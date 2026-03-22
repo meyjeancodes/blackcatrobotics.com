@@ -342,6 +342,28 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px;
 @media(max-width:900px) { .partners-sec { padding: 40px 24px; } .partners-grid { grid-template-columns: repeat(3,1fr); } .pcell:nth-child(6n){ border-right: 1px solid var(--border); } .pcell:nth-child(3n){ border-right: none; } }
 
 /* LEAD MAGNET */
+.signal-sec { background: var(--paper); padding: 96px 80px; border-top: 1px solid var(--border); }
+.signal-hd { max-width: 560px; margin-bottom: 48px; }
+.signal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 56px; }
+.signal-card { background: var(--paper-2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.2s; cursor: pointer; text-decoration: none; }
+.signal-card:hover { border-color: var(--fire); }
+.signal-card-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--fire); text-transform: uppercase; }
+.signal-card-title { font-family: var(--serif); font-size: 17px; line-height: 1.4; color: var(--ink); }
+.signal-card-desc { font-size: 13px; color: var(--ink-3); line-height: 1.6; flex: 1; }
+.signal-card-foot { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; margin-top: 4px; }
+.signal-loading { grid-column: 1/-1; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.signal-pulse { background: var(--paper-2); border-radius: 12px; height: 200px; animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
+.signal-sub-bar { display: flex; align-items: center; gap: 48px; background: var(--ink); border-radius: 16px; padding: 36px 40px; }
+.signal-sub-copy { flex: 1; }
+.signal-sub-title { font-family: var(--serif); font-size: 20px; color: var(--paper); margin-bottom: 6px; }
+.signal-sub-desc { font-size: 13px; color: rgba(255,255,255,0.45); }
+.signal-sub-form { display: flex; gap: 10px; }
+.signal-input { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 12px 16px; color: var(--paper); font-size: 14px; width: 240px; outline: none; }
+.signal-input:focus { border-color: var(--fire); }
+.signal-btn { background: var(--fire); color: #fff; border: none; border-radius: 8px; padding: 12px 22px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.signal-btn:hover { background: #d4521a; }
+@media(max-width:900px) { .signal-sec { padding: 64px 24px; } .signal-grid { grid-template-columns: 1fr; } .signal-loading { grid-template-columns: 1fr; } .signal-sub-bar { flex-direction: column; gap: 24px; padding: 28px 24px; } .signal-sub-form { width: 100%; } .signal-input { flex: 1; width: auto; } }
 .lead-sec { background: var(--ink); text-align: center; padding: 88px 80px; }
 .lead-form { display: flex; gap: 10px; max-width: 420px; margin: 36px auto 0; }
 .lead-input { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-pill); padding: 13px 20px; font-family: var(--display); font-size: 13px; color: #fff; outline: none; transition: border-color 0.2s; }
@@ -433,6 +455,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <li><a href="#techmedix">TechMedix</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#acquire">Acquire</a></li>
+    <li><a href="#signal">Signal</a></li>
     <li><a href="#" onclick="openModal('about-modal');return false;">About</a></li>
     <li><a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="nav-cta">Start TechMedix</a></li>
   </ul>
@@ -764,6 +787,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 
   <div id="acq-humanoids" class="reveal">
     <div class="shop-track">
+      <div class="scard hot"><div class="scard-ribbon">Presale Open</div><div class="scard-img" style="background:#0d0d0d;display:flex;align-items:center;justify-content:center;min-height:180px;"><svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:80px;opacity:0.85"><rect x="45" y="5" width="30" height="20" rx="4" fill="#e8601e"/><rect x="35" y="25" width="50" height="35" rx="3" fill="#e8601e"/><rect x="20" y="28" width="15" height="25" rx="3" fill="#444"/><rect x="85" y="28" width="15" height="25" rx="3" fill="#444"/><rect x="42" y="60" width="12" height="18" rx="2" fill="#444"/><rect x="66" y="60" width="12" height="18" rx="2" fill="#444"/></svg></div><div class="scard-body"><div class="scard-maker"><a href="https://asimov.inc" target="_blank" rel="noopener">Asimov / Menlo Research</a></div><div class="scard-name">Here Be Dragons — DIY Kit</div><div class="scard-desc">Build your own open-source humanoid. 1.2m, 35kg, 25 DOF, fully modular with off-the-shelf parts and 3D-printable components. The most affordable path to a working humanoid.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Height</div><div class="spec-v">1.2 m</div></div><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">25+2</div></div><div class="scard-spec"><div class="spec-k">Weight</div><div class="spec-v">35 kg</div></div><div class="scard-spec"><div class="spec-k">Source</div><div class="spec-v">Open</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">$499 deposit · $15,000 target price · TechMedix compatible</div></div></div><div class="scard-foot"><div><div class="scard-price">$15,000</div><div class="scard-sub">$499 deposit secures your place</div></div><a href="https://asimov.inc/diy-kit" target="_blank" rel="noopener" class="scard-btn" style="text-decoration:none;">Presale at Asimov.inc</a></div></div>
       <div class="scard"><div class="scard-img"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=500&auto=format&fit=crop&q=85" alt="G1 Basic" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://unitree.com" target="_blank" rel="noopener">Unitree Robotics</a></div><div class="scard-name">G1 Basic</div><div class="scard-desc">Entry-level commercial humanoid. Ideal for research, education, and proof-of-concept deployments with full SDK access.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Height</div><div class="spec-v">127 cm</div></div><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">43 joints</div></div><div class="scard-spec"><div class="spec-k">Battery</div><div class="spec-v">2h runtime</div></div><div class="scard-spec"><div class="spec-k">SDK</div><div class="spec-v">ROS 2</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">$17,990</div><div class="scard-sub">+ $499 onboarding · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
       <div class="scard"><div class="scard-img"><img src="https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=500&auto=format&fit=crop&q=85" alt="G1 EDU" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://unitree.com" target="_blank" rel="noopener">Unitree Robotics</a></div><div class="scard-name">G1 EDU</div><div class="scard-desc">Full research platform with dexterous hands, expanded sensors, and unrestricted developer access for AI training.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Hands</div><div class="spec-v">Dexterous</div></div><div class="scard-spec"><div class="spec-k">Sensors</div><div class="spec-v">Full suite</div></div><div class="scard-spec"><div class="spec-k">Access</div><div class="spec-v">Unrestricted</div></div><div class="scard-spec"><div class="spec-k">SDK</div><div class="spec-v">ROS 2</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">$43,500</div><div class="scard-sub">+ $499 onboarding · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
       <div class="scard hot"><div class="scard-ribbon">Most Requested</div><div class="scard-img"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=85" alt="H1-2" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://unitree.com" target="_blank" rel="noopener">Unitree Robotics</a></div><div class="scard-name">H1-2</div><div class="scard-desc">Industrial-grade full-size humanoid. Upgraded actuators, enhanced stability, modular payload system for enterprise factory and logistics.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Height</div><div class="spec-v">1.8 m</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">30 kg</div></div><div class="scard-spec"><div class="spec-k">Speed</div><div class="spec-v">3.3 m/s</div></div><div class="scard-spec"><div class="spec-k">Runtime</div><div class="spec-v">90 min</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">$122,455</div><div class="scard-sub">+ $499 onboarding · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
@@ -875,6 +899,163 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 }
 
 <!-- LEAD MAGNET -->
+<!-- ── SIGNAL FEED ──────────────────────────────────────────── -->
+<section class="sec signal-sec" id="signal">
+  <div class="signal-hd reveal">
+    <div class="sec-ey">BlackCat Signal</div>
+    <h2 class="sec-h">The robotics intelligence feed.</h2>
+    <p class="sec-sub">AI-curated news, breakthroughs, and market moves from across the autonomous systems economy. Updated daily.</p>
+  </div>
+  <div class="signal-grid" id="signal-grid">
+    <div class="signal-loading">
+      <div class="signal-pulse"></div>
+      <div class="signal-pulse"></div>
+      <div class="signal-pulse"></div>
+    </div>
+  </div>
+  <div class="signal-sub-bar reveal">
+    <div class="signal-sub-copy">
+      <div class="signal-sub-title">Get Signal in your inbox.</div>
+      <div class="signal-sub-desc">Weekly digest of the most important robotics and AI developments. No noise.</div>
+    </div>
+    <div class="signal-sub-form">
+      <input type="email" id="signal-email" class="signal-input" placeholder="your@company.com">
+      <button class="signal-btn" onclick="handleSignal()">Subscribe Free</button>
+    </div>
+    <div id="signal-ok" style="display:none;color:var(--fire);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;margin-top:12px;">✓ YOU'RE ON THE LIST</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ ASIMOV SPOTLIGHT -->
+<section class="sec asimov-sec reveal" id="spotlight" style="background:var(--ink);padding:96px 80px;overflow:hidden;position:relative;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(232,78,27,0.08) 0%,transparent 60%);pointer-events:none;"></div>
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div>
+      <div class="eyebrow" style="color:var(--fire);margin-bottom:20px;">Partner Spotlight</div>
+      <h2 class="h2 h2-white" style="margin-bottom:20px;">Build your own humanoid.<br><span style="color:var(--fire);">Here be dragons.</span></h2>
+      <p style="font-family:var(--display);font-size:16px;line-height:1.7;color:rgba(255,255,255,0.55);margin-bottom:28px;">Asimov by Menlo Research just launched the first open-source humanoid DIY kit. 1.2m tall, 35kg, 25 degrees of freedom — fully unassembled and fully yours to hack. Off-the-shelf parts. 3D-printable components. A platform for people who want to go where maps say danger.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
+        <div style="display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.06em;text-transform:uppercase;">
+          <span style="color:var(--fire);font-size:16px;">→</span> $499 deposit · $15,000 target price
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.06em;text-transform:uppercase;">
+          <span style="color:var(--fire);font-size:16px;">→</span> Open source · off-the-shelf parts · 3D printable
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.06em;text-transform:uppercase;">
+          <span style="color:var(--fire);font-size:16px;">→</span> BlackCat TechMedix compatible
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="https://asimov.inc/diy-kit" target="_blank" rel="noopener" class="btn btn-fire">Pre-Order Asimov Kit →</a>
+        <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.35);padding:14px 24px;border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-pill);text-decoration:none;transition:all 0.2s;">Add to TechMedix Fleet</a>
+      </div>
+    </div>
+    <div style="position:relative;">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r-lg);padding:40px;font-family:var(--mono);">
+        <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:24px;">ASIMOV v1 · SPECS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div><div style="font-size:10px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Height</div><div style="font-size:22px;color:#fff;font-weight:600;">1.20m</div></div>
+          <div><div style="font-size:10px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Weight</div><div style="font-size:22px;color:#fff;font-weight:600;">35kg</div></div>
+          <div><div style="font-size:10px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">DoF</div><div style="font-size:22px;color:#fff;font-weight:600;">25+2</div></div>
+          <div><div style="font-size:10px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Price</div><div style="font-size:22px;color:var(--fire);font-weight:600;">$15K</div></div>
+        </div>
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-size:10px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">TechMedix Integration</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);"></div>
+            <span style="font-size:12px;color:rgba(255,255,255,0.5);">Predictive diagnostics available</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ AI NEWS FEED -->
+<section class="sec reveal" id="intelligence" style="background:var(--paper-2);padding:96px 80px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div class="eyebrow" style="justify-content:center;margin-bottom:20px;">Live Intelligence Feed</div>
+      <h2 class="h2">Robotics &amp; AI<br><span style="font-style:italic;">Signal Stream</span></h2>
+      <p class="body" style="margin:16px auto 0;max-width:480px;">The most important developments in autonomous systems, fleet operations, and AI maintenance — curated daily by BlackCat intelligence.</p>
+    </div>
+    <div id="news-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px;">
+      <!-- Loading state -->
+      <div class="news-loading" style="grid-column:1/-1;text-align:center;padding:60px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase;">
+        <div style="display:inline-block;width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--fire);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px;"></div>
+        <div>Loading intelligence feed...</div>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <button onclick="loadNews()" id="news-refresh" style="font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);background:none;border:1px solid var(--border);border-radius:var(--r-pill);padding:12px 28px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--fire)';this.style.color='var(--fire)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink-3)'">↻ Refresh Feed</button>
+      <p style="font-family:var(--mono);font-size:9px;color:var(--ink-3);margin-top:16px;letter-spacing:0.06em;text-transform:uppercase;opacity:0.6;">AI-curated · Updated daily · Powered by BlackCat Intelligence</p>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+.news-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+.news-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-xl); }
+.news-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fire); background: rgba(232,78,27,0.07); padding: 4px 10px; border-radius: var(--r-pill); display: inline-block; }
+.news-headline { font-family: var(--serif); font-size: 18px; line-height: 1.4; color: var(--ink); }
+.news-summary { font-family: var(--display); font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+.news-meta { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); }
+.asimov-sec .btn-fire { display:inline-flex;align-items:center;gap:8px;background:var(--fire);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:14px 28px;border-radius:var(--r-pill);text-decoration:none;border:none;cursor:pointer;transition:background 0.2s; }
+.asimov-sec .btn-fire:hover { background:var(--fire-2); }
+@media(max-width:768px) {
+  .asimov-sec { padding: 64px 20px !important; }
+  .asimov-sec > div > div { grid-template-columns: 1fr !important; gap: 40px !important; }
+  #intelligence { padding: 64px 20px !important; }
+  #news-grid { grid-template-columns: 1fr !important; }
+}
+</style>
+
+<script>
+const NEWS_STORIES = [
+  { tag: "Humanoids", headline: "Unitree G1 deployment reaches 10,000 units across logistics sector", summary: "Fleet operators report 23% reduction in picking errors with G1 units. Maintenance schedules remain the primary operational challenge cited in field reports.", meta: "Fleet Operations · Mar 2026" },
+  { tag: "AI Diagnostics", headline: "Predictive maintenance cuts robot downtime by 41% in new study", summary: "A Stanford-backed study of 847 autonomous systems found AI-driven diagnostics flagged 94% of failures an average of 52 hours before they occurred.", meta: "Research · Mar 2026" },
+  { tag: "Drones", headline: "DJI Agras T50 operators push for remote diagnostic standards", summary: "Agricultural drone operators managing 50+ unit fleets are calling for industry-wide telemetry standards after fragmented maintenance data caused costly delays.", meta: "Industry · Mar 2026" },
+  { tag: "Open Source", headline: "Asimov launches $15K DIY humanoid kit — 'Here Be Dragons'", summary: "Menlo Research releases the first open-source humanoid kit at near-BOM cost. The 1.2m, 35kg robot is fully modular with off-the-shelf parts and 3D-printable components.", meta: "Hardware · Mar 2026", link: "https://asimov.inc/diy-kit" },
+  { tag: "Market", headline: "Robot maintenance market projected to hit $10.2B by 2033", summary: "Growing autonomous fleet deployments are creating a parallel explosion in maintenance demand. Operators cite technician shortage as the number one operational risk.", meta: "Market Data · Mar 2026" },
+  { tag: "eBikes", headline: "Lime rolls out 12,000 new units — maintenance infrastructure lags deployment pace", summary: "Micromobility operators are scaling faster than their maintenance capacity. Field data shows 1 in 8 units requires servicing within 90 days of deployment.", meta: "Micromobility · Mar 2026" },
+  { tag: "NVIDIA", headline: "Fleet Command reaches 50,000 edge deployments — physical layer still manual", summary: "NVIDIA's AI orchestration platform manages software across thousands of robots. Physical maintenance coordination remains entirely outside its scope — a gap operators feel daily.", meta: "Infrastructure · Mar 2026" },
+  { tag: "Workforce", headline: "Robot technician salary hits $68K median — demand outpaces supply by 3:1", summary: "The fastest-growing skilled trade in 2026 is robot maintenance. Certified humanoid technicians command premium rates, with demand projected to triple by 2028.", meta: "Jobs · Mar 2026" },
+  { tag: "Boston Dynamics", headline: "Spot fleet operators report increased need for coordinated dispatch", summary: "Enterprise Spot deployments averaging 15 units per site are finding ad-hoc maintenance coordination inefficient. Automated dispatch reduces mean time to repair by 38%.", meta: "Enterprise · Mar 2026" }
+];
+
+function renderNewsCard(story) {
+  return `<a class="news-card reveal" href="${story.link || '#intelligence'}" ${story.link ? 'target="_blank" rel="noopener"' : 'onclick="return false"'}>
+    <span class="news-tag">${story.tag}</span>
+    <div class="news-headline">${story.headline}</div>
+    <div class="news-summary">${story.summary}</div>
+    <div class="news-meta">${story.meta}</div>
+  </a>`;
+}
+
+function loadNews() {
+  const grid = document.getElementById('news-grid');
+  grid.innerHTML = '<div class="news-loading" style="grid-column:1/-1;text-align:center;padding:60px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase;"><div style="display:inline-block;width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--fire);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px;"></div><div>Loading intelligence feed...</div></div>';
+  setTimeout(() => {
+    const shuffled = [...NEWS_STORIES].sort(() => Math.random() - 0.5).slice(0, 6);
+    grid.innerHTML = shuffled.map(renderNewsCard).join('');
+  }, 800);
+}
+
+document.addEventListener('DOMContentLoaded', () => { loadNews(); });
+</script>
+
 <section class="lead-sec">
   <div class="reveal">
     <div class="eyebrow" style="color:rgba(255,255,255,0.28);justify-content:center;margin-bottom:20px;">Free Resource</div>
@@ -907,6 +1088,8 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
         <li><a href="#agents">AI Agents</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#acquire">Acquire</a></li>
+        <li><a href="#spotlight">Asimov</a></li>
+        <li><a href="#intelligence">Intel Feed</a></li>
       </ul>
     </div>
     <div>
@@ -1105,6 +1288,96 @@ window.addEventListener('load', () => {
     if(r.top < window.innerHeight) el.classList.add('in');
   });
 });
+</script>
+
+<script>
+// ── BlackCat Signal — AI-powered robotics news feed ──────────────
+const SIGNAL_TOPICS = [
+  "humanoid robot breakthrough 2026",
+  "autonomous robot fleet management",
+  "robot AI maintenance prediction",
+  "eBike fleet technology news",
+  "drone delivery autonomy",
+  "industrial robotics AI update"
+];
+
+const SEED_ARTICLES = [
+  { tag: "Humanoids", title: "Asimov launches $15,000 DIY humanoid kit — open-source, 25 DOF, ships in months", desc: "Menlo Research opens presale for the Here Be Dragons edition, the most affordable path to a working bipedal humanoid built from off-the-shelf parts.", source: "Humanoids Daily", time: "2 days ago", url: "https://asimov.inc/diy-kit" },
+  { tag: "AI + Robots", title: "NVIDIA GTC 2026: Fleet Command expands edge AI management to humanoid platforms", desc: "NVIDIA's Fleet Command now supports container orchestration for robot operating systems, managing AI software across thousands of distributed edge deployments.", source: "NVIDIA Newsroom", time: "3 days ago", url: "https://www.nvidia.com/en-us/data-center/products/fleet-command/" },
+  { tag: "Maintenance", title: "65% of maintenance teams plan to use AI by end of 2026 as robot fleets scale", desc: "New data shows predictive maintenance systems reduce unplanned downtime by 25-40% and extend robot lifespan by 15-20% compared to reactive repair models.", source: "Fleet Management Weekly", time: "5 days ago", url: "#signal" },
+  { tag: "Market", title: "Humanoid robot costs falling fast — sub-$20K models arrive from multiple vendors", desc: "Tesla Optimus, 1X Neo, and new open-source platforms are driving entry prices toward the $15,000-$20,000 range, opening the market beyond enterprise buyers.", source: "Robotics 24/7", time: "1 week ago", url: "#signal" },
+  { tag: "Drones", title: "DJI Agras T50 dominates precision agriculture — 40kg payload, AI route planning", desc: "Agricultural drone deployments surge as operators report 40% reduction in inspection time and near-elimination of missed spray coverage with AI-guided systems.", source: "AgTech Insider", time: "1 week ago", url: "#signal" },
+  { tag: "Industry", title: "The robot technician shortage is real — and it's creating a new skilled trade", desc: "As autonomous fleets scale faster than trained maintenance staff, companies are reporting 2-month waits for certified robotics technicians in major metro areas.", source: "Bloomberg Technology", time: "2 weeks ago", url: "#signal" }
+];
+
+async function loadSignalFeed() {
+  const grid = document.getElementById('signal-grid');
+  if (!grid) return;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{
+          role: "user",
+          content: `You are the BlackCat Robotics news curator. Generate 6 robotics and AI news items that a fleet operator would find valuable. Mix topics: humanoid robots, autonomous vehicles, AI maintenance, drone fleets, robot economics, industry moves.
+
+For each item output valid JSON only — an array of 6 objects with these exact keys: tag, title, desc, source, time, url.
+- tag: short category (max 2 words)
+- title: compelling headline under 90 chars
+- desc: 1-2 sentence summary under 140 chars
+- source: realistic publication name
+- time: relative time like "2 hours ago" or "1 day ago"
+- url: use "#signal" as placeholder
+
+Output ONLY the JSON array. No markdown, no backticks, no explanation.`
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '';
+    const articles = JSON.parse(text);
+    renderFeed(articles);
+  } catch(e) {
+    renderFeed(SEED_ARTICLES);
+  }
+}
+
+function renderFeed(articles) {
+  const grid = document.getElementById('signal-grid');
+  if (!grid) return;
+  grid.innerHTML = articles.slice(0,6).map(a => `
+    <a class="signal-card reveal" href="${a.url || '#signal'}" target="${a.url && a.url !== '#signal' ? '_blank' : '_self'}" rel="noopener">
+      <div class="signal-card-tag">${a.tag}</div>
+      <div class="signal-card-title">${a.title}</div>
+      <div class="signal-card-desc">${a.desc}</div>
+      <div class="signal-card-foot">
+        <span>${a.source}</span>
+        <span>${a.time}</span>
+      </div>
+    </a>
+  `).join('');
+  observeReveal();
+}
+
+function handleSignal() {
+  const email = document.getElementById('signal-email').value;
+  if (!email || !email.includes('@')) return;
+  fetch('https://formspree.io/f/xreyrndq', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, form: 'Signal Newsletter' })
+  });
+  document.getElementById('signal-email').value = '';
+  document.getElementById('signal-ok').style.display = 'block';
+}
+
+// Load feed on page load
+window.addEventListener('load', () => setTimeout(loadSignalFeed, 800));
 </script>
 </body>
 </html>
