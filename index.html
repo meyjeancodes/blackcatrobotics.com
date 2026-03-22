@@ -46,6 +46,13 @@ img { display: block; max-width: 100%; }
 a, button { cursor: pointer; }
 ul { list-style: none; }
 
+/* NEWS TICKER */
+.news-ticker{background:var(--ink);color:rgba(255,255,255,0.7);display:flex;align-items:center;height:36px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.06);position:relative;z-index:99;}
+.ticker-label{background:var(--fire);color:#fff;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:0 12px;height:100%;display:flex;align-items:center;flex-shrink:0;}
+.ticker-track{flex:1;overflow:hidden;display:flex;}
+.ticker-inner{display:flex;align-items:center;gap:24px;white-space:nowrap;font-family:var(--mono);font-size:10px;letter-spacing:0.04em;animation:ticker 50s linear infinite;padding-right:24px;}
+@keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+
 /* TYPOGRAPHY */
 .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); display: inline-flex; align-items: center; gap: 8px; }
 .eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: var(--ink-3); }
@@ -465,6 +472,44 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 </nav>
 
 <!-- HERO -->
+<div class="news-ticker">
+  <div class="ticker-label">LIVE</div>
+  <div class="ticker-track">
+    <div class="ticker-inner">
+      <span>🔥 Unitree files $610M IPO — 5,500+ humanoids deployed, 60%+ gross margins</span>
+      <span>•</span>
+      <span>Foundation Phantom MK-1 deployed to Ukraine frontlines for battlefield evaluation</span>
+      <span>•</span>
+      <span>Asimov Here Be Dragons humanoid kit available for $15K presale</span>
+      <span>•</span>
+      <span>Robot technician salary hits $68K median — 3:1 demand over supply</span>
+      <span>•</span>
+      <span>Robot maintenance market projected to reach $10.2B by 2033</span>
+      <span>•</span>
+      <span>NVIDIA Fleet Command reaches 50,000 edge deployments — physical layer still unmanaged</span>
+      <span>•</span>
+      <span>65% of maintenance teams plan to adopt AI diagnostics by end of 2026</span>
+      <span>•</span>
+    </div>
+    <div class="ticker-inner" aria-hidden="true">
+      <span>🔥 Unitree files $610M IPO — 5,500+ humanoids deployed, 60%+ gross margins</span>
+      <span>•</span>
+      <span>Foundation Phantom MK-1 deployed to Ukraine frontlines for battlefield evaluation</span>
+      <span>•</span>
+      <span>Asimov Here Be Dragons humanoid kit available for $15K presale</span>
+      <span>•</span>
+      <span>Robot technician salary hits $68K median — 3:1 demand over supply</span>
+      <span>•</span>
+      <span>Robot maintenance market projected to reach $10.2B by 2033</span>
+      <span>•</span>
+      <span>NVIDIA Fleet Command reaches 50,000 edge deployments — physical layer still unmanaged</span>
+      <span>•</span>
+      <span>65% of maintenance teams plan to adopt AI diagnostics by end of 2026</span>
+      <span>•</span>
+    </div>
+  </div>
+</div>
+
 <section id="hero">
   <div class="hero-bg">
     <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=1800&auto=format&fit=crop&q=85" alt="Autonomous drone fleet" loading="eager">
@@ -536,8 +581,8 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=400&auto=format&fit=crop&q=80" alt="Figure 02" loading="lazy"><span class="rcard-badge badge-green">Production</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://figure.ai" target="_blank" rel="noopener">Figure AI</a></div><div class="rcard-name">Figure 02</div><div class="rcard-desc">Manufactured at BotQ — robots building robots at 12,000 units/year. BMW and Mercedes-Benz deployments confirmed. OpenAI neural integration for dexterous manipulation.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Production</div><div class="spec-v">12K/year</div></div><div class="spec"><div class="spec-k">AI</div><div class="spec-v">OpenAI</div></div><div class="spec"><div class="spec-k">Customers</div><div class="spec-v">BMW, MB</div></div><div class="spec"><div class="spec-k">Plant</div><div class="spec-v">BotQ</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://figure.ai" target="_blank" rel="noopener">Learn more →</a></div></div>
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&auto=format&fit=crop&q=80" alt="Tesla Optimus" loading="lazy"><span class="rcard-badge badge-fire">Watch 2026</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://tesla.com/optimus" target="_blank" rel="noopener">Tesla</a></div><div class="rcard-name">Optimus Gen 3</div><div class="rcard-desc">Tesla converting Fremont lines to Optimus production Q2 2026. 50,000-unit target. FSD neural network adapted for bipedal locomotion. Target price under $20K.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Target</div><div class="spec-v">&lt;$20K</div></div><div class="spec"><div class="spec-k">Units</div><div class="spec-v">50K target</div></div><div class="spec"><div class="spec-k">AI</div><div class="spec-v">FSD Neural</div></div><div class="spec"><div class="spec-k">Launch</div><div class="spec-v">Q2 2026</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Ready</span><a class="rcard-link" href="https://tesla.com/optimus" target="_blank" rel="noopener">Learn more →</a></div></div>
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1563207153-f403bf289096?w=400&auto=format&fit=crop&q=80" alt="Unitree G1" loading="lazy"><span class="rcard-badge badge-green">Certified</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://unitree.com" target="_blank" rel="noopener">Unitree Robotics</a></div><div class="rcard-name">Unitree G1</div><div class="rcard-desc">Most accessible commercial humanoid. 43 DOF, 13 force-torque sensors, 360° depth perception. Widely deployed for research and industrial piloting. Base price $16K.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">DOF</div><div class="spec-v">43 joints</div></div><div class="spec"><div class="spec-k">Sensors</div><div class="spec-v">13 F/T</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">360° depth</div></div><div class="spec"><div class="spec-k">Price</div><div class="spec-v">from $16K</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://unitree.com" target="_blank" rel="noopener">Learn more →</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&auto=format&fit=crop&q=80" alt="Phantom MK-1" loading="lazy"><span class="rcard-badge badge-indigo">Defense</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://foundationrobotics.com" target="_blank" rel="noopener">Foundation Robotics</a></div><div class="rcard-name">Phantom MK-1</div><div class="rcard-desc">$24M in US Army, Navy, Air Force contracts. Two units deployed in Ukraine. 20 cycloidal actuators, LLM vision. MK-2 launching 2026 with 80 kg payload.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Contracts</div><div class="spec-v">$24M</div></div><div class="spec"><div class="spec-k">Actuators</div><div class="spec-v">20 cycloidal</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">LLM Camera</div></div><div class="spec"><div class="spec-k">MK-2</div><div class="spec-v">80 kg payload</div></div></div></div><div class="rcard-foot"><span class="rcard-status">Defense Grade</span><a class="rcard-link" href="https://foundationrobotics.com" target="_blank" rel="noopener">Learn more →</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1601370552761-24b6b2a98c55?w=400&auto=format&fit=crop&q=80" alt="Digit V5" loading="lazy"><span class="rcard-badge badge-gold">Amazon</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://agility.ai" target="_blank" rel="noopener">Agility Robotics</a></div><div class="rcard-name">Digit V5</div><div class="rcard-desc">500+ units at Amazon fulfillment centers and GXO Logistics. Bipedal design built for existing human environments — no infrastructure changes required.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Deployed</div><div class="spec-v">500+ units</div></div><div class="spec"><div class="spec-k">Partner</div><div class="spec-v">Amazon</div></div><div class="spec"><div class="spec-k">Payload</div><div class="spec-v">16 kg</div></div><div class="spec"><div class="spec-k">Infra</div><div class="spec-v">No changes</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://agility.ai" target="_blank" rel="noopener">Learn more →</a></div></div>
+      <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&auto=format&fit=crop&q=80" alt="Phantom MK-1" loading="lazy"><span class="rcard-badge badge-indigo">Defense</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://foundation.bot" target="_blank" rel="noopener">Foundation</a></div><div class="rcard-name">Phantom MK-1</div><div class="rcard-desc">Two units deployed to Ukraine for battlefield evaluation. Pilots underway in factories and shipyards. Cycloidal actuators, camera-first LLM vision stack. MK-2 in development 2026.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Height</div><div class="spec-v">175 cm</div></div><div class="spec"><div class="spec-k">Actuators</div><div class="spec-v">~20 cycloidal</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">Camera-first</div></div><div class="spec"><div class="spec-k">MK-2</div><div class="spec-v">2026</div></div></div></div><div class="rcard-foot"><span class="rcard-status">Defense Grade</span><a class="rcard-link" href="https://foundation.bot" target="_blank" rel="noopener">Learn more →</a></div></div>
+      <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1601370552761-24b6b2a98c55?w=400&auto=format&fit=crop&q=80" alt="Digit V5" loading="lazy"><span class="rcard-badge badge-gold">Amazon</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://agilityrobotics.com" target="_blank" rel="noopener">Agility Robotics</a></div><div class="rcard-name">Digit V5</div><div class="rcard-desc">500+ units at Amazon fulfillment centers and GXO Logistics. Bipedal design built for existing human environments — no infrastructure changes required.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Deployed</div><div class="spec-v">500+ units</div></div><div class="spec"><div class="spec-k">Partner</div><div class="spec-v">Amazon</div></div><div class="spec"><div class="spec-k">Payload</div><div class="spec-v">16 kg</div></div><div class="spec"><div class="spec-k">Infra</div><div class="spec-v">No changes</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://agilityrobotics.com" target="_blank" rel="noopener">Learn more →</a></div></div>
     </div>
   </div>
 
@@ -841,14 +886,14 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <a class="pcell" href="https://figure.ai" target="_blank" rel="noopener"><div class="p-logo">FIGURE AI</div></a>
     <a class="pcell" href="https://tesla.com/optimus" target="_blank" rel="noopener"><div class="p-logo">TESLA<br>OPTIMUS</div></a>
     <a class="pcell" href="https://unitree.com" target="_blank" rel="noopener"><div class="p-logo">UNITREE<br>ROBOTICS</div></a>
-    <a class="pcell" href="https://agility.ai" target="_blank" rel="noopener"><div class="p-logo">AGILITY<br>ROBOTICS</div></a>
+    <a class="pcell" href="https://agilityrobotics.com" target="_blank" rel="noopener"><div class="p-logo">AGILITY<br>ROBOTICS</div></a>
     <a class="pcell" href="https://flyzipline.com" target="_blank" rel="noopener"><div class="p-logo" style="color:#e84e1b;">ZIPLINE</div></a>
     <a class="pcell" href="https://ag.dji.com" target="_blank" rel="noopener"><div class="p-logo">DJI<br>AGRICULTURE</div></a>
     <a class="pcell" href="https://skydio.com" target="_blank" rel="noopener"><div class="p-logo">SKYDIO</div></a>
     <a class="pcell" href="https://amazon.com/robotics" target="_blank" rel="noopener"><div class="p-logo">AMAZON<br>ROBOTICS</div></a>
     <a class="pcell" href="https://serverobotics.com" target="_blank" rel="noopener"><div class="p-logo">SERVE<br>ROBOTICS</div></a>
     <a class="pcell" href="https://starship.xyz" target="_blank" rel="noopener"><div class="p-logo">STARSHIP<br>TECH</div></a>
-    <a class="pcell" href="https://foundationrobotics.com" target="_blank" rel="noopener"><div class="p-logo">FOUNDATION<br>ROBOTICS</div></a>
+    <a class="pcell" href="https://foundation.bot" target="_blank" rel="noopener"><div class="p-logo">FOUNDATION<br>ROBOTICS</div></a>
     <a class="pcell" href="https://li.me/business" target="_blank" rel="noopener"><div class="p-logo" style="color:#00c853;">lime</div></a>
     <a class="pcell" href="https://bird.co" target="_blank" rel="noopener"><div class="p-logo">Bird</div></a>
     <a class="pcell" href="https://radpowerbikes.com/commercial" target="_blank" rel="noopener"><div class="p-logo" style="color:#e02020;">RAD POWER<br>BIKES</div></a>
@@ -894,9 +939,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     </div>
   </div>
 </section>
-@media(max-width:900px){
-  .collab-grid { grid-template-columns: 1fr !important; }
-}
+
 
 <!-- LEAD MAGNET -->
 <!-- ── SIGNAL FEED ──────────────────────────────────────────── -->
@@ -931,7 +974,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(232,78,27,0.08) 0%,transparent 60%);pointer-events:none;"></div>
   <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
     <div>
-      <div class="eyebrow" style="color:var(--fire);margin-bottom:20px;">Partner Spotlight</div>
+      <div class="eyebrow" style="color:var(--fire);margin-bottom:20px;">Spotlight</div>
       <h2 class="h2 h2-white" style="margin-bottom:20px;">Build your own humanoid.<br><span style="color:var(--fire);">Here be dragons.</span></h2>
       <p style="font-family:var(--display);font-size:16px;line-height:1.7;color:rgba(255,255,255,0.55);margin-bottom:28px;">Asimov by Menlo Research just launched the first open-source humanoid DIY kit. 1.2m tall, 35kg, 25 degrees of freedom — fully unassembled and fully yours to hack. Off-the-shelf parts. 3D-printable components. A platform for people who want to go where maps say danger.</p>
       <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
@@ -971,90 +1014,6 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ AI NEWS FEED -->
-<section class="sec reveal" id="intelligence" style="background:var(--paper-2);padding:96px 80px;">
-  <div style="max-width:1200px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:56px;">
-      <div class="eyebrow" style="justify-content:center;margin-bottom:20px;">Live Intelligence Feed</div>
-      <h2 class="h2">Robotics &amp; AI<br><span style="font-style:italic;">Signal Stream</span></h2>
-      <p class="body" style="margin:16px auto 0;max-width:480px;">The most important developments in autonomous systems, fleet operations, and AI maintenance — curated daily by BlackCat intelligence.</p>
-    </div>
-    <div id="news-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px;">
-      <!-- Loading state -->
-      <div class="news-loading" style="grid-column:1/-1;text-align:center;padding:60px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase;">
-        <div style="display:inline-block;width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--fire);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px;"></div>
-        <div>Loading intelligence feed...</div>
-      </div>
-    </div>
-    <div style="text-align:center;">
-      <button onclick="loadNews()" id="news-refresh" style="font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);background:none;border:1px solid var(--border);border-radius:var(--r-pill);padding:12px 28px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--fire)';this.style.color='var(--fire)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink-3)'">↻ Refresh Feed</button>
-      <p style="font-family:var(--mono);font-size:9px;color:var(--ink-3);margin-top:16px;letter-spacing:0.06em;text-transform:uppercase;opacity:0.6;">AI-curated · Updated daily · Powered by BlackCat Intelligence</p>
-    </div>
-  </div>
-</section>
-
-<style>
-@keyframes spin { to { transform: rotate(360deg); } }
-.news-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-decoration: none;
-  color: inherit;
-}
-.news-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-xl); }
-.news-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fire); background: rgba(232,78,27,0.07); padding: 4px 10px; border-radius: var(--r-pill); display: inline-block; }
-.news-headline { font-family: var(--serif); font-size: 18px; line-height: 1.4; color: var(--ink); }
-.news-summary { font-family: var(--display); font-size: 13px; line-height: 1.6; color: var(--ink-2); }
-.news-meta { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); }
-.asimov-sec .btn-fire { display:inline-flex;align-items:center;gap:8px;background:var(--fire);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:14px 28px;border-radius:var(--r-pill);text-decoration:none;border:none;cursor:pointer;transition:background 0.2s; }
-.asimov-sec .btn-fire:hover { background:var(--fire-2); }
-@media(max-width:768px) {
-  .asimov-sec { padding: 64px 20px !important; }
-  .asimov-sec > div > div { grid-template-columns: 1fr !important; gap: 40px !important; }
-  #intelligence { padding: 64px 20px !important; }
-  #news-grid { grid-template-columns: 1fr !important; }
-}
-</style>
-
-<script>
-const NEWS_STORIES = [
-  { tag: "Humanoids", headline: "Unitree G1 deployment reaches 10,000 units across logistics sector", summary: "Fleet operators report 23% reduction in picking errors with G1 units. Maintenance schedules remain the primary operational challenge cited in field reports.", meta: "Fleet Operations · Mar 2026" },
-  { tag: "AI Diagnostics", headline: "Predictive maintenance cuts robot downtime by 41% in new study", summary: "A Stanford-backed study of 847 autonomous systems found AI-driven diagnostics flagged 94% of failures an average of 52 hours before they occurred.", meta: "Research · Mar 2026" },
-  { tag: "Drones", headline: "DJI Agras T50 operators push for remote diagnostic standards", summary: "Agricultural drone operators managing 50+ unit fleets are calling for industry-wide telemetry standards after fragmented maintenance data caused costly delays.", meta: "Industry · Mar 2026" },
-  { tag: "Open Source", headline: "Asimov launches $15K DIY humanoid kit — 'Here Be Dragons'", summary: "Menlo Research releases the first open-source humanoid kit at near-BOM cost. The 1.2m, 35kg robot is fully modular with off-the-shelf parts and 3D-printable components.", meta: "Hardware · Mar 2026", link: "https://asimov.inc/diy-kit" },
-  { tag: "Market", headline: "Robot maintenance market projected to hit $10.2B by 2033", summary: "Growing autonomous fleet deployments are creating a parallel explosion in maintenance demand. Operators cite technician shortage as the number one operational risk.", meta: "Market Data · Mar 2026" },
-  { tag: "eBikes", headline: "Lime rolls out 12,000 new units — maintenance infrastructure lags deployment pace", summary: "Micromobility operators are scaling faster than their maintenance capacity. Field data shows 1 in 8 units requires servicing within 90 days of deployment.", meta: "Micromobility · Mar 2026" },
-  { tag: "NVIDIA", headline: "Fleet Command reaches 50,000 edge deployments — physical layer still manual", summary: "NVIDIA's AI orchestration platform manages software across thousands of robots. Physical maintenance coordination remains entirely outside its scope — a gap operators feel daily.", meta: "Infrastructure · Mar 2026" },
-  { tag: "Workforce", headline: "Robot technician salary hits $68K median — demand outpaces supply by 3:1", summary: "The fastest-growing skilled trade in 2026 is robot maintenance. Certified humanoid technicians command premium rates, with demand projected to triple by 2028.", meta: "Jobs · Mar 2026" },
-  { tag: "Boston Dynamics", headline: "Spot fleet operators report increased need for coordinated dispatch", summary: "Enterprise Spot deployments averaging 15 units per site are finding ad-hoc maintenance coordination inefficient. Automated dispatch reduces mean time to repair by 38%.", meta: "Enterprise · Mar 2026" }
-];
-
-function renderNewsCard(story) {
-  return `<a class="news-card reveal" href="${story.link || '#intelligence'}" ${story.link ? 'target="_blank" rel="noopener"' : 'onclick="return false"'}>
-    <span class="news-tag">${story.tag}</span>
-    <div class="news-headline">${story.headline}</div>
-    <div class="news-summary">${story.summary}</div>
-    <div class="news-meta">${story.meta}</div>
-  </a>`;
-}
-
-function loadNews() {
-  const grid = document.getElementById('news-grid');
-  grid.innerHTML = '<div class="news-loading" style="grid-column:1/-1;text-align:center;padding:60px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase;"><div style="display:inline-block;width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--fire);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px;"></div><div>Loading intelligence feed...</div></div>';
-  setTimeout(() => {
-    const shuffled = [...NEWS_STORIES].sort(() => Math.random() - 0.5).slice(0, 6);
-    grid.innerHTML = shuffled.map(renderNewsCard).join('');
-  }, 800);
-}
-
-document.addEventListener('DOMContentLoaded', () => { loadNews(); });
-</script>
 
 <section class="lead-sec">
   <div class="reveal">
@@ -1089,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => { loadNews(); });
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#acquire">Acquire</a></li>
         <li><a href="#spotlight">Asimov</a></li>
-        <li><a href="#intelligence">Intel Feed</a></li>
+        
       </ul>
     </div>
     <div>
@@ -1302,17 +1261,20 @@ const SIGNAL_TOPICS = [
 ];
 
 const SEED_ARTICLES = [
-  { tag: "Humanoids", title: "Asimov launches $15,000 DIY humanoid kit — open-source, 25 DOF, ships in months", desc: "Menlo Research opens presale for the Here Be Dragons edition, the most affordable path to a working bipedal humanoid built from off-the-shelf parts.", source: "Humanoids Daily", time: "2 days ago", url: "https://asimov.inc/diy-kit" },
-  { tag: "AI + Robots", title: "NVIDIA GTC 2026: Fleet Command expands edge AI management to humanoid platforms", desc: "NVIDIA's Fleet Command now supports container orchestration for robot operating systems, managing AI software across thousands of distributed edge deployments.", source: "NVIDIA Newsroom", time: "3 days ago", url: "https://www.nvidia.com/en-us/data-center/products/fleet-command/" },
-  { tag: "Maintenance", title: "65% of maintenance teams plan to use AI by end of 2026 as robot fleets scale", desc: "New data shows predictive maintenance systems reduce unplanned downtime by 25-40% and extend robot lifespan by 15-20% compared to reactive repair models.", source: "Fleet Management Weekly", time: "5 days ago", url: "#signal" },
-  { tag: "Market", title: "Humanoid robot costs falling fast — sub-$20K models arrive from multiple vendors", desc: "Tesla Optimus, 1X Neo, and new open-source platforms are driving entry prices toward the $15,000-$20,000 range, opening the market beyond enterprise buyers.", source: "Robotics 24/7", time: "1 week ago", url: "#signal" },
-  { tag: "Drones", title: "DJI Agras T50 dominates precision agriculture — 40kg payload, AI route planning", desc: "Agricultural drone deployments surge as operators report 40% reduction in inspection time and near-elimination of missed spray coverage with AI-guided systems.", source: "AgTech Insider", time: "1 week ago", url: "#signal" },
-  { tag: "Industry", title: "The robot technician shortage is real — and it's creating a new skilled trade", desc: "As autonomous fleets scale faster than trained maintenance staff, companies are reporting 2-month waits for certified robotics technicians in major metro areas.", source: "Bloomberg Technology", time: "2 weeks ago", url: "#signal" }
+  { tag: "🔥 IPO", title: "Unitree files $610M IPO — 5,500 humanoids delivered, 60%+ gross margins", desc: "First humanoid robotics IPO sets the public market benchmark. ~1.7B RMB revenue, the only company at scale with profitability.", source: "Humanoids Daily", time: "Today", url: "https://unitree.com" },
+  { tag: "Open Source", title: "Asimov launches $15,000 DIY humanoid kit — 'Here Be Dragons' edition", desc: "Menlo Research opens presale for the most affordable bipedal humanoid kit built entirely from off-the-shelf parts. TechMedix compatible.", source: "Humanoids Daily", time: "2 weeks ago", url: "https://asimov.inc/diy-kit" },
+  { tag: "Defense", title: "Foundation Phantom MK-1 deployed to Ukraine — first humanoid battlefield evaluation", desc: "Two units entered active frontline evaluation in February 2026. Industrial pilots simultaneously underway in factories worldwide.", source: "Interesting Engineering", time: "5 days ago", url: "https://foundation.bot" },
+  { tag: "Maintenance", title: "65% of maintenance teams plan to use AI by end of 2026 as robot fleets scale", desc: "Predictive systems reduce unplanned downtime by 25-40% and extend robot lifespan by 15-20% vs reactive repair models.", source: "Fleet Management Weekly", time: "1 week ago", url: "#signal" },
+  { tag: "Workforce", title: "Robot technician salary hits $68K median — demand outpaces supply 3:1", desc: "The fastest-growing skilled trade in 2026. Certified humanoid technicians command premium rates with demand projected to triple by 2028.", source: "Bloomberg Technology", time: "1 week ago", url: "#signal" },
+  { tag: "Market", title: "Robot maintenance market projected to hit $10.2B by 2033", desc: "Growing autonomous fleet deployments create a parallel explosion in maintenance demand. Technician shortage is the #1 operational risk.", source: "Robotics 24/7", time: "2 weeks ago", url: "#signal" }
 ];
 
 async function loadSignalFeed() {
   const grid = document.getElementById('signal-grid');
   if (!grid) return;
+
+  // Show seed data immediately — never blank
+  renderFeed(SEED_ARTICLES);
 
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
@@ -1341,9 +1303,9 @@ Output ONLY the JSON array. No markdown, no backticks, no explanation.`
     const data = await response.json();
     const text = data.content?.[0]?.text || '';
     const articles = JSON.parse(text);
-    renderFeed(articles);
+    if (articles && articles.length > 0) renderFeed(articles);
   } catch(e) {
-    renderFeed(SEED_ARTICLES);
+    // Seed data already showing
   }
 }
 
@@ -1376,8 +1338,16 @@ function handleSignal() {
   document.getElementById('signal-ok').style.display = 'block';
 }
 
-// Load feed on page load
-window.addEventListener('load', () => setTimeout(loadSignalFeed, 800));
+// Load signal feed immediately and on window load as fallback
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadSignalFeed);
+} else {
+  loadSignalFeed();
+}
+window.addEventListener('load', () => {
+  const grid = document.getElementById('signal-grid');
+  if (grid && grid.querySelector('.signal-loading')) loadSignalFeed();
+});
 </script>
 </body>
 </html>
