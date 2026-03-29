@@ -13,7 +13,8 @@
 <script defer data-domain="blackcatrobotics.com" src="https://plausible.io/js/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Syne+Mono&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=tanker@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ─── DESIGN SYSTEM ─── */
 :root {
@@ -35,9 +36,9 @@
   --nav-h:   68px;
   --shadow:  0 2px 16px rgba(10,10,15,0.07);
   --shadow-xl:0 20px 60px rgba(10,10,15,0.15);
-  --serif:   'Instrument Serif', Georgia, serif;
-  --display: 'Syne', sans-serif;
-  --mono:    'Syne Mono', monospace;
+  --serif:   'Tanker', sans-serif;
+  --display: 'Satoshi', 'Helvetica Neue', sans-serif;
+  --mono:    'Chakra Petch', monospace;
 }
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -450,6 +451,89 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
 .reveal.in { opacity: 1; transform: none; }
 .d1{transition-delay:0.07s;}.d2{transition-delay:0.15s;}.d3{transition-delay:0.23s;}.d4{transition-delay:0.31s;}
+
+/* ── DIVISIONS DROPDOWN ── */
+.nav-dropdown { position: relative; }
+.nav-dropdown-toggle { cursor: pointer; }
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 8px;
+  min-width: 220px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  list-style: none;
+  z-index: 999;
+}
+.nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-left: 1px solid rgba(0,0,0,0.08);
+  border-top: 1px solid rgba(0,0,0,0.08);
+  transform: translateX(-50%) rotate(45deg);
+}
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown-menu li a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  transition: background 0.15s;
+  color: #1c1a17;
+  font-size: 13px;
+}
+.nav-dropdown-menu li a:hover { background: #f7f4ef; }
+.dropdown-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #1c1a17;
+}
+.dropdown-desc {
+  font-size: 12px;
+  color: #8c8880;
+  font-weight: 400;
+}
+
+/* PRIVACY-FIRST SECTION */
+.privacy-sec { background: var(--paper-2); padding: 96px 80px; border-top: 1px solid var(--border); }
+.privacy-inner { max-width: 1100px; margin: 0 auto; }
+.privacy-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 48px; }
+.privacy-title-block { max-width: 400px; }
+.privacy-intro { font-size: 15px; line-height: 1.8; color: var(--ink-2); max-width: 400px; }
+.privacy-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+.privacy-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 28px 28px 24px; transition: border-color 0.2s, box-shadow 0.2s; }
+.privacy-card:hover { border-color: rgba(29,185,84,0.25); box-shadow: 0 4px 20px rgba(29,185,84,0.07); }
+.privacy-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.privacy-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.privacy-card-title { font-family: var(--display); font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+.privacy-card-desc { font-size: 12px; line-height: 1.7; color: var(--ink-2); padding-left: 17px; }
+.privacy-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(29,185,84,0.08); border: 1px solid rgba(29,185,84,0.18); border-radius: 999px; padding: 5px 14px 5px 10px; margin-bottom: 20px; }
+.privacy-badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+.privacy-badge-txt { font-family: var(--mono); font-size: 9px; color: #15803d; letter-spacing: 0.10em; text-transform: uppercase; }
+@media(max-width:900px) { .privacy-sec { padding: 64px 24px; } .privacy-header { flex-direction: column; } .privacy-grid { grid-template-columns: 1fr; } }
+.unitree-banner { background: var(--ink); border-radius: var(--r-lg); padding: 32px 40px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 24px; }
+.unitree-banner-top { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+.unitree-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); margin-bottom: 10px; }
+.unitree-headline { font-family: var(--serif); font-size: clamp(20px, 2.2vw, 28px); color: #fff; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 10px; }
+.unitree-desc { font-family: var(--display); font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.42); }
+.unitree-stats { display: flex; gap: 10px; }
+.unitree-stat { border: 1px solid rgba(255,255,255,0.10); border-radius: var(--r); padding: 12px 20px; text-align: center; min-width: 88px; }
+.unitree-stat-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 5px; }
+.unitree-stat-value { font-family: var(--mono); font-size: 17px; font-weight: 700; color: #fff; line-height: 1; }
+.unitree-banner-btns { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
+@media(max-width:768px) { .unitree-banner { padding: 24px 20px; } .unitree-banner-top { grid-template-columns: 1fr; gap: 20px; } .unitree-stats { flex-wrap: wrap; } }
 </style>
 </head>
 <body>
@@ -458,11 +542,32 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <nav id="nav">
   <a href="#" class="nav-logo">BlackCat<span>.</span></a>
   <ul class="nav-links" id="nav-links">
-    <li><a href="#agents">AI Agents</a></li>
+    <li><a href="#agents">Autonomous Systems</a></li>
     <li><a href="#techmedix">TechMedix</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#acquire">Acquire</a></li>
     <li><a href="#signal">Signal</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="nav-dropdown-toggle">Divisions &#9662;</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="https://habitat.blackcatrobotics.com" target="_blank" rel="noopener">
+          <span class="dropdown-name">HABITAT</span>
+          <span class="dropdown-desc">AI-driven home construction</span>
+        </a></li>
+        <li><a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener">
+          <span class="dropdown-name">TechMedix</span>
+          <span class="dropdown-desc">Robot fleet maintenance</span>
+        </a></li>
+        <li><a href="/blackcat-os.html" rel="noopener">
+          <span class="dropdown-name">BlackCat OS</span>
+          <span class="dropdown-desc">AI orchestration — investor overview</span>
+        </a></li>
+        <li><a href="#system" rel="noopener">
+          <span class="dropdown-name">BlackCat Grid</span>
+          <span class="dropdown-desc">EV + energy infrastructure (2027)</span>
+        </a></li>
+      </ul>
+    </li>
     <li><a href="#" onclick="openModal('about-modal');return false;">About</a></li>
     <li><a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="nav-cta">Start TechMedix</a></li>
   </ul>
@@ -476,7 +581,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   <div class="ticker-label">LIVE</div>
   <div class="ticker-track">
     <div class="ticker-inner">
-      <span>🔥 Unitree files $610M IPO — 5,500+ humanoids deployed, 60%+ gross margins</span>
+      <span>Unitree files $610M IPO — 5,500+ humanoids deployed, 60%+ gross margins</span>
       <span>•</span>
       <span>Foundation Phantom MK-1 deployed to Ukraine frontlines for battlefield evaluation</span>
       <span>•</span>
@@ -492,7 +597,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <span>•</span>
     </div>
     <div class="ticker-inner" aria-hidden="true">
-      <span>🔥 Unitree files $610M IPO — 5,500+ humanoids deployed, 60%+ gross margins</span>
+      <span>Unitree files $610M IPO — 5,500+ humanoids deployed, 60%+ gross margins</span>
       <span>•</span>
       <span>Foundation Phantom MK-1 deployed to Ukraine frontlines for battlefield evaluation</span>
       <span>•</span>
@@ -523,7 +628,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <p class="hero-sub">The world's first global maintenance and intelligence platform for autonomous drones, humanoid robots, EV fleets, and aerospace ground support.</p>
     <div class="hero-actions">
       <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Start TechMedix — $299/mo</a>
-      <a href="#agents" class="btn btn-outline-white">Explore AI Agents →</a>
+      <a href="#agents" class="btn btn-outline-white">Explore Autonomous Systems →</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -563,6 +668,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <div class="eyebrow">AI Agent Database</div>
     <h2 class="h2" style="margin-top:14px;max-width:540px;">Every robot.<br>Every platform.</h2>
     <p class="body" style="margin-top:16px;max-width:500px;">Comprehensive maintenance intelligence for the world's leading autonomous systems, continuously monitored by TechMedix AI agents.</p>
+    <p class="body" style="margin-top:10px;max-width:500px;color:var(--fire);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">Unitree Robotics — Official TechMedix Partner</p>
   </div>
   <div class="reveal" style="margin-bottom:28px;">
     <div class="tabs-bar">
@@ -576,11 +682,39 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 
   <!-- HUMANOIDS -->
   <div id="tab-humanoids" class="reveal">
+    <!-- Unitree Partner Spotlight -->
+    <div class="unitree-banner reveal">
+      <div class="unitree-banner-top">
+        <div>
+          <div class="unitree-eyebrow">Unitree Robotics</div>
+          <div class="unitree-headline">The world's most deployed humanoid platform.</div>
+          <div class="unitree-desc">5,500+ units deployed. $610M IPO filed. G1, H1-2, and B2 platforms — all TechMedix certified.</div>
+        </div>
+        <div class="unitree-stats">
+          <div class="unitree-stat">
+            <div class="unitree-stat-label">Units</div>
+            <div class="unitree-stat-value">5,500+</div>
+          </div>
+          <div class="unitree-stat">
+            <div class="unitree-stat-label">IPO Filed</div>
+            <div class="unitree-stat-value">$610M</div>
+          </div>
+          <div class="unitree-stat">
+            <div class="unitree-stat-label">From</div>
+            <div class="unitree-stat-value">$16K</div>
+          </div>
+        </div>
+      </div>
+      <div class="unitree-banner-btns">
+        <a href="#acquire" class="btn btn-fire">View All Unitree Models →</a>
+        <a href="https://unitree.com" target="_blank" rel="noopener" class="btn btn-outline-white">unitree.com ↗</a>
+      </div>
+    </div>
     <div class="cards-track">
-      <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&auto=format&fit=crop&q=80" alt="Atlas Gen 2" loading="lazy"><span class="rcard-badge badge-green">Active Fleet</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://bostondynamics.com" target="_blank" rel="noopener">Boston Dynamics</a></div><div class="rcard-name">Atlas Gen 2</div><div class="rcard-desc">Production humanoid launched CES 2026. 56 DOF, IP67 weatherproofing, autonomous battery hot-swap, Google DeepMind AI. Deployed at BMW and Mercedes factories.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">DOF</div><div class="spec-v">56 joints</div></div><div class="spec"><div class="spec-k">IP Rating</div><div class="spec-v">IP67</div></div><div class="spec"><div class="spec-k">AI</div><div class="spec-v">DeepMind</div></div><div class="spec"><div class="spec-k">Status</div><div class="spec-v">Production</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://bostondynamics.com/atlas" target="_blank" rel="noopener">Learn more →</a></div></div>
+      <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1709220578665-9d8e6a3a7e10?w=400&auto=format&fit=crop&q=80" alt="Unitree G1 humanoid robot" loading="lazy"><span class="rcard-badge badge-fire">Featured Partner</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://unitree.com" target="_blank" rel="noopener">Unitree Robotics</a></div><div class="rcard-name">G1 Humanoid</div><div class="rcard-desc">BlackCat's featured humanoid partner. 43 DOF, 13 force-torque sensors, 360° depth perception. Most accessible commercial humanoid at scale — 5,500+ units deployed globally. $610M IPO filed 2026.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">DOF</div><div class="spec-v">43 joints</div></div><div class="spec"><div class="spec-k">Sensors</div><div class="spec-v">13 F/T</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">360° depth</div></div><div class="spec"><div class="spec-k">Price</div><div class="spec-v">from $16K</div></div></div></div><div class="rcard-foot"><span class="rcard-status">Featured Partner</span><a class="rcard-link" href="https://unitree.com" target="_blank" rel="noopener">unitree.com →</a></div></div>
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=400&auto=format&fit=crop&q=80" alt="Figure 02" loading="lazy"><span class="rcard-badge badge-green">Production</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://figure.ai" target="_blank" rel="noopener">Figure AI</a></div><div class="rcard-name">Figure 02</div><div class="rcard-desc">Manufactured at BotQ — robots building robots at 12,000 units/year. BMW and Mercedes-Benz deployments confirmed. OpenAI neural integration for dexterous manipulation.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Production</div><div class="spec-v">12K/year</div></div><div class="spec"><div class="spec-k">AI</div><div class="spec-v">OpenAI</div></div><div class="spec"><div class="spec-k">Customers</div><div class="spec-v">BMW, MB</div></div><div class="spec"><div class="spec-k">Plant</div><div class="spec-v">BotQ</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://figure.ai" target="_blank" rel="noopener">Learn more →</a></div></div>
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&auto=format&fit=crop&q=80" alt="Tesla Optimus" loading="lazy"><span class="rcard-badge badge-fire">Watch 2026</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://tesla.com/optimus" target="_blank" rel="noopener">Tesla</a></div><div class="rcard-name">Optimus Gen 3</div><div class="rcard-desc">Tesla converting Fremont lines to Optimus production Q2 2026. 50,000-unit target. FSD neural network adapted for bipedal locomotion. Target price under $20K.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Target</div><div class="spec-v">&lt;$20K</div></div><div class="spec"><div class="spec-k">Units</div><div class="spec-v">50K target</div></div><div class="spec"><div class="spec-k">AI</div><div class="spec-v">FSD Neural</div></div><div class="spec"><div class="spec-k">Launch</div><div class="spec-v">Q2 2026</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Ready</span><a class="rcard-link" href="https://tesla.com/optimus" target="_blank" rel="noopener">Learn more →</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1563207153-f403bf289096?w=400&auto=format&fit=crop&q=80" alt="Unitree G1" loading="lazy"><span class="rcard-badge badge-green">Certified</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://unitree.com" target="_blank" rel="noopener">Unitree Robotics</a></div><div class="rcard-name">Unitree G1</div><div class="rcard-desc">Most accessible commercial humanoid. 43 DOF, 13 force-torque sensors, 360° depth perception. Widely deployed for research and industrial piloting. Base price $16K.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">DOF</div><div class="spec-v">43 joints</div></div><div class="spec"><div class="spec-k">Sensors</div><div class="spec-v">13 F/T</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">360° depth</div></div><div class="spec"><div class="spec-k">Price</div><div class="spec-v">from $16K</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://unitree.com" target="_blank" rel="noopener">Learn more →</a></div></div>
+      <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1563207153-f403bf289096?w=400&auto=format&fit=crop&q=80" alt="Unitree G1" loading="lazy"><span class="rcard-badge badge-green">G1 · H1-2 · B2</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://unitree.com" target="_blank" rel="noopener">Unitree Robotics</a></div><div class="rcard-name">Unitree Full Fleet</div><div class="rcard-desc">G1, H1-2, and B2 platforms — all TechMedix certified. From research-grade to industrial full-size humanoid. The most complete commercially available humanoid lineup.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">DOF</div><div class="spec-v">43 joints</div></div><div class="spec"><div class="spec-k">Sensors</div><div class="spec-v">13 F/T</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">360° depth</div></div><div class="spec"><div class="spec-k">Models</div><div class="spec-v">G1 · H1-2 · B2</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://unitree.com" target="_blank" rel="noopener">Learn more →</a></div></div>
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&auto=format&fit=crop&q=80" alt="Phantom MK-1" loading="lazy"><span class="rcard-badge badge-indigo">Defense</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://foundation.bot" target="_blank" rel="noopener">Foundation</a></div><div class="rcard-name">Phantom MK-1</div><div class="rcard-desc">Two units deployed to Ukraine for battlefield evaluation. Pilots underway in factories and shipyards. Cycloidal actuators, camera-first LLM vision stack. MK-2 in development 2026.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Height</div><div class="spec-v">175 cm</div></div><div class="spec"><div class="spec-k">Actuators</div><div class="spec-v">~20 cycloidal</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">Camera-first</div></div><div class="spec"><div class="spec-k">MK-2</div><div class="spec-v">2026</div></div></div></div><div class="rcard-foot"><span class="rcard-status">Defense Grade</span><a class="rcard-link" href="https://foundation.bot" target="_blank" rel="noopener">Learn more →</a></div></div>
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1601370552761-24b6b2a98c55?w=400&auto=format&fit=crop&q=80" alt="Digit V5" loading="lazy"><span class="rcard-badge badge-gold">Amazon</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://agilityrobotics.com" target="_blank" rel="noopener">Agility Robotics</a></div><div class="rcard-name">Digit V5</div><div class="rcard-desc">500+ units at Amazon fulfillment centers and GXO Logistics. Bipedal design built for existing human environments — no infrastructure changes required.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Deployed</div><div class="spec-v">500+ units</div></div><div class="spec"><div class="spec-k">Partner</div><div class="spec-v">Amazon</div></div><div class="spec"><div class="spec-k">Payload</div><div class="spec-v">16 kg</div></div><div class="spec"><div class="spec-k">Infra</div><div class="spec-v">No changes</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://agilityrobotics.com" target="_blank" rel="noopener">Learn more →</a></div></div>
     </div>
@@ -625,7 +759,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <!-- PHOTO STRIP -->
 <div class="strip">
   <div class="strip-cell"><img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600&auto=format&fit=crop&q=85" alt="Drone fleet" loading="lazy"><div class="strip-glass"><div class="strip-name">Drone Fleet</div><div class="strip-sub">VTOL · Delivery · Inspection</div></div></div>
-  <div class="strip-cell"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&auto=format&fit=crop&q=85" alt="Humanoids" loading="lazy"><div class="strip-glass"><div class="strip-name">Humanoids</div><div class="strip-sub">Atlas · Figure · Optimus</div></div></div>
+  <div class="strip-cell"><img src="https://images.unsplash.com/photo-1709220578665-9d8e6a3a7e10?w=900&auto=format&fit=crop&q=85" alt="Unitree G1 humanoid robot" loading="lazy"><div class="strip-glass"><div class="strip-name">Humanoids</div><div class="strip-sub">Atlas · Figure · Optimus</div></div></div>
   <div class="strip-cell"><img src="https://images.unsplash.com/photo-1541185934-01b600ea069c?w=600&auto=format&fit=crop&q=85" alt="Aerospace ground support" loading="lazy"><div class="strip-glass"><div class="strip-name">Aerospace</div><div class="strip-sub">SpaceX · Ground Support</div></div></div>
   <div class="strip-cell"><img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=600&auto=format&fit=crop&q=85" alt="Industrial" loading="lazy"><div class="strip-glass"><div class="strip-name">Industrial AMRs</div><div class="strip-sub">Inspection · Logistics · Mfg</div></div></div>
 </div>
@@ -941,6 +1075,53 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 </section>
 
 
+<!-- SYSTEM OVERVIEW -->
+<section style="background:var(--paper-2);padding:96px 80px;border-top:1px solid var(--border);" id="system">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="reveal" style="margin-bottom:64px;">
+      <div class="eyebrow">BlackCat Robotics</div>
+      <h2 class="h2" style="margin-top:14px;max-width:640px;">One company.<br>Three operating systems.</h2>
+      <p class="body" style="margin-top:16px;max-width:560px;">BlackCat Robotics builds the operating infrastructure for the autonomous economy — from robot maintenance to autonomous home construction to energy grid management.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px;" class="reveal">
+      <!-- TechMedix -->
+      <div style="background:var(--ink);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:32px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--fire);margin-bottom:14px;">Platform</div>
+        <div style="font-family:var(--display);font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;">TechMedix</div>
+        <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.45);margin-bottom:20px;">System operating and maintenance software for autonomous fleets. Predictive diagnostics, technician dispatch, work order management. Every robot is a node.</p>
+        <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.22);letter-spacing:0.06em;text-transform:uppercase;">Node — Event — Maintenance — Work Order — Resolution</div>
+      </div>
+      <!-- HABITAT -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:20px;padding:32px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--fire);margin-bottom:14px;">Platform</div>
+        <div style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px;">HABITAT</div>
+        <p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:20px;">Home as a Service. AI-driven autonomous construction from blueprint to move-in. Powered by Construct.Bot fleets. Residential, off-grid, multi-unit, and commercial.</p>
+        <a href="https://blackcatrobotics.com/habitat" style="font-family:var(--mono);font-size:9px;color:var(--fire);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">View HABITAT Platform</a>
+      </div>
+      <!-- BlackCat Grid -->
+      <div style="background:var(--paper);border:1px solid var(--border);border-radius:20px;padding:32px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:8px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);background:var(--paper-2);border:1px solid var(--border);border-radius:99px;padding:3px 10px;">Coming 2027</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;">Platform</div>
+        <div style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px;">BlackCat Grid</div>
+        <p style="font-size:13px;line-height:1.7;color:var(--ink-2);margin-bottom:20px;">EV fleet management and distributed energy grid integration. Node-based billing, charge scheduling, and energy trading for autonomous vehicle infrastructure.</p>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink-3);letter-spacing:0.06em;text-transform:uppercase;">EV + Grid + Energy Node Management</div>
+      </div>
+    </div>
+
+    <!-- LinkedIn Badge -->
+    <div style="display:flex;align-items:center;gap:48px;flex-wrap:wrap;padding-top:48px;border-top:1px solid var(--border);" class="reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:12px;">Connect</div>
+        <p style="font-size:14px;color:var(--ink-2);max-width:320px;line-height:1.65;">Follow BlackCat Robotics for updates on the autonomous economy, TechMedix releases, and HABITAT launches.</p>
+      </div>
+      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="black-cat-4302a13ba" data-version="v1">
+        <a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/black-cat-4302a13ba?trk=profile-badge">Black Cat</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- LEAD MAGNET -->
 <!-- ── SIGNAL FEED ──────────────────────────────────────────── -->
 <section class="sec signal-sec" id="signal">
@@ -950,11 +1131,42 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <p class="sec-sub">AI-curated news, breakthroughs, and market moves from across the autonomous systems economy. Updated daily.</p>
   </div>
   <div class="signal-grid" id="signal-grid">
-    <div class="signal-loading">
-      <div class="signal-pulse"></div>
-      <div class="signal-pulse"></div>
-      <div class="signal-pulse"></div>
-    </div>
+    <a class="signal-card reveal" href="#signal" rel="noopener">
+      <div class="signal-card-tag">Robotics</div>
+      <div class="signal-card-title">Boston Dynamics Atlas Gen 3 enters automotive pilot program</div>
+      <div class="signal-card-desc">General Motors partners with Boston Dynamics to deploy 40 Atlas units across three assembly plants. Early telemetry shows 94% uptime in the first operational month.</div>
+      <div class="signal-card-foot"><span>IEEE Spectrum</span><span>Mar 19, 2026</span></div>
+    </a>
+    <a class="signal-card reveal" href="#signal" rel="noopener">
+      <div class="signal-card-tag">Robotics</div>
+      <div class="signal-card-title">Figure AI closes $300M Series C to scale humanoid production</div>
+      <div class="signal-card-desc">Figure AI will use new funding to expand production capacity to 10,000 units annually by Q4 2026. Manufacturing automation and workforce displacement studies included in prospectus.</div>
+      <div class="signal-card-foot"><span>TechCrunch</span><span>Mar 18, 2026</span></div>
+    </a>
+    <a class="signal-card reveal" href="#signal" rel="noopener">
+      <div class="signal-card-tag">EV / Energy</div>
+      <div class="signal-card-title">Tesla Megapack deployment hits 40 GWh globally</div>
+      <div class="signal-card-desc">Cumulative Megapack installations cross 40 GWh milestone. Grid-scale storage economics continue improving; average levelized cost of storage now below $80/MWh in utility deployments.</div>
+      <div class="signal-card-foot"><span>Electrek</span><span>Mar 18, 2026</span></div>
+    </a>
+    <a class="signal-card reveal" href="#signal" rel="noopener">
+      <div class="signal-card-tag">AI</div>
+      <div class="signal-card-title">Predictive maintenance AI cuts unplanned downtime by 38% in manufacturing study</div>
+      <div class="signal-card-desc">Cross-industry study of 214 facilities finds AI-driven predictive maintenance reduces unplanned downtime by 38% and maintenance labor costs by 22% over a 12-month window.</div>
+      <div class="signal-card-foot"><span>MIT Technology Review</span><span>Mar 16, 2026</span></div>
+    </a>
+    <a class="signal-card reveal" href="#signal" rel="noopener">
+      <div class="signal-card-tag">Robotics</div>
+      <div class="signal-card-title">DJI Agras T60 certified for autonomous multi-field operation in 14 US states</div>
+      <div class="signal-card-desc">FAA Part 137 certification expanded for the DJI Agras T60. Operators in approved states may now run fully autonomous spray missions without a visual observer on flights under 400 ft AGL.</div>
+      <div class="signal-card-foot"><span>Reuters</span><span>Mar 15, 2026</span></div>
+    </a>
+    <a class="signal-card reveal" href="#signal" rel="noopener">
+      <div class="signal-card-tag">EV / Energy</div>
+      <div class="signal-card-title">Bidirectional EV charging deployments grow 3× as utilities expand V2G programs</div>
+      <div class="signal-card-desc">Vehicle-to-grid enrollment in utility programs reaches 180,000 vehicles across 22 states. Average grid revenue per enrolled EV: $420/year. Fleet operators see highest yield per asset.</div>
+      <div class="signal-card-foot"><span>GreenBiz</span><span>Mar 13, 2026</span></div>
+    </a>
   </div>
   <div class="signal-sub-bar reveal">
     <div class="signal-sub-copy">
@@ -1015,12 +1227,59 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 </section>
 
 
+<!-- PRIVACY-FIRST INFRASTRUCTURE -->
+<section class="privacy-sec">
+  <div class="privacy-inner">
+    <div class="privacy-header reveal">
+      <div class="privacy-title-block">
+        <div class="privacy-badge">
+          <span class="privacy-badge-dot"></span>
+          <span class="privacy-badge-txt">Privacy-First Infrastructure</span>
+        </div>
+        <h2 class="h2" style="font-size:clamp(28px,3.5vw,44px);">Built on trust,<br>not surveillance</h2>
+      </div>
+      <p class="privacy-intro reveal d1">TechMedix is designed around data sovereignty and operator control. No background data collection, no opaque telemetry flows, no always-on streaming architecture.</p>
+    </div>
+    <div class="privacy-grid reveal d2">
+      <div class="privacy-card">
+        <div class="privacy-card-head">
+          <span class="privacy-dot"></span>
+          <span class="privacy-card-title">No always-on surveillance architecture</span>
+        </div>
+        <p class="privacy-card-desc">The platform activates data collection on explicit operator instruction. Idle nodes do not stream telemetry continuously or retain raw sensor data without authorization.</p>
+      </div>
+      <div class="privacy-card">
+        <div class="privacy-card-head">
+          <span class="privacy-dot"></span>
+          <span class="privacy-card-title">User-owned data and system control</span>
+        </div>
+        <p class="privacy-card-desc">Your fleet data remains under your organization's control at all times. Exports, deletions, and access revocations are always available — no vendor lock-in.</p>
+      </div>
+      <div class="privacy-card">
+        <div class="privacy-card-head">
+          <span class="privacy-dot"></span>
+          <span class="privacy-card-title">Local-first processing where possible</span>
+        </div>
+        <p class="privacy-card-desc">Diagnostic inference and threshold evaluation run at the node level when hardware supports it, minimizing cloud exposure and reducing latency in critical decisions.</p>
+      </div>
+      <div class="privacy-card">
+        <div class="privacy-card-head">
+          <span class="privacy-dot"></span>
+          <span class="privacy-card-title">Transparent system logs and auditability</span>
+        </div>
+        <p class="privacy-card-desc">Every platform action — alerts, dispatches, status changes — is recorded in an append-only audit log visible to account admins. Full traceability, no hidden operations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="lead-sec">
   <div class="reveal">
     <div class="eyebrow" style="color:rgba(255,255,255,0.28);justify-content:center;margin-bottom:20px;">Free Resource</div>
     <h2 class="h2 h2-white">Get the 2026 Robot Fleet<br>Maintenance Checklist</h2>
     <p class="body body-white" style="margin:16px auto 0;max-width:440px;">47 critical inspection points across humanoids, drones, and AMRs. Used by fleet operators managing 100+ autonomous units. Free PDF, instant delivery.</p>
     <div class="lead-form">
+      <input type="text" id="lead-name" class="lead-input" placeholder="Your name" style="margin-bottom:10px;">
       <input type="email" id="lead-email" class="lead-input" placeholder="your@company.com">
       <button id="lead-btn" class="lead-submit" onclick="handleLead()">Get Free Checklist</button>
     </div>
@@ -1036,7 +1295,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <div class="foot-brand">BlackCat<span>.</span></div>
       <p class="foot-tagline">Global maintenance intelligence for autonomous systems. TechMedix AI diagnostics and hardware sourcing. Powered by Claude Code.</p>
       <div class="foot-contact">
-        <a href="mailto:blackcat@blackcatrobotics.com">blackcat@blackcatrobotics.com</a>
+        <a href="/cdn-cgi/l/email-protection#eb89878a8880888a9fab89878a8880888a9f998489849f828898c5888486"><span class="__cf_email__" data-cfemail="ff9d939e9c949c9e8bbf9d939e9c949c9e8b8d909d908b969c8cd19c9092">[email&#160;protected]</span></a>
         <span>Cumby, Texas &middot; Global Operations</span>
       </div>
     </div>
@@ -1044,11 +1303,11 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <div class="foot-col-head">Platform</div>
       <ul class="foot-links">
         <li><a href="#techmedix">TechMedix</a></li>
-        <li><a href="#agents">AI Agents</a></li>
+        <li><a href="https://habitat.blackcatrobotics.com" target="_blank" rel="noopener">HABITAT</a></li>
+        <li><a href="#system">BlackCat Grid</a></li>
+        <li><a href="#agents">Autonomous Systems</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#acquire">Acquire</a></li>
-        <li><a href="#spotlight">Asimov</a></li>
-        
       </ul>
     </div>
     <div>
@@ -1088,22 +1347,23 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <!-- MODALS -->
 <div class="overlay" id="tm-modal"><div class="modal modal-dark"><div class="modal-hd"><span class="modal-ey">TechMedix AI</span><button class="modal-x" onclick="closeModal('tm-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="tm-form"><div class="modal-title">Start TechMedix</div><p class="modal-sub">AI diagnostics for your robot fleet. We'll onboard you within 24 hours.</p><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="tm-name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="tm-email" placeholder="jane@company.com"></div><div class="fgroup"><label>Company</label><input type="text" id="tm-co" placeholder="Acme Robotics"></div><div class="fgroup"><label>Plan</label><select id="tm-plan"><option>Operator — $299/robot/mo</option><option>Fleet — $229/robot/mo</option><option>Command — Enterprise</option></select></div><div class="fgroup"><label>Number of robots</label><input type="number" id="tm-robots" placeholder="5" min="1"></div><button class="fsub-btn" onclick="submitTM()">Submit Request</button></div></div><div id="tm-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Request received.</div><p class="form-ok-sub">We'll reach out within 24 hours to begin onboarding.</p></div></div></div></div>
 
-<div class="overlay" id="acquire-modal"><div class="modal modal-dark"><div class="modal-hd"><span class="modal-ey">Acquire</span><button class="modal-x" onclick="closeModal('acquire-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="acq-form"><div class="modal-title">Request a Quote</div><p class="modal-sub">We'll source, configure, and deliver your robot with TechMedix pre-activated.</p><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="aq-name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="aq-email" placeholder="jane@company.com"></div><div class="fgroup"><label>Platform</label><select id="aq-platform"><option value="">Select a platform...</option><option>Unitree G1 Basic — $17,990</option><option>Unitree G1 EDU — $43,500</option><option>Unitree H1-2 — $122,455</option><option>Boston Dynamics Spot</option><option>DJI Agras T50</option><option>Other / Custom</option></select></div><div class="fgroup"><label>Message (optional)</label><textarea id="aq-msg" rows="3" placeholder="Quantity, timeline, deployment context..."></textarea></div><button class="fsub-btn" onclick="submitAcq()">Submit Quote Request</button></div></div><div id="acq-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Quote request sent.</div><p class="form-ok-sub">We'll prepare your quote and reach out within 24 hours.</p></div></div></div></div>
+<div class="overlay" id="acquire-modal"><div class="modal modal-dark"><div class="modal-hd"><span class="modal-ey">Acquire</span><button class="modal-x" onclick="closeModal('acquire-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="acq-form"><div class="modal-title">Request a Quote</div><p class="modal-sub">We'll source, configure, and deliver your robot with TechMedix pre-activated.</p><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="aq-name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="aq-email" placeholder="jane@company.com"></div><div class="fgroup"><label>Company / Organization</label><input type="text" id="aq-company" placeholder="Acme Robotics"></div><div class="fgroup"><label>Platform</label><select id="aq-platform"><option value="">Select a platform...</option><option>Unitree G1 Basic — $17,990</option><option>Unitree G1 EDU — $43,500</option><option>Unitree H1-2 — $122,455</option><option>Boston Dynamics Spot</option><option>DJI Agras T50</option><option>Other / Custom</option></select></div><div class="fgroup"><label>Message (optional)</label><textarea id="aq-msg" rows="3" placeholder="Quantity, timeline, deployment context..."></textarea></div><button class="fsub-btn" onclick="submitAcq()">Submit Quote Request</button></div></div><div id="acq-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Quote request sent.</div><p class="form-ok-sub">We'll prepare your quote and reach out within 24 hours.</p></div></div></div></div>
 
-<div class="overlay" id="contact-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Contact</span><button class="modal-x" onclick="closeModal('contact-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="contact-form"><div class="modal-title">Get in touch.</div><div class="fstack"><div class="fgroup"><label>Name</label><input type="text" id="c-name" placeholder="Your name"></div><div class="fgroup"><label>Email</label><input type="email" id="c-email" placeholder="your@email.com"></div><div class="fgroup"><label>Message</label><textarea id="c-msg" rows="4" placeholder="How can we help?"></textarea></div><button class="fsub-btn" onclick="submitContact()">Send Message</button></div></div><div id="contact-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Message sent.</div><p class="form-ok-sub">We'll reply within one business day.</p></div></div></div></div>
+<div class="overlay" id="contact-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Contact</span><button class="modal-x" onclick="closeModal('contact-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="contact-form"><div class="modal-title">Get in touch.</div><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="c-name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="c-email" placeholder="jane@company.com"></div><div class="fgroup"><label>Company / Organization</label><input type="text" id="c-company" placeholder="Acme Robotics"></div><div class="fgroup"><label>I'm interested in...</label><select id="c-interest"><option value="">Select one...</option><option value="habitat">HABITAT Homes</option><option value="techmedix">TechMedix Platform</option><option value="partnership">Partnership Opportunity</option><option value="investment">Investment</option></select></div><div class="fgroup"><label>Message</label><textarea id="c-msg" rows="3" placeholder="Tell us more about your interest..."></textarea></div><button class="fsub-btn" onclick="submitContact()">Send Message</button></div></div><div id="contact-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Message sent.</div><p class="form-ok-sub">We'll reply within one business day.</p></div></div></div></div>
 
 <div class="overlay" id="about-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">About</span><button class="modal-x" onclick="closeModal('about-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">BlackCat Robotics</div><div class="modal-prose"><p>BlackCat Robotics is a global AI maintenance intelligence company built for the autonomous systems economy. We exist because the robot economy is arriving faster than the infrastructure to support it.</p><h3>Our Mission</h3><p>To keep every autonomous system in the world running — before it breaks. TechMedix AI monitors your fleet 24/7, predicts failures 48 hours in advance, and dispatches certified technicians automatically.</p><h3>Technology</h3><p>TechMedix is powered by Claude Code and Hermes AI. Our agents write their own diagnostic and repair protocols, adapting in real-time to each robot platform we support.</p><h3>Coverage</h3><p>14+ robot platforms across humanoids, drones, delivery robots, industrial AMRs, and aerospace ground support. Global technician network. 99.2% diagnostic uptime SLA.</p></div></div></div></div>
 
-<div class="overlay" id="techs-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Technicians</span><button class="modal-x" onclick="closeModal('techs-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Join the Network</div><div class="modal-prose"><p>BlackCat Robotics maintains a global network of certified robotics technicians. If you're a robotics engineer or mechatronics specialist, we want to work with you.</p><h3>What We Offer</h3><ul><li>On-demand work dispatched via AI — you choose when to accept jobs</li><li>Competitive per-job compensation</li><li>Priority access to service calls in your region</li><li>Certification programs for new robot platforms</li></ul><h3>Requirements</h3><ul><li>Proven experience with autonomous robotic systems</li><li>Ability to respond within 2 hours in your coverage area</li></ul><p><strong>Email:</strong> blackcat@blackcatrobotics.com — Subject: Technician Application</p></div></div></div></div>
+<div class="overlay" id="techs-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Technicians</span><button class="modal-x" onclick="closeModal('techs-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Join the Network</div><div class="modal-prose"><p>BlackCat Robotics maintains a global network of certified robotics technicians. If you're a robotics engineer or mechatronics specialist, we want to work with you.</p><h3>What We Offer</h3><ul><li>On-demand work dispatched via AI — you choose when to accept jobs</li><li>Competitive per-job compensation</li><li>Priority access to service calls in your region</li><li>Certification programs for new robot platforms</li></ul><h3>Requirements</h3><ul><li>Proven experience with autonomous robotic systems</li><li>Ability to respond within 2 hours in your coverage area</li></ul><p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01636d60626a62607541636d60626a626075736e636e756862722f626e6c">[email&#160;protected]</a> — Subject: Technician Application</p></div></div></div></div>
 
-<div class="overlay" id="privacy-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Legal</span><button class="modal-x" onclick="closeModal('privacy-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Privacy Policy</div><div class="modal-prose"><p><strong>Effective:</strong> January 1, 2026</p><h3>Data We Collect</h3><p>We collect information you provide in forms (name, email, company), robot fleet telemetry data under service agreements, and standard web analytics via Plausible (privacy-first, no cookies).</p><h3>How We Use It</h3><p>Fleet data is used exclusively to provide TechMedix diagnostics. Contact information is used to respond to inquiries and deliver service updates. We do not sell personal data.</p><h3>Contact</h3><p>Privacy inquiries: blackcat@blackcatrobotics.com</p></div></div></div></div>
+<div class="overlay" id="privacy-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Legal</span><button class="modal-x" onclick="closeModal('privacy-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Privacy Policy</div><div class="modal-prose"><p><strong>Effective:</strong> January 1, 2026</p><h3>Data We Collect</h3><p>We collect information you provide in forms (name, email, company), robot fleet telemetry data under service agreements, and standard web analytics via Plausible (privacy-first, no cookies).</p><h3>How We Use It</h3><p>Fleet data is used exclusively to provide TechMedix diagnostics. Contact information is used to respond to inquiries and deliver service updates. We do not sell personal data.</p><h3>Contact</h3><p>Privacy inquiries: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9bf9f7faf8f0f8faefdbf9f7faf8f0f8faefe9f4f9f4eff2f8e8b5f8f4f6">[email&#160;protected]</a></p></div></div></div></div>
 
-<div class="overlay" id="terms-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Legal</span><button class="modal-x" onclick="closeModal('terms-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Terms of Service</div><div class="modal-prose"><p><strong>Effective:</strong> January 1, 2026</p><h3>Service Agreement</h3><p>TechMedix services are provided on a monthly subscription basis. Subscriptions renew automatically and may be cancelled with 30 days written notice.</p><h3>Limitation of Liability</h3><p>BlackCat Robotics provides predictive diagnostics as a tool to assist operators. We are not liable for robot failures or damages arising from reliance on AI-generated diagnostics.</p><h3>Contact</h3><p>Legal inquiries: blackcat@blackcatrobotics.com</p></div></div></div></div>
+<div class="overlay" id="terms-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Legal</span><button class="modal-x" onclick="closeModal('terms-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Terms of Service</div><div class="modal-prose"><p><strong>Effective:</strong> January 1, 2026</p><h3>Service Agreement</h3><p>TechMedix services are provided on a monthly subscription basis. Subscriptions renew automatically and may be cancelled with 30 days written notice.</p><h3>Limitation of Liability</h3><p>BlackCat Robotics provides predictive diagnostics as a tool to assist operators. We are not liable for robot failures or damages arising from reliance on AI-generated diagnostics.</p><h3>Contact</h3><p>Legal inquiries: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="83e1efe2e0e8e0e2f7c3e1efe2e0e8e0e2f7f1ece1ecf7eae0f0ade0ecee">[email&#160;protected]</a></p></div></div></div></div>
 
 <div class="overlay" id="sla-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">TechMedix</span><button class="modal-x" onclick="closeModal('sla-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Service Level Agreement</div><div class="modal-prose"><p><strong>TechMedix Diagnostic Platform SLA — 2026</strong></p><h3>Uptime Guarantee</h3><p>BlackCat Robotics guarantees 99.2% diagnostic platform uptime measured monthly. Downtime credits applied automatically for any breach.</p><h3>Predictive Alert Lead Time</h3><p>TechMedix targets a 48-hour minimum lead time for actionable failure alerts. Reviewed quarterly and reported to all Fleet and Command customers.</p><h3>Technician Dispatch</h3><p>Priority Dispatch customers: guaranteed on-site within 4 hours. Standard accounts: best-effort averaging under 2 hours.</p><h3>Support Response</h3><p>Operator: email, 24h. Fleet: Slack + phone, 4h. Command: dedicated manager, 1h.</p></div></div></div></div>
 
 <!-- JAVASCRIPT -->
-<script>
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Nav scroll
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
@@ -1203,7 +1463,7 @@ function submitTM() {
   const e=document.getElementById('tm-email').value.trim();
   if(!n||!e){alert('Please fill in your name and email.');return;}
   const btn=document.querySelector('#tm-form .fsub-btn');
-  postForm({name:n,email:e,company:document.getElementById('tm-co').value,plan:document.getElementById('tm-plan').value,robots:document.getElementById('tm-robots').value,form:'TechMedix Signup',_subject:'New TechMedix Signup — '+n},btn,'Submit Request','tm-ok','tm-form');
+  postForm({name:n,email:e,company:document.getElementById('tm-co').value,interest_type:'techmedix',plan:document.getElementById('tm-plan').value,robots:document.getElementById('tm-robots').value,source:'blackcat_website',product:'techmedix',_subject:'TechMedix Signup — '+n},btn,'Submit Request','tm-ok','tm-form');
 }
 
 function submitAcq() {
@@ -1212,7 +1472,7 @@ function submitAcq() {
   const p=document.getElementById('aq-platform').value;
   if(!n||!e||!p){alert('Please fill in your name, email, and platform.');return;}
   const btn=document.querySelector('#acq-form .fsub-btn');
-  postForm({name:n,email:e,platform:p,message:document.getElementById('aq-msg').value,form:'Acquire Quote',_subject:'Quote Request — '+p+' — '+n},btn,'Submit Quote Request','acq-ok','acq-form');
+  postForm({name:n,email:e,company:document.getElementById('aq-company').value,interest_type:'acquire',platform:p,message:document.getElementById('aq-msg').value,source:'blackcat_website',product:'acquire',_subject:'Acquire Quote — '+p+' — '+n},btn,'Submit Quote Request','acq-ok','acq-form');
 }
 
 function submitContact() {
@@ -1220,14 +1480,17 @@ function submitContact() {
   const e=document.getElementById('c-email').value.trim();
   if(!n||!e){alert('Please fill in your name and email.');return;}
   const btn=document.querySelector('#contact-form .fsub-btn');
-  postForm({name:n,email:e,message:document.getElementById('c-msg').value,form:'Contact',_subject:'Contact — '+n},btn,'Send Message','contact-ok','contact-form');
+  const interest=document.getElementById('c-interest').value;
+  postForm({name:n,email:e,company:document.getElementById('c-company').value,interest_type:interest||'general',message:document.getElementById('c-msg').value,source:'blackcat_website',product:'core_platform',_subject:'New BlackCat Inquiry — '+n},btn,'Send Message','contact-ok','contact-form');
 }
 
 function handleLead() {
   const e=document.getElementById('lead-email').value.trim();
+  const n=document.getElementById('lead-name').value.trim();
   if(!e||!e.includes('@')){alert('Please enter a valid email.');return;}
   const btn=document.getElementById('lead-btn');
-  postForm({email:e,form:'Lead Magnet',_subject:'Lead Magnet — '+e},btn,'Get Free Checklist','lead-ok',null);
+  postForm({name:n,email:e,interest_type:'lead_magnet',source:'blackcat_website',product:'core_platform',_subject:'Lead Magnet — '+(n||e)},btn,'Get Free Checklist','lead-ok',null);
+  document.getElementById('lead-name').style.display='none';
   document.getElementById('lead-email').style.display='none';
   btn.style.display='none';
 }
@@ -1261,7 +1524,7 @@ const SIGNAL_TOPICS = [
 ];
 
 const SEED_ARTICLES = [
-  { tag: "🔥 IPO", title: "Unitree files $610M IPO — 5,500 humanoids delivered, 60%+ gross margins", desc: "First humanoid robotics IPO sets the public market benchmark. ~1.7B RMB revenue, the only company at scale with profitability.", source: "Humanoids Daily", time: "Today", url: "https://unitree.com" },
+  { tag: "IPO", title: "Unitree files $610M IPO — 5,500 humanoids delivered, 60%+ gross margins", desc: "First humanoid robotics IPO sets the public market benchmark. ~1.7B RMB revenue, the only company at scale with profitability.", source: "Humanoids Daily", time: "Today", url: "https://unitree.com" },
   { tag: "Open Source", title: "Asimov launches $15,000 DIY humanoid kit — 'Here Be Dragons' edition", desc: "Menlo Research opens presale for the most affordable bipedal humanoid kit built entirely from off-the-shelf parts. TechMedix compatible.", source: "Humanoids Daily", time: "2 weeks ago", url: "https://asimov.inc/diy-kit" },
   { tag: "Defense", title: "Foundation Phantom MK-1 deployed to Ukraine — first humanoid battlefield evaluation", desc: "Two units entered active frontline evaluation in February 2026. Industrial pilots simultaneously underway in factories worldwide.", source: "Interesting Engineering", time: "5 days ago", url: "https://foundation.bot" },
   { tag: "Maintenance", title: "65% of maintenance teams plan to use AI by end of 2026 as robot fleets scale", desc: "Predictive systems reduce unplanned downtime by 25-40% and extend robot lifespan by 15-20% vs reactive repair models.", source: "Fleet Management Weekly", time: "1 week ago", url: "#signal" },
@@ -1330,24 +1593,3 @@ function handleSignal() {
   const email = document.getElementById('signal-email').value;
   if (!email || !email.includes('@')) return;
   fetch('https://formspree.io/f/xreyrndq', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, form: 'Signal Newsletter' })
-  });
-  document.getElementById('signal-email').value = '';
-  document.getElementById('signal-ok').style.display = 'block';
-}
-
-// Load signal feed immediately and on window load as fallback
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadSignalFeed);
-} else {
-  loadSignalFeed();
-}
-window.addEventListener('load', () => {
-  const grid = document.getElementById('signal-grid');
-  if (grid && grid.querySelector('.signal-loading')) loadSignalFeed();
-});
-</script>
-</body>
-</html>
