@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackCat HABITAT — Designed by you. Built by tomorrow.</title>
+<meta name="description" content="AI-driven autonomous home construction. From blueprint to build — powered by BlackCat Robotics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=tanker@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#0b0c0e;color:#e8e5df;font-family:'Satoshi','Helvetica Neue',sans-serif;overflow-x:hidden;line-height:1.6;}
+img{display:block;width:100%;height:100%;object-fit:cover;}
+a{text-decoration:none;color:inherit;}
+
+:root{
+  --bg:#0b0c0e;
+  --bg-2:#111316;
+  --bg-3:#161a1f;
+  --surface:#1a1e24;
+  --surface-2:#202530;
+  --cream:#e8e5df;
+  --cream-dim:rgba(232,229,223,0.62);
+  --cream-faint:rgba(232,229,223,0.18);
+  --fire:#e05a1e;
+  --fire-2:#c44d17;
+  --fire-faint:rgba(224,90,30,0.08);
+  --border:rgba(232,229,223,0.08);
+  --border-fire:rgba(224,90,30,0.3);
+  --sh:0 2px 16px rgba(0,0,0,0.32);
+  --sh-lg:0 8px 48px rgba(0,0,0,0.48);
+  --tanker:'Tanker',serif;
+  --chakra:'Chakra Petch','Courier New',monospace;
+  --satoshi:'Satoshi','Helvetica Neue',sans-serif;
+  --r:10px;--r-lg:18px;--r-xl:26px;--pill:999px;
+}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 56px;}
+.sec{padding:100px 0;}
+.eyebrow{font-family:var(--chakra);font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--fire);flex-shrink:0;}
+.t-h2{font-family:var(--tanker);font-size:clamp(36px,3.8vw,58px);font-weight:400;line-height:1.0;letter-spacing:0.01em;color:var(--cream);margin-bottom:14px;}
+.t-h2 em{font-style:italic;color:var(--fire);}
+.t-body{font-family:var(--satoshi);font-size:16px;font-weight:400;line-height:1.75;color:var(--cream-dim);}
+.sec-head{margin-bottom:56px;}
+
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--chakra);font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;border-radius:var(--r);padding:14px 28px;cursor:pointer;transition:all 0.2s;border:none;}
+.btn-fire{background:var(--fire);color:#fff;}
+.btn-fire:hover{background:var(--fire-2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(224,90,30,0.36);}
+.btn-ghost{background:transparent;color:var(--cream);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--fire);color:var(--fire);transform:translateY(-1px);}
+.arr{width:14px;height:14px;flex-shrink:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(11,12,14,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:border-color 0.3s;}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-mark{width:32px;height:32px;background:var(--fire);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--chakra);font-size:9px;font-weight:700;color:#fff;letter-spacing:0.08em;flex-shrink:0;}
+.nav-parent{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,229,223,0.32);display:block;}
+.nav-name{font-family:var(--tanker);font-size:18px;color:var(--cream);line-height:1;letter-spacing:0.02em;}
+.nav-menu{display:flex;align-items:center;gap:32px;list-style:none;}
+.nav-menu a{font-family:var(--chakra);font-size:12px;font-weight:400;letter-spacing:0.08em;color:var(--cream-dim);transition:color 0.2s;}
+.nav-menu a:hover{color:var(--cream);}
+
+/* HERO */
+.hero{min-height:100vh;padding-top:66px;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px 56px;background:var(--bg);}
+.hero-h1{font-family:var(--tanker);font-size:clamp(52px,5.8vw,90px);font-weight:400;line-height:0.98;letter-spacing:0.01em;color:var(--cream);margin-bottom:10px;}
+.hero-h1 em{font-style:italic;color:var(--fire);}
+.hero-sub{font-family:var(--chakra);font-size:clamp(13px,1.3vw,16px);font-weight:300;font-style:italic;color:var(--cream-dim);line-height:1.5;margin-bottom:28px;letter-spacing:0.04em;}
+.hero-p{font-family:var(--satoshi);font-size:16px;font-weight:400;line-height:1.75;color:var(--cream-dim);max-width:440px;margin-bottom:36px;}
+.hero-btns{display:flex;align-items:center;gap:12px;margin-bottom:52px;}
+.hero-stats{display:flex;gap:36px;padding-top:36px;border-top:1px solid var(--border);}
+.stat-num{font-family:var(--tanker);font-size:34px;color:var(--cream);line-height:1;letter-spacing:0.02em;}
+.stat-lbl{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;color:rgba(232,229,223,0.38);margin-top:4px;text-transform:uppercase;}
+.hero-right{position:relative;background:var(--bg-3);overflow:hidden;min-height:600px;}
+.hero-img{position:absolute;inset:0;filter:brightness(0.45) saturate(0.6);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(11,12,14,0.3) 0%,rgba(11,12,14,0.65) 100%);}
+/* Construct.Bot hero HUD overlay */
+.hero-bot-ui{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:28px;}
+.hero-bot-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.hero-bot-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--fire);background:rgba(11,12,14,0.85);border:1px solid var(--border-fire);border-radius:var(--pill);padding:7px 14px;backdrop-filter:blur(10px);}
+.hero-bot-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--fire);animation:pulse 2s infinite;}
+.hero-bot-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;opacity:0.6;}
+.hero-bot-corner{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(232,229,223,0.28);}
+/* Crosshair targeting reticle */
+.hero-reticle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;pointer-events:none;}
+.hero-reticle::before,.hero-reticle::after{content:'';position:absolute;}
+.hero-reticle::before{inset:0;border:1px solid rgba(224,90,30,0.35);border-radius:50%;}
+.hero-reticle::after{top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:var(--fire);opacity:0.7;animation:pulse 1.5s infinite;}
+.hero-reticle-h{position:absolute;top:50%;left:-20px;right:-20px;height:1px;background:linear-gradient(90deg,transparent,rgba(224,90,30,0.4),transparent);transform:translateY(-50%);}
+.hero-reticle-v{position:absolute;left:50%;top:-20px;bottom:-20px;width:1px;background:linear-gradient(0deg,transparent,rgba(224,90,30,0.4),transparent);transform:translateX(-50%);}
+/* HUD data panels */
+.hero-bot-hud-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hero-bot-hud-panel{background:rgba(11,12,14,0.88);border:1px solid var(--border-fire);border-radius:var(--r);padding:12px 14px;backdrop-filter:blur(10px);}
+.hero-bot-hud-panel-label{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,229,223,0.36);margin-bottom:4px;}
+.hero-bot-hud-panel-val{font-family:var(--chakra);font-size:13px;font-weight:700;letter-spacing:0.06em;color:var(--fire);}
+.hero-bot-hud-panel-sub{font-family:var(--chakra);font-size:9px;color:rgba(232,229,223,0.35);margin-top:2px;letter-spacing:0.06em;}
+/* Animated counter */
+@keyframes countup{from{opacity:0.4;}to{opacity:1;}}
+.hero-counter{animation:countup 0.8s ease infinite alternate;}
+/* Side data rail */
+.hero-bot-rail{position:absolute;right:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;align-items:flex-end;}
+.hero-rail-item{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(224,90,30,0.55);display:flex;align-items:center;gap:6px;}
+.hero-rail-bar{height:3px;border-radius:2px;background:var(--fire);opacity:0.5;transition:width 0.3s;}
+.hero-card{position:absolute;bottom:28px;left:28px;background:rgba(26,30,36,0.97);border:1px solid var(--border-fire);border-radius:var(--r-lg);padding:14px 18px;max-width:230px;backdrop-filter:blur(12px);}
+.hero-card-label{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);margin-bottom:4px;}
+.hero-card-text{font-family:var(--satoshi);font-size:12px;font-weight:500;color:var(--cream);line-height:1.45;}
+
+/* MARQUEE */
+.marquee{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;overflow:hidden;white-space:nowrap;}
+.marquee-track{display:inline-flex;animation:ticker 32s linear infinite;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.m-item{display:inline-flex;align-items:center;gap:14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(232,229,223,0.3);padding:0 28px;}
+.m-dot{width:3px;height:3px;border-radius:50%;background:var(--fire);flex-shrink:0;}
+
+/* ========================================
+   CONSTRUCT.BOT SECTION
+   ======================================== */
+.bot-sec{background:var(--bg-3);border-bottom:1px solid var(--border);}
+.bot-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:560px;}
+.bot-visual{position:relative;background:var(--bg-2);overflow:hidden;}
+.bot-visual-img{position:absolute;inset:0;filter:brightness(0.6) saturate(0.75);}
+.bot-visual-overlay{position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,var(--bg-3) 100%),linear-gradient(0deg,rgba(11,12,14,0.6) 0%,transparent 60%);}
+.bot-hud{position:absolute;top:24px;left:24px;display:flex;flex-direction:column;gap:10px;}
+.bot-hud-item{background:rgba(11,12,14,0.88);border:1px solid var(--border-fire);border-radius:var(--r);padding:9px 14px;backdrop-filter:blur(8px);display:flex;align-items:center;gap:10px;}
+.bot-hud-dot{width:7px;height:7px;border-radius:50%;background:var(--fire);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+.bot-hud-label{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--cream-dim);}
+.bot-hud-val{font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;color:var(--fire);margin-left:auto;}
+.bot-content{padding:64px 56px;display:flex;flex-direction:column;justify-content:center;}
+.bot-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--fire);background:var(--fire-faint);border:1px solid var(--border-fire);border-radius:var(--pill);padding:6px 14px;margin-bottom:20px;width:fit-content;}
+.bot-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--fire);animation:pulse 2s infinite;}
+.bot-h2{font-family:var(--tanker);font-size:clamp(38px,4vw,62px);font-weight:400;line-height:0.97;letter-spacing:0.01em;color:var(--cream);margin-bottom:18px;}
+.bot-h2 em{color:var(--fire);font-style:italic;}
+.bot-p{font-family:var(--satoshi);font-size:16px;font-weight:400;line-height:1.75;color:var(--cream-dim);max-width:420px;margin-bottom:32px;}
+.bot-specs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:36px;}
+.bot-spec{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;transition:border-color 0.2s;}
+.bot-spec:hover{border-color:var(--border-fire);}
+.bot-spec-icon{font-family:var(--chakra);font-size:18px;font-weight:700;color:var(--fire);margin-bottom:6px;line-height:1;}
+.bot-spec-label{font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(232,229,223,0.36);margin-bottom:3px;}
+.bot-spec-val{font-family:var(--satoshi);font-size:13px;font-weight:600;color:var(--cream);}
+
+/* ========================================
+   HOW IT WORKS — ANIMATED VERTICAL STEPPER
+   ======================================== */
+.how-sec{background:var(--bg-2);}
+.how-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.how-head-col{position:sticky;top:120px;}
+.stepper{display:flex;flex-direction:column;gap:0;position:relative;}
+.stepper-line{position:absolute;left:21px;top:42px;bottom:42px;width:1px;background:linear-gradient(180deg,var(--fire) 0%,rgba(224,90,30,0.08) 100%);}
+.step-row{display:flex;gap:24px;align-items:flex-start;padding:0 0 0 0;position:relative;}
+.step-row+.step-row{margin-top:0;}
+.step-connector{width:44px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding-top:10px;}
+.step-dot-wrap{position:relative;z-index:1;}
+.step-dot{width:44px;height:44px;border-radius:50%;background:var(--bg-3);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--chakra);font-size:13px;font-weight:700;color:rgba(232,229,223,0.4);transition:all 0.4s;flex-shrink:0;}
+.step-row.is-active .step-dot{background:var(--fire);border-color:var(--fire);color:#fff;box-shadow:0 0 0 6px rgba(224,90,30,0.12),0 0 24px rgba(224,90,30,0.3);}
+.step-row.is-done .step-dot{background:var(--surface-2);border-color:rgba(224,90,30,0.4);color:var(--fire);}
+.step-tick{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;transition:opacity 0.3s;}
+.step-row.is-done .step-tick{opacity:1;}
+.step-row.is-done .step-num-inner{opacity:0;}
+.step-num-inner{transition:opacity 0.3s;}
+/* Vertical segment between dots */
+.step-seg{width:1px;height:48px;margin:4px auto;background:var(--border);transition:background 0.4s;}
+.step-row.is-done~.step-row .step-seg,.step-row.is-active .step-seg{background:linear-gradient(180deg,var(--fire),rgba(224,90,30,0.2));}
+/* Step content panel */
+.step-panel{flex:1;padding:8px 0 52px;}
+.step-panel-inner{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:28px 28px 26px;transition:all 0.4s;opacity:0.45;transform:translateX(8px);}
+.step-row.is-active .step-panel-inner{opacity:1;transform:translateX(0);border-color:var(--border-fire);box-shadow:0 4px 32px rgba(224,90,30,0.08);}
+.step-row.is-done .step-panel-inner{opacity:0.6;transform:translateX(0);}
+.step-panel-tag{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);margin-bottom:8px;}
+.step-panel-title{font-family:var(--tanker);font-size:24px;color:var(--cream);letter-spacing:0.01em;margin-bottom:10px;line-height:1.05;}
+.step-panel-desc{font-family:var(--satoshi);font-size:14px;font-weight:400;line-height:1.72;color:var(--cream-dim);}
+.step-panel-detail{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
+.step-detail-pill{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,229,223,0.45);background:var(--bg-3);border:1px solid var(--border);border-radius:var(--pill);padding:4px 10px;}
+
+/* ========================================
+   WHAT WE BUILD — 3D PRINTED HOME IMAGES
+   ======================================== */
+.types-sec{background:var(--bg);}
+.types-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.type-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;transition:all 0.22s;box-shadow:var(--sh);}
+.type-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg);border-color:var(--border-fire);}
+.type-img{height:200px;overflow:hidden;background:var(--bg-3);position:relative;}
+.type-img img{filter:brightness(0.85) saturate(0.85);}
+.type-img-badge{position:absolute;bottom:12px;right:12px;font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--fire);background:rgba(11,12,14,0.88);border:1px solid var(--border-fire);border-radius:var(--pill);padding:5px 10px;backdrop-filter:blur(6px);}
+.type-body{padding:26px 28px 30px;}
+.type-label{font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--fire);margin-bottom:7px;display:block;}
+.type-title{font-family:var(--tanker);font-size:22px;color:var(--cream);margin-bottom:8px;letter-spacing:0.01em;}
+.type-desc{font-family:var(--satoshi);font-size:14px;font-weight:400;line-height:1.7;color:var(--cream-dim);}
+
+/* ========================================
+   TECHNOLOGY — WITH NVIDIA LOGO + LINKS
+   ======================================== */
+.tech-sec{background:var(--bg-3);}
+.tech-layout{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.tech-visual{border-radius:var(--r-xl);overflow:hidden;position:relative;background:var(--surface);}
+.tech-visual-inner{width:100%;height:460px;display:flex;align-items:center;justify-content:center;position:relative;}
+.tech-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(224,90,30,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(224,90,30,0.05) 1px,transparent 1px);background-size:36px 36px;}
+.tech-visual-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(224,90,30,0.09) 0%,transparent 65%);}
+.tech-diagram{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:0;}
+.tech-node-center{width:88px;height:88px;border-radius:50%;background:var(--bg);border:1.5px solid var(--border-fire);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 30px rgba(224,90,30,0.2);}
+.tech-node-center::before{content:'';position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(224,90,30,0.15);}
+.tech-node-center::after{content:'';position:absolute;inset:-24px;border-radius:50%;border:1px solid rgba(224,90,30,0.07);}
+.tech-node-label{font-family:var(--tanker);font-size:16px;color:var(--fire);letter-spacing:0.05em;}
+.tech-orbit-row{display:flex;gap:16px;margin-top:20px;}
+.tech-orbit-node{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;text-align:center;transition:border-color 0.2s;}
+.tech-orbit-node:hover{border-color:var(--border-fire);}
+.tech-orbit-icon{font-size:16px;margin-bottom:4px;}
+.tech-orbit-lbl{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,229,223,0.45);}
+/* Partner logos strip */
+.tech-partners{display:flex;gap:16px;margin:24px 0 28px;flex-wrap:wrap;align-items:center;}
+.tech-partner{display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:10px 16px;transition:all 0.18s;cursor:pointer;text-decoration:none;}
+.tech-partner:hover{border-color:var(--border-fire);background:var(--fire-faint);}
+.tech-partner-logo{height:18px;width:auto;display:block;filter:brightness(0) invert(1);opacity:0.65;transition:opacity 0.18s;}
+.tech-partner:hover .tech-partner-logo{opacity:1;}
+.tech-partner-name{font-family:var(--chakra);font-size:11px;font-weight:600;letter-spacing:0.08em;color:rgba(232,229,223,0.55);transition:color 0.18s;}
+.tech-partner:hover .tech-partner-name{color:var(--cream);}
+/* Nvidia inline SVG styling */
+.nvidia-svg{height:16px;width:auto;display:block;opacity:0.65;transition:opacity 0.18s;fill:white;}
+.tech-partner:hover .nvidia-svg{opacity:1;}
+.tech-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.tech-tag{font-family:var(--chakra);font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--cream-dim);background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:7px 14px;transition:all 0.18s;cursor:default;}
+.tech-tag:hover{border-color:var(--fire);color:var(--fire);background:var(--fire-faint);}
+.tech-modules{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tech-mod{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 18px;transition:all 0.18s;}
+.tech-mod:hover{background:var(--fire-faint);border-color:var(--border-fire);}
+.tech-mod-label{font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--fire);margin-bottom:5px;}
+.tech-mod-name{font-family:var(--satoshi);font-size:14px;font-weight:700;color:var(--cream);margin-bottom:4px;}
+.tech-mod-desc{font-family:var(--satoshi);font-size:12px;font-weight:400;line-height:1.55;color:rgba(232,229,223,0.42);}
+
+/* MARKETS */
+.markets-sec{background:var(--bg-2);}
+.markets-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.market-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh);transition:all 0.22s;}
+.market-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg);border-color:var(--border-fire);}
+.market-img{height:220px;overflow:hidden;background:var(--bg-3);}
+.market-img img{filter:brightness(0.75) saturate(0.75);}
+.market-body{padding:30px 34px 34px;}
+.market-badge{display:inline-block;font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--fire);background:var(--fire-faint);border:1px solid var(--border-fire);border-radius:var(--pill);padding:5px 12px;margin-bottom:12px;}
+.market-title{font-family:var(--tanker);font-size:24px;color:var(--cream);margin-bottom:10px;letter-spacing:0.01em;line-height:1.1;}
+.market-desc{font-family:var(--satoshi);font-size:14px;font-weight:400;line-height:1.78;color:var(--cream-dim);}
+
+/* REVENUE */
+.rev-sec{background:var(--bg);}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-top:56px;}
+.rev-cell{background:var(--surface);padding:24px 22px;transition:background 0.18s;}
+.rev-cell:hover{background:var(--surface-2);}
+.rev-tag{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--fire);margin-bottom:5px;}
+.rev-name{font-family:var(--satoshi);font-size:14px;font-weight:700;color:var(--cream);margin-bottom:5px;line-height:1.3;}
+.rev-desc{font-family:var(--satoshi);font-size:12px;font-weight:400;line-height:1.6;color:var(--cream-dim);}
+
+/* FINANCING */
+.fin-bar{background:var(--bg-3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:50px 0;}
+.fin-inner{display:flex;align-items:center;justify-content:space-between;gap:36px;}
+.fin-title{font-family:var(--tanker);font-size:22px;color:var(--cream);margin-bottom:6px;letter-spacing:0.01em;}
+.fin-sub{font-family:var(--satoshi);font-size:15px;font-weight:400;color:var(--cream-dim);}
+.fin-pills{display:flex;gap:10px;flex-wrap:wrap;}
+.fin-pill{font-family:var(--chakra);font-size:12px;font-weight:600;letter-spacing:0.06em;color:var(--cream);background:var(--surface);border:1px solid var(--border);border-radius:var(--pill);padding:10px 18px;box-shadow:var(--sh);transition:all 0.18s;}
+.fin-pill:hover{border-color:var(--fire);color:var(--fire);}
+
+/* CTA */
+.cta-sec{background:var(--bg-2);padding:110px 0;text-align:center;position:relative;overflow:hidden;}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:350px;background:radial-gradient(ellipse,rgba(224,90,30,0.1) 0%,transparent 70%);pointer-events:none;}
+.cta-sec .eyebrow{justify-content:center;}
+.cta-h2{font-family:var(--tanker);font-size:clamp(42px,5vw,72px);font-weight:400;line-height:1.0;letter-spacing:0.01em;color:var(--cream);margin:14px 0 18px;}
+.cta-h2 em{font-style:italic;color:var(--fire);}
+.cta-p{font-family:var(--satoshi);font-size:16px;font-weight:400;line-height:1.75;color:var(--cream-dim);max-width:500px;margin:0 auto 40px;}
+.cta-form{display:flex;gap:10px;max-width:440px;margin:0 auto 14px;}
+.cta-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 20px;font-family:var(--satoshi);font-size:15px;color:var(--cream);outline:none;transition:border-color 0.2s;}
+.cta-input:focus{border-color:var(--fire);}
+.cta-input::placeholder{color:rgba(232,229,223,0.28);}
+.cta-note{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(232,229,223,0.22);}
+.cta-success{display:none;font-family:var(--chakra);font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--fire);margin-top:12px;}
+
+/* FOOTER */
+footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56px;}
+.foot{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.foot-name{font-family:var(--tanker);font-size:20px;color:var(--cream);letter-spacing:0.02em;}
+.foot-sub{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(232,229,223,0.24);margin-top:4px;}
+.foot-links{display:flex;gap:28px;list-style:none;}
+.foot-links a{font-family:var(--chakra);font-size:12px;font-weight:600;letter-spacing:0.07em;color:rgba(232,229,223,0.32);transition:color 0.18s;text-transform:uppercase;}
+.foot-links a:hover{color:var(--fire);}
+.foot-copy{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.06em;color:rgba(232,229,223,0.16);}
+
+/* ANIMATIONS */
+.fade-in{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .wrap{padding:0 32px;}
+  nav{padding:0 32px;}
+  .hero,.bot-layout,.tech-layout{grid-template-columns:1fr;}
+  .hero-right,.bot-visual{height:400px;min-height:auto;}
+  .tech-visual-inner{height:260px;}
+  .how-layout{grid-template-columns:1fr;}
+  .how-head-col{position:static;margin-bottom:40px;}
+}
+@media(max-width:768px){
+  nav{padding:0 20px;}
+  .nav-menu{display:none;}
+  .hero-left,.bot-content{padding:52px 24px;}
+  .wrap{padding:0 20px;}
+  .sec{padding:72px 0;}
+  .types-grid,.markets-grid{grid-template-columns:1fr;}
+  .rev-grid{grid-template-columns:1fr;}
+  .tech-modules{grid-template-columns:1fr;}
+  .cta-form{flex-direction:column;}
+  .fin-inner{flex-direction:column;align-items:flex-start;}
+  footer{padding:32px 20px;}
+  .foot{flex-direction:column;align-items:flex-start;}
+  .stepper-line{left:19px;}
+  .step-dot{width:38px;height:38px;font-size:11px;}
+  .step-panel{padding:6px 0 36px;}
+  .tiers-grid{grid-template-columns:1fr;}
+}
+
+/* ========================================
+   HABITAT LUXURY TIERS
+   ======================================== */
+.tiers-sec{background:var(--bg-2);border-bottom:1px solid var(--border);}
+.tiers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.tier-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:30px 26px 34px;display:flex;flex-direction:column;transition:all 0.22s;position:relative;}
+.tier-card:hover{transform:translateY(-4px);border-color:var(--border-fire);box-shadow:0 12px 48px rgba(0,0,0,0.48);}
+.tier-popular-badge{display:inline-flex;align-items:center;font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fff;background:var(--fire);border-radius:var(--pill);padding:4px 12px;margin-bottom:14px;width:fit-content;}
+.tier-name{font-family:var(--tanker);font-size:22px;color:var(--cream);letter-spacing:0.01em;margin-bottom:6px;line-height:1.0;}
+.tier-sub{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(224,90,30,0.65);margin-bottom:20px;}
+.tier-divider{height:1px;background:var(--border);margin-bottom:20px;}
+.tier-features{list-style:none;display:flex;flex-direction:column;gap:10px;flex:1;}
+.tier-feature{display:flex;align-items:flex-start;gap:10px;font-family:var(--satoshi);font-size:13px;font-weight:400;color:var(--cream-dim);line-height:1.5;}
+.tier-feature::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--fire);flex-shrink:0;margin-top:6px;opacity:0.65;}
+.tier-card-pro{border-color:rgba(224,90,30,0.22);background:var(--surface-2);}
+.tier-card-signature{border-color:rgba(224,90,30,0.22);box-shadow:0 0 48px rgba(224,90,30,0.07),0 8px 32px rgba(0,0,0,0.32);}
+.tier-card-signature:hover{box-shadow:0 0 72px rgba(224,90,30,0.14),0 16px 56px rgba(0,0,0,0.48) !important;}
+@media(max-width:1100px){.tiers-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="https://blackcatrobotics.com" class="nav-brand">
+    <div class="nav-mark">BCR</div>
+    <div>
+      <span class="nav-parent">BlackCat Robotics</span>
+      <span class="nav-name">HABITAT</span>
+    </div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="#tiers">Systems</a></li>
+    <li><a href="#construct-bot">Construct.Bot</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#homes">What We Build</a></li>
+    <li><a href="#tech">Technology</a></li>
+    <li><a href="#markets">Markets</a></li>
+    <li><a href="#partners">Partners</a></li>
+  <a href="#waitlist" class="btn btn-fire" style="font-size:11px;padding:11px 22px;">
+    Join Waitlist
+    <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">A BlackCat Robotics Division</div>
+    <h1 class="hero-h1">Designed by you.<br><em>Built by tomorrow.</em></h1>
+    <p class="hero-sub">One platform. Every decision.<br>Every material. Every bolt.</p>
+    <p class="hero-p">HABITAT is the world&#8217;s first vertically integrated AI-driven construction platform, taking you from initial concept to a fully built, furnished, and move-in-ready home. Powered by autonomous Construct.Bot fleets.</p>
+    <div class="hero-btns">
+      <a href="#waitlist" class="btn btn-fire">
+        Join the Waitlist
+        <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#construct-bot" class="btn btn-ghost">
+        Meet Construct.Bot
+        <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">$12T</div>
+        <div class="stat-lbl">Global construction market</div>
+      </div>
+      <div>
+        <div class="stat-num">72h</div>
+        <div class="stat-lbl">Target tiny home build</div>
+      </div>
+      <div>
+        <div class="stat-num">Net-Zero</div>
+        <div class="stat-lbl">From move-in day</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=85&auto=format&fit=crop" alt="Autonomous robotic system" loading="eager">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-bot-scanlines"></div>
+    <!-- Crosshair reticle -->
+    <div class="hero-reticle">
+      <div class="hero-reticle-h"></div>
+      <div class="hero-reticle-v"></div>
+    </div>
+    <!-- Bot UI overlay -->
+    <div class="hero-bot-ui">
+      <div class="hero-bot-top">
+        <div class="hero-bot-badge">
+          <div class="hero-bot-badge-dot"></div>
+          Construct.Bot — Online
+        </div>
+        <div class="hero-bot-corner">BCR-CB-01 &#x2F;&#x2F; FIELD UNIT</div>
+      </div>
+      <!-- Side rail data -->
+      <div class="hero-bot-rail">
+        <div class="hero-rail-item"><span>Nav2</span><div class="hero-rail-bar" style="width:36px"></div></div>
+        <div class="hero-rail-item"><span>SLAM</span><div class="hero-rail-bar" style="width:48px"></div></div>
+        <div class="hero-rail-item"><span>Vision</span><div class="hero-rail-bar" style="width:28px"></div></div>
+        <div class="hero-rail-item"><span>Jetson</span><div class="hero-rail-bar" style="width:52px"></div></div>
+      </div>
+      <!-- Bottom HUD panels -->
+      <div>
+        <div class="hero-bot-hud-row" style="margin-bottom:10px;">
+          <div class="hero-bot-hud-panel">
+            <div class="hero-bot-hud-panel-label">Status</div>
+            <div class="hero-bot-hud-panel-val hero-counter">ACTIVE</div>
+            <div class="hero-bot-hud-panel-sub">Layer 14 of 62</div>
+          </div>
+          <div class="hero-bot-hud-panel">
+            <div class="hero-bot-hud-panel-label">Operation</div>
+            <div class="hero-bot-hud-panel-val">24/7</div>
+            <div class="hero-bot-hud-panel-sub">No crew required</div>
+          </div>
+        </div>
+        <div class="hero-bot-hud-row">
+          <div class="hero-bot-hud-panel">
+            <div class="hero-bot-hud-panel-label">Navigation</div>
+            <div class="hero-bot-hud-panel-val">SLAM</div>
+            <div class="hero-bot-hud-panel-sub">Obstacle-free path</div>
+          </div>
+          <div class="hero-bot-hud-panel">
+            <div class="hero-bot-hud-panel-label">Build ETA</div>
+            <div class="hero-bot-hud-panel-val">68h</div>
+            <div class="hero-bot-hud-panel-sub">Tiny home target</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="m-item"><span class="m-dot"></span>Construct.Bot Fleet</span>
+    <span class="m-item"><span class="m-dot"></span>AI Design Agent</span>
+    <span class="m-item"><span class="m-dot"></span>3D Printed Structure</span>
+    <span class="m-item"><span class="m-dot"></span>Materials Marketplace</span>
+    <span class="m-item"><span class="m-dot"></span>Solar Manufacturing</span>
+    <span class="m-item"><span class="m-dot"></span>HABITAT Financing</span>
+    <span class="m-item"><span class="m-dot"></span>Disaster Relief Ready</span>
+    <span class="m-item"><span class="m-dot"></span>Net-Zero From Day One</span>
+    <span class="m-item"><span class="m-dot"></span>Digital Assets Accepted</span>
+    <span class="m-item"><span class="m-dot"></span>NVIDIA Powered</span>
+    <span class="m-item"><span class="m-dot"></span>Construct.Bot Fleet</span>
+    <span class="m-item"><span class="m-dot"></span>AI Design Agent</span>
+    <span class="m-item"><span class="m-dot"></span>3D Printed Structure</span>
+    <span class="m-item"><span class="m-dot"></span>Materials Marketplace</span>
+    <span class="m-item"><span class="m-dot"></span>Solar Manufacturing</span>
+    <span class="m-item"><span class="m-dot"></span>HABITAT Financing</span>
+    <span class="m-item"><span class="m-dot"></span>Disaster Relief Ready</span>
+    <span class="m-item"><span class="m-dot"></span>Net-Zero From Day One</span>
+    <span class="m-item"><span class="m-dot"></span>Digital Assets Accepted</span>
+    <span class="m-item"><span class="m-dot"></span>NVIDIA Powered</span>
+  </div>
+</div>
+
+<!-- ============================================
+     HABITAT LUXURY TIERS
+     ============================================ -->
+<section class="tiers-sec sec" id="tiers">
+  <div class="wrap">
+    <div class="sec-head fade-in" style="text-align:center;max-width:640px;margin:0 auto 56px;">
+      <div class="eyebrow" style="justify-content:center;">HABITAT Systems</div>
+      <h2 class="t-h2">Choose Your <em>HABITAT</em> System</h2>
+      <p class="t-body" style="margin-top:14px;">Every HABITAT starts with intelligence. Choose the tier that matches your vision.</p>
+      <p style="font-family:var(--satoshi);font-size:15px;font-weight:400;line-height:1.75;color:rgba(232,229,223,0.38);max-width:520px;margin:16px auto 0;">A fully managed living system designed to eliminate maintenance, reduce long-term costs, and future-proof your home.</p>
+    </div>
+    <div class="tiers-grid fade-in">
+      <!-- CORE -->
+      <div class="tier-card">
+        <div class="tier-name">HABITAT CORE</div>
+        <div class="tier-sub">Entry Tier</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(232,229,223,0.38);margin-bottom:20px;">Starting at $XXX,XXX</div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li class="tier-feature">Intelligent 3D Printed Home</li>
+          <li class="tier-feature">Smart Lighting &amp; Climate</li>
+          <li class="tier-feature">Built-in Mesh WiFi Network</li>
+          <li class="tier-feature">Essential TechMedix Monitoring</li>
+          <li class="tier-feature">Energy Efficient System Design</li>
+        </ul>
+      </div>
+      <!-- PRO -->
+      <div class="tier-card tier-card-pro">
+        <div class="tier-popular-badge">Most Popular</div>
+        <div class="tier-name">HABITAT PRO</div>
+        <div class="tier-sub">Recommended Tier</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:400;line-height:1.55;color:rgba(232,229,223,0.55);margin-bottom:6px;">The complete, fully managed home experience.</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(232,229,223,0.38);margin-bottom:20px;">From $X,XXX/month</div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li class="tier-feature">Everything in Core</li>
+          <li class="tier-feature">Full TechMedix Integration</li>
+          <li class="tier-feature">Predictive Maintenance System</li>
+          <li class="tier-feature">Premium Appliance Ecosystem</li>
+          <li class="tier-feature">EV + Charging Integration</li>
+          <li class="tier-feature">BlackCat Mobile Control</li>
+        </ul>
+      </div>
+      <!-- ELITE -->
+      <div class="tier-card">
+        <div class="tier-name">HABITAT ELITE</div>
+        <div class="tier-sub">Advanced Tier</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(232,229,223,0.38);margin-bottom:20px;">Custom Pricing</div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li class="tier-feature">Everything in Pro</li>
+          <li class="tier-feature">Off-Grid Energy Capability</li>
+          <li class="tier-feature">Priority Service Dispatch</li>
+          <li class="tier-feature">Advanced Automation Routines</li>
+          <li class="tier-feature">Premium Materials &amp; Architecture</li>
+          <li class="tier-feature">Multi-Unit Compatibility</li>
+        </ul>
+      </div>
+      <!-- SIGNATURE -->
+      <div class="tier-card tier-card-signature">
+        <div class="tier-name">HABITAT SIGNATURE</div>
+        <div class="tier-sub">Flagship Tier</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(232,229,223,0.38);margin-bottom:20px;">Private Consultation</div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li class="tier-feature">Everything in Elite</li>
+          <li class="tier-feature">Autonomous Home Operations Layer</li>
+          <li class="tier-feature">Integrated Robotics Support</li>
+          <li class="tier-feature">Private Microgrid Ready (BlackCat Grid)</li>
+          <li class="tier-feature">Enterprise TechMedix Monitoring</li>
+          <li class="tier-feature">White-Glove Installation &amp; Lifecycle Service</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CONSTRUCT.BOT SECTION
+     ============================================ -->
+<section class="bot-sec" id="construct-bot">
+  <div class="bot-layout">
+    <!-- Visual side: autonomous robot on site, no humans -->
+    <div class="bot-visual">
+      <div class="bot-visual-img">
+        <img src="Concept/habitat-residental.jpg" alt="Autonomous robotic system" loading="lazy">
+      </div>
+      <div class="bot-visual-overlay"></div>
+      <!-- Live HUD readouts -->
+      <div class="bot-hud">
+        <div class="bot-hud-item">
+          <div class="bot-hud-dot"></div>
+          <span class="bot-hud-label">Status</span>
+          <span class="bot-hud-val">ACTIVE</span>
+        </div>
+        <div class="bot-hud-item">
+          <div class="bot-hud-dot" style="animation-delay:0.5s"></div>
+          <span class="bot-hud-label">Navigation</span>
+          <span class="bot-hud-val">SLAM</span>
+        </div>
+        <div class="bot-hud-item">
+          <div class="bot-hud-dot" style="animation-delay:1s"></div>
+          <span class="bot-hud-label">Vision</span>
+          <span class="bot-hud-val">DeepStream</span>
+        </div>
+        <div class="bot-hud-item">
+          <div class="bot-hud-dot" style="animation-delay:1.5s"></div>
+          <span class="bot-hud-label">Edge CPU</span>
+          <span class="bot-hud-val">Jetson</span>
+        </div>
+      </div>
+    </div>
+    <!-- Content side -->
+    <div class="bot-content fade-in">
+      <div class="bot-badge">
+        <div class="bot-badge-dot"></div>
+        Fleet Ready
+      </div>
+      <h2 class="bot-h2">Meet<br><em>Construct.Bot</em></h2>
+      <p class="bot-p">The autonomous construction unit at the core of every HABITAT build. Construct.Bot operates 24/7, reads the job site in real time, and executes every layer of your structure without a crew. Powered by NVIDIA Jetson, guided by Nav2 and SLAM, and supervised by the HABITAT AI planning engine.</p>
+      <div class="bot-specs">
+        <div class="bot-spec">
+          <div class="bot-spec-icon">24/7</div>
+          <div class="bot-spec-label">Operation</div>
+          <div class="bot-spec-val">Round-the-clock autonomous build cycles</div>
+        </div>
+        <div class="bot-spec">
+          <div class="bot-spec-icon">SLAM</div>
+          <div class="bot-spec-label">Navigation</div>
+          <div class="bot-spec-val">Full-lifecycle Nav2 with obstacle avoidance</div>
+        </div>
+        <div class="bot-spec">
+          <div class="bot-spec-icon">AI</div>
+          <div class="bot-spec-label">Vision</div>
+          <div class="bot-spec-val">NVIDIA DeepStream real-time site monitoring</div>
+        </div>
+        <div class="bot-spec">
+          <div class="bot-spec-icon">OTA</div>
+          <div class="bot-spec-label">Updates</div>
+          <div class="bot-spec-val">Over-the-air updates from HABITAT cloud</div>
+        </div>
+      </div>
+      <a href="#how" class="btn btn-fire">
+        See It In Action
+        <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec how-sec" id="how">
+  <div class="wrap">
+    <div class="how-layout">
+      <!-- Sticky left: heading -->
+      <div class="how-head-col fade-in">
+        <div class="eyebrow">How It Works</div>
+        <h2 class="t-h2">From concept to<br><em>move-in ready</em></h2>
+        <p class="t-body" style="margin-top:4px;">One intelligent system manages every step of your build. No contractors, no scheduling chaos. Just your design, executed autonomously by Construct.Bot.</p>
+        <div style="margin-top:36px;padding:22px 24px;background:var(--surface);border:1px solid var(--border-fire);border-radius:var(--r-xl);">
+          <div style="font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);margin-bottom:10px;">Live Build Status</div>
+          <div style="font-family:var(--tanker);font-size:38px;color:var(--cream);line-height:1;letter-spacing:0.01em;" id="active-step-label">Design</div>
+          <div style="font-family:var(--satoshi);font-size:13px;color:var(--cream-dim);margin-top:5px;" id="active-step-sub">AI generating your CAD blueprint</div>
+          <div style="margin-top:16px;height:3px;background:var(--surface-2);border-radius:2px;overflow:hidden;">
+            <div id="progress-bar" style="height:100%;width:20%;background:var(--fire);border-radius:2px;transition:width 0.6s ease;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;">
+            <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.1em;color:rgba(232,229,223,0.3);">STEP <span id="step-counter">1</span> OF 5</span>
+            <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.1em;color:var(--fire);" id="step-pct">20%</span>
+          </div>
+        </div>
+      </div>
+      <!-- Right: animated stepper -->
+      <div style="position:relative;">
+        <div class="stepper-line"></div>
+        <div class="stepper" id="stepper">
+
+          <div class="step-row is-active" data-step="1" data-label="Design" data-sub="AI generating your CAD blueprint">
+            <div class="step-connector">
+              <div class="step-dot-wrap">
+                <div class="step-dot">
+                  <span class="step-num-inner">1</span>
+                  <span class="step-tick">✓</span>
+                </div>
+              </div>
+            </div>
+            <div class="step-panel">
+              <div class="step-panel-inner">
+                <div class="step-panel-tag">Step 01 — AI Design Agent</div>
+                <div class="step-panel-title">Design with AI</div>
+                <div class="step-panel-desc">Describe your vision to the HABITAT AI agent. A full CAD blueprint — walls, utilities, systems, and energy layout — is generated and refined in minutes. No architect required.</div>
+                <div class="step-panel-detail">
+                  <span class="step-detail-pill">Claude AI</span>
+                  <span class="step-detail-pill">CAD Output</span>
+                  <span class="step-detail-pill">Digital Twin</span>
+                  <span class="step-detail-pill">NVIDIA Omniverse</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="height:2px;margin:0 0 0 21px;width:1px;"></div>
+
+          <div class="step-row" data-step="2" data-label="Materials" data-sub="Sourcing and delivery to site">
+            <div class="step-connector">
+              <div class="step-dot-wrap">
+                <div class="step-dot">
+                  <span class="step-num-inner">2</span>
+                  <span class="step-tick">✓</span>
+                </div>
+              </div>
+            </div>
+            <div class="step-panel">
+              <div class="step-panel-inner">
+                <div class="step-panel-tag">Step 02 — Materials Marketplace</div>
+                <div class="step-panel-title">Select Materials</div>
+                <div class="step-panel-desc">Browse the HABITAT marketplace. Every material, appliance, and energy component is sourced and automatically scheduled for delivery to your build site based on the construction sequence.</div>
+                <div class="step-panel-detail">
+                  <span class="step-detail-pill">Eco Materials</span>
+                  <span class="step-detail-pill">Auto-Scheduling</span>
+                  <span class="step-detail-pill">Site Delivery</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-row" data-step="3" data-label="Build" data-sub="Construct.Bot executing the build plan">
+            <div class="step-connector">
+              <div class="step-dot-wrap">
+                <div class="step-dot">
+                  <span class="step-num-inner">3</span>
+                  <span class="step-tick">✓</span>
+                </div>
+              </div>
+            </div>
+            <div class="step-panel">
+              <div class="step-panel-inner">
+                <div class="step-panel-tag">Step 03 — Autonomous Fleet</div>
+                <div class="step-panel-title">Construct.Bot Builds</div>
+                <div class="step-panel-desc">The Construct.Bot fleet receives the build plan and executes every layer. 3D-printed concrete, framing, utility runs, and finishing — 24 hours a day, 7 days a week. Zero crew. Zero downtime.</div>
+                <div class="step-panel-detail">
+                  <span class="step-detail-pill">3D Print Concrete</span>
+                  <span class="step-detail-pill">24/7 Operation</span>
+                  <span class="step-detail-pill">Nav2 + SLAM</span>
+                  <span class="step-detail-pill">DeepStream Vision</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-row" data-step="4" data-label="Solar" data-sub="Energy systems being integrated">
+            <div class="step-connector">
+              <div class="step-dot-wrap">
+                <div class="step-dot">
+                  <span class="step-num-inner">4</span>
+                  <span class="step-tick">✓</span>
+                </div>
+              </div>
+            </div>
+            <div class="step-panel">
+              <div class="step-panel-inner">
+                <div class="step-panel-tag">Step 04 — Net-Zero Energy</div>
+                <div class="step-panel-title">Solar Integrated</div>
+                <div class="step-panel-desc">HABITAT-manufactured solar panels and battery storage systems are built into the structure from the foundation up. Energy independence is not an add-on — it is the architecture.</div>
+                <div class="step-panel-detail">
+                  <span class="step-detail-pill">Solar Panels</span>
+                  <span class="step-detail-pill">Battery Storage</span>
+                  <span class="step-detail-pill">Rainwater</span>
+                  <span class="step-detail-pill">Net-Zero Cert</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-row" data-step="5" data-label="Move-In" data-sub="Your home is ready for occupancy">
+            <div class="step-connector">
+              <div class="step-dot-wrap">
+                <div class="step-dot">
+                  <span class="step-num-inner">5</span>
+                  <span class="step-tick">✓</span>
+                </div>
+              </div>
+            </div>
+            <div class="step-panel">
+              <div class="step-panel-inner">
+                <div class="step-panel-tag">Step 05 — Handover</div>
+                <div class="step-panel-title">Move In</div>
+                <div class="step-panel-desc">Furnished, solar-powered, and net-zero certified from day one. Your home is handed over ready for occupancy — no punch list, no contractor callbacks, no waiting.</div>
+                <div class="step-panel-detail">
+                  <span class="step-detail-pill">Fully Furnished</span>
+                  <span class="step-detail-pill">Occupancy Ready</span>
+                  <span class="step-detail-pill">Net-Zero Day 1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     WHAT WE BUILD — 3D PRINTED HOME IMAGES
+     ============================================ -->
+<section class="sec types-sec" id="homes">
+  <div class="wrap">
+    <div class="sec-head fade-in">
+      <div class="eyebrow">What We Build</div>
+      <h2 class="t-h2">Every home type.<br><em>One platform.</em></h2>
+      <p class="t-body" style="max-width:500px;">From tiny off-grid retreats to multi-family developments. Every structure 3D-printed by Construct.Bot fleets using HABITAT&#8217;s proprietary concrete composite and eco-material systems.</p>
+    </div>
+    <div class="types-grid">
+      <!-- Real 3D printed single-family: concrete layered wall exterior, curvilinear ICON-style -->
+      <div class="type-card fade-in">
+        <div class="type-img">
+          <img src="Concept/habitat-residental.jpg" onerror="this.src='https://images.unsplash.com/photo-1631467455050-c1fe3b70c9dc?w=700&q=80&auto=format&fit=crop'" alt="3D printed concrete home exterior with layered walls" loading="lazy">
+          <div class="type-img-badge">3D Printed Concrete</div>
+        </div>
+        <div class="type-body">
+          <span class="type-label">Residential</span>
+          <div class="type-title">Single-Family Homes</div>
+          <p class="type-desc">Primary residences on privately owned land. Curvilinear or rectilinear forms, designed by the AI agent, layer-printed by Construct.Bot with compressive strength exceeding industry standard.</p>
+        </div>
+      </div>
+      <!-- Real 3D printer gantry: large-format concrete printer on site -->
+      <div class="type-card fade-in" style="transition-delay:0.1s">
+        <div class="type-img">
+          <img src="Concept/habitat-off-grid.jpg" onerror="this.src='https://images.unsplash.com/photo-1716989685404-5c55b7d28a9a?w=700&q=80&auto=format&fit=crop'" alt="Industrial 3D concrete printer gantry system on construction site" loading="lazy">
+          <div class="type-img-badge">72h Build Target</div>
+        </div>
+        <div class="type-body">
+          <span class="type-label">Off-Grid + ADU</span>
+          <div class="type-title">Tiny Homes &amp; Accessory Units</div>
+          <p class="type-desc">The fastest Construct.Bot build type. Ideal for off-grid living, backyard ADU additions, and rapid rental income builds. Highest speed-to-occupancy ratio on the platform.</p>
+        </div>
+      </div>
+      <!-- Real 3D printed multi-unit: concrete printed apartment block -->
+      <div class="type-card fade-in" style="transition-delay:0.1s">
+        <div class="type-img">
+          <img src="Concept/habitat-multiunit.jpg" onerror="this.src='https://images.unsplash.com/photo-1590725140246-20acdee442be?w=700&q=80&auto=format&fit=crop'" alt="3D printed multi-unit concrete residential structure" loading="lazy">
+          <div class="type-img-badge">Fleet-Scale Build</div>
+        </div>
+        <div class="type-body">
+          <span class="type-label">Multi-Family</span>
+          <div class="type-title">Duplex &amp; Small Multi-Unit</div>
+          <p class="type-desc">Two-to-four unit builds with shared utility infrastructure. Developer-focused pricing with fleet-scale project management and shared solar provisioning.</p>
+        </div>
+      </div>
+      <!-- Real 3D printed commercial: industrial concrete printed structure -->
+      <div class="type-card fade-in" style="transition-delay:0.2s">
+        <div class="type-img">
+          <img src="Concept/habitat-comercial.jpg" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80&auto=format&fit=crop'" alt="3D printed commercial and industrial concrete structure" loading="lazy">
+          <div class="type-img-badge">Custom CAD Design</div>
+        </div>
+        <div class="type-body">
+          <span class="type-label">Commercial</span>
+          <div class="type-title">Light Industrial &amp; Commercial</div>
+          <p class="type-desc">Small commercial buildings, workshops, studios, and agricultural structures. Custom-designed in the AI agent and fleet-printed at commercial scale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     TECHNOLOGY — NVIDIA LOGO + PROPER LINKS
+     ============================================ -->
+<section class="sec tech-sec" id="tech">
+  <div class="wrap">
+    <div class="tech-layout">
+      <div class="tech-visual fade-in">
+        <div class="tech-visual-inner">
+          <div class="tech-grid-bg"></div>
+          <div class="tech-visual-overlay"></div>
+          <div class="tech-diagram">
+            <div class="tech-node-center">
+              <div class="tech-node-label">OS</div>
+            </div>
+            <div class="tech-orbit-row">
+              <div class="tech-orbit-node">
+                <div class="tech-orbit-icon" style="font-family:var(--chakra);font-size:11px;font-weight:700;color:var(--fire);">ROS</div>
+                <div class="tech-orbit-lbl">ROS2</div>
+              </div>
+              <div class="tech-orbit-node">
+                <div class="tech-orbit-icon" style="font-family:var(--chakra);font-size:11px;font-weight:700;color:var(--fire);">CV</div>
+                <div class="tech-orbit-lbl">Vision</div>
+              </div>
+              <div class="tech-orbit-node">
+                <div class="tech-orbit-icon" style="font-family:var(--chakra);font-size:11px;font-weight:700;color:var(--fire);">NAV</div>
+                <div class="tech-orbit-lbl">Nav2</div>
+              </div>
+              <div class="tech-orbit-node">
+                <div class="tech-orbit-icon" style="font-family:var(--chakra);font-size:11px;font-weight:700;color:var(--fire);">GPU</div>
+                <div class="tech-orbit-lbl">Jetson</div>
+              </div>
+              <div class="tech-orbit-node">
+                <div class="tech-orbit-icon" style="font-family:var(--chakra);font-size:11px;font-weight:700;color:var(--fire);">LLM</div>
+                <div class="tech-orbit-lbl">LLM</div>
+              </div>
+            </div>
+            <!-- Live data readout strip -->
+            <div style="margin-top:24px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:0 20px;">
+              <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.12em;color:rgba(224,90,30,0.6);background:rgba(224,90,30,0.06);border:1px solid rgba(224,90,30,0.15);border-radius:4px;padding:4px 8px;">JWT ● SECURE</span>
+              <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.12em;color:rgba(224,90,30,0.6);background:rgba(224,90,30,0.06);border:1px solid rgba(224,90,30,0.15);border-radius:4px;padding:4px 8px;">PostgreSQL ● LIVE</span>
+              <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.12em;color:rgba(224,90,30,0.6);background:rgba(224,90,30,0.06);border:1px solid rgba(224,90,30,0.15);border-radius:4px;padding:4px 8px;">SLAM ● ACTIVE</span>
+              <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.12em;color:rgba(224,90,30,0.6);background:rgba(224,90,30,0.06);border:1px solid rgba(224,90,30,0.15);border-radius:4px;padding:4px 8px;">API ● READY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in" style="transition-delay:0.1s">
+        <div class="eyebrow">The Technology</div>
+        <h2 class="t-h2">Production-grade<br><em>construction OS</em></h2>
+        <p class="t-body" style="margin-top:12px;">HABITAT runs on a full enterprise-grade autonomous construction stack — from AI planning to robotic execution to edge deployment on NVIDIA Jetson hardware.</p>
+
+        <!-- PARTNER LOGOS with real links -->
+        <div class="tech-partners">
+          <!-- NVIDIA with inline SVG logo -->
+          <a href="https://www.nvidia.com/en-us/omniverse/" target="_blank" rel="noopener" class="tech-partner" title="NVIDIA Omniverse + Isaac + Jetson">
+            <svg class="nvidia-svg" viewBox="0 0 732 132" xmlns="http://www.w3.org/2000/svg" aria-label="NVIDIA">
+              <path d="M367.9 3.5v124.7h22.3V3.5h-22.3zM163.8 3.5v124.7h22.4V37.8l44.2 90.4h19.1l44.2-90.4v90.4h22.4V3.5h-31.5l-44.7 91.6L195.3 3.5h-31.5zm380.8 0l-52.5 124.7h24.2l10.4-25.1h55.5l10.4 25.1h24.3L564.4 3.5h-19.8zm9.9 23.5l21 50.8h-42l21-50.8zM732 3.5h-24.1l-42.9 97.2-42.9-97.2h-24.1l55 124.7h24l55-124.7zM0 44.9v82.8h22.3V65l50.3 62.7h17.7V3.5H68V65.7L18.2 3.5H0v41.4zm100 82.8h22.4V3.5H100v124.2z"/>
+            </svg>
+            <span class="tech-partner-name">Omniverse + Isaac + Jetson</span>
+          </a>
+          <!-- ROS2 -->
+          <a href="https://ros.org" target="_blank" rel="noopener" class="tech-partner" title="ROS2">
+            <svg style="width:18px;height:18px;fill:rgba(232,229,223,0.6);flex-shrink:0;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"/></svg>
+            <span class="tech-partner-name">ROS2 + Nav2</span>
+          </a>
+          <!-- Claude AI -->
+          <a href="https://anthropic.com" target="_blank" rel="noopener" class="tech-partner" title="Claude AI by Anthropic">
+            <svg style="width:16px;height:16px;fill:rgba(232,229,223,0.6);flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <span class="tech-partner-name">Claude AI</span>
+          </a>
+        </div>
+
+        <div class="tech-tags">
+          <span class="tech-tag">NVIDIA Omniverse</span>
+          <span class="tech-tag">Isaac Sim</span>
+          <span class="tech-tag">Jetson Edge</span>
+          <span class="tech-tag">ROS2 + Nav2</span>
+          <span class="tech-tag">SLAM Navigation</span>
+          <span class="tech-tag">DeepStream Vision</span>
+          <span class="tech-tag">FastAPI Gateway</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">Claude AI</span>
+          <span class="tech-tag">JWT Security</span>
+        </div>
+        <div class="tech-modules">
+          <div class="tech-mod">
+            <div class="tech-mod-label">AI</div>
+            <div class="tech-mod-name">Planning Engine</div>
+            <div class="tech-mod-desc">Structured LLM pipeline converts design intent into executable construction task queues.</div>
+          </div>
+          <div class="tech-mod">
+            <div class="tech-mod-label">Vision</div>
+            <div class="tech-mod-name">DeepStream System</div>
+            <div class="tech-mod-desc">Real-time object detection, material classification, and safety monitoring on-site.</div>
+          </div>
+          <div class="tech-mod">
+            <div class="tech-mod-label">Nav</div>
+            <div class="tech-mod-name">Nav2 + SLAM</div>
+            <div class="tech-mod-desc">Full lifecycle navigation with obstacle avoidance and multi-robot coordination.</div>
+          </div>
+          <div class="tech-mod">
+            <div class="tech-mod-label">Edge</div>
+            <div class="tech-mod-name">Jetson Deployment</div>
+            <div class="tech-mod-desc">NVIDIA Jetson on every Construct.Bot. Vision, ROS2, and cloud sync in one unit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETS -->
+<section class="sec markets-sec" id="markets">
+  <div class="wrap">
+    <div class="sec-head fade-in">
+      <div class="eyebrow">Target Markets</div>
+      <h2 class="t-h2">Two launch markets.<br><em>Massive urgency.</em></h2>
+      <p class="t-body" style="max-width:540px;">HABITAT launches in the two segments with the highest unmet demand and the clearest fit for autonomous construction technology.</p>
+    </div>
+    <div class="markets-grid">
+      <div class="market-card fade-in">
+        <div class="market-img">
+          <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80&auto=format&fit=crop" alt="Solar panel array sustainable energy" loading="lazy">
+        </div>
+        <div class="market-body">
+          <span class="market-badge">Primary Market</span>
+          <div class="market-title">Off-Grid &amp; Eco-Conscious Buyers</div>
+          <p class="market-desc">The fastest-growing segment in residential construction. HABITAT&#8217;s solar manufacturing, rainwater collection, and eco-material stack makes it the most complete off-grid solution available. High margins. Self-selecting audience.</p>
+        </div>
+      </div>
+      <div class="market-card fade-in" style="transition-delay:0.1s">
+        <div class="market-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop" alt="Modular rapid deployment structures" loading="lazy">
+        </div>
+        <div class="market-body">
+          <span class="market-badge">Primary Market</span>
+          <div class="market-title">Disaster Relief &amp; Rapid Housing</div>
+          <p class="market-desc">HABITAT&#8217;s Construct.Bot model is uniquely suited for rapid-deployment housing in disaster zones and emergency shortfalls. Speed, standardized modular designs, and remote site capability create strong government and NGO contract potential. Grant funding eligible.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVENUE -->
+<section class="sec rev-sec" id="revenue">
+  <div class="wrap fade-in">
+    <div class="sec-head">
+      <div class="eyebrow">Revenue Model</div>
+      <h2 class="t-h2">Eleven revenue streams.<br><em>One platform.</em></h2>
+      <p class="t-body" style="max-width:540px;">Hardware, software, services, financing, and government contracts all operate within the same ecosystem from day one.</p>
+    </div>
+    <div class="rev-grid">
+      <div class="rev-cell"><div class="rev-tag">SaaS</div><div class="rev-name">Design Licensing</div><div class="rev-desc">AI design sessions on subscription or per-project basis.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Commerce</div><div class="rev-name">Marketplace Sales</div><div class="rev-desc">Materials, appliances, furniture, energy systems with margin on every order.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Services</div><div class="rev-name">Build Contracts</div><div class="rev-desc">HABITAT-operated Construct.Bot construction service. Primary revenue driver.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Hardware</div><div class="rev-name">Printer Sales</div><div class="rev-desc">FORGE and FIELD industrial 3D printer series sold to developers and municipalities.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Hardware</div><div class="rev-name">Printer Leasing</div><div class="rev-desc">Monthly leasing contracts with software and support included.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Robotics</div><div class="rev-name">Construct.Bot Sales</div><div class="rev-desc">Direct bot unit sales to builders, developers, and NGOs worldwide.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Robotics</div><div class="rev-name">Bot Fleet Leasing</div><div class="rev-desc">Project-based or long-term operational fleet leasing contracts.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Energy</div><div class="rev-name">Solar Manufacturing</div><div class="rev-desc">HABITAT-manufactured solar panels sold through the marketplace and wholesale.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Service</div><div class="rev-name">Maintenance Contracts</div><div class="rev-desc">BCR-operated repair and diagnostics on all Construct.Bots and printers in the field.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Finance</div><div class="rev-name">HABITAT Financing</div><div class="rev-desc">Interest revenue on direct client financing. USD and digital assets accepted.</div></div>
+      <div class="rev-cell"><div class="rev-tag">Government</div><div class="rev-name">Relief Contracts</div><div class="rev-desc">Government and NGO contracts for rapid housing. Grant funding eligible.</div></div>
+      <div class="rev-cell" style="background:var(--fire-faint);border:1px solid var(--border-fire);"><div class="rev-tag">Total</div><div class="rev-name" style="color:var(--fire);">11 Streams</div><div class="rev-desc">Hardware + SaaS + Services + Finance + Government.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCING -->
+<div class="fin-bar">
+  <div class="wrap">
+    <div class="fin-inner">
+      <div>
+        <div class="fin-title">Three ways to own your HABITAT home</div>
+        <div class="fin-sub">All models accept USD and major cryptocurrencies including Bitcoin, Ethereum, and stablecoins.</div>
+      </div>
+      <div class="fin-pills">
+        <span class="fin-pill">HABITAT Direct Financing</span>
+        <span class="fin-pill">Direct Payment — Fiat &amp; Crypto</span>
+        <span class="fin-pill">Lease-to-Own</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     STRATEGIC PARTNERS — INVESTOR / NVIDIA / CAT SIGNAL
+     ============================================ -->
+<section style="background:var(--bg-3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 0;" id="partners">
+  <div class="wrap">
+    <!-- Partner alignment statement -->
+    <div class="fade-in" style="text-align:center;margin-bottom:64px;">
+      <div class="eyebrow" style="justify-content:center;">Strategic Alignment</div>
+      <h2 class="t-h2" style="font-size:clamp(28px,3vw,46px);margin-bottom:10px;">Built on the world's<br><em>most powerful stacks.</em></h2>
+      <p class="t-body" style="max-width:540px;margin:0 auto;">HABITAT is purpose-built on NVIDIA's enterprise AI and robotics infrastructure and Caterpillar's heavy equipment ecosystem — two of the most significant platforms in autonomous industrial systems.</p>
+    </div>
+
+    <!-- NVIDIA Block -->
+    <div class="fade-in" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+      <div style="background:var(--surface);border:1px solid rgba(118,185,0,0.2);border-radius:var(--r-xl);padding:36px 40px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#76b900,rgba(118,185,0,0.1));"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+          <!-- NVIDIA wordmark SVG -->
+          <a href="https://www.nvidia.com/en-us/omniverse/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0;">
+            <svg viewBox="0 0 732 132" style="height:22px;width:auto;fill:#76b900;" xmlns="http://www.w3.org/2000/svg">
+              <path d="M367.9 3.5v124.7h22.3V3.5h-22.3zM163.8 3.5v124.7h22.4V37.8l44.2 90.4h19.1l44.2-90.4v90.4h22.4V3.5h-31.5l-44.7 91.6L195.3 3.5h-31.5zm380.8 0l-52.5 124.7h24.2l10.4-25.1h55.5l10.4 25.1h24.3L564.4 3.5h-19.8zm9.9 23.5l21 50.8h-42l21-50.8zM732 3.5h-24.1l-42.9 97.2-42.9-97.2h-24.1l55 124.7h24l55-124.7zM0 44.9v82.8h22.3V65l50.3 62.7h17.7V3.5H68V65.7L18.2 3.5H0v41.4zm100 82.8h22.4V3.5H100v124.2z"/>
+            </svg>
+          </a>
+          <span style="font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(118,185,0,0.7);background:rgba(118,185,0,0.07);border:1px solid rgba(118,185,0,0.2);border-radius:var(--pill);padding:4px 12px;">Technology Stack</span>
+        </div>
+        <div style="font-family:var(--tanker);font-size:22px;color:var(--cream);margin-bottom:12px;letter-spacing:0.01em;">NVIDIA-Native Architecture</div>
+        <p style="font-family:var(--satoshi);font-size:14px;line-height:1.75;color:var(--cream-dim);margin-bottom:24px;">HABITAT runs the complete NVIDIA robotics and AI stack — Omniverse for digital twin simulation, Isaac Sim for robot training, Jetson for edge deployment, and DeepStream for real-time site vision. Every Construct.Bot is Jetson-powered.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <a href="https://www.nvidia.com/en-us/omniverse/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg-3);border:1px solid rgba(118,185,0,0.15);border-radius:var(--r);padding:10px 14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(118,185,0,0.8);transition:border-color 0.18s;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#76b900;flex-shrink:0;"></span>Omniverse
+          </a>
+          <a href="https://developer.nvidia.com/isaac-sim" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg-3);border:1px solid rgba(118,185,0,0.15);border-radius:var(--r);padding:10px 14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(118,185,0,0.8);transition:border-color 0.18s;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#76b900;flex-shrink:0;"></span>Isaac Sim
+          </a>
+          <a href="https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg-3);border:1px solid rgba(118,185,0,0.15);border-radius:var(--r);padding:10px 14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(118,185,0,0.8);transition:border-color 0.18s;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#76b900;flex-shrink:0;"></span>Jetson Edge
+          </a>
+          <a href="https://developer.nvidia.com/deepstream-sdk" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg-3);border:1px solid rgba(118,185,0,0.15);border-radius:var(--r);padding:10px 14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(118,185,0,0.8);transition:border-color 0.18s;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#76b900;flex-shrink:0;"></span>DeepStream
+          </a>
+        </div>
+      </div>
+
+      <!-- CAT Block -->
+      <div style="background:var(--surface);border:1px solid rgba(255,178,0,0.2);border-radius:var(--r-xl);padding:36px 40px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ffb200,rgba(255,178,0,0.1));"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+          <!-- CAT wordmark -->
+          <a href="https://www.cat.com/en_US/products/new/equipment/construction.html" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0;">
+            <div style="font-family:var(--tanker);font-size:28px;color:#ffb200;letter-spacing:0.06em;line-height:1;">CAT</div>
+          </a>
+          <span style="font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,178,0,0.7);background:rgba(255,178,0,0.07);border:1px solid rgba(255,178,0,0.2);border-radius:var(--pill);padding:4px 12px;">OEM Opportunity</span>
+        </div>
+        <div style="font-family:var(--tanker);font-size:22px;color:var(--cream);margin-bottom:12px;letter-spacing:0.01em;">Caterpillar OEM Integration Path</div>
+        <p style="font-family:var(--satoshi);font-size:14px;line-height:1.75;color:var(--cream-dim);margin-bottom:24px;">HABITAT's Construct.Bot platform is designed for OEM integration with Caterpillar's heavy equipment and telematics infrastructure. Cat's global dealer network, site machine data, and autonomous machine ecosystem (Cat Command) represent a natural go-to-market channel for HABITAT fleet deployments at commercial scale.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <a href="https://www.cat.com/en_US/products/new/equipment/construction.html" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg-3);border:1px solid rgba(255,178,0,0.15);border-radius:var(--r);padding:10px 14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,178,0,0.8);transition:border-color 0.18s;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#ffb200;flex-shrink:0;"></span>Construction Equip
+          </a>
+          <a href="https://www.cat.com/en_US/support/operations/technology-solutions/cat-command.html" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg-3);border:1px solid rgba(255,178,0,0.15);border-radius:var(--r);padding:10px 14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,178,0,0.8);transition:border-color 0.18s;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#ffb200;flex-shrink:0;"></span>Cat Command
+          </a>
+          <a href="https://www.cat.com/en_US/support/operations/technology-solutions/visionlink.html" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg-3);border:1px solid rgba(255,178,0,0.15);border-radius:var(--r);padding:10px 14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,178,0,0.8);transition:border-color 0.18s;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#ffb200;flex-shrink:0;"></span>VisionLink Fleet
+          </a>
+          <a href="https://www.cat.com/en_US/products/new/equipment/construction/dozer.html" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;background:var(--bg-3);border:1px solid rgba(255,178,0,0.15);border-radius:var(--r);padding:10px 14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,178,0,0.8);transition:border-color 0.18s;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#ffb200;flex-shrink:0;"></span>Site Prep Fleet
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Market size + investor signal bar -->
+    <div class="fade-in" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:36px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;text-align:center;">
+      <div style="padding:0 24px;border-right:1px solid var(--border);">
+        <div style="font-family:var(--tanker);font-size:40px;color:var(--fire);letter-spacing:0.01em;line-height:1;">$12T</div>
+        <div style="font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream-dim);margin-top:6px;">Global Construction Market</div>
+      </div>
+      <div style="padding:0 24px;border-right:1px solid var(--border);">
+        <div style="font-family:var(--tanker);font-size:40px;color:var(--fire);letter-spacing:0.01em;line-height:1;">11</div>
+        <div style="font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream-dim);margin-top:6px;">Revenue Streams Day One</div>
+      </div>
+      <div style="padding:0 24px;border-right:1px solid var(--border);">
+        <div style="font-family:var(--tanker);font-size:40px;color:var(--fire);letter-spacing:0.01em;line-height:1;">72h</div>
+        <div style="font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream-dim);margin-top:6px;">Tiny Home Build Target</div>
+      </div>
+      <div style="padding:0 24px;">
+        <div style="font-family:var(--tanker);font-size:40px;color:var(--fire);letter-spacing:0.01em;line-height:1;">0</div>
+        <div style="font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream-dim);margin-top:6px;">Full-Stack Competitors</div>
+      </div>
+    </div>
+
+    <!-- Investor CTA -->
+    <div class="fade-in" style="margin-top:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:28px 36px;background:linear-gradient(135deg,rgba(224,90,30,0.06),rgba(224,90,30,0.02));border:1px solid var(--border-fire);border-radius:var(--r-xl);">
+      <div>
+        <div style="font-family:var(--tanker);font-size:22px;color:var(--cream);letter-spacing:0.01em;margin-bottom:5px;">Seeking strategic partners &amp; investors</div>
+        <div style="font-family:var(--satoshi);font-size:14px;color:var(--cream-dim);">NVIDIA ecosystem partners, Caterpillar dealer network, construction developers, and seed-stage investors welcome.</div>
+      </div>
+      <a href="mailto:blackcatrobotics.ai@gmail.com?subject=HABITAT%20Partnership%20Inquiry" class="btn btn-fire" style="white-space:nowrap;flex-shrink:0;">
+        Partner With Us
+        <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / WAITLIST -->
+<section class="cta-sec" id="waitlist">
+  <div class="cta-glow"></div>
+  <div class="wrap" style="position:relative;z-index:1;">
+    <div style="max-width:700px;margin:0 auto;">
+      <div class="eyebrow">Early Access</div>
+      <h2 class="cta-h2">Be first to build<br><em>with HABITAT</em></h2>
+      <p class="cta-p">Join the waitlist for early access to the AI design agent, priority project scheduling, and founding client pricing. Off-grid and disaster relief partners move to the front of the queue.</p>
+      <form class="cta-form" onsubmit="handleWL(event)">
+        <input type="email" class="cta-input" placeholder="your@email.com" required>
+        <button type="submit" class="btn btn-fire">
+          Join Waitlist
+          <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+      <p class="cta-note">No spam. Unsubscribe anytime.</p>
+      <p class="cta-success" id="wl-success">&#10003; You&#8217;re on the list. We&#8217;ll be in touch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot">
+    <div>
+      <div class="foot-name">BlackCat HABITAT</div>
+      <div class="foot-sub">A BlackCat Robotics Division &mdash; habitat.blackcatrobotics.com</div>
+    </div>
+    <ul class="foot-links">
+      <li><a href="https://blackcatrobotics.com">BlackCat Robotics</a></li>
+      <li><a href="https://dashboard.blackcatrobotics.com">TechMedix</a></li>
+      <li><a href="mailto:blackcatrobotics.ai@gmail.com">Contact</a></li>
+    </ul>
+    <div class="foot-copy">&copy; 2026 BlackCat Robotics. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+
+// Waitlist form
+function handleWL(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('button');
+  const inp=e.target.querySelector('input');
+  const suc=document.getElementById('wl-success');
+  btn.textContent='Submitting…';
+  btn.disabled=true;
+  setTimeout(()=>{
+    inp.value='';
+    btn.textContent='Joined!';
+    suc.style.display='block';
+  },800);
+}
+
+// Fade-in on scroll
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target);}
+  });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// Nav scroll tint
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('main-nav');
+  if(nav) nav.style.borderBottomColor=window.scrollY>60?'rgba(224,90,30,0.2)':'rgba(232,229,223,0.08)';
+});
+
+// =============================================
+// ANIMATED VERTICAL STEPPER
+// =============================================
+(function(){
+  const steps = document.querySelectorAll('.step-row');
+  const label = document.getElementById('active-step-label');
+  const sub   = document.getElementById('active-step-sub');
+  const pct   = document.getElementById('step-pct');
+  const ctr   = document.getElementById('step-counter');
+  const bar   = document.getElementById('progress-bar');
+
+  const stepData = [
+    {label:'Design',    sub:'AI generating your CAD blueprint',        pct:20},
+    {label:'Materials', sub:'Sourcing and delivery to site',            pct:40},
+    {label:'Build',     sub:'Construct.Bot executing the build plan',   pct:60},
+    {label:'Solar',     sub:'Energy systems being integrated',          pct:80},
+    {label:'Move-In',   sub:'Your home is ready for occupancy',         pct:100},
+  ];
+
+  let current = 0;
+  let autoTimer = null;
+
+  function activate(idx){
+    current = idx;
+    steps.forEach((row, i) => {
+      row.classList.remove('is-active','is-done');
+      if(i < idx)   row.classList.add('is-done');
+      if(i === idx) row.classList.add('is-active');
+    });
+    const d = stepData[idx];
+    if(label) label.textContent = d.label;
+    if(sub)   sub.textContent   = d.sub;
+    if(pct)   pct.textContent   = d.pct + '%';
+    if(ctr)   ctr.textContent   = idx + 1;
+    if(bar)   bar.style.width   = d.pct + '%';
+  }
+
+  function startAuto(){
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => activate((current + 1) % steps.length), 3200);
+  }
+
+  // Click to jump + restart auto
+  steps.forEach((row, i) => {
+    row.style.cursor = 'pointer';
+    row.addEventListener('click', () => {
+      clearInterval(autoTimer);
+      activate(i);
+      setTimeout(startAuto, 5000);
+    });
+  });
+
+  // Scroll-into-view activates current step
+  const stepObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const idx = Array.from(steps).indexOf(entry.target);
+        if(idx > -1) activate(idx);
+      }
+    });
+  },{threshold:0.6, rootMargin:'0px 0px -80px 0px'});
+  steps.forEach(s => stepObs.observe(s));
+
+  // Auto-cycle only when section is visible
+  // Auto-cycle only when section is visible
+  const secObs = new IntersectionObserver(([e]) => {
+    if(e.isIntersecting){ startAuto(); }
+    else { clearInterval(autoTimer); }
+  },{threshold:0.1});
+  const howSec = document.getElementById('how');
+  if(howSec) secObs.observe(howSec);
+
+  activate(0);
+})();
+</script>
+
+</body>
+</html>
