@@ -336,6 +336,74 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
 .tier-card-signature{border-color:rgba(224,90,30,0.22);box-shadow:0 0 48px rgba(224,90,30,0.07),0 8px 32px rgba(0,0,0,0.32);}
 .tier-card-signature:hover{box-shadow:0 0 72px rgba(224,90,30,0.14),0 16px 56px rgba(0,0,0,0.48) !important;}
 @media(max-width:1100px){.tiers-grid{grid-template-columns:1fr 1fr;}}
+
+/* ========================================
+   HERO TICKER
+   ======================================== */
+.hero-ticker{background:rgba(0,0,0,0.45);border-top:1px solid rgba(224,90,30,0.15);border-bottom:1px solid rgba(224,90,30,0.15);padding:11px 0;overflow:hidden;display:flex;align-items:center;}
+.hero-ticker-label{flex-shrink:0;font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);padding:0 22px;border-right:1px solid rgba(224,90,30,0.2);margin-right:20px;white-space:nowrap;}
+.hero-ticker-track{flex:1;overflow:hidden;}
+.hero-ticker-inner{display:inline-flex;gap:64px;white-space:nowrap;animation:ticker 40s linear infinite;}
+.hero-ticker-item{font-family:var(--chakra);font-size:10px;letter-spacing:0.06em;color:rgba(232,229,223,0.42);display:inline-flex;align-items:center;gap:10px;}
+.hero-ticker-item::before{content:'→';color:var(--fire);flex-shrink:0;}
+
+/* ========================================
+   CONSTRUCT.BOT DEEP SPEC
+   ======================================== */
+.cb-spec-sec{background:var(--bg);border-bottom:1px solid var(--border);}
+.cb-spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:56px;}
+.cb-spec-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:26px 22px;transition:border-color 0.2s;}
+.cb-spec-card:hover{border-color:var(--border-fire);}
+.cb-spec-icon{font-size:24px;margin-bottom:12px;line-height:1;}
+.cb-spec-label{font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--fire);margin-bottom:6px;}
+.cb-spec-val{font-family:var(--satoshi);font-size:15px;font-weight:700;color:var(--cream);margin-bottom:6px;}
+.cb-spec-sub{font-family:var(--satoshi);font-size:12px;line-height:1.6;color:var(--cream-dim);}
+.cmp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:var(--r-xl);}
+.cmp-table{width:100%;border-collapse:collapse;font-family:var(--chakra);font-size:11px;}
+.cmp-table th,.cmp-table td{padding:14px 20px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle;}
+.cmp-table tr:last-child td,.cmp-table tr:last-child th{border-bottom:none;}
+.cmp-table thead th{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,229,223,0.3);background:var(--surface-2);}
+.cmp-table thead .cmp-us-head{color:var(--fire);background:rgba(224,90,30,0.08);}
+.cmp-table tbody tr:hover td{background:rgba(232,229,223,0.015);}
+.cmp-table tbody td:first-child{color:rgba(232,229,223,0.42);font-size:10px;letter-spacing:0.08em;white-space:nowrap;}
+.cmp-table tbody td{color:rgba(232,229,223,0.55);}
+.cmp-table tbody td.cmp-us-cell{color:var(--cream);font-weight:600;background:rgba(224,90,30,0.04);}
+.cmp-badge{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:0.14em;color:var(--fire);background:rgba(224,90,30,0.1);border:1px solid rgba(224,90,30,0.25);border-radius:var(--pill);padding:3px 10px;margin-left:8px;vertical-align:middle;}
+
+/* ========================================
+   BUILD LOG
+   ======================================== */
+.build-sec{background:var(--bg-3);border-bottom:1px solid var(--border);}
+.build-scroll-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px;}
+.build-scroll-row{display:flex;gap:20px;min-width:max-content;padding:4px 2px;}
+.build-card{width:340px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;flex-shrink:0;transition:all 0.22s;}
+.build-card:hover{border-color:var(--border-fire);transform:translateY(-3px);box-shadow:var(--sh-lg);}
+.build-card-img{height:200px;overflow:hidden;background:var(--bg-2);position:relative;}
+.build-card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.72) saturate(0.8);transition:filter 0.3s;}
+.build-card:hover .build-card-img img{filter:brightness(0.85) saturate(0.9);}
+.build-card-status{position:absolute;top:12px;left:12px;font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;padding:5px 11px;border-radius:var(--pill);backdrop-filter:blur(8px);}
+.build-card-status.complete{color:#4ade80;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);}
+.build-card-status.in-progress{color:var(--fire);background:rgba(224,90,30,0.12);border:1px solid var(--border-fire);}
+.build-card-status.planned{color:rgba(232,229,223,0.5);background:rgba(232,229,223,0.06);border:1px solid rgba(232,229,223,0.12);}
+.build-card-tag{position:absolute;bottom:12px;right:12px;font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--fire);background:rgba(11,12,14,0.88);border:1px solid var(--border-fire);border-radius:var(--pill);padding:4px 10px;backdrop-filter:blur(6px);}
+.build-card-body{padding:22px 24px 26px;}
+.build-card-id{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);margin-bottom:6px;}
+.build-card-title{font-family:var(--tanker);font-size:20px;color:var(--cream);margin-bottom:14px;letter-spacing:0.01em;line-height:1.05;}
+.build-card-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.build-spec-item{display:flex;flex-direction:column;gap:2px;}
+.build-spec-lbl{font-family:var(--chakra);font-size:8px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(232,229,223,0.26);}
+.build-spec-val{font-family:var(--chakra);font-size:11px;font-weight:600;color:rgba(232,229,223,0.68);letter-spacing:0.04em;}
+
+/* ========================================
+   HOME AS A SERVICE
+   ======================================== */
+.haas-sec{background:var(--bg-2);border-bottom:1px solid var(--border);}
+.haas-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:72px;}
+.haas-col-n{font-family:var(--tanker);font-size:64px;color:rgba(224,90,30,0.10);letter-spacing:-0.02em;line-height:1;margin-bottom:16px;}
+.haas-col-h{font-family:var(--tanker);font-size:22px;color:var(--cream);letter-spacing:0.01em;margin-bottom:10px;line-height:1.1;}
+.haas-col-p{font-family:var(--satoshi);font-size:15px;line-height:1.82;color:var(--cream-dim);}
+@media(max-width:1024px){.cb-spec-grid{grid-template-columns:1fr 1fr;}.haas-cols{grid-template-columns:1fr;gap:36px;}}
+@media(max-width:600px){.cb-spec-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -371,12 +439,12 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
     <p class="hero-sub">One platform. Every decision.<br>Every material. Every bolt.</p>
     <p class="hero-p">HABITAT is the world&#8217;s first vertically integrated AI-driven construction platform, taking you from initial concept to a fully built, furnished, and move-in-ready home. Powered by autonomous Construct.Bot fleets.</p>
     <div class="hero-btns">
-      <a href="#waitlist" class="btn btn-fire">
-        Join the Waitlist
+      <a href="mailto:blackcatrobotics.ai@gmail.com?subject=Design%20My%20HABITAT%20Inquiry" class="btn btn-fire">
+        Design My HABITAT
         <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a href="#construct-bot" class="btn btn-ghost">
-        Meet Construct.Bot
+      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-ghost">
+        Talk to HABITAT AI
         <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -453,6 +521,25 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
   </div>
 </section>
 
+<!-- HERO TICKER — competitive intel strip -->
+<div class="hero-ticker">
+  <div class="hero-ticker-label">Signal</div>
+  <div class="hero-ticker-track">
+    <div class="hero-ticker-inner">
+      <span class="hero-ticker-item">ICON's Vulcan prints 3,000 sq ft in under 2 weeks</span>
+      <span class="hero-ticker-item">WASP Crane WASP starts at €160,000 — no software layer</span>
+      <span class="hero-ticker-item">US housing shortage: 10 million affordable homes needed now</span>
+      <span class="hero-ticker-item">3D-printed walls completed 350% stronger than traditional construction</span>
+      <span class="hero-ticker-item">BlackCat HABITAT: from blueprint to move-in, fully autonomous</span>
+      <span class="hero-ticker-item">ICON's Vulcan prints 3,000 sq ft in under 2 weeks</span>
+      <span class="hero-ticker-item">WASP Crane WASP starts at €160,000 — no software layer</span>
+      <span class="hero-ticker-item">US housing shortage: 10 million affordable homes needed now</span>
+      <span class="hero-ticker-item">3D-printed walls completed 350% stronger than traditional construction</span>
+      <span class="hero-ticker-item">BlackCat HABITAT: from blueprint to move-in, fully autonomous</span>
+    </div>
+  </div>
+</div>
+
 <!-- MARQUEE -->
 <div class="marquee">
   <div class="marquee-track">
@@ -478,6 +565,246 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
     <span class="m-item"><span class="m-dot"></span>NVIDIA Powered</span>
   </div>
 </div>
+
+<!-- ============================================
+     CONSTRUCT.BOT DEEP SPEC + COMPETITOR TABLE
+     ============================================ -->
+<section class="cb-spec-sec sec" id="bot-specs">
+  <div class="wrap">
+    <div class="sec-head fade-in" style="max-width:700px;">
+      <div class="eyebrow">Construct.Bot · The Machine</div>
+      <h2 class="t-h2">Built different.<br><em>Runs forever.</em></h2>
+      <p class="t-body" style="margin-top:14px;max-width:560px;">Every ICON Vulcan needs an operator. Every WASP Crane needs a crew. Construct.Bot runs autonomously — guided by the HABITAT AI planning engine, maintained by TechMedix, and updated over the air.</p>
+    </div>
+
+    <!-- 4 spec cards -->
+    <div class="cb-spec-grid fade-in">
+      <div class="cb-spec-card">
+        <div class="cb-spec-icon">📐</div>
+        <div class="cb-spec-label">Print Area</div>
+        <div class="cb-spec-val">50 m² per unit · unlimited with multi-bot mesh</div>
+        <div class="cb-spec-sub">Expandable: add units to scale any project size. Fleet-mode enabled from day one.</div>
+      </div>
+      <div class="cb-spec-card">
+        <div class="cb-spec-icon">🧱</div>
+        <div class="cb-spec-label">Materials</div>
+        <div class="cb-spec-val">Cement · local earth · lime · geopolymer</div>
+        <div class="cb-spec-sub">AI-mixed per site conditions and local sourcing. No proprietary compound required.</div>
+      </div>
+      <div class="cb-spec-card">
+        <div class="cb-spec-icon">⚙️</div>
+        <div class="cb-spec-label">Autonomy</div>
+        <div class="cb-spec-val">200+ hour continuous operation on tether power</div>
+        <div class="cb-spec-sub">Zero crew required during active print phases. TechMedix monitors every bot remotely.</div>
+      </div>
+      <div class="cb-spec-card">
+        <div class="cb-spec-icon">🧠</div>
+        <div class="cb-spec-label">Intelligence</div>
+        <div class="cb-spec-val">HABITAT AI planning engine + BlackCat OS</div>
+        <div class="cb-spec-sub">TechMedix predictive maintenance built in. OTA updates from HABITAT cloud.</div>
+      </div>
+    </div>
+
+    <!-- Competitor comparison table -->
+    <div class="fade-in">
+      <div style="margin-bottom:20px;">
+        <div class="eyebrow" style="margin-bottom:10px;">How We Stack Up</div>
+        <p class="t-body" style="max-width:500px;font-size:14px;">ICON builds printers. WASP builds printers. HABITAT builds the operating system that makes autonomous construction possible at scale.</p>
+      </div>
+      <div class="cmp-wrap">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th style="min-width:190px;">Feature</th>
+              <th style="min-width:170px;">ICON Vulcan</th>
+              <th style="min-width:170px;">WASP Crane WASP</th>
+              <th class="cmp-us-head" style="min-width:200px;">Construct.Bot <span class="cmp-badge">Our Tech</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Operator required</td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td class="cmp-us-cell">No — autonomous</td>
+            </tr>
+            <tr>
+              <td>Software layer</td>
+              <td>Tablet OS only</td>
+              <td>App only</td>
+              <td class="cmp-us-cell">Full AI + BlackCat OS</td>
+            </tr>
+            <tr>
+              <td>Materials</td>
+              <td>Lavacrete only</td>
+              <td>Cement / earth</td>
+              <td class="cmp-us-cell">Any — AI-mixed per site</td>
+            </tr>
+            <tr>
+              <td>Maintenance platform</td>
+              <td>None</td>
+              <td>None</td>
+              <td class="cmp-us-cell">TechMedix built-in</td>
+            </tr>
+            <tr>
+              <td>Energy independence</td>
+              <td>Add-on</td>
+              <td>Not included</td>
+              <td class="cmp-us-cell">Standard — solar + battery</td>
+            </tr>
+            <tr>
+              <td>Business model</td>
+              <td>Per-build</td>
+              <td>Hardware sale</td>
+              <td class="cmp-us-cell">Home as a Service</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     BUILD LOG — COMPLETED BUILD SHOWCASE
+     ============================================ -->
+<section class="build-sec sec" id="build-log">
+  <div class="wrap">
+    <div class="sec-head fade-in">
+      <div class="eyebrow">Build Log</div>
+      <h2 class="t-h2">From blueprint<br><em>to move-in.</em></h2>
+      <p class="t-body" style="max-width:520px;">Every HABITAT build is logged from first print layer to certificate of occupancy. Real builds, real specs, real timelines.</p>
+    </div>
+    <div class="build-scroll-wrap fade-in">
+      <div class="build-scroll-row">
+
+        <!-- Build 001 -->
+        <div class="build-card">
+          <div class="build-card-img">
+            <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&auto=format&fit=crop&q=85" alt="HABITAT CORE prototype 3D printed home" loading="lazy">
+            <div class="build-card-status complete">● Complete</div>
+            <div class="build-card-tag">TechMedix Active</div>
+          </div>
+          <div class="build-card-body">
+            <div class="build-card-id">Build 001</div>
+            <div class="build-card-title">HABITAT CORE Prototype</div>
+            <div class="build-card-specs">
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Size</div>
+                <div class="build-spec-val">800 sq ft</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Print Time</div>
+                <div class="build-spec-val">72 hours</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Material</div>
+                <div class="build-spec-val">Cement + local aggregate</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Location</div>
+                <div class="build-spec-val">Cumby, Texas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Build 002 -->
+        <div class="build-card">
+          <div class="build-card-img">
+            <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&auto=format&fit=crop&q=85" alt="Off-grid HABITAT PRO under construction" loading="lazy">
+            <div class="build-card-status in-progress">● In Progress</div>
+            <div class="build-card-tag">Energy Independent</div>
+          </div>
+          <div class="build-card-body">
+            <div class="build-card-id">Build 002</div>
+            <div class="build-card-title">Off-Grid HABITAT PRO</div>
+            <div class="build-card-specs">
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Size</div>
+                <div class="build-spec-val">1,400 sq ft</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Est. Print Time</div>
+                <div class="build-spec-val">120 hours</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Material</div>
+                <div class="build-spec-val">Geopolymer + solar skin</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Location</div>
+                <div class="build-spec-val">West Texas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Build 003 -->
+        <div class="build-card">
+          <div class="build-card-img">
+            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&auto=format&fit=crop&q=85" alt="HABITAT ELITE community multi-unit development" loading="lazy">
+            <div class="build-card-status planned">● Planned · Q4 2026</div>
+            <div class="build-card-tag">Multi-Bot Mesh</div>
+          </div>
+          <div class="build-card-body">
+            <div class="build-card-id">Build 003</div>
+            <div class="build-card-title">HABITAT ELITE Community</div>
+            <div class="build-card-specs">
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Scale</div>
+                <div class="build-spec-val">12 units · 900 sq ft ea.</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Est. Print Time</div>
+                <div class="build-spec-val">30 days · 4 bots</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Material</div>
+                <div class="build-spec-val">AI-specified per site</div>
+              </div>
+              <div class="build-spec-item">
+                <div class="build-spec-lbl">Location</div>
+                <div class="build-spec-val">TBD</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     HOME AS A SERVICE — THE MODEL
+     ============================================ -->
+<section class="haas-sec sec">
+  <div class="wrap">
+    <div class="fade-in" style="max-width:640px;margin-bottom:64px;">
+      <div class="eyebrow">The Model</div>
+      <h2 class="t-h2">You don't buy a house.<br><em>You join the Grid.</em></h2>
+      <p class="t-body" style="margin-top:14px;">HABITAT isn't a construction company. It is a vertically integrated platform — AI design, autonomous build, and lifetime maintenance under one subscription. Most homes are built once and forgotten. HABITAT homes are actively managed from day one.</p>
+    </div>
+    <div class="haas-cols fade-in">
+      <div>
+        <div class="haas-col-n">01</div>
+        <div class="haas-col-h">Design</div>
+        <p class="haas-col-p">Your vision, not a floor plan. Describe your home to the HABITAT AI. A full CAD blueprint is generated, refined, and submitted for permit — in minutes. No architect, no back-and-forth, no waiting.</p>
+      </div>
+      <div>
+        <div class="haas-col-n">02</div>
+        <div class="haas-col-h">Build</div>
+        <p class="haas-col-p">Construct.Bots deploy. No crew, no delays. AI-mixed materials, real-time print monitoring, and TechMedix watching every bot 24/7. Average build: under two weeks. Structure is printed. Solar and battery are integrated. Done.</p>
+      </div>
+      <div>
+        <div class="haas-col-n">03</div>
+        <div class="haas-col-h">Own</div>
+        <p class="haas-col-p">Solar, battery, and maintenance included. Energy independence is the architecture — not an add-on. TechMedix monitors your home's systems the same way it monitors robot fleets: predictively, remotely, and permanently.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================
      HABITAT LUXURY TIERS
@@ -621,8 +948,8 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
           <div class="bot-spec-val">Over-the-air updates from HABITAT cloud</div>
         </div>
       </div>
-      <a href="#how" class="btn btn-fire">
-        See It In Action
+      <a href="#bot-specs" class="btn btn-fire">
+        See Full Specs
         <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
