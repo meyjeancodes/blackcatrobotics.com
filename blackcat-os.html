@@ -133,7 +133,7 @@ ul { list-style: none; }
 .pipe-label { font-family: var(--serif); font-size: 16px; color: #fff; margin-bottom: 8px; letter-spacing: -0.01em; }
 .pipe-sub { font-size: 11px; line-height: 1.6; color: rgba(255,255,255,0.35); font-family: var(--mono); letter-spacing: 0.03em; }
 .pipe-arrow { position: absolute; top: 52px; right: -16px; width: 32px; display: flex; align-items: center; justify-content: center; z-index: 2; }
-.pipe-arrow::after { content: '→'; font-size: 14px; color: rgba(232,78,27,0.4); }
+.pipe-arrow::after { content: '\2192'; font-size: 14px; color: rgba(232,78,27,0.4); }
 .pipe-step:last-child .pipe-arrow { display: none; }
 @media(max-width:900px) { .pipeline { grid-template-columns: 1fr 1fr; gap: 32px; } .pipeline::before { display: none; } .pipe-arrow { display: none; } .pipe-node { width: 80px; height: 80px; } }
 @media(max-width:500px) { .pipeline { grid-template-columns: 1fr; } }
@@ -157,7 +157,7 @@ ul { list-style: none; }
 .prod-desc { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.4); flex: 1; }
 .prod-features { display: flex; flex-direction: column; gap: 8px; }
 .prod-feat { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
-.prod-feat::before { content: '→'; color: var(--fire); font-size: 11px; }
+.prod-feat::before { content: '\2192'; color: var(--fire); font-size: 11px; }
 .prod-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fire); text-decoration: none; margin-top: 8px; transition: gap 0.2s; }
 .prod-link:hover { gap: 14px; }
 @media(max-width:900px) { .products-grid { grid-template-columns: 1fr; } }
@@ -282,7 +282,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     <li><a href="#products">Products</a></li>
     <li><a href="#market">Market</a></li>
     <li><a href="#model">Model</a></li>
-    <li><a href="/" class="nav-back">← Main Site</a></li>
+    <li><a href="/" class="nav-back">&larr; Main Site</a></li>
     <li><a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="nav-cta-btn">Start TechMedix</a></li>
   </ul>
   <button class="nav-burger" id="burger" onclick="toggleNav()" aria-label="Menu">
@@ -306,7 +306,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
       BlackCat turns human intent into real-world execution — across robots, infrastructure, and autonomous systems at scale.
     </p>
     <div class="hero-actions reveal reveal-delay-3">
-      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Start TechMedix →</a>
+      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Start TechMedix &rarr;</a>
       <a href="#pipeline" class="btn btn-ghost">See the Architecture</a>
       <a href="#cta" class="btn btn-ghost">Request Investor Deck</a>
     </div>
@@ -323,14 +323,14 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     <span class="manifesto-item">AI is leverage</span>
     <span class="manifesto-item">Prompting is temporary</span>
     <span class="manifesto-item">Problem framing is power</span>
-    <span class="manifesto-item">Control → Orchestration → Delegation</span>
+    <span class="manifesto-item">Control &rarr; Orchestration &rarr; Delegation</span>
     <span class="manifesto-item">The interface disappears</span>
     <span class="manifesto-item">Execution beats information</span>
     <span class="manifesto-item">Ownership is leverage</span>
     <span class="manifesto-item">AI is leverage</span>
     <span class="manifesto-item">Prompting is temporary</span>
     <span class="manifesto-item">Problem framing is power</span>
-    <span class="manifesto-item">Control → Orchestration → Delegation</span>
+    <span class="manifesto-item">Control &rarr; Orchestration &rarr; Delegation</span>
     <span class="manifesto-item">The interface disappears</span>
     <span class="manifesto-item">Execution beats information</span>
     <span class="manifesto-item">Ownership is leverage</span>
@@ -364,7 +364,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
       <div class="principle reveal reveal-delay-3">
         <div class="principle-n">03</div>
         <div class="principle-body">
-          <h4>Control → Orchestration → Delegation</h4>
+          <h4>Control &rarr; Orchestration &rarr; Delegation</h4>
           <p>We are moving from using AI to directing systems that execute without hand-holding at every step.</p>
         </div>
       </div>
@@ -390,7 +390,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
 <section class="sec" id="pipeline">
   <div class="pipe-head">
     <div class="eyebrow reveal">System Architecture</div>
-    <h2 class="reveal reveal-delay-1">Intent → Plan → Simulate<br>→ Orchestrate → Execute → Learn</h2>
+    <h2 class="reveal reveal-delay-1">Intent &rarr; Plan &rarr; Simulate<br>&rarr; Orchestrate &rarr; Execute &rarr; Learn</h2>
   </div>
   <div class="pipeline">
     <div class="pipe-step reveal reveal-delay-1">
@@ -464,11 +464,11 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
       <div class="prod-features">
         <div class="prod-feat">Three-layer diagnostic AI pipeline</div>
         <div class="prod-feat">Unitree G1 · H1-2 · B2 certified</div>
-        <div class="prod-feat">Rule engine → VLA → Claude AI</div>
+        <div class="prod-feat">Rule engine &rarr; VLA &rarr; Claude AI</div>
         <div class="prod-feat">Technician dispatch + fleet ops</div>
         <div class="prod-feat">$299/robot/month</div>
       </div>
-      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="prod-link">Open TechMedix →</a>
+      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="prod-link">Open TechMedix &rarr;</a>
     </div>
     <div class="prod-card reveal reveal-delay-1">
       <div class="prod-status"><div class="prod-status-dot"></div><span class="prod-status-txt">Live — habitat.blackcatrobotics.com</span></div>
@@ -482,7 +482,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
         <div class="prod-feat">Residential · ADU · Commercial</div>
         <div class="prod-feat">TechMedix monitoring built in</div>
       </div>
-      <a href="https://habitat.blackcatrobotics.com" target="_blank" rel="noopener" class="prod-link">View HABITAT →</a>
+      <a href="https://habitat.blackcatrobotics.com" target="_blank" rel="noopener" class="prod-link">View HABITAT &rarr;</a>
     </div>
     <div class="prod-card reveal reveal-delay-2">
       <div class="prod-status"><div class="prod-status-dot soon"></div><span class="prod-status-txt">Coming 2027</span></div>
@@ -496,7 +496,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
         <div class="prod-feat">Energy storage health monitoring</div>
         <div class="prod-feat">Waitlist open</div>
       </div>
-      <a href="#cta" class="prod-link">Join Waitlist →</a>
+      <a href="#cta" class="prod-link">Join Waitlist &rarr;</a>
     </div>
   </div>
 </section>
@@ -514,22 +514,22 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     </div>
     <div class="uc-steps">
       <div class="uc-step reveal reveal-delay-1">
-        <div class="uc-step-n">L2 → DESIGN</div>
+        <div class="uc-step-n">L2 &rarr; DESIGN</div>
         <div class="uc-step-action">Design agent</div>
         <div class="uc-step-detail">Generates floor plan variants within budget, structural constraints, site dimensions</div>
       </div>
       <div class="uc-step reveal reveal-delay-2">
-        <div class="uc-step-n">L2 → PLAN</div>
+        <div class="uc-step-n">L2 &rarr; PLAN</div>
         <div class="uc-step-action">Planning agent</div>
         <div class="uc-step-detail">Creates print path, material schedule, robot deployment sequence</div>
       </div>
       <div class="uc-step reveal reveal-delay-3">
-        <div class="uc-step-n">L3 → SIM</div>
+        <div class="uc-step-n">L3 &rarr; SIM</div>
         <div class="uc-step-action">Omniverse sim</div>
         <div class="uc-step-detail">Full build simulated before a single robot moves. Stress tested, optimized.</div>
       </div>
       <div class="uc-step reveal reveal-delay-4">
-        <div class="uc-step-n">L4 → ORC</div>
+        <div class="uc-step-n">L4 &rarr; ORC</div>
         <div class="uc-step-action">Orchestrator</div>
         <div class="uc-step-detail">Schedules Construct.Bot fleet, coordinates print heads, manages material logistics</div>
       </div>
@@ -541,7 +541,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     </div>
     <div class="uc-output reveal">
       <div>
-        <div class="uc-output-label">✓ Outcome delivered</div>
+        <div class="uc-output-label">&#10003; Outcome delivered</div>
         <div class="uc-output-text">100 homes built. On budget. On schedule. Zero crew.</div>
       </div>
       <div class="uc-stats">
@@ -628,7 +628,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     <div class="moat-grid">
       <div class="moat-card reveal">
         <h4>Full-stack orchestration</h4>
-        <p>No one else connects intent → simulation → robot execution → maintenance in a single platform. BlackCat owns the full loop.</p>
+        <p>No one else connects intent &rarr; simulation &rarr; robot execution &rarr; maintenance in a single platform. BlackCat owns the full loop.</p>
       </div>
       <div class="moat-card reveal reveal-delay-1">
         <h4>Physical + digital integration</h4>
@@ -645,16 +645,16 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     </div>
     <div class="flywheel reveal">
       <h3>The data flywheel</h3>
-      <p>More robots → more telemetry → smarter failure models → better predictions → more robots trust the platform. This loop is impossible to replicate without the data.</p>
+      <p>More robots &rarr; more telemetry &rarr; smarter failure models &rarr; better predictions &rarr; more robots trust the platform. This loop is impossible to replicate without the data.</p>
       <div class="flywheel-loop">
         <div class="fw-item">More robots</div>
-        <div class="fw-arrow">→</div>
+        <div class="fw-arrow">&rarr;</div>
         <div class="fw-item">More telemetry</div>
-        <div class="fw-arrow">→</div>
+        <div class="fw-arrow">&rarr;</div>
         <div class="fw-item">Smarter models</div>
-        <div class="fw-arrow">→</div>
+        <div class="fw-arrow">&rarr;</div>
         <div class="fw-item">Better predictions</div>
-        <div class="fw-arrow">→</div>
+        <div class="fw-arrow">&rarr;</div>
         <div class="fw-item">More robots</div>
         <div class="fw-arrow">↺</div>
       </div>
@@ -713,7 +713,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     <h2>We are building<br>the system that<br>executes reality.</h2>
     <p>From construction to infrastructure to autonomous cities. BlackCat is not a chatbot. Not a tool. Not a feature. It is an operating system for deploying intelligence into the physical world.</p>
     <div class="cta-actions">
-      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-white">Start TechMedix — $299/mo →</a>
+      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-white">Start TechMedix — $299/mo &rarr;</a>
       <a href="mailto:blackcatrobotics.ai@gmail.com?subject=Investor%20Deck%20Request%20—%20BlackCat%20OS" class="btn btn-white-outline">Request Investor Deck</a>
     </div>
   </div>

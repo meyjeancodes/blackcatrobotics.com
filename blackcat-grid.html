@@ -134,7 +134,7 @@ ul { list-style: none; }
 .how-card-desc { font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.4); flex: 1; }
 .how-card-feats { display: flex; flex-direction: column; gap: 8px; }
 .how-card-feat { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
-.how-card-feat::before { content: '→'; color: var(--fire); font-size: 11px; }
+.how-card-feat::before { content: '\2192'; color: var(--fire); font-size: 11px; }
 @media(max-width:900px) { .how-cards { grid-template-columns: 1fr; } }
 
 /* ─── HOW IT WORKS ─── */
@@ -248,7 +248,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     <li><a href="#hiw">How It Works</a></li>
     <li><a href="#market">Market</a></li>
     <li><a href="#usecases">Use Cases</a></li>
-    <li><a href="/" class="nav-back">← Main Site</a></li>
+    <li><a href="/" class="nav-back">&larr; Main Site</a></li>
     <li><a href="#waitlist" class="nav-cta-btn">Join Waitlist</a></li>
   </ul>
   <button class="nav-burger" id="burger" onclick="toggleNav()" aria-label="Menu">
@@ -307,7 +307,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
       BlackCat Grid turns distributed charging infrastructure into an intelligent network — scheduling, billing, and grid trading from a single node-based platform.
     </p>
     <div class="hero-actions reveal reveal-delay-3">
-      <a href="#waitlist" class="btn btn-fire">Join the Waitlist →</a>
+      <a href="#waitlist" class="btn btn-fire">Join the Waitlist &rarr;</a>
       <a href="#how" class="btn btn-ghost">Explore the Platform</a>
     </div>
     <div class="hero-scroll-hint reveal reveal-delay-4">
@@ -349,7 +349,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     </div>
     <div class="how-cards reveal reveal-delay-1">
       <div class="how-card">
-        <div class="how-card-icon">⚡</div>
+        <div class="how-card-icon">01</div>
         <div class="how-card-tag">Layer 1</div>
         <div class="how-card-name">Charge Node Management</div>
         <div class="how-card-desc">Intelligent scheduling across your entire charging network. Dynamic load balancing, priority queuing for fleet vehicles, and predictive maintenance alerts before chargers go offline.</div>
@@ -361,7 +361,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
         </div>
       </div>
       <div class="how-card">
-        <div class="how-card-icon">💳</div>
+        <div class="how-card-icon">02</div>
         <div class="how-card-tag">Layer 2</div>
         <div class="how-card-name">Node-Based Billing</div>
         <div class="how-card-desc">Per-session, per-vehicle, and per-fleet billing with automated invoicing. Integrate with existing fleet management software or use Grid's native cost allocation engine.</div>
@@ -373,7 +373,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
         </div>
       </div>
       <div class="how-card">
-        <div class="how-card-icon">🔋</div>
+        <div class="how-card-icon">03</div>
         <div class="how-card-tag">Layer 3</div>
         <div class="how-card-name">Energy Grid Trading</div>
         <div class="how-card-desc">Participate in wholesale energy markets through FERC Order 2222 compliant virtual power plant aggregation. Your idle fleet batteries become a grid-scale revenue asset.</div>
@@ -398,31 +398,31 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     <div class="hiw-grid reveal reveal-delay-1">
       <div class="hiw-cell">
         <div class="hiw-n">01</div>
-        <div class="hiw-icon">🔌</div>
+        <div class="hiw-icon">01</div>
         <div class="hiw-title">Connect Hardware</div>
         <div class="hiw-desc">Any OCPP-compliant charger onboards to Grid in minutes. Firmware is deployed OTA. No truck roll required.</div>
-        <div class="hiw-detail">OCPP 1.6 + 2.0.1 → Node registered</div>
+        <div class="hiw-detail">OCPP 1.6 + 2.0.1 &rarr; Node registered</div>
       </div>
       <div class="hiw-cell">
         <div class="hiw-n">02</div>
-        <div class="hiw-icon">🗓</div>
+        <div class="hiw-icon">02</div>
         <div class="hiw-title">Schedule Charging</div>
         <div class="hiw-desc">Grid's AI engine analyzes fleet departure times, grid prices, and charger capacity. Vehicles charge at the lowest cost window without missing dispatch.</div>
-        <div class="hiw-detail">Fleet plan → Smart schedule → Executed</div>
+        <div class="hiw-detail">Fleet plan &rarr; Smart schedule &rarr; Executed</div>
       </div>
       <div class="hiw-cell">
         <div class="hiw-n">03</div>
-        <div class="hiw-icon">💸</div>
+        <div class="hiw-icon">03</div>
         <div class="hiw-title">Bill Automatically</div>
         <div class="hiw-desc">Every session is logged per vehicle, per driver, per fleet account. Invoices generate automatically. Disputes resolve with session telemetry.</div>
-        <div class="hiw-detail">Session telemetry → Invoice → Exported</div>
+        <div class="hiw-detail">Session telemetry &rarr; Invoice &rarr; Exported</div>
       </div>
       <div class="hiw-cell">
         <div class="hiw-n">04</div>
-        <div class="hiw-icon">📈</div>
+        <div class="hiw-icon">04</div>
         <div class="hiw-title">Trade Energy</div>
         <div class="hiw-desc">When vehicles sit idle, Grid aggregates their battery capacity and bids into wholesale energy markets. Revenue flows back to the fleet operator.</div>
-        <div class="hiw-detail">Idle capacity → Grid bid → Revenue split</div>
+        <div class="hiw-detail">Idle capacity &rarr; Grid bid &rarr; Revenue split</div>
       </div>
     </div>
   </div>
@@ -585,7 +585,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
           <textarea id="message" name="message" placeholder="Tell us about your charging infrastructure challenges..."></textarea>
         </div>
       </div>
-      <button type="submit" class="btn btn-fire form-submit">Request Early Access →</button>
+      <button type="submit" class="btn btn-fire form-submit">Request Early Access &rarr;</button>
       <p class="form-note">No spam. No obligation. We'll reach out when Grid enters beta.</p>
     </form>
   </div>
