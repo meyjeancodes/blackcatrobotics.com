@@ -1,0 +1,160 @@
+import { SurfaceCard } from "../../../components/surface-card";
+import { formatCurrency } from "../../../lib/format";
+import { getDashboardData } from "../../../lib/data";
+
+const techmedixPlans = [
+  {
+    id: "starter",
+    name: "Starter",
+    range: "1–4 robots",
+    price: "$299",
+    unit: "per robot / month",
+    features: ["Real-time telemetry dashboard", "48h predictive failure alerts", "Up to 2 platform integrations", "On-demand technician dispatch", "Email support — 24h response"],
+  },
+  {
+    id: "fleet",
+    name: "Fleet",
+    range: "5–19 robots",
+    price: "$229",
+    unit: "per robot / month",
+    highlight: true,
+    features: ["Everything in Starter", "Unlimited platform integrations", "2 included service hours per robot/month", "Auto technician dispatch", "Priority Slack + phone — 4h response", "Monthly performance report"],
+  },
+  {
+    id: "operator",
+    name: "Operator",
+    range: "Single operator coverage",
+    price: "$299",
+    unit: "per robot / month",
+    features: ["Single-robot coverage", "Diagnostic alerts", "Email support", "On-demand dispatch"],
+  },
+  {
+    id: "command",
+    name: "Command",
+    range: "20+ robots",
+    price: "Contact",
+    unit: "enterprise pricing",
+    features: ["Everything in Fleet", "Dedicated AI operations manager", "Custom API + ERP integration", "SLA guarantee + legal review", "Unlimited service hours included"],
+  },
+];
+
+const habitatPlans = [
+  { name: "Core", price: "$49", unit: "/month", desc: "Single-unit smart home monitoring. Energy tracking, maintenance alerts, Construct.Bot status." },
+  { name: "Home+", price: "$99", unit: "/month", desc: "Full HABITAT OS. AI scheduling, solar optimization, remote access, and service dispatch." },
+  { name: "Portfolio", price: "$199", unit: "/month", desc: "Multi-unit management. Fleet-scale builds, developer dashboard, and API access for property portfolios." },
+];
+
+const enterpriseTiers = [
+  { name: "Platform", desc: "Full TechMedix + HABITAT access under a single enterprise agreement. Custom node limits, dedicated SLA, and priority engineering." },
+  { name: "Node", desc: "Node-based licensing for large-scale deployments. Price per registered node across all asset types — robots, homes, EVs, chargers." },
+  { name: "Services", desc: "Managed operations, custom integrations, field technician contracts, and on-site deployment support. Contact for scope and pricing." },
+];
+
+export default async function BillingPage() {
+  const { snapshot } = await getDashboardData();
+  const { customer } = snapshot;
+
+  return (
+    <div className="space-y-8">
+      {/* Current subscription */}
+      <SurfaceCard title="Current subscription" eyebrow="Account">
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <p className="metric-value mt-1 capitalize">{customer.plan}</p>
+            <div className="mt-4 space-y-2 rounded-[20px] bg-black/[0.03] p-4">
+              <div className="flex items-center justify-between text-sm text-black/60">
+                <span>Monthly spend</span>
+                <strong className="text-black">{formatCurrency(customer.monthlySpend)}</strong>
+              </div>
+              <div className="flex items-center justify-between text-sm text-black/60">
+                <span>Fleet size</span>
+                <strong className="text-black">{customer.fleetSize} robots</strong>
+              </div>
+              <div className="flex items-center justify-between text-sm text-black/60">
+                <span>Status</span>
+                <strong className="capitalize text-black">{customer.status}</strong>
+              </div>
+              <div className="flex items-center justify-between text-sm text-black/60">
+                <span>Member since</span>
+                <strong className="text-black">
+                  {new Date(customer.createdAt).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                </strong>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-[20px] border border-black/5 bg-black/[0.02] p-5">
+            <p className="kicker mb-3">Billing tables (future)</p>
+            <div className="space-y-2 text-xs text-black/45">
+              <p className="font-medium text-black/60">Prepared for Stripe integration:</p>
+              <p>subscriptions — subscription records per product</p>
+              <p>node_usage — per-node billing periods and active hours</p>
+              <p>billing_events — payment events and invoice records</p>
+              <p className="mt-3 text-[0.65rem] uppercase tracking-[0.14em] text-black/30">Stripe not yet integrated</p>
+            </div>
+          </div>
+        </div>
+      </SurfaceCard>
+
+      {/* TechMedix pricing */}
+      <SurfaceCard title="TechMedix" eyebrow="Robot fleet maintenance">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {techmedixPlans.map((plan) => (
+            <div
+              key={plan.id}
+              className={`rounded-[22px] border p-5 ${
+                plan.highlight
+                  ? "border-ember/20 bg-ember/[0.04]"
+                  : "border-black/5 bg-black/[0.02]"
+              }`}
+            >
+              {plan.highlight && (
+                <span className="mb-2 inline-block text-[0.6rem] uppercase tracking-[0.2em] text-ember font-semibold">
+                  Most Popular
+                </span>
+              )}
+              <p className="kicker">{plan.name}</p>
+              <p className="text-[0.65rem] uppercase tracking-[0.14em] text-black/40 mb-2">{plan.range}</p>
+              <p className="text-3xl font-semibold tracking-[-0.04em] text-black">{plan.price}</p>
+              <p className="text-xs text-black/45 mb-4">{plan.unit}</p>
+              <ul className="space-y-1.5">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-xs text-black/55">
+                    <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-black/25" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </SurfaceCard>
+
+      {/* HABITAT pricing */}
+      <SurfaceCard title="HABITAT" eyebrow="Home as a Service">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {habitatPlans.map((plan) => (
+            <div key={plan.name} className="rounded-[22px] border border-black/5 bg-black/[0.02] p-5">
+              <p className="kicker">{plan.name}</p>
+              <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-black">{plan.price}</p>
+              <p className="text-xs text-black/45 mb-3">{plan.unit}</p>
+              <p className="text-xs leading-relaxed text-black/55">{plan.desc}</p>
+            </div>
+          ))}
+        </div>
+      </SurfaceCard>
+
+      {/* Enterprise */}
+      <SurfaceCard title="Enterprise" eyebrow="Platform + Node + Services">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {enterpriseTiers.map((tier) => (
+            <div key={tier.name} className="rounded-[22px] border border-black/5 bg-black/[0.02] p-5">
+              <p className="kicker mb-2">{tier.name}</p>
+              <p className="text-xs leading-relaxed text-black/55">{tier.desc}</p>
+              <p className="mt-4 text-[0.6rem] uppercase tracking-[0.18em] text-black/30">Contact for pricing</p>
+            </div>
+          ))}
+        </div>
+      </SurfaceCard>
+    </div>
+  );
+}
