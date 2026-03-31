@@ -14,7 +14,8 @@
     "atlas:seed": "npx ts-node scripts/atlas-to-seed.ts",
     "cap:add:ios": "npx cap add ios",
     "cap:add:android": "npx cap add android",
-    "cap:sync": "next build && npx cap sync"
+    "cap:sync": "next build && npx cap sync",
+    "vercel-build": "next build"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
