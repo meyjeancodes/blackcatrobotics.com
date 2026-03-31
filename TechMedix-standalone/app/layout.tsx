@@ -1,9 +1,19 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TechMedix",
-  description: "BlackCat Robotics maintenance intelligence platform"
+  title: "BlackCat OS",
+  description: "Humanoid robot maintenance platform by BlackCat Robotics",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "BlackCat OS",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0d0d12",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -17,6 +27,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link
           href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap"
           rel="stylesheet"
+        />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#0d0d12" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }`,
+          }}
         />
       </head>
       <body className="text-ink">

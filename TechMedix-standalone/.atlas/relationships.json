@@ -1,0 +1,3111 @@
+[
+  {
+    "id": "r1",
+    "from": {
+      "id": "maxon",
+      "name": "Maxon Motor",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "BLDC Motors",
+    "componentCategoryId": "motors",
+    "description": "Precision frameless motors"
+  },
+  {
+    "id": "r2",
+    "from": {
+      "id": "maxon",
+      "name": "Maxon Motor",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "BLDC Motors",
+    "componentCategoryId": "motors",
+    "description": "Frameless BLDC motors for Apollo"
+  },
+  {
+    "id": "r3",
+    "from": {
+      "id": "kollmorgen",
+      "name": "Kollmorgen",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "figure",
+      "name": "Figure (Figure 03)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "BLDC Motors",
+    "componentCategoryId": "motors",
+    "description": "Frameless BLDC motors"
+  },
+  {
+    "id": "r4",
+    "from": {
+      "id": "kollmorgen",
+      "name": "Kollmorgen",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "BLDC Motors",
+    "componentCategoryId": "motors",
+    "description": "Brushless DC motors"
+  },
+  {
+    "id": "r5",
+    "from": {
+      "id": "cubemars",
+      "name": "CubeMars",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "BLDC Motors",
+    "componentCategoryId": "motors",
+    "description": "Actuator motors"
+  },
+  {
+    "id": "r6",
+    "from": {
+      "id": "nidec",
+      "name": "Nidec",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Motors",
+    "componentCategoryId": "motors",
+    "description": "Frameless and coreless motors"
+  },
+  {
+    "id": "r7",
+    "from": {
+      "id": "estun",
+      "name": "Estun Automation",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Servo Motors",
+    "componentCategoryId": "motors",
+    "description": "Servo actuators"
+  },
+  {
+    "id": "r10",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers",
+    "bomPercent": 36,
+    "description": "~36% of rotary actuator cost"
+  },
+  {
+    "id": "r11",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers",
+    "bomPercent": 36
+  },
+  {
+    "id": "r12",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "figure",
+      "name": "Figure (Figure 03)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers",
+    "bomPercent": 36
+  },
+  {
+    "id": "r13",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers"
+  },
+  {
+    "id": "r14",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "ubtech",
+      "name": "UBTECH (Walker S2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers"
+  },
+  {
+    "id": "r15",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "dexmate",
+      "name": "Dexmate (Vega)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers"
+  },
+  {
+    "id": "r16",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "engineai",
+      "name": "EngineAI (T800)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Strain Wave Reducer",
+    "componentCategoryId": "reducers"
+  },
+  {
+    "id": "r20",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Jetson Platform",
+    "componentCategoryId": "compute",
+    "description": "AI partnership + compute"
+  },
+  {
+    "id": "r21",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "1x",
+      "name": "1X (Neo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Jetson Thor",
+    "componentCategoryId": "compute",
+    "description": "NEO Cortex compute"
+  },
+  {
+    "id": "r22",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Jetson AGX Thor",
+    "componentCategoryId": "compute"
+  },
+  {
+    "id": "r23",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "dexmate",
+      "name": "Dexmate (Vega)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Jetson AGX Thor",
+    "componentCategoryId": "compute"
+  },
+  {
+    "id": "r24",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson Orin",
+    "componentCategoryId": "compute"
+  },
+  {
+    "id": "r25",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson Orin 64G",
+    "componentCategoryId": "compute"
+  },
+  {
+    "id": "r26",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "figure",
+      "name": "Figure (Figure 03)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Dual NVIDIA GPUs",
+    "componentCategoryId": "compute"
+  },
+  {
+    "id": "r27",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "engineai",
+      "name": "EngineAI (T800)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson Thor",
+    "componentCategoryId": "compute"
+  },
+  {
+    "id": "r28",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "i7 CPUs + RealSense",
+    "componentCategoryId": "compute",
+    "description": "Dual i7 CPUs and depth cameras"
+  },
+  {
+    "id": "r29",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "dexmate",
+      "name": "Dexmate (Vega)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "x86 SoC",
+    "componentCategoryId": "compute",
+    "description": "Secondary compute"
+  },
+  {
+    "id": "r30",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "engineai",
+      "name": "EngineAI (T800)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Intel N97",
+    "componentCategoryId": null
+  },
+  {
+    "id": "r31",
+    "from": {
+      "id": "horizon_robotics",
+      "name": "Horizon Robotics",
+      "type": "ai_compute",
+      "country": "CN"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "AI Chips",
+    "componentCategoryId": "compute",
+    "description": "Chinese compute alternative"
+  },
+  {
+    "id": "r40",
+    "from": {
+      "id": "google_deepmind",
+      "name": "Google DeepMind",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "AI/ML Models",
+    "componentCategoryId": "ai_models",
+    "description": "Foundation model partnership"
+  },
+  {
+    "id": "r41",
+    "from": {
+      "id": "google_deepmind",
+      "name": "Google DeepMind",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "AI/ML Models",
+    "componentCategoryId": "ai_models",
+    "description": "Robot learning models"
+  },
+  {
+    "id": "r50",
+    "from": {
+      "id": "hesai",
+      "name": "Hesai Technology",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "LiDAR",
+    "componentCategoryId": "sensors_general",
+    "description": "3D LiDAR sensors"
+  },
+  {
+    "id": "r51",
+    "from": {
+      "id": "hesai",
+      "name": "Hesai Technology",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "LiDAR",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r52",
+    "from": {
+      "id": "hesai",
+      "name": "Hesai Technology",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "LiDAR",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r53",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "Camera sensors (FSD hardware)"
+  },
+  {
+    "id": "r54",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "figure",
+      "name": "Figure (Figure 03)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r60",
+    "from": {
+      "id": "tsmc",
+      "name": "TSMC",
+      "type": "component_maker",
+      "country": "TW"
+    },
+    "to": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "component": "Chip Fabrication",
+    "componentCategoryId": "compute",
+    "description": "Fabricates Jetson/GPU chips"
+  },
+  {
+    "id": "r61",
+    "from": {
+      "id": "tsmc",
+      "name": "TSMC",
+      "type": "component_maker",
+      "country": "TW"
+    },
+    "to": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "component": "Chip Fabrication",
+    "componentCategoryId": "compute"
+  },
+  {
+    "id": "r62",
+    "from": {
+      "id": "texas_instruments",
+      "name": "Texas Instruments",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Motor Drivers / Power ICs",
+    "componentCategoryId": "motors"
+  },
+  {
+    "id": "r63",
+    "from": {
+      "id": "texas_instruments",
+      "name": "Texas Instruments",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Analog ICs",
+    "componentCategoryId": "pcbs"
+  },
+  {
+    "id": "r64",
+    "from": {
+      "id": "infineon",
+      "name": "Infineon Technologies",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Power Semiconductors",
+    "componentCategoryId": "pcbs",
+    "description": "Motor controllers, power management"
+  },
+  {
+    "id": "r65",
+    "from": {
+      "id": "infineon",
+      "name": "Infineon Technologies",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Power Semiconductors",
+    "componentCategoryId": "pcbs"
+  },
+  {
+    "id": "r66",
+    "from": {
+      "id": "samsung_electro",
+      "name": "Samsung Electro-Mechanics",
+      "type": "component_maker",
+      "country": "KR"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "MLCCs / Substrates",
+    "componentCategoryId": "pcbs"
+  },
+  {
+    "id": "r67",
+    "from": {
+      "id": "samsung_electro",
+      "name": "Samsung Electro-Mechanics",
+      "type": "component_maker",
+      "country": "KR"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Passive Components",
+    "componentCategoryId": "pcbs"
+  },
+  {
+    "id": "r70",
+    "from": {
+      "id": "mp_materials",
+      "name": "MP Materials",
+      "type": "raw_material",
+      "country": "US"
+    },
+    "to": {
+      "id": "maxon",
+      "name": "Maxon Motor",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "component": "NdFeB Rare Earths",
+    "componentCategoryId": "raw_materials",
+    "description": "Magnet materials for BLDC motors"
+  },
+  {
+    "id": "r71",
+    "from": {
+      "id": "mp_materials",
+      "name": "MP Materials",
+      "type": "raw_material",
+      "country": "US"
+    },
+    "to": {
+      "id": "kollmorgen",
+      "name": "Kollmorgen",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "component": "NdFeB Rare Earths",
+    "componentCategoryId": "raw_materials"
+  },
+  {
+    "id": "r72",
+    "from": {
+      "id": "mp_materials",
+      "name": "MP Materials",
+      "type": "raw_material",
+      "country": "US"
+    },
+    "to": {
+      "id": "nidec",
+      "name": "Nidec",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "component": "NdFeB Rare Earths",
+    "componentCategoryId": "raw_materials"
+  },
+  {
+    "id": "r73",
+    "from": {
+      "id": "lynas",
+      "name": "Lynas Rare Earths",
+      "type": "raw_material",
+      "country": "AU"
+    },
+    "to": {
+      "id": "maxon",
+      "name": "Maxon Motor",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "component": "Rare Earth Oxides",
+    "componentCategoryId": "raw_materials"
+  },
+  {
+    "id": "r74",
+    "from": {
+      "id": "lynas",
+      "name": "Lynas Rare Earths",
+      "type": "raw_material",
+      "country": "AU"
+    },
+    "to": {
+      "id": "nidec",
+      "name": "Nidec",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "component": "Rare Earth Oxides",
+    "componentCategoryId": "raw_materials"
+  },
+  {
+    "id": "r75",
+    "from": {
+      "id": "jl_mag",
+      "name": "JL Mag Rare-Earth",
+      "type": "raw_material",
+      "country": "CN"
+    },
+    "to": {
+      "id": "cubemars",
+      "name": "CubeMars",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "component": "NdFeB Magnets",
+    "componentCategoryId": "raw_materials",
+    "description": "Permanent magnets for Chinese motor supply chain"
+  },
+  {
+    "id": "r76",
+    "from": {
+      "id": "jl_mag",
+      "name": "JL Mag Rare-Earth",
+      "type": "raw_material",
+      "country": "CN"
+    },
+    "to": {
+      "id": "estun",
+      "name": "Estun Automation",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "component": "NdFeB Magnets",
+    "componentCategoryId": "raw_materials"
+  },
+  {
+    "id": "r106",
+    "from": {
+      "id": "cubemars",
+      "name": "CubeMars",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Actuator Modules",
+    "componentCategoryId": "actuators_rotary",
+    "description": "Complete rotary actuator modules"
+  },
+  {
+    "id": "r107",
+    "from": {
+      "id": "cubemars",
+      "name": "CubeMars",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Actuator Modules",
+    "componentCategoryId": "actuators_rotary"
+  },
+  {
+    "id": "r108",
+    "from": {
+      "id": "cubemars",
+      "name": "CubeMars",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "engineai",
+      "name": "EngineAI (T800)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Actuator Modules",
+    "componentCategoryId": "actuators_rotary"
+  },
+  {
+    "id": "r109",
+    "from": {
+      "id": "estun",
+      "name": "Estun Automation",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Servo Actuators",
+    "componentCategoryId": "actuators_rotary",
+    "description": "Integrated servo actuator packages"
+  },
+  {
+    "id": "r110",
+    "from": {
+      "id": "estun",
+      "name": "Estun Automation",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Servo Actuators",
+    "componentCategoryId": "actuators_rotary"
+  },
+  {
+    "id": "r111",
+    "from": {
+      "id": "estun",
+      "name": "Estun Automation",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "ubtech",
+      "name": "UBTECH (Walker S2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Servo Actuators",
+    "componentCategoryId": "actuators_rotary"
+  },
+  {
+    "id": "r93",
+    "from": {
+      "id": "thk",
+      "name": "THK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Cross-Roller Bearings",
+    "componentCategoryId": "bearings",
+    "description": "Hip and waist joint bearings"
+  },
+  {
+    "id": "r94",
+    "from": {
+      "id": "thk",
+      "name": "THK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Cross-Roller Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r95",
+    "from": {
+      "id": "thk",
+      "name": "THK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "figure",
+      "name": "Figure (Figure 03)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Cross-Roller Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r96",
+    "from": {
+      "id": "thk",
+      "name": "THK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "ubtech",
+      "name": "UBTECH (Walker S2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Cross-Roller Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r97",
+    "from": {
+      "id": "thk",
+      "name": "THK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "engineai",
+      "name": "EngineAI (T800)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Cross-Roller Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r98",
+    "from": {
+      "id": "skf",
+      "name": "SKF",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r99",
+    "from": {
+      "id": "skf",
+      "name": "SKF",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r100",
+    "from": {
+      "id": "skf",
+      "name": "SKF",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Ball Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r101",
+    "from": {
+      "id": "rollvis",
+      "name": "Rollvis",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Planetary Roller Screws",
+    "componentCategoryId": "screws",
+    "description": "1:14 ratio screws for linear actuators"
+  },
+  {
+    "id": "r102",
+    "from": {
+      "id": "rollvis",
+      "name": "Rollvis",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Planetary Roller Screws",
+    "componentCategoryId": "screws"
+  },
+  {
+    "id": "r103",
+    "from": {
+      "id": "rollvis",
+      "name": "Rollvis",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "figure",
+      "name": "Figure (Figure 03)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Planetary Roller Screws",
+    "componentCategoryId": "screws"
+  },
+  {
+    "id": "r104",
+    "from": {
+      "id": "ewellix",
+      "name": "Ewellix",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Roller Screws",
+    "componentCategoryId": "screws"
+  },
+  {
+    "id": "r105",
+    "from": {
+      "id": "ewellix",
+      "name": "Ewellix",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Roller Screws",
+    "componentCategoryId": "screws"
+  },
+  {
+    "id": "r85",
+    "from": {
+      "id": "panasonic_energy",
+      "name": "Panasonic Energy",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Battery Cells",
+    "componentCategoryId": "batteries",
+    "description": "2170/4680 lithium-ion cells"
+  },
+  {
+    "id": "r86",
+    "from": {
+      "id": "catl",
+      "name": "CATL",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Pack",
+    "componentCategoryId": "batteries",
+    "description": "Lithium-ion battery packs"
+  },
+  {
+    "id": "r87",
+    "from": {
+      "id": "catl",
+      "name": "CATL",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Pack",
+    "componentCategoryId": "batteries"
+  },
+  {
+    "id": "r88",
+    "from": {
+      "id": "catl",
+      "name": "CATL",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Cells",
+    "componentCategoryId": "batteries",
+    "description": "Solid-state battery development"
+  },
+  {
+    "id": "r89",
+    "from": {
+      "id": "catl",
+      "name": "CATL",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "ubtech",
+      "name": "UBTECH (Walker S2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Pack",
+    "componentCategoryId": "batteries",
+    "description": "Dual hot-swap battery packs"
+  },
+  {
+    "id": "r90",
+    "from": {
+      "id": "catl",
+      "name": "CATL",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "engineai",
+      "name": "EngineAI (T800)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Cells",
+    "componentCategoryId": "batteries"
+  },
+  {
+    "id": "r91",
+    "from": {
+      "id": "byd_battery",
+      "name": "BYD",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Pack",
+    "componentCategoryId": "batteries"
+  },
+  {
+    "id": "r92",
+    "from": {
+      "id": "byd_battery",
+      "name": "BYD",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "ubtech",
+      "name": "UBTECH (Walker S2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Pack",
+    "componentCategoryId": "batteries"
+  },
+  {
+    "id": "r80",
+    "from": {
+      "id": "psyonic",
+      "name": "PSYONIC",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Dexterous Hands",
+    "componentCategoryId": "end_effectors",
+    "description": "Off-the-shelf robotic/prosthetic hands"
+  },
+  {
+    "id": "r81",
+    "from": {
+      "id": "sharpa",
+      "name": "Sharpa Robotics",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Dexterous Hands",
+    "componentCategoryId": "end_effectors",
+    "description": "Dexterous hands for Chinese OEMs"
+  },
+  {
+    "id": "r82",
+    "from": {
+      "id": "sharpa",
+      "name": "Sharpa Robotics",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Dexterous Hands",
+    "componentCategoryId": "end_effectors"
+  },
+  {
+    "id": "r405",
+    "from": {
+      "id": "shadow_robot",
+      "name": "Shadow Robot",
+      "type": "component_maker",
+      "country": "GB"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Dexterous Hands",
+    "componentCategoryId": "end_effectors",
+    "description": "Research-grade 24 DOF tendon-driven hand (OpenAI, DeepMind, NASA)"
+  },
+  {
+    "id": "r406",
+    "from": {
+      "id": "orca_dexterity",
+      "name": "ORCA Dexterity",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "pollen_robotics",
+      "name": "Pollen Robotics (Reachy 2)",
+      "type": "oem",
+      "country": "FR"
+    },
+    "component": "Dexterous Hands",
+    "componentCategoryId": "end_effectors",
+    "description": "Open-source 17 DOF hand ($3.5K-$6.1K), NVIDIA Isaac Gym support"
+  },
+  {
+    "id": "r407",
+    "from": {
+      "id": "robotis",
+      "name": "ROBOTIS",
+      "type": "component_maker",
+      "country": "KR"
+    },
+    "to": {
+      "id": "pollen_robotics",
+      "name": "Pollen Robotics (Reachy 2)",
+      "type": "oem",
+      "country": "FR"
+    },
+    "component": "Dexterous Hands",
+    "componentCategoryId": "end_effectors",
+    "description": "Dynamixel XM430 servo motors for Reachy 2 grippers"
+  },
+  {
+    "id": "r120",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "Camera sensors for 360° perception"
+  },
+  {
+    "id": "r121",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "Head and torso camera sensors"
+  },
+  {
+    "id": "r122",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "1x",
+      "name": "1X (Neo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "8.85MP 90Hz stereo fisheye sensors"
+  },
+  {
+    "id": "r123",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r124",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "ubtech",
+      "name": "UBTECH (Walker S2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "RGB and fisheye camera sensors"
+  },
+  {
+    "id": "r125",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "dexmate",
+      "name": "Dexmate (Vega)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "Sensors for multi-camera perception"
+  },
+  {
+    "id": "r126",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "sunday",
+      "name": "Sunday Robotics (Memo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "Eye and hand camera sensors"
+  },
+  {
+    "id": "r127",
+    "from": {
+      "id": "ouster",
+      "name": "Ouster",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "LiDAR",
+    "componentCategoryId": "sensors_general",
+    "description": "Digital LiDAR for navigation"
+  },
+  {
+    "id": "r128",
+    "from": {
+      "id": "ouster",
+      "name": "Ouster",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "dexmate",
+      "name": "Dexmate (Vega)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "LiDAR",
+    "componentCategoryId": "sensors_general",
+    "description": "Dual 3D LiDAR"
+  },
+  {
+    "id": "r129",
+    "from": {
+      "id": "hesai",
+      "name": "Hesai Technology",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "engineai",
+      "name": "EngineAI (T800)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "LiDAR",
+    "componentCategoryId": "sensors_general",
+    "description": "360° LiDAR sensor"
+  },
+  {
+    "id": "r130",
+    "from": {
+      "id": "orbbec",
+      "name": "Orbbec",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Depth Cameras",
+    "componentCategoryId": "sensors_general",
+    "description": "360° depth camera array"
+  },
+  {
+    "id": "r131",
+    "from": {
+      "id": "orbbec",
+      "name": "Orbbec",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Depth Cameras",
+    "componentCategoryId": "sensors_general",
+    "description": "RGB-D depth cameras"
+  },
+  {
+    "id": "r132",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general",
+    "description": "MEMS inertial measurement unit"
+  },
+  {
+    "id": "r133",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general",
+    "description": "MEMS IMU for balance and orientation"
+  },
+  {
+    "id": "r134",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "1x",
+      "name": "1X (Neo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general",
+    "description": "Linkwise differential IMUs"
+  },
+  {
+    "id": "r135",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r136",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "apptronik",
+      "name": "Apptronik",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r137",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "dexmate",
+      "name": "Dexmate (Vega)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r140",
+    "from": {
+      "id": "nabtesco",
+      "name": "Nabtesco",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Cycloidal Reducer",
+    "componentCategoryId": "reducers",
+    "description": "Cycloidal-pin gear transmission"
+  },
+  {
+    "id": "r141",
+    "from": {
+      "id": "leaderdrive",
+      "name": "Leaderdrive",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers",
+    "description": "Chinese domestic harmonic drive"
+  },
+  {
+    "id": "r142",
+    "from": {
+      "id": "leaderdrive",
+      "name": "Leaderdrive",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers"
+  },
+  {
+    "id": "r143",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers"
+  },
+  {
+    "id": "r144",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers"
+  },
+  {
+    "id": "r145",
+    "from": {
+      "id": "moons",
+      "name": "Moons' Electric",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Servo Motors",
+    "componentCategoryId": "motors"
+  },
+  {
+    "id": "r146",
+    "from": {
+      "id": "moons",
+      "name": "Moons' Electric",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "ubtech",
+      "name": "UBTECH (Walker S2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Servo Motors",
+    "componentCategoryId": "motors"
+  },
+  {
+    "id": "r147",
+    "from": {
+      "id": "1x",
+      "name": "1X (Neo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "to": {
+      "id": "1x",
+      "name": "1X (Neo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Revo2 Motors (in-house)",
+    "componentCategoryId": "motors",
+    "description": "Proprietary motors with in-house wound copper coils, 5x torque density vs off-the-shelf"
+  },
+  {
+    "id": "r148",
+    "from": {
+      "id": "thk",
+      "name": "THK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Cross-Roller Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r149",
+    "from": {
+      "id": "thk",
+      "name": "THK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Cross-Roller Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r150",
+    "from": {
+      "id": "skf",
+      "name": "SKF",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "dexmate",
+      "name": "Dexmate (Vega)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r151",
+    "from": {
+      "id": "nsk",
+      "name": "NSK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Ball Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r152",
+    "from": {
+      "id": "lg_energy",
+      "name": "LG Energy Solution",
+      "type": "component_maker",
+      "country": "KR"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Battery Cells",
+    "componentCategoryId": "batteries",
+    "description": "Hyundai group battery supply chain"
+  },
+  {
+    "id": "r153",
+    "from": {
+      "id": "panasonic_energy",
+      "name": "Panasonic Energy",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "agility",
+      "name": "Agility Robotics (Digit)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Battery Cells",
+    "componentCategoryId": "batteries"
+  },
+  {
+    "id": "r154",
+    "from": {
+      "id": "1x",
+      "name": "1X (Neo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "to": {
+      "id": "1x",
+      "name": "1X (Neo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Battery Cells (in-house)",
+    "componentCategoryId": "batteries",
+    "description": "1X manufactures their own batteries"
+  },
+  {
+    "id": "r155",
+    "from": {
+      "id": "nanjing_kgm",
+      "name": "Nanjing KGM",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Planetary Roller Screws",
+    "componentCategoryId": "screws",
+    "description": "Chinese domestic screw supplier"
+  },
+  {
+    "id": "r156",
+    "from": {
+      "id": "nanjing_kgm",
+      "name": "Nanjing KGM",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Planetary Roller Screws",
+    "componentCategoryId": "screws"
+  },
+  {
+    "id": "r157",
+    "from": {
+      "id": "nanjing_kgm",
+      "name": "Nanjing KGM",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Planetary Roller Screws",
+    "componentCategoryId": "screws"
+  },
+  {
+    "id": "r158",
+    "from": {
+      "id": "nanjing_kgm",
+      "name": "Nanjing KGM",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "engineai",
+      "name": "EngineAI (T800)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Planetary Roller Screws",
+    "componentCategoryId": "screws"
+  },
+  {
+    "id": "r159",
+    "from": {
+      "id": "stmicro",
+      "name": "STMicroelectronics",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Motor Drivers / MEMS",
+    "componentCategoryId": "motors",
+    "description": "Gate drivers and STM32 MCUs for actuator control"
+  },
+  {
+    "id": "r160",
+    "from": {
+      "id": "stmicro",
+      "name": "STMicroelectronics",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Motor Drivers",
+    "componentCategoryId": "motors",
+    "description": "MEMS IMUs and motor gate drivers"
+  },
+  {
+    "id": "r161",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "sunday",
+      "name": "Sunday Robotics (Memo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Jetson Platform",
+    "componentCategoryId": "compute",
+    "description": "Compute for ACT-1 model inference"
+  },
+  {
+    "id": "r162",
+    "from": {
+      "id": "kollmorgen",
+      "name": "Kollmorgen",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "sunday",
+      "name": "Sunday Robotics (Memo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "BLDC Motors",
+    "componentCategoryId": "motors"
+  },
+  {
+    "id": "r163",
+    "from": {
+      "id": "panasonic_energy",
+      "name": "Panasonic Energy",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "sunday",
+      "name": "Sunday Robotics (Memo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Battery Pack",
+    "componentCategoryId": "batteries"
+  },
+  {
+    "id": "r164",
+    "from": {
+      "id": "thk",
+      "name": "THK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "sunday",
+      "name": "Sunday Robotics (Memo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Cross-Roller Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r165",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "sunday",
+      "name": "Sunday Robotics (Memo)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r170",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "fourier",
+      "name": "Fourier Intelligence (GR-2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson Orin",
+    "componentCategoryId": "compute",
+    "description": "AI compute for GR-2"
+  },
+  {
+    "id": "r171",
+    "from": {
+      "id": "leaderdrive",
+      "name": "Leaderdrive",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "fourier",
+      "name": "Fourier Intelligence (GR-2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers",
+    "description": "Reducers for FSA actuators"
+  },
+  {
+    "id": "r172",
+    "from": {
+      "id": "catl",
+      "name": "CATL",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "fourier",
+      "name": "Fourier Intelligence (GR-2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Pack",
+    "componentCategoryId": "batteries"
+  },
+  {
+    "id": "r173",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "fourier",
+      "name": "Fourier Intelligence (GR-2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r174",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "fourier",
+      "name": "Fourier Intelligence (GR-2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r180",
+    "from": {
+      "id": "leaderdrive",
+      "name": "Leaderdrive",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "kepler",
+      "name": "Kepler Robotics (Forerunner K2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers",
+    "description": "Chinese domestic reducer supply"
+  },
+  {
+    "id": "r181",
+    "from": {
+      "id": "catl",
+      "name": "CATL",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "kepler",
+      "name": "Kepler Robotics (Forerunner K2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Battery Pack",
+    "componentCategoryId": "batteries"
+  },
+  {
+    "id": "r182",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "kepler",
+      "name": "Kepler Robotics (Forerunner K2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r183",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "kepler",
+      "name": "Kepler Robotics (Forerunner K2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r190",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "sanctuary_ai",
+      "name": "Sanctuary AI (Phoenix)",
+      "type": "oem",
+      "country": "CA"
+    },
+    "component": "Jetson Platform",
+    "componentCategoryId": "compute",
+    "description": "Compute for Carbon AI system"
+  },
+  {
+    "id": "r191",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "sanctuary_ai",
+      "name": "Sanctuary AI (Phoenix)",
+      "type": "oem",
+      "country": "CA"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r192",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "sanctuary_ai",
+      "name": "Sanctuary AI (Phoenix)",
+      "type": "oem",
+      "country": "CA"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r210",
+    "from": {
+      "id": "samsung_sdi",
+      "name": "Samsung SDI",
+      "type": "component_maker",
+      "country": "KR"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Battery Cells",
+    "componentCategoryId": "batteries",
+    "description": "Hyundai group battery supply chain"
+  },
+  {
+    "id": "r211",
+    "from": {
+      "id": "samsung_sdi",
+      "name": "Samsung SDI",
+      "type": "component_maker",
+      "country": "KR"
+    },
+    "to": {
+      "id": "figure",
+      "name": "Figure (Figure 03)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Battery Cells",
+    "componentCategoryId": "batteries",
+    "description": "High energy density cylindrical cells"
+  },
+  {
+    "id": "r200",
+    "from": {
+      "id": "horizon_robotics",
+      "name": "Horizon Robotics",
+      "type": "ai_compute",
+      "country": "CN"
+    },
+    "to": {
+      "id": "ubtech",
+      "name": "UBTECH (Walker S2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "AI Chips",
+    "componentCategoryId": "compute",
+    "description": "Chinese domestic compute alternative"
+  },
+  {
+    "id": "r201",
+    "from": {
+      "id": "horizon_robotics",
+      "name": "Horizon Robotics",
+      "type": "ai_compute",
+      "country": "CN"
+    },
+    "to": {
+      "id": "agibot",
+      "name": "AGIBot (A2-Ultra)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "AI Chips",
+    "componentCategoryId": "compute",
+    "description": "Domestic compute qualification"
+  },
+  {
+    "id": "r202",
+    "from": {
+      "id": "nsk",
+      "name": "NSK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Ball Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r203",
+    "from": {
+      "id": "nsk",
+      "name": "NSK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "tesla",
+      "name": "Tesla (Optimus)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Precision Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r204",
+    "from": {
+      "id": "nsk",
+      "name": "NSK",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Angular Contact Bearings",
+    "componentCategoryId": "bearings"
+  },
+  {
+    "id": "r205",
+    "from": {
+      "id": "nabtesco",
+      "name": "Nabtesco",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "RV Reducer",
+    "componentCategoryId": "reducers",
+    "description": "Cycloidal reducer for high-torque joints"
+  },
+  {
+    "id": "r206",
+    "from": {
+      "id": "kollmorgen",
+      "name": "Kollmorgen",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "boston_dynamics",
+      "name": "Boston Dynamics (Atlas)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "BLDC Motors",
+    "componentCategoryId": "motors",
+    "description": "Frameless motors from Spot heritage"
+  },
+  {
+    "id": "r207",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general"
+  },
+  {
+    "id": "r208",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "xpeng",
+      "name": "XPeng (Iron)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "Eagle Eye stereo camera sensors"
+  },
+  {
+    "id": "r299",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "noetix",
+      "name": "Noetix Robotics (N2)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson Orin",
+    "componentCategoryId": "compute",
+    "description": "AI inference compute (40 TOPS, 8GB) alongside RK3588s control"
+  },
+  {
+    "id": "r310",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "booster",
+      "name": "Booster Robotics (T1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson AGX Orin",
+    "componentCategoryId": "compute",
+    "description": "AI compute (200 TOPS)"
+  },
+  {
+    "id": "r311",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "booster",
+      "name": "Booster Robotics (T1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "i7 CPU",
+    "componentCategoryId": "compute",
+    "description": "Main CPU compute"
+  },
+  {
+    "id": "r312",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "booster",
+      "name": "Booster Robotics (T1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Depth Cameras",
+    "componentCategoryId": "sensors_general",
+    "description": "RealSense D455 RGBD depth camera"
+  },
+  {
+    "id": "r330",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "robotera",
+      "name": "RobotEra (L7)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson AGX Orin",
+    "componentCategoryId": "compute",
+    "description": "AI compute (275 TOPS), NVIDIA Developer Program member"
+  },
+  {
+    "id": "r340",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "dobot",
+      "name": "Dobot (Atom)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Core i9 CPU",
+    "componentCategoryId": "compute",
+    "description": "Main CPU compute (24 cores)"
+  },
+  {
+    "id": "r342",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "dobot",
+      "name": "Dobot (Atom)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Depth Cameras",
+    "componentCategoryId": "sensors_general",
+    "description": "RealSense D455 depth camera"
+  },
+  {
+    "id": "r341",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "dobot",
+      "name": "Dobot (Atom)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "GPU",
+    "componentCategoryId": "compute",
+    "description": "16GB GPU (1500 TOPS total system), Physics AI partner"
+  },
+  {
+    "id": "r350",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "limx",
+      "name": "LimX Dynamics (Oli)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson Orin",
+    "componentCategoryId": "compute",
+    "description": "Primary AI/perception compute"
+  },
+  {
+    "id": "r351",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "limx",
+      "name": "LimX Dynamics (Oli)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Depth Cameras",
+    "componentCategoryId": "sensors_general",
+    "description": "RealSense D435i (head, chest, wrist, hip)"
+  },
+  {
+    "id": "r360",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "pudu",
+      "name": "PUDU Robotics (D9)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Jetson Orin",
+    "componentCategoryId": "compute",
+    "description": "AI compute in dual-processor architecture"
+  },
+  {
+    "id": "r370",
+    "from": {
+      "id": "leaderdrive",
+      "name": "Leaderdrive",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "magiclab",
+      "name": "MagicLab (MagicBot G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers",
+    "description": "Waist, arm, and wrist joint reducers"
+  },
+  {
+    "id": "r371",
+    "from": {
+      "id": "moons",
+      "name": "Moons' Electric",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "magiclab",
+      "name": "MagicLab (MagicBot G1)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Precision Motors",
+    "componentCategoryId": "motors",
+    "description": "Coreless/hollow-cup motors"
+  },
+  {
+    "id": "r380",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "xiaomi",
+      "name": "Xiaomi (CyberOne)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Xeon CPUs",
+    "componentCategoryId": "compute",
+    "description": "Dual Xeon quad-core processors"
+  },
+  {
+    "id": "r382",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "xiaomi",
+      "name": "Xiaomi (CyberOne)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Depth Cameras",
+    "componentCategoryId": "sensors_general",
+    "description": "RealSense D455 Mi-Sense depth camera"
+  },
+  {
+    "id": "r381",
+    "from": {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "xiaomi",
+      "name": "Xiaomi (CyberOne)",
+      "type": "oem",
+      "country": "CN"
+    },
+    "component": "Harmonic Reducer",
+    "componentCategoryId": "reducers",
+    "description": "Joint harmonic gearboxes"
+  },
+  {
+    "id": "r390",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "neura_4ne1",
+      "name": "Neura Robotics (4NE-1)",
+      "type": "oem",
+      "country": "DE"
+    },
+    "component": "Jetson Thor T5000",
+    "componentCategoryId": "compute",
+    "description": "Main compute with water cooling, GR00T XX VLA"
+  },
+  {
+    "id": "r391",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "vanar_robots",
+      "name": "Vanar Robots",
+      "type": "oem",
+      "country": "IN"
+    },
+    "component": "Jetson Platform",
+    "componentCategoryId": "compute",
+    "description": "Primary compute for in-house VLA models"
+  },
+  {
+    "id": "r392",
+    "from": {
+      "id": "panasonic_energy",
+      "name": "Panasonic Energy",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "vanar_robots",
+      "name": "Vanar Robots",
+      "type": "oem",
+      "country": "IN"
+    },
+    "component": "Battery Cells",
+    "componentCategoryId": "batteries",
+    "description": "Commercially sourced Panasonic cells for custom battery pack"
+  },
+  {
+    "id": "r393",
+    "from": {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP"
+    },
+    "to": {
+      "id": "vanar_robots",
+      "name": "Vanar Robots",
+      "type": "oem",
+      "country": "IN"
+    },
+    "component": "Image Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "Planned Sony vision sensors for multi-modal perception"
+  },
+  {
+    "id": "r400",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "fauna",
+      "name": "Fauna Robotics (Sprout)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Jetson AGX Orin 64GB",
+    "componentCategoryId": "compute",
+    "description": "Primary AI/perception compute"
+  },
+  {
+    "id": "r401",
+    "from": {
+      "id": "stereolabs",
+      "name": "Stereolabs",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "fauna",
+      "name": "Fauna Robotics (Sprout)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "ZED2i Stereo Camera",
+    "componentCategoryId": "sensors_general",
+    "description": "Stereo RGB-D for visual-inertial odometry and mapping"
+  },
+  {
+    "id": "r402",
+    "from": {
+      "id": "stmicro",
+      "name": "STMicroelectronics",
+      "type": "component_maker",
+      "country": "CH"
+    },
+    "to": {
+      "id": "fauna",
+      "name": "Fauna Robotics (Sprout)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "VL53L8CX ToF Sensors",
+    "componentCategoryId": "sensors_general",
+    "description": "4x time-of-flight obstacle detection sensors"
+  },
+  {
+    "id": "r403",
+    "from": {
+      "id": "molicel",
+      "name": "Molicel",
+      "type": "component_maker",
+      "country": "TW"
+    },
+    "to": {
+      "id": "fauna",
+      "name": "Fauna Robotics (Sprout)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "P50B Battery Cells",
+    "componentCategoryId": "batteries",
+    "description": "Li-ion 21700 cells, 46.8V swappable pack"
+  },
+  {
+    "id": "r404",
+    "from": {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE"
+    },
+    "to": {
+      "id": "fauna",
+      "name": "Fauna Robotics (Sprout)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general",
+    "description": "9-axis inertial measurement unit"
+  },
+  {
+    "id": "r410",
+    "from": {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "vibe",
+      "name": "Vibe Robotics (Sunday A1)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Jetson Orin Nano",
+    "componentCategoryId": "compute",
+    "description": "Primary compute for AI inference"
+  },
+  {
+    "id": "r411",
+    "from": {
+      "id": "intel",
+      "name": "Intel",
+      "type": "ai_compute",
+      "country": "US"
+    },
+    "to": {
+      "id": "vibe",
+      "name": "Vibe Robotics (Sunday A1)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Depth Cameras",
+    "componentCategoryId": "sensors_general",
+    "description": "RealSense D435i depth camera"
+  },
+  {
+    "id": "r412",
+    "from": {
+      "id": "feetech",
+      "name": "FEETECH",
+      "type": "component_maker",
+      "country": "CN"
+    },
+    "to": {
+      "id": "vibe",
+      "name": "Vibe Robotics (Sunday A1)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "Servo Actuators",
+    "componentCategoryId": "actuators_rotary",
+    "description": "Low-cost embedded servo actuators for joint control"
+  },
+  {
+    "id": "r413",
+    "from": {
+      "id": "adafruit",
+      "name": "Adafruit Industries",
+      "type": "component_maker",
+      "country": "US"
+    },
+    "to": {
+      "id": "vibe",
+      "name": "Vibe Robotics (Sunday A1)",
+      "type": "oem",
+      "country": "US"
+    },
+    "component": "IMU",
+    "componentCategoryId": "sensors_general",
+    "description": "9-axis IMU for balance and orientation"
+  }
+]

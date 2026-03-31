@@ -1,0 +1,2497 @@
+[
+  {
+    "id": "apptronik",
+    "name": "Apptronik",
+    "type": "oem",
+    "country": "US",
+    "description": "Austin-based startup spun out of UT Austin's Human Centered Robotics Lab. Apollo is designed around modularity - swappable legs and wheel bases let it adapt to different facility layouts. Their bet on partnering with Google DeepMind rather than building AI in-house lets them focus entirely on hardware, but locks them into an external dependency for intelligence. At $150K-$250K per unit, they're targeting enterprise logistics customers who can justify the ROI against $80K/year warehouse labor costs.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo1_apptronik.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Aug 2023",
+      "targetUse": [
+        "Logistics",
+        "Warehousing"
+      ],
+      "mass": "73 kg",
+      "height": "173 cm",
+      "speed": "1.1 m/s",
+      "totalDOF": "71",
+      "operatingTime": "4 hrs",
+      "payloadCapacity": "55 lbs",
+      "endEffector": "Hand (PSYONIC partnership)",
+      "tactileSensing": true,
+      "locomotion": "Modular - Leg and wheel",
+      "materials": "Lightweight aluminum, Carbon fiber/polymer/glass fiber covers",
+      "motor": "Frameless BLDC motors",
+      "actuatorBody": "Rotary + Linear actuator",
+      "actuatorHand": "Partner (PSYONIC)",
+      "transmission": "Harmonic Reducer + Planetary Roller Screw",
+      "externalSensors": "2 Cameras",
+      "internalSensors": "Encoders, Force/torque sensing, IMU",
+      "compute": "Not disclosed",
+      "battery": "Replaceable Lithium",
+      "charging": "Self charge",
+      "aiPartner": "Google DeepMind",
+      "aiPartnerIds": [
+        "google_deepmind"
+      ],
+      "software": "Not disclosed",
+      "dataCollection": "Teleoperation",
+      "price": "$150K - $250K"
+    },
+    "_counts": {
+      "suppliersInbound": 9,
+      "customersOutbound": 0,
+      "vlaModels": 2,
+      "simPlatforms": 1
+    }
+  },
+  {
+    "id": "tesla",
+    "name": "Tesla (Optimus)",
+    "type": "oem",
+    "country": "US",
+    "description": "The only humanoid OEM with an existing autonomous driving stack to repurpose. Tesla is applying the same camera-only perception, custom silicon, and neural network architecture from FSD to Optimus - a massive software leverage play. Currently deploying ~150 units inside Tesla factories to validate manipulation tasks. The BOM sits at ~$40K today but Musk targets $20K-$30K at scale by leveraging Tesla's own supply chain, in-house chip fab (AI5), and Chinese manufacturing partners. The near-total redesign between Gen-1 and Gen-2 underscores how early the hardware design is.",
+    "ticker": "TSLA",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo2_tesla.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Q1 2026",
+      "shipments2025": 150,
+      "shipmentShare": "1%",
+      "targetUse": [
+        "Auto manufacturing",
+        "Consumer"
+      ],
+      "mass": "47 kg",
+      "height": "173 cm",
+      "speed": "2-3 m/s",
+      "totalDOF": "72",
+      "operatingTime": "14 hrs (with battery swap)",
+      "payloadCapacity": "45 lbs",
+      "endEffector": "Hand (22 DOF)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Aluminum alloys, Carbon fiber panels, PEEK for joints",
+      "motor": "Frameless (body), Coreless (hand)",
+      "actuatorBody": "Rotary (20/110/180Nm) + Linear (500/3900/8000N)",
+      "actuatorHand": "Motor + Tendon drive",
+      "transmission": "Harmonic Reducer + Planetary Roller Screw",
+      "externalSensors": "7 Cameras (FSD hardware)",
+      "internalSensors": "Custom tactile, Fingertip sensors, 2-axis feet force",
+      "compute": "Tesla proprietary SoC, AI5 chip",
+      "battery": "2.3 kWh",
+      "charging": "Self charge, 30 min to 80%",
+      "aiPartner": "Proprietary (FSD tech)",
+      "software": "Modified FSD tech, Camera-only perception",
+      "dataCollection": "Teleoperation, Human video",
+      "bom": "~$40K",
+      "price": "$20K - $30K (at scale)"
+    },
+    "_counts": {
+      "suppliersInbound": 11,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "figure",
+    "name": "Figure (Figure 03)",
+    "type": "oem",
+    "country": "US",
+    "description": "Founded in 2022 and already on their third-generation robot. Figure is making two notable bets: proprietary AI (Helix) rather than external partnerships, and a dedicated robot factory (BotQ) with 12K units/year capacity - a real commitment to manufacturing scale before proving demand. Their use of stamped steel and die-cast aluminum over CNC machining signals cost-at-scale thinking. Wireless inductive charging eliminates connector wear. Project Go-Big with Brookfield is generating massive teleoperation datasets to train Helix models.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo3_figure.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Oct 2025",
+      "shipments2025": 150,
+      "shipmentShare": "1%",
+      "targetUse": [
+        "Industrial",
+        "Home"
+      ],
+      "mass": "61 kg",
+      "height": "173 cm",
+      "speed": "1.2 m/s",
+      "totalDOF": "Not disclosed",
+      "operatingTime": "5 hrs",
+      "payloadCapacity": "45 lbs",
+      "endEffector": "Hand",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Stamped steel, die-cast aluminum, structural adhesives, multi-density foam",
+      "motor": "Frameless BLDC motors",
+      "actuatorBody": "Rotary + Linear actuator",
+      "actuatorHand": "Motor + Gear",
+      "transmission": "Harmonic Reducer + Planetary Roller Screw",
+      "externalSensors": "2 head cameras + 2 palm cameras",
+      "internalSensors": "Encoder, Torque/force sensors, Tactile sensors on hands",
+      "compute": "Dual low-power NVIDIA GPUs",
+      "battery": "1.2 kWh lithium-polymer",
+      "charging": "Wireless inductive self charge",
+      "aiPartner": "Proprietary (Helix)",
+      "software": "Helix",
+      "dataCollection": "Teleoperation (Project Go-Big with Brookfield), Egocentric video",
+      "bom": "~$50K"
+    },
+    "_counts": {
+      "suppliersInbound": 7,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "agility",
+    "name": "Agility Robotics (Digit)",
+    "type": "oem",
+    "country": "US",
+    "description": "The longest-running commercial bipedal effort in the US, with Digit roots going back to Oregon State's ATRIAS research. Agility made a deliberate trade-off: flat spatulate grippers instead of dexterous hands, optimizing for tote-moving logistics rather than general manipulation. At $250K per unit - the most expensive humanoid on the market - they need logistics customers where displacing multiple shifts of labor justifies the price. Their cycloidal-pin gear transmission choice diverges from the industry's harmonic drive consensus.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo4_agility.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Feb 2019",
+      "shipments2025": 150,
+      "shipmentShare": "1%",
+      "targetUse": [
+        "Logistics"
+      ],
+      "mass": "65 kg",
+      "height": "175 cm",
+      "speed": "1.5 m/s",
+      "totalDOF": "16",
+      "operatingTime": "Up to 4 hrs",
+      "payloadCapacity": "35 lbs",
+      "endEffector": "Flat, spatulate grippers",
+      "tactileSensing": false,
+      "locomotion": "Leg",
+      "materials": "Aluminum, thermoformed polycarbonate, carbon fiber composites",
+      "motor": "Brushless DC with custom transmissions",
+      "actuatorBody": "Rotary + Linear actuator",
+      "actuatorHand": "No hand",
+      "transmission": "Harmonic Reducer / Cycloidal-Pin Gear",
+      "externalSensors": "4 Cameras (2 head + 1 torso), LiDAR",
+      "internalSensors": "LiDAR, Intel RealSense, MEMS IMU, encoders",
+      "compute": "Two Intel i7 CPUs, payload bay for NUC/Jetson",
+      "battery": "1.2 kWh lithium-polymer",
+      "charging": "Self charge",
+      "aiPartner": "NVIDIA",
+      "aiPartnerIds": [
+        "nvidia"
+      ],
+      "software": "Linux-based RTOS",
+      "dataCollection": "Not disclosed",
+      "price": "$250K"
+    },
+    "_counts": {
+      "suppliersInbound": 10,
+      "customersOutbound": 0,
+      "vlaModels": 2,
+      "simPlatforms": 2
+    }
+  },
+  {
+    "id": "1x",
+    "name": "1X (Neo)",
+    "type": "oem",
+    "country": "US",
+    "description": "Originally founded in Norway, 1X is now a US-based company manufacturing robots in the Bay Area, making the most radical hardware bet in the space: tendon-driven actuation throughout the entire body, eliminating heavy gearboxes entirely. The result is the lightest humanoid at just 30 kg - half the weight of competitors - and the fastest at 6.2 m/s running speed. The soft 3D-lattice polymer body with a machine-washable nylon suit is designed for home environments where humans need physical safety around robots. At $20K purchase or $499/month lease, 1X is pricing for the consumer market, not enterprise.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo5_1x.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Oct 2025",
+      "targetUse": [
+        "Home"
+      ],
+      "mass": "30 kg",
+      "height": "170 cm",
+      "speed": "Walk: 1.4, Run: 6.2 m/s",
+      "totalDOF": "75",
+      "operatingTime": "4 hrs",
+      "payloadCapacity": "Lift: 154 lbs, Carry: 55 lbs",
+      "endEffector": "Hand (22 DOF)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Soft 3D-lattice polymer, machine-washable nylon suit/shoes",
+      "motor": "Revo2 (proprietary, in-house wound copper coils, 5x torque density)",
+      "actuatorBody": "Tendon drive",
+      "actuatorHand": "Tendon drive",
+      "transmission": "Tendon drive",
+      "externalSensors": "Dual 8.85MP 90Hz Stereo Fisheye",
+      "internalSensors": "IMUs (linkwise differential)",
+      "compute": "1X NEO Cortex (NVIDIA Jetson Thor)",
+      "battery": "842 Wh (proprietary, in-house)",
+      "charging": "Self charge, 6 min per hour runtime",
+      "aiPartner": "NVIDIA",
+      "aiPartnerIds": [
+        "nvidia"
+      ],
+      "software": "Built-in LLM + Redwood AI vision-language model",
+      "dataCollection": "Teleoperation, World model",
+      "price": "$20K (purchase), $499/month (lease)"
+    },
+    "_counts": {
+      "suppliersInbound": 5,
+      "customersOutbound": 2,
+      "vlaModels": 2,
+      "simPlatforms": 1
+    }
+  },
+  {
+    "id": "boston_dynamics",
+    "name": "Boston Dynamics (Atlas)",
+    "type": "oem",
+    "country": "US",
+    "description": "The most experienced humanoid robotics company in the world, now owned by Hyundai. The new electric Atlas represents a complete break from their iconic hydraulic platform - a bet that electric actuation has finally caught up. Atlas has the highest payload capacity in the industry (110 lbs instant lift) and uses titanium structural components where others use aluminum, reflecting their performance-first philosophy. Their DeepMind AI partnership mirrors Apptronik's approach: outsource intelligence, own the hardware. Price undisclosed - likely the most expensive platform currently in development.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo6_bostondynamics.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Jan 2026",
+      "targetUse": [
+        "Industrial",
+        "Auto manufacturing"
+      ],
+      "mass": "~90 kg",
+      "height": "190 cm",
+      "speed": "2.5 m/s",
+      "totalDOF": "56",
+      "operatingTime": "4 hrs typical, 2 hrs heavy use",
+      "payloadCapacity": "Instant: 110 lbs, Sustained: 66 lbs",
+      "endEffector": "Hand (3 fingers)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Titanium, aluminum",
+      "motor": "Frameless BLDC motors",
+      "actuatorBody": "Rotary + Linear",
+      "actuatorHand": "Motor + Gear",
+      "transmission": "Planetary gearbox (estimated)",
+      "externalSensors": "2x 360-degree camera, Tactile sensors",
+      "internalSensors": "Torque sensors on joints, IMU",
+      "compute": "NVIDIA Jetson AGX Thor",
+      "battery": "3.7 kWh",
+      "charging": "Self charge",
+      "aiPartner": "Google DeepMind",
+      "aiPartnerIds": [
+        "google_deepmind"
+      ],
+      "software": "Not disclosed",
+      "dataCollection": "Not disclosed"
+    },
+    "_counts": {
+      "suppliersInbound": 15,
+      "customersOutbound": 0,
+      "vlaModels": 2,
+      "simPlatforms": 2
+    }
+  },
+  {
+    "id": "sunday",
+    "name": "Sunday Robotics (Memo)",
+    "type": "oem",
+    "country": "US",
+    "description": "Taking a contrarian approach on two fronts: wheels instead of legs (simpler, more reliable for home use), and a foundation model (ACT-1) trained on zero robot data - using human demonstrations and internet video instead. They've shipped 2,000 Skill Capture Gloves to generate training data from human operators doing household tasks. At $20K with a wheeled base, they're arguably building an extremely capable mobile manipulator rather than a traditional humanoid, which may be exactly what the home market actually needs.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo7_sunday.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Nov 2025",
+      "targetUse": [
+        "Home"
+      ],
+      "mass": "~77 kg",
+      "height": "170 cm",
+      "speed": "1 m/s",
+      "totalDOF": "27",
+      "operatingTime": "4 hrs",
+      "payloadCapacity": "Dual-arm: 22 lbs, Body: 132 lbs",
+      "endEffector": "Hand (3 fingers)",
+      "tactileSensing": true,
+      "locomotion": "Wheel",
+      "materials": "Rigid/elastic polymers, soft color-customizable cladding",
+      "motor": "Not disclosed",
+      "actuatorBody": "Rotary + Linear for torso",
+      "actuatorHand": "Dual Gripper",
+      "transmission": "Planetary gearbox (estimated)",
+      "externalSensors": "1 camera per eye + 2 per hand",
+      "internalSensors": "Not disclosed",
+      "compute": "Not disclosed",
+      "battery": "Not disclosed",
+      "charging": "1 hr charge, Self charge in beta",
+      "aiPartner": "Proprietary (ACT-1)",
+      "software": "ACT-1: Foundation model trained on zero robot data",
+      "dataCollection": "Skill Capture Glove (UMI) - 2K gloves shipped",
+      "price": "$20K"
+    },
+    "_counts": {
+      "suppliersInbound": 6,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "vibe",
+    "name": "Vibe Robotics (Sunday A1)",
+    "type": "oem",
+    "country": "US",
+    "description": "Vibe Robotics is taking a contrarian approach to humanoid robotics: instead of maximizing performance, they are optimizing for accessibility and scale. Their core thesis is that the bottleneck for general-purpose humanoids is not better hardware, but large-scale real-world data - something that can only be achieved through widespread deployment. By building ultra-low-cost humanoids ($1K-$2K range) using 3D-printed structures and commodity actuators, Vibe targets universities, research labs, and developers rather than enterprise customers. This enables hundreds to thousands of robots to be deployed early, forming a distributed data flywheel across diverse real-world environments. The bet is that scale of deployment - not peak hardware capability - will ultimately define the winning humanoid platform, similar to how personal computers outpaced mainframes through accessibility.",
+    "plyModel": "/models/skeleton.ply",
+    "website": "https://www.viberobotics.co",
+    "robotImage": "/models/robo8_vibe.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Feb 2026",
+      "targetUse": [
+        "Education",
+        "Research",
+        "Developer Platform"
+      ],
+      "mass": "~3 kg",
+      "height": "61 cm",
+      "speed": "0.15 m/s",
+      "totalDOF": "25",
+      "operatingTime": "2 hrs",
+      "payloadCapacity": "Single-arm 1kg, Dual-arm: 2 kg",
+      "endEffector": "Servo-actuator gripper",
+      "tactileSensing": false,
+      "locomotion": "Leg",
+      "materials": "3D-printed polymer (ABS) + metal components",
+      "motor": "Low-cost embedded servo actuators",
+      "actuatorBody": "Not disclosed",
+      "actuatorHand": "Dual Gripper",
+      "transmission": "Integrated gear reduction (servo-based)",
+      "externalSensors": "Intel RealSense D435i",
+      "internalSensors": "IMU, encoders",
+      "compute": "NVIDIA Jetson Orin Nano 8GB",
+      "battery": "24V Li-ion",
+      "charging": "20 min charge, Type-C Charging",
+      "aiPartner": "Proprietary AI Models",
+      "software": "Vibe OS",
+      "dataCollection": "Teleoperation, Egocentric video, UMI",
+      "price": "$2K"
+    },
+    "_counts": {
+      "suppliersInbound": 4,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "unitree",
+    "name": "Unitree (G1)",
+    "type": "oem",
+    "country": "CN",
+    "description": "The volume leader with 5,500+ units shipped in 2025 - more than Tesla, Figure, and Agility combined, driving ~$248M in revenue at a ~16.8% net margin. Unitree's secret is radical cost compression: BOM of just $11.5K achieved through China's EV and drone supply chains. Their PMSM motors (rather than the BLDC consensus) offer better response and heat dissipation. At 130 cm tall and 35 kg, G1 is significantly smaller than competitors - closer to a research platform than a human-scale worker. Filed for a STAR Market IPO in Mar 2026 targeting ~$610M, with proceeds earmarked for AI-driven intelligent robot models - signaling a strategic pivot from pure hardware to AI capabilities.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo9_unitree.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "Aug 2024",
+      "shipments2025": 5500,
+      "shipmentShare": "41%",
+      "targetUse": [
+        "Research",
+        "Commercial"
+      ],
+      "mass": "35 kg",
+      "height": "130 cm",
+      "speed": "2 m/s",
+      "totalDOF": "23-43",
+      "operatingTime": "2 hrs",
+      "payloadCapacity": "6.6 lbs",
+      "endEffector": "3-finger force control (optional 5-finger)",
+      "tactileSensing": null,
+      "locomotion": "Leg",
+      "materials": "Aluminum alloy, high-strength engineering plastic",
+      "motor": "Low inertia high-speed PMSM",
+      "actuatorBody": "Rotary",
+      "actuatorHand": "Not disclosed",
+      "transmission": "Harmonic Reducer + Planetary Reducer",
+      "externalSensors": "3D LiDAR, depth cameras 360°, GPS, IMUs",
+      "internalSensors": "3D Cameras, LiDAR, Magnetic encoders, Current loop",
+      "compute": "8-core CPU, NVIDIA Jetson Orin",
+      "battery": "2 kWh",
+      "charging": "Quick-swap / autonomous charging",
+      "aiPartner": "Not disclosed",
+      "software": "Unitree app store",
+      "dataCollection": "Not disclosed",
+      "bom": "$11.5K",
+      "price": "$13.5K"
+    },
+    "_counts": {
+      "suppliersInbound": 15,
+      "customersOutbound": 0,
+      "vlaModels": 2,
+      "simPlatforms": 3
+    }
+  },
+  {
+    "id": "booster",
+    "name": "Booster Robotics (T1)",
+    "type": "oem",
+    "country": "CN",
+    "robotImage": "/models/robo20_booster.webp",
+    "description": "Beijing-based startup that has achieved remarkable volume for humanoid robots - over 700 T1 units shipped at a $9,999 price point. The T1 is a compact 118 cm platform with 23-41 DoF (configurable), powered by an NVIDIA Jetson AGX Orin delivering 200 TOPS of AI inference. Their strategy is to win the market on price and volume, establishing an installed base before competitors can scale. The sub-$10K price makes the T1 accessible for education, research, and light commercial use.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "2024",
+      "shipments2025": 700,
+      "targetUse": [
+        "Education",
+        "Research",
+        "Light commercial"
+      ],
+      "mass": "~25 kg",
+      "height": "118 cm",
+      "speed": "~6 km/h (walking)",
+      "totalDOF": "23-41 (configurable)",
+      "operatingTime": "~2 hrs",
+      "payloadCapacity": "~3-5 kg (arms)",
+      "endEffector": "Configurable: simple grippers or dexterous hands (up to 18 DOF)",
+      "tactileSensing": null,
+      "locomotion": "Leg (bipedal, dynamic walking)",
+      "materials": "Aluminum alloy frame, ABS/PC shell",
+      "motor": "Custom BLDC motors (quasi-direct-drive)",
+      "actuatorBody": "QDD actuators (low-ratio planetary, ~6:1 to 9:1)",
+      "actuatorHand": "Servo motors (dexterous hand config)",
+      "transmission": "Planetary gear reduction (low ratio)",
+      "externalSensors": "RGB-D depth camera, stereo camera",
+      "internalSensors": "IMU (6-axis), joint encoders, foot force/torque sensors",
+      "compute": "NVIDIA Jetson AGX Orin (200 TOPS)",
+      "battery": "Lithium-ion",
+      "charging": "DC charging adapter",
+      "aiPartner": "NVIDIA",
+      "aiPartnerIds": [
+        "nvidia"
+      ],
+      "software": "ROS 2, NVIDIA Isaac integration, RL-based locomotion",
+      "dataCollection": "Simulation (NVIDIA Isaac Sim) + teleoperation",
+      "price": "~$10K"
+    },
+    "_counts": {
+      "suppliersInbound": 3,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "booster_k1",
+    "name": "Booster Robotics (K1)",
+    "type": "oem",
+    "country": "CN",
+    "description": "The K1 is Booster Robotics' compact, affordable humanoid platform - a 95 cm, 19.5 kg bipedal robot positioned as an \"Introductory Embodied Development Platform\" for education, research, and RoboCup competition. Won 1st and 2nd place at RoboCup 2025 KidSize league and sold out within 20 minutes at its October 2025 debut. Three editions (Geek $5K, EDU $10K, Pro $18K) span from Qualcomm to Jetson AGX Orin compute. Integrates ByteDance's Doubao LLM and Booster's open-source RL framework (Booster Gym). At roughly 1/7th the price of the T1, the K1 targets volume adoption in universities and developer communities.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo32_booster_k1.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "Oct 2025",
+      "targetUse": [
+        "Education",
+        "Research",
+        "Competition (RoboCup)"
+      ],
+      "mass": "19.5 kg",
+      "height": "95 cm",
+      "speed": "0.4 m/s (walk), up to 1 m/s",
+      "totalDOF": "22",
+      "operatingTime": "30-50 min (2Ah) / ~80 min (5Ah); hot-swappable",
+      "payloadCapacity": "Not disclosed",
+      "endEffector": "No hands (base); optional grippers",
+      "tactileSensing": true,
+      "locomotion": "Leg (bipedal)",
+      "materials": "Plastic and metal composite",
+      "motor": "Custom dual-encoder force-controlled (QDD-style)",
+      "actuatorBody": "Force-controlled dual-encoder (60 N·m peak torque)",
+      "actuatorHand": "N/A base; servo motors (optional dexterous hand)",
+      "transmission": "Not disclosed",
+      "externalSensors": "RGBD stereo depth camera, 6-mic array, touch sensors",
+      "internalSensors": "Dual encoders per joint, 9-axis IMU",
+      "compute": "Qualcomm QCS 8550 (Geek, 48 TOPS) / Jetson Orin NX 8GB (EDU, 117 TOPS) / Jetson AGX Orin 32GB (Pro, 200 TOPS)",
+      "battery": "48V Li-ion, 2Ah (Geek) or 5Ah (EDU/Pro), hot-swappable",
+      "charging": "Wired, ≤1 hr",
+      "aiPartner": "ByteDance (Doubao LLM), NVIDIA",
+      "aiPartnerIds": [
+        "nvidia"
+      ],
+      "software": "ROS 2, Booster Gym (open-source RL), Isaac Sim/MuJoCo/Webots",
+      "dataCollection": "Sim2Real RL (Isaac Gym), teleoperation, MoCap datasets",
+      "price": "$4,999 - $18,000 (by edition)"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "agibot",
+    "name": "AGIBot (A2-Ultra)",
+    "type": "oem",
+    "country": "CN",
+    "description": "The shipment leader globally with 5,168 units projected in 2025 - 39% of the entire market. AGIBot's real moat may be data: AgiBot World contains 1M+ manipulation trajectories from 100+ robots, the largest known humanoid training dataset. They're actively transitioning from teleoperation to egocentric video capture for data collection, which could dramatically reduce the cost of scaling training data. Their Genie Operator-1 model processes this data into generalizable manipulation policies. Backed by significant Chinese government and provincial support.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo10_agibot.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "Aug 2024",
+      "shipments2025": 5168,
+      "shipmentShare": "39%",
+      "targetUse": [
+        "Industrial",
+        "Commercial"
+      ],
+      "mass": "69 kg",
+      "height": "169 cm",
+      "speed": "Max: 1.2 m/s",
+      "totalDOF": "40",
+      "operatingTime": "Standing: ~3 hrs, Walking: ~1.5 hrs",
+      "payloadCapacity": "4.4 lbs",
+      "endEffector": "Hand",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Aluminum Alloy",
+      "motor": "Not disclosed",
+      "actuatorBody": "Rotary",
+      "actuatorHand": "Not disclosed",
+      "transmission": "Not disclosed",
+      "externalSensors": "3D LiDAR, RGB-D, RGB, Fisheye Camera",
+      "internalSensors": "Not disclosed",
+      "compute": "16-core CPU, NVIDIA Jetson Orin 64G",
+      "battery": "2 kWh",
+      "charging": "2 hrs",
+      "aiPartner": "Proprietary",
+      "software": "Genie Operator-1, AgiBot World (1M+ trajectories)",
+      "dataCollection": "Teleop → Egocentric video, World model",
+      "price": "~$27K"
+    },
+    "_counts": {
+      "suppliersInbound": 15,
+      "customersOutbound": 0,
+      "vlaModels": 2,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "xpeng",
+    "name": "XPeng (Iron)",
+    "type": "oem",
+    "country": "CN",
+    "description": "The most ambitious hardware spec sheet in the industry: 82 DOF (highest of any humanoid), all-solid-state battery, proprietary Turing AI chips, and exotic materials including e-skin flexible composites and TPU 3D-printed muscle structures with liquid metal. As an EV manufacturer, XPeng has deep supply chain relationships and manufacturing expertise, but Iron represents a significant leap from cars to humanoids. Three proprietary AI chips suggest they're building full vertical integration on the compute side - no NVIDIA dependency. BOM estimated at ~$28K.",
+    "ticker": "XPEV",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo12_xpeng.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Nov 2025",
+      "targetUse": [
+        "Commercial",
+        "Industrial"
+      ],
+      "mass": "70 kg",
+      "height": "178 cm",
+      "speed": "1.2 m/s",
+      "totalDOF": "82",
+      "operatingTime": "4 hrs",
+      "payloadCapacity": "45 lbs",
+      "endEffector": "Anthropomorphic hands (22 DOF)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Al-Mg Alloy, E-Skin composites, Carbon fiber spine, TPU 3D printed + liquid metal",
+      "motor": "Electric servo-actuator",
+      "actuatorBody": "Not disclosed",
+      "actuatorHand": "Not disclosed",
+      "transmission": "Harmonic Reducer + Planetary Reducer",
+      "externalSensors": "LiDAR, Eagle Eye stereo & depth",
+      "internalSensors": "Ultrasonic arrays",
+      "compute": "3 Proprietary Turing AI chips",
+      "battery": "All solid-state, 2-3 kWh",
+      "charging": "30 min to 80%",
+      "aiPartner": "Proprietary",
+      "software": "Not disclosed",
+      "dataCollection": "Not disclosed",
+      "bom": "~$28K"
+    },
+    "_counts": {
+      "suppliersInbound": 9,
+      "customersOutbound": 0,
+      "vlaModels": 2,
+      "simPlatforms": 1
+    }
+  },
+  {
+    "id": "engineai",
+    "name": "EngineAI (T800)",
+    "type": "oem",
+    "country": "CN",
+    "description": "Focused on raw locomotion speed - T800 targets 3+ m/s, making it one of the fastest bipedal humanoids. The name is no accident: EngineAI is positioning for industrial environments where covering ground quickly matters. With 400 units planned for 2025, they're shipping meaningful volume while still in prototype. The dual battery option (ternary lithium or solid-state) gives customers a choice between proven and cutting-edge power. Price ranges widely ($40K-$81K) suggesting multiple configurations.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo13_engineai.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Dec 2025",
+      "shipments2025": 400,
+      "shipmentShare": "3%",
+      "targetUse": [
+        "Commercial",
+        "Logistics"
+      ],
+      "mass": "75 kg",
+      "height": "173 cm",
+      "speed": "≥3 m/s",
+      "totalDOF": "43",
+      "operatingTime": "4 hrs",
+      "payloadCapacity": "~11 lbs",
+      "endEffector": "Hand",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Carbon Fiber, Aluminum, PC/ABS, PPS",
+      "motor": "Not disclosed",
+      "actuatorBody": "Not disclosed",
+      "actuatorHand": "Not disclosed",
+      "transmission": "Harmonic drive / strain-wave reducers",
+      "externalSensors": "360° LiDAR, Intel Depth Camera",
+      "internalSensors": "Not disclosed",
+      "compute": "Intel N97 + NVIDIA Jetson Thor (~2000 TOPS)",
+      "battery": "Ternary lithium (71.4V) / Solid-state (74.8V)",
+      "charging": "Not disclosed",
+      "aiPartner": "Not disclosed",
+      "software": "Not disclosed",
+      "dataCollection": "Not disclosed",
+      "price": "$40.5K - $80.8K"
+    },
+    "_counts": {
+      "suppliersInbound": 8,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "ubtech",
+    "name": "UBTECH (Walker S2)",
+    "type": "oem",
+    "country": "CN",
+    "description": "One of the few humanoid companies already in production with 1,000 units planned for 2025. UBTECH has the longest track record in Chinese humanoids, with Walker lineage going back several generations. Their dual hot-swap battery system (48V, 3-5 kWh) is the highest-capacity power system in the industry, though runtime is still limited to 2 hours. At $80K they sit in the mid-range - affordable enough for Chinese government procurement but expensive enough to fund real R&D. Listed in Hong Kong as UBXG.HK.",
+    "ticker": "UBXG.HK",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo14_ubtech.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "Nov 2025",
+      "shipments2025": 1000,
+      "shipmentShare": "8%",
+      "targetUse": [
+        "Industrial",
+        "Logistics"
+      ],
+      "mass": "70 kg",
+      "height": "176 cm",
+      "speed": "2 m/s",
+      "totalDOF": "52",
+      "operatingTime": "2 hrs",
+      "payloadCapacity": "33 lbs",
+      "endEffector": "Hand (11 DOF)",
+      "tactileSensing": null,
+      "locomotion": "Leg",
+      "materials": "Not disclosed",
+      "motor": "Not disclosed",
+      "actuatorBody": "Rotary",
+      "actuatorHand": "Not disclosed",
+      "transmission": "Harmonic reducer",
+      "externalSensors": "Fisheye, RGB, RGBD, 6-axis force sensor",
+      "internalSensors": "Not disclosed",
+      "compute": "Not disclosed",
+      "battery": "Dual hot-swap, 48V, 3-5 kWh",
+      "charging": "90 min full recharge",
+      "aiPartner": "Not disclosed",
+      "software": "Not disclosed",
+      "dataCollection": "Not disclosed",
+      "price": "$80K"
+    },
+    "_counts": {
+      "suppliersInbound": 8,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 1
+    }
+  },
+  {
+    "id": "dexmate",
+    "name": "Dexmate (Vega)",
+    "type": "oem",
+    "country": "US",
+    "description": "The outlier in the landscape: a 220 cm foldable wheeled platform that prioritizes operating time (25 hours - 5x longer than any legged competitor) over bipedal locomotion. Dual compute architecture pairs NVIDIA Jetson AGX Thor for AI inference with Intel x86 for deterministic control - a pragmatic split that acknowledges neither platform alone covers all needs. Uses exo-skeleton and VR for data collection. Already in production at $80K, targeting research labs and industrial environments where long continuous operation matters more than walking.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo8_dexmate.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "Mar 2025",
+      "targetUse": [
+        "Research",
+        "Industrial"
+      ],
+      "mass": "130 kg",
+      "height": "220 cm (foldable)",
+      "speed": "1.1 m/s",
+      "totalDOF": "34",
+      "operatingTime": "25 hrs",
+      "payloadCapacity": "Dual-arm: 22 lbs",
+      "endEffector": "Hand or grippers",
+      "tactileSensing": true,
+      "locomotion": "Wheel",
+      "materials": "Aluminum, Plastic exterior",
+      "motor": "Frameless BLDC motors",
+      "actuatorBody": "Rotary",
+      "actuatorHand": "Motor + gear",
+      "transmission": "Harmonic Reducer",
+      "externalSensors": "Two 3D LiDARs, Up to 7 Cameras",
+      "internalSensors": "RGBD/RGB, LiDAR, IMUs, Ultrasonic, Force/torque, Tactile",
+      "compute": "NVIDIA Jetson AGX Thor + Intel x86 SoC",
+      "battery": "Not disclosed",
+      "charging": "2 hrs charge time",
+      "aiPartner": "Proprietary",
+      "software": "In-house software infrastructure",
+      "dataCollection": "Exo-skeleton, VR",
+      "price": "$80K"
+    },
+    "_counts": {
+      "suppliersInbound": 7,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "fourier",
+    "name": "Fourier Intelligence (GR-2)",
+    "type": "oem",
+    "country": "CN",
+    "description": "Shanghai-based company that pivoted from rehabilitation robotics to humanoids, bringing deep actuator expertise from years of building exoskeletons and rehab devices. GR-2 is the successor to GR-1, with significantly improved manipulation capabilities. Fourier's proprietary FSA (Fourier Smart Actuator) series is designed for safe human interaction - a direct legacy of their medical robotics work. Their rehabilitation robotics revenue provides a cash flow base that pure-play humanoid startups lack. Targeting both industrial and service applications.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo15_fourier.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Nov 2024",
+      "targetUse": [
+        "Industrial",
+        "Service",
+        "Research"
+      ],
+      "mass": "63 kg",
+      "height": "175 cm",
+      "speed": "2 m/s",
+      "totalDOF": "53",
+      "operatingTime": "~2 hrs",
+      "payloadCapacity": "11 lbs (5 kg per arm)",
+      "endEffector": "Hand (12 DOF dexterous)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Aluminum alloy, engineering plastics",
+      "motor": "Proprietary FSA (Fourier Smart Actuator)",
+      "actuatorBody": "Rotary (FSA series)",
+      "actuatorHand": "Motor + Tendon drive",
+      "transmission": "Harmonic Reducer + Planetary",
+      "externalSensors": "RGB cameras, depth cameras",
+      "internalSensors": "IMU, encoders, force/torque sensors",
+      "compute": "NVIDIA Jetson Orin",
+      "battery": "~1.5 kWh lithium",
+      "charging": "Not disclosed",
+      "aiPartner": "Not disclosed",
+      "software": "Not disclosed",
+      "dataCollection": "Teleoperation"
+    },
+    "_counts": {
+      "suppliersInbound": 5,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 2
+    }
+  },
+  {
+    "id": "kepler",
+    "name": "Kepler Robotics (Forerunner K2)",
+    "type": "oem",
+    "country": "CN",
+    "description": "Shanghai-based humanoid startup that debuted at CES 2025 with live demonstrations of the Forerunner K2. Kepler is notable for vertical integration - they produce their own actuators, reducing dependency on external reducer and motor suppliers. The K2 is positioned for industrial logistics and light manufacturing tasks. Their emphasis on proprietary actuator technology mirrors the approach of companies like Fourier, suggesting that Chinese OEMs are racing to reduce dependency on Japanese harmonic drives.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo16_kepler.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Jan 2025",
+      "targetUse": [
+        "Industrial",
+        "Logistics"
+      ],
+      "mass": "~80 kg",
+      "height": "178 cm",
+      "speed": "1.5 m/s",
+      "totalDOF": "52",
+      "operatingTime": "4-8 hrs",
+      "payloadCapacity": "33 lbs (15 kg)",
+      "endEffector": "Hand (12 DOF dexterous)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Aluminum alloy",
+      "motor": "Proprietary actuators",
+      "actuatorBody": "Rotary + Linear",
+      "actuatorHand": "Motor + Gear",
+      "transmission": "Proprietary (harmonic + planetary)",
+      "externalSensors": "RGB cameras, depth cameras",
+      "internalSensors": "IMU, encoders, force/torque",
+      "compute": "Not disclosed",
+      "battery": "Not disclosed",
+      "charging": "Not disclosed",
+      "aiPartner": "Not disclosed",
+      "software": "Not disclosed",
+      "dataCollection": "Teleoperation"
+    },
+    "_counts": {
+      "suppliersInbound": 4,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "sanctuary_ai",
+    "name": "Sanctuary AI (Phoenix)",
+    "type": "oem",
+    "country": "CA",
+    "description": "Vancouver-based company taking the most AI-first approach in the industry. Sanctuary AI's core thesis is that general-purpose intelligence - not hardware - is the bottleneck for humanoid robots. Their Carbon AI system is designed as a general-purpose AI control system that can operate any robotic form factor. Phoenix uses hydraulic actuators in the hands for human-equivalent dexterity and force, diverging from the all-electric consensus. Deploying early units with Magna International for automotive manufacturing. Founded by former D-Wave Systems executives.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo17_sanctuary.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "May 2023",
+      "targetUse": [
+        "Manufacturing",
+        "Automotive",
+        "Logistics"
+      ],
+      "mass": "~70 kg",
+      "height": "170 cm",
+      "speed": "~1.1 m/s",
+      "totalDOF": "~50",
+      "operatingTime": "~4 hrs",
+      "payloadCapacity": "~55 lbs",
+      "endEffector": "Hand (20 DOF, hydraulic fingers)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Not disclosed",
+      "motor": "Electric (body) + Hydraulic (hands)",
+      "actuatorBody": "Rotary + Linear",
+      "actuatorHand": "Hydraulic tendon drive",
+      "transmission": "Not disclosed",
+      "externalSensors": "Cameras, depth sensors",
+      "internalSensors": "Force/torque sensors, encoders",
+      "compute": "Not disclosed",
+      "battery": "Not disclosed",
+      "charging": "Not disclosed",
+      "aiPartner": "Proprietary (Carbon)",
+      "software": "Carbon: General-purpose AI control system",
+      "dataCollection": "Teleoperation"
+    },
+    "_counts": {
+      "suppliersInbound": 3,
+      "customersOutbound": 0,
+      "vlaModels": 2,
+      "simPlatforms": 1
+    }
+  },
+  {
+    "id": "noetix",
+    "name": "Noetix Robotics (N2)",
+    "type": "oem",
+    "country": "CN",
+    "description": "Beijing-based humanoid startup that burst onto the scene with the N2, a compact 118 cm bipedal robot capable of 12.6 km/h running, continuous backflips, and a half-marathon (21 km in 3h37m). Over 2,500 pre-orders at ~$5.5K - the most aggressively priced humanoid in the industry. Speed-first approach contrasts with the dexterity-first strategy of most competitors.",
+    "robotImage": "/models/robo18_noetix.webp",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "2025",
+      "shipments2025": 105,
+      "targetUse": [
+        "Industrial",
+        "Entertainment",
+        "Research"
+      ],
+      "mass": "30 kg",
+      "height": "118 cm",
+      "speed": "12.6 km/h",
+      "totalDOF": "18",
+      "operatingTime": "~2 hrs",
+      "payloadCapacity": "5 kg (walking)",
+      "endEffector": "Ball-shaped hands (swappable 5-finger dexterous option)",
+      "tactileSensing": null,
+      "locomotion": "Leg (bipedal, backflip capable)",
+      "materials": "Aluminum alloy internal, high-strength outer shell",
+      "motor": "Electric actuated joints (150 Nm peak)",
+      "actuatorBody": "Electric servo actuators",
+      "actuatorHand": "Swappable end-effector mount",
+      "transmission": "Not disclosed",
+      "externalSensors": "2 depth cameras (structured light), 4 microphones",
+      "internalSensors": "IMU, joint encoders",
+      "compute": "NVIDIA Jetson Orin (40 TOPS)",
+      "battery": "48V / 7Ah lithium, quick-swap",
+      "charging": "Quick-charge (~2 hr)",
+      "aiPartner": "Proprietary (in-house deep RL)",
+      "software": "Deep RL locomotion, LLM-powered speech/visual interaction, ROS/Python/C++ compatible",
+      "dataCollection": "Vision + audio (onboard)",
+      "price": "~$5.5K"
+    },
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "dobot",
+    "name": "Dobot (Atom)",
+    "type": "oem",
+    "country": "CN",
+    "robotImage": "/models/robo22_dobot.webp",
+    "description": "Shenzhen-based Dobot, already established in collaborative robot arms, entered the humanoid space with the Atom. At 153 cm and 62 kg, it features 41 DoF and claims ±0.05 mm precision - extraordinary for a humanoid platform and rivaling industrial robot arms. Priced at ~$27.5K, Atom targets precision assembly and quality inspection tasks where sub-millimeter accuracy matters. Dobot's existing channel relationships with manufacturers give them a distribution advantage.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "2025",
+      "targetUse": [
+        "Precision assembly",
+        "Quality inspection",
+        "Manufacturing"
+      ],
+      "mass": "62 kg",
+      "height": "153 cm",
+      "speed": "1.5 m/s (~5.4 km/h)",
+      "totalDOF": "41",
+      "operatingTime": "Not disclosed",
+      "payloadCapacity": "Not disclosed",
+      "endEffector": "5-finger dexterous hands (12 DOF, ±0.05 mm precision)",
+      "tactileSensing": null,
+      "locomotion": "Leg (bipedal, straight-knee biomimetic gait)",
+      "materials": "Not disclosed",
+      "motor": "Servo motors (200 Hz high-frequency control)",
+      "actuatorBody": "Servo actuators with vibration suppression",
+      "actuatorHand": "12-DOF dexterous finger actuators",
+      "transmission": "Not disclosed",
+      "externalSensors": "Intel RealSense D455 depth camera, 60 FPS Full-HD RGB, wrist cameras (Atom D)",
+      "internalSensors": "IMU, force sensors",
+      "compute": "1500 TOPS edge AI (Intel i9 + GPU on Atom Max)",
+      "battery": "~2.3 kWh lithium (quick-swap on Atom Max)",
+      "charging": "Quick-swap battery",
+      "aiPartner": "NVIDIA (Physics AI partner ecosystem)",
+      "aiPartnerIds": [
+        "nvidia"
+      ],
+      "software": "ROM-1 (100M param, 24 Hz end-to-end control), VR teleoperation",
+      "dataCollection": "Dual-mode teleoperation (full-body + segmented), VR-based imitation learning",
+      "price": "~$27.5K"
+    },
+    "_counts": {
+      "suppliersInbound": 3,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "limx",
+    "name": "LimX Dynamics (Oli)",
+    "type": "oem",
+    "country": "CN",
+    "robotImage": "/models/robo23_limx.webp",
+    "description": "Shenzhen-based LimX Dynamics produces Oli, a 165 cm humanoid with 31 DoF targeting education, manufacturing, and entertainment. At $60K, Oli is now in production - one of the few Chinese humanoids to reach that milestone. Their background in legged locomotion research gives them strong walking/balancing capabilities.",
+    "website": "https://www.limxdynamics.com",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "2025-08-08",
+      "targetUse": [
+        "Education",
+        "Manufacturing",
+        "Entertainment"
+      ],
+      "mass": "55 kg",
+      "height": "165 cm",
+      "speed": "1.5 m/s (max)",
+      "totalDOF": "31",
+      "operatingTime": "1.5-2 hours",
+      "payloadCapacity": "3 kg per arm",
+      "endEffector": "Gripper / Model hand / Five-finger dexterous hand",
+      "tactileSensing": false,
+      "locomotion": "Bipedal (legs)",
+      "materials": "Aluminum alloy + industrial plastic",
+      "motor": "Frameless torque motor",
+      "actuatorBody": "Frameless torque motors",
+      "actuatorHand": "Gripper / Dexterous hand",
+      "transmission": "Harmonic Reducer",
+      "externalSensors": "Camera",
+      "internalSensors": "1 IMU, dual encoders, motor torque control",
+      "compute": "NVIDIA Jetson Orin",
+      "battery": "9,500 mAh / 58.8V 10A lithium-ion",
+      "charging": "Manual / ~1 hour",
+      "aiPartner": "Not disclosed",
+      "software": "Proprietary RL-based locomotion controller (sim-to-real)",
+      "dataCollection": "Not disclosed",
+      "price": "$60K"
+    },
+    "_counts": {
+      "suppliersInbound": 2,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "pudu",
+    "name": "PUDU Robotics (D9)",
+    "type": "oem",
+    "country": "CN",
+    "robotImage": "/models/robo24_pudu.webp",
+    "description": "Shenzhen-based PUDU, known for delivery robots deployed in thousands of restaurants, enters the humanoid market with the D9. At 170 cm, 65 kg, 42 DoF, and 352 Nm torque, it's a capable full-size platform. The 20 kg payload capacity and 4.5 mph walking speed position it for logistics and light industrial work. PUDU's existing fleet management software and mass manufacturing experience from delivery robots could give them a scaling advantage over pure humanoid startups. Priced at $20-30K.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "2025",
+      "targetUse": [
+        "Logistics",
+        "Light industrial",
+        "Service"
+      ],
+      "mass": "65 kg",
+      "height": "170 cm",
+      "speed": "4.5 mph (~7.2 km/h)",
+      "totalDOF": "42",
+      "operatingTime": "Not disclosed",
+      "payloadCapacity": "20 kg (10 kg per arm)",
+      "endEffector": "DH11: 11-DOF 5-finger, cable-driven, 500g, 30N grip, 1018 tactile pixels",
+      "tactileSensing": true,
+      "locomotion": "Leg (bipedal)",
+      "materials": "Not disclosed",
+      "motor": "Not disclosed",
+      "actuatorBody": "352 Nm peak torque",
+      "actuatorHand": "Cable-driven, 6 motors for 11 DOF",
+      "transmission": "Not disclosed",
+      "externalSensors": "RGB cameras, RGBD depth cameras, LiDAR (VSLAM)",
+      "internalSensors": "IMU, tactile sensors (12 areas per hand)",
+      "compute": "275 TOPS (NVIDIA Orin + RK3588 dual-processor)",
+      "battery": "15 Ah / 0.72 kWh",
+      "charging": "Not disclosed",
+      "aiPartner": "Not disclosed",
+      "software": "Real-time 3D semantic mapping",
+      "dataCollection": "Not disclosed",
+      "price": "$20K - $30K"
+    },
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "astribot",
+    "name": "Astribot (S1)",
+    "type": "oem",
+    "country": "CN",
+    "robotImage": "/models/robo25_astribot.webp",
+    "description": "Shenzhen-based Astribot takes a wheeled-base approach with the S1, trading bipedal locomotion for superior upper-body performance. With 36 DoF, 10 m/s end-effector speed, ±0.1 mm precision, and 10 kg payload per arm, the S1 is optimized for dexterous manipulation tasks. The wheeled base provides stable positioning for precision work. At $96-150K, it's premium-priced but targets high-value manufacturing and lab automation where manipulation performance justifies the cost.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "2025",
+      "targetUse": [
+        "Manufacturing",
+        "Lab automation",
+        "Precision tasks"
+      ],
+      "mass": "~65 kg",
+      "height": "~170 cm",
+      "speed": "~1.5 km/h (wheeled base)",
+      "totalDOF": "36",
+      "operatingTime": "Not disclosed",
+      "payloadCapacity": "10 kg per arm",
+      "endEffector": "Dexterous multi-finger hands (force/torque sensing at fingertips)",
+      "tactileSensing": true,
+      "locomotion": "Wheeled base",
+      "materials": "Aluminum alloy frame, carbon fiber arm links, engineering plastics",
+      "motor": "Custom high-torque BLDC servos with harmonic reducers",
+      "actuatorBody": "BLDC servos + strain-wave gears (arm joints)",
+      "actuatorHand": "Tendon-driven dexterous fingers",
+      "transmission": "Harmonic drives (arms), planetary gears (wrist)",
+      "externalSensors": "Stereo RGB cameras, force/torque (wrists/fingertips), LiDAR (base)",
+      "internalSensors": "Joint encoders, IMU (base)",
+      "compute": "Not disclosed",
+      "battery": "Lithium-ion (mobile base)",
+      "charging": "Docking station",
+      "aiPartner": "Not disclosed",
+      "software": "Teleoperation-based imitation learning, autonomous task execution",
+      "dataCollection": "Teleoperation (motion-capture suit / exoskeleton gloves)",
+      "price": "$96K - $150K"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "magiclab",
+    "name": "MagicLab (MagicBot G1)",
+    "type": "oem",
+    "country": "CN",
+    "robotImage": "/models/robo26_magiclab.webp",
+    "description": "Suzhou-based MagicLab's G1 features 42 DoF and 525 Nm peak torque - the highest torque figure among the new Chinese entrants. At 174 cm and 67.5 kg with 20 kg payload and 4-5 hour battery life, it's designed for sustained industrial work. Commercially available at ~$120K with fleet coordination via \"MagicNet\" for multi-robot deployments.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "2025",
+      "targetUse": [
+        "Industrial",
+        "Logistics",
+        "Service"
+      ],
+      "mass": "67.5 kg",
+      "height": "174 cm",
+      "speed": ">=2 m/s (~7.2 km/h)",
+      "totalDOF": "42",
+      "operatingTime": "4-5 hrs",
+      "payloadCapacity": "20 kg",
+      "endEffector": "5-finger dexterous hands (6 mini high-torque servos per hand, pressure sensors)",
+      "tactileSensing": true,
+      "locomotion": "Leg (bipedal)",
+      "materials": "Not disclosed",
+      "motor": "High-torque servo motors",
+      "actuatorBody": "525 Nm peak torque actuators",
+      "actuatorHand": "6 mini high-torque servos per hand",
+      "transmission": "Not disclosed",
+      "externalSensors": "3D LiDAR, 3 fisheye cameras, RGB-D cameras (head + waist)",
+      "internalSensors": "IMU, joint encoders, force sensors",
+      "compute": "~100 TOPS onboard AI",
+      "battery": "~1.35 kWh (25 Ah)",
+      "charging": "Not disclosed",
+      "aiPartner": "Not disclosed",
+      "software": "MagicNet fleet coordination, autonomous navigation",
+      "dataCollection": "Vision + LiDAR (onboard)",
+      "price": "~$120K"
+    },
+    "_counts": {
+      "suppliersInbound": 2,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "xiaomi",
+    "name": "Xiaomi (CyberOne)",
+    "type": "oem",
+    "country": "CN",
+    "robotImage": "/models/robo27_xiaomi.webp",
+    "description": "Xiaomi's CyberOne is the consumer electronics giant's entry into humanoid robotics. At 177 cm and 52 kg with 21 DoF, it's a relatively simple platform compared to competitors, but Xiaomi's strengths lie elsewhere: massive manufacturing scale, supply chain optimization, and consumer market reach. CyberOne can recognize 85 environmental sounds and 45 human emotions, suggesting a consumer/companion focus rather than industrial. Xiaomi's ability to subsidize hardware costs with software and services could disrupt pricing if they commit to volume production.",
+    "plyModel": "/models/skeleton.ply",
+    "ticker": "1810.HK",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Aug 2022",
+      "targetUse": [
+        "Consumer",
+        "Companion",
+        "Service"
+      ],
+      "mass": "52 kg",
+      "height": "177 cm",
+      "speed": "3.6 km/h",
+      "totalDOF": "21",
+      "operatingTime": "Not disclosed",
+      "payloadCapacity": "1.5 kg per hand",
+      "endEffector": "5-finger hands (basic open/close grip)",
+      "tactileSensing": null,
+      "locomotion": "Leg (bipedal)",
+      "materials": "Aluminum alloy, ABS/PC engineering plastics",
+      "motor": "Xiaomi custom servo motors",
+      "actuatorBody": "Custom servos, ~300 Nm peak (hip)",
+      "actuatorHand": "Basic open/close actuation",
+      "transmission": "Harmonic drive reducers",
+      "externalSensors": "Mi-Sense depth camera, 8-element curved mic array, OLED face display",
+      "internalSensors": "IMU, joint encoders, foot force/torque sensors",
+      "compute": "Qualcomm Snapdragon 8 Gen 1 + Xiaomi AI processor",
+      "battery": "Lithium polymer",
+      "charging": "Not disclosed",
+      "aiPartner": "Xiaomi proprietary (MiAI / Xiao AI)",
+      "software": "Emotion recognition (45 emotions), sound recognition (85 sounds), SLAM, bipedal locomotion control",
+      "dataCollection": "Vision + audio (onboard cameras and mic array)",
+      "bom": "~600K-700K RMB (~$89K-$104K)"
+    },
+    "_counts": {
+      "suppliersInbound": 3,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "foundation_robotics",
+    "name": "Foundation Robotics (MK-1)",
+    "type": "oem",
+    "country": "US",
+    "robotImage": "/models/robo28_foundation.webp",
+    "description": "San Francisco-based Foundation Robotics builds the MK-1, a 175 cm dual-use humanoid targeting industrial and defense applications. Uses proprietary cycloidal actuators (160 Nm peak, back-drivable below 1 Nm) for shock resistance and long life. Deployed to Ukraine for battlefield logistics and reconnaissance testing in early 2026. Available on a ~$100K/year lease model.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "2025",
+      "targetUse": [
+        "Industrial",
+        "Defense",
+        "Logistics"
+      ],
+      "mass": "~80 kg",
+      "height": "175 cm",
+      "speed": "1.7 m/s (~6.1 km/h)",
+      "totalDOF": "19+ (19 upper-body confirmed)",
+      "operatingTime": "~2-4 hrs",
+      "payloadCapacity": "20 kg",
+      "endEffector": "5-finger hands",
+      "tactileSensing": null,
+      "locomotion": "Leg (bipedal)",
+      "materials": "Not disclosed",
+      "motor": "Not disclosed",
+      "actuatorBody": "Proprietary cycloidal actuators (160 Nm peak, back-drivable <1 Nm)",
+      "actuatorHand": "Not disclosed",
+      "transmission": "Cycloidal gearing",
+      "externalSensors": "Camera-first vision system (no LiDAR)",
+      "internalSensors": "Force-limiting, collision detection",
+      "compute": "Not disclosed (upper torso mounted)",
+      "battery": "Not disclosed",
+      "charging": "Not disclosed",
+      "aiPartner": "Not disclosed",
+      "software": "Proprietary OS, ROS 2, Python APIs, LLM integration for NL commands",
+      "dataCollection": "Not disclosed",
+      "price": "~$100K/yr lease"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "fauna",
+    "name": "Fauna Robotics (Sprout)",
+    "type": "oem",
+    "country": "US",
+    "description": "NYC-based startup that designed Sprout as a lightweight, approachable developer platform rather than a heavy industrial workhorse. At just 22.7 kg and 107 cm, Sprout is the lightest and shortest humanoid in the landscape - roughly half the weight of 1X Neo and shorter than Unitree G1. The design prioritizes safe human proximity: soft exterior panels, backdrivable motors with conservative torque limits, minimized pinch points, and a swappable battery. A character-like expressive face (LED array + motorized eyebrows) and LEGO-compatible cosmetic customization signal a consumer/education play. The full SDK with Python/C++ bindings, ROS 2 integration, MCP server for LLM-based agents, and IsaacSim/Lab compatibility makes it genuinely developer-ready. Whole-body VR teleoperation via Meta Quest enables DAgger-style data collection. No proprietary VLA - instead exposes modular services for external models.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo2_fauna.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Jan 2025",
+      "targetUse": [
+        "Developer platform",
+        "Research",
+        "Education",
+        "HRI"
+      ],
+      "mass": "22.7 kg",
+      "height": "107 cm",
+      "speed": "Not disclosed",
+      "totalDOF": "29 (incl. 2 eyebrows)",
+      "operatingTime": "3 - 3.5 hrs",
+      "payloadCapacity": "0.7 kg rated, 3.7 kg burst (forward raise)",
+      "endEffector": "Single-DOF grippers (12N software-limited)",
+      "tactileSensing": false,
+      "locomotion": "Leg",
+      "materials": "Soft exterior panels, minimized pinch points",
+      "motor": "Backdrivable motors (per-joint tuned)",
+      "actuatorBody": "Backdrivable with gear reductions",
+      "actuatorHand": "Single-DOF gripper actuator",
+      "transmission": "Not disclosed",
+      "externalSensors": "ZED2i stereo RGB-D (Stereolabs), 4x VL53L8CX ToF, 4x MEMS mic array",
+      "internalSensors": "9-axis IMU, joint position/velocity sensors (125 Hz)",
+      "compute": "NVIDIA Jetson AGX Orin 64GB, 1TB SSD",
+      "battery": "Li-ion (Molicel P50B), 46.8V, 5Ah / 10Ah extended",
+      "charging": "Swappable battery",
+      "aiPartner": "None (modular MCP server for external LLMs)",
+      "software": "ROS 2 + RMW Zenoh, IsaacSim/Lab, Docker containers, Foxglove viz",
+      "dataCollection": "VR teleoperation (Meta Quest, \"Embody\"), DAgger intervention"
+    },
+    "_counts": {
+      "suppliersInbound": 5,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "neura_4ne1",
+    "name": "Neura Robotics (4NE-1)",
+    "type": "oem",
+    "country": "DE",
+    "robotImage": "/models/robo29_neura4ne1.webp",
+    "description": "Neura's 4NE-1 is a full-size industrial humanoid at 180 cm with 100 kg lift capacity and a water-cooled actuator system - an unusual choice that enables sustained high-torque operation without thermal throttling. Runs on NVIDIA Thor with GR00T integration. Priced at ~$107K.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "2025",
+      "targetUse": [
+        "Industrial",
+        "Manufacturing"
+      ],
+      "mass": "Not disclosed",
+      "height": "180 cm",
+      "speed": "5 km/h",
+      "totalDOF": "~42",
+      "operatingTime": "Not disclosed",
+      "payloadCapacity": "100 kg lift",
+      "endEffector": "Dexterous 5-finger hands (proprietary)",
+      "tactileSensing": true,
+      "locomotion": "Leg (bipedal)",
+      "materials": "Aluminum alloy frame, composite covers",
+      "motor": "Water-cooled BLDC motors",
+      "actuatorBody": "Proprietary water-cooled rotary actuators",
+      "actuatorHand": "Proprietary integrated dexterous hand",
+      "transmission": "Not disclosed",
+      "externalSensors": "3D cameras, LiDAR, depth sensors",
+      "internalSensors": "IMU, encoders, force/torque sensors, joint torque sensors",
+      "compute": "NVIDIA Thor (GR00T integration)",
+      "battery": "Lithium-ion",
+      "charging": "Not disclosed",
+      "aiPartner": "NVIDIA (GR00T foundation model)",
+      "aiPartnerIds": [
+        "nvidia"
+      ],
+      "software": "neuraOS (proprietary), NVIDIA Isaac / GR00T, ROS 2 compatible",
+      "dataCollection": "Teleoperation + simulation (NVIDIA Isaac Sim)",
+      "price": "~$107K"
+    },
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 0,
+      "vlaModels": 1,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "robotera",
+    "name": "RobotEra (L7)",
+    "type": "oem",
+    "country": "CN",
+    "robotImage": "/models/robo21_robotera.webp",
+    "description": "Beijing-based company behind the L7 humanoid, which packs 55 DoF and 14.4 km/h top speed with 400 Nm peak torque - among the highest specs in the industry. The XHand features 12 DoF per hand with integrated tactile sensing, enabling fine manipulation (demonstrated egg grasping and pen writing). RobotEra's strategy is to lead on raw performance metrics, betting that customers will pay a premium for the most capable platform rather than the cheapest.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "2025",
+      "targetUse": [
+        "Industrial",
+        "Research"
+      ],
+      "mass": "~55 kg",
+      "height": "165 cm",
+      "speed": "14.4 km/h (4 m/s)",
+      "totalDOF": "55",
+      "operatingTime": "~2 hrs",
+      "payloadCapacity": "Not disclosed",
+      "endEffector": "XHand (12 DOF per hand, tactile fingertips)",
+      "tactileSensing": true,
+      "locomotion": "Leg (bipedal)",
+      "materials": "Aerospace-grade aluminum alloy, carbon fiber composite panels",
+      "motor": "Custom QDD BLDC motors (legs), miniature BLDC (hands)",
+      "actuatorBody": "QDD + harmonic drives, 400 Nm peak (hip/knee)",
+      "actuatorHand": "Miniature BLDC with tendon-driven linkages",
+      "transmission": "Planetary + harmonic (legs), belt/tendon (hands)",
+      "externalSensors": "Stereo RGB-D cameras, IMU",
+      "internalSensors": "Joint torque sensors, foot force/pressure sensors, tactile arrays (fingertips)",
+      "compute": "NVIDIA Orin (edge AI)",
+      "battery": "Lithium-ion / LiFePO4 (torso-mounted)",
+      "charging": "DC charging",
+      "aiPartner": "Not disclosed",
+      "software": "End-to-end RL locomotion (sim-to-real), imitation learning (manipulation)",
+      "dataCollection": "Teleoperation (VR/exoskeleton) + sim-to-real RL (Isaac Sim)"
+    },
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "vanar_robots",
+    "name": "Vanar Robots",
+    "type": "oem",
+    "country": "IN",
+    "robotImage": "/models/robo30_vanar.webp",
+    "description": "Vanar Robots (founded 2024, India) develops cost-efficient, self-reliant humanoid robots to scale physical labor in real human environments. Generation 1 prototype (5'9\", ~60 kg) features 38 DoF, tendon-driven hands with proprioceptive + vision sensing, high-torque in-house actuators (validated via SUV pull test), proprietary VLA models under development, and multi-modal sensors. Most core subsystems are developed in-house, enabling rapid iteration and long-term cost optimization.",
+    "plyModel": "/models/skeleton.ply",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "2026-2027 (beta)",
+      "targetUse": [
+        "Industrial"
+      ],
+      "mass": "~60 kg",
+      "height": "5'9\" (~175 cm)",
+      "speed": "Tuned for controlled, stable operation in real-world environments",
+      "totalDOF": "38",
+      "operatingTime": "Under active development",
+      "payloadCapacity": "15 kg",
+      "endEffector": "Tendon-driven hands with integrated proprioceptive and vision-based sensing (v2 with custom tactile sensors under development)",
+      "tactileSensing": true,
+      "locomotion": "Bipedal",
+      "materials": "Stainless steel, aluminum, polymers, composites (modular design)",
+      "motor": "High-torque, high-precision in-house actuators",
+      "actuatorBody": "Planetary gearboxes, linear actuators, tendon-based",
+      "actuatorHand": "Tendon-driven",
+      "transmission": "Planetary, linear, tendon-based pulley",
+      "externalSensors": "Multi-modal (vision cameras, IMU, encoders); Sony vision sensors planned",
+      "internalSensors": "Proprioceptive, encoders, custom tactile (v2 under development)",
+      "compute": "NVIDIA Jetson Platform",
+      "battery": "Custom pack with Panasonic cells",
+      "charging": "Plug-in charging; autonomous docking under development",
+      "aiPartner": "Proprietary (in-house VLA models)",
+      "software": "AI control stack using VLA models, trained via simulation and real-world data (sim2real)",
+      "dataCollection": "Teleoperation-driven data collection"
+    },
+    "_counts": {
+      "suppliersInbound": 3,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "mentee_robotics",
+    "name": "Mentee Robotics (MenteeBot)",
+    "type": "oem",
+    "country": "IL",
+    "description": "Israeli humanoid startup founded in 2022 by Mobileye founder Amnon Shashua, ex-FAIR researcher Lior Wolf (CEO), and ML researcher Shai Shalev-Shwartz. Acquired by Mobileye (Intel) in January 2026 for ~$900M after raising only $38M at a $162M valuation - a 5.5x markup in under two years. The team applies Mobileye's camera-only philosophy (no lidar) to humanoid robots, with deep vertical integration across proprietary actuators, hands, and AI. Their November 2025 demo of two MenteeBots autonomously moving 32 boxes in an unedited 18-minute video was a landmark proof of multi-robot warehouse autonomy. Manufacturing partnership with Aumovio (ex-Continental) targets 2027 experimental batch, 2028 commercial launch. Sub-$20K unit cost target at 100K+ scale.",
+    "website": "https://www.menteebot.com",
+    "ticker": "MBLY",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo31_mentee.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "2028 (commercial target)",
+      "targetUse": [
+        "Warehouse logistics",
+        "Manufacturing"
+      ],
+      "mass": "70 kg",
+      "height": "175 cm",
+      "speed": "1.5 m/s",
+      "totalDOF": "40",
+      "operatingTime": "3-4 hrs (hot-swappable battery)",
+      "payloadCapacity": "25 kg (55 lbs)",
+      "endEffector": "Multi-finger dexterous hand (30N pinch force/finger)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Not disclosed",
+      "motor": "Proprietary electric (in-house, 3x power density vs COTS)",
+      "actuatorBody": "Custom electric rotary (integrated sensors + drivers)",
+      "actuatorHand": "Motor-driven (motor-based tactile sensing)",
+      "transmission": "Not disclosed",
+      "externalSensors": "360° fisheye cameras, rear camera, depth sensors (no lidar)",
+      "internalSensors": "Motor-based tactile, integrated encoders, IMU",
+      "compute": "Dual NVIDIA Jetson AGX Orin (future: Jetson Thor)",
+      "battery": "Hot-swappable Li-ion pack",
+      "charging": "Hot-swap (charge time not disclosed)",
+      "aiPartner": "Proprietary + NVIDIA (Isaac Sim/Lab, GR00T-Mimic)",
+      "aiPartnerIds": [
+        "nvidia"
+      ],
+      "software": "Proprietary (NeRF 3D mapping, transformer LLM planning, Sim2Real RL)",
+      "dataCollection": "Teleoperation in sim, Sim2Real transfer, few-shot learning"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "pal_robotics",
+    "name": "PAL Robotics (Talos)",
+    "type": "oem",
+    "country": "ES",
+    "description": "One of Europe's oldest humanoid robotics companies, founded in 2004 in Barcelona. TALOS is a 95 kg, 175 cm fully torque-controlled bipedal humanoid designed for industrial research - drilling, riveting, and operating power tools in hostile environments. Every actuated joint (except head, wrists, grippers) has torque sensor feedback, enabling whole-body torque control at up to 5 kHz via EtherCAT. At ~€900K per unit, it's a premium research platform deployed at LAAS-CNRS, Inria, and University of Waterloo. Part of the PAL Technology Group, affiliated with Abu Dhabi's Royal Group.",
+    "website": "https://pal-robotics.com",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo33_pal.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "2017",
+      "targetUse": [
+        "Industrial research",
+        "Manipulation research"
+      ],
+      "mass": "95 kg",
+      "height": "175 cm",
+      "speed": "0.83 m/s",
+      "totalDOF": "32",
+      "operatingTime": "1.5 hrs walking / 3 hrs standby",
+      "payloadCapacity": "6 kg per arm",
+      "endEffector": "3-finger gripper (1 DOF, current-limit controlled)",
+      "tactileSensing": false,
+      "locomotion": "Leg",
+      "materials": "Not disclosed (metal frame)",
+      "motor": "TQ RoboDrive ILM frameless BLDC",
+      "actuatorBody": "Electric with integrated torque sensors (EtherCAT, 5 kHz)",
+      "actuatorHand": "Electric (1 DOF gripper, no torque feedback)",
+      "transmission": "Not disclosed",
+      "externalSensors": "Orbbec Astra Pro RGB-D, 6-axis F/T at wrists and ankles",
+      "internalSensors": "Joint torque sensors, encoders, Advanced Navigation Orientus IMU (1 kHz), temperature sensors",
+      "compute": "2x Intel Core i7 (COM Express Type-6)",
+      "battery": "1,080 Wh Li-ion",
+      "charging": "Not disclosed",
+      "aiPartner": "None (open research platform)",
+      "software": "ROS, OROCOS, ros_control, MoveIt!, Gazebo, Ubuntu RT Preempt",
+      "dataCollection": "Onboard sensor logging (ROS bags)",
+      "price": "~€900K"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "engineered_arts",
+    "name": "Engineered Arts (Ameca)",
+    "type": "oem",
+    "country": "GB",
+    "description": "Founded in 2004 in Cornwall, UK (restructured as US entity Dec 2024), Engineered Arts builds the most expressively realistic humanoid robot in the world. Ameca's 27 facial DOF using proprietary \"Mesmer technology\" create nuanced, asymmetrical expressions that no other robot can match. Currently a stationary upper-body platform (Gen 3 walking prototypes shown at ICRA 2025), it targets entertainment, museums, and HRI research - installed at the Museum of the Future (Dubai), Las Vegas Sphere, and Computer History Museum. Raised $16.2M including a $10M Series A led by Helium-3 Ventures (Muse frontman Matt Bellamy on the board).",
+    "website": "https://engineeredarts.com",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo35_ameca.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "Dec 2021",
+      "targetUse": [
+        "Entertainment",
+        "HRI research",
+        "Museums"
+      ],
+      "mass": "49-62 kg",
+      "height": "187 cm",
+      "speed": "N/A (stationary platform)",
+      "totalDOF": "61 (27 face, 5 neck, 8 shoulder, 10 arm, 8 hand, 3 torso)",
+      "operatingTime": "4-6 hrs (battery) / mains-powered typical",
+      "payloadCapacity": "2 kg per arm",
+      "endEffector": "5-finger articulated hand (4 DOF/hand, silicone skin)",
+      "tactileSensing": false,
+      "locomotion": "Stationary (Gen 3 bipedal prototype)",
+      "materials": "Silicone elastomer (face/hands), machined aluminum/steel skeleton, molded plastics",
+      "motor": "Silent electric servos",
+      "actuatorBody": "Electromechanical servos (proprietary Mesmer facial actuators)",
+      "actuatorHand": "Electromechanical servos",
+      "transmission": "Not disclosed",
+      "externalSensors": "2x 8MP eye cameras, Stereolabs ZED 2 (chest), chest LiDAR, 6 microphones (2 binaural + 4 beamforming)",
+      "internalSensors": "IMU, force/torque sensors, joint encoders, gyroscope, accelerometer",
+      "compute": "Custom Linux (Yocto-based), C++/Rust/Python",
+      "battery": "1.25 kWh LiPo (mobile); mains-powered typical",
+      "charging": "Mains AC (110-240V)",
+      "aiPartner": "OpenAI (GPT-4, Whisper), Amazon Polly; proprietary Tritium AI",
+      "software": "Tritium 3 OS, REST/WebSocket API, Python scripting, 50+ pre-programmed expressions",
+      "dataCollection": "Cloud-connected interaction data, camera/mic capture",
+      "price": "$250K-$500K (full) / $100K-$150K (half-body)"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "pollen_robotics",
+    "name": "Pollen Robotics (Reachy 2)",
+    "type": "oem",
+    "country": "FR",
+    "description": "Bordeaux-based open-source robotics startup acquired by Hugging Face in April 2025, making Reachy 2 the reference hardware platform for the LeRobot AI library. Founded by Inria researchers who created the Poppy open-source humanoid, Pollen built the first fully open-source humanoid designed for AI data collection via VR teleoperation. Uses Maxon brushless motors with custom Orbita parallel-mechanism actuators. The mobile base (omniwheels, not legs) limits its classification as a traditional bipedal humanoid, but its open-source stack and Hugging Face integration make it a uniquely important research platform.",
+    "website": "https://www.pollen-robotics.com",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo34_reachy.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "2024",
+      "targetUse": [
+        "AI research",
+        "Education",
+        "Healthcare research"
+      ],
+      "mass": "50 kg",
+      "height": "136-166 cm (config-dependent)",
+      "speed": "1.0 m/s (recommended) / 2.5 m/s max",
+      "totalDOF": "18 (7/arm, 3 neck, 1 gripper/hand)",
+      "operatingTime": "~8 hrs",
+      "payloadCapacity": "3 kg per arm",
+      "endEffector": "Parallel 2-finger gripper (torque-controlled, swappable)",
+      "tactileSensing": false,
+      "locomotion": "Wheel (3 omniwheels, holonomic)",
+      "materials": "3D-printed parts, aluminum, plastic",
+      "motor": "Maxon ECXT22L (40W) + EC45 Flat (60W) brushless DC",
+      "actuatorBody": "Custom Orbita parallel-mechanism (2D: 12 N·m, 3D: 3 N·m nominal)",
+      "actuatorHand": "Dynamixel servo (Robotis)",
+      "transmission": "Maxon GPX22C 1:28 / GPX32UP ~35:1 gearboxes",
+      "externalSensors": "2x IMX296 stereo cameras, Orbbec Gemini 336 RGB-D, Luxonis ToF, RPLIDAR S2, 2 microphones",
+      "internalSensors": "Maxon 1024-point encoders, wheel IMUs, Hall sensors",
+      "compute": "SolidRun BedRock V3000 fanless industrial PC",
+      "battery": "OlenBox LiFePO4 24V 35Ah (~840 Wh)",
+      "charging": "AC charging, ~3 hrs",
+      "aiPartner": "Hugging Face (LeRobot)",
+      "software": "ROS 2 (Humble), Python SDK, Rust firmware, MuJoCo/Gazebo sim, fully open-source",
+      "dataCollection": "VR teleoperation (Unity, 125ms latency), robot-to-robot teleop, LeRobot datasets"
+    },
+    "_counts": {
+      "suppliersInbound": 2,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "clone_robotics",
+    "name": "Clone Robotics (Clone Alpha)",
+    "type": "oem",
+    "country": "PL",
+    "description": "Wroclaw-based deep-tech startup building the only humanoid robot powered entirely by artificial muscles instead of electric motors. Clone replaces traditional actuators with ~1,000 water-powered Myofiber hydraulic muscles arranged on a 206-bone 3D-printed polymer skeleton - a biomimetic approach no other company has attempted at scale. The Clone Hand ($2,800) was the first product; the full-body Clone Alpha ($100K, limited run of 279 units) was announced in December 2024. Raised ~$7.1M led by Initialized Capital. Free bipedal walking has not yet been publicly demonstrated unassisted.",
+    "website": "https://clonerobotics.com",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo36_clone_alpha.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Dec 2024 (announced)",
+      "targetUse": [
+        "Consumer/household",
+        "Research"
+      ],
+      "mass": "~60 kg",
+      "height": "170 cm",
+      "speed": "Not disclosed",
+      "totalDOF": "200+",
+      "operatingTime": "~1.5 hrs",
+      "payloadCapacity": "Not disclosed",
+      "endEffector": "Clone Hand (anthropomorphic, opposable thumb, soft skin layers)",
+      "tactileSensing": false,
+      "locomotion": "Leg (bipedal, not yet demonstrated unassisted)",
+      "materials": "3D-printed polymer bones (206), Myofiber artificial muscles, artificial ligaments",
+      "motor": "No motors - Myofiber hydraulic artificial muscles (McKibben-type)",
+      "actuatorBody": "Myofiber water-powered muscles (~1,000 fibers, <50ms response, >30% contraction)",
+      "actuatorHand": "Myofiber muscles (back-drivable antagonistic tendon configuration)",
+      "transmission": "N/A (direct muscle-to-tendon)",
+      "externalSensors": "4 depth cameras",
+      "internalSensors": "70 inertial sensors, 320 pressure sensors (~500 total sensors)",
+      "compute": "NVIDIA Jetson Thor",
+      "battery": "500W hydraulic pump (\"hydraulic heart\"), 40 SLPM @ 100 psi",
+      "charging": "Not disclosed",
+      "aiPartner": "Proprietary (Cybernet visuomotor foundation model)",
+      "software": "Cybernet visuomotor model, Telekinesis training platform, LLM interface",
+      "dataCollection": "Teleoperation (Telekinesis), internet video learning",
+      "price": "$100K (limited run of 279 units)"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "qinglong",
+    "name": "OpenLoong (Qinglong)",
+    "type": "oem",
+    "country": "CN",
+    "description": "China's national open-source humanoid robot reference platform, developed by the Humanoid Robots (Shanghai) Innovation Center - a government-backed consortium established by MIIT in May 2024 with 1 billion RMB registered capital. Qinglong (\"Azure Dragon\") is designed as an open-source full-stack platform (hardware + software + AI) to accelerate the entire Chinese humanoid ecosystem, similar in concept to a national lab. Partners include Fourier Intelligence and AGIBot. The open-source stack runs on GitHub (OpenLoong) co-managed with the OpenAtom Foundation. V3.0 (Aug 2025) expanded to 60 DOF with wheeled and lightweight variants.",
+    "website": "https://www.openloong.org.cn",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo37_openloong.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Jul 2024",
+      "targetUse": [
+        "Open-source reference platform",
+        "Industrial research"
+      ],
+      "mass": "80 kg (V1) / 85 kg (V3)",
+      "height": "185 cm",
+      "speed": "1.0 m/s",
+      "totalDOF": "43 (V1) / 60 (V3)",
+      "operatingTime": "≥3 hrs",
+      "payloadCapacity": "Up to 40 kg",
+      "endEffector": "Multi-DOF dexterous hands (\"steel fingers\")",
+      "tactileSensing": null,
+      "locomotion": "Leg (V3 also has wheeled variant)",
+      "materials": "Not disclosed",
+      "motor": "Axial flux BLDC (legs, QDD) + high-density BLDC (arms, SEA)",
+      "actuatorBody": "QDD legs (175 Nm/kg torque density) + SEA arms (harmonic drive), 400 N·m peak, EtherCAT",
+      "actuatorHand": "Multi-DOF (modular, replaceable)",
+      "transmission": "Planetary gear (low-ratio, legs) + Harmonic drive (arms)",
+      "externalSensors": "RoboSense E1R solid-state LiDAR (120°×90°), depth cameras, surround cameras",
+      "internalSensors": "IMU, joint encoders, torque sensors (current-loop)",
+      "compute": "400 TOPS (NVIDIA Orin-class)",
+      "battery": "Li-ion (capacity not disclosed)",
+      "charging": "Not disclosed",
+      "aiPartner": "Proprietary (Suzaku embodied brain + Xuanwu cerebellum model)",
+      "software": "Open-source: MPC+WBC control, MuJoCo sim, Pinocchio dynamics, C++/Python, ROS",
+      "dataCollection": "Sim2Real (Unity RL Playground / Gewu platform)"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "unitree_h2",
+    "name": "Unitree (H2)",
+    "type": "oem",
+    "country": "CN",
+    "description": "Unitree's move from compact research platform (G1, 130cm) to full-scale human-sized humanoid. The H2 stands 182 cm tall at 70 kg, with 7-DOF arms (vs G1's 4-DOF) and a bionic human-like face. Trades the G1's raw speed (2 m/s) for manipulation precision with optional dexterous hands featuring up to 94 tactile pressure points. The EDU variant supports up to 2,070 TOPS via Jetson AGX Thor expansion. At $29.9K (Commercial) / $68.9K (EDU), it sits between the budget G1 ($13.5K) and premium competitors like Figure and Apptronik. Deliveries begin April 2026.",
+    "website": "https://www.unitree.com/H2",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo38_h2.webp",
+    "robotSpecs": {
+      "status": "Prototype",
+      "launchDate": "Oct 2025 (deliveries Apr 2026)",
+      "targetUse": [
+        "Research",
+        "Commercial",
+        "Logistics"
+      ],
+      "mass": "70 kg",
+      "height": "182 cm",
+      "speed": "~1.5 m/s",
+      "totalDOF": "31",
+      "operatingTime": "~3 hrs",
+      "payloadCapacity": "7 kg rated / 15-21 kg peak per arm",
+      "endEffector": "Modular: dummy / Dex3-1 (3-finger, 7 DOF) / Dex5-1P (5-finger, 20 DOF)",
+      "tactileSensing": true,
+      "locomotion": "Leg",
+      "materials": "Aircraft-grade aluminum, titanium alloy, high-strength engineering plastic",
+      "motor": "Low-inertia high-speed PMSM",
+      "actuatorBody": "High-torque electric rotary (360 N·m leg, 120 N·m arm)",
+      "actuatorHand": "Micro brushless force-controlled (hollow-cup motors, high-precision encoders)",
+      "transmission": "Not disclosed",
+      "externalSensors": "Binocular stereo camera, depth sensor, array microphone",
+      "internalSensors": "IMU, high-precision joint encoders, tactile sensors (EDU hands)",
+      "compute": "Intel i5 (Commercial) / i5+i7 + Jetson expansion up to AGX Thor 2,070 TOPS (EDU)",
+      "battery": "0.972 kWh Li-ion (75.6V, 15Ah), quick-swap",
+      "charging": "Quick-swap smart battery",
+      "aiPartner": "Proprietary (UnifoLM-WMA-0 world model + UnifoLM-VLA-0)",
+      "software": "ROS 2 (EDU), Python/C++, Isaac Lab/MuJoCo, Unitree App Store (1,200+ devs)",
+      "dataCollection": "XR teleoperation (Vision Pro/PICO/Quest), Sim2Real, UnifoLM world model",
+      "price": "$29.9K (Commercial) / $68.9K (EDU)"
+    },
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "maxon",
+    "name": "Maxon Motor",
+    "type": "component_maker",
+    "country": "CH",
+    "description": "Swiss-headquartered precision motor manufacturer commanding 25-30% of the robotics motor market. Their frameless BLDC motors are the gold standard for humanoid actuators - compact, high torque density, and reliable. The motors depend on NdFeB rare earth magnets, tying Maxon's supply chain to rare earth producers like MP Materials and Lynas.",
+    "marketShare": "25-30%",
+    "plyModel": "/models/bldc-motor.ply",
+    "_counts": {
+      "suppliersInbound": 2,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "harmonic_drive",
+    "name": "Harmonic Drive Systems",
+    "type": "component_maker",
+    "country": "JP",
+    "description": "Japanese company that dominates the strain wave gear market with 20-25% share. Their harmonic reducers are the single most expensive component in a rotary actuator at ~36% of cost - making Harmonic Drive the most critical bottleneck supplier in the entire humanoid supply chain. Precision grinding tools required for manufacturing are dominated by a handful of European and Japanese firms, and only 12% of global machine tool manufacturers meet the technical requirements for mass production.",
+    "marketShare": "20-25%",
+    "ticker": "6324.T",
+    "plyModel": "/models/harmonic-reducer.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 10,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "kollmorgen",
+    "name": "Kollmorgen",
+    "type": "component_maker",
+    "country": "US",
+    "description": "Frameless BLDC motor specialist. 15-20% market share in precision servo motors.",
+    "marketShare": "15-20%",
+    "plyModel": "/models/bldc-motor.ply",
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 4,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "nvidia",
+    "name": "NVIDIA",
+    "type": "ai_compute",
+    "country": "US",
+    "description": "The de facto compute platform for humanoid robotics. NVIDIA's Jetson line (Orin, AGX Thor) runs the perception and planning stack on 10 of 13 major humanoids - only Tesla, XPeng, and a few others build their own silicon. This isn't just hardware: NVIDIA's Isaac robotics SDK, simulation tools, and foundation model partnerships create deep ecosystem lock-in. Their chips are fabbed by TSMC, adding another layer to the geopolitical supply chain complexity.",
+    "marketShare": "~70-80% (robotics edge AI)",
+    "ticker": "NVDA",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 21,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "google_deepmind",
+    "name": "Google DeepMind",
+    "type": "ai_compute",
+    "country": "US",
+    "description": "AI partner to Apptronik and Boston Dynamics. Provides foundation models for robot learning.",
+    "ticker": "GOOGL",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "hesai",
+    "name": "Hesai Technology",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Chinese LiDAR manufacturer that owns 33% of the automotive LiDAR market - a technology they helped drive from $50K per unit down to a few hundred dollars through manufacturing scale. This cost-reduction playbook is now being replicated by Hesai's co-founders at Sharpa Robotics for dexterous hands. Hesai supplies 3D LiDAR to Unitree, AGIBot, and XPeng, making them the dominant spatial perception supplier for Chinese humanoids.",
+    "ticker": "HSAI",
+    "marketShare": "33% (auto LiDAR)",
+    "plyModel": "/models/camera-sensor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 4,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "sony_sensors",
+    "name": "Sony Semiconductor",
+    "type": "component_maker",
+    "country": "JP",
+    "description": "Dominant image sensor manufacturer with ~44% of the global CMOS image sensor market. Sony sensors appear in nearly every humanoid camera system - from Tesla's FSD cameras to 1X's stereo fisheye.",
+    "marketShare": "~44% (CMOS image sensors)",
+    "ticker": "SONY",
+    "plyModel": "/models/camera-sensor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 15,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "tsmc",
+    "name": "TSMC",
+    "type": "component_maker",
+    "country": "TW",
+    "description": "The foundry that fabricates nearly every advanced chip used in humanoid robotics - NVIDIA's Jetson GPUs, AMD processors, and most other cutting-edge silicon. TSMC's position makes them the single most critical node in the global semiconductor supply chain. Their location in Taiwan adds significant geopolitical risk to every humanoid that depends on advanced compute, which is virtually all of them.",
+    "marketShare": "~90% (advanced node fab)",
+    "ticker": "TSM",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "texas_instruments",
+    "name": "Texas Instruments",
+    "type": "component_maker",
+    "country": "US",
+    "description": "Analog/mixed-signal ICs, motor drivers, power management. Foundational components in every robot.",
+    "ticker": "TXN",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "infineon",
+    "name": "Infineon Technologies",
+    "type": "component_maker",
+    "country": "DE",
+    "description": "Power semiconductors, motor controllers, MEMS sensors. Key supplier for actuator electronics.",
+    "ticker": "IFX.DE",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "mp_materials",
+    "name": "MP Materials",
+    "type": "raw_material",
+    "country": "US",
+    "description": "The largest rare earth producer outside of China, operating the Mountain Pass mine in California. Supplies neodymium-iron-boron (NdFeB) magnet materials that are essential for every BLDC motor in every humanoid robot. As the US-China rare earth supply chain becomes more contested, MP Materials represents a critical strategic asset for Western humanoid manufacturers who need magnet supply chain independence from China.",
+    "marketShare": "~15% (non-China rare earths)",
+    "ticker": "MP",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 3,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "lynas",
+    "name": "Lynas Rare Earths",
+    "type": "raw_material",
+    "country": "AU",
+    "description": "Major non-Chinese rare earth supplier. Critical for motor magnet supply chain diversification.",
+    "ticker": "LYC.AX",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "jl_mag",
+    "name": "JL Mag Rare-Earth",
+    "type": "raw_material",
+    "country": "CN",
+    "description": "NdFeB permanent magnet manufacturer. Supplies high-performance magnets for BLDC motors.",
+    "plyModel": "/models/bldc-motor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "thk",
+    "name": "THK",
+    "type": "component_maker",
+    "country": "JP",
+    "description": "Japanese precision bearing and linear motion manufacturer. THK's cross-roller bearings are the dominant choice for humanoid hip and waist joints due to their ability to handle combined radial, axial, and moment loads in a single compact unit. Their LM guides and ball screws are also used throughout robotics.",
+    "marketShare": "~30-35% (cross-roller bearings)",
+    "ticker": "6481.T",
+    "plyModel": "/models/bearings.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 8,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "skf",
+    "name": "SKF",
+    "type": "component_maker",
+    "country": "DE",
+    "description": "Swedish-headquartered bearing manufacturer and one of the world's largest. SKF produces precision angular contact and cross-roller bearings used in humanoid joints. Their deep groove ball bearings are also found in lower-precision joints. SKF's global manufacturing footprint provides supply chain resilience.",
+    "marketShare": "~20% (industrial bearings)",
+    "ticker": "SKF-B.ST",
+    "plyModel": "/models/bearings.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 4,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "rollvis",
+    "name": "Rollvis",
+    "type": "component_maker",
+    "country": "CH",
+    "description": "Swiss precision planetary roller screw manufacturer. Rollvis produces some of the highest-precision roller screws available, converting rotary motion to linear motion with exceptional force density and load life. Their screws are critical for linear actuators in humanoid legs and torso.",
+    "plyModel": "/models/planetary-screw.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 3,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "ewellix",
+    "name": "Ewellix",
+    "type": "component_maker",
+    "country": "DE",
+    "description": "Formerly SKF Motion Technologies, now independent. Ewellix specializes in linear motion systems including planetary roller screws, ball screws, and linear actuators. Their CASM integrated actuators combine motor, gearbox, and screw into a single unit - a design pattern gaining traction in humanoid robotics.",
+    "plyModel": "/models/planetary-screw.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "catl",
+    "name": "CATL",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "The world's largest battery manufacturer by market share (~37% global EV battery market). CATL's lithium-ion and lithium-polymer cells power the majority of Chinese humanoids. Their massive EV production scale (>250 GWh/year capacity) has driven cell costs below $100/kWh, directly benefiting humanoid robotics. Also developing solid-state battery technology that could dramatically improve energy density for next-gen humanoids.",
+    "ticker": "300750.SZ",
+    "marketShare": "~37% (EV batteries)",
+    "plyModel": "/models/battery.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 7,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "panasonic_energy",
+    "name": "Panasonic Energy",
+    "type": "component_maker",
+    "country": "JP",
+    "description": "Tesla's primary battery cell supplier, producing 2170 and 4680 cells at the Nevada Gigafactory. Panasonic's deep relationship with Tesla extends naturally to Optimus - the same cell chemistry and form factors that power Tesla vehicles are being adapted for humanoid battery packs. Their NCA (nickel-cobalt-aluminum) chemistry offers higher energy density than the LFP cells common in Chinese robots.",
+    "marketShare": "~6-7% (global EV battery)",
+    "ticker": "6752.T",
+    "plyModel": "/models/battery.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 4,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "byd_battery",
+    "name": "BYD",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Vertically integrated EV and battery manufacturer. BYD's Blade Battery (LFP chemistry) offers exceptional safety and cycle life, making it attractive for humanoid applications where thermal runaway could be catastrophic. As both an EV maker and battery supplier, BYD has the manufacturing depth to produce custom battery packs optimized for humanoid form factors.",
+    "marketShare": "~16-17% (global EV battery)",
+    "ticker": "1211.HK",
+    "plyModel": "/models/battery.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "psyonic",
+    "name": "PSYONIC",
+    "type": "component_maker",
+    "country": "US",
+    "description": "Prosthetic and robotic hand manufacturer. Supplies dexterous hands to Apptronik Apollo.",
+    "plyModel": "/models/end-effector.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "sharpa",
+    "name": "Sharpa Robotics",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Founded by Hesai co-founders. Replicating the Hesai playbook (cost reduction at scale) for dexterous robotic hands.",
+    "plyModel": "/models/end-effector.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "shadow_robot",
+    "name": "Shadow Robot",
+    "type": "component_maker",
+    "country": "GB",
+    "description": "Britain's longest-running robot company (since 1987) and the world's leading specialist in dexterous robotic hands. The Shadow Dexterous Hand (24 movements, 20 DOF, 129 sensors, tendon-driven, ~€110K) is the de facto research standard - used by OpenAI for Rubik's Cube manipulation, Google DeepMind (5-year collaboration producing the DEX-EE hand), NASA, ESA, MIT, CMU, and Oxford. All hands are built to order in London. The newer DEX-EE line is hardened for RL research (high availability, impact resistance). ARIA-funded (£11M) for next-gen dexterity research.",
+    "plyModel": "/models/end-effector.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "orca_dexterity",
+    "name": "ORCA Dexterity",
+    "type": "component_maker",
+    "country": "CH",
+    "description": "ETH Zurich spinoff democratizing dexterous robot hands through open-source design. The ORCA Hand (17 DOF, tendon-driven, ~1.3 kg, $3.5K kit / $5.9K assembled) is 50-70x cheaper than Shadow's equivalent while offering comparable research-grade dexterity. Three models: Lite (9 DOF, $1.5K), Standard (17 DOF), and Touch (17 DOF + 351 tactile taxels/hand, $6.1K). Fully open-source (MIT license), 3D-printable, field-repairable with \"poppable\" pin joints. Distributed via ROBOTIS. Simulation support via NVIDIA Isaac Gym.",
+    "plyModel": "/models/end-effector.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "cubemars",
+    "name": "CubeMars",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Actuator and motor manufacturer for robotics. Popular in research and Chinese OEM supply chains.",
+    "plyModel": "/models/bldc-motor.ply",
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 4,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "estun",
+    "name": "Estun Automation",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Chinese servo motor and industrial robot manufacturer. Growing presence in humanoid supply chain. Acquired Germany's Cloos Welding for industrial robot technology.",
+    "ticker": "002747.SZ",
+    "plyModel": "/models/bldc-motor.ply",
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 4,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "robotis",
+    "name": "ROBOTIS",
+    "type": "component_maker",
+    "country": "KR",
+    "ticker": "108490.KQ",
+    "description": "South Korean robotics company (founded 1999, KOSDAQ-listed) and exclusive manufacturer of the DYNAMIXEL smart servo actuator line - the de facto standard servo motor in research robotics and open-source humanoid platforms worldwide. Product range spans educational servos (AX/XL) to industrial-grade actuators for full-scale humanoids (Y/P series), plus the DYD cycloidal speed reducer line. Dynamixel servos power Pollen Robotics' Reachy 2 grippers, ETH Zurich's ORCA Hand, the Poppy Humanoid, and ROBOTIS' own THORMANG3 full-size humanoid. Also distributes the ORCA v1 Hand in the US. Market cap ~₩3.8T (~$2.8B) at a ~746x P/E driven by robotics/AI hype.",
+    "plyModel": "/models/end-effector.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "feetech",
+    "name": "FEETECH",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Chinese manufacturer of low-cost smart servo actuators (SCS, STS, SMS series). Widely used in education, hobby robotics, and budget humanoid platforms for modular joint control at sub-$50 per actuator price points.",
+    "plyModel": "/models/bldc-motor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "adafruit",
+    "name": "Adafruit Industries",
+    "type": "component_maker",
+    "country": "US",
+    "description": "Open-source hardware company supplying maker electronics including 9-axis IMUs (LSM6DS33, BNO055, LSM9DS1), breakout boards, and sensor modules. Popular in education and research robotics for rapid prototyping.",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "horizon_robotics",
+    "name": "Horizon Robotics",
+    "type": "ai_compute",
+    "country": "CN",
+    "description": "Chinese AI chip maker that IPO'd on Hong Kong Stock Exchange in October 2024. Journey 6 AI chip positioned as China's domestic alternative to NVIDIA for edge AI inference. Critical to China's compute self-sufficiency strategy.",
+    "marketShare": "~5-8% (China edge AI)",
+    "ticker": "9660.HK",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 3,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "intel",
+    "name": "Intel",
+    "type": "ai_compute",
+    "country": "US",
+    "description": "Supplies CPUs (i7) to Agility Digit. RealSense depth cameras (now discontinued) were used in multiple robots. Intel's robotics-specific position is declining as NVIDIA Jetson displaces x86 in edge AI inference.",
+    "marketShare": "~15-20% (edge AI inference)",
+    "ticker": "INTC",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 1,
+      "customersOutbound": 11,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "samsung_electro",
+    "name": "Samsung Electro-Mechanics",
+    "type": "component_maker",
+    "country": "KR",
+    "description": "MLCCs, camera modules, semiconductor substrates. Key passive component supplier.",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "nidec",
+    "name": "Nidec",
+    "type": "component_maker",
+    "country": "JP",
+    "description": "World's largest manufacturer of small precision motors. Growing robotics actuator division.",
+    "plyModel": "/models/bldc-motor.ply",
+    "_counts": {
+      "suppliersInbound": 2,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "nabtesco",
+    "name": "Nabtesco",
+    "type": "component_maker",
+    "country": "JP",
+    "description": "The world's largest cycloidal/RV reducer manufacturer with approximately 60% global market share in precision reducers for industrial robots. Nabtesco's cycloidal reducers are the primary alternative to Harmonic Drive's strain wave gears - offering higher rigidity and load capacity at the cost of slightly more backlash. Agility's Digit explicitly uses cycloidal-pin gear transmission, pointing directly to Nabtesco or Nabtesco-derived technology.",
+    "ticker": "6268.T",
+    "marketShare": "~60% (cycloidal reducers)",
+    "plyModel": "/models/harmonic-reducer.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "leaderdrive",
+    "name": "Leaderdrive",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Suzhou-based Chinese harmonic drive manufacturer and one of the leading domestic alternatives to Japan's Harmonic Drive Systems. Leaderdrive produces strain wave gears at significantly lower cost points, enabling Chinese OEMs like Unitree to achieve BOMs under $12K. As China pushes for supply chain independence in precision components, Leaderdrive represents the domestic answer to the harmonic drive bottleneck.",
+    "plyModel": "/models/harmonic-reducer.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 5,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "ouster",
+    "name": "Ouster",
+    "type": "component_maker",
+    "country": "US",
+    "description": "Digital LiDAR manufacturer formed from the 2023 merger of Ouster and Velodyne - the two pioneering Western LiDAR companies. Their REV7 digital LiDAR technology enables simultaneous range, intensity, and near-infrared imaging. Ouster is the primary Western alternative to China's Hesai for robotics LiDAR, used by US humanoid OEMs who need non-Chinese sensor supply chains.",
+    "ticker": "OUST",
+    "plyModel": "/models/camera-sensor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "orbbec",
+    "name": "Orbbec",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Chinese 3D camera and depth sensor manufacturer. Produces structured light and time-of-flight depth cameras increasingly adopted as Intel RealSense alternatives (which Intel discontinued in 2022). Their Gemini and Femto series are used by Chinese humanoid OEMs for RGB-D perception and manipulation tasks. Unitree has publicly shown Orbbec cameras on the G1.",
+    "plyModel": "/models/camera-sensor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "bosch_sensortec",
+    "name": "Bosch Sensortec",
+    "type": "component_maker",
+    "country": "DE",
+    "description": "MEMS sensor division of Bosch. Dominant supplier of inertial measurement units (IMUs) and accelerometers used for robot orientation, balance, and motion tracking. Their BMI series IMUs are industry-standard - nearly every humanoid robot lists IMU in its internal sensors. Without reliable inertial sensing, bipedal locomotion and balance control are impossible.",
+    "marketShare": "~23-27% (MEMS IMU)",
+    "plyModel": "/models/camera-sensor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 11,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "stmicro",
+    "name": "STMicroelectronics",
+    "type": "component_maker",
+    "country": "CH",
+    "description": "European semiconductor manufacturer supplying motor gate drivers, MEMS IMUs, power MOSFETs, and STM32 microcontrollers. STM32 MCUs are widely used for real-time joint-level motor control in robotics actuators. A direct peer to Texas Instruments and Infineon in the humanoid power electronics supply chain, with particularly strong presence in motor drive stages.",
+    "marketShare": "~15-18% (motor drivers)",
+    "ticker": "STM",
+    "plyModel": "/models/pcb.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 3,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "lg_energy",
+    "name": "LG Energy Solution",
+    "type": "component_maker",
+    "country": "KR",
+    "description": "The world's second-largest EV battery manufacturer. LG Energy Solution supplies GM (Ultium), Hyundai, and others. The Hyundai connection is significant: Hyundai owns Boston Dynamics, and LG Energy is a primary Hyundai battery cell supplier, making LG a natural battery source for the Atlas humanoid program.",
+    "ticker": "373220.KS",
+    "plyModel": "/models/battery.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "samsung_sdi",
+    "name": "Samsung SDI",
+    "type": "component_maker",
+    "country": "KR",
+    "description": "The world's third-largest EV battery manufacturer. Samsung SDI produces prismatic and cylindrical lithium-ion cells for BMW, Rivian, and others. Their high-nickel NCA chemistry offers energy density advantages relevant to weight-constrained humanoid robots. Expanding solid-state battery research.",
+    "ticker": "006400.KS",
+    "plyModel": "/models/battery.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 2,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "nanjing_kgm",
+    "name": "Nanjing KGM",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "One of China's largest planetary roller screw manufacturers, actively supplying Chinese humanoid OEMs. As the domestic alternative to Swiss-based Rollvis, Nanjing KGM enables Chinese humanoid companies to source this critical precision component without crossing tariff boundaries or depending on European supply chains.",
+    "plyModel": "/models/planetary-screw.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 4,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "nsk",
+    "name": "NSK",
+    "type": "component_maker",
+    "country": "JP",
+    "description": "One of the world's top-3 bearing manufacturers with a dedicated robotics bearing line. NSK produces precision angular contact bearings, ball bearings, and cross-roller bearings used extensively in robotic joints. Their bearings are found in industrial robot arms globally and are a natural fit for humanoid joint applications.",
+    "ticker": "6471.T",
+    "plyModel": "/models/bearings.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 4,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "stereolabs",
+    "name": "Stereolabs",
+    "type": "component_maker",
+    "country": "US",
+    "description": "San Francisco-based manufacturer of the ZED line of stereo cameras, widely used in robotics for depth perception, visual-inertial odometry, and spatial mapping. The ZED2i is an IP66-rated industrial stereo camera with built-in IMU, used by Fauna Robotics Sprout for navigation and manipulation.",
+    "plyModel": "/models/camera-sensor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "molicel",
+    "name": "Molicel",
+    "type": "component_maker",
+    "country": "TW",
+    "description": "Taiwanese high-performance lithium-ion cell manufacturer. Their P50B cells (21700 format, 5000mAh, 35A continuous) are favored in high-drain applications including power tools, e-bikes, and robotics. Supplies battery cells for Fauna Robotics Sprout.",
+    "plyModel": "/models/battery.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 1,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  },
+  {
+    "id": "moons",
+    "name": "Moons' Electric",
+    "type": "component_maker",
+    "country": "CN",
+    "description": "Shanghai-based manufacturer and one of China's largest stepper/servo/BLDC motor companies. Moons' supplies motors to multiple Chinese robotics companies with a growing humanoid-adjacent business. Their motors offer competitive performance at Chinese price points, supporting the low-BOM strategy of Chinese OEMs.",
+    "plyModel": "/models/bldc-motor.ply",
+    "_counts": {
+      "suppliersInbound": 0,
+      "customersOutbound": 3,
+      "vlaModels": 0,
+      "simPlatforms": 0
+    }
+  }
+]

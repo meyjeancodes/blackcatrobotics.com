@@ -9,7 +9,12 @@
     "typecheck": "tsc --noEmit",
     "lint": "next lint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "atlas:pull": "bash scripts/pull-atlas.sh",
+    "atlas:seed": "npx ts-node scripts/atlas-to-seed.ts",
+    "cap:add:ios": "npx cap add ios",
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "next build && npx cap sync"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
