@@ -1,0 +1,329 @@
+{
+  "root": "unitree",
+  "nodes": [
+    {
+      "id": "unitree",
+      "name": "Unitree (G1)",
+      "type": "oem",
+      "country": "CN",
+      "depth": 0,
+      "direction": "root",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "cubemars",
+      "name": "CubeMars",
+      "type": "component_maker",
+      "country": "CN",
+      "depth": 1,
+      "direction": "upstream",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "harmonic_drive",
+      "name": "Harmonic Drive Systems",
+      "type": "component_maker",
+      "country": "JP",
+      "depth": 1,
+      "direction": "upstream",
+      "ticker": "6324.T",
+      "marketShare": "20-25%",
+      "isBottleneckSupplier": true
+    },
+    {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "type": "ai_compute",
+      "country": "US",
+      "depth": 1,
+      "direction": "upstream",
+      "ticker": "NVDA",
+      "marketShare": "~70-80% (robotics edge AI)",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "hesai",
+      "name": "Hesai Technology",
+      "type": "component_maker",
+      "country": "CN",
+      "depth": 1,
+      "direction": "upstream",
+      "ticker": "HSAI",
+      "marketShare": "33% (auto LiDAR)",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "samsung_electro",
+      "name": "Samsung Electro-Mechanics",
+      "type": "component_maker",
+      "country": "KR",
+      "depth": 1,
+      "direction": "upstream",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "skf",
+      "name": "SKF",
+      "type": "component_maker",
+      "country": "DE",
+      "depth": 1,
+      "direction": "upstream",
+      "ticker": "SKF-B.ST",
+      "marketShare": "~20% (industrial bearings)",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "catl",
+      "name": "CATL",
+      "type": "component_maker",
+      "country": "CN",
+      "depth": 1,
+      "direction": "upstream",
+      "ticker": "300750.SZ",
+      "marketShare": "~37% (EV batteries)",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "sharpa",
+      "name": "Sharpa Robotics",
+      "type": "component_maker",
+      "country": "CN",
+      "depth": 1,
+      "direction": "upstream",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "orbbec",
+      "name": "Orbbec",
+      "type": "component_maker",
+      "country": "CN",
+      "depth": 1,
+      "direction": "upstream",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "bosch_sensortec",
+      "name": "Bosch Sensortec",
+      "type": "component_maker",
+      "country": "DE",
+      "depth": 1,
+      "direction": "upstream",
+      "marketShare": "~23-27% (MEMS IMU)",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "leaderdrive",
+      "name": "Leaderdrive",
+      "type": "component_maker",
+      "country": "CN",
+      "depth": 1,
+      "direction": "upstream",
+      "isBottleneckSupplier": true
+    },
+    {
+      "id": "nanjing_kgm",
+      "name": "Nanjing KGM",
+      "type": "component_maker",
+      "country": "CN",
+      "depth": 1,
+      "direction": "upstream",
+      "isBottleneckSupplier": true
+    },
+    {
+      "id": "nsk",
+      "name": "NSK",
+      "type": "component_maker",
+      "country": "JP",
+      "depth": 1,
+      "direction": "upstream",
+      "ticker": "6471.T",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "sony_sensors",
+      "name": "Sony Semiconductor",
+      "type": "component_maker",
+      "country": "JP",
+      "depth": 1,
+      "direction": "upstream",
+      "ticker": "SONY",
+      "marketShare": "~44% (CMOS image sensors)",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "jl_mag",
+      "name": "JL Mag Rare-Earth",
+      "type": "raw_material",
+      "country": "CN",
+      "depth": 2,
+      "direction": "upstream",
+      "isBottleneckSupplier": false
+    },
+    {
+      "id": "tsmc",
+      "name": "TSMC",
+      "type": "component_maker",
+      "country": "TW",
+      "depth": 2,
+      "direction": "upstream",
+      "ticker": "TSM",
+      "marketShare": "~90% (advanced node fab)",
+      "isBottleneckSupplier": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "r5",
+      "source": "cubemars",
+      "target": "unitree",
+      "component": "BLDC Motors",
+      "componentCategoryId": "motors",
+      "description": "Actuator motors"
+    },
+    {
+      "id": "r13",
+      "source": "harmonic_drive",
+      "target": "unitree",
+      "component": "Harmonic Reducer",
+      "componentCategoryId": "reducers"
+    },
+    {
+      "id": "r24",
+      "source": "nvidia",
+      "target": "unitree",
+      "component": "Jetson Orin",
+      "componentCategoryId": "compute"
+    },
+    {
+      "id": "r50",
+      "source": "hesai",
+      "target": "unitree",
+      "component": "LiDAR",
+      "componentCategoryId": "sensors_general",
+      "description": "3D LiDAR sensors"
+    },
+    {
+      "id": "r67",
+      "source": "samsung_electro",
+      "target": "unitree",
+      "component": "Passive Components",
+      "componentCategoryId": "pcbs"
+    },
+    {
+      "id": "r106",
+      "source": "cubemars",
+      "target": "unitree",
+      "component": "Actuator Modules",
+      "componentCategoryId": "actuators_rotary",
+      "description": "Complete rotary actuator modules"
+    },
+    {
+      "id": "r100",
+      "source": "skf",
+      "target": "unitree",
+      "component": "Ball Bearings",
+      "componentCategoryId": "bearings"
+    },
+    {
+      "id": "r86",
+      "source": "catl",
+      "target": "unitree",
+      "component": "Battery Pack",
+      "componentCategoryId": "batteries",
+      "description": "Lithium-ion battery packs"
+    },
+    {
+      "id": "r81",
+      "source": "sharpa",
+      "target": "unitree",
+      "component": "Dexterous Hands",
+      "componentCategoryId": "end_effectors",
+      "description": "Dexterous hands for Chinese OEMs"
+    },
+    {
+      "id": "r130",
+      "source": "orbbec",
+      "target": "unitree",
+      "component": "Depth Cameras",
+      "componentCategoryId": "sensors_general",
+      "description": "360° depth camera array"
+    },
+    {
+      "id": "r135",
+      "source": "bosch_sensortec",
+      "target": "unitree",
+      "component": "IMU",
+      "componentCategoryId": "sensors_general"
+    },
+    {
+      "id": "r141",
+      "source": "leaderdrive",
+      "target": "unitree",
+      "component": "Harmonic Reducer",
+      "componentCategoryId": "reducers",
+      "description": "Chinese domestic harmonic drive"
+    },
+    {
+      "id": "r155",
+      "source": "nanjing_kgm",
+      "target": "unitree",
+      "component": "Planetary Roller Screws",
+      "componentCategoryId": "screws",
+      "description": "Chinese domestic screw supplier"
+    },
+    {
+      "id": "r202",
+      "source": "nsk",
+      "target": "unitree",
+      "component": "Ball Bearings",
+      "componentCategoryId": "bearings"
+    },
+    {
+      "id": "r207",
+      "source": "sony_sensors",
+      "target": "unitree",
+      "component": "Image Sensors",
+      "componentCategoryId": "sensors_general"
+    },
+    {
+      "id": "r75",
+      "source": "jl_mag",
+      "target": "cubemars",
+      "component": "NdFeB Magnets",
+      "componentCategoryId": "raw_materials",
+      "description": "Permanent magnets for Chinese motor supply chain"
+    },
+    {
+      "id": "r60",
+      "source": "tsmc",
+      "target": "nvidia",
+      "component": "Chip Fabrication",
+      "componentCategoryId": "compute",
+      "description": "Fabricates Jetson/GPU chips"
+    }
+  ],
+  "_metrics": {
+    "totalNodes": 17,
+    "totalEdges": 17,
+    "maxDepthReached": 2,
+    "layerCounts": [
+      {
+        "depth": 0,
+        "count": 1
+      },
+      {
+        "depth": 1,
+        "count": 14
+      },
+      {
+        "depth": 2,
+        "count": 2
+      }
+    ],
+    "bottleneckNodes": [
+      "harmonic_drive",
+      "leaderdrive",
+      "nanjing_kgm"
+    ]
+  }
+}

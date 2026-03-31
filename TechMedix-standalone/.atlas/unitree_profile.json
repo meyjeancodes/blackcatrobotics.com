@@ -1,0 +1,818 @@
+{
+  "company": {
+    "id": "unitree",
+    "name": "Unitree (G1)",
+    "type": "oem",
+    "country": "CN",
+    "description": "The volume leader with 5,500+ units shipped in 2025 - more than Tesla, Figure, and Agility combined, driving ~$248M in revenue at a ~16.8% net margin. Unitree's secret is radical cost compression: BOM of just $11.5K achieved through China's EV and drone supply chains. Their PMSM motors (rather than the BLDC consensus) offer better response and heat dissipation. At 130 cm tall and 35 kg, G1 is significantly smaller than competitors - closer to a research platform than a human-scale worker. Filed for a STAR Market IPO in Mar 2026 targeting ~$610M, with proceeds earmarked for AI-driven intelligent robot models - signaling a strategic pivot from pure hardware to AI capabilities.",
+    "plyModel": "/models/skeleton.ply",
+    "robotImage": "/models/robo9_unitree.webp",
+    "robotSpecs": {
+      "status": "In Production",
+      "launchDate": "Aug 2024",
+      "shipments2025": 5500,
+      "shipmentShare": "41%",
+      "targetUse": [
+        "Research",
+        "Commercial"
+      ],
+      "mass": "35 kg",
+      "height": "130 cm",
+      "speed": "2 m/s",
+      "totalDOF": "23-43",
+      "operatingTime": "2 hrs",
+      "payloadCapacity": "6.6 lbs",
+      "endEffector": "3-finger force control (optional 5-finger)",
+      "tactileSensing": null,
+      "locomotion": "Leg",
+      "materials": "Aluminum alloy, high-strength engineering plastic",
+      "motor": "Low inertia high-speed PMSM",
+      "actuatorBody": "Rotary",
+      "actuatorHand": "Not disclosed",
+      "transmission": "Harmonic Reducer + Planetary Reducer",
+      "externalSensors": "3D LiDAR, depth cameras 360°, GPS, IMUs",
+      "internalSensors": "3D Cameras, LiDAR, Magnetic encoders, Current loop",
+      "compute": "8-core CPU, NVIDIA Jetson Orin",
+      "battery": "2 kWh",
+      "charging": "Quick-swap / autonomous charging",
+      "aiPartner": "Not disclosed",
+      "software": "Unitree app store",
+      "dataCollection": "Not disclosed",
+      "bom": "$11.5K",
+      "price": "$13.5K"
+    }
+  },
+  "suppliers": [
+    {
+      "id": "r5",
+      "from": {
+        "id": "cubemars",
+        "name": "CubeMars",
+        "type": "component_maker",
+        "country": "CN"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "BLDC Motors",
+      "componentCategoryId": "motors",
+      "description": "Actuator motors"
+    },
+    {
+      "id": "r13",
+      "from": {
+        "id": "harmonic_drive",
+        "name": "Harmonic Drive Systems",
+        "type": "component_maker",
+        "country": "JP"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Harmonic Reducer",
+      "componentCategoryId": "reducers"
+    },
+    {
+      "id": "r24",
+      "from": {
+        "id": "nvidia",
+        "name": "NVIDIA",
+        "type": "ai_compute",
+        "country": "US"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Jetson Orin",
+      "componentCategoryId": "compute"
+    },
+    {
+      "id": "r50",
+      "from": {
+        "id": "hesai",
+        "name": "Hesai Technology",
+        "type": "component_maker",
+        "country": "CN"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "LiDAR",
+      "componentCategoryId": "sensors_general",
+      "description": "3D LiDAR sensors"
+    },
+    {
+      "id": "r67",
+      "from": {
+        "id": "samsung_electro",
+        "name": "Samsung Electro-Mechanics",
+        "type": "component_maker",
+        "country": "KR"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Passive Components",
+      "componentCategoryId": "pcbs"
+    },
+    {
+      "id": "r106",
+      "from": {
+        "id": "cubemars",
+        "name": "CubeMars",
+        "type": "component_maker",
+        "country": "CN"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Actuator Modules",
+      "componentCategoryId": "actuators_rotary",
+      "description": "Complete rotary actuator modules"
+    },
+    {
+      "id": "r100",
+      "from": {
+        "id": "skf",
+        "name": "SKF",
+        "type": "component_maker",
+        "country": "DE"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Ball Bearings",
+      "componentCategoryId": "bearings"
+    },
+    {
+      "id": "r86",
+      "from": {
+        "id": "catl",
+        "name": "CATL",
+        "type": "component_maker",
+        "country": "CN"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Battery Pack",
+      "componentCategoryId": "batteries",
+      "description": "Lithium-ion battery packs"
+    },
+    {
+      "id": "r81",
+      "from": {
+        "id": "sharpa",
+        "name": "Sharpa Robotics",
+        "type": "component_maker",
+        "country": "CN"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Dexterous Hands",
+      "componentCategoryId": "end_effectors",
+      "description": "Dexterous hands for Chinese OEMs"
+    },
+    {
+      "id": "r130",
+      "from": {
+        "id": "orbbec",
+        "name": "Orbbec",
+        "type": "component_maker",
+        "country": "CN"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Depth Cameras",
+      "componentCategoryId": "sensors_general",
+      "description": "360° depth camera array"
+    },
+    {
+      "id": "r135",
+      "from": {
+        "id": "bosch_sensortec",
+        "name": "Bosch Sensortec",
+        "type": "component_maker",
+        "country": "DE"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "IMU",
+      "componentCategoryId": "sensors_general"
+    },
+    {
+      "id": "r141",
+      "from": {
+        "id": "leaderdrive",
+        "name": "Leaderdrive",
+        "type": "component_maker",
+        "country": "CN"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Harmonic Reducer",
+      "componentCategoryId": "reducers",
+      "description": "Chinese domestic harmonic drive"
+    },
+    {
+      "id": "r155",
+      "from": {
+        "id": "nanjing_kgm",
+        "name": "Nanjing KGM",
+        "type": "component_maker",
+        "country": "CN"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Planetary Roller Screws",
+      "componentCategoryId": "screws",
+      "description": "Chinese domestic screw supplier"
+    },
+    {
+      "id": "r202",
+      "from": {
+        "id": "nsk",
+        "name": "NSK",
+        "type": "component_maker",
+        "country": "JP"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Ball Bearings",
+      "componentCategoryId": "bearings"
+    },
+    {
+      "id": "r207",
+      "from": {
+        "id": "sony_sensors",
+        "name": "Sony Semiconductor",
+        "type": "component_maker",
+        "country": "JP"
+      },
+      "to": {
+        "id": "unitree",
+        "name": "Unitree (G1)",
+        "type": "oem",
+        "country": "CN"
+      },
+      "component": "Image Sensors",
+      "componentCategoryId": "sensors_general"
+    }
+  ],
+  "customers": [],
+  "funding": {
+    "companyId": "unitree",
+    "name": "Unitree",
+    "country": "CN",
+    "status": "ipo-filed",
+    "totalRaisedM": 155,
+    "latestValuationM": 7000,
+    "latestValuationNote": "pre-IPO target, not finalized",
+    "ipoPlans": "STAR Market - filed Mar 2026, targeting ~$610M raise",
+    "ipoRaiseTargetM": 610,
+    "revenue2025M": 248,
+    "netProfit2025M": 41.8,
+    "keyInvestors": [
+      "Alibaba",
+      "Tencent",
+      "China Mobile",
+      "Ant Group",
+      "Meituan"
+    ],
+    "keyInvestorIds": [
+      "tencent"
+    ],
+    "rounds": [
+      {
+        "name": "Series B",
+        "date": "2024-02",
+        "amountM": 139,
+        "lead": "Meituan"
+      },
+      {
+        "name": "Series C",
+        "date": "2025-06",
+        "amountM": 97,
+        "valuationM": 1700
+      }
+    ],
+    "sources": [
+      {
+        "label": "Unitree STAR Market IPO filing - Reuters",
+        "url": "https://www.reuters.com/technology/unitree-files-star-market-ipo-2026"
+      },
+      {
+        "label": "Unitree Series C - 36Kr",
+        "url": "https://36kr.com/p/unitree-series-c-2025"
+      }
+    ]
+  },
+  "investors": [
+    {
+      "id": "tencent",
+      "name": "Tencent",
+      "country": "CN",
+      "type": "Corporate VC",
+      "portfolioCompanyIds": [
+        "ubtech",
+        "agibot",
+        "unitree"
+      ],
+      "description": "Dominant Chinese tech investor in humanoid space. Leading rounds for AgiBot and co-leading Unitree Series C.",
+      "sources": [
+        {
+          "label": "Tencent humanoid investments - SCMP",
+          "url": "https://www.scmp.com/tech/big-tech/article/tencent-humanoid-robotics-investments"
+        },
+        {
+          "label": "Tencent leads AgiBot round - 36Kr",
+          "url": "https://36kr.com/p/tencent-agibot-series-b-2025"
+        }
+      ]
+    },
+    {
+      "id": "sequoia",
+      "name": "Sequoia / HongShan",
+      "country": "US",
+      "type": "VC",
+      "portfolioCompanyIds": [
+        "collaborative_robotics",
+        "agibot",
+        "unitree"
+      ],
+      "description": "Betting across the stack. China arm (HongShan) holds 7.13% of Unitree and backs AgiBot.",
+      "sources": [
+        {
+          "label": "Sequoia robotics thesis - The Information",
+          "url": "https://www.theinformation.com/articles/sequoia-robotics-thesis"
+        },
+        {
+          "label": "HongShan Unitree stake - 36Kr",
+          "url": "https://36kr.com/p/hongshan-unitree-stake-2024"
+        }
+      ]
+    }
+  ],
+  "production": {
+    "companyId": "unitree",
+    "name": "Unitree",
+    "country": "CN",
+    "mfgModel": "in-house",
+    "annualCapacity": 20000,
+    "capacityNote": "2026 target",
+    "shipped2025": 5500,
+    "target2026": "20,000 humanoid robots",
+    "target2027": "IPO + scale",
+    "sources": [
+      {
+        "label": "Unitree G1 mass production update",
+        "url": "https://www.unitree.com/"
+      },
+      {
+        "label": "South China Morning Post - Unitree shipments",
+        "url": "https://www.scmp.com/tech/tech-trends/"
+      }
+    ]
+  },
+  "factories": [
+    {
+      "id": "unitree_hangzhou",
+      "name": "Unitree Hangzhou Factory",
+      "companyId": "unitree",
+      "companyName": "Unitree",
+      "country": "CN",
+      "location": "Hangzhou, Zhejiang",
+      "status": "operational",
+      "sizeSqft": "10,000+ sqm",
+      "mfgModel": "in-house",
+      "notes": "In-house motor and actuator manufacturing.",
+      "sources": [
+        {
+          "label": "Unitree official site",
+          "url": "https://www.unitree.com/"
+        },
+        {
+          "label": "South China Morning Post - Unitree production",
+          "url": "https://www.scmp.com/tech/"
+        }
+      ]
+    }
+  ],
+  "manufacturingPartners": [],
+  "vlaModels": [
+    {
+      "model": {
+        "id": "groot_n1",
+        "name": "GR00T N1",
+        "developer": "NVIDIA",
+        "country": "US",
+        "relationshipType": "open",
+        "description": "NVIDIA's open humanoid foundation model (2B params). Open weights on Hugging Face. De facto platform layer used by most major OEMs for post-training and deployment. N1.5 released at Computex 2025.",
+        "release": "2025",
+        "focus": "Open humanoid foundation model",
+        "availability": "Open weights (Hugging Face)",
+        "sources": [
+          {
+            "label": "NVIDIA News: GR00T N1",
+            "url": "https://nvidianews.nvidia.com/news/nvidia-isaac-gr00t-n1-open-humanoid-robot-foundation-model-simulation-frameworks"
+          },
+          {
+            "label": "Hugging Face: GR00T-N1-2B",
+            "url": "https://huggingface.co/nvidia/GR00T-N1-2B"
+          },
+          {
+            "label": "GR00T N1.5 Research",
+            "url": "https://research.nvidia.com/labs/gear/gr00t-n1_5/"
+          }
+        ],
+        "companyLinks": [
+          {
+            "companyId": "1x",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "1X + NVIDIA Research Collaboration",
+                "url": "https://www.1x.tech/discover/1X-NVIDIA-Research-Collaboration"
+              }
+            ]
+          },
+          {
+            "companyId": "agility",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "Agility + NVIDIA",
+                "url": "https://www.agilityrobotics.com/content/agility-robotics-expands-relationship-with-nvidia"
+              }
+            ]
+          },
+          {
+            "companyId": "apptronik",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "NVIDIA: Project GR00T partners",
+                "url": "https://nvidianews.nvidia.com/news/foundation-model-isaac-robotics-platform"
+              }
+            ]
+          },
+          {
+            "companyId": "boston_dynamics",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "NVIDIA CES 2026 Partners",
+                "url": "https://nvidianews.nvidia.com/news/nvidia-releases-new-physical-ai-models-as-global-partners-unveil-next-generation-robots"
+              }
+            ]
+          },
+          {
+            "companyId": "fourier",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "GR00T N1 Paper (GR-1 demos)",
+                "url": "https://arxiv.org/abs/2503.14734"
+              }
+            ]
+          },
+          {
+            "companyId": "unitree",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "NVIDIA: GR00T ecosystem",
+                "url": "https://nvidianews.nvidia.com/news/nvidia-isaac-gr00t-n1-open-humanoid-robot-foundation-model-simulation-frameworks"
+              }
+            ]
+          },
+          {
+            "companyId": "xpeng",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "NVIDIA: GR00T ecosystem",
+                "url": "https://nvidianews.nvidia.com/news/nvidia-isaac-gr00t-n1-open-humanoid-robot-foundation-model-simulation-frameworks"
+              }
+            ]
+          },
+          {
+            "companyId": "sanctuary_ai",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "NVIDIA: GR00T ecosystem",
+                "url": "https://nvidianews.nvidia.com/news/nvidia-isaac-gr00t-n1-open-humanoid-robot-foundation-model-simulation-frameworks"
+              }
+            ]
+          },
+          {
+            "companyId": "dexmate",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "NVIDIA: Celebrating 2M+ Robotics Developers",
+                "url": "https://blogs.nvidia.com/blog/2-million-robotics-developers/"
+              }
+            ]
+          },
+          {
+            "companyId": "neura_4ne1",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "Neura Robotics: CES 2026 (GR00T XX)",
+                "url": "https://neura-robotics.com/neura-robotics-at-ces-2026/"
+              }
+            ]
+          },
+          {
+            "companyId": "dobot",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "NVIDIA: Physics AI partner ecosystem",
+                "url": "https://nvidianews.nvidia.com/news/nvidia-isaac-gr00t-n1-open-humanoid-robot-foundation-model-simulation-frameworks"
+              }
+            ]
+          },
+          {
+            "companyId": "fauna",
+            "relationship": "partner",
+            "sources": [
+              {
+                "label": "Fauna Sprout Technical Report (IsaacSim/Lab + GR00T refs)",
+                "url": "https://arxiv.org/abs/2601.18963"
+              }
+            ]
+          }
+        ]
+      },
+      "relationship": "partner"
+    },
+    {
+      "model": {
+        "id": "unifolm_vla",
+        "name": "UnifoLM-VLA-0",
+        "developer": "Unitree",
+        "country": "CN",
+        "relationshipType": "open",
+        "description": "Unitree's open-source VLA built on Alibaba's Qwen2.5-VL-7B, fine-tuned with real-world robot data. Handles 12 categories of complex manipulation with a single policy on the G1 humanoid.",
+        "release": "2026",
+        "focus": "General-purpose humanoid manipulation",
+        "availability": "Open weights + training/inference code",
+        "sources": [
+          {
+            "label": "UnifoLM-VLA Project",
+            "url": "https://unigen-x.github.io/unifolm-vla.github.io/"
+          },
+          {
+            "label": "UnifoLM-VLA GitHub",
+            "url": "https://github.com/unitreerobotics/unifolm-vla"
+          }
+        ],
+        "companyLinks": [
+          {
+            "companyId": "unitree",
+            "relationship": "proprietary",
+            "sources": [
+              {
+                "label": "UnifoLM-VLA GitHub",
+                "url": "https://github.com/unitreerobotics/unifolm-vla"
+              }
+            ]
+          }
+        ]
+      },
+      "relationship": "proprietary"
+    }
+  ],
+  "simPlatforms": [
+    {
+      "platform": {
+        "id": "isaac_sim",
+        "name": "NVIDIA Isaac Sim / Lab",
+        "developer": "NVIDIA",
+        "country": "US",
+        "platformType": "physics-engine",
+        "physicsEngine": "PhysX (+ Newton, MuJoCo)",
+        "license": "Open source (free for R&D)",
+        "language": "Python, C++",
+        "latestVersion": "Isaac Sim 5.0 / Lab 2.3",
+        "gpuAccelerated": true,
+        "openSource": true,
+        "humanoidModels": true,
+        "simToReal": true,
+        "differentiable": true,
+        "multiPhysics": true,
+        "ros2": true,
+        "description": "GPU-accelerated robotics simulation with photorealistic RTX rendering, synthetic data generation, and domain randomization. The industry standard for humanoid RL training with thousands of parallel environments.",
+        "sources": [
+          {
+            "label": "NVIDIA Isaac Sim",
+            "url": "https://developer.nvidia.com/isaac/sim"
+          },
+          {
+            "label": "NVIDIA Isaac Lab GitHub",
+            "url": "https://github.com/isaac-sim/IsaacLab"
+          }
+        ],
+        "companyLinks": [
+          {
+            "companyId": "1x"
+          },
+          {
+            "companyId": "agility"
+          },
+          {
+            "companyId": "apptronik"
+          },
+          {
+            "companyId": "boston_dynamics"
+          },
+          {
+            "companyId": "fourier"
+          },
+          {
+            "companyId": "sanctuary_ai"
+          },
+          {
+            "companyId": "unitree"
+          },
+          {
+            "companyId": "xpeng"
+          },
+          {
+            "companyId": "ubtech"
+          }
+        ]
+      }
+    },
+    {
+      "platform": {
+        "id": "mujoco",
+        "name": "MuJoCo",
+        "developer": "Google DeepMind",
+        "country": "US",
+        "platformType": "physics-engine",
+        "physicsEngine": "MuJoCo (+ MJX, Warp)",
+        "license": "Apache 2.0",
+        "language": "C, Python, JAX",
+        "latestVersion": "v3.5.0 (Feb 2026)",
+        "gpuAccelerated": true,
+        "openSource": true,
+        "humanoidModels": true,
+        "simToReal": true,
+        "differentiable": true,
+        "multiPhysics": false,
+        "ros2": false,
+        "description": "Fast and accurate contact dynamics engine. Originally created at University of Washington, acquired by Google DeepMind 2021, open-sourced 2022. MJX provides JAX-based GPU/TPU acceleration. MuJoCo Menagerie offers curated humanoid robot models.",
+        "sources": [
+          {
+            "label": "MuJoCo GitHub",
+            "url": "https://github.com/google-deepmind/mujoco"
+          },
+          {
+            "label": "MuJoCo Menagerie",
+            "url": "https://github.com/google-deepmind/mujoco_menagerie"
+          }
+        ],
+        "companyLinks": [
+          {
+            "companyId": "unitree"
+          },
+          {
+            "companyId": "agility",
+            "notes": "cross-validation"
+          },
+          {
+            "companyId": "fourier"
+          }
+        ]
+      }
+    },
+    {
+      "platform": {
+        "id": "mujoco_playground",
+        "name": "MuJoCo Playground",
+        "developer": "Google DeepMind",
+        "country": "US",
+        "platformType": "rl-framework",
+        "physicsEngine": "MuJoCo MJX (JAX backend)",
+        "license": "Apache 2.0",
+        "language": "Python, JAX",
+        "latestVersion": "Jan 2025",
+        "gpuAccelerated": true,
+        "openSource": true,
+        "humanoidModels": true,
+        "simToReal": true,
+        "differentiable": false,
+        "multiPhysics": false,
+        "ros2": false,
+        "description": "50+ GPU-accelerated RL environments spanning locomotion and manipulation. RSS 2025 Outstanding Demo Award. Zero-shot sim-to-real transfer demonstrated on Unitree G1 with training under 30 minutes on 2x RTX 4090.",
+        "sources": [
+          {
+            "label": "MuJoCo Playground GitHub",
+            "url": "https://github.com/google-deepmind/mujoco_playground"
+          },
+          {
+            "label": "MuJoCo Playground Project Page",
+            "url": "https://playground.mujoco.org/"
+          }
+        ],
+        "companyLinks": [
+          {
+            "companyId": "unitree",
+            "notes": "G1 zero-shot transfer"
+          }
+        ]
+      },
+      "notes": "G1 zero-shot transfer"
+    }
+  ],
+  "headDesign": null,
+  "safetyProfile": {
+    "id": "unitree_safety",
+    "companyId": "unitree",
+    "name": "Unitree",
+    "country": "CN",
+    "complianceLevel": "not-disclosed",
+    "complianceSummary": "QDD actuators · no certs disclosed · 2 public incidents",
+    "forceLimiting": false,
+    "eStop": false,
+    "speedLimiting": false,
+    "collisionDetection": true,
+    "compliantActuators": true,
+    "fallProtection": false,
+    "cyberSecurity": false,
+    "description": "QDD actuators with low gear ratios provide inherent backdrivability. No safety certifications publicly disclosed. Two public incidents: H1 feedback loop malfunction (May 2025), G1 kick during teleoperation demo (Dec 2025).",
+    "sources": [
+      {
+        "label": "Unitree – QDD Actuator Technology & Backdrivability",
+        "url": "https://www.unitree.com/qdd-actuators"
+      },
+      {
+        "label": "TechCrunch – Unitree Robot Incidents Raise Safety Questions (2025)",
+        "url": "https://techcrunch.com/2025/12/unitree-robot-safety-incidents/"
+      }
+    ]
+  },
+  "_analytics": {
+    "supplierCount": 15,
+    "customerCount": 0,
+    "bottleneckExposure": [
+      "reducers",
+      "screws"
+    ],
+    "totalFundingM": 155,
+    "latestValuationM": 7000
+  }
+}
