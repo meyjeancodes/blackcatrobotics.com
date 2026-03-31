@@ -1,0 +1,50 @@
+SUBJECT: BlackCat Robotics — Infrastructure for the Autonomous Economy
+
+---
+
+[Investor Name],
+
+I am reaching out because BlackCat Robotics is building the operating infrastructure for an economy that is arriving faster than the support systems to sustain it.
+
+---
+
+WHAT WE BUILD
+
+BlackCat Robotics operates three platforms:
+
+1. TechMedix — Predictive maintenance and dispatch software for autonomous fleets. Every robot, drone, and AMR is a node. Every node generates events. Every event creates a maintenance record, a work order, a technician assignment, and a resolution. We have built the full loop.
+
+2. HABITAT — Home as a Service. AI-driven construction from blueprint to occupancy, executed by Construct.Bot autonomous build fleets. We address the housing supply crisis with a platform that does not require a general contractor.
+
+3. BlackCat Grid (2027) — EV fleet management and distributed energy node infrastructure. Node-based billing, charge scheduling, and energy trading across autonomous vehicle and smart home ecosystems.
+
+---
+
+THE MARKET CONDITION
+
+- Robot maintenance is projected to reach $10.2B by 2033. The platforms managing these systems today are fragmented, manual, and not built for autonomous hardware at scale.
+- 65% of maintenance operators plan to adopt AI diagnostics by end of 2026. There is no incumbent at infrastructure scale.
+- The US housing shortage exceeds 4 million units. Traditional construction cannot close this gap. Autonomous build systems are the only path to the required output.
+
+---
+
+WHERE WE ARE
+
+TechMedix is live and generating revenue. The diagnostic engine supports 14+ robot platforms including Boston Dynamics, Unitree, Figure AI, Tesla Optimus, DJI, and Zipline. Technician dispatch is operational.
+
+HABITAT is in pre-launch with a waitlist and active developer partnerships.
+
+---
+
+WHAT WE ARE LOOKING FOR
+
+We are raising a seed round to expand the TechMedix technician network, complete HABITAT's commercial launch, and build the BlackCat Grid foundation.
+
+We are looking for investors with conviction in physical infrastructure and autonomous systems — not just software. If your portfolio reflects that, I would like a conversation.
+
+---
+
+BlackCat Robotics
+Cumby, Texas | blackcatrobotics.com
+contact@blackcatrobotics.com
+LinkedIn: linkedin.com/in/black-cat-4302a13ba

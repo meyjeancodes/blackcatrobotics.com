@@ -1,0 +1,42 @@
+SUBJECT: Partnership Inquiry — BlackCat Robotics x [Partner Company]
+
+---
+
+[Contact Name],
+
+BlackCat Robotics builds operating infrastructure for autonomous systems — maintenance software, AI-driven construction, and energy node management. I am reaching out because [Partner Company]'s work in [relevant area] aligns directly with what we are building.
+
+---
+
+PARTNERSHIP CONTEXT
+
+TechMedix, our fleet maintenance platform, currently supports 14+ autonomous robot platforms and handles the full operational loop: node registration, event detection, maintenance records, work order creation, technician dispatch, and resolution. We are expanding coverage and looking for partners who are already operating at this layer.
+
+HABITAT, our construction platform, uses autonomous Construct.Bot fleets to take a project from AI-generated CAD blueprint to move-in ready occupancy. We are in active discussions with developers, land owners, and municipal partners for launch markets.
+
+---
+
+WHAT A PARTNERSHIP COULD LOOK LIKE
+
+Depending on [Partner Company]'s position, we see potential in:
+
+- Hardware integration: Adding [Partner Company]'s platform to the TechMedix diagnostic registry, giving your customers predictive maintenance capabilities and technician dispatch without building the infrastructure themselves.
+
+- Distribution: Offering TechMedix as a co-branded or embedded maintenance solution for [Partner Company]'s customer base.
+
+- Construction supply: Integrating [Partner Company]'s materials, systems, or technology into the HABITAT build stack and marketplace.
+
+- Energy and grid: Participating in the BlackCat Grid development roadmap (2027) for EV charging, solar, and distributed energy node management.
+
+---
+
+I am not approaching this as a vendor pitch. We are looking for partners who see the same long-term infrastructure opportunity and want to build it together.
+
+A 30-minute conversation would be a good starting point. I am available [days/times] or happy to work around your schedule.
+
+---
+
+BlackCat Robotics
+Cumby, Texas | blackcatrobotics.com
+contact@blackcatrobotics.com
+LinkedIn: linkedin.com/in/black-cat-4302a13ba
