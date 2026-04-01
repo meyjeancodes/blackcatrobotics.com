@@ -162,7 +162,7 @@ export function ServiceNetworkPanel() {
                         : "bg-black/[0.04] border border-black/[0.06] text-black/30",
                     ].join(" ")}
                   >
-                    {isDone ? "✓" : i + 1}
+                    {isDone ? "+" : i + 1}
                   </div>
                   {i < STAGES.length - 1 && (
                     <div

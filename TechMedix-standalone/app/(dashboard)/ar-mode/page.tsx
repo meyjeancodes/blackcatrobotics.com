@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { RobotBodySVG } from "../../../components/RobotBodySVG";
 import type { BodyZone, AROverlay, Procedure, ProcedureStep } from "../../../types/atlas";
 import { createClient } from "../../../lib/supabase-browser";
@@ -18,11 +18,149 @@ export default function ARModePage() {
   const [loading, setLoading] = useState(false);
   const [guidance, setGuidance] = useState<string | null>(null);
   const [guidanceLoading, setGuidanceLoading] = useState(false);
-  const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [voiceListening, setVoiceListening] = useState(false);
+  const [voiceSupported, setVoiceSupported] = useState<boolean | null>(null);
+  const [lastCommand, setLastCommand] = useState<string | null>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   // Lazy init — only create client when needed (avoids SSR env var errors)
   function getSupabase() {
     return createClient();
+  }
+
+  // Web Speech API voice commands
+  const stepsRef = useRef<ProcedureStep[]>([]);
+  const activeStepRef = useRef(0);
+  const zoneDataRef = useRef<ZoneData | null>(null);
+
+  // Keep refs in sync
+  useEffect(() => { activeStepRef.current = activeStep; }, [activeStep]);
+  useEffect(() => { zoneDataRef.current = zoneData; }, [zoneData]);
+  useEffect(() => {
+    stepsRef.current = zoneData ? (zoneData.procedure.steps as ProcedureStep[]) : [];
+  }, [zoneData]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const SpeechRecognition =
+        (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition ||
+        (window as unknown as { webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition;
+      setVoiceSupported(!!SpeechRecognition);
+    }
+  }, []);
+
+  const showCommand = useCallback((cmd: string) => {
+    setLastCommand(cmd);
+    setTimeout(() => setLastCommand(null), 2500);
+  }, []);
+
+  const handleVoiceResult = useCallback((transcript: string) => {
+    const t = transcript.toLowerCase().trim();
+    if (t.includes("next step")) {
+      showCommand("Next step");
+      setActiveStep((s) => {
+        const max = stepsRef.current.length - 1;
+        return s < max ? s + 1 : s;
+      });
+      setGuidance(null);
+    } else if (t.includes("previous step") || t.includes("go back")) {
+      showCommand("Previous step");
+      setActiveStep((s) => Math.max(0, s - 1));
+      setGuidance(null);
+    } else if (t.includes("repeat")) {
+      showCommand("Repeat");
+      fetchGuidanceForStep(activeStepRef.current, zoneDataRef.current);
+    } else if (t.includes("explain")) {
+      showCommand("Explain");
+      const currentData = zoneDataRef.current;
+      if (currentData) {
+        const step = (currentData.procedure.steps as ProcedureStep[])[activeStepRef.current];
+        fetchCustomGuidance(`Explain in more detail: ${step?.instruction ?? "current step"}`, currentData);
+      }
+    } else if (t.includes("warning")) {
+      showCommand("Warning check");
+      const currentData = zoneDataRef.current;
+      if (currentData) {
+        const step = (currentData.procedure.steps as ProcedureStep[])[activeStepRef.current];
+        fetchCustomGuidance(`What are the safety risks for: ${step?.instruction ?? "current step"}`, currentData);
+      }
+    }
+  }, [showCommand]);
+
+  function toggleVoice() {
+    if (!voiceSupported) return;
+    if (voiceListening) {
+      recognitionRef.current?.stop();
+      setVoiceListening(false);
+      return;
+    }
+    const SpeechRecognitionClass =
+      (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition ||
+      (window as unknown as { webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition;
+    if (!SpeechRecognitionClass) return;
+
+    const recognition = new SpeechRecognitionClass();
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = "en-US";
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = event.results[event.results.length - 1][0].transcript;
+      handleVoiceResult(transcript);
+    };
+    recognition.onerror = () => { setVoiceListening(false); };
+    recognition.onend = () => { setVoiceListening(false); };
+    recognitionRef.current = recognition;
+    recognition.start();
+    setVoiceListening(true);
+  }
+
+  async function fetchGuidanceForStep(stepIdx: number, data: ZoneData | null) {
+    if (!data) return;
+    const step = (data.procedure.steps as ProcedureStep[])[stepIdx];
+    if (!step) return;
+    setGuidanceLoading(true);
+    setGuidance(null);
+    try {
+      const res = await fetch("/api/ar-guidance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          step_instruction: step.instruction,
+          component_name: data.overlay.components?.name ?? "Component",
+          warnings: step.warning ? [step.warning] : [],
+        }),
+      });
+      const d = await res.json();
+      setGuidance(d.guidance ?? "No guidance available.");
+    } catch {
+      setGuidance("AI guidance unavailable — check connection.");
+    } finally {
+      setGuidanceLoading(false);
+    }
+  }
+
+  async function fetchCustomGuidance(prompt: string, data: ZoneData | null) {
+    if (!data) return;
+    const step = (data.procedure.steps as ProcedureStep[])[activeStepRef.current];
+    setGuidanceLoading(true);
+    setGuidance(null);
+    try {
+      const res = await fetch("/api/ar-guidance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          step_instruction: prompt,
+          component_name: data.overlay.components?.name ?? "Component",
+          warnings: step?.warning ? [step.warning] : [],
+        }),
+      });
+      const d = await res.json();
+      setGuidance(d.guidance ?? "No guidance available.");
+    } catch {
+      setGuidance("AI guidance unavailable — check connection.");
+    } finally {
+      setGuidanceLoading(false);
+    }
   }
 
   async function handleZoneClick(zone: BodyZone) {
@@ -79,35 +217,7 @@ export default function ARModePage() {
   }
 
   async function fetchGuidance() {
-    if (!zoneData) return;
-    const step = (zoneData.procedure.steps as ProcedureStep[])[activeStep];
-    if (!step) return;
-
-    setGuidanceLoading(true);
-    setGuidance(null);
-
-    try {
-      const res = await fetch("/api/ar-guidance", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          step_instruction: step.instruction,
-          component_name: zoneData.overlay.components?.name ?? "Component",
-          warnings: step.warning ? [step.warning] : [],
-        }),
-      });
-      const data = await res.json();
-      setGuidance(data.guidance ?? "No guidance available.");
-
-      if (voiceEnabled && "speechSynthesis" in window && data.guidance) {
-        const utt = new SpeechSynthesisUtterance(data.guidance);
-        window.speechSynthesis.speak(utt);
-      }
-    } catch {
-      setGuidance("AI guidance unavailable — check connection.");
-    } finally {
-      setGuidanceLoading(false);
-    }
+    await fetchGuidanceForStep(activeStep, zoneData);
   }
 
   const steps = zoneData
@@ -271,6 +381,13 @@ export default function ARModePage() {
                 </div>
               )}
 
+              {/* Recognized command flash */}
+              {lastCommand && (
+                <div className="rounded-lg bg-white/10 border border-white/20 px-3 py-1.5 text-center">
+                  <p className="text-xs text-white/70 font-ui uppercase tracking-widest">Command: {lastCommand}</p>
+                </div>
+              )}
+
               <div className="flex gap-2">
                 <button
                   onClick={fetchGuidance}
@@ -278,24 +395,35 @@ export default function ARModePage() {
                   className="flex-1 flex items-center justify-center gap-2 bg-[#FF6B35] hover:bg-[#e85d2a] disabled:opacity-50 text-white rounded-xl px-4 py-2.5 text-sm font-medium transition-colors"
                 >
                   <Zap className="w-4 h-4" />
-                  {guidanceLoading ? "Thinking…" : "Get AI Guidance"}
+                  {guidanceLoading ? "Thinking..." : "Get AI Guidance"}
                 </button>
-                <button
-                  onClick={() => setVoiceEnabled(!voiceEnabled)}
-                  className={`px-3 py-2.5 rounded-xl border transition-colors ${
-                    voiceEnabled
-                      ? "bg-white/10 border-white/20 text-white"
-                      : "border-white/10 text-white/40 hover:border-white/20 hover:text-white/60"
-                  }`}
-                  title={voiceEnabled ? "Voice on" : "Voice off"}
-                >
-                  {voiceEnabled ? (
-                    <Mic className="w-4 h-4" />
-                  ) : (
-                    <MicOff className="w-4 h-4" />
-                  )}
-                </button>
+                {voiceSupported === false ? (
+                  <div className="px-3 py-2.5 rounded-xl border border-white/10 text-white/30 text-xs">
+                    Voice not supported
+                  </div>
+                ) : (
+                  <button
+                    onClick={toggleVoice}
+                    className={`px-3 py-2.5 rounded-xl border transition-all ${
+                      voiceListening
+                        ? "bg-[#FF6B35]/20 border-[#FF6B35]/50 text-[#FF6B35] animate-pulse"
+                        : "border-white/10 text-white/40 hover:border-white/20 hover:text-white/60"
+                    }`}
+                    title={voiceListening ? "Listening... click to stop" : "Start voice commands"}
+                  >
+                    {voiceListening ? (
+                      <Mic className="w-4 h-4" />
+                    ) : (
+                      <MicOff className="w-4 h-4" />
+                    )}
+                  </button>
+                )}
               </div>
+              {voiceListening && (
+                <p className="text-[0.6rem] text-white/40 text-center font-ui uppercase tracking-widest">
+                  Listening... say: next step, previous step, repeat, explain, warning
+                </p>
+              )}
 
               {/* Prev / Next */}
               <div className="flex gap-2">

@@ -516,7 +516,7 @@ function SubdomainStrip() {
                 <div className="h-3.5 w-3.5 rounded-full bg-black/[0.08] animate-pulse shrink-0" />
               )}
               <span className="inline-flex items-center rounded-full bg-sky-50 px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-sky-600">
-                SSL ✓
+                SSL
               </span>
             </div>
             <div>
