@@ -142,7 +142,7 @@ ul { list-style: none; }
 #products { background: var(--ink); border-top: 1px solid var(--border-d); }
 .products-head { max-width: 1200px; margin: 0 auto 64px; }
 .products-head h2 { font-family: var(--serif); font-size: clamp(36px,5vw,64px); font-weight: 400; line-height: 1.0; letter-spacing: -0.03em; color: #fff; margin-top: 16px; max-width: 600px; }
-.products-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: var(--border-d); border: 1px solid var(--border-d); border-radius: var(--r-lg); overflow: hidden; }
+.products-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border-d); border: 1px solid var(--border-d); border-radius: var(--r-lg); overflow: hidden; }
 .prod-card { background: #0d0d13; padding: 48px 40px; display: flex; flex-direction: column; gap: 20px; transition: background 0.3s; position: relative; overflow: hidden; }
 .prod-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--fire); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
 .prod-card:hover { background: rgba(232,78,27,0.04); }
@@ -453,7 +453,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
 <section class="sec" id="products">
   <div class="products-head">
     <div class="eyebrow reveal">Live Products</div>
-    <h2 class="reveal reveal-delay-1">Three platforms.<br>One operating system.</h2>
+    <h2 class="reveal reveal-delay-1">Four platforms.<br>One operating system.</h2>
   </div>
   <div class="products-grid">
     <div class="prod-card reveal">
@@ -466,7 +466,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
         <div class="prod-feat">Unitree G1 · H1-2 · B2 certified</div>
         <div class="prod-feat">Rule engine &rarr; VLA &rarr; Claude AI</div>
         <div class="prod-feat">Technician dispatch + fleet ops</div>
-        <div class="prod-feat">$299/robot/month</div>
+        <div class="prod-feat">$199-$299/robot/month</div>
       </div>
       <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="prod-link">Open TechMedix &rarr;</a>
     </div>
@@ -485,7 +485,7 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
       <a href="https://habitat.blackcatrobotics.com" target="_blank" rel="noopener" class="prod-link">View HABITAT &rarr;</a>
     </div>
     <div class="prod-card reveal reveal-delay-2">
-      <div class="prod-status"><div class="prod-status-dot soon"></div><span class="prod-status-txt">Coming 2027</span></div>
+      <div class="prod-status"><div class="prod-status-dot soon"></div><span class="prod-status-txt">Live Preview - Full Launch 2027</span></div>
       <div class="prod-tag">Infrastructure Layer</div>
       <div class="prod-name">BlackCat Grid</div>
       <div class="prod-desc">EV fleet management, V2G energy infrastructure, and autonomous energy systems. The physical world's power layer — monitored, orchestrated, and optimized by BlackCat OS.</div>
@@ -497,6 +497,20 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
         <div class="prod-feat">Waitlist open</div>
       </div>
       <a href="/blackcat-grid.html" class="prod-link">Explore Grid &rarr;</a>
+    </div>
+    <div class="prod-card reveal reveal-delay-3">
+      <div class="prod-status"><div class="prod-status-dot"></div><span class="prod-status-txt">Live</span></div>
+      <div class="prod-tag">Certification Layer</div>
+      <div class="prod-name">TechMedix Certified</div>
+      <div class="prod-desc">The industry standard for humanoid robot technicians. Five certification levels from Operator to Autonomous Systems Architect. One-time investment. AI-evaluated. Dispatch-eligible upon passing.</div>
+      <div class="prod-features">
+        <div class="prod-feat">5 levels: L1 to L5</div>
+        <div class="prod-feat">AI-evaluated certification exams</div>
+        <div class="prod-feat">One-time fees: $199 to $1,499</div>
+        <div class="prod-feat">Dispatch-eligible upon certification</div>
+        <div class="prod-feat">BlackCat takes 15-20% per job</div>
+      </div>
+      <a href="https://dashboard.blackcatrobotics.com/certifications" target="_blank" rel="noopener" class="prod-link">View Certification Levels &rarr;</a>
     </div>
   </div>
 </section>
@@ -673,9 +687,10 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
         <div class="model-name">SaaS — TechMedix</div>
         <div class="model-desc">Per-robot monthly subscription. Scales linearly with every robot deployed globally.</div>
         <div class="model-items">
-          <div class="model-item">Operator — $299/robot/month (1–4 robots)</div>
-          <div class="model-item">Fleet — $229/robot/month (5–19 robots)</div>
+          <div class="model-item">Operator — $299/robot/month (1-4 robots)</div>
+          <div class="model-item">Fleet — $199/robot/month (5-19 robots)</div>
           <div class="model-item">Enterprise — custom (20+ robots)</div>
+          <div class="model-item">TechMedix Certified network — one-time cert fees $199-$1,499 per level</div>
           <div class="model-item">AI cost per robot — under $0.10/month</div>
           <div class="model-item">99.9%+ margin on the AI layer</div>
         </div>
@@ -713,8 +728,26 @@ footer { background: #060608; border-top: 1px solid var(--border-d); padding: 48
     <h2>We are building<br>the system that<br>executes reality.</h2>
     <p>From construction to infrastructure to autonomous cities. BlackCat is not a chatbot. Not a tool. Not a feature. It is an operating system for deploying intelligence into the physical world.</p>
     <div class="cta-actions">
-      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-white">Start TechMedix — $299/mo &rarr;</a>
-      <a href="mailto:blackcatrobotics.ai@gmail.com?subject=Investor%20Deck%20Request%20—%20BlackCat%20OS" class="btn btn-white-outline">Request Investor Deck</a>
+      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-white">Start TechMedix &rarr;</a>
+      <a href="#investor-deck" class="btn btn-white-outline">Request Investor Deck</a>
+    </div>
+    <!-- Investor Deck Form -->
+    <div id="investor-deck" style="max-width:500px;margin:48px auto 0;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:36px 36px;">
+      <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--fire);margin-bottom:12px;">Investor Deck</p>
+      <h3 style="font-family:var(--serif);font-size:28px;color:#fff;margin-bottom:16px;letter-spacing:-0.02em;">Request the Deck</h3>
+      <div id="inv-deck-form">
+        <form action="https://formspree.io/f/xreyrndq" method="POST" onsubmit="handleInvDeck(event)">
+          <input type="hidden" name="_subject" value="Investor Deck Request" />
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <input type="text" name="full_name" placeholder="Full Name" required style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px 16px;color:#fff;font-size:14px;outline:none;">
+            <input type="email" name="email" placeholder="Work Email" required style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px 16px;color:#fff;font-size:14px;outline:none;">
+            <input type="text" name="company" placeholder="Company / Fund" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px 16px;color:#fff;font-size:14px;outline:none;">
+            <textarea name="message" placeholder="Message (optional)" rows="3" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px 16px;color:#fff;font-size:14px;outline:none;resize:vertical;"></textarea>
+            <button type="submit" id="inv-deck-btn" style="background:var(--fire);color:#fff;border:none;border-radius:10px;padding:14px 28px;font-size:14px;font-weight:600;cursor:pointer;">Request Deck</button>
+          </div>
+        </form>
+      </div>
+      <div id="inv-deck-ok" style="display:none;color:#fff;font-size:15px;line-height:1.7;">Request received. We will be in touch within 24 hours.</div>
     </div>
   </div>
 </section>
@@ -786,6 +819,24 @@ if (el) {
     setTimeout(type, deleting ? 18 : 38);
   }
   type();
+}
+</script>
+<script>
+function handleInvDeck(e) {
+  e.preventDefault();
+  const btn = document.getElementById('inv-deck-btn');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  const form = e.target;
+  fetch('https://formspree.io/f/xreyrndq', {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(r => {
+    if (r.ok) {
+      document.getElementById('inv-deck-form').style.display = 'none';
+      document.getElementById('inv-deck-ok').style.display = 'block';
+    } else { btn.textContent = 'Request Deck'; btn.disabled = false; }
+  }).catch(() => { btn.textContent = 'Request Deck'; btn.disabled = false; });
 }
 </script>
 </body>

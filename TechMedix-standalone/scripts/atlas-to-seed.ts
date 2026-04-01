@@ -272,7 +272,7 @@ function main() {
   fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
   fs.writeFileSync(OUT_FILE, lines.join("\n"), "utf8");
 
-  console.log(`✅ Generated: ${OUT_FILE}`);
+  console.log(`Generated: ${OUT_FILE}`);
   console.log(`   ${supplierIdx - 1} suppliers, ${compIdx - 1} component categories`);
   console.log("");
   console.log("To apply: paste into Supabase SQL editor after 002_blackcat_os.sql");

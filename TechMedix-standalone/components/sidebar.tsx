@@ -4,8 +4,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import {
+  Award,
   CreditCard,
   Cpu,
+  Home,
   LayoutDashboard,
   LogOut,
   Network,
@@ -21,17 +23,19 @@ import { createClient } from "../lib/supabase-browser";
 import type { SessionUser } from "./dashboard-shell";
 
 const links = [
-  { href: "/dashboard",    label: "Overview",     icon: LayoutDashboard },
-  { href: "/ar-mode",      label: "AR Mode",      icon: Scan },
-  { href: "/maintenance",  label: "Maintenance",  icon: Wrench },
-  { href: "/nodes",        label: "Fleet & Nodes", icon: Cpu },
-  { href: "/technicians",  label: "Technicians",  icon: Users },
-  { href: "/datacenter",   label: "Data Centers", icon: Server },
-  { href: "/network",      label: "Network",      icon: Network },
-  { href: "/operations",   label: "Operations",   icon: Waypoints },
-  { href: "/energy",       label: "Energy & Grid", icon: Zap },
-  { href: "/billing",      label: "Billing",      icon: CreditCard },
-  { href: "/settings",     label: "Settings",     icon: Settings2 },
+  { href: "/dashboard",      label: "Overview",       icon: LayoutDashboard },
+  { href: "/ar-mode",        label: "AR Mode",        icon: Scan },
+  { href: "/maintenance",    label: "Maintenance",    icon: Wrench },
+  { href: "/nodes",          label: "Fleet & Nodes",  icon: Cpu },
+  { href: "/technicians",    label: "Technicians",    icon: Users },
+  { href: "/certifications", label: "Certifications", icon: Award },
+  { href: "/habitat",        label: "HABITAT",        icon: Home },
+  { href: "/datacenter",     label: "Data Centers",   icon: Server },
+  { href: "/network",        label: "Network",        icon: Network },
+  { href: "/operations",     label: "Operations",     icon: Waypoints },
+  { href: "/energy",         label: "Energy & Grid",  icon: Zap },
+  { href: "/billing",        label: "Billing",        icon: CreditCard },
+  { href: "/settings",       label: "Settings",       icon: Settings2 },
 ];
 
 function initials(name?: string, email?: string): string {
