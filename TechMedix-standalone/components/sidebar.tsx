@@ -5,14 +5,12 @@ import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import {
   Activity,
-  Award,
   CreditCard,
   Cpu,
   Layers,
   LayoutDashboard,
   LogOut,
   Network,
-  Package,
   Scan,
   Server,
   Settings2,
@@ -25,21 +23,19 @@ import { createClient } from "../lib/supabase-browser";
 import type { SessionUser } from "./dashboard-shell";
 
 const links = [
-  { href: "/dashboard",                    label: "Overview",       icon: LayoutDashboard },
-  { href: "/ar-mode",                      label: "AR Mode",        icon: Scan },
-  { href: "/maintenance",                  label: "Maintenance",    icon: Wrench },
-  { href: "/certifications",              label: "Certifications", icon: Award },
-  { href: "/acquire",                      label: "Acquire",        icon: Package },
-  { href: "/nodes",                        label: "Nodes",          icon: Cpu },
-  { href: "/technicians/certifications",   label: "Technicians",    icon: Users },
-  { href: "/datacenter",                   label: "Data Centers",   icon: Server },
-  { href: "/network",                      label: "Network",        icon: Network },
-  { href: "/operations",                   label: "Operations",   icon: Waypoints },
-  { href: "/fleet",                        label: "Fleet",        icon: Activity },
-  { href: "/energy",                       label: "Energy",       icon: Zap },
-  { href: "/grid",                         label: "Grid",         icon: Layers },
-  { href: "/billing",                      label: "Billing",      icon: CreditCard },
-  { href: "/settings",                     label: "Settings",     icon: Settings2 },
+  { href: "/dashboard",    label: "Overview",     icon: LayoutDashboard },
+  { href: "/ar-mode",      label: "AR Mode",      icon: Scan },
+  { href: "/maintenance",  label: "Maintenance",  icon: Wrench },
+  { href: "/nodes",        label: "Nodes",        icon: Cpu },
+  { href: "/technicians",  label: "Technicians",  icon: Users },
+  { href: "/datacenter",   label: "Data Centers", icon: Server },
+  { href: "/network",      label: "Network",      icon: Network },
+  { href: "/operations",   label: "Operations",   icon: Waypoints },
+  { href: "/fleet",        label: "Fleet",        icon: Activity },
+  { href: "/energy",       label: "Energy",       icon: Zap },
+  { href: "/grid",         label: "Grid",         icon: Layers },
+  { href: "/billing",      label: "Billing",      icon: CreditCard },
+  { href: "/settings",     label: "Settings",     icon: Settings2 },
 ];
 
 function initials(name?: string, email?: string): string {
