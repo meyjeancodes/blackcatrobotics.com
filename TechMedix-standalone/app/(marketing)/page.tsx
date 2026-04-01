@@ -39,11 +39,6 @@ export default function MarketingPage() {
           </div>
         </div>
         <div className="space-y-5 p-8 lg:p-10">
-          <div className="rounded-[26px] border border-white/10 bg-white/5 p-5 text-white">
-            <p className="text-[0.7rem] uppercase tracking-[0.28em] text-white/40">Current mode</p>
-            <p className="mt-3 text-3xl font-semibold">Mock-backed build</p>
-            <p className="mt-3 text-sm leading-6 text-white/60">The API and dashboard are scaffolded so you can start with seeded data, then swap to live Supabase and Anthropic services by flipping env vars.</p>
-          </div>
           <div className="grid gap-4">
             {pillars.map((pillar) => {
               const Icon = pillar.icon;

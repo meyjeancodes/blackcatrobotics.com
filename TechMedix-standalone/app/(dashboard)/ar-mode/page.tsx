@@ -165,14 +165,13 @@ export default function ARModePage() {
         {loading ? (
           <div className="flex items-center justify-center flex-1 text-white/30">
             <div className="text-center">
-              <div className="animate-pulse text-4xl mb-2">⚡</div>
+              <Zap className="w-8 h-8 text-white/30 animate-pulse mb-2 mx-auto" />
               <p className="text-sm">Loading zone data…</p>
             </div>
           </div>
         ) : !zoneData ? (
           <div className="flex items-center justify-center flex-1 text-white/30 p-8 text-center">
             <div>
-              <div className="text-5xl mb-4">🤖</div>
               <p className="text-sm leading-relaxed">
                 Select a zone on the robot diagram to view components, procedures, and AR guidance.
               </p>

@@ -59,7 +59,7 @@ export default function GridPage() {
       </div>
 
       {/* Page header */}
-      <div className="mb-8">
+      <div className="panel px-7 py-6 mb-8">
         <p className="kicker">BlackCat Grid</p>
         <div className="mt-2 flex items-center gap-3 flex-wrap">
           <h1 className="font-header text-[2.8rem] leading-none tracking-[-0.04em] text-black">
@@ -69,7 +69,7 @@ export default function GridPage() {
             Coming 2027
           </span>
         </div>
-        <p className="mt-3 text-sm leading-6 text-black/52 max-w-2xl">
+        <p className="mt-3 text-sm leading-6 text-black/65 max-w-2xl">
           Node-based billing, AI charge scheduling, and energy trading across the BlackCat physical network.
         </p>
       </div>
