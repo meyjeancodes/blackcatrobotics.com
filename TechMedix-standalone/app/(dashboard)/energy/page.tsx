@@ -1,9 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { SurfaceCard } from "../../../components/surface-card";
 import { systemNodes } from "../../../lib/shared/mock-data";
+import { GridStatusBar }  from "../../../components/grid/grid-status-bar";
+import { NodeMap }        from "../../../components/grid/node-map";
+import { ChargeSchedule } from "../../../components/grid/charge-schedule";
+import { TradeFeed }      from "../../../components/grid/trade-feed";
+import { BillingLedger }  from "../../../components/grid/billing-ledger";
+import { useGridSimulation } from "../../../lib/grid/use-grid-simulation";
+import { CHARGE_SCHEDULE } from "../../../lib/grid/mock-data";
 import type { GridStateResponse } from "../../../types/blackcat";
+import type { ScheduleBlock } from "../../../lib/grid/mock-data";
 
 const evNodes = systemNodes.filter((n) => n.type === "ev");
 const chargerNodes = systemNodes.filter((n) => n.type === "charger");
@@ -22,6 +30,23 @@ export default function EnergyPage() {
     fetchGrid();
     const id = setInterval(fetchGrid, 10_000);
     return () => clearInterval(id);
+  }, []);
+
+  // Grid infrastructure state
+  const { gridStatus, trades, updateFloor, toggleAutoTrade, executeTrade } =
+    useGridSimulation();
+
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [scheduleBlocks, setScheduleBlocks]  = useState<ScheduleBlock[]>(CHARGE_SCHEDULE);
+
+  const handleApproveBlock = useCallback((idx: number) => {
+    setScheduleBlocks((prev) =>
+      prev.map((b, i) => (i === idx ? { ...b, approved: true } : b))
+    );
+  }, []);
+
+  const handleApproveAll = useCallback(() => {
+    setScheduleBlocks((prev) => prev.map((b) => ({ ...b, approved: true })));
   }, []);
 
   return (
@@ -182,7 +207,6 @@ export default function EnergyPage() {
           </div>
         </div>
 
-        {/* Recent transactions */}
         {grid && grid.transactions.length > 0 ? (
           <div className="overflow-hidden rounded-[18px] border border-black/5">
             <table className="min-w-full divide-y divide-black/5 text-left text-xs">
@@ -217,6 +241,53 @@ export default function EnergyPage() {
           </p>
         )}
       </SurfaceCard>
+
+      {/* ── Grid Infrastructure ──────────────────────────────────────────────── */}
+      <div className="-mx-6 sticky top-0 z-10">
+        <GridStatusBar gridStatus={gridStatus} onToggleAutoTrade={toggleAutoTrade} />
+      </div>
+
+      <div className="panel px-7 py-6">
+        <p className="kicker">BlackCat Grid</p>
+        <div className="mt-2 flex items-center gap-3 flex-wrap">
+          <h2 className="font-header text-[2rem] leading-none tracking-[-0.04em] text-black">
+            Grid Infrastructure
+          </h2>
+          <span className="font-ui text-[0.60rem] uppercase tracking-[0.16em] px-3 py-1.5 rounded-full bg-gold/[0.12] text-gold border border-gold/[0.20]">
+            Coming 2027
+          </span>
+        </div>
+        <p className="mt-3 text-sm leading-6 text-black/65 max-w-2xl">
+          Node-based billing, AI charge scheduling, and energy trading across the BlackCat physical network.
+        </p>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
+        <div>
+          <NodeMap
+            selectedNodeId={selectedNodeId}
+            onSelectNode={setSelectedNodeId}
+            trades={trades}
+          />
+        </div>
+        <div className={selectedNodeId ? "hidden lg:block" : ""}>
+          <TradeFeed
+            gridStatus={gridStatus}
+            trades={trades}
+            onToggleAutoTrade={toggleAutoTrade}
+            onUpdateFloor={updateFloor}
+            onExecuteTrade={executeTrade}
+          />
+        </div>
+      </div>
+
+      <ChargeSchedule
+        blocks={scheduleBlocks}
+        onApprove={handleApproveBlock}
+        onApproveAll={handleApproveAll}
+      />
+
+      <BillingLedger />
     </div>
   );
 }
