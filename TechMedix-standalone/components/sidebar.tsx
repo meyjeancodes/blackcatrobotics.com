@@ -4,10 +4,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import {
-  Activity,
   CreditCard,
   Cpu,
-  Layers,
   LayoutDashboard,
   LogOut,
   Network,
@@ -26,14 +24,12 @@ const links = [
   { href: "/dashboard",    label: "Overview",     icon: LayoutDashboard },
   { href: "/ar-mode",      label: "AR Mode",      icon: Scan },
   { href: "/maintenance",  label: "Maintenance",  icon: Wrench },
-  { href: "/nodes",        label: "Nodes",        icon: Cpu },
+  { href: "/nodes",        label: "Fleet & Nodes", icon: Cpu },
   { href: "/technicians",  label: "Technicians",  icon: Users },
   { href: "/datacenter",   label: "Data Centers", icon: Server },
   { href: "/network",      label: "Network",      icon: Network },
   { href: "/operations",   label: "Operations",   icon: Waypoints },
-  { href: "/fleet",        label: "Fleet",        icon: Activity },
-  { href: "/energy",       label: "Energy",       icon: Zap },
-  { href: "/grid",         label: "Grid",         icon: Layers },
+  { href: "/energy",       label: "Energy & Grid", icon: Zap },
   { href: "/billing",      label: "Billing",      icon: CreditCard },
   { href: "/settings",     label: "Settings",     icon: Settings2 },
 ];

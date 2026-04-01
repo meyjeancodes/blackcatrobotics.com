@@ -1,6 +1,8 @@
 import { SurfaceCard } from "../../../components/surface-card";
 import { StatusPill } from "../../../components/status-pill";
+import { RobotTable } from "../../../components/robot-table";
 import { systemNodes, nodeEvents } from "../../../lib/shared/mock-data";
+import { getDashboardData } from "../../../lib/data";
 import type { SystemNode } from "../../../lib/shared/types";
 
 const nodeTypeLabel: Record<SystemNode["type"], string> = {
@@ -20,7 +22,9 @@ const statusColor: Record<SystemNode["status"], string> = {
   idle:        "text-blue-500",
 };
 
-export default function NodesPage() {
+export default async function NodesPage() {
+  const { snapshot } = await getDashboardData();
+
   const recentEvents = [...nodeEvents].sort(
     (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
   );
@@ -140,6 +144,11 @@ export default function NodesPage() {
           </div>
         </SurfaceCard>
       </section>
+
+      {/* ── Fleet Overview ───────────────────────────────────────────────────── */}
+      <SurfaceCard title="Fleet inventory" eyebrow="Fleet overview">
+        <RobotTable robots={snapshot.robots} />
+      </SurfaceCard>
     </div>
   );
 }
