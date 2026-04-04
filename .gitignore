@@ -12,3 +12,11 @@ TechMedix-standalone/.env.local
 
 # Legal / private docs
 Legal/
+
+# Python bytecode
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Nested git repos (use submodules intentionally if needed)
+bcr-live/

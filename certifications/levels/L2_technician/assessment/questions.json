@@ -1,0 +1,527 @@
+[
+  {
+    "id": "L2-001",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "A CAN arbitration ID of 0x205 on a Unitree G1 corresponds to which CANopen message type?",
+    "options": [
+      "A. PDO Transmit — robot publishing sensor data",
+      "B. PDO Receive — operator sending commands to the robot",
+      "C. SDO — parameter access and configuration",
+      "D. NMT — network management commands"
+    ],
+    "correct": "B",
+    "explanation": "Arbitration IDs 0x201-0x27F are PDO Receive messages — commands sent from the controller to actuators on the robot. PDO Transmit (robot publishing) uses 0x181-0x1FF. SDO uses 0x581-0x5FF. NMT uses 0x001-0x007.",
+    "reference": "curriculum.md#can-bus-diagnostics"
+  },
+  {
+    "id": "L2-002",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "You measure 11.2V on the 12V bus of a Unitree G1 while the robot is running a manipulation task with elevated torque demand. What does this indicate?",
+    "options": [
+      "A. Fault — the bus voltage is outside the 11.5-12.6V specification",
+      "B. Normal — bus sag under load is expected within tolerance",
+      "C. Critical — below 11.5V indicates a shorted bus that requires immediate shutdown",
+      "D. Measurement error — the 12V bus cannot drop below 12V by design"
+    ],
+    "correct": "A",
+    "explanation": "The 12V bus specification under load is 11.5-12.6V. A reading of 11.2V is below the lower specification limit and indicates either a failing power supply, excessive load, or bus fault. This should be flagged as a P2 alert and investigated.",
+    "reference": "curriculum.md#multimeter"
+  },
+  {
+    "id": "L2-003",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "During IMU calibration verification, the Z-axis reads 9.94 m/s2 on a level surface. Is this within specification?",
+    "options": [
+      "A. Yes — the reading is within 0.13 m/s2 of 9.81, which is within spec",
+      "B. No — the reading exceeds the 0.1 m/s2 tolerance (9.81 +/- 0.1 = 9.71-9.91 m/s2)",
+      "C. Yes — any reading between 9.7 and 10.0 m/s2 is acceptable for field use",
+      "D. Cannot determine — IMU calibration tolerance depends on the specific unit model"
+    ],
+    "correct": "B",
+    "explanation": "The expected Z-axis reading at rest on a level surface is 9.81 +/- 0.1 m/s2 (9.71-9.91 m/s2). A reading of 9.94 exceeds this range and requires recalibration before deployment.",
+    "reference": "curriculum.md#imu"
+  },
+  {
+    "id": "L2-004",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "A motor winding resistance reading of 0 ohms between two terminals indicates:",
+    "options": [
+      "A. A very efficient motor with minimal winding resistance",
+      "B. A measurement taken while the motor is spinning at high speed",
+      "C. A short circuit — insulation failure between windings — motor must be replaced",
+      "D. Normal condition — BLDC motors have very low winding resistance"
+    ],
+    "correct": "C",
+    "explanation": "Zero ohms between motor terminals indicates a short circuit between windings. This is caused by insulation failure, overheating, or physical damage. A healthy BLDC winding reads 0.1-2.0 ohm depending on motor size. A short will cause immediate overcurrent in the motor driver. The motor must be replaced.",
+    "reference": "curriculum.md#multimeter"
+  },
+  {
+    "id": "L2-005",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "ros2 topic hz /joint_states returns a rate of 420Hz instead of the expected 500Hz. What is the most likely cause?",
+    "options": [
+      "A. The joint_states topic has been reconfigured to a lower rate — this is by design",
+      "B. The robot is operating in a power-saving mode that reduces telemetry frequency",
+      "C. Elevated CPU load or bus congestion causing delayed message publishing",
+      "D. The measurement is inaccurate — ros2 topic hz has a 10% inherent error"
+    ],
+    "correct": "C",
+    "explanation": "420Hz is 84% of the expected 500Hz, which falls below the 90% threshold for healthy operation. The most likely cause is elevated CPU load or CAN bus congestion causing delayed message publishing. Check `top` for CPU usage and `candump` for bus error frames.",
+    "reference": "curriculum.md#ros-2-node-health"
+  },
+  {
+    "id": "L2-006",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "A Unitree G1 knee joint telemetry shows 47 Nm sustained torque during a normal walking sequence. The spec is 45 Nm continuous. What action is required?",
+    "options": [
+      "A. No action — 47 Nm is within measurement uncertainty of the 45 Nm spec",
+      "B. Flag as P2 — sustained torque above spec indicates potential mechanical binding or degraded actuator",
+      "C. Immediately shut down the robot — 47 Nm exceeds the structural safety limit",
+      "D. Increase the torque limit in firmware to accommodate the higher demand"
+    ],
+    "correct": "B",
+    "explanation": "Sustained torque above the 45 Nm continuous specification indicates either mechanical binding or a degraded actuator. Flag as P2, schedule physical inspection. 47 Nm is above spec but not immediately catastrophic — the robot can continue operation while the inspection is scheduled.",
+    "reference": "curriculum.md#joint-telemetry"
+  },
+  {
+    "id": "L2-007",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "In a harmonic drive, which component is the input (connected to the motor)?",
+    "options": [
+      "A. Circular spline — the rigid ring gear",
+      "B. Flex spline — the thin-walled output gear",
+      "C. Wave generator — the elliptical cam on the input shaft",
+      "D. Output flange — the final power takeoff"
+    ],
+    "correct": "C",
+    "explanation": "The wave generator is the input component, comprising an elliptical cam mounted on the motor shaft with a bearing assembly. It deforms the flex spline as it rotates, creating the progressive tooth engagement that produces the gear reduction. The circular spline is fixed, and the flex spline is the output.",
+    "reference": "curriculum.md#harmonic-drives"
+  },
+  {
+    "id": "L2-008",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "When replacing a joint actuator, in what order should connectors be disconnected and reconnected?",
+    "options": [
+      "A. Disconnect: power then encoder. Reconnect: power then encoder",
+      "B. Disconnect: encoder then power. Reconnect: power then encoder",
+      "C. Disconnect: power then encoder. Reconnect: encoder then power",
+      "D. Order does not matter — power and encoder connectors are interchangeable"
+    ],
+    "correct": "C",
+    "explanation": "Correct sequence: Disconnect power first, then encoder. Reconnect encoder first, then power. Removing power first prevents the drive from attempting to commutate on incorrect encoder data during disconnection. Reconnecting encoder before power ensures the drive has valid position data when power is applied, preventing runaway.",
+    "reference": "curriculum.md#actuator-rr-torque-sequence"
+  },
+  {
+    "id": "L2-009",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "What is the typical gear ratio range for harmonic drives used in humanoid robot joints?",
+    "options": [
+      "A. 5:1 to 20:1 — similar to conventional planetary gearboxes",
+      "B. 50:1 to 160:1 — high reduction for precise control",
+      "C. 200:1 to 500:1 — ultra-high reduction for heavy-load joints",
+      "D. 1:1 — harmonic drives are used as torque amplifiers, not speed reducers"
+    ],
+    "correct": "B",
+    "explanation": "Harmonic drives in humanoid robot joints typically have gear ratios from 50:1 to 160:1. These high reductions allow small, fast BLDC motors to produce the high torques needed for joint control while maintaining zero backlash.",
+    "reference": "curriculum.md#harmonic-drives"
+  },
+  {
+    "id": "L2-010",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "The BPFO formula is used to identify which type of bearing fault?",
+    "options": [
+      "A. Inner race wear",
+      "B. Outer race wear",
+      "C. Ball/roller element spalling",
+      "D. Cage fracture"
+    ],
+    "correct": "B",
+    "explanation": "BPFO stands for Ball Pass Frequency Outer race. It calculates the frequency at which bearing balls contact a defect on the outer race, producing vibration detectable by accelerometer and FFT analysis. Inner race defects use BPFI. Ball defects use BSF.",
+    "reference": "curriculum.md#bearing-defect-frequency-formula"
+  },
+  {
+    "id": "L2-011",
+    "level": "L2",
+    "domain": "sensors",
+    "question": "An F/T sensor reads 1.2N on the Fz axis while completely unloaded. The specification is < 0.5N. What does this indicate?",
+    "options": [
+      "A. Normal — F/T sensors have thermal drift that causes small non-zero readings",
+      "B. Zero-point drift — the sensor requires recalibration",
+      "C. Sensor failure — 1.2N exceeds the sensor's noise floor and indicates hardware damage",
+      "D. Load still applied — verify the sensor is truly unloaded before concluding it is a fault"
+    ],
+    "correct": "B",
+    "explanation": "An F/T sensor reading of 1.2N when unloaded (more than double the 0.5N specification) indicates zero-point drift. This is a calibration issue, not hardware damage. Run the zero-point calibration procedure with the sensor confirmed unloaded.",
+    "reference": "curriculum.md#forcetorque-sensors"
+  },
+  {
+    "id": "L2-012",
+    "level": "L2",
+    "domain": "sensors",
+    "question": "Why must stereo cameras be cleaned as a matched pair rather than individually?",
+    "options": [
+      "A. To save time — cleaning both at once is more efficient",
+      "B. Because the cameras share a single aperture that covers both lenses",
+      "C. Because differential contamination between left and right lenses causes depth calibration errors",
+      "D. Because the cameras are physically connected and cannot be cleaned individually"
+    ],
+    "correct": "C",
+    "explanation": "Stereo depth cameras calculate distance by comparing images from the left and right lenses. If one lens is significantly dirtier than the other, the optical properties differ, causing systematic depth errors. Always clean both lenses simultaneously.",
+    "reference": "curriculum.md#camera-cleaning"
+  },
+  {
+    "id": "L2-013",
+    "level": "L2",
+    "domain": "software",
+    "question": "What is the minimum battery SoC required before initiating a firmware update on a Unitree G1?",
+    "options": [
+      "A. 20% — minimum to power the update process",
+      "B. 30% — sufficient for most update durations",
+      "C. 40% — minimum recommended to prevent power loss during flash",
+      "D. 80% — full charge ensures update completes without interruption"
+    ],
+    "correct": "C",
+    "explanation": "40% SoC is the minimum before firmware flashing. A full update cycle can take 5-15 minutes. Power loss mid-flash can corrupt the firmware and brick the controller, requiring OEM RMA for recovery.",
+    "reference": "curriculum.md#firmware-update-procedure"
+  },
+  {
+    "id": "L2-014",
+    "level": "L2",
+    "domain": "software",
+    "question": "ros2 doctor reports 'No ROS_DOMAIN_ID set — using default (0).' A second robot on the same network also uses domain 0. What is the consequence?",
+    "options": [
+      "A. No consequence — ROS 2 handles multiple robots on the same domain ID automatically",
+      "B. Minor inconvenience — topic names may overlap but data will be separated by node name",
+      "C. Critical conflict — both robots will receive each other's commands, causing control interference",
+      "D. Increased latency — sharing a domain ID reduces network bandwidth available to each robot"
+    ],
+    "correct": "C",
+    "explanation": "ROS 2 uses DDS multicast within a domain ID. Two robots on domain 0 will both receive all messages published in that domain. /cmd_vel published for robot A will also be received by robot B, causing unintended motion commands.",
+    "reference": "curriculum.md#ros-2-node-health"
+  },
+  {
+    "id": "L2-015",
+    "level": "L2",
+    "domain": "repair",
+    "question": "After an actuator R&R, the post-repair validation shows the joint can reach only +2.4 radians of the required +2.7 radians. What is the most likely cause?",
+    "options": [
+      "A. The replacement actuator is a different variant with a smaller range of motion",
+      "B. A fastener is not fully tightened, allowing the actuator to shift under load",
+      "C. The encoder was not reconnected before power, causing a position reference error",
+      "D. The joint limit is set correctly but the software needs to be recalibrated to the new actuator"
+    ],
+    "correct": "C",
+    "explanation": "If the encoder was connected after power was applied, the drive initialized with an incorrect position reference. The 0.3 radian deficit corresponds to the drive stopping 0.3 radians before the true joint limit based on a shifted reference.",
+    "reference": "curriculum.md#post-repair-validation"
+  },
+  {
+    "id": "L2-016",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "On a CAN bus with 60-ohm termination resistance instead of the standard 120-ohm per terminator, what symptom would you observe?",
+    "options": [
+      "A. Increased signal amplitude causing receiver overdrive errors",
+      "B. Reduced signal amplitude from over-termination, causing dominant bit errors",
+      "C. No effect — CAN bus termination has a tolerance of +/- 50%",
+      "D. Bus-off state because the termination mismatch triggers a protocol violation"
+    ],
+    "correct": "B",
+    "explanation": "Standard CAN termination places 120 ohm at each end of the bus, combining to 60 ohm differential load. If a terminator is 60 ohm instead of 120 ohm, the total bus impedance drops to 40 ohm (60 parallel with 120). This increases current draw and reduces the recessive voltage level, causing dominant bit detection failures and increasing error frame rates.",
+    "reference": "shared/can_bus_primer.md#physical-layer"
+  },
+  {
+    "id": "L2-017",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "candump can0 shows repeated error frames with the pattern 'ERRORFRAME'. What is the first diagnostic step?",
+    "options": [
+      "A. Replace the CAN transceiver immediately",
+      "B. Check bus termination resistance with a multimeter — measure across CAN-H and CAN-L with the bus powered off",
+      "C. Increase the CAN bitrate to reduce collision probability",
+      "D. Restart all ROS 2 nodes to clear the error state"
+    ],
+    "correct": "B",
+    "explanation": "Repeated ERRORFRAME entries in candump indicate a bus-level fault. The first step is to measure termination resistance across CAN-H and CAN-L with the bus unpowered. The expected reading is 60 ohm (two 120-ohm terminators in parallel). Readings outside 55-65 ohm indicate a termination fault, which is the most common cause of persistent CAN errors.",
+    "reference": "shared/can_bus_primer.md#common-faults"
+  },
+  {
+    "id": "L2-018",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "An oscilloscope measurement of CAN-H shows 2.5V during recessive state and 3.5V during dominant state. Is this correct?",
+    "options": [
+      "A. Yes — recessive is 2.5V and dominant is 3.5V on CAN-H",
+      "B. No — recessive should be 2.5V but dominant should be 3.75V minimum",
+      "C. No — both states should be 2.5V; CAN-H is a fixed reference voltage",
+      "D. No — dominant on CAN-H should be closer to 4.5V in a healthy bus"
+    ],
+    "correct": "A",
+    "explanation": "CAN-H nominal voltages: recessive = 2.5V (same as CAN-L), dominant = 3.5V. CAN-L nominal: recessive = 2.5V, dominant = 1.5V. The differential voltage (CAN-H minus CAN-L) is 0V recessive and 2V dominant. Values within 10% of these are acceptable.",
+    "reference": "shared/can_bus_primer.md#physical-layer"
+  },
+  {
+    "id": "L2-019",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "A BLDC motor driver reports a Hall sensor fault. The motor was working correctly before a recent actuator R&R. What is the most likely cause?",
+    "options": [
+      "A. The motor has overheated and the Hall sensors have burned out",
+      "B. The Hall sensor connector is not fully seated after the repair",
+      "C. The firmware commutation table does not match the replacement motor",
+      "D. The motor is spinning in the wrong direction relative to the sensor polarity"
+    ],
+    "correct": "B",
+    "explanation": "A Hall sensor fault immediately after an R&R most likely indicates an unseated connector. Hall sensors are delicate connectors that require positive engagement. Check that the 3-wire Hall sensor connector (5V, GND, signal) is fully clicked into the motor driver header. This is the most common post-repair fault.",
+    "reference": "curriculum.md#actuator-rr-torque-sequence"
+  },
+  {
+    "id": "L2-020",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "What grease specification should be used when lubricating a harmonic drive flex spline?",
+    "options": [
+      "A. Lithium-complex NLGI 2 grease — standard for all industrial gear applications",
+      "B. SKF LGMT 3 or equivalent — high-temperature lithium grease",
+      "C. Harmonic Drive-approved specialty lubricant such as Harmonic Grease SK-1A or 4B",
+      "D. Dry PTFE lubricant — harmonic drives must not use wet lubricants"
+    ],
+    "correct": "C",
+    "explanation": "Harmonic drives require specialty lubricants formulated for the high-contact stress between the flex spline and circular spline tooth profiles. Harmonic Grease SK-1A (for standard applications) and 4B No.2 (for high-load) are OEM-specified. Standard lithium greases break down under the cyclic contact stress, leading to accelerated wear.",
+    "reference": "curriculum.md#harmonic-drives"
+  },
+  {
+    "id": "L2-021",
+    "level": "L2",
+    "domain": "sensors",
+    "question": "A LiDAR unit mounted on a Boston Dynamics Spot reports incorrect range readings for targets closer than 0.5m. What is this specification called?",
+    "options": [
+      "A. Minimum detection range — a hardware characteristic of the LiDAR optical path",
+      "B. Dead zone — caused by environmental interference below 0.5m",
+      "C. Saturation floor — the sensor is overloaded at close range",
+      "D. Blind spot — caused by motor encoder offset in the spinning mirror"
+    ],
+    "correct": "A",
+    "explanation": "The minimum detection range (also called blind zone or near-field limit) is a fixed hardware characteristic of LiDAR sensors. It arises from the optical geometry — the transmit and receive paths cannot resolve reflections from targets below a certain distance. For rotating LiDAR, this is typically 0.1-0.5m depending on the model. This is expected behavior, not a fault.",
+    "reference": "curriculum.md#lidar-sensors"
+  },
+  {
+    "id": "L2-022",
+    "level": "L2",
+    "domain": "sensors",
+    "question": "After replacing a depth camera on a robot, the /tf tree shows a static transform for the camera frame. What must be verified?",
+    "options": [
+      "A. The camera is powered and publishing on the /camera/image_raw topic",
+      "B. The physical mount offset matches the static transform values in the URDF/SRDF",
+      "C. The camera firmware version is compatible with the robot's ROS distribution",
+      "D. The camera driver node is listed in the active node list via ros2 node list"
+    ],
+    "correct": "B",
+    "explanation": "After a camera replacement, the physical mounting position must exactly match the static transform defined in the robot URDF or launch file. Even a 5mm translation or 1-degree rotation error in the camera_link transform will cause significant 3D perception errors at distances over 2m. Use the camera mount jig and verify with a known-distance calibration target.",
+    "reference": "curriculum.md#camera-cleaning"
+  },
+  {
+    "id": "L2-023",
+    "level": "L2",
+    "domain": "sensors",
+    "question": "Shannon entropy H = -sum(p(x) * log2(p(x))) is used in robotics signal processing to measure:",
+    "options": [
+      "A. Signal power in decibels relative to full scale",
+      "B. The amount of information or unpredictability in a signal",
+      "C. The frequency at which a signal must be sampled for accurate reconstruction",
+      "D. The ratio of signal amplitude to noise floor"
+    ],
+    "correct": "B",
+    "explanation": "Shannon entropy quantifies the information content of a signal. In robotics diagnostics, it measures sensor signal unpredictability — a constant signal has H=0 (no information), while a truly random signal has maximum entropy. Anomaly detection algorithms compare current entropy against baseline to detect sensor degradation or abnormal behavior.",
+    "reference": "shared/signal_theory.md"
+  },
+  {
+    "id": "L2-024",
+    "level": "L2",
+    "domain": "software",
+    "question": "A technician needs to verify firmware integrity on a Unitree G1 without performing a full reflash. Which command provides the installed firmware checksum?",
+    "options": [
+      "A. ros2 param get /main_controller firmware_version",
+      "B. ssh unitree@robot.local 'cat /etc/firmware_version && sha256sum /usr/lib/robot_fw.bin'",
+      "C. ros2 service call /firmware_check std_srvs/srv/Trigger",
+      "D. candump can0 | grep 0x7FF — the last 8 bytes of the NMT broadcast contain the firmware hash"
+    ],
+    "correct": "B",
+    "explanation": "Firmware integrity verification requires accessing the filesystem directly. SSH to the robot and use sha256sum on the firmware binary, then compare against the OEM-published checksum for the installed version. The /etc/firmware_version file contains the version string. ROS 2 parameters only expose the version string, not the binary hash.",
+    "reference": "curriculum.md#firmware-update-procedure"
+  },
+  {
+    "id": "L2-025",
+    "level": "L2",
+    "domain": "software",
+    "question": "ros2 bag record -a is used to capture all topics. What is the primary risk of this approach in production diagnostics?",
+    "options": [
+      "A. Compressed topics cannot be recorded and will cause bag corruption",
+      "B. High-bandwidth topics like /camera/image_raw will rapidly fill storage and may impact real-time performance",
+      "C. Recording all topics will cause ROS 2 to enter a deadlock state on DDS networks",
+      "D. No risk — ros2 bag record is designed to record all topics without performance impact"
+    ],
+    "correct": "B",
+    "explanation": "Recording all topics with -a includes high-bandwidth image and point cloud streams. A stereo camera at 30fps 1280x720 RGB generates ~150MB/s. This can fill a 256GB SSD in under 30 minutes and add CPU overhead for serialization. In production diagnostics, specify only the required topics using -e for a regex filter.",
+    "reference": "curriculum.md#ros-2-node-health"
+  },
+  {
+    "id": "L2-026",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "The Nyquist sampling theorem states that to accurately reconstruct a signal containing a 400Hz component, the minimum sampling rate must be:",
+    "options": [
+      "A. 400 Hz — same as the signal frequency",
+      "B. 600 Hz — 1.5x the signal frequency for margin",
+      "C. 800 Hz — at least twice the highest frequency component",
+      "D. 1600 Hz — four times the frequency is recommended practice"
+    ],
+    "correct": "C",
+    "explanation": "The Nyquist-Shannon sampling theorem states the sampling rate must be at least twice the highest frequency component (2 x 400Hz = 800Hz minimum). Sampling below this rate causes aliasing, where high-frequency components appear as lower-frequency artifacts that corrupt the measurement.",
+    "reference": "shared/signal_theory.md#nyquist"
+  },
+  {
+    "id": "L2-027",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "During a torque ripple measurement on a BLDC motor, FFT analysis shows peaks at the 6th and 12th harmonic of the electrical frequency. What causes these peaks?",
+    "options": [
+      "A. Imbalance in the rotor assembly",
+      "B. Cogging torque from the stator tooth and magnet interaction in a 3-phase motor",
+      "C. Bearing defects at the ball pass frequency",
+      "D. Encoder quantization error at the commutation switching points"
+    ],
+    "correct": "B",
+    "explanation": "Cogging torque in a 3-phase BLDC motor creates periodic torque variations at multiples of 6 times the electrical frequency (6, 12, 18th harmonics). This arises from the attraction between rotor magnets and stator teeth during commutation. Peaks above the motor baseline specification indicate worn magnets or increased air gap from bearing wear.",
+    "reference": "curriculum.md#bearing-defect-frequency-formula"
+  },
+  {
+    "id": "L2-028",
+    "level": "L2",
+    "domain": "sensors",
+    "question": "An IMU gyroscope axis bias of 0.08 rad/s is measured at rest. Over a 10-second integration window, how much heading error accumulates?",
+    "options": [
+      "A. 0.008 radians (0.46 degrees)",
+      "B. 0.08 radians (4.6 degrees)",
+      "C. 0.8 radians (45.8 degrees)",
+      "D. 8.0 radians (458 degrees) — bias accumulates nonlinearly"
+    ],
+    "correct": "C",
+    "explanation": "Gyroscope bias error integrates linearly over time. 0.08 rad/s × 10 seconds = 0.8 radians = 45.8 degrees. This is a critical concept in IMU dead reckoning: even a small bias becomes catastrophic over extended integration windows. Specification for humanoid robot IMUs is typically < 0.01 rad/s bias.",
+    "reference": "curriculum.md#imu"
+  },
+  {
+    "id": "L2-029",
+    "level": "L2",
+    "domain": "repair",
+    "question": "A DJI Agras T50 nozzle flow rate is 20% below specification after a repair. What is the most likely cause?",
+    "options": [
+      "A. The spray pump motor is degraded and requires replacement",
+      "B. A nozzle orifice is partially blocked with residual spray material",
+      "C. The battery voltage is low, reducing pump motor RPM",
+      "D. The flow sensor is miscalibrated and reading high, making actual flow appear low"
+    ],
+    "correct": "B",
+    "explanation": "Partial nozzle blockage from residual agrichemical crystallization is the most common cause of reduced flow rate after a repair. The nozzle orifice is precision-drilled to 0.5-1.2mm depending on application rate. Even a 0.1mm crystal deposit can reduce flow by 15-25%. Remove and ultrasonically clean all nozzles, then retest flow rate.",
+    "reference": "platforms/dji_agras_t50/common_failures.md"
+  },
+  {
+    "id": "L2-030",
+    "level": "L2",
+    "domain": "repair",
+    "question": "What is the correct torque specification for M6 stainless fasteners used in Unitree G1 actuator mounting brackets?",
+    "options": [
+      "A. 5-7 Nm — standard M6 torque for aluminum",
+      "B. 8-10 Nm — stainless-to-aluminum with thread-locking compound",
+      "C. 12-14 Nm — required for structural actuator mounts",
+      "D. Always check the OEM service manual — torque specifications vary by joint and bracket material"
+    ],
+    "correct": "D",
+    "explanation": "Fastener torque specifications must come from the OEM service manual for each specific application. Factors including bracket material (aluminum alloy grade, thickness), fastener grade, thread engagement depth, and vibration environment all affect the correct torque. Using a generic M6 torque without reference to the manual risks under-torquing (fastener backs out) or over-torquing (stripped threads in aluminum).",
+    "reference": "curriculum.md#actuator-rr-torque-sequence"
+  },
+  {
+    "id": "L2-031",
+    "level": "L2",
+    "domain": "diagnostics",
+    "question": "A Butterworth low-pass filter is chosen over a simple moving average for robot joint velocity estimation. What is the key advantage?",
+    "options": [
+      "A. Butterworth filters are computationally simpler to implement in real-time",
+      "B. Butterworth filters provide a maximally flat passband response with steeper rolloff than a moving average",
+      "C. Moving averages introduce causality violations that Butterworth filters avoid",
+      "D. Butterworth filters can be applied in post-processing but not in real-time"
+    ],
+    "correct": "B",
+    "explanation": "A Butterworth filter is designed for maximally flat frequency response in the passband — no ripple — with a steeper rolloff slope than a simple moving average. This preserves the true joint velocity signal while more aggressively attenuating high-frequency encoder noise. Moving averages have poor selectivity and introduce phase delay proportional to their window length.",
+    "reference": "shared/signal_theory.md#butterworth-filtering"
+  },
+  {
+    "id": "L2-032",
+    "level": "L2",
+    "domain": "actuators",
+    "question": "What does a 'position error exceeded' fault on a joint motor driver indicate, and what is the immediate recovery procedure?",
+    "options": [
+      "A. The motor has exceeded its temperature rating; cool for 10 minutes before restarting",
+      "B. The commanded position cannot be reached within the allocated time; increase the motion timeout",
+      "C. The actual joint position has deviated from the commanded position beyond the error threshold; power cycle the actuator after confirming no mechanical obstruction",
+      "D. A firmware bug in the motor driver; flash the latest firmware version to resolve"
+    ],
+    "correct": "C",
+    "explanation": "Position error exceeded indicates the servo loop could not maintain position within the allowable deviation band. Before power cycling, physically verify the joint is not obstructed, jammed, or in contact with a limit stop. After confirming free movement, power cycle the actuator in the following sequence: disable torque, wait 2 seconds, re-enable torque, home the joint.",
+    "reference": "curriculum.md#joint-telemetry"
+  },
+  {
+    "id": "L2-033",
+    "level": "L2",
+    "domain": "sensors",
+    "question": "When performing LiDAR boresight calibration, the technician measures a 2.3-degree pitch offset from the reference plane. What action is required?",
+    "options": [
+      "A. Adjust the physical mount shims to reduce pitch offset to within 0.5 degrees",
+      "B. Update the static transform for the lidar_link frame with the measured offset",
+      "C. Both: correct the physical mount and update the transform if residual error remains",
+      "D. No action — 2.3 degrees is within the typical boresight tolerance for field robots"
+    ],
+    "correct": "C",
+    "explanation": "2.3 degrees is above the acceptable 0.5-degree boresight tolerance. The correct procedure is to first adjust the physical mount (add/remove shims, adjust bracket fasteners) to reduce mechanical offset to under 0.5 degrees, then update the static transform for any remaining residual offset. Correcting only in software without fixing the physical mount creates a fragile calibration that will drift.",
+    "reference": "curriculum.md#lidar-sensors"
+  },
+  {
+    "id": "L2-034",
+    "level": "L2",
+    "domain": "software",
+    "question": "After a Unitree G1 firmware update from v1.3.2 to v1.4.0, the robot fails to complete its startup sequence and reverts to the previous LED state. What is the most likely cause?",
+    "options": [
+      "A. The update package was corrupted during download — re-download and retry",
+      "B. The v1.4.0 firmware requires a configuration migration that was not performed",
+      "C. The battery SoC dropped below 20% during the update, triggering a watchdog rollback",
+      "D. Either A, B, or C — all are valid causes; check the update log at /var/log/firmware_update.log"
+    ],
+    "correct": "D",
+    "explanation": "A failed firmware update with reversion to previous state can be caused by several factors: corrupted package, missing configuration migration (new parameters not present in old config), or power loss triggering watchdog rollback. The definitive diagnostic is the firmware update log, which records the exact failure point. Always check logs before attempting a second update.",
+    "reference": "curriculum.md#firmware-update-procedure"
+  },
+  {
+    "id": "L2-035",
+    "level": "L2",
+    "domain": "repair",
+    "question": "A Boston Dynamics Spot is returned from a deployment with a broken payload rail mounting post. The field tech needs to document and order the replacement part. What information is required on the parts request?",
+    "options": [
+      "A. Robot serial number, part description, and estimated cost",
+      "B. Robot serial number, OEM part number from the service manual, quantity, and urgency classification",
+      "C. Work order number, part description, and the technician's certification level",
+      "D. Robot model, part description, and the date of damage"
+    ],
+    "correct": "B",
+    "explanation": "A complete parts request requires: robot serial number (confirms parts compatibility for that specific build), OEM part number from the service manual (prevents ordering incorrect variants), quantity, and urgency classification (determines whether standard or expedited shipping applies). Part descriptions alone are insufficient — similar descriptions can refer to different parts across robot generations.",
+    "reference": "curriculum.md#parts-request-format"
+  }
+]

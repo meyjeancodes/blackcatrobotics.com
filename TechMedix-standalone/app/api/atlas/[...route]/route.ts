@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import fs from "fs";
 
 export const runtime = "nodejs";
 
 // Proxy Atlas API requests from the frontend.
+// Falls back to local .atlas/ JSON files when the upstream API is unreachable.
 // API key stays server-side. Supported paths:
 //   GET /api/atlas/companies
 //   GET /api/atlas/companies/:id
@@ -22,6 +25,36 @@ const ALLOWED_PREFIXES = [
   "query",
 ];
 
+// Map of path prefix to local .atlas/ file
+const LOCAL_FILES: Record<string, string> = {
+  companies: path.join(process.cwd(), ".atlas", "companies.json"),
+  components: path.join(process.cwd(), ".atlas", "components.json"),
+  relationships: path.join(process.cwd(), ".atlas", "relationships.json"),
+};
+
+function serveLocalFallback(pathSegments: string[]): NextResponse | null {
+  const prefix = pathSegments[0];
+  const filePath = LOCAL_FILES[prefix];
+  if (!filePath) return null;
+
+  try {
+    const raw = fs.readFileSync(filePath, "utf8");
+    const data = JSON.parse(raw);
+
+    // If requesting a specific company by ID
+    if (prefix === "companies" && pathSegments[1]) {
+      const id = pathSegments[1];
+      const found = Array.isArray(data) ? data.find((c: { id: string }) => c.id === id) : null;
+      if (!found) return NextResponse.json({ error: "Not found" }, { status: 404 });
+      return NextResponse.json(found);
+    }
+
+    return NextResponse.json(data);
+  } catch {
+    return null;
+  }
+}
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ route: string[] }> }
@@ -36,18 +69,33 @@ export async function GET(
   const upstreamPath = "/" + pathSegments.join("/");
   const search = req.nextUrl.search; // preserve query string (e.g. ?q=...)
 
-  try {
-    const res = await fetch(`${BASE_URL}${upstreamPath}${search}`, {
-      headers: {
-        Authorization: `Bearer ${API_KEY}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await res.json();
-    return NextResponse.json(data, { status: res.status });
-  } catch (err) {
-    console.error("Atlas proxy error:", err);
-    return NextResponse.json({ error: "Atlas API unavailable" }, { status: 502 });
+  // Try upstream API first
+  if (API_KEY) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+      try {
+        const res = await fetch(`${BASE_URL}${upstreamPath}${search}`, {
+          headers: {
+            Authorization: `Bearer ${API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+        const data = await res.json();
+        return NextResponse.json(data, { status: res.status });
+      } finally {
+        clearTimeout(timeout);
+      }
+    } catch (err) {
+      console.warn("[Atlas proxy] Upstream unavailable, falling back to local:", err instanceof Error ? err.message : err);
+    }
   }
+
+  // Local file fallback
+  const local = serveLocalFallback(pathSegments);
+  if (local) return local;
+
+  return NextResponse.json({ error: "Atlas API unavailable" }, { status: 502 });
 }

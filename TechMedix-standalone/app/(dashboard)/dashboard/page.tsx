@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertTriangle, BatteryCharging, BriefcaseBusiness, Cpu, ShieldCheck } from "lucide-react";
+import { AlertTriangle, BatteryCharging, BriefcaseBusiness, Cpu, ShieldCheck, Wind, Award } from "lucide-react";
 import { MetricCard } from "../../../components/metric-card";
 import { FleetHealthCard } from "../../../components/fleet-health-card";
 import { RobotTable } from "../../../components/robot-table";
@@ -233,6 +233,81 @@ export default async function DashboardPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Drone Fleet + Certification Progress widgets */}
+      <section className="grid gap-6 xl:grid-cols-[1fr_1fr]">
+        {/* Drone Fleet Card */}
+        <div className="panel px-6 py-5">
+          <div className="flex items-center gap-2.5 mb-4">
+            <div className="rounded-xl bg-[#e8601e]/[0.10] p-2 text-[#e8601e]">
+              <Wind size={16} />
+            </div>
+            <p className="kicker">Drone Fleet</p>
+          </div>
+          <h3 className="font-header text-xl leading-tight text-black mb-2">DJI Fleet Management</h3>
+          <p className="text-sm leading-relaxed text-black/52 mb-4">
+            AI-powered drone diagnostics, DJI Care Refresh coverage tracking, and claim management for your entire fleet.
+          </p>
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            {[
+              { label: "AI Diagnostics", detail: "Motor, battery, gimbal, signal health" },
+              { label: "Care Refresh", detail: "Coverage status and claim filing" },
+              { label: "Flight Logs", detail: "DJI CSV import and parsing" },
+              { label: "Fleet Analytics", detail: "Health trends and coverage maps" },
+            ].map((item) => (
+              <div key={item.label} className="rounded-[18px] border border-black/[0.05] bg-black/[0.018] p-3">
+                <div className="flex items-start gap-1.5 mb-1">
+                  <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#e8601e]" />
+                  <p className="text-xs font-semibold text-black/70">{item.label}</p>
+                </div>
+                <p className="text-[0.65rem] text-black/40 leading-snug pl-3">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+          <Link
+            href="/drones"
+            className="inline-flex items-center gap-2 rounded-full bg-[#e8601e] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#d4521a] transition-colors"
+          >
+            Open Drone Fleet
+          </Link>
+        </div>
+
+        {/* Certification Progress Card */}
+        <div className="panel px-6 py-5">
+          <div className="flex items-center gap-2.5 mb-4">
+            <div className="rounded-xl bg-[#1db87a]/[0.10] p-2 text-[#1db87a]">
+              <Award size={16} />
+            </div>
+            <p className="kicker">Certifications</p>
+          </div>
+          <h3 className="font-header text-xl leading-tight text-black mb-2">BlackCat OS Certifications</h3>
+          <p className="text-sm leading-relaxed text-black/52 mb-4">
+            Five certification levels from Operator to Autonomous Systems Architect. Study free. Get certified through TechMedix. Earn on every dispatch.
+          </p>
+          <div className="space-y-2 mb-4">
+            {[
+              { level: "L1", title: "Operator", salary: "$280–350/job", color: "bg-blue-500" },
+              { level: "L2", title: "Technician", salary: "$450–550/job", color: "bg-sky-500" },
+              { level: "L3", title: "Specialist", salary: "$650–800/job", color: "bg-amber-500" },
+              { level: "L4", title: "Systems Eng.", salary: "$1,000–1,500/job", color: "bg-orange-500" },
+              { level: "L5", title: "Architect", salary: "$2,500+/job", color: "bg-[#e8601e]" },
+            ].map((l) => (
+              <div key={l.level} className="flex items-center gap-3">
+                <div className={`h-2 w-2 rounded-full ${l.color} shrink-0`} />
+                <span className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-black/50 w-6">{l.level}</span>
+                <span className="text-xs text-black/65 flex-1">{l.title}</span>
+                <span className="font-ui text-[0.58rem] text-black/35">{l.salary}</span>
+              </div>
+            ))}
+          </div>
+          <Link
+            href="/certifications"
+            className="inline-flex items-center gap-2 rounded-full border border-black/10 px-5 py-2.5 text-sm font-medium text-black/65 hover:border-[#1db87a] hover:text-[#1db87a] transition-colors"
+          >
+            View Certification Path
+          </Link>
         </div>
       </section>
 

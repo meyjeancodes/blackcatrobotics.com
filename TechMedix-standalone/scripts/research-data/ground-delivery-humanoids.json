@@ -1,0 +1,1574 @@
+{
+  "agent_run_id": "manual-seed-batch1-20260404",
+  "platforms": [
+    {
+      "slug": "serve-rs2",
+      "name": "Serve Robotics RS2",
+      "manufacturer": "Serve Robotics",
+      "type": "delivery_ground",
+      "introduced_year": 2023,
+      "specs_json": {
+        "weight_kg": 22,
+        "payload_kg": 15,
+        "max_speed_kmh": 10,
+        "battery_wh": 1500,
+        "range_km": 40,
+        "drive": "4-wheel differential",
+        "ip_rating": "IP65",
+        "cameras": 6,
+        "lidar": true
+      },
+      "notes": "Sidewalk delivery robot operating in Los Angeles and other US cities. Partnerships with Uber Eats and 7-Eleven.",
+      "failure_modes": [
+        {
+          "component": "drive wheel hub motor bearing",
+          "symptom": "audible grinding from drivetrain, vibration spike at low speed, increased motor current draw by 15-25% above baseline",
+          "root_cause": "bearing race spalling from water ingress via inadequate IP sealing after repeated curb impact events; grit contamination accelerates race wear",
+          "severity": "high",
+          "mtbf_hours": 800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["drivetrain", "bearing", "mechanical", "water-ingress", "curb-impact"],
+          "repair_protocol": {
+            "title": "Drive Hub Motor Bearing Replacement",
+            "steps": [
+              { "step": 1, "action": "Power down robot via fleet management console; engage software lockout; verify zero-energy state on dash LED", "tool": null, "warning": "Capacitor discharge — wait 2 minutes after power-off before touching drive electronics" },
+              { "step": 2, "action": "Remove 6x M5 wheel mounting bolts; extract full wheel/hub assembly from chassis dropouts", "tool": "4mm hex key, wheel puller", "warning": null },
+              { "step": 3, "action": "Remove hub motor end cap retaining snap ring; carefully extract rotor from stator housing; label motor phase wires", "tool": "snap ring pliers, heat gun at 60°C to soften thread-lock", "warning": "Do not stress motor phase wires — they are short-bonded to stator windings" },
+              { "step": 4, "action": "Press out degraded bearing from rotor carrier using bearing press; inspect stator for corrosion deposits or winding discoloration", "tool": "hydraulic bearing press, inspection light, magnifying glass", "warning": null },
+              { "step": 5, "action": "Clean bore with isopropyl alcohol; apply 2-3 drops Loctite 648 retaining compound; press new NTN 6203-2RS sealed bearing to full seat depth", "tool": "bearing press, Loctite 648", "warning": "Do not spin bearing until adhesive cures 30 minutes at 22°C" },
+              { "step": 6, "action": "Inspect and replace IP65 end cap gasket; apply thin bead of Dow Corning 732 RTV to mating face; reassemble rotor; torque end cap bolts to 12 Nm", "tool": "torque wrench 0-25 Nm, Dow Corning 732 RTV sealant", "warning": null },
+              { "step": 7, "action": "Reinstall wheel assembly; hand-tighten then torque M5 bolts to 8 Nm in star pattern", "tool": "torque wrench", "warning": null },
+              { "step": 8, "action": "Remove software lockout; run 10-minute drive cycle on flat surface; verify current draw <±10% of factory baseline; confirm vibration RMS <0.4g on IMU", "tool": "fleet management console, multimeter", "warning": null }
+            ],
+            "tools_required": ["4mm hex key", "snap ring pliers", "hydraulic bearing press", "heat gun", "torque wrench 0-25 Nm", "multimeter", "isopropyl alcohol"],
+            "parts": [
+              { "part_name": "NTN 6203-2RS Sealed Deep-Groove Bearing", "part_number": "6203LLBC3/2AS", "supplier": "NTN Bearing Corporation of America", "unit_cost_usd": 9, "qty": 2 },
+              { "part_name": "Dow Corning 732 RTV Multi-Purpose Sealant 90g", "part_number": "DC-732-90G", "supplier": "Dow Corning / Dupont", "unit_cost_usd": 18, "qty": 1 },
+              { "part_name": "Loctite 648 Retaining Compound 50ml", "part_number": "1835100", "supplier": "Henkel / Loctite", "unit_cost_usd": 24, "qty": 1 },
+              { "part_name": "Hub Motor End Cap IP65 Gasket Kit", "part_number": "SRV-RS2-GASKET-001", "supplier": "Serve Robotics Service Parts", "unit_cost_usd": 12, "qty": 1 }
+            ],
+            "labor_minutes": 65,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_current_draw_pct_baseline", "signal_source": "motor controller CAN bus", "threshold_value": 115, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 24, "confidence": 0.72 },
+            { "signal_name": "drivetrain_vibration_rms", "signal_source": "onboard IMU", "threshold_value": 0.8, "threshold_operator": ">", "threshold_unit": "g", "lead_time_hours": 8, "confidence": 0.80 },
+            { "signal_name": "wheel_motor_temperature_delta", "signal_source": "NTC thermistor on motor controller", "threshold_value": 15, "threshold_operator": ">", "threshold_unit": "celsius_delta_from_ambient", "lead_time_hours": 12, "confidence": 0.65 }
+          ]
+        },
+        {
+          "component": "360° lidar sensor (Velodyne/Ouster derivative)",
+          "symptom": "point cloud density drops >30%, phantom obstacle detections in clear path, robot stops unexpectedly or navigates erratically",
+          "root_cause": "lens window contamination from road grime, rain, and exhaust particulates; secondary failure mode is bearing wear in rotating scanner head after continuous 24/7 operation",
+          "severity": "high",
+          "mtbf_hours": 5000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["sensor", "lidar", "navigation", "contamination", "perception"],
+          "repair_protocol": {
+            "title": "Lidar Lens Cleaning and Scanner Health Check",
+            "steps": [
+              { "step": 1, "action": "Park robot in safe off-street location; engage lockout via fleet console", "tool": null, "warning": null },
+              { "step": 2, "action": "Remove lidar protective dome (4x M3 captive screws, quarter-turn); expose lens window", "tool": "Torx T10 driver", "warning": "Do not touch lens glass — handle dome by edge only" },
+              { "step": 3, "action": "Apply 2 sprays of Optically Clear Lens Cleaning Solution to lint-free microfibre cloth; wipe lens in single radial strokes from center outward; repeat until surface is haze-free", "tool": "microfibre cloth, Zeiss Lens Care spray", "warning": "Never use paper towels or circular wiping — scratches anti-reflection coating" },
+              { "step": 4, "action": "Inspect rotating head: spin by hand with power off; confirm smooth rotation, no grinding or notchiness; check motor flex cable for fraying", "tool": "inspection light", "warning": null },
+              { "step": 5, "action": "Reinstall dome; power on; run diagnostic scan tool to measure point cloud return rate — must be >92% of factory baseline", "tool": "fleet diagnostic console", "warning": null },
+              { "step": 6, "action": "If point cloud recovery <92% after cleaning, replace full lidar module per manufacturer RMA procedure", "tool": null, "warning": "Full module replacement requires re-calibration of sensor-to-chassis transform — do not skip calibration step" }
+            ],
+            "tools_required": ["Torx T10 driver", "microfibre cloths", "Zeiss Lens Care spray", "fleet diagnostic console"],
+            "parts": [
+              { "part_name": "Zeiss Lens Care Plus Spray 240ml", "part_number": "000000-2096-075", "supplier": "Carl Zeiss Vision", "unit_cost_usd": 14, "qty": 1 },
+              { "part_name": "Lidar Protective Dome Replacement", "part_number": "SRV-RS2-LIDAR-DOME", "supplier": "Serve Robotics Service Parts", "unit_cost_usd": 45, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "lidar_return_rate_pct", "signal_source": "navigation stack / lidar driver", "threshold_value": 88, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.85 },
+            { "signal_name": "obstacle_false_positive_rate_per_km", "signal_source": "navigation software log", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "count_per_km", "lead_time_hours": 12, "confidence": 0.74 }
+          ]
+        },
+        {
+          "component": "main traction battery (Li-ion pack)",
+          "symptom": "reduced range >20% below spec, battery thermal event warning, cells failing to balance above 90% SOC",
+          "root_cause": "cell imbalance from repeated partial-charge cycles and thermal cycling in ambient temperatures <5°C or >40°C; accelerated by vibration-induced micro-shorts in 18650/21700 cell holders",
+          "severity": "high",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["battery", "BMS", "thermal", "range", "cell-imbalance"],
+          "repair_protocol": {
+            "title": "Battery Pack Cell Balance Inspection and BMS Reset",
+            "steps": [
+              { "step": 1, "action": "Park robot; connect to fleet console; pull BMS telemetry report — identify cells with voltage delta >50mV from pack median", "tool": "fleet console / BMS diagnostic port", "warning": null },
+              { "step": 2, "action": "Perform forced balance charge: set BMS to slow-charge mode (0.2C); allow 8-hour passive balancing cycle", "tool": "fleet console BMS balance command", "warning": null },
+              { "step": 3, "action": "If delta persists >80mV post-balance, remove battery pack (4x M6 bolts, 2 Anderson connector locks)", "tool": "5mm hex key, Anderson connector tool", "warning": "Wear insulated gloves; pack voltage is 48V nominal — arc flash risk" },
+              { "step": 4, "action": "Transfer pack to bench; connect to Texas Instruments BQ78350 BMS evaluation board; run full cell individual voltage sweep; flag cells <3.0V or >4.22V", "tool": "TI BQ78350 evaluation kit, DMM with cell-probe adapter", "warning": null },
+              { "step": 5, "action": "Replace degraded cell modules (hot-swap modules if pack design permits); update BMS firmware to latest release via SPI flash tool", "tool": "SPI flash programmer, soldering station", "warning": "Cell replacement in Li-ion packs is advanced — refer to certified battery technician if >3 cells flagged" },
+              { "step": 6, "action": "Reinstall pack; run 3-cycle capacity test (full charge/discharge); confirm capacity >85% of nameplate; log result in fleet system", "tool": "fleet console", "warning": null }
+            ],
+            "tools_required": ["fleet console", "5mm hex key", "Anderson connector tool", "insulated gloves", "DMM", "TI BQ78350 evaluation kit"],
+            "parts": [
+              { "part_name": "Texas Instruments BQ78350 BMS Replacement IC", "part_number": "BQ78350DRBT", "supplier": "Texas Instruments / Mouser Electronics", "unit_cost_usd": 8, "qty": 1 },
+              { "part_name": "21700 Li-ion Cell 5000mAh (replacement)", "part_number": "INR21700-50E", "supplier": "Samsung SDI / Liion Wholesale", "unit_cost_usd": 7, "qty": 4 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "bms_cell_voltage_delta_mv", "signal_source": "BMS CAN telemetry", "threshold_value": 80, "threshold_operator": ">", "threshold_unit": "millivolts", "lead_time_hours": 72, "confidence": 0.82 },
+            { "signal_name": "pack_capacity_pct_nameplate", "signal_source": "BMS state-of-health register", "threshold_value": 80, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 168, "confidence": 0.88 },
+            { "signal_name": "battery_temperature_max_celsius", "signal_source": "BMS NTC array", "threshold_value": 45, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 2, "confidence": 0.91 }
+          ]
+        },
+        {
+          "component": "camera array (front/side/rear 1080p cameras)",
+          "symptom": "lens condensation causing blurred perception output, camera frames reported as 'low confidence' by vision stack, increased pedestrian detection latency",
+          "root_cause": "thermal differential between cold ambient and warm robot body causes moisture condensation on exterior lens surfaces; hydrophobic coating degradation after 6-12 months outdoor exposure",
+          "severity": "medium",
+          "mtbf_hours": 4000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["sensor", "camera", "vision", "condensation", "perception", "weather"],
+          "repair_protocol": {
+            "title": "Camera Lens Defogging and Hydrophobic Recoat",
+            "steps": [
+              { "step": 1, "action": "Identify affected cameras from fleet diagnostic image quality scores; flag cameras with mean SSIM <0.75 versus clear reference", "tool": "fleet console image quality dashboard", "warning": null },
+              { "step": 2, "action": "Power down affected camera module; remove housing cover (3x M2.5 screws)", "tool": "JIS #0 screwdriver", "warning": "Fragile ribbon cable at camera module — do not stress" },
+              { "step": 3, "action": "Apply Rain-X Original Glass Treatment to exterior lens surface with cotton applicator; buff to clear with microfibre cloth; allow 5 minutes cure", "tool": "Rain-X Original, cotton applicator, microfibre cloth", "warning": "Keep Rain-X away from rubber gaskets — causes swelling" },
+              { "step": 4, "action": "Inspect IP gasket around lens housing; replace if any cracking or compression set visible; apply thin bead of Dow Corning 732 to seal", "tool": "Dow Corning 732, gasket pick tool", "warning": null },
+              { "step": 5, "action": "Reassemble housing; power on; run image quality check — confirm SSIM >0.9 and vision stack confidence >0.85", "tool": "fleet diagnostic console", "warning": null }
+            ],
+            "tools_required": ["JIS #0 screwdriver", "microfibre cloths", "Rain-X Original", "Dow Corning 732"],
+            "parts": [
+              { "part_name": "Rain-X Original Glass Water Repellent 103ml", "part_number": "800001771", "supplier": "Rain-X / ITW Global Brands", "unit_cost_usd": 8, "qty": 1 },
+              { "part_name": "Camera Module IP Gasket Set", "part_number": "SRV-RS2-CAM-GSKT", "supplier": "Serve Robotics Service Parts", "unit_cost_usd": 15, "qty": 1 }
+            ],
+            "labor_minutes": 25,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "camera_image_quality_ssim", "signal_source": "vision processing node", "threshold_value": 0.75, "threshold_operator": "<", "threshold_unit": "ssim_score", "lead_time_hours": 4, "confidence": 0.78 },
+            { "signal_name": "ambient_humidity_pct", "signal_source": "environmental sensor", "threshold_value": 85, "threshold_operator": ">", "threshold_unit": "percent_rh", "lead_time_hours": 1, "confidence": 0.60 }
+          ]
+        },
+        {
+          "component": "LTE/5G cellular modem (IoT connectivity module)",
+          "symptom": "robot stops mid-delivery and enters safe-stop mode, fleet console shows 'connection lost', delayed return-to-home behavior",
+          "root_cause": "cellular modem firmware crash triggered by malformed network registration packets from carrier edge nodes; secondary cause is antenna connector corrosion from humidity ingress loosening SMA connector impedance match",
+          "severity": "medium",
+          "mtbf_hours": 3500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["connectivity", "IoT", "cellular", "firmware", "antenna"],
+          "repair_protocol": {
+            "title": "Cellular Modem Firmware Update and Antenna Inspection",
+            "steps": [
+              { "step": 1, "action": "Connect to robot via local WiFi or physical Ethernet port (maintenance port under belly panel)", "tool": "Ethernet cable, laptop", "warning": null },
+              { "step": 2, "action": "SSH into robot OS; check modem status: `mmcli -m 0 --status`; confirm if modem shows 'failed' or 'searching' state", "tool": "SSH terminal", "warning": null },
+              { "step": 3, "action": "Attempt modem soft reset: `mmcli -m 0 --reset`; wait 60 seconds; re-check status", "tool": "SSH terminal", "warning": null },
+              { "step": 4, "action": "If persistent, flash latest modem firmware via fleet OTA command or USB tether: `fwupd upgrade --modem`", "tool": "SSH terminal or USB tether", "warning": "Do not interrupt power during firmware flash — will brick modem" },
+              { "step": 5, "action": "Inspect SMA antenna connectors (2x on modem module): check torque at 0.5 Nm; clean contacts with DeoxIT D5; re-seat connectors", "tool": "SMA torque wrench 0.5Nm, DeoxIT D5 spray", "warning": null },
+              { "step": 6, "action": "Run 30-minute connectivity soak test via fleet console; confirm 0 disconnections and latency <200ms", "tool": "fleet console", "warning": null }
+            ],
+            "tools_required": ["Ethernet cable", "laptop with SSH", "SMA torque wrench 0.5Nm", "DeoxIT D5"],
+            "parts": [
+              { "part_name": "DeoxIT D5 Contact Cleaner 5% 142g", "part_number": "D5S-6", "supplier": "Caig Laboratories", "unit_cost_usd": 16, "qty": 1 },
+              { "part_name": "SMA Female Connector IP67 Panel Mount (replacement)", "part_number": "5-1814832-1", "supplier": "TE Connectivity / Mouser", "unit_cost_usd": 4, "qty": 2 }
+            ],
+            "labor_minutes": 35,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "cellular_rssi_dbm", "signal_source": "modem AT command interface", "threshold_value": -100, "threshold_operator": "<", "threshold_unit": "dBm", "lead_time_hours": 2, "confidence": 0.70 },
+            { "signal_name": "modem_reconnect_count_per_hour", "signal_source": "fleet telemetry daemon", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "count_per_hour", "lead_time_hours": 6, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "chassis frame / body panel (structural)",
+          "symptom": "visible cracking at wheel arch gussets, frame flex under payload, audible creak over bumps",
+          "root_cause": "repeated curb drop impacts (5-15mm height) exceeding design fatigue load at chassis tube weld joints; aluminum alloy 6061-T6 weld heat-affected zone embrittlement",
+          "severity": "high",
+          "mtbf_hours": 1200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["structural", "chassis", "fatigue", "curb-impact", "frame"],
+          "repair_protocol": {
+            "title": "Chassis Crack Inspection and Gusset Plate Reinforcement",
+            "steps": [
+              { "step": 1, "action": "Remove all body panels; perform full visual inspection of chassis tube welds with 10x magnification loupe; mark any cracks with paint pen", "tool": "10x magnification loupe, paint pen, inspection light", "warning": null },
+              { "step": 2, "action": "Photograph all crack locations for engineering review before any repair; submit to fleet engineering Slack channel", "tool": "camera or phone", "warning": "Do not operate robot with confirmed chassis crack — retire from service immediately" },
+              { "step": 3, "action": "If crack is <10mm at non-load-bearing panel: clean area with acetone; apply JB Weld Aluminum Epoxy across crack; clamp and cure 24h", "tool": "acetone, JB Weld Aluminum Epoxy, clamps", "warning": "JB Weld structural repair is field-expedient only — engineering sign-off required before return to service" },
+              { "step": 4, "action": "For weld joint cracks: robot must be returned to depot; certified welder performs TIG re-weld and 2mm aluminum gusset plate bonding with Scotch-Weld 2216", "tool": "TIG welder, 3M Scotch-Weld 2216 B/A", "warning": "Field welding of 6061-T6 is not recommended without post-weld heat treatment — depot repair only" },
+              { "step": 5, "action": "Post-repair load test: apply full 15kg payload; drive over standard curb-drop test (80mm) 10 times; re-inspect all welds", "tool": "15kg test payload, standard curb fixture", "warning": null }
+            ],
+            "tools_required": ["10x magnifying loupe", "paint pen", "camera", "acetone", "JB Weld Aluminum Epoxy", "clamps"],
+            "parts": [
+              { "part_name": "JB Weld 8267 Aluminum Epoxy 28g", "part_number": "8267", "supplier": "JB Weld / Ace Hardware", "unit_cost_usd": 9, "qty": 1 },
+              { "part_name": "3M Scotch-Weld 2216 B/A Epoxy 200ml", "part_number": "62-3280-0076-8", "supplier": "3M Industrial", "unit_cost_usd": 55, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "chassis_vibration_asymmetry_ratio", "signal_source": "IMU left vs right accelerometer delta", "threshold_value": 1.3, "threshold_operator": ">", "threshold_unit": "ratio", "lead_time_hours": 48, "confidence": 0.55 },
+            { "signal_name": "cumulative_curb_drop_events", "signal_source": "IMU shock event counter in fleet log", "threshold_value": 500, "threshold_operator": ">", "threshold_unit": "count", "lead_time_hours": 240, "confidence": 0.62 }
+          ]
+        },
+        {
+          "component": "motor controller (BLDC FOC controller)",
+          "symptom": "thermal throttling warning in fleet console, motor speed limited to 50% of commanded value, controller reboots mid-run",
+          "root_cause": "controller MOSFET junction overheating due to clogged thermal pad contact between MOSFET and heatsink, compounded by increased bearing drag increasing motor load; thermal runaway risk above 85°C junction temp",
+          "severity": "high",
+          "mtbf_hours": 3000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["motor-controller", "thermal", "BLDC", "MOSFET", "drivetrain"],
+          "repair_protocol": {
+            "title": "Motor Controller Thermal Interface Replacement",
+            "steps": [
+              { "step": 1, "action": "Power down robot; wait 5 minutes for controller thermal soak before opening enclosure", "tool": null, "warning": "Controller heatsink may be at 70°C+ immediately after shutdown — burn hazard" },
+              { "step": 2, "action": "Remove controller enclosure cover (6x M3 screws); photograph thermal pad condition and PCB state", "tool": "JIS #1 screwdriver, camera", "warning": null },
+              { "step": 3, "action": "Remove 4x M3 heatsink mounting screws; separate heatsink from PCB; note old thermal pad condition (compression, dry-out, cracking)", "tool": "JIS #1 screwdriver, plastic pry tool", "warning": null },
+              { "step": 4, "action": "Clean both mating surfaces with isopropyl alcohol; allow to dry fully", "tool": "isopropyl alcohol 99%, lint-free cloth", "warning": null },
+              { "step": 5, "action": "Apply new Fujipoly XR-m or Bergquist GP3000S30 thermal pad (3mm thick, cut to MOSFET cluster footprint); remove protective liners; seat heatsink; torque M3 screws to 0.8 Nm", "tool": "torque screwdriver, scissors", "warning": null },
+              { "step": 6, "action": "Reassemble enclosure; power on; run motor at 100% load for 10 minutes; verify controller temperature plateau <70°C via fleet telemetry", "tool": "fleet console", "warning": null }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "plastic pry tool", "isopropyl alcohol 99%", "lint-free cloth", "torque screwdriver 0-1Nm", "scissors"],
+            "parts": [
+              { "part_name": "Bergquist GP3000S30 Thermal Pad 3mm 100x100mm", "part_number": "GP3000S30-0.030-00-161", "supplier": "Henkel Bergquist / Digi-Key", "unit_cost_usd": 22, "qty": 1 },
+              { "part_name": "Thermal Interface Screw Kit M3x8 SS", "part_number": "KIT-M3-TIM-8", "supplier": "McMaster-Carr", "unit_cost_usd": 5, "qty": 1 }
+            ],
+            "labor_minutes": 40,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_controller_junction_temp_celsius", "signal_source": "motor controller NTC / CAN telemetry", "threshold_value": 78, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 4, "confidence": 0.88 },
+            { "signal_name": "thermal_throttle_events_per_hour", "signal_source": "motor controller fault register", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "count_per_hour", "lead_time_hours": 8, "confidence": 0.83 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "NTN Bearing Corporation of America", "website": "https://www.ntnamericas.com", "region": "NA", "component_types": ["bearing", "seal"], "lead_time_days": 5, "risk_level": "low" },
+        { "name": "SKF Bearing Americas", "website": "https://www.skf.com", "region": "NA", "component_types": ["bearing", "seal"], "lead_time_days": 5, "risk_level": "low" },
+        { "name": "Texas Instruments", "website": "https://www.ti.com", "region": "NA", "component_types": ["BMS IC", "motor controller IC"], "lead_time_days": 14, "risk_level": "medium" },
+        { "name": "Henkel Bergquist", "website": "https://www.henkel-adhesives.com", "region": "NA", "component_types": ["thermal interface material"], "lead_time_days": 7, "risk_level": "low" },
+        { "name": "Serve Robotics Service Parts", "website": "https://www.serverobotics.com", "region": "NA", "component_types": ["chassis", "body panel", "gasket", "sensor housing"], "lead_time_days": 10, "risk_level": "medium" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "starship-gen3",
+      "name": "Starship Gen3",
+      "manufacturer": "Starship Technologies",
+      "type": "delivery_ground",
+      "introduced_year": 2023,
+      "specs_json": {
+        "weight_kg": 20,
+        "payload_kg": 10,
+        "max_speed_kmh": 9,
+        "battery_wh": 1100,
+        "range_km": 30,
+        "drive": "6-wheel differential",
+        "cameras": 12,
+        "lidar": true,
+        "ultrasonic_sensors": 8,
+        "ip_rating": "IP55"
+      },
+      "notes": "6-wheel sidewalk delivery robot with 12 cameras for 360-degree perception. Deployed across US universities and cities.",
+      "failure_modes": [
+        {
+          "component": "6-wheel drive train belt / wheel motor",
+          "symptom": "one wheel not tracking speed commands, robot yaws unexpectedly, fleet console shows wheel speed encoder mismatch",
+          "root_cause": "drive belt stretch and tooth skip on rear idler pulleys after 600-800 hours of operation; grit ingress from sidewalk grime accelerates belt tooth wear; encoder magnet displacement from vibration",
+          "severity": "high",
+          "mtbf_hours": 700,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["drivetrain", "belt", "encoder", "wheel", "mechanical"],
+          "repair_protocol": {
+            "title": "Drive Belt Inspection, Tension Adjustment, and Encoder Realignment",
+            "steps": [
+              { "step": 1, "action": "Park robot; engage lockout; remove lower chassis belly panel (8x M4 screws)", "tool": "3mm hex key", "warning": null },
+              { "step": 2, "action": "Inspect each of 6 drive belts for: tooth missing, cracking, glazing, or lateral tracking offset >2mm from pulley center", "tool": "inspection light, belt tension gauge", "warning": null },
+              { "step": 3, "action": "Measure belt tension using Gates Sonic Tension Meter — target 80-95 Hz frequency for 8mm wide HTD3M belt", "tool": "Gates Sonic Tension Meter model 507C", "warning": null },
+              { "step": 4, "action": "For belts out of spec: loosen idler pulley lock nut; adjust idler to achieve target tension; re-lock at 6 Nm", "tool": "8mm spanner, torque wrench", "warning": null },
+              { "step": 5, "action": "Replace belts with visible tooth damage: remove old belt; clean pulley with isopropyl alcohol; fit new Gates HTD3M belt; set tension", "tool": "belt installation tool, isopropyl alcohol", "warning": null },
+              { "step": 6, "action": "Inspect wheel encoder magnets: verify each magnet is flush and centered over Hall sensor using 0.1mm feeler gauge; re-epoxy any displaced magnets with Loctite EA 9466", "tool": "0.1mm feeler gauge, Loctite EA 9466", "warning": null },
+              { "step": 7, "action": "Reassemble belly panel; power on; run wheel speed calibration from fleet console; confirm all 6 wheels tracking within ±2% of commanded speed", "tool": "fleet console", "warning": null }
+            ],
+            "tools_required": ["3mm hex key", "8mm spanner", "torque wrench 0-10Nm", "Gates Sonic Tension Meter 507C", "feeler gauge 0.1mm", "inspection light"],
+            "parts": [
+              { "part_name": "Gates HTD3M Drive Belt 255-3M-9 (replacement set of 6)", "part_number": "5MHT0255090", "supplier": "Gates Corporation / Motion Industries", "unit_cost_usd": 12, "qty": 6 },
+              { "part_name": "Loctite EA 9466 Structural Epoxy 50ml", "part_number": "1864002", "supplier": "Henkel / Loctite", "unit_cost_usd": 28, "qty": 1 }
+            ],
+            "labor_minutes": 55,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "wheel_speed_variance_pct", "signal_source": "wheel encoder CAN", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "percent_between_wheels", "lead_time_hours": 12, "confidence": 0.79 },
+            { "signal_name": "drivetrain_current_asymmetry_pct", "signal_source": "motor controller CAN", "threshold_value": 20, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 24, "confidence": 0.71 }
+          ]
+        },
+        {
+          "component": "12-camera stereo/mono array",
+          "symptom": "stereo depth estimation errors causing collision avoidance false stops, one or more camera streams dropping from perception pipeline",
+          "root_cause": "camera module ribbon cable fatigue fracture at body flex-point after repeated opening/closing of robot lid; secondary: OV2740 or similar CMOS sensor ESD damage from static discharge during courier interactions",
+          "severity": "high",
+          "mtbf_hours": 3500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["sensor", "camera", "ribbon-cable", "ESD", "perception"],
+          "repair_protocol": {
+            "title": "Camera Module Ribbon Cable Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "From fleet console, identify which camera streams are down (camera ID in perception log); locate physical position (front-left, rear-right, etc.)", "tool": "fleet console", "warning": null },
+              { "step": 2, "action": "Open robot lid fully; locate affected camera module (labeled on housing); wear ESD wrist strap before touching any electronics", "tool": "ESD wrist strap, mat", "warning": "CMOS sensors are ESD-sensitive — always ground yourself before handling" },
+              { "step": 3, "action": "Disconnect ribbon cable ZIF connector: lift retaining arm with plastic spudger; slide ribbon out; inspect for creasing, tears, or trace separation", "tool": "plastic spudger", "warning": null },
+              { "step": 4, "action": "If cable damaged: measure length and pitch (typically 15-24 pin, 0.5mm pitch FFC); source replacement; insert new cable fully before locking ZIF arm", "tool": "calipers, FFC cable replacement", "warning": null },
+              { "step": 5, "action": "Power on; confirm camera stream active in fleet console; run stereo calibration verification tool — reprojection error must be <0.5 pixels", "tool": "fleet calibration tool", "warning": null }
+            ],
+            "tools_required": ["ESD wrist strap", "ESD mat", "plastic spudger", "calipers"],
+            "parts": [
+              { "part_name": "FFC Flat Flex Cable 24-pin 0.5mm pitch 200mm", "part_number": "FFCA05200-A", "supplier": "Würth Elektronik / Digi-Key", "unit_cost_usd": 3, "qty": 2 },
+              { "part_name": "ESD Wrist Strap with Cord", "part_number": "WS3001-EU", "supplier": "Desco Industries / Amazon", "unit_cost_usd": 10, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "camera_stream_active_count", "signal_source": "perception pipeline node", "threshold_value": 11, "threshold_operator": "<", "threshold_unit": "count", "lead_time_hours": 0, "confidence": 0.95 },
+            { "signal_name": "stereo_reprojection_error_px", "signal_source": "stereo calibration daemon", "threshold_value": 1.0, "threshold_operator": ">", "threshold_unit": "pixels", "lead_time_hours": 2, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "battery pack (Li-ion, 1100Wh)",
+          "symptom": "range degradation >25%, BMS thermal warning at end of charge, pack voltage sag under acceleration load",
+          "root_cause": "cyclic lithium plating on anode at fast-charge rates in cold weather (<10°C); BMS charge algorithm not compensating for low-temperature derating; cumulative capacity fade from 600+ shallow cycles",
+          "severity": "high",
+          "mtbf_hours": 2500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["battery", "BMS", "thermal", "cold-weather", "capacity-fade"],
+          "repair_protocol": {
+            "title": "Battery State-of-Health Assessment and BMS Firmware Update",
+            "steps": [
+              { "step": 1, "action": "Pull BMS state-of-health report via fleet console; record SOH%, cycle count, max cell temperature and delta-voltage over last 30 days", "tool": "fleet console", "warning": null },
+              { "step": 2, "action": "If SOH <80%: flag battery for replacement; notify depot. If SOH 80-90%: proceed with BMS parameter update", "tool": null, "warning": null },
+              { "step": 3, "action": "Update BMS firmware to latest release (adds low-temperature charge derating profile: reduces charge current to 0.3C below 10°C)", "tool": "fleet OTA console or USB-C service port", "warning": "Do not interrupt OTA during BMS flash — causes BMS lockout requiring depot recovery" },
+              { "step": 4, "action": "After firmware update, perform a full conditioning cycle: discharge to 10% SOC at 0.5C, then charge at 0.3C to 100%; log capacity", "tool": "fleet console charge management interface", "warning": null },
+              { "step": 5, "action": "If capacity recovered to >85% nameplate, return to service. If not, pull pack and ship to battery recycler per local hazmat regulations", "tool": null, "warning": "Li-ion pack disposal is regulated waste — do not discard in general trash" }
+            ],
+            "tools_required": ["fleet console", "USB-C service cable"],
+            "parts": [
+              { "part_name": "Starship Gen3 Battery Pack Replacement (OEM)", "part_number": "SSH-GEN3-BATT-R", "supplier": "Starship Technologies Service", "unit_cost_usd": 850, "qty": 1 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_soh_pct", "signal_source": "BMS SOH register via fleet telemetry", "threshold_value": 82, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 240, "confidence": 0.87 },
+            { "signal_name": "pack_voltage_sag_under_load_v", "signal_source": "BMS voltage monitor during 2C discharge pulse", "threshold_value": 3.5, "threshold_operator": "<", "threshold_unit": "volts_per_cell", "lead_time_hours": 48, "confidence": 0.79 }
+          ]
+        },
+        {
+          "component": "ultrasonic proximity sensor array (8 sensors)",
+          "symptom": "robot stops at false obstacles in indoor/covered spaces, high false-positive rate near glass or smooth walls, one or more sensors not responding",
+          "root_cause": "ultrasonic transducer membrane contamination from sidewalk grit/mud reduces signal-to-noise ratio; glass surfaces produce specular reflection causing signal loss; membrane cracking from physical impact",
+          "severity": "medium",
+          "mtbf_hours": 6000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "ultrasonic", "perception", "contamination", "false-positive"],
+          "repair_protocol": {
+            "title": "Ultrasonic Sensor Cleaning and Sensitivity Calibration",
+            "steps": [
+              { "step": 1, "action": "From fleet console, run ultrasonic self-test; identify sensors with SNR <6dB or range error >±15cm at 50cm reference target", "tool": "fleet diagnostic console", "warning": null },
+              { "step": 2, "action": "Clean each sensor membrane with dry compressed air at <30 PSI from 10cm distance; remove loose grit without wetting membrane", "tool": "compressed air can (30 PSI max)", "warning": "Do not use liquid cleaners on ultrasonic membranes — wetting causes temporary desensitization" },
+              { "step": 3, "action": "For persistent grit adhesion: use soft camel-hair brush to dislodge; verify membrane visually for cracks", "tool": "camel-hair brush", "warning": null },
+              { "step": 4, "action": "If membrane cracked: replace sensor module (push-fit retaining ring, no solder); recalibrate array after replacement", "tool": "spanner wrench for sensor retaining ring", "warning": null },
+              { "step": 5, "action": "Run recalibration routine from fleet console — drive robot alongside reference wall at 40cm distance for 5 meters; system auto-calibrates sensor offsets", "tool": "fleet console calibration workflow", "warning": null }
+            ],
+            "tools_required": ["compressed air can", "camel-hair brush", "spanner wrench", "fleet console"],
+            "parts": [
+              { "part_name": "Murata MA40S4S Ultrasonic Transducer 40kHz (replacement)", "part_number": "MA40S4S", "supplier": "Murata Electronics / Mouser", "unit_cost_usd": 4, "qty": 2 }
+            ],
+            "labor_minutes": 25,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "ultrasonic_snr_db", "signal_source": "sensor array diagnostic bus", "threshold_value": 6, "threshold_operator": "<", "threshold_unit": "dB", "lead_time_hours": 24, "confidence": 0.68 },
+            { "signal_name": "false_stop_rate_per_km", "signal_source": "navigation event log", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "count_per_km", "lead_time_hours": 12, "confidence": 0.72 }
+          ]
+        },
+        {
+          "component": "mechanical lid hinge and latch assembly",
+          "symptom": "lid fails to latch after delivery, triggering 'lid open' safety fault; hinge shows binding; lid rattles during travel",
+          "root_cause": "stainless steel hinge pins develop fretting corrosion from repeated open/close cycles in humid environments; plastic latch housing cracks from customer mishandling (forced closure)",
+          "severity": "medium",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["structural", "mechanical", "hinge", "latch", "customer-interaction"],
+          "repair_protocol": {
+            "title": "Lid Hinge Pin Lubrication and Latch Housing Replacement",
+            "steps": [
+              { "step": 1, "action": "Open lid; inspect hinge pins for fretting corrosion (reddish-brown powder around pin holes); check plastic latch housing for visible cracks", "tool": "inspection light", "warning": null },
+              { "step": 2, "action": "Apply Krytox GPL 205 grease to hinge pin interface via syringe; work grease into joint by cycling lid 10 times", "tool": "grease syringe, Krytox GPL 205", "warning": null },
+              { "step": 3, "action": "If plastic latch housing cracked: use spudger to release 4 snap clips; pull housing off; install new housing; confirm positive latch engagement at <15N force", "tool": "plastic spudger, latch force gauge", "warning": null },
+              { "step": 4, "action": "Test lid latch 20 cycles; verify fleet console 'lid state' sensor reads CLOSED when latched and OPEN when released", "tool": "fleet console", "warning": null }
+            ],
+            "tools_required": ["grease syringe", "plastic spudger", "latch force gauge", "inspection light"],
+            "parts": [
+              { "part_name": "Krytox GPL 205 PTFE Grease 2oz", "part_number": "GPL-205-2OZ", "supplier": "DuPont / Miller-Stephenson", "unit_cost_usd": 28, "qty": 1 },
+              { "part_name": "Lid Latch Housing Assembly (OEM)", "part_number": "SSH-GEN3-LATCH-01", "supplier": "Starship Technologies Service", "unit_cost_usd": 22, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "lid_latch_engage_force_n", "signal_source": "lid servo current proxy", "threshold_value": 18, "threshold_operator": ">", "threshold_unit": "newtons", "lead_time_hours": 48, "confidence": 0.60 },
+            { "signal_name": "lid_open_fault_count_per_week", "signal_source": "fleet event log", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "count_per_week", "lead_time_hours": 72, "confidence": 0.70 }
+          ]
+        },
+        {
+          "component": "navigation software / autonomy stack",
+          "symptom": "robot becomes stuck in a loop navigating the same 5m section of sidewalk, fails to reroute around temporary obstacle, or unexpectedly enters manual-assist request mode",
+          "root_cause": "HD map data staleness from construction or seasonal changes; edge-case failures in obstacle cost-map when multiple dynamic agents (pedestrians, cyclists) cluster; watchdog timeout in path planner causing node restart",
+          "severity": "medium",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["software", "navigation", "autonomy", "map", "edge-case"],
+          "repair_protocol": {
+            "title": "Navigation Stack Reset and Map Cache Refresh",
+            "steps": [
+              { "step": 1, "action": "If robot is stuck: send 'manual assist' command from fleet console; operator guides robot 2m past blockage; re-engage autonomy", "tool": "fleet console", "warning": null },
+              { "step": 2, "action": "After return to depot: SSH into robot; pull navigation logs from `/var/log/nav/` for the affected run; send to engineering team", "tool": "SSH terminal", "warning": null },
+              { "step": 3, "action": "Clear stale map tile cache: `nav_cache_reset --tiles --radius 200m --location <GPS_coords>`", "tool": "SSH terminal", "warning": null },
+              { "step": 4, "action": "Pull latest map update from fleet server: `nav_map_sync --force`; verify sync completion with `nav_map_status`", "tool": "SSH terminal", "warning": null },
+              { "step": 5, "action": "Run robot on affected route segment in 'shadow mode' (autonomy active but remote operator monitoring live); confirm clean navigation for 3 consecutive runs before removing monitoring", "tool": "fleet console shadow-mode", "warning": null }
+            ],
+            "tools_required": ["fleet console", "SSH terminal"],
+            "parts": [],
+            "labor_minutes": 30,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "path_replanning_rate_per_km", "signal_source": "navigation stack metrics", "threshold_value": 8, "threshold_operator": ">", "threshold_unit": "count_per_km", "lead_time_hours": 2, "confidence": 0.65 },
+            { "signal_name": "nav_watchdog_restarts_per_day", "signal_source": "system service monitor", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "count_per_day", "lead_time_hours": 4, "confidence": 0.73 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Gates Corporation", "website": "https://www.gates.com", "region": "NA", "component_types": ["drive belt", "pulley"], "lead_time_days": 5, "risk_level": "low" },
+        { "name": "Murata Electronics North America", "website": "https://www.murata.com", "region": "NA", "component_types": ["ultrasonic sensor", "capacitor", "filter"], "lead_time_days": 14, "risk_level": "medium" },
+        { "name": "Starship Technologies Service", "website": "https://www.starship.xyz", "region": "global", "component_types": ["battery pack", "latch assembly", "chassis"], "lead_time_days": 14, "risk_level": "medium" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "amazon-proteus",
+      "name": "Amazon Proteus",
+      "manufacturer": "Amazon Robotics",
+      "type": "warehouse_amr",
+      "introduced_year": 2022,
+      "specs_json": {
+        "weight_kg": 100,
+        "payload_kg": 340,
+        "max_speed_ms": 1.5,
+        "battery_wh": 4800,
+        "drive": "omnidirectional holonomic",
+        "navigation": "SLAM + infrastructure-free",
+        "clearance_mm": 200,
+        "ip_rating": "IP40",
+        "charging": "automatic_dock"
+      },
+      "notes": "Amazon's first fully autonomous warehouse AMR operating among human workers without safety cages. Uses custom SLAM navigation.",
+      "failure_modes": [
+        {
+          "component": "omnidirectional drive module (mecanum / caster wheel assembly)",
+          "symptom": "robot moves in unexpected direction, reported heading error >15 degrees from commanded, vibration on smooth warehouse floor",
+          "root_cause": "mecanum wheel roller bearings develop flat spots from sustained high-load static positions during warehouse idle periods; polyurethane roller tread cracking from thermal cycling and solvent contact",
+          "severity": "high",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["drivetrain", "mecanum-wheel", "bearing", "warehouse", "navigation-accuracy"],
+          "repair_protocol": {
+            "title": "Mecanum Wheel Roller Bearing and Tread Inspection",
+            "steps": [
+              { "step": 1, "action": "Bring robot to maintenance bay; command robot to home position via fleet console; engage lockout", "tool": "fleet console", "warning": null },
+              { "step": 2, "action": "Lift robot using floor jack under designated lift points (4x marked pads on chassis); support on jack stands", "tool": "floor jack 2-ton, jack stands", "warning": "Proteus weighs 100kg unloaded — use rated jack stands rated for 250kg minimum" },
+              { "step": 3, "action": "Inspect each mecanum wheel (4 wheels, 8 rollers each): spin rollers by hand; check for flat spots (>1mm depth), cracking, or delamination of PU tread", "tool": "inspection light, calipers", "warning": null },
+              { "step": 4, "action": "For damaged rollers: remove roller axle bolt (M6); pull roller; inspect roller bearing (6000-2RS, 10x26x8mm); replace bearing and/or full roller assembly", "tool": "6mm hex key, bearing puller, SKF 6000-2RS bearing", "warning": null },
+              { "step": 5, "action": "Replace PU tread if cracked: press off old tread; apply new PU roller; cure in oven per supplier datasheet (80°C, 2h)", "tool": "arbor press, oven capable of 80°C", "warning": null },
+              { "step": 6, "action": "Lower robot; run holonomic drive calibration from fleet console — strafe test left/right/diagonal; confirm position error <5mm over 3m", "tool": "fleet console, tape measure", "warning": null }
+            ],
+            "tools_required": ["floor jack 2-ton", "jack stands", "6mm hex key", "bearing puller", "arbor press", "calipers", "inspection light"],
+            "parts": [
+              { "part_name": "SKF 6000-2RS1 Deep-Groove Sealed Bearing 10x26x8mm", "part_number": "6000-2RS1/C3", "supplier": "SKF Bearing Americas", "unit_cost_usd": 6, "qty": 8 },
+              { "part_name": "Mecanum Wheel Polyurethane Roller (replacement set of 8)", "part_number": "AMZ-PROTEUS-ROLLER-8PK", "supplier": "Amazon Robotics Internal Supply", "unit_cost_usd": 180, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "heading_error_degrees_rms", "signal_source": "SLAM localization module", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "degrees", "lead_time_hours": 24, "confidence": 0.74 },
+            { "signal_name": "drive_current_imbalance_pct", "signal_source": "motor controller CAN", "threshold_value": 18, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.68 }
+          ]
+        },
+        {
+          "component": "automatic docking / charging station alignment",
+          "symptom": "robot fails to dock after 3 attempts, fleet shows 'dock failure' alarm, robot idles with low battery",
+          "root_cause": "dock infrared guide beacon contamination from warehouse dust causing alignment signal loss >1cm; charging pad contact spring fatigue reducing contact pressure below spec; dock sensor drift from temperature expansion",
+          "severity": "high",
+          "mtbf_hours": 4000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["charging", "docking", "sensor", "warehouse", "alignment"],
+          "repair_protocol": {
+            "title": "Docking Station Alignment Calibration and Contact Cleaning",
+            "steps": [
+              { "step": 1, "action": "Lock out docking station from fleet console; confirm no robot attempting to dock; switch station to maintenance mode", "tool": "fleet console", "warning": "Station carries 48V DC on charging contacts — always lockout before touching contacts" },
+              { "step": 2, "action": "Clean IR guide beacons (4 units on dock face) with isopropyl alcohol and cotton swab; clean robot-side IR receivers", "tool": "isopropyl alcohol, cotton swabs", "warning": null },
+              { "step": 3, "action": "Inspect charging pad spring contacts (2x brass contacts): measure spring force with force gauge — must be 2.0-3.5 N per contact; replace spring if <1.5 N", "tool": "force gauge 0-5N, contact spring replacement tool", "warning": null },
+              { "step": 4, "action": "Clean contact surfaces with 600-grit emery cloth to remove oxidation; wipe with isopropyl alcohol", "tool": "600-grit emery cloth, isopropyl alcohol", "warning": null },
+              { "step": 5, "action": "Run dock alignment calibration from fleet console: robot approaches dock 5 times; system measures approach vector and auto-corrects dock beacon offset parameters", "tool": "fleet console dock calibration tool", "warning": null },
+              { "step": 6, "action": "Confirm 5 consecutive successful docks; monitor charge current — must reach C/3 (1.6A for 4800Wh pack) within 30 seconds of dock contact", "tool": "fleet console charging monitor", "warning": null }
+            ],
+            "tools_required": ["isopropyl alcohol", "cotton swabs", "force gauge 0-5N", "600-grit emery cloth", "fleet console"],
+            "parts": [
+              { "part_name": "Dock Charging Contact Spring Set (2pcs)", "part_number": "AMZ-DOCK-SPRING-2PK", "supplier": "Amazon Robotics Internal Supply", "unit_cost_usd": 25, "qty": 1 },
+              { "part_name": "IR Alignment Beacon LED Module", "part_number": "TSFF5200", "supplier": "Vishay Semiconductors / Digi-Key", "unit_cost_usd": 1, "qty": 4 }
+            ],
+            "labor_minutes": 50,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "dock_attempts_before_success", "signal_source": "fleet docking event log", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "count", "lead_time_hours": 12, "confidence": 0.84 },
+            { "signal_name": "charging_contact_current_ramp_time_s", "signal_source": "charger current monitor", "threshold_value": 45, "threshold_operator": ">", "threshold_unit": "seconds", "lead_time_hours": 24, "confidence": 0.76 }
+          ]
+        },
+        {
+          "component": "battery management system (48V LFP pack)",
+          "symptom": "battery SOC reading jumps unexpectedly, thermal protection trip during charge cycle, robot returned to dock with 15% shown SOC but actually depleted",
+          "root_cause": "LFP cell SOC estimation inaccuracy from BMS Coulomb counter drift — common in LFP chemistry due to flat discharge curve; thermal management fan bearing failure causing elevated cell temperatures; cell group parallel fusing degradation",
+          "severity": "critical",
+          "mtbf_hours": 6000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["battery", "BMS", "LFP", "thermal", "warehouse", "critical"],
+          "repair_protocol": {
+            "title": "BMS Coulomb Counter Recalibration and Thermal Fan Service",
+            "steps": [
+              { "step": 1, "action": "Pull full BMS data dump via fleet console: SOH%, cycle count, Coulomb counter accumulated error, individual cell voltages and temperatures", "tool": "fleet console BMS diagnostic interface", "warning": null },
+              { "step": 2, "action": "Run forced full calibration cycle: discharge to 2.5V/cell cutoff at C/5 rate; rest 2 hours; charge to 3.65V/cell at C/5; rest 2 hours; this resets Coulomb counter baseline", "tool": "fleet console charge management", "warning": "This cycle takes ~20 hours — schedule during off-shift maintenance window" },
+              { "step": 3, "action": "Update BMS firmware if version <3.2.1 (adds improved LFP SOC estimation using OCV table correction)", "tool": "fleet OTA or service laptop USB-C", "warning": null },
+              { "step": 4, "action": "Remove battery access panel; locate BMS cooling fan; spin by hand — must rotate freely; measure fan RPM at full speed with tachometer — must be >4500 RPM", "tool": "tachometer, 4mm hex key for panel", "warning": "Insulated gloves required — pack is 48V" },
+              { "step": 5, "action": "If fan RPM <4000 or grinding: replace fan (90mm 24VDC axial fan); apply fresh thermal paste to BMS controller heatsink", "tool": "fan replacement, Arctic MX-4 thermal paste", "warning": null },
+              { "step": 6, "action": "Confirm SOC accuracy over 2-week monitoring period; flag any SOC jump >5% between consecutive 10-minute telemetry readings", "tool": "fleet telemetry dashboard", "warning": null }
+            ],
+            "tools_required": ["fleet console", "insulated gloves", "4mm hex key", "tachometer", "Arctic MX-4 thermal paste"],
+            "parts": [
+              { "part_name": "Arctic MX-4 Thermal Paste 4g", "part_number": "ACTCP00007B", "supplier": "Arctic / Amazon", "unit_cost_usd": 8, "qty": 1 },
+              { "part_name": "90mm 24VDC Axial Cooling Fan 4500RPM", "part_number": "FAN90-24V-BB", "supplier": "Nidec / Digi-Key", "unit_cost_usd": 22, "qty": 1 }
+            ],
+            "labor_minutes": 60,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "soc_jump_magnitude_pct_per_10min", "signal_source": "BMS Coulomb counter telemetry", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "percent_per_10min", "lead_time_hours": 48, "confidence": 0.79 },
+            { "signal_name": "bms_cooling_fan_rpm", "signal_source": "BMS fan tachometer", "threshold_value": 4000, "threshold_operator": "<", "threshold_unit": "rpm", "lead_time_hours": 72, "confidence": 0.83 },
+            { "signal_name": "cell_temperature_max_celsius", "signal_source": "BMS NTC array", "threshold_value": 42, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 4, "confidence": 0.88 }
+          ]
+        },
+        {
+          "component": "floor safety sensor array (3D ToF / laser scanner)",
+          "symptom": "robot incorrectly detects floor hazard and stops; robot misses actual low obstacle (pallet edge, wire guide); E-stop triggers in clean aisle",
+          "root_cause": "warehouse floor dust accumulation on downward-facing ToF sensor window; forklift pallet dust plumes create momentary high-particulate environment exceeding sensor noise threshold; lens scratches from floor surface proximity",
+          "severity": "high",
+          "mtbf_hours": 2500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["sensor", "floor-sensor", "ToF", "warehouse", "contamination", "safety"],
+          "repair_protocol": {
+            "title": "Floor Safety Sensor Cleaning and Threshold Recalibration",
+            "steps": [
+              { "step": 1, "action": "Pull sensor false-positive log from fleet console for the past 7 days; identify sensors with >5 unconfirmed E-stop events", "tool": "fleet console", "warning": null },
+              { "step": 2, "action": "Engage robot lockout; lower robot to ground-level maintenance position; access floor sensor array (belly panel, 6x M4 screws)", "tool": "3mm hex key", "warning": null },
+              { "step": 3, "action": "Clean each ToF sensor window: blow off loose dust with dry compressed air; wipe with Zeiss Lens Care solution on microfibre cloth", "tool": "compressed air, microfibre cloth, Zeiss Lens Care", "warning": null },
+              { "step": 4, "action": "Inspect sensor windows under magnification for scratches >0.5mm; replace window cap if scratched (press-fit cap, no solder)", "tool": "10x loupe, sensor window cap replacement", "warning": null },
+              { "step": 5, "action": "Reassemble; run floor sensor calibration routine from fleet console on clean flat floor — confirm all sensor range readings within ±10mm of 200mm reference", "tool": "fleet console calibration, 200mm height reference block", "warning": null },
+              { "step": 6, "action": "Update dust-filter threshold parameter in sensor config if warehouse has elevated particulate season (increase dust-hold-off window from 50ms to 100ms)", "tool": "fleet console sensor configuration panel", "warning": "Increasing hold-off reduces safety response speed — safety engineer sign-off required" }
+            ],
+            "tools_required": ["3mm hex key", "compressed air", "microfibre cloth", "Zeiss Lens Care", "10x loupe", "200mm height reference block"],
+            "parts": [
+              { "part_name": "ToF Sensor Protective Window Cap (replacement, 4-pack)", "part_number": "VL53L5CX-WCAP-4PK", "supplier": "STMicroelectronics / Mouser", "unit_cost_usd": 8, "qty": 1 }
+            ],
+            "labor_minutes": 35,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "floor_sensor_estop_rate_per_shift", "signal_source": "fleet safety event log", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "count_per_shift", "lead_time_hours": 8, "confidence": 0.81 },
+            { "signal_name": "floor_sensor_snr_db", "signal_source": "ToF sensor diagnostic register", "threshold_value": 8, "threshold_operator": "<", "threshold_unit": "dB", "lead_time_hours": 24, "confidence": 0.73 }
+          ]
+        },
+        {
+          "component": "SLAM navigation stack (localization)",
+          "symptom": "robot reports position jump >1m from expected location, fails to navigate to correct pick station, collides with rack corner",
+          "root_cause": "feature-sparse warehouse environments (blank white walls) causing particle filter degeneration in SLAM; reflective floor causing LiDAR ground-return multipath; map invalidation when warehouse racks are reconfigured",
+          "severity": "critical",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["software", "SLAM", "navigation", "localization", "warehouse", "critical"],
+          "repair_protocol": {
+            "title": "SLAM Map Rebuild and Localization Parameter Tuning",
+            "steps": [
+              { "step": 1, "action": "Immediately halt robot from fleet console if position jump detected; engage E-stop; do not attempt autonomous navigation until map is verified", "tool": "fleet console E-stop", "warning": "Robot operating with bad localization poses collision risk — treat as safety incident" },
+              { "step": 2, "action": "SSH into robot; pull SLAM log from `/var/log/slam/` for past 30 minutes; check particle weight distribution — if effective sample size <50, filter has degenerated", "tool": "SSH terminal", "warning": null },
+              { "step": 3, "action": "If map is stale (rack reconfiguration): run guided re-mapping: robot driven manually around full warehouse perimeter at 0.3 m/s; system rebuilds occupancy grid", "tool": "fleet console teleoperation mode", "warning": null },
+              { "step": 4, "action": "Add artificial landmarks (retroreflective AprilTag markers) to feature-sparse walls if SLAM degeneration is recurring — mount at 1.5m height, 5m intervals", "tool": "AprilTag stickers, mounting hardware", "warning": null },
+              { "step": 5, "action": "Tune SLAM parameters: increase lidar scan-match weight on corner features; reduce trust in dead-reckoning after 500ms; update config and restart SLAM node", "tool": "SSH terminal, ROS parameter server", "warning": null },
+              { "step": 6, "action": "Test robot over 30-minute autonomous run; confirm maximum localization error <50mm per fleet position tracking overlay", "tool": "fleet console position tracking", "warning": null }
+            ],
+            "tools_required": ["fleet console", "SSH terminal", "AprilTag stickers", "measuring tape"],
+            "parts": [
+              { "part_name": "AprilTag 36h11 Retroreflective Sticker Pack (25pcs)", "part_number": "APTAG-36H11-RR-25", "supplier": "AprilRobotics / Amazon", "unit_cost_usd": 45, "qty": 1 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "slam_effective_particle_count", "signal_source": "SLAM localization node", "threshold_value": 80, "threshold_operator": "<", "threshold_unit": "count", "lead_time_hours": 1, "confidence": 0.82 },
+            { "signal_name": "localization_covariance_trace", "signal_source": "SLAM pose estimate covariance matrix", "threshold_value": 0.5, "threshold_operator": ">", "threshold_unit": "m_squared", "lead_time_hours": 0.5, "confidence": 0.79 }
+          ]
+        },
+        {
+          "component": "payload lift mechanism (scissor lift / conveyor interface)",
+          "symptom": "robot cannot raise or lower payload to correct transfer height, lift mechanism grinds, fleet shows 'transfer failed' error",
+          "root_cause": "lead screw drive nut wear from particulate contamination reducing lubrication film; limit switch failure from vibration causing incorrect height reporting; linear guide rail binding from improper loading",
+          "severity": "high",
+          "mtbf_hours": 3000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["mechanical", "lift", "warehouse", "lead-screw", "actuator"],
+          "repair_protocol": {
+            "title": "Lift Mechanism Lead Screw Lubrication and Limit Switch Inspection",
+            "steps": [
+              { "step": 1, "action": "Command lift to mid-travel position from fleet console; engage lockout; access lift mechanism via top service panel", "tool": "fleet console, 4mm hex key for panel", "warning": "Lift mechanism under spring preload — secure with locking pin before servicing" },
+              { "step": 2, "action": "Inspect lead screw: clean all grit from thread with stiff nylon brush; apply fresh Molykote 33 Light grease to full thread length", "tool": "nylon brush, Molykote 33 Light grease, grease gun", "warning": null },
+              { "step": 3, "action": "Inspect lead screw nut for thread wear: insert go/no-go thread gauge; replace nut if backlash >0.5mm", "tool": "thread go/no-go gauge, calipers", "warning": null },
+              { "step": 4, "action": "Inspect upper and lower limit switches: manually actuate; confirm click and electrical continuity; replace any switch that does not click cleanly", "tool": "multimeter, microswitches", "warning": null },
+              { "step": 5, "action": "Run lift calibration from fleet console: 3 full up/down cycles; verify height at transfer point within ±3mm of specification", "tool": "fleet console lift calibration, height reference block", "warning": null }
+            ],
+            "tools_required": ["4mm hex key", "nylon brush", "grease gun", "calipers", "multimeter", "thread gauge"],
+            "parts": [
+              { "part_name": "Molykote 33 Light Grease 150g", "part_number": "4056791", "supplier": "DuPont / Grainger", "unit_cost_usd": 18, "qty": 1 },
+              { "part_name": "Omron D2FC-F-7N Microswitch (2-pack)", "part_number": "D2FC-F-7N", "supplier": "Omron / Digi-Key", "unit_cost_usd": 5, "qty": 2 }
+            ],
+            "labor_minutes": 55,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "lift_motor_current_spike_amps", "signal_source": "lift motor controller", "threshold_value": 8, "threshold_operator": ">", "threshold_unit": "amps", "lead_time_hours": 48, "confidence": 0.71 },
+            { "signal_name": "lift_position_error_mm", "signal_source": "lift encoder vs limit switch cross-check", "threshold_value": 8, "threshold_operator": ">", "threshold_unit": "mm", "lead_time_hours": 24, "confidence": 0.77 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "SKF Bearing Americas", "website": "https://www.skf.com", "region": "NA", "component_types": ["bearing", "linear guide"], "lead_time_days": 5, "risk_level": "low" },
+        { "name": "Omron Automation Americas", "website": "https://www.ia.omron.com", "region": "NA", "component_types": ["microswitch", "limit switch", "safety relay"], "lead_time_days": 7, "risk_level": "low" },
+        { "name": "Nidec Motor Corporation", "website": "https://www.nidec.com", "region": "NA", "component_types": ["BLDC motor", "cooling fan", "servo motor"], "lead_time_days": 14, "risk_level": "medium" },
+        { "name": "Amazon Robotics Internal Supply", "website": "https://www.amazonrobotics.com", "region": "NA", "component_types": ["mecanum wheel", "dock assembly", "chassis"], "lead_time_days": 3, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "lime-gen4",
+      "name": "Lime Gen4 E-Scooter",
+      "manufacturer": "Lime (Neutron Holdings)",
+      "type": "micromobility",
+      "introduced_year": 2022,
+      "specs_json": {
+        "weight_kg": 22,
+        "payload_kg": 100,
+        "motor_w": 350,
+        "motor_type": "hub motor BLDC",
+        "battery_wh": 504,
+        "max_speed_kmh": 25,
+        "ip_rating": "IP56",
+        "range_km": 50,
+        "brakes": "regenerative + mechanical disc"
+      },
+      "notes": "Fleet e-scooter with IP56 rating. Gen4 introduced improved battery and IoT lock vs Gen3.",
+      "failure_modes": [
+        {
+          "component": "rear hub motor bearing (BLDC)",
+          "symptom": "audible grinding or clicking from rear wheel during riding, vibration felt through deck, motor current draw elevated at constant speed",
+          "root_cause": "6002-2RS or similar bearing inner race spalling from contaminated grease after water ingress through worn axle seal; accelerated by high-speed riding over rough pavement transmitting impact loads to bearing race",
+          "severity": "high",
+          "mtbf_hours": 1200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["drivetrain", "bearing", "hub-motor", "e-scooter", "water-ingress"],
+          "repair_protocol": {
+            "title": "Hub Motor Bearing Replacement — Lime Gen4",
+            "steps": [
+              { "step": 1, "action": "Release scooter from service lock via fleet console; disable IoT lock; bring to workshop", "tool": "fleet ops console", "warning": null },
+              { "step": 2, "action": "Remove axle retention nuts (M10, 32mm AF); slide rear wheel off dropouts; disconnect motor phase wires and hall sensor connector", "tool": "32mm spanner, magnetic tray for nuts", "warning": "Label motor phase wires before disconnection — wrong reconnection causes reverse motor direction" },
+              { "step": 3, "action": "Use hub motor disassembly tool to remove motor side covers; extract rotor from stator; place on clean bench", "tool": "hub motor disassembly tool set, bench vise", "warning": null },
+              { "step": 4, "action": "Press out bearing from rotor carrier on drive side; inspect bearing race and balls under 10x magnification for spalling, pitting, or brinelling", "tool": "hydraulic bearing press, 10x magnifying loupe", "warning": null },
+              { "step": 5, "action": "Clean bearing bore with isopropyl alcohol; apply thin film Loctite 648; press new NTN 6002-2RS bearing; allow 20-minute cure at room temperature", "tool": "bearing press, Loctite 648", "warning": null },
+              { "step": 6, "action": "Pack inner bearing cavity with Lucas Red N Tacky EP2 grease (5g per bearing cavity); reassemble motor; torque side cover bolts to 8 Nm", "tool": "grease gun, torque wrench", "warning": null },
+              { "step": 7, "action": "Reinstall wheel; connect motor wires (verify phase order with fleet console motor test); torque axle nuts to 35 Nm", "tool": "32mm spanner, torque wrench", "warning": null },
+              { "step": 8, "action": "Run 10-minute ride cycle on roller dyno or flat surface; verify motor current within ±10% baseline; verify no audible noise", "tool": "roller dyno or flat test area, fleet console", "warning": null }
+            ],
+            "tools_required": ["32mm spanner", "hub motor disassembly tool", "hydraulic bearing press", "torque wrench 0-40Nm", "grease gun", "10x magnifying loupe"],
+            "parts": [
+              { "part_name": "NTN 6002-2RS Sealed Bearing 15x32x9mm", "part_number": "6002LLBC3/L627", "supplier": "NTN Bearing Corporation of America", "unit_cost_usd": 7, "qty": 2 },
+              { "part_name": "Lucas Red N Tacky EP2 Grease 1lb", "part_number": "10005", "supplier": "Lucas Oil Products", "unit_cost_usd": 14, "qty": 1 }
+            ],
+            "labor_minutes": 50,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "hub_motor_current_pct_baseline", "signal_source": "motor controller telemetry via IoT", "threshold_value": 118, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.74 },
+            { "signal_name": "accelerometer_vibration_rms_g", "signal_source": "IMU in IoT module", "threshold_value": 1.2, "threshold_operator": ">", "threshold_unit": "g", "lead_time_hours": 12, "confidence": 0.77 }
+          ]
+        },
+        {
+          "component": "battery BMS and cell pack (Li-ion NMC, 504Wh)",
+          "symptom": "scooter range drops to <30km before recharge warning, cells fail to balance at end of charge cycle, BMS reports cell group 3 voltage 200mV below others",
+          "root_cause": "NMC cell capacity fade from repeated partial charging during fleet rebalancing operations; cell imbalance from 1-2 cells in the parallel group developing higher internal resistance from micro-short nucleation; BMS passive balancing undersized for fast fleet cycling",
+          "severity": "high",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["battery", "BMS", "NMC", "cell-imbalance", "e-scooter", "fleet"],
+          "repair_protocol": {
+            "title": "Battery Pack Balance Assessment and Cell Group Replacement",
+            "steps": [
+              { "step": 1, "action": "Pull BMS telemetry from fleet cloud dashboard; review 30-day cell voltage trends; identify persistent low-voltage cell groups", "tool": "fleet cloud dashboard", "warning": null },
+              { "step": 2, "action": "Remove battery pack: unlock battery door (Torx T25, 3 screws); slide out pack; disconnect Anderson SB50 connector", "tool": "Torx T25 screwdriver, Anderson disconnect tool", "warning": "48V pack — insulated gloves mandatory; avoid shorting Anderson connector terminals" },
+              { "step": 3, "action": "Connect pack to TI BQ78350 or Victron Energy BMV-712 battery monitor via balance connector; take individual cell group voltage measurements", "tool": "TI BQ78350 eval kit or Victron BMV-712, multimeter", "warning": null },
+              { "step": 4, "action": "Identify any cell group showing voltage delta >100mV after 2-hour passive balance rest; flag those cell groups for replacement", "tool": null, "warning": null },
+              { "step": 5, "action": "If <3 cell groups affected: replace individual cell modules (spot-weld nickel strip tabs); test weld strength by trying to peel at 45 degrees — must not lift at <20N", "tool": "battery spot welder, nickel strip 0.15mm, PPE", "warning": "Cell replacement requires battery technician certification — high short-circuit energy" },
+              { "step": 6, "action": "If >3 cell groups affected: replace full pack; recycle old pack per local hazmat regulations (IATA/EPA)", "tool": null, "warning": null },
+              { "step": 7, "action": "Reinstall pack; run 3 full conditioning cycles; confirm range >45km before returning to fleet", "tool": "fleet console charge management", "warning": null }
+            ],
+            "tools_required": ["Torx T25 screwdriver", "Anderson disconnect tool", "insulated gloves", "TI BQ78350 eval kit", "multimeter", "battery spot welder"],
+            "parts": [
+              { "part_name": "Samsung 21700 INR-21700-50E Cell 5000mAh (10-pack)", "part_number": "INR21700-50E-10PK", "supplier": "Samsung SDI / Liion Wholesale", "unit_cost_usd": 65, "qty": 1 },
+              { "part_name": "Victron Energy BMV-712 Battery Monitor", "part_number": "BAM030712000R", "supplier": "Victron Energy", "unit_cost_usd": 110, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "bms_cell_voltage_delta_mv", "signal_source": "BMS cell monitor via fleet cloud", "threshold_value": 100, "threshold_operator": ">", "threshold_unit": "millivolts", "lead_time_hours": 72, "confidence": 0.83 },
+            { "signal_name": "scooter_range_km_rolling_avg", "signal_source": "fleet GPS track analytics", "threshold_value": 32, "threshold_operator": "<", "threshold_unit": "km", "lead_time_hours": 120, "confidence": 0.79 }
+          ]
+        },
+        {
+          "component": "brake cable and mechanical disc brake caliper",
+          "symptom": "brake lever feels spongy, longer stopping distance, Segway/Lime safety audit flags brake performance below spec; brake rub noise at low speed",
+          "root_cause": "stainless brake cable stretch and outer housing compression after 300-500 hours of use; brake pad wear reducing effective pad thickness to <2mm; caliper piston contamination from road spray",
+          "severity": "critical",
+          "mtbf_hours": 400,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["brake", "safety", "cable", "mechanical", "e-scooter", "critical"],
+          "repair_protocol": {
+            "title": "Brake Cable Adjustment, Pad Inspection, and Caliper Service",
+            "steps": [
+              { "step": 1, "action": "Perform brake performance check: measure stopping distance from 20 km/h on dry concrete — must be <7m; if >7m, remove from service immediately", "tool": "GPS speed checker or fleet speed log, tape measure", "warning": "Do not return scooter to service with stopping distance >7m — safety-critical" },
+              { "step": 2, "action": "Adjust brake cable at handlebar barrel adjuster: turn adjuster counter-clockwise until lever has 2-3mm of free play before engagement", "tool": "fingers (barrel adjuster is hand-adjustable)", "warning": null },
+              { "step": 3, "action": "If adjustment range exhausted: replace brake cable — thread new cable through housing; set barrel adjuster to middle of range; pull cable taut at caliper anchor; pinch bolt to 6 Nm", "tool": "cable cutters, 4mm hex key, torque screwdriver", "warning": null },
+              { "step": 4, "action": "Inspect brake pads: remove caliper inspection plug; measure pad thickness with depth gauge — must be >2.5mm; replace pads if <2.5mm", "tool": "depth gauge, Torx T25", "warning": null },
+              { "step": 5, "action": "Clean caliper piston with brake cleaner spray; actuate caliper by hand to confirm piston moves freely; apply caliper piston grease to piston seal if stiff", "tool": "brake cleaner spray, caliper piston tool, Sil-Glyde caliper grease", "warning": "Never use petroleum-based lubricant on brake pads or rotor — use only silicone-based caliper grease on piston seal" },
+              { "step": 6, "action": "Repeat stopping distance test; confirm <7m from 20 km/h; log result in fleet maintenance record", "tool": "tape measure, fleet console maintenance log", "warning": null }
+            ],
+            "tools_required": ["cable cutters", "4mm hex key", "torque screwdriver", "depth gauge", "Torx T25", "brake cleaner spray", "caliper piston tool"],
+            "parts": [
+              { "part_name": "Jagwire Sport Stainless Brake Cable 1700mm", "part_number": "HBW510S", "supplier": "Jagwire / J&B Importers", "unit_cost_usd": 8, "qty": 2 },
+              { "part_name": "Resin Disc Brake Pad Set (compatible)", "part_number": "SM-BH90-JK-SSR", "supplier": "Shimano / Jenson USA", "unit_cost_usd": 18, "qty": 1 },
+              { "part_name": "Sil-Glyde Brake Lubricant 4oz", "part_number": "SG-4OZ", "supplier": "AGS Company", "unit_cost_usd": 7, "qty": 1 }
+            ],
+            "labor_minutes": 35,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "brake_cable_tension_kg", "signal_source": "brake lever force sensor (if equipped) or proxy from brake engagement angle", "threshold_value": 2.5, "threshold_operator": "<", "threshold_unit": "kg", "lead_time_hours": 24, "confidence": 0.65 },
+            { "signal_name": "fleet_ride_hours_since_brake_service", "signal_source": "fleet maintenance log timestamp", "threshold_value": 400, "threshold_operator": ">", "threshold_unit": "hours", "lead_time_hours": 72, "confidence": 0.88 }
+          ]
+        },
+        {
+          "component": "deck structure (aluminum/composite deck)",
+          "symptom": "visible crack or fracture in deck platform, flex or creak when rider applies weight, surface delamination of non-slip mat",
+          "root_cause": "fatigue crack nucleation at deck-to-stem weld joint from repeated impact loading (curb drops, potholes); overloading by riders exceeding 100kg weight limit; material fatigue in 6061-T6 aluminum at weld HAZ",
+          "severity": "critical",
+          "mtbf_hours": 1800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["structural", "deck", "fatigue", "safety", "e-scooter", "critical"],
+          "repair_protocol": {
+            "title": "Deck Structural Inspection and Retirement Decision",
+            "steps": [
+              { "step": 1, "action": "Perform visual inspection of full deck surface and underside; check stem-to-deck weld joint with 10x loupe for any crack indication", "tool": "10x magnifying loupe, inspection light", "warning": "Any confirmed crack means immediate retirement — do not attempt to weld repair deck in field" },
+              { "step": 2, "action": "Apply penetrant dye test to suspect areas: spray red dye; wait 5 minutes; clean; spray developer; pink indication = crack present", "tool": "Magnaflux Spotcheck SK-816 dye penetrant kit", "warning": null },
+              { "step": 3, "action": "If crack confirmed: remove scooter from service permanently; log in fleet system as 'retired structural failure'; send for recycling", "tool": "fleet console retirement workflow", "warning": "Do not re-deploy a cracked deck scooter — liability risk for catastrophic rider injury" },
+              { "step": 4, "action": "If no crack but non-slip mat delaminating: remove old mat with heat gun and plastic scraper; clean deck with acetone; apply new 3M Safety-Walk 600 Series non-slip tape", "tool": "heat gun, plastic scraper, acetone, roller", "warning": null }
+            ],
+            "tools_required": ["10x magnifying loupe", "inspection light", "Magnaflux SK-816 dye penetrant kit", "heat gun", "plastic scraper", "acetone"],
+            "parts": [
+              { "part_name": "Magnaflux Spotcheck SK-816 Dye Penetrant Kit", "part_number": "SK-816", "supplier": "Magnaflux / Grainger", "unit_cost_usd": 35, "qty": 1 },
+              { "part_name": "3M Safety-Walk 600 Series Non-Slip Tape 25mm x 1m", "part_number": "7000052062", "supplier": "3M Industrial / Amazon", "unit_cost_usd": 12, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "cumulative_impact_events_g10_plus", "signal_source": "IoT IMU shock event counter", "threshold_value": 800, "threshold_operator": ">", "threshold_unit": "count", "lead_time_hours": 240, "confidence": 0.63 },
+            { "signal_name": "fleet_ride_hours_since_deck_inspect", "signal_source": "fleet maintenance log", "threshold_value": 500, "threshold_operator": ">", "threshold_unit": "hours", "lead_time_hours": 168, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "IoT lock module (NFC + Bluetooth + cellular unlock)",
+          "symptom": "scooter cannot be unlocked by rider app, stuck in locked state in field; fleet shows scooter as available but unlock command times out",
+          "root_cause": "IoT lock MCU firmware hang from malformed BLE advertisement packet; cellular modem SIM card session expiry not handled gracefully; water ingress via cracked lock housing O-ring corroding PCB traces",
+          "severity": "high",
+          "mtbf_hours": 3000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["IoT", "connectivity", "lock", "firmware", "e-scooter", "BLE"],
+          "repair_protocol": {
+            "title": "IoT Lock Module Reset, Firmware Update, and Housing Inspection",
+            "steps": [
+              { "step": 1, "action": "Attempt remote power cycle of IoT module via fleet console (OTA reset command); wait 90 seconds; retry unlock command", "tool": "fleet console", "warning": null },
+              { "step": 2, "action": "If OTA reset fails: physically retrieve scooter with maintenance key (mechanical override key); transport to workshop", "tool": "mechanical override key (fleet ops kit)", "warning": null },
+              { "step": 3, "action": "In workshop: access IoT module (2x Torx T10 screws on lock housing); inspect PCB for water damage (green/white corrosion deposits)", "tool": "Torx T10 screwdriver, inspection light", "warning": null },
+              { "step": 4, "action": "If corrosion present: clean PCB with 99% isopropyl alcohol and soft brush; re-bake in oven at 60°C for 30 minutes to drive off moisture", "tool": "isopropyl alcohol 99%, soft brush, oven", "warning": "Do not exceed 70°C — will damage BLE antenna matching circuit components" },
+              { "step": 5, "action": "Update IoT firmware via USB-C service port to latest release (adds BLE watchdog timeout and SIM session auto-renew)", "tool": "USB-C service cable, laptop with Lime fleet firmware tool", "warning": null },
+              { "step": 6, "action": "Inspect housing O-ring; replace if compressed, cracked, or oval-deformed; apply thin film of Molykote 111 to new O-ring before installation", "tool": "O-ring pick, Molykote 111 silicone compound", "warning": null },
+              { "step": 7, "action": "Reassemble; test unlock via rider app and fleet console; confirm <3 second unlock response time over LTE", "tool": "test smartphone, fleet console", "warning": null }
+            ],
+            "tools_required": ["Torx T10 screwdriver", "isopropyl alcohol 99%", "soft brush", "USB-C service cable", "oven", "O-ring pick"],
+            "parts": [
+              { "part_name": "IoT Lock Housing O-Ring Replacement Set", "part_number": "LME-GEN4-ORING-KIT", "supplier": "Lime Fleet Parts Program", "unit_cost_usd": 5, "qty": 1 },
+              { "part_name": "Molykote 111 Compound Silicone Grease 150g", "part_number": "000000-8297-200-14", "supplier": "DuPont / Grainger", "unit_cost_usd": 22, "qty": 1 }
+            ],
+            "labor_minutes": 40,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "iot_unlock_command_timeout_count_per_day", "signal_source": "fleet IoT event log", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "count_per_day", "lead_time_hours": 24, "confidence": 0.75 },
+            { "signal_name": "ble_rssi_at_1m_dbm", "signal_source": "fleet BLE diagnostic scan", "threshold_value": -85, "threshold_operator": "<", "threshold_unit": "dBm", "lead_time_hours": 48, "confidence": 0.65 }
+          ]
+        },
+        {
+          "component": "front fork (aluminum steering column / fork legs)",
+          "symptom": "loose or notchy headset bearing, steering wobble at speed, audible clunk when braking, visible fork leg crack at dropout",
+          "root_cause": "headset bearing preload loss from vibration loosening lock nut; fork leg fatigue cracking at dropout weld from high-cycle impact loading; corrosion fatigue at anodized-to-raw aluminum interface at welds",
+          "severity": "critical",
+          "mtbf_hours": 2500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["structural", "fork", "headset", "bearing", "fatigue", "safety", "e-scooter"],
+          "repair_protocol": {
+            "title": "Headset Bearing Adjustment and Fork Structural Inspection",
+            "steps": [
+              { "step": 1, "action": "Apply front brake; rock scooter forward and back — any clunk or movement indicates headset play; lift front wheel and turn bars — any binding indicates headset overtightening", "tool": null, "warning": null },
+              { "step": 2, "action": "Adjust headset bearing: loosen stem clamp bolts; adjust top cap bolt in 1/4-turn increments until play eliminated without binding; tighten stem clamp bolts to 6 Nm", "tool": "5mm hex key, torque screwdriver", "warning": null },
+              { "step": 3, "action": "Inspect both fork legs at dropout (axle retention slot): apply dye penetrant test; any crack indication = remove from service permanently", "tool": "Magnaflux SK-816 dye penetrant kit", "warning": "Fork crack is a retire-immediately defect — catastrophic failure risk at speed" },
+              { "step": 4, "action": "Inspect fork crown weld (joint between fork legs and steerer tube): look for hairline cracks or paint bubbling over welds with 10x loupe", "tool": "10x loupe, inspection light", "warning": null },
+              { "step": 5, "action": "If headset bearing races pitted or gritty: remove stem; remove fork; press out bearing races; install new 1-1/8 inch integrated headset bearing; repack with Shimano grease", "tool": "headset press, bearing cup remover, Shimano grease", "warning": null }
+            ],
+            "tools_required": ["5mm hex key", "torque screwdriver", "Magnaflux SK-816 kit", "10x loupe", "headset press", "bearing cup remover"],
+            "parts": [
+              { "part_name": "FSA Orbit IS-2 1-1/8 Integrated Headset Bearing", "part_number": "MR149", "supplier": "FSA (Full Speed Ahead) / Jenson USA", "unit_cost_usd": 18, "qty": 1 },
+              { "part_name": "Shimano Premium Grease 50g", "part_number": "Y04110000", "supplier": "Shimano / Jenson USA", "unit_cost_usd": 9, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "steering_angle_wobble_hz_above_15kmh", "signal_source": "IMU gyroscope yaw axis", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "hz_oscillation", "lead_time_hours": 24, "confidence": 0.69 },
+            { "signal_name": "cumulative_impact_events_g15_plus", "signal_source": "IoT IMU shock counter", "threshold_value": 600, "threshold_operator": ">", "threshold_unit": "count", "lead_time_hours": 240, "confidence": 0.61 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "NTN Bearing Corporation of America", "website": "https://www.ntnamericas.com", "region": "NA", "component_types": ["bearing", "hub motor bearing"], "lead_time_days": 5, "risk_level": "low" },
+        { "name": "Samsung SDI America", "website": "https://www.samsungsdi.com", "region": "NA", "component_types": ["Li-ion cell", "battery module"], "lead_time_days": 21, "risk_level": "medium" },
+        { "name": "Victron Energy", "website": "https://www.victronenergy.com", "region": "EU", "component_types": ["BMS", "battery monitor", "charger"], "lead_time_days": 14, "risk_level": "low" },
+        { "name": "Shimano", "website": "https://www.shimano.com", "region": "global", "component_types": ["brake caliper", "brake pad", "headset bearing"], "lead_time_days": 7, "risk_level": "low" },
+        { "name": "Lime Fleet Parts Program", "website": "https://www.li.me", "region": "NA", "component_types": ["IoT lock", "battery pack", "deck"], "lead_time_days": 5, "risk_level": "medium" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "radcommercial-cargo",
+      "name": "RadCommercial Cargo E-Bike",
+      "manufacturer": "Rad Power Bikes",
+      "type": "micromobility",
+      "introduced_year": 2022,
+      "specs_json": {
+        "weight_kg": 34,
+        "payload_kg": 113,
+        "motor_w": 750,
+        "motor_type": "rear hub motor BLDC",
+        "battery_wh": 672,
+        "max_speed_kmh": 32,
+        "ip_rating": "IP67",
+        "range_km": 55,
+        "brakes": "hydraulic disc",
+        "gears": "7-speed Shimano",
+        "cargo_platform": "rear rack 45x35cm"
+      },
+      "notes": "Commercial cargo e-bike rated IP67. Designed for last-mile delivery fleets. 750W hub motor, front suspension fork.",
+      "failure_modes": [
+        {
+          "component": "750W rear hub motor — BLDC windings and bearings",
+          "symptom": "motor cuts out above 80% throttle, error code 21 on display (over-current), motor housing hot to touch after 20-minute ride, audible bearing grind",
+          "root_cause": "winding insulation breakdown from repeated thermal cycling with 113kg payload on hills; concurrent bearing race spalling from high-load radial forces under cargo weight; inadequate motor cooling in IP67 sealed housing",
+          "severity": "high",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["drivetrain", "hub-motor", "thermal", "bearing", "cargo-bike", "winding"],
+          "repair_protocol": {
+            "title": "750W Hub Motor Winding Inspection and Bearing Replacement",
+            "steps": [
+              { "step": 1, "action": "Remove rear wheel: shift to smallest cog; disconnect torque arm (2x M5 bolts); unplug motor connector (3+5 pin); remove axle nuts (15mm AF); extract wheel", "tool": "15mm spanner, 4mm hex key", "warning": null },
+              { "step": 2, "action": "Remove hub motor cover (6x M4 bolts, Torx T20); extract rotor; inspect stator windings under inspection light — any blackening, smell of burnt varnish, or winding-to-winding short = full motor replacement", "tool": "Torx T20, inspection light, nose", "warning": null },
+              { "step": 3, "action": "Measure winding resistance (phase-to-phase) with multimeter: must be within ±5% of spec (typically 0.2-0.5 Ω per phase for 750W). Any phase reading open circuit or >20% deviation = replace motor", "tool": "multimeter 0.01Ω resolution", "warning": null },
+              { "step": 4, "action": "If windings OK: press out drive-side bearing (6203-2RS); inspect non-drive side bearing; replace both", "tool": "hydraulic bearing press, bearing puller", "warning": null },
+              { "step": 5, "action": "Install new NTN 6203-2RS bearings with Loctite 648 in bore; pack bearing cavities with 3-4g Mobil Polyrex EM grease", "tool": "bearing press, grease gun, Loctite 648", "warning": null },
+              { "step": 6, "action": "Reinstall motor cover with new IP67 gasket; torque bolts in star pattern to 8 Nm", "tool": "torque wrench, Torx T20", "warning": null },
+              { "step": 7, "action": "Reinstall wheel; reconnect motor connector (verify phase order if connector replaced); run 15-minute loaded test with 80kg rider+cargo; check for error codes and motor temp <70°C", "tool": "fleet console or display, IR thermometer", "warning": null }
+            ],
+            "tools_required": ["15mm spanner", "Torx T20", "4mm hex key", "multimeter 0.01Ω", "hydraulic bearing press", "bearing puller", "torque wrench", "IR thermometer"],
+            "parts": [
+              { "part_name": "NTN 6203-2RS Sealed Deep-Groove Bearing (2-pack)", "part_number": "6203LLBC3-2PK", "supplier": "NTN Bearing Corporation of America", "unit_cost_usd": 16, "qty": 1 },
+              { "part_name": "Mobil Polyrex EM Electric Motor Grease 1lb", "part_number": "102538", "supplier": "ExxonMobil / Grainger", "unit_cost_usd": 28, "qty": 1 },
+              { "part_name": "Hub Motor IP67 Gasket Set", "part_number": "RPB-CARGO-GSKT-01", "supplier": "Rad Power Bikes Service Parts", "unit_cost_usd": 18, "qty": 1 }
+            ],
+            "labor_minutes": 75,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_temperature_celsius", "signal_source": "NTC in motor controller", "threshold_value": 72, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 8, "confidence": 0.82 },
+            { "signal_name": "over_current_error_code_count_per_week", "signal_source": "controller error log via BLE", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "count_per_week", "lead_time_hours": 72, "confidence": 0.78 }
+          ]
+        },
+        {
+          "component": "hydraulic disc brake system (front and rear)",
+          "symptom": "brake lever goes to bar without full stopping force, brake fade on long descents, brake fluid reservoir low indicator, squealing from rotor",
+          "root_cause": "hydraulic brake fluid (DOT 4 or mineral oil depending on caliper brand) moisture absorption degrading boiling point over 12-18 months; pad material glazing from repeated light braking with heavy cargo; rotor surface oxidation from IP67-sealed environments",
+          "severity": "critical",
+          "mtbf_hours": 1200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["brake", "hydraulic", "safety", "cargo-bike", "critical"],
+          "repair_protocol": {
+            "title": "Hydraulic Brake Fluid Replacement and Caliper Bleed",
+            "steps": [
+              { "step": 1, "action": "Identify brake fluid type from caliper manufacturer (Tektro, Shimano = mineral oil; SRAM, Magura DOT 5.1 — never mix DOT with mineral)", "tool": "caliper identification guide", "warning": "Mixing DOT and mineral oil destroys caliper seals — catastrophic brake failure" },
+              { "step": 2, "action": "Position bike upright; remove brake lever reservoir cap; remove old fluid with syringe; clean reservoir with fresh fluid of same type", "tool": "syringe, correct brake fluid", "warning": null },
+              { "step": 3, "action": "Attach bleed kit to caliper bleed nipple; open nipple 1/4 turn; slowly push fresh fluid from lever reservoir through system until clean fluid exits caliper bleed port", "tool": "Shimano TL-BT03-S or Tektro bleed kit, fresh mineral oil", "warning": null },
+              { "step": 4, "action": "Close bleed nipple; top up reservoir to max line; reinstall cap; check lever firmness — must not bottom out before full braking engagement", "tool": null, "warning": null },
+              { "step": 5, "action": "Inspect pad thickness: if <1.5mm compound remaining, replace pads; bed in new pads per manufacturer procedure (10x stops from 30kmh to 5kmh, allow cool between sets)", "tool": "depth gauge, pad replacement tool", "warning": null },
+              { "step": 6, "action": "Sand rotor surface with 400-grit wet/dry sandpaper to deglaze; wipe with isopropyl alcohol; test brake performance — stopping distance from 25km/h must be <9m", "tool": "400-grit wet/dry paper, isopropyl alcohol, tape measure", "warning": null }
+            ],
+            "tools_required": ["syringe", "bleed kit", "fresh brake fluid", "depth gauge", "400-grit sandpaper", "isopropyl alcohol", "tape measure"],
+            "parts": [
+              { "part_name": "Shimano Mineral Oil Brake Fluid 500ml", "part_number": "ISMDBLOIL", "supplier": "Shimano / Jenson USA", "unit_cost_usd": 10, "qty": 1 },
+              { "part_name": "Tektro Hydraulic Disc Brake Pad Set E10.11", "part_number": "E10.11", "supplier": "Tektro Technology / JensonUSA", "unit_cost_usd": 15, "qty": 2 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "brake_fluid_age_months", "signal_source": "fleet maintenance log timestamp", "threshold_value": 12, "threshold_operator": ">", "threshold_unit": "months", "lead_time_hours": 720, "confidence": 0.85 },
+            { "signal_name": "brake_lever_travel_pct_full", "signal_source": "brake pressure sensor (if equipped) or proxy rider report", "threshold_value": 85, "threshold_operator": ">", "threshold_unit": "percent_of_full_travel", "lead_time_hours": 24, "confidence": 0.72 }
+          ]
+        },
+        {
+          "component": "battery pack (672Wh Li-ion, IP67 sealed)",
+          "symptom": "range below 35km on flat route, battery LED shows 3 bars but bike cuts power after 15 minutes, charge port intermittent connection",
+          "root_cause": "cell capacity fade from repeated full-depth discharge in commercial delivery use; charge port connector oxidation from condensation inside IP67 enclosure via thermal cycling; BMS over-discharge protection triggering prematurely due to cell imbalance",
+          "severity": "high",
+          "mtbf_hours": 800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["battery", "BMS", "cargo-bike", "range", "charge-port", "IP67"],
+          "repair_protocol": {
+            "title": "Battery Charge Port Cleaning and BMS Balance Cycle",
+            "steps": [
+              { "step": 1, "action": "Inspect charge port with magnification loupe: look for corrosion, bent pins, or debris in port; clean with DeoxIT D5 on cotton swab", "tool": "magnification loupe, DeoxIT D5, cotton swab", "warning": "Ensure bike is powered off before cleaning charge port" },
+              { "step": 2, "action": "Plug in charger: confirm LED shows charging (red/amber) within 10 seconds; if no indication, test charger output voltage with multimeter (should be 58.8V for 48V system)", "tool": "multimeter", "warning": null },
+              { "step": 3, "action": "If charger output correct but bike not charging: access battery BMS via diagnostic port (if equipped); run BMS reset command; attempt charge again", "tool": "diagnostic cable, BMS software", "warning": null },
+              { "step": 4, "action": "Run BMS balance charge: set charger to 100% SOC; allow full absorb phase (current drops to C/20 or lower) — this forces passive balancing; may take 6-8 hours", "tool": "charger, 6-8 hour charge window", "warning": null },
+              { "step": 5, "action": "After balance charge: fully discharge at controlled C/3 rate (load tester or ride); re-charge fully; measure range on standard flat route — if <40km, schedule pack replacement", "tool": "load tester or test ride", "warning": null }
+            ],
+            "tools_required": ["magnification loupe", "DeoxIT D5", "cotton swab", "multimeter", "diagnostic cable"],
+            "parts": [
+              { "part_name": "DeoxIT D5 Contact Cleaner Spray 142g", "part_number": "D5S-6", "supplier": "Caig Laboratories", "unit_cost_usd": 16, "qty": 1 },
+              { "part_name": "RadCommercial 672Wh Battery Pack (replacement)", "part_number": "RPB-CARGO-BATT-672", "supplier": "Rad Power Bikes Service Parts", "unit_cost_usd": 680, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "range_km_7day_rolling_average", "signal_source": "GPS track distance / charge cycle log", "threshold_value": 38, "threshold_operator": "<", "threshold_unit": "km", "lead_time_hours": 168, "confidence": 0.80 },
+            { "signal_name": "charge_port_contact_resistance_mohm", "signal_source": "charger current profile ramp time proxy", "threshold_value": 150, "threshold_operator": ">", "threshold_unit": "milliohms", "lead_time_hours": 48, "confidence": 0.63 }
+          ]
+        },
+        {
+          "component": "Shimano 7-speed rear derailleur and chain",
+          "symptom": "gear skipping under load, chain dropping under heavy cargo pedaling, derailleur bent from impact, indexed shifting out of alignment after 500km",
+          "root_cause": "chain elongation from 500+ hours of high-torque cargo use causing skip on cassette cogs; derailleur hanger bending from curb/rack impacts; shift cable stretch de-indexing Shimano 7-speed precision",
+          "severity": "medium",
+          "mtbf_hours": 600,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "medium",
+          "tags": ["drivetrain", "chain", "derailleur", "cargo-bike", "Shimano"],
+          "repair_protocol": {
+            "title": "Chain Wear Check, Derailleur Alignment, and Cable Adjustment",
+            "steps": [
+              { "step": 1, "action": "Measure chain with Park Tool CC-4 chain checker — if >0.75% elongation reading, replace chain; if >1.0%, inspect cassette for hooked cog teeth (requires cassette replacement too)", "tool": "Park Tool CC-4 chain wear indicator", "warning": "Running a worn chain destroys cassette cogs — replace chain at 0.75% to avoid cascade cost" },
+              { "step": 2, "action": "Replace chain: break old chain with chain breaker; thread new KMC Z7 chain; connect with master link; ensure correct direction (inner-plate printing faces outward)", "tool": "Park Tool CT-3.2 chain breaker, KMC Missing Link pliers", "warning": null },
+              { "step": 3, "action": "Inspect derailleur hanger: place derailleur alignment gauge in axle hole; rotate gauge around wheel — any deviation >2mm at rim = straighten or replace hanger", "tool": "Park Tool DAG-2.2 alignment gauge", "warning": "Only straighten hanger if aluminum — carbon hangers must be replaced, not bent" },
+              { "step": 4, "action": "Adjust shift cable tension at barrel adjuster until index shifting is clean through all 7 gears under light pedaling load", "tool": "3mm hex key (barrel adjuster)", "warning": null },
+              { "step": 5, "action": "Set derailleur limit screws (H and L): confirm chain does not overshoot onto spokes or into dropout in any gear", "tool": "JIS #1 screwdriver", "warning": null },
+              { "step": 6, "action": "Test under cargo load (40kg on rear rack); shift through all gears under moderate torque; confirm no skipping for 3 consecutive lap cycles", "tool": "40kg test load", "warning": null }
+            ],
+            "tools_required": ["Park Tool CC-4 chain checker", "Park Tool CT-3.2 chain breaker", "KMC Missing Link pliers", "Park Tool DAG-2.2 alignment gauge", "3mm hex key", "JIS #1 screwdriver"],
+            "parts": [
+              { "part_name": "KMC Z7 7-Speed Chain 116L", "part_number": "Z7112", "supplier": "KMC Chain / J&B Importers", "unit_cost_usd": 12, "qty": 1 },
+              { "part_name": "Shimano CS-HG200 7-Speed Cassette 12-28T", "part_number": "ECSHG2007228", "supplier": "Shimano / Jenson USA", "unit_cost_usd": 22, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "chain_elongation_pct", "signal_source": "maintenance inspection cadence trigger (every 300km)", "threshold_value": 0.75, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 168, "confidence": 0.90 },
+            { "signal_name": "gear_skip_events_per_ride", "signal_source": "rider report or motor current spike analysis", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "count_per_ride", "lead_time_hours": 24, "confidence": 0.70 }
+          ]
+        },
+        {
+          "component": "front suspension fork (hydraulic damped)",
+          "symptom": "fork bottoms out on speed bumps with full cargo, oil stain on fork legs, fork feels harsh or locked at one end of travel",
+          "root_cause": "fork oil seal degradation from UV exposure and grit ingress causing oil bypass; spring preload inadequate for 113kg cargo payload at maximum; damper shim stack fatigue after 800+ hours of cargo-loaded riding",
+          "severity": "medium",
+          "mtbf_hours": 1000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["suspension", "fork", "cargo-bike", "seal", "oil"],
+          "repair_protocol": {
+            "title": "Suspension Fork Seal Replacement and Oil Change",
+            "steps": [
+              { "step": 1, "action": "Place bike in stand; remove front wheel; support fork with one hand; loosen axle through-bolt (5mm hex)", "tool": "bike stand, 5mm hex key", "warning": null },
+              { "step": 2, "action": "Remove fork lower legs: unscrew lower leg bolts (4mm hex, bottom of each leg); pull lowers down firmly while twisting to break seal; drain old oil into container", "tool": "4mm hex key, oil drain container", "warning": "Old fork oil is hazardous — dispose per local regulations, not in drain" },
+              { "step": 3, "action": "Inspect dust seals and oil seals: replace with correct seal kit (matched to fork model — typically 32mm or 34mm stanchion diameter)", "tool": "seal driver or large socket, wooden dowel", "warning": null },
+              { "step": 4, "action": "Measure and add correct volume of suspension fork oil: 10wt oil, quantity per fork manufacturer spec (typically 80-120ml per leg); reassemble lower legs; torque bottom bolts to 8 Nm", "tool": "graduated syringe, 10wt suspension oil, torque wrench", "warning": null },
+              { "step": 5, "action": "Reinstall wheel; set preload to maximum for cargo use (full clockwise on preload adjuster); test with 40kg cargo load — fork should use 70-80% travel on firm bump", "tool": "40kg test load, sag measurement tool", "warning": null }
+            ],
+            "tools_required": ["bike stand", "5mm hex key", "4mm hex key", "seal driver", "graduated syringe", "torque wrench"],
+            "parts": [
+              { "part_name": "RST / SR Suntour 32mm Fork Seal Kit", "part_number": "SF15-CR9V-32-SK", "supplier": "SR Suntour / Chain Reaction Cycles", "unit_cost_usd": 12, "qty": 1 },
+              { "part_name": "Fox Float Fluid 10wt Suspension Oil 120ml", "part_number": "025-03-056", "supplier": "Fox Racing Shox / Chain Reaction Cycles", "unit_cost_usd": 18, "qty": 1 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "fork_oil_stain_detected", "signal_source": "visual inspection flag in fleet maintenance log", "threshold_value": 1, "threshold_operator": ">=", "threshold_unit": "boolean", "lead_time_hours": 0, "confidence": 0.90 },
+            { "signal_name": "fleet_hours_since_fork_service", "signal_source": "fleet maintenance timestamp", "threshold_value": 800, "threshold_operator": ">", "threshold_unit": "hours", "lead_time_hours": 168, "confidence": 0.82 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "NTN Bearing Corporation of America", "website": "https://www.ntnamericas.com", "region": "NA", "component_types": ["bearing"], "lead_time_days": 5, "risk_level": "low" },
+        { "name": "Shimano", "website": "https://www.shimano.com", "region": "global", "component_types": ["brake caliper", "derailleur", "cassette", "chain"], "lead_time_days": 7, "risk_level": "low" },
+        { "name": "KMC Chain Industrial", "website": "https://www.kmcchain.com", "region": "global", "component_types": ["chain"], "lead_time_days": 5, "risk_level": "low" },
+        { "name": "Rad Power Bikes Service Parts", "website": "https://www.radpowerbikes.com", "region": "NA", "component_types": ["battery pack", "motor", "display", "gasket"], "lead_time_days": 10, "risk_level": "medium" },
+        { "name": "Tektro Technology Corporation", "website": "https://www.tektro.com", "region": "global", "component_types": ["hydraulic brake", "brake pad", "caliper"], "lead_time_days": 10, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "figure-02",
+      "name": "Figure 02",
+      "manufacturer": "Figure AI",
+      "type": "humanoid",
+      "introduced_year": 2024,
+      "specs_json": {
+        "weight_kg": 70,
+        "dof": 44,
+        "height_m": 1.7,
+        "payload_kg": 20,
+        "runtime_h": 5,
+        "hand_dof": 16,
+        "walking_speed_ms": 1.2,
+        "battery_wh": 2200
+      },
+      "notes": "Commercial humanoid with OpenAI VLA integration. BMW manufacturing deployment. Documentation is sparse — failure modes based on generic humanoid engineering principles. Confidence: low.",
+      "failure_modes": [
+        {
+          "component": "leg actuator (knee / hip joint — harmonic drive + BLDC)",
+          "symptom": "joint position error alarms, gait asymmetry detected by IMU, joint makes clicking sound during stance phase, reduced torque output in affected limb",
+          "root_cause": "harmonic drive flex spline fatigue cracking from repetitive high-torque stance loading; wave generator bearing wear increasing backlash beyond firmware compensation range; motor winding thermal stress from sustained walking duty cycle",
+          "severity": "critical",
+          "mtbf_hours": 3000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "harmonic-drive", "humanoid", "leg", "joint", "critical"],
+          "repair_protocol": {
+            "title": "Leg Actuator Joint Inspection and Harmonic Drive Assessment",
+            "steps": [
+              { "step": 1, "action": "Command robot to maintenance pose via control interface (lying flat, all joints to home position); engage full software E-stop and lockout", "tool": "robot control terminal", "warning": "Humanoid joints store significant energy in springs/actuators — never manually move limbs without confirming software lockout" },
+              { "step": 2, "action": "Measure joint backlash with dial indicator on output link: apply ±5 Nm hand torque; read dial indicator deflection at 200mm moment arm — backlash >0.3mm indicates harmonic drive wear", "tool": "dial indicator, 200mm moment arm fixture, force gauge", "warning": null },
+              { "step": 3, "action": "Pull joint torque telemetry from last 7 days: plot torque vs position — increasing torque-to-position ratio (stiffness increase) or torque ripple >15% indicates flex spline damage", "tool": "robot diagnostic software", "warning": null },
+              { "step": 4, "action": "If backlash >0.3mm or torque ripple >15%: remove actuator module (typically 6-8 M5 bolts per actuator, 2 motor connectors); send to manufacturer for harmonic drive replacement — not field-repairable", "tool": "M5 hex key set, torque wrench, connector extraction tool", "warning": "Harmonic drive replacement requires precision assembly tooling and calibration — depot/manufacturer service only" },
+              { "step": 5, "action": "After actuator reinstallation: run full joint calibration routine from robot software; verify joint position accuracy <0.1° across full range of motion", "tool": "robot calibration software", "warning": null }
+            ],
+            "tools_required": ["robot control terminal", "dial indicator", "moment arm fixture", "force gauge", "M5 hex key set", "torque wrench"],
+            "parts": [
+              { "part_name": "Harmonic Drive Component Set (wave generator + flex spline + circular spline)", "part_number": "CSF-20-100-2A-GR", "supplier": "Harmonic Drive Systems (Harmonic Drive LLC)", "unit_cost_usd": 1800, "qty": 1 },
+              { "part_name": "BLDC Actuator Replacement Module (Figure AI OEM)", "part_number": "FIG02-ACT-LEG-MOD", "supplier": "Figure AI Service", "unit_cost_usd": 4500, "qty": 1 }
+            ],
+            "labor_minutes": 180,
+            "skill_level": "specialist",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "joint_backlash_mm_at_200mm_arm", "signal_source": "actuator encoder + torque sensor cross-check", "threshold_value": 0.25, "threshold_operator": ">", "threshold_unit": "mm", "lead_time_hours": 168, "confidence": 0.65 },
+            { "signal_name": "joint_torque_ripple_pct", "signal_source": "joint torque sensor CAN telemetry", "threshold_value": 12, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.61 },
+            { "signal_name": "gait_asymmetry_score", "signal_source": "IMU gait analysis module", "threshold_value": 0.15, "threshold_operator": ">", "threshold_unit": "symmetry_index_deviation", "lead_time_hours": 24, "confidence": 0.70 }
+          ]
+        },
+        {
+          "component": "sensor fusion system (proprioception + exteroception)",
+          "symptom": "robot stumbles on uneven terrain it previously handled, balance controller intervention rate increases, 'sensor fusion degraded' warning in logs",
+          "root_cause": "IMU calibration drift from thermal cycling and vibration causing accelerometer bias error accumulation; camera-to-IMU extrinsic calibration drift from vibration loosening camera mount; temporal synchronization error between sensor streams (>5ms) causing state estimation noise",
+          "severity": "high",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "IMU", "sensor-fusion", "calibration", "humanoid", "balance"],
+          "repair_protocol": {
+            "title": "IMU Calibration Reset and Camera Extrinsic Recalibration",
+            "steps": [
+              { "step": 1, "action": "Place robot on precision flat surface (±0.1° level); run IMU static calibration routine from control software: robot must be stationary for 5 minutes; software estimates gyro bias and accelerometer offset", "tool": "precision level ±0.1°, robot calibration software", "warning": "Robot must be on vibration-isolated surface for calibration — do not run on concrete near forklifts or HVAC equipment" },
+              { "step": 2, "action": "After IMU calibration, run camera-IMU temporal synchronization check: wave calibration target in front of cameras; software estimates time offset between camera frames and IMU samples — must be <2ms", "tool": "AprilTag calibration target, robot calibration software", "warning": null },
+              { "step": 3, "action": "Run camera extrinsic calibration: mount multi-tag calibration board at known distance; drive robot through slow head movements; software updates camera-to-IMU rigid body transform", "tool": "multi-tag calibration board (0.5m x 0.5m), robot software", "warning": null },
+              { "step": 4, "action": "Verify calibration: run robot on standard test course (flat, 10cm step, 5° ramp, 180° turn); balance intervention rate should be <5 per minute", "tool": "standard test course, robot telemetry logger", "warning": null },
+              { "step": 5, "action": "If calibration does not converge (residual error >0.5°): inspect camera mount bolts for looseness (M2.5 or M3); retorque; repeat calibration", "tool": "M2.5/M3 hex key, torque screwdriver", "warning": null }
+            ],
+            "tools_required": ["precision level ±0.1°", "AprilTag calibration target", "multi-tag calibration board", "robot calibration software", "M2.5/M3 hex key"],
+            "parts": [
+              { "part_name": "AprilTag Multi-Tag Calibration Board A2 size", "part_number": "APTAG-CALIB-A2", "supplier": "AprilRobotics / Amazon", "unit_cost_usd": 35, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "imu_gyro_bias_deg_per_s", "signal_source": "IMU internal bias register", "threshold_value": 0.05, "threshold_operator": ">", "threshold_unit": "degrees_per_second", "lead_time_hours": 72, "confidence": 0.62 },
+            { "signal_name": "balance_controller_intervention_rate_per_min", "signal_source": "balance controller telemetry", "threshold_value": 8, "threshold_operator": ">", "threshold_unit": "count_per_minute", "lead_time_hours": 12, "confidence": 0.68 }
+          ]
+        },
+        {
+          "component": "battery thermal management system",
+          "symptom": "battery temperature warning above 40°C during operation, charging stops at 80% SOC as thermal protection engages, reduced runtime from 5h to 3h",
+          "root_cause": "cooling loop pump flow reduction from air bubble accumulation in liquid cooling circuit; thermal interface pad dry-out between battery cells and cooling plate after 18 months; cell chemistry sensitivity to BMW factory floor ambient temperature (28-35°C)",
+          "severity": "high",
+          "mtbf_hours": 4000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "thermal", "cooling", "humanoid", "BMS"],
+          "repair_protocol": {
+            "title": "Battery Cooling Circuit Bleed and Thermal Pad Inspection",
+            "steps": [
+              { "step": 1, "action": "Pull battery thermal telemetry for past 14 days: plot peak cell temperature vs ambient; if delta >12°C at rest, suspect cooling degradation", "tool": "robot diagnostic dashboard", "warning": null },
+              { "step": 2, "action": "Access battery cooling loop service port (location varies — refer to Figure AI service bulletin); attach cooling system pressure gauge; measure static pressure — must hold 0.8 bar over 10 minutes (no drop = no leak)", "tool": "cooling system pressure gauge, Figure AI service docs", "warning": null },
+              { "step": 3, "action": "Bleed cooling loop: open bleed nipple at highest point in loop; run pump at low speed; wait for continuous coolant flow without bubbles from bleed nipple; close nipple", "tool": "bleed nipple tool, catch container", "warning": null },
+              { "step": 4, "action": "If temperature delta persists after bleed: access battery cooling plate (specialist-level disassembly); replace Bergquist GP2000 thermal pads between cells and cooling plate", "tool": "Bergquist GP2000 thermal pad, precision knife, isopropyl alcohol", "warning": "Battery disassembly at this level is manufacturer service only — high voltage exposure" },
+              { "step": 5, "action": "After service: run full charge/discharge cycle in 25°C ambient; confirm peak cell temp <38°C throughout", "tool": "robot diagnostic dashboard, ambient thermometer", "warning": null }
+            ],
+            "tools_required": ["robot diagnostic dashboard", "cooling pressure gauge", "bleed nipple tool", "ambient thermometer"],
+            "parts": [
+              { "part_name": "Bergquist GP2000 Thermal Pad 1mm 150x150mm", "part_number": "GP2000-0.010-00-161", "supplier": "Henkel Bergquist / Digi-Key", "unit_cost_usd": 18, "qty": 2 },
+              { "part_name": "Glycol Cooling Fluid (50/50 premix) 1L", "part_number": "COOLANT-5050-1L", "supplier": "Prestone / Grainger", "unit_cost_usd": 10, "qty": 1 }
+            ],
+            "labor_minutes": 60,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_cell_temp_delta_from_ambient_celsius", "signal_source": "battery NTC array via BMS telemetry", "threshold_value": 12, "threshold_operator": ">", "threshold_unit": "celsius_delta", "lead_time_hours": 48, "confidence": 0.70 },
+            { "signal_name": "cooling_pump_flow_rate_lpm", "signal_source": "cooling circuit flow sensor", "threshold_value": 2.0, "threshold_operator": "<", "threshold_unit": "liters_per_minute", "lead_time_hours": 72, "confidence": 0.65 }
+          ]
+        },
+        {
+          "component": "dexterous hand actuators (Figure AI proprietary — 16 DOF)",
+          "symptom": "finger position error exceeds ±2mm during grasp tasks, object drop rate increases, tendon/cable pops audibly during gripping cycle",
+          "root_cause": "tendon cable stretch and conduit wear in distal finger segments from repetitive pick-and-place with hard objects; pulley bearing micro-pitting in small-diameter (3-5mm) stainless bearings; tendon anchor crimp fatigue failure",
+          "severity": "high",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["hand", "actuator", "tendon", "humanoid", "dexterity", "cable"],
+          "repair_protocol": {
+            "title": "Hand Tendon Cable Inspection and Tension Calibration",
+            "steps": [
+              { "step": 1, "action": "Command hand to open/close calibration cycle 10 times via control software; record finger position error from encoder readings — identify fingers with error >1.5mm", "tool": "robot control terminal", "warning": null },
+              { "step": 2, "action": "Engage hand lockout; open hand dorsal access panel (snap-fit cover, plastic pry tool); expose tendon routing and pulley assembly", "tool": "plastic pry tool, ESD wrist strap", "warning": "Small bearings and springs — work over clean white surface to catch dropped components" },
+              { "step": 3, "action": "For each affected finger: pull tendon gently and feel for slack >0.5mm; inspect cable sheath for fraying under magnification; check anchor crimp for any wire escape", "tool": "calipers, 10x loupe", "warning": null },
+              { "step": 4, "action": "If tendon slack >1mm: adjust tension at motor-side tensioner (typically small M1.6 adjuster bolt) until slack is <0.3mm under 2N pull force", "tool": "M1.6 hex driver, force gauge", "warning": "Over-tensioning tears finger tendons — apply maximum 2N at finger tip" },
+              { "step": 5, "action": "Replace any cable showing >3 broken strands or anchor crimp damage; route new cable per manufacturer routing diagram; crimp new anchor with ratchet crimper to 50N pull-out force", "tool": "ratchet crimper, replacement cable, routing diagram", "warning": "Cable routing errors can jam finger mechanism — follow diagram exactly" },
+              { "step": 6, "action": "Reassemble; run finger calibration routine; confirm all fingers within ±1mm position error over 20-cycle test", "tool": "robot calibration software", "warning": null }
+            ],
+            "tools_required": ["robot control terminal", "plastic pry tool", "ESD wrist strap", "calipers", "10x loupe", "M1.6 hex driver", "force gauge", "ratchet crimper"],
+            "parts": [
+              { "part_name": "Stainless Steel Aircraft Cable 0.8mm 7x7 (1m)", "part_number": "T304-0.8MM-1M", "supplier": "McMaster-Carr", "unit_cost_usd": 8, "qty": 1 },
+              { "part_name": "Micro Stainless Bearing ABEC-7 3x8x3mm (10-pack)", "part_number": "MR83ZZ-10PK", "supplier": "NSK Ltd / Boca Bearing Company", "unit_cost_usd": 22, "qty": 1 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "specialist",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "finger_position_error_mm_rms", "signal_source": "finger encoder vs commanded position", "threshold_value": 1.5, "threshold_operator": ">", "threshold_unit": "mm", "lead_time_hours": 48, "confidence": 0.67 },
+            { "signal_name": "grasp_object_drop_rate_pct", "signal_source": "vision-based task success monitor", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 24, "confidence": 0.73 }
+          ]
+        },
+        {
+          "component": "firmware / VLA model synchronization",
+          "symptom": "robot executes correct high-level task command but physical motion is jerky or mis-timed, model inference latency spikes >200ms, robot requests human clarification for tasks it previously completed autonomously",
+          "root_cause": "VLA model version mismatch between edge compute and cloud after OTA partial update; real-time controller firmware clock synchronization drift from IEEE 1588 PTP network issue; model quantization artifacts at runtime causing action prediction error",
+          "severity": "medium",
+          "mtbf_hours": 720,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["software", "firmware", "VLA", "AI", "humanoid", "latency", "OTA"],
+          "repair_protocol": {
+            "title": "Firmware Version Verification and VLA Model Redeployment",
+            "steps": [
+              { "step": 1, "action": "From fleet management console: check firmware version on all robot compute modules vs current release manifest; identify any module running non-current version", "tool": "fleet management console", "warning": null },
+              { "step": 2, "action": "Check PTP synchronization status: `ptp4l -f /etc/ptp4l.conf --slave_only 2>&1 | grep offset` — offset must be <50 microseconds; if >500μs, restart PTP service", "tool": "SSH terminal", "warning": null },
+              { "step": 3, "action": "If VLA model mismatch: force full model re-sync: `vla_deploy --full-sync --verify`; confirm model hash matches fleet manifest before allowing autonomous operation", "tool": "SSH terminal / fleet console OTA tool", "warning": "Do not allow robot to operate autonomously with unverified VLA model — task execution may be unpredictable" },
+              { "step": 4, "action": "After model sync: run 10-task qualification test suite (pick, place, navigate, handoff); confirm task success rate >95% and motion profile latency <150ms", "tool": "robot task qualification suite", "warning": null },
+              { "step": 5, "action": "If motion jerkiness persists post-sync: reboot all real-time control modules in sequence (joint controllers → state estimator → planner); confirm boot sequence completes without fault codes", "tool": "fleet console module reboot tool", "warning": null }
+            ],
+            "tools_required": ["fleet management console", "SSH terminal"],
+            "parts": [],
+            "labor_minutes": 45,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "vla_inference_latency_ms_p99", "signal_source": "inference engine performance monitor", "threshold_value": 180, "threshold_operator": ">", "threshold_unit": "milliseconds", "lead_time_hours": 4, "confidence": 0.71 },
+            { "signal_name": "ptp_clock_offset_us", "signal_source": "PTP synchronization daemon", "threshold_value": 200, "threshold_operator": ">", "threshold_unit": "microseconds", "lead_time_hours": 2, "confidence": 0.76 }
+          ]
+        },
+        {
+          "component": "ankle and foot contact sensors",
+          "symptom": "robot unable to detect ground contact reliably during foot-strike, stumbles on transitions between surface types, gait controller reports 'contact uncertainty' warnings",
+          "root_cause": "foot force/torque sensor overload from hard foot-strikes on concrete exceeding sensor rated load (common in early-learning gait policies); cable damage to sensor signal wiring from flex fatigue at ankle pivot; sensor zero-offset drift from temperature",
+          "severity": "high",
+          "mtbf_hours": 2500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "foot", "force-torque", "humanoid", "gait", "contact"],
+          "repair_protocol": {
+            "title": "Foot Force-Torque Sensor Zero Calibration and Cable Inspection",
+            "steps": [
+              { "step": 1, "action": "Command robot to stand on flat surface, feet fully loaded; run force sensor zero calibration from software — sets current load as zero reference (tare)", "tool": "robot calibration software", "warning": "Robot must be stationary and stable during tare — any motion will corrupt calibration" },
+              { "step": 2, "action": "Run sensor linearity check: apply known weights (5kg, 10kg, 15kg test masses) to foot pad; verify sensor output within ±3% of expected value", "tool": "calibrated test masses, robot diagnostic dashboard", "warning": null },
+              { "step": 3, "action": "If sensor overrange alarm has triggered: inspect sensor housing for mechanical damage; check for zero offset >5% of full-scale after tare — indicates overload damage requiring sensor replacement", "tool": "robot diagnostic software", "warning": null },
+              { "step": 4, "action": "Inspect ankle flex cable: bend cable through full ankle range while monitoring resistance continuity on each wire — any intermittent (>±5% change) = replace cable loom", "tool": "multimeter, flex cable loom replacement", "warning": null },
+              { "step": 5, "action": "After service: run gait validation on 10m test course with 5cm step transitions; confirm no 'contact uncertainty' warnings in 3 consecutive runs", "tool": "test course, robot telemetry monitor", "warning": null }
+            ],
+            "tools_required": ["robot calibration software", "calibrated test masses 5/10/15kg", "multimeter", "robot diagnostic dashboard"],
+            "parts": [
+              { "part_name": "6-Axis Force/Torque Sensor (generic humanoid ankle size ~50Nm range)", "part_number": "ATI-MINI45-E", "supplier": "ATI Industrial Automation", "unit_cost_usd": 3500, "qty": 1 },
+              { "part_name": "Custom Ankle Flex Cable Loom (OEM)", "part_number": "FIG02-ANKLE-CABLE", "supplier": "Figure AI Service", "unit_cost_usd": 280, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "specialist",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "foot_sensor_zero_offset_pct_fullscale", "signal_source": "F/T sensor diagnostic", "threshold_value": 4, "threshold_operator": ">", "threshold_unit": "percent_of_full_scale", "lead_time_hours": 48, "confidence": 0.64 },
+            { "signal_name": "contact_uncertainty_count_per_100_steps", "signal_source": "gait controller event log", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "count_per_100_steps", "lead_time_hours": 12, "confidence": 0.69 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Harmonic Drive LLC", "website": "https://www.harmonicdrive.net", "region": "NA", "component_types": ["harmonic drive", "strain wave gear"], "lead_time_days": 45, "risk_level": "high" },
+        { "name": "ATI Industrial Automation", "website": "https://www.ati-ia.com", "region": "NA", "component_types": ["force-torque sensor", "tool changer"], "lead_time_days": 30, "risk_level": "medium" },
+        { "name": "Henkel Bergquist", "website": "https://www.henkel-adhesives.com", "region": "NA", "component_types": ["thermal interface material"], "lead_time_days": 7, "risk_level": "low" },
+        { "name": "NSK Americas", "website": "https://www.nskamericas.com", "region": "NA", "component_types": ["micro bearing", "precision bearing"], "lead_time_days": 14, "risk_level": "medium" },
+        { "name": "Figure AI Service", "website": "https://www.figure.ai", "region": "NA", "component_types": ["actuator module", "cable loom", "hand assembly"], "lead_time_days": 21, "risk_level": "high" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "tesla-optimus",
+      "name": "Tesla Optimus Gen2",
+      "manufacturer": "Tesla",
+      "type": "humanoid",
+      "introduced_year": 2024,
+      "specs_json": {
+        "weight_kg": 57,
+        "dof": 40,
+        "height_m": 1.73,
+        "walking_speed_ms": 1.0,
+        "hand_dof": 22,
+        "battery_wh": 2300,
+        "compute": "Tesla FSD SoC",
+        "actuators": "proprietary linear + rotary"
+      },
+      "notes": "Tesla in-house manufacturing humanoid. Minimal external technical documentation. Failure modes based on engineering principles and publicly observable hardware. Confidence: low. FCC filings and teardown speculation are primary sources.",
+      "failure_modes": [
+        {
+          "component": "proprietary linear actuator (leg push-rod / knee extension)",
+          "symptom": "joint stiffness increase, linear actuator audible buzz at near-max extension, gait deviation detected by Tesla's internal vision-based gait monitor, joint position error >1cm",
+          "root_cause": "ball-screw drive nut preload loss from thermal cycling causing backlash increase; recirculating ball bearing wear from grit contamination in partially-sealed IP environment; motor winding insulation thermal degradation from high duty cycle in manufacturing environment (sustained walking)",
+          "severity": "critical",
+          "mtbf_hours": 4000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "ball-screw", "humanoid", "leg", "linear-actuator", "critical"],
+          "repair_protocol": {
+            "title": "Linear Actuator Backlash Check and Ball-Screw Inspection",
+            "steps": [
+              { "step": 1, "action": "Command Optimus to maintenance pose (supine, all joints centered); engage full E-stop via Tesla Optimus control tablet; verify all joint brakes engaged", "tool": "Tesla control tablet", "warning": "Tesla actuators contain high-tension springs — do not manually manipulate limbs without confirmed brake engagement" },
+              { "step": 2, "action": "Measure linear actuator backlash: attach dial indicator to output rod end; apply ±20N axial hand load; record total indicator movement — must be <0.2mm", "tool": "dial indicator, rod-end attachment fixture", "warning": null },
+              { "step": 3, "action": "If backlash >0.3mm: remove actuator module (connector-first, then structural bolts — typically 4x M6); open actuator housing to expose ball-screw nut", "tool": "M6 hex key, actuator housing tool", "warning": "Module is under-documented externally — photograph all wiring before disconnection" },
+              { "step": 4, "action": "Inspect ball-screw balls and nut races under magnification: replace full ball-screw assembly if any pitting visible; clean housing of metal debris", "tool": "10x loupe, magnetic pick-up tool", "warning": null },
+              { "step": 5, "action": "Repack ball-screw nut with Mobil Mobilux EP2 grease (5-8g); reassemble; verify backlash <0.15mm before reinstallation", "tool": "grease syringe, dial indicator, Mobilux EP2", "warning": null },
+              { "step": 6, "action": "Reinstall actuator; run joint calibration from Tesla software; confirm position tracking error <0.5mm over 10 full-range motion cycles", "tool": "Tesla control software", "warning": null }
+            ],
+            "tools_required": ["Tesla control tablet", "dial indicator", "M6 hex key", "10x loupe", "grease syringe", "magnetic pick-up tool"],
+            "parts": [
+              { "part_name": "Thomson BSA12-3.175x3 Ball Screw Assembly (nearest commercial equivalent)", "part_number": "TBSA12-3175X3", "supplier": "Thomson Industries / Digi-Key", "unit_cost_usd": 280, "qty": 1 },
+              { "part_name": "Mobil Mobilux EP2 Lithium Complex Grease 1kg", "part_number": "102817", "supplier": "ExxonMobil / Grainger", "unit_cost_usd": 32, "qty": 1 }
+            ],
+            "labor_minutes": 150,
+            "skill_level": "specialist",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "linear_actuator_backlash_mm", "signal_source": "actuator encoder round-trip position test", "threshold_value": 0.2, "threshold_operator": ">", "threshold_unit": "mm", "lead_time_hours": 168, "confidence": 0.57 },
+            { "signal_name": "actuator_motor_current_rms_pct_baseline", "signal_source": "actuator motor controller", "threshold_value": 122, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.63 }
+          ]
+        },
+        {
+          "component": "22-DOF hand (high-dexterity proprietary tendon-driven hand)",
+          "symptom": "finger grip force inconsistency >20% cycle-to-cycle, tendon pops audible during rapid close gesture, finger tip position wobbles during precision tasks",
+          "root_cause": "tendon cable micro-fatigue at sheave radius for small-bend (<8mm) pulleys common in 22-DOF hand architecture; actuator tendon pre-tensioner spring setpoint drift causing inconsistent tendon baseline tension; contact pad surface wear reducing tactile signal quality",
+          "severity": "high",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["hand", "tendon", "actuator", "humanoid", "dexterity", "cable"],
+          "repair_protocol": {
+            "title": "Hand Tendon Pre-Tension Inspection and Cable Integrity Check",
+            "steps": [
+              { "step": 1, "action": "Run hand self-test cycle from Tesla control software: 20 open/close cycles at 50% speed; log finger position deviation; identify fingers with >3mm tip deviation", "tool": "Tesla control software", "warning": null },
+              { "step": 2, "action": "Engage hand lockout; open dorsal access cover (proprietary tool or Torx T6 if accessible); expose tendon routing and pulley tree", "tool": "Tesla hand service tool or Torx T6", "warning": "Hand contains small ABEC-7 bearings and springs — work on anti-static mat over white paper" },
+              { "step": 3, "action": "For each problematic finger: pull tendon at proximal segment with 1N force; measure slack — acceptable <0.5mm; if >1mm, adjust at pre-tensioner", "tool": "force gauge, calipers", "warning": null },
+              { "step": 4, "action": "Inspect each tendon under 10x loupe at pulley contact point: any fraying, kinking, or >2 broken strands = replace cable segment", "tool": "10x loupe", "warning": null },
+              { "step": 5, "action": "Replace any failed tendon segment with 0.5mm 7x7 stainless aircraft cable; route per hand assembly diagram; crimp end with ratchet crimper; verify 30N pull-out from crimp", "tool": "0.5mm 7x7 cable, ratchet crimper, assembly diagram", "warning": null },
+              { "step": 6, "action": "Reassemble; run 50-cycle qualification at full speed; confirm tip deviation <1.5mm and grip force consistency >90%", "tool": "Tesla control software, grip force test object", "warning": null }
+            ],
+            "tools_required": ["Tesla control software", "Tesla hand service tool or Torx T6", "force gauge", "calipers", "10x loupe", "ratchet crimper", "anti-static mat"],
+            "parts": [
+              { "part_name": "Stainless Aircraft Cable 0.5mm 7x7 (2m)", "part_number": "T304-0.5MM-2M", "supplier": "McMaster-Carr", "unit_cost_usd": 10, "qty": 1 },
+              { "part_name": "Micro Swage Crimp Ferrule 0.5mm Stainless (50-pack)", "part_number": "CRIMP-05-SS-50", "supplier": "McMaster-Carr", "unit_cost_usd": 12, "qty": 1 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "specialist",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "hand_finger_tip_deviation_mm_p95", "signal_source": "hand encoder array", "threshold_value": 2.5, "threshold_operator": ">", "threshold_unit": "mm", "lead_time_hours": 48, "confidence": 0.60 },
+            { "signal_name": "grip_force_cycle_variance_pct", "signal_source": "grip force sensor / actuator torque proxy", "threshold_value": 20, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 24, "confidence": 0.64 }
+          ]
+        },
+        {
+          "component": "Tesla FSD SoC compute platform (onboard inference)",
+          "symptom": "increased task latency, motion planning solution not found within 500ms timeout, SoC thermal throttle warning in logs, robot enters conservative 'reduced capability' mode",
+          "root_cause": "FSD SoC operating at 90%+ CPU/NPU utilization from perception pipeline workload in cluttered manufacturing environment; thermal throttle from cooling system dust accumulation on heat sink fins; NPU SRAM soft errors from cosmic ray single-event upsets (rare but documented in ARM cores)",
+          "severity": "high",
+          "mtbf_hours": 5000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["compute", "SoC", "thermal", "firmware", "humanoid", "AI-inference"],
+          "repair_protocol": {
+            "title": "FSD SoC Thermal Cleaning and Utilization Optimization",
+            "steps": [
+              { "step": 1, "action": "Pull SoC performance telemetry: CPU utilization, NPU utilization, thermal zone temperatures, throttle events per hour over past 7 days", "tool": "Tesla fleet diagnostic console", "warning": null },
+              { "step": 2, "action": "Access compute module cooling air inlet (location per Tesla service guide — typically rear torso); use compressed air at 30 PSI to clear dust from heat sink fins; measure airflow improvement", "tool": "compressed air can 30 PSI, airflow indicator strip", "warning": "ESD precaution — ground yourself before accessing compute compartment" },
+              { "step": 3, "action": "Check thermal interface between SoC and heat sink: if SoC package temp >85°C at 50% NPU load, replace thermal interface material; apply Shin-Etsu X-23 paste 0.1mm layer", "tool": "Shin-Etsu X-23 thermal paste, plastic spatula, isopropyl alcohol", "warning": null },
+              { "step": 4, "action": "If NPU SRAM errors in logs (ECC error count >0 per week): perform memory ECC scrub via Tesla diagnostic tool; if persistent, SoC replacement required (factory service)", "tool": "Tesla diagnostic tool", "warning": null },
+              { "step": 5, "action": "Optimize perception pipeline configuration: reduce camera resolution for non-safety-critical views from 1080p to 720p in stable-lighting environments; confirm NPU utilization drops to <75%", "tool": "Tesla configuration console", "warning": "Do not reduce resolution on safety-critical forward-facing cameras without engineering sign-off" }
+            ],
+            "tools_required": ["Tesla fleet diagnostic console", "compressed air 30 PSI", "Shin-Etsu X-23 thermal paste", "plastic spatula", "isopropyl alcohol"],
+            "parts": [
+              { "part_name": "Shin-Etsu X-23-7762 Thermal Paste 7g", "part_number": "X-23-7762-7G", "supplier": "Shin-Etsu Chemical / Digi-Key", "unit_cost_usd": 15, "qty": 1 }
+            ],
+            "labor_minutes": 50,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "fsd_soc_temperature_celsius", "signal_source": "SoC thermal zone sensor", "threshold_value": 82, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 4, "confidence": 0.72 },
+            { "signal_name": "npu_utilization_pct_1h_avg", "signal_source": "SoC performance counters", "threshold_value": 88, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 12, "confidence": 0.68 }
+          ]
+        },
+        {
+          "component": "rotary actuator (shoulder / hip — BLDC + cycloidal or planetary gearbox)",
+          "symptom": "joint torque output drops to 60% of commanded, robot shifts to low-torque mode for affected limb, gear noise at low speed, joint vibration during slow controlled motion",
+          "root_cause": "cycloidal gearbox pin roller bearing fatigue from high-cycle manufacturing use; planetary carrier bearing wear from sustained radial loads; motor encoder magnetic interference from adjacent actuators causing commutation errors",
+          "severity": "critical",
+          "mtbf_hours": 3500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "gearbox", "humanoid", "shoulder", "hip", "BLDC", "critical"],
+          "repair_protocol": {
+            "title": "Rotary Actuator Gearbox Inspection and Bearing Service",
+            "steps": [
+              { "step": 1, "action": "Pull actuator efficiency telemetry: compare motor input power vs output torque × speed; efficiency <75% indicates gearbox loss; cross-check with gear noise audio analysis if equipped", "tool": "Tesla diagnostic console", "warning": null },
+              { "step": 2, "action": "Command robot to maintenance pose; lockout; remove actuator module: disconnect motor connector and encoder cable; remove 4-6x M6 structural bolts; extract module", "tool": "M6 hex key, connector extraction tool, torque wrench", "warning": null },
+              { "step": 3, "action": "On bench: measure gear stage backlash — apply ±10 Nm to output; measure input shaft rotation (should be <0.05° for cycloidal, <0.1° for planetary)", "tool": "precision rotation sensor, torque wrench", "warning": null },
+              { "step": 4, "action": "Open gearbox (proprietary fasteners expected): inspect pin rollers and ring gear; any pitting >0.1mm on pin rollers = replace cycloidal stage; record all gear measurements", "tool": "proprietary gearbox tool, 10x loupe, calipers", "warning": null },
+              { "step": 5, "action": "Replace carrier bearings with matched precision set (ABEC-5 or better); repack with Klüber Isoflex NBU 15 ultra-precision bearing grease; reassemble gearbox to 0.02mm backlash spec", "tool": "ABEC-5 bearing set, precision assembly fixtures, Klüber Isoflex NBU 15 grease", "warning": "Cycloidal gearbox reassembly requires precision tooling — factory service only for full disassembly" },
+              { "step": 6, "action": "Reinstall actuator module; run efficiency test; confirm >85% mechanical efficiency; run position accuracy test <0.2° error at max rated torque", "tool": "Tesla diagnostic software", "warning": null }
+            ],
+            "tools_required": ["Tesla diagnostic console", "M6 hex key", "precision rotation sensor", "torque wrench", "10x loupe", "calipers", "ABEC-5 precision bearing set"],
+            "parts": [
+              { "part_name": "Klüber Isoflex NBU 15 Ultra-Precision Bearing Grease 50g", "part_number": "099120-082", "supplier": "Klüber Lubrication / Grainger", "unit_cost_usd": 65, "qty": 1 },
+              { "part_name": "ABEC-5 Precision Bearing Set (cycloidal carrier — OEM match)", "part_number": "TSLA-OPT-BEAR-SET-HIP", "supplier": "Tesla Service Parts", "unit_cost_usd": 380, "qty": 1 }
+            ],
+            "labor_minutes": 200,
+            "skill_level": "specialist",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "actuator_mechanical_efficiency_pct", "signal_source": "motor power in vs joint torque × speed out", "threshold_value": 78, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 72, "confidence": 0.66 },
+            { "signal_name": "gearbox_vibration_rms_g_at_joint", "signal_source": "accelerometer on actuator housing", "threshold_value": 0.5, "threshold_operator": ">", "threshold_unit": "g", "lead_time_hours": 48, "confidence": 0.62 }
+          ]
+        },
+        {
+          "component": "battery pack thermal management (2300Wh, liquid-cooled)",
+          "symptom": "runtime reduced from 8h target to 5h, battery max charge voltage reduced by BMS to 90% capacity, coolant pump warning LED, pack surface temperature uneven",
+          "root_cause": "liquid coolant micro-channel blockage from mineral precipitation in non-deionized coolant; cooling pump brushless motor bearing wear reducing flow rate; cell chemistry (assumed NMC 811 or LFP based on Tesla supply chain) sensitivity to >38°C cell temperature during fast charge",
+          "severity": "high",
+          "mtbf_hours": 5000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "thermal", "cooling", "humanoid", "BMS", "liquid-cooling"],
+          "repair_protocol": {
+            "title": "Battery Cooling Pump Inspection and Coolant Flush",
+            "steps": [
+              { "step": 1, "action": "Pull cooling system telemetry: inlet vs outlet temperature differential (ΔT); must be 5-8°C at nominal load; ΔT >12°C indicates low flow; ΔT <2°C indicates no flow or short-circuit", "tool": "Tesla diagnostic console", "warning": null },
+              { "step": 2, "action": "Access cooling system service port (Tesla Optimus — assumed similar to Tesla vehicle architecture — HVAC system on upper torso); attach cooling loop pressure gauge; measure flow rate indicator", "tool": "cooling pressure gauge kit", "warning": "48V battery system — lockout before accessing any cooling circuit near battery" },
+              { "step": 3, "action": "Drain cooling loop via drain plug; flush with 1L deionized water; refill with Tesla-spec coolant (assumed OAT extended-life ethylene glycol or Tesla Novec-equivalent); bleed air", "tool": "drain container, deionized water, Tesla-spec coolant, bleed tool", "warning": "Use only manufacturer-specified coolant — incorrect chemistry causes aluminum corrosion in micro-channels" },
+              { "step": 4, "action": "Check cooling pump: measure pump motor current at startup vs spec; if >20% over baseline or pump fails to start within 2 seconds, replace pump assembly", "tool": "multimeter, pump spec datasheet", "warning": null },
+              { "step": 5, "action": "After service: run full charge/discharge cycle; monitor cell temperature max — confirm <36°C throughout cycle in 22°C ambient", "tool": "Tesla diagnostic console, ambient thermometer", "warning": null }
+            ],
+            "tools_required": ["Tesla diagnostic console", "cooling pressure gauge", "drain container", "deionized water supply", "ambient thermometer"],
+            "parts": [
+              { "part_name": "Tesla OAT Extended-Life Coolant Concentrate 1L (diluted 50/50 with DI water)", "part_number": "TSLA-COOLANT-OAT-1L", "supplier": "Tesla Service Parts", "unit_cost_usd": 25, "qty": 1 },
+              { "part_name": "Micro Cooling Pump DC 24V 5LPM (nearest commercial equivalent)", "part_number": "D5-VARIO-LT12V-12V", "supplier": "Laing Thermotech / McMaster-Carr", "unit_cost_usd": 85, "qty": 1 }
+            ],
+            "labor_minutes": 75,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "cooling_delta_T_celsius", "signal_source": "coolant inlet vs outlet thermistor", "threshold_value": 11, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 24, "confidence": 0.67 },
+            { "signal_name": "battery_soh_pct", "signal_source": "BMS state-of-health register", "threshold_value": 85, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 336, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "vision-based localization (FSD camera array — torso + head mounted)",
+          "symptom": "robot loses position in manufacturing cell after lighting change, returns incorrect object pose for grasping task, repeated task abort events linked to 'pose uncertainty too high'",
+          "root_cause": "FSD neural network localization degrading under factory lighting conditions not well-represented in training data (sodium vapor lamps, variable LED intensity); camera lens soiling from manufacturing environment particulates (metal chips, coolant mist); adversarial environment conditions causing distribution shift",
+          "severity": "high",
+          "mtbf_hours": 1200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["vision", "localization", "perception", "camera", "FSD", "humanoid", "manufacturing"],
+          "repair_protocol": {
+            "title": "Camera Lens Cleaning and Visual Localization Reference Map Update",
+            "steps": [
+              { "step": 1, "action": "Review task abort log for pattern: if aborts cluster around specific lighting state or time of day, flag for lighting environment remediation before camera service", "tool": "Tesla fleet console abort log", "warning": null },
+              { "step": 2, "action": "Clean all camera lenses: remove dust cover (if present); apply 2 sprays Zeiss Lens Care solution to microfibre cloth; wipe each lens with single radial strokes", "tool": "Zeiss Lens Care spray, microfibre cloths", "warning": "Do not spray solution directly on lens — spray on cloth first; avoid anti-reflective coating damage" },
+              { "step": 3, "action": "Update visual localization reference map for the manufacturing cell: run 'map capture' mode — robot walks slowly around cell perimeter at 0.3 m/s; system captures new lighting-corrected visual fingerprint map", "tool": "Tesla control software map-capture mode", "warning": null },
+              { "step": 4, "action": "Test localization: drive robot to 10 known waypoints; measure position error with external tracker (laser tracker or AprilTag ground truth); max error 15mm in XY, 2° in yaw", "tool": "laser tracker or AprilTag ground truth fixture, measuring tape", "warning": null },
+              { "step": 5, "action": "If localization error persists: install supplementary structured light markers (retroreflective targets) at 2m height around cell; update localization to use marker-fusion mode", "tool": "retroreflective markers, drill, measuring tape", "warning": null }
+            ],
+            "tools_required": ["Tesla fleet console", "Zeiss Lens Care spray", "microfibre cloths", "laser tracker or AprilTag ground truth"],
+            "parts": [
+              { "part_name": "Zeiss Lens Care Plus Spray 240ml", "part_number": "000000-2096-075", "supplier": "Carl Zeiss Vision", "unit_cost_usd": 14, "qty": 1 },
+              { "part_name": "Retroreflective Survey Target 75mm dia (10-pack)", "part_number": "RR-75-10PK", "supplier": "Prism Survey Supply / Amazon", "unit_cost_usd": 22, "qty": 1 }
+            ],
+            "labor_minutes": 75,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "task_abort_rate_per_shift", "signal_source": "Tesla fleet task execution log", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "count_per_shift", "lead_time_hours": 8, "confidence": 0.70 },
+            { "signal_name": "pose_uncertainty_covariance_trace_m2", "signal_source": "visual localization module", "threshold_value": 0.01, "threshold_operator": ">", "threshold_unit": "m_squared", "lead_time_hours": 2, "confidence": 0.65 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Thomson Industries", "website": "https://www.thomsonlinear.com", "region": "NA", "component_types": ["ball screw", "linear actuator", "linear guide"], "lead_time_days": 21, "risk_level": "medium" },
+        { "name": "Klüber Lubrication", "website": "https://www.klueber.com", "region": "global", "component_types": ["precision grease", "thermal lubricant"], "lead_time_days": 14, "risk_level": "low" },
+        { "name": "NSK Americas", "website": "https://www.nskamericas.com", "region": "NA", "component_types": ["precision bearing", "ABEC-5 bearing", "ball screw nut"], "lead_time_days": 14, "risk_level": "medium" },
+        { "name": "Tesla Service Parts", "website": "https://www.tesla.com", "region": "NA", "component_types": ["actuator module", "battery pack", "compute module", "coolant"], "lead_time_days": 30, "risk_level": "high" },
+        { "name": "Shin-Etsu Chemical America", "website": "https://www.shinetsu.co.jp", "region": "NA", "component_types": ["thermal interface paste", "silicone compound"], "lead_time_days": 7, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    }
+  ]
+}

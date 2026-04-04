@@ -1,0 +1,151 @@
+{
+  "interface": "can0",
+  "can_signals": [
+    {
+      "can_id": 385,
+      "can_id_hex": "0x181",
+      "message_count": 12,
+      "frequency_hz": 10.0,
+      "dlc": 8,
+      "entropy": 3.12,
+      "entropy_class": "medium",
+      "signal_class": "SENSOR",
+      "sample_bytes": ["3E00000000000000", "3E12340000000000", "3E24680000000000"],
+      "canopen_function_code": "PDO1_TX",
+      "node_id": 1
+    },
+    {
+      "can_id": 386,
+      "can_id_hex": "0x182",
+      "message_count": 10,
+      "frequency_hz": 10.0,
+      "dlc": 8,
+      "entropy": 3.08,
+      "entropy_class": "medium",
+      "signal_class": "SENSOR",
+      "sample_bytes": ["3E00000000000000", "3E12340000000000"],
+      "canopen_function_code": "PDO1_TX",
+      "node_id": 2
+    },
+    {
+      "can_id": 387,
+      "can_id_hex": "0x183",
+      "message_count": 8,
+      "frequency_hz": 8.0,
+      "dlc": 8,
+      "entropy": 2.95,
+      "entropy_class": "medium",
+      "signal_class": "SENSOR",
+      "sample_bytes": ["3E00000000000000", "3E24680000000000"],
+      "canopen_function_code": "PDO1_TX",
+      "node_id": 3
+    },
+    {
+      "can_id": 513,
+      "can_id_hex": "0x201",
+      "message_count": 6,
+      "frequency_hz": 6.0,
+      "dlc": 8,
+      "entropy": 2.0,
+      "entropy_class": "low",
+      "signal_class": "COMMAND",
+      "sample_bytes": ["00400000C8000000"],
+      "canopen_function_code": "PDO1_RX",
+      "node_id": 1
+    },
+    {
+      "can_id": 514,
+      "can_id_hex": "0x202",
+      "message_count": 5,
+      "frequency_hz": 5.0,
+      "dlc": 8,
+      "entropy": 1.9,
+      "entropy_class": "low",
+      "signal_class": "COMMAND",
+      "sample_bytes": ["00400000C8000000"],
+      "canopen_function_code": "PDO1_RX",
+      "node_id": 2
+    },
+    {
+      "can_id": 1409,
+      "can_id_hex": "0x581",
+      "message_count": 3,
+      "frequency_hz": 1.5,
+      "dlc": 8,
+      "entropy": 2.5,
+      "entropy_class": "medium",
+      "signal_class": "SDO",
+      "sample_bytes": ["6043010000000000", "604301AABB000000"],
+      "canopen_function_code": "SDO_TX",
+      "node_id": 1
+    },
+    {
+      "can_id": 1793,
+      "can_id_hex": "0x701",
+      "message_count": 8,
+      "frequency_hz": 2.0,
+      "dlc": 1,
+      "entropy": 0.0,
+      "entropy_class": "constant",
+      "signal_class": "HEARTBEAT",
+      "sample_bytes": ["05"],
+      "canopen_function_code": "NMT_HEARTBEAT",
+      "node_id": 1
+    },
+    {
+      "can_id": 1794,
+      "can_id_hex": "0x702",
+      "message_count": 7,
+      "frequency_hz": 2.0,
+      "dlc": 1,
+      "entropy": 0.0,
+      "entropy_class": "constant",
+      "signal_class": "HEARTBEAT",
+      "sample_bytes": ["05"],
+      "canopen_function_code": "NMT_HEARTBEAT",
+      "node_id": 2
+    },
+    {
+      "can_id": 0,
+      "can_id_hex": "0x000",
+      "message_count": 3,
+      "frequency_hz": 1.5,
+      "dlc": 2,
+      "entropy": 1.0,
+      "entropy_class": "low",
+      "signal_class": "NMT",
+      "sample_bytes": ["8101", "8201"],
+      "canopen_function_code": "NMT",
+      "node_id": null
+    },
+    {
+      "can_id": 2561,
+      "can_id_hex": "0xA01",
+      "message_count": 3,
+      "frequency_hz": 1.0,
+      "dlc": 8,
+      "entropy": 5.2,
+      "entropy_class": "high",
+      "signal_class": "PROPRIETARY",
+      "sample_bytes": ["DEADBEEF01020304", "DEADBEEF05060708", "DEADBEEF09101112"],
+      "canopen_function_code": "PROPRIETARY",
+      "node_id": null
+    }
+  ],
+  "ros_topics": [
+    {"topic": "/joint_states", "type": "sensor_msgs/msg/JointState", "frequency_hz": 500.0},
+    {"topic": "/imu/data", "type": "sensor_msgs/msg/Imu", "frequency_hz": 500.0},
+    {"topic": "/camera/depth/image_rect_raw", "type": "sensor_msgs/msg/Image", "frequency_hz": 30.0},
+    {"topic": "/battery_state", "type": "sensor_msgs/msg/BatteryState", "frequency_hz": 1.0}
+  ],
+  "network_services": [
+    {"target": "192.168.1.100", "port": 22, "protocol": "SSH", "confidence": 0.99},
+    {"target": "192.168.1.100", "port": 9090, "protocol": "ROS Bridge WebSocket", "confidence": 0.9}
+  ],
+  "proprietary_frames": [
+    "A01#DEADBEEF01020304",
+    "A01#DEADBEEF05060708",
+    "A02#CAFE000011223344"
+  ],
+  "analyzed_at": "2026-03-31T00:00:00+00:00"
+}

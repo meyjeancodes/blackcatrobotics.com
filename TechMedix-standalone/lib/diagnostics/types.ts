@@ -117,6 +117,23 @@ export interface DiagnosticReport {
   isMock: boolean;
 }
 
+// ─── AR Vision guidance ───────────────────────────────────────────────────────
+
+export interface ARComponentHighlight {
+  x: number;       // 0.0–1.0 fraction of frame width
+  y: number;       // 0.0–1.0 fraction of frame height
+  radius: number;  // 0.0–1.0 fraction of min(width, height)
+  label: string;
+}
+
+export interface ARGuidanceResponse {
+  overlay_text: string;
+  component_highlight: ARComponentHighlight | null;
+  next_step: string;
+  severity: "ok" | "warning" | "critical";
+  confidence: number;
+}
+
 // ─── Cost tracker ─────────────────────────────────────────────────────────────
 
 export interface CostProjection {
