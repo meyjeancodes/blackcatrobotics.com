@@ -9,11 +9,9 @@ import { TelemetryChart } from "../../../components/telemetry-chart";
 import { LiveSystemPanel } from "../../../components/live-system-panel";
 import { ServiceNetworkPanel } from "../../../components/service-network-panel";
 import { PerformanceKpis } from "../../../components/performance-kpis";
-import { SignalFeed } from "../../../components/signal-feed";
 import { FleetHealthCategories } from "../../../components/fleet-health-categories";
 import { formatDateTime } from "../../../lib/format";
 import { getDashboardData } from "../../../lib/data";
-import { signalEntries } from "../../../lib/shared/mock-data";
 
 export default async function DashboardPage() {
   const { snapshot, stats } = await getDashboardData();
@@ -311,10 +309,6 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* BlackCat Signal Feed */}
-      <SurfaceCard title="BlackCat Signal" eyebrow="Industry intelligence">
-        <SignalFeed entries={signalEntries} />
-      </SurfaceCard>
     </div>
   );
 }
