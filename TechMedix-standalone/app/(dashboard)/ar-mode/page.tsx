@@ -21,7 +21,8 @@ export default function ARModePage() {
   const [voiceListening, setVoiceListening] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState<boolean | null>(null);
   const [lastCommand, setLastCommand] = useState<string | null>(null);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recognitionRef = useRef<any>(null);
 
   // Lazy init — only create client when needed (avoids SSR env var errors)
   function getSupabase() {
@@ -42,9 +43,9 @@ export default function ARModePage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const SpeechRecognition =
-        (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition ||
-        (window as unknown as { webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const w = window as any;
+      const SpeechRecognition = w.SpeechRecognition || w.webkitSpeechRecognition;
       setVoiceSupported(!!SpeechRecognition);
     }
   }, []);
@@ -94,16 +95,17 @@ export default function ARModePage() {
       setVoiceListening(false);
       return;
     }
-    const SpeechRecognitionClass =
-      (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition ||
-      (window as unknown as { webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w2 = window as any;
+    const SpeechRecognitionClass = w2.SpeechRecognition || w2.webkitSpeechRecognition;
     if (!SpeechRecognitionClass) return;
 
     const recognition = new SpeechRecognitionClass();
     recognition.continuous = true;
     recognition.interimResults = false;
     recognition.lang = "en-US";
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    recognition.onresult = (event: any) => {
       const transcript = event.results[event.results.length - 1][0].transcript;
       handleVoiceResult(transcript);
     };

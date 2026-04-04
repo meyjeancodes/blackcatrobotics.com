@@ -1,0 +1,19 @@
+{
+  "level": "L2",
+  "total_questions": 35,
+  "passing_score_percent": 78,
+  "passing_score_questions": 28,
+  "time_limit_minutes": 60,
+  "practical_required": true,
+  "practical_passing_standard": "Competent in all diagnostic and repair domains; Developing or above in all others",
+  "prerequisite_level": "L1",
+  "retake_wait_days": 14,
+  "max_attempts": 3,
+  "domain_minimums": {
+    "diagnostics": "9/12",
+    "actuators": "8/10",
+    "sensors": "5/7",
+    "software": "3/4",
+    "repair": "1/2"
+  }
+}

@@ -3,8 +3,8 @@
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const config: any = {
-  appId: "com.blackcatrobotics.bcos",
-  appName: "BlackCat OS",
+  appId: "com.blackcatrobotics.techmedix",
+  appName: "TechMedix",
   webDir: "out",
   server: {
     // For local dev against Next.js dev server:
@@ -18,9 +18,15 @@ const config: any = {
   android: {
     backgroundColor: "#0d0d12",
   },
+  androidScheme: "https",
   plugins: {
     SplashScreen: {
       launchShowDuration: 0,
+    },
+    Camera: {
+      androidPermissions: [
+        "android.permission.CAMERA",
+      ],
     },
   },
 };

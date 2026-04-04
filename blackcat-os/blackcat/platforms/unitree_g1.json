@@ -1,0 +1,271 @@
+{
+  "platform_id": "unitree_g1",
+  "platform_name": "Unitree G1",
+  "manufacturer": "Unitree Robotics",
+  "category": "humanoid",
+  "compute_stack": {
+    "primary_compute": "NVIDIA Jetson Orin NX 16GB",
+    "os": "Ubuntu 22.04",
+    "middleware": "ROS 2 Humble",
+    "gpu": "1024-core NVIDIA Ampere"
+  },
+  "actuators": [
+    {
+      "id": "left_hip_pitch",
+      "name": "Left Hip Pitch",
+      "joint": "left_hip_pitch",
+      "dof": 1,
+      "max_torque_nm": 88.0,
+      "max_speed_rpm": 180.0,
+      "control_mode": "torque_position",
+      "can_id": 385
+    },
+    {
+      "id": "right_hip_pitch",
+      "name": "Right Hip Pitch",
+      "joint": "right_hip_pitch",
+      "dof": 1,
+      "max_torque_nm": 88.0,
+      "max_speed_rpm": 180.0,
+      "control_mode": "torque_position",
+      "can_id": 386
+    },
+    {
+      "id": "left_knee",
+      "name": "Left Knee",
+      "joint": "left_knee",
+      "dof": 1,
+      "max_torque_nm": 139.0,
+      "max_speed_rpm": 120.0,
+      "control_mode": "torque_position",
+      "can_id": 387
+    },
+    {
+      "id": "right_knee",
+      "name": "Right Knee",
+      "joint": "right_knee",
+      "dof": 1,
+      "max_torque_nm": 139.0,
+      "max_speed_rpm": 120.0,
+      "control_mode": "torque_position",
+      "can_id": 388
+    },
+    {
+      "id": "left_ankle_pitch",
+      "name": "Left Ankle Pitch",
+      "joint": "left_ankle_pitch",
+      "dof": 1,
+      "max_torque_nm": 50.0,
+      "max_speed_rpm": 240.0,
+      "control_mode": "torque_position",
+      "can_id": 389
+    },
+    {
+      "id": "right_ankle_pitch",
+      "name": "Right Ankle Pitch",
+      "joint": "right_ankle_pitch",
+      "dof": 1,
+      "max_torque_nm": 50.0,
+      "max_speed_rpm": 240.0,
+      "control_mode": "torque_position",
+      "can_id": 390
+    },
+    {
+      "id": "waist_yaw",
+      "name": "Waist Yaw",
+      "joint": "waist_yaw",
+      "dof": 1,
+      "max_torque_nm": 88.0,
+      "max_speed_rpm": 180.0,
+      "control_mode": "torque_position",
+      "can_id": 391
+    },
+    {
+      "id": "left_shoulder_pitch",
+      "name": "Left Shoulder Pitch",
+      "joint": "left_shoulder_pitch",
+      "dof": 1,
+      "max_torque_nm": 25.0,
+      "max_speed_rpm": 360.0,
+      "control_mode": "torque_position",
+      "can_id": 393
+    }
+  ],
+  "sensors": [
+    {
+      "id": "imu_main",
+      "name": "Main IMU",
+      "type": "imu",
+      "ros_topic": "/imu/data",
+      "sample_rate_hz": 500.0,
+      "manufacturer": "MEMS Technology"
+    },
+    {
+      "id": "depth_camera_head",
+      "name": "Head Depth Camera",
+      "type": "depth_camera",
+      "ros_topic": "/camera/depth/image_rect_raw",
+      "sample_rate_hz": 30.0,
+      "manufacturer": "Intel"
+    },
+    {
+      "id": "depth_camera_chest",
+      "name": "Chest Depth Camera",
+      "type": "depth_camera",
+      "ros_topic": "/camera/chest/depth/image_rect_raw",
+      "sample_rate_hz": 30.0,
+      "manufacturer": "Intel"
+    },
+    {
+      "id": "joint_encoder_array",
+      "name": "Joint State Encoders",
+      "type": "encoder",
+      "ros_topic": "/joint_states",
+      "sample_rate_hz": 500.0,
+      "manufacturer": "Unitree Robotics"
+    },
+    {
+      "id": "battery_bms",
+      "name": "Battery Management System",
+      "type": "bms",
+      "ros_topic": "/battery_state",
+      "sample_rate_hz": 1.0,
+      "manufacturer": "Unitree Robotics"
+    }
+  ],
+  "communication_protocols": [
+    {
+      "name": "Unitree CAN",
+      "interface": "can0",
+      "baud_rate": 1000000,
+      "version": "2.0B"
+    },
+    {
+      "name": "ROS 2 DDS",
+      "interface": "eth0",
+      "baud_rate": null,
+      "version": "Humble (Cyclone DDS)"
+    },
+    {
+      "name": "Unitree SDK2",
+      "interface": "eth0",
+      "baud_rate": null,
+      "version": "2.0"
+    }
+  ],
+  "telemetry_map": {
+    "knee_torque_left": {
+      "signal_name": "Left Knee Torque",
+      "can_id": 387,
+      "ros_topic": "/joint_states",
+      "data_type": "float32",
+      "unit": "Nm",
+      "normal_range": [0.0, 100.0],
+      "warning_threshold": 120.0,
+      "critical_threshold": 135.0
+    },
+    "knee_torque_right": {
+      "signal_name": "Right Knee Torque",
+      "can_id": 388,
+      "ros_topic": "/joint_states",
+      "data_type": "float32",
+      "unit": "Nm",
+      "normal_range": [0.0, 100.0],
+      "warning_threshold": 120.0,
+      "critical_threshold": 135.0
+    },
+    "joint_temperature": {
+      "signal_name": "Joint Motor Temperature",
+      "can_id": null,
+      "ros_topic": "/motor_states",
+      "data_type": "float32",
+      "unit": "degC",
+      "normal_range": [20.0, 60.0],
+      "warning_threshold": 70.0,
+      "critical_threshold": 80.0
+    },
+    "battery_soc": {
+      "signal_name": "Battery State of Charge",
+      "can_id": null,
+      "ros_topic": "/battery_state",
+      "data_type": "float32",
+      "unit": "percent",
+      "normal_range": [20.0, 100.0],
+      "warning_threshold": 15.0,
+      "critical_threshold": 5.0
+    },
+    "imu_pitch": {
+      "signal_name": "Trunk Pitch Angle",
+      "can_id": null,
+      "ros_topic": "/imu/data",
+      "data_type": "float32",
+      "unit": "deg",
+      "normal_range": [-15.0, 15.0],
+      "warning_threshold": 25.0,
+      "critical_threshold": 35.0
+    }
+  },
+  "diagnostic_rules": [
+    {
+      "rule_id": "G1_KNEE_TORQUE_WARN",
+      "component": "left_knee",
+      "signal": "knee_torque_left",
+      "condition": "> 120",
+      "severity": "warning",
+      "action": "Reduce gait velocity. Inspect knee joint for mechanical binding. Log torque variance trend for wear analysis."
+    },
+    {
+      "rule_id": "G1_BATTERY_CRITICAL",
+      "component": "battery_bms",
+      "signal": "battery_soc",
+      "condition": "< 5",
+      "severity": "critical",
+      "action": "Immediately initiate safe stand-down sequence. Navigate to charging station. Do not attempt locomotion below 3% SoC."
+    },
+    {
+      "rule_id": "G1_MOTOR_OVERTEMP",
+      "component": "left_knee",
+      "signal": "joint_temperature",
+      "condition": "> 70",
+      "severity": "warning",
+      "action": "Reduce duty cycle on affected joint. Increase ventilation period. If temperature exceeds 80C, halt motion and initiate thermal recovery."
+    }
+  ],
+  "fmea_summary": [
+    {
+      "component": "left_knee",
+      "failure_mode": "Knee actuator joint wear from cumulative torque overload during stair climbing",
+      "rpn": 280,
+      "action": "Monitor torque variance trend. Replace knee actuator module at 2000 operating hours or when wear score exceeds 0.7."
+    },
+    {
+      "component": "right_hip_pitch",
+      "failure_mode": "Hip actuator failure from lateral impact load exceeding design limit",
+      "rpn": 240,
+      "action": "Restrict operation on uneven terrain above 15 degree incline. Add lateral force guard rail in control policy."
+    },
+    {
+      "component": "battery_bms",
+      "failure_mode": "Lithium cell degradation causing reduced capacity and voltage sag under peak load",
+      "rpn": 200,
+      "action": "Replace battery pack at 80% capacity retention threshold. Run capacity calibration every 500 charge cycles."
+    },
+    {
+      "component": "imu_main",
+      "failure_mode": "IMU gyroscope drift causing balance control degradation during extended operation",
+      "rpn": 160,
+      "action": "Run IMU calibration routine at startup and every 4 hours of operation. Monitor balance controller error covariance."
+    }
+  ],
+  "maintenance_schedule": {
+    "inspection_interval_hours": 500,
+    "lubrication_interval_hours": 1000,
+    "calibration_interval_hours": 250,
+    "firmware_update_interval_days": 90,
+    "notes": "Inspect all 23 joint actuators for backlash, binding, and thermal discoloration. Replace harmonic drive grease at 1000h. IMU and camera calibration every 250h or after any fall event. Check CAN bus termination resistance (should be 60 ohm). Battery capacity test every 100 charge cycles."
+  },
+  "atlas_cross_reference": "unitree-g1",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-04-01T00:00:00Z",
+  "generated_by": "blackcat-os"
+}

@@ -1,0 +1,1112 @@
+{
+  "platforms": [
+    {
+      "slug": "unitree-g1",
+      "name": "Unitree G1",
+      "manufacturer": "Unitree Robotics",
+      "type": "humanoid",
+      "introduced_year": 2024,
+      "specs_json": {
+        "weight_kg": 35,
+        "dof": 23,
+        "battery_wh": 864,
+        "max_speed_ms": 2.0,
+        "ip_rating": "IP54",
+        "actuator_type": "harmonic drive + BLDC",
+        "compute": "Nvidia Jetson Orin",
+        "comms": "CAN bus + Ethernet"
+      },
+      "failure_modes": [
+        {
+          "component": "knee actuator harmonic drive",
+          "symptom": "torque ripple and audible grinding under load, joint position error exceeding 2 degrees, gait instability on inclines",
+          "root_cause": "harmonic drive flexspline fatigue from cyclical high-torque loading without lubrication interval compliance; exacerbated by operation on uneven terrain increasing peak torque spikes",
+          "severity": "high",
+          "mtbf_hours": 1400,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "mechanical", "wear", "harmonic-drive", "knee"],
+          "repair_protocol": {
+            "title": "Knee Actuator Harmonic Drive Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off robot completely via main switch; engage emergency stop lanyard; wait 90 seconds for capacitor discharge", "tool": null, "warning": "Residual servo energy present — never assume joint is unpowered without full discharge wait" },
+              { "step": 2, "action": "Place robot in supine position on padded work surface; secure torso with nylon straps to prevent roll", "tool": "nylon tie-down straps, foam pad" },
+              { "step": 3, "action": "Remove knee outer cover panel (4x M3 JIS-head screws); set aside in labeled container", "tool": "JIS #1 screwdriver" },
+              { "step": 4, "action": "Photograph cable routing inside knee housing before any disconnection", "tool": "smartphone or digital camera" },
+              { "step": 5, "action": "Disconnect actuator CAN bus connector (JST-GH 4-pin) and 48V power connector; apply cable labels", "tool": "spudger, label tape" },
+              { "step": 6, "action": "Insert limb support block under lower leg to unload knee joint; remove 8x M4 actuator mounting bolts in star pattern", "tool": "3mm hex wrench, limb support block" },
+              { "step": 7, "action": "Extract actuator module assembly from housing; place on clean anti-static mat", "tool": "anti-static mat" },
+              { "step": 8, "action": "Using bearing press and appropriate mandrel, press out worn harmonic drive assembly; note orientation witness marks", "tool": "bearing press, HD extraction mandrel" },
+              { "step": 9, "action": "Clean housing bore with lint-free cloth and isopropyl alcohol; inspect for scoring", "tool": "lint-free cloth, IPA 99%" },
+              { "step": 10, "action": "Apply thin coat of Mobil SHC 632 grease to new flexspline tooth contact surfaces", "tool": "grease applicator syringe" },
+              { "step": 11, "action": "Press in new harmonic drive aligned to witness marks; verify seating within 0.05mm using dial indicator", "tool": "dial indicator, bearing press" },
+              { "step": 12, "action": "Reinstall actuator module; torque M4 bolts to 4.5 Nm in star pattern using calibrated torque wrench", "tool": "torque wrench 0-10 Nm" },
+              { "step": 13, "action": "Reconnect CAN and power cables per original routing; reinstall cover panel", "tool": "JIS #1 screwdriver" },
+              { "step": 14, "action": "Power on robot; run joint calibration and zero-offset routine via Unitree SDK; verify position error < 0.3 deg across full ROM", "tool": "laptop with Unitree G1 SDK" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "3mm hex wrench", "bearing press", "HD extraction mandrel", "torque wrench 0-10 Nm", "dial indicator", "limb support block", "anti-static mat", "spudger"],
+            "parts": [
+              { "part_name": "Harmonic Drive CSF-17-100-2UH-F5 Unit", "part_number": "CSF-17-100-2UH-F5", "supplier": "Harmonic Drive LLC", "unit_cost_usd": 480, "qty": 1 },
+              { "part_name": "Mobil SHC 632 Grease 400g", "part_number": "SHC632-400G", "supplier": "ExxonMobil Lubricants", "unit_cost_usd": 45, "qty": 1 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "joint_position_error_deg", "signal_source": "servo controller CAN bus", "threshold_value": 1.5, "threshold_operator": ">", "threshold_unit": "degrees", "lead_time_hours": 72, "confidence": 0.70 },
+            { "signal_name": "joint_torque_variance_pct", "signal_source": "servo controller CAN bus", "threshold_value": 12, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.65 },
+            { "signal_name": "actuator_current_rms_a", "signal_source": "motor controller telemetry", "threshold_value": 8.5, "threshold_operator": ">", "threshold_unit": "amperes", "lead_time_hours": 96, "confidence": 0.60 }
+          ]
+        },
+        {
+          "component": "lithium battery pack — cell group voltage imbalance",
+          "symptom": "reduced runtime below 45 minutes, BMS overcurrent fault codes, unexpected shutdown under load",
+          "root_cause": "lithium cell group capacity divergence due to micro-dendrite formation from repeated high-current discharge during dynamic locomotion; BMS fails to balance fast enough under 15A+ draw",
+          "severity": "high",
+          "mtbf_hours": 1200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "electrical", "BMS", "thermal"],
+          "repair_protocol": {
+            "title": "Battery Pack Cell Group Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off robot; disconnect charger; wait 5 minutes before handling battery", "tool": null, "warning": "Li-ion batteries are a fire hazard if punctured or shorted — wear insulated gloves throughout" },
+              { "step": 2, "action": "Remove battery module access panel (6x M3 screws, underside of torso)", "tool": "JIS #1 screwdriver" },
+              { "step": 3, "action": "Slide battery module out on guides; place on non-conductive surface", "tool": "battery extraction handle" },
+              { "step": 4, "action": "Connect battery analyzer to BMS diagnostic port (USB-C); log per-cell voltage and internal resistance", "tool": "Hioki BT3554 battery tester or equivalent" },
+              { "step": 5, "action": "Identify cell groups with voltage delta > 50mV or internal resistance > 80mOhm vs nominal group average", "tool": "battery analyzer software" },
+              { "step": 6, "action": "If delta < 100mV: perform slow balance charge at 0.1C via BMS port and retest after 24 hours", "tool": "bench power supply, BMS interface cable", "warning": "Never exceed 4.2V per cell" },
+              { "step": 7, "action": "If balance charge fails to resolve delta: replace full battery module — do not attempt individual cell replacement in field", "tool": null, "warning": "Cell-level replacement requires controlled environment and spot welder; not safe in field" },
+              { "step": 8, "action": "Install new OEM battery module; slide in on guides; reinstall access panel", "tool": "JIS #1 screwdriver" },
+              { "step": 9, "action": "Perform initial charge cycle to 100%; confirm BMS reports all cells within 10mV delta", "tool": "OEM charger, laptop with BMS diagnostic software" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "Hioki BT3554 battery tester", "bench power supply", "insulated gloves", "battery extraction handle"],
+            "parts": [
+              { "part_name": "Unitree G1 Battery Module 864Wh", "part_number": "G1-BAT-864", "supplier": "Unitree Official Store", "unit_cost_usd": 620, "qty": 1 }
+            ],
+            "labor_minutes": 60,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_cell_voltage_delta_mv", "signal_source": "BMS CAN telemetry", "threshold_value": 80, "threshold_operator": ">", "threshold_unit": "millivolts", "lead_time_hours": 48, "confidence": 0.80 },
+            { "signal_name": "battery_pack_temp_c", "signal_source": "BMS thermistor", "threshold_value": 45, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 24, "confidence": 0.70 },
+            { "signal_name": "battery_state_of_health_pct", "signal_source": "BMS CAN telemetry", "threshold_value": 75, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 168, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "ankle absolute encoder — magnetic position sensor",
+          "symptom": "ankle joint reports erratic position readings at startup; controller throws encoder fault E03; robot fails self-check and refuses to stand",
+          "root_cause": "magnetic absolute encoder (hall-effect type) experiences signal degradation from ferrous debris contamination near magnetic disc or from thermal cycling causing encoder PCB solder joint micro-cracking",
+          "severity": "high",
+          "mtbf_hours": 2800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "encoder", "ankle", "electrical"],
+          "repair_protocol": {
+            "title": "Ankle Absolute Encoder Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; wait 90 seconds discharge; place robot supine on foam pad", "tool": "foam pad" },
+              { "step": 2, "action": "Remove ankle outer shell (6x M3 JIS screws); expose encoder PCB", "tool": "JIS #1 screwdriver" },
+              { "step": 3, "action": "Photograph encoder orientation and zero-reference witness mark on magnetic disc", "tool": "smartphone" },
+              { "step": 4, "action": "Disconnect encoder JST-SH 6-pin flex cable from controller board", "tool": "spudger" },
+              { "step": 5, "action": "Remove 2x M2 encoder PCB mounting screws; extract PCB", "tool": "JIS #000 screwdriver" },
+              { "step": 6, "action": "Inspect magnetic disc for ferrous debris; clean with IPA if contaminated", "tool": "magnifying glass, IPA, lint-free swab" },
+              { "step": 7, "action": "Install new encoder PCB; align to witness mark within +/-1 degree; torque M2 screws to 0.15 Nm", "tool": "torque driver 0-0.5 Nm" },
+              { "step": 8, "action": "Reconnect flex cable; replace ankle shell; power on; run encoder calibration; verify fault E03 cleared", "tool": "laptop with Unitree SDK" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "JIS #000 screwdriver", "spudger", "torque driver 0-0.5 Nm", "magnifying glass", "IPA 99%", "lint-free swabs"],
+            "parts": [
+              { "part_name": "AMT21 Absolute Magnetic Encoder 14-bit", "part_number": "AMT21-V 00", "supplier": "CUI Devices", "unit_cost_usd": 38, "qty": 1 }
+            ],
+            "labor_minutes": 75,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "encoder_signal_quality_index", "signal_source": "actuator CAN status frame", "threshold_value": 0.85, "threshold_operator": "<", "threshold_unit": "unitless 0-1", "lead_time_hours": 24, "confidence": 0.65 },
+            { "signal_name": "encoder_startup_retry_count", "signal_source": "controller boot log", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "count", "lead_time_hours": 12, "confidence": 0.72 }
+          ]
+        },
+        {
+          "component": "motor controller MOSFET bridge — arm joints",
+          "symptom": "joint becomes unresponsive; controller reports overcurrent fault; MOSFET junction temperature alarm",
+          "root_cause": "MOSFET H-bridge failure from repeated avalanche breakdown during aggressive trajectory following; thermal cycling degrades gate oxide",
+          "severity": "high",
+          "mtbf_hours": 3500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["motor-controller", "electrical", "MOSFET", "thermal"],
+          "repair_protocol": {
+            "title": "Motor Controller MOSFET Bridge Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; engage e-stop; wait 120 seconds; verify 0V on bus with multimeter before opening controller enclosure", "tool": "digital multimeter", "warning": "DC bus may hold 48V+ for over 60 seconds — verify with meter before touching" },
+              { "step": 2, "action": "Remove arm shell panels to expose motor controller PCB module", "tool": "JIS #1 screwdriver" },
+              { "step": 3, "action": "Disconnect all connectors; label each; remove 4x M3 controller mounting standoffs", "tool": "5.5mm hex socket, spudger, label tape" },
+              { "step": 4, "action": "Using DMM diode mode, test all 6 MOSFET positions; failed devices show forward voltage < 0.2V in both directions", "tool": "digital multimeter" },
+              { "step": 5, "action": "Replace entire controller module (field replacement unit)", "tool": null },
+              { "step": 6, "action": "Install new controller module; reconnect all connectors per photographs; torque standoffs", "tool": "5.5mm hex socket" },
+              { "step": 7, "action": "Flash firmware via SDK to match current robot version; run full joint ROM test", "tool": "laptop with Unitree SDK, USB-C cable, clamp meter" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "digital multimeter", "5.5mm hex socket", "spudger", "clamp meter", "laptop with Unitree SDK"],
+            "parts": [
+              { "part_name": "Unitree G1 Arm Motor Controller Module", "part_number": "G1-CTRL-ARM-V2", "supplier": "Unitree Official Store", "unit_cost_usd": 320, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_controller_temp_c", "signal_source": "motor controller thermistor via CAN", "threshold_value": 75, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 8, "confidence": 0.78 },
+            { "signal_name": "phase_current_imbalance_pct", "signal_source": "motor controller CAN telemetry", "threshold_value": 15, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 24, "confidence": 0.68 },
+            { "signal_name": "overcurrent_fault_event_count", "signal_source": "controller fault log", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "events per hour", "lead_time_hours": 6, "confidence": 0.82 }
+          ]
+        },
+        {
+          "component": "head depth camera / structured light emitter",
+          "symptom": "point cloud dropouts in 15-30 degree arc; SLAM drift accumulates faster than expected; obstacle detection failures",
+          "root_cause": "VCSEL array partial failure from ESD damage or thermal stress; protective glass micro-scratches from debris reducing structured light contrast",
+          "severity": "medium",
+          "mtbf_hours": 5000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "perception", "camera", "SLAM", "navigation"],
+          "repair_protocol": {
+            "title": "Head Perception Sensor Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; remove head cover assembly (4x M3 screws)", "tool": "JIS #1 screwdriver" },
+              { "step": 2, "action": "Inspect protective glass for scratches under oblique-angle flashlight", "tool": "flashlight" },
+              { "step": 3, "action": "Clean glass with dry sensor-safe lens cloth; if scratches present, proceed to replacement", "tool": "lens cleaning cloth, sensor-safe air blower" },
+              { "step": 4, "action": "Power on; run depth sensor diagnostic via SDK; capture point cloud vs calibration target at 1m", "tool": "laptop with SDK, calibration target board" },
+              { "step": 5, "action": "If dropout arc confirmed, disconnect sensor cable; remove 4x M2 mounting screws; extract sensor", "tool": "JIS #000 screwdriver, spudger" },
+              { "step": 6, "action": "Install replacement sensor; reconnect; run intrinsic and extrinsic calibration via SDK calibration wizard", "tool": "laptop with SDK, checkerboard calibration target" },
+              { "step": 7, "action": "Verify SLAM drift < 2cm over 10m traverse; reinstall head cover", "tool": "JIS #1 screwdriver, measuring tape" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "JIS #000 screwdriver", "spudger", "lens cloth", "calibration checkerboard target", "laptop with Unitree SDK"],
+            "parts": [
+              { "part_name": "Intel RealSense D435i Depth Camera", "part_number": "82635AWGDVKPRQ", "supplier": "Intel / Mouser Electronics", "unit_cost_usd": 179, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "depth_frame_dropout_rate_pct", "signal_source": "perception subsystem software metrics", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "percent of frames", "lead_time_hours": 48, "confidence": 0.62 },
+            { "signal_name": "slam_position_drift_cm_per_10m", "signal_source": "navigation stack telemetry", "threshold_value": 4, "threshold_operator": ">", "threshold_unit": "centimeters", "lead_time_hours": 24, "confidence": 0.58 }
+          ]
+        },
+        {
+          "component": "hip abduction harmonic drive — lateral load bearing",
+          "symptom": "side-step gait shows lateral lean drift; hip abduction torque vs actual diverges by > 15%; clicking at mid-stance during lateral sway",
+          "root_cause": "harmonic drive wave generator bearing failure (pitting) under combined axial and radial loading during lateral locomotion",
+          "severity": "high",
+          "mtbf_hours": 1800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "harmonic-drive", "hip", "mechanical", "wear"],
+          "repair_protocol": {
+            "title": "Hip Abduction Harmonic Drive Wave Generator Bearing Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; wait 90 seconds; place robot in lateral recumbent position with affected hip up; support with foam cradle", "tool": "foam cradle" },
+              { "step": 2, "action": "Remove hip outer shell panels (6x M3 JIS screws); disconnect hip actuator CAN and 48V power connectors", "tool": "JIS #1 screwdriver, spudger, label tape" },
+              { "step": 3, "action": "Remove 10x M5 actuator flange bolts in star pattern; support leg weight", "tool": "4mm hex wrench, limb support sling" },
+              { "step": 4, "action": "Extract hip actuator assembly; disassemble to expose wave generator sub-assembly", "tool": "actuator disassembly fixture" },
+              { "step": 5, "action": "Remove retaining ring; extract wave generator from flexspline; press out elliptical bearing", "tool": "snap-ring pliers, wave generator puller, bench press, bearing extraction mandrel" },
+              { "step": 6, "action": "Press in new elliptical bearing; apply Mobil SHC 632 grease to bearing outer race; reassemble wave generator", "tool": "bench press, grease applicator, snap-ring pliers" },
+              { "step": 7, "action": "Reinstall actuator in hip; torque M5 flange bolts to 8.0 Nm in star pattern; reconnect cables", "tool": "torque wrench 0-20 Nm, 4mm hex" },
+              { "step": 8, "action": "Power on; run hip calibration; verify torque tracking error < 5% across full abduction ROM", "tool": "laptop with Unitree SDK" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "4mm hex wrench", "snap-ring pliers", "bench press", "bearing extraction mandrel", "torque wrench 0-20 Nm", "limb support sling"],
+            "parts": [
+              { "part_name": "Harmonic Drive CSF-20-100-2UH Wave Generator Sub-Assembly", "part_number": "CSF-20-100-2UH-WG", "supplier": "Harmonic Drive LLC", "unit_cost_usd": 290, "qty": 1 }
+            ],
+            "labor_minutes": 150,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "hip_torque_tracking_error_pct", "signal_source": "servo controller CAN", "threshold_value": 10, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.68 },
+            { "signal_name": "hip_vibration_rms_g", "signal_source": "IMU accelerometer high-frequency channel", "threshold_value": 0.8, "threshold_operator": ">", "threshold_unit": "g", "lead_time_hours": 36, "confidence": 0.62 }
+          ]
+        },
+        {
+          "component": "Jetson Orin compute — thermal throttling",
+          "symptom": "locomotion controller loop rate drops from 1kHz to 400Hz intermittently; gait becomes jerky; CPU temperature > 80C in ambient above 25C",
+          "root_cause": "inadequate thermal interface material (TIM) contact between Jetson Orin and chassis heat spreader due to assembly torque variation or TIM pump-out over thermal cycles",
+          "severity": "medium",
+          "mtbf_hours": 4000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["compute", "thermal", "Jetson", "performance"],
+          "repair_protocol": {
+            "title": "Jetson Orin Thermal Interface Material Refresh",
+            "steps": [
+              { "step": 1, "action": "Power off; wait 5 minutes for SoC to cool below 40C", "tool": null },
+              { "step": 2, "action": "Remove torso back panel (8x M3 JIS screws) to expose compute bay", "tool": "JIS #1 screwdriver" },
+              { "step": 3, "action": "Photograph all cable and connector positions in compute bay", "tool": "smartphone" },
+              { "step": 4, "action": "Remove Jetson Orin module retaining screws (4x M2.5); lift module straight up", "tool": "JIS #0 screwdriver", "warning": "Jetson SO-DIMM connector is fragile — lift straight up, do not rock" },
+              { "step": 5, "action": "Remove old TIM from both module lid and heat spreader using IPA and lint-free cloth", "tool": "IPA 99%, lint-free cloth, plastic scraper" },
+              { "step": 6, "action": "Apply thin even bead (0.2mm) of Shin-Etsu X-23 7783D to module lid; spread uniformly with card", "tool": "plastic card spreader" },
+              { "step": 7, "action": "Reseat Jetson module; reinstall retaining screws torqued to 0.25 Nm; reinstall torso panel", "tool": "JIS #0 screwdriver, torque driver" },
+              { "step": 8, "action": "Power on; run 30-minute load test; verify Jetson temp stays below 70C at ambient 25C", "tool": "laptop, thermal monitoring software" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "JIS #0 screwdriver", "IPA 99%", "lint-free cloth", "plastic scraper", "plastic card spreader", "torque driver 0-0.5 Nm"],
+            "parts": [
+              { "part_name": "Shin-Etsu X-23 7783D Thermal Compound 1g", "part_number": "X-23-7783D-1G", "supplier": "Shin-Etsu Chemical / Digi-Key", "unit_cost_usd": 12, "qty": 1 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "jetson_cpu_temp_c", "signal_source": "Jetson tegrastats via ROS2 topic", "threshold_value": 78, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 4, "confidence": 0.85 },
+            { "signal_name": "control_loop_rate_hz", "signal_source": "locomotion controller diagnostics", "threshold_value": 800, "threshold_operator": "<", "threshold_unit": "hertz", "lead_time_hours": 2, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "CAN bus wiring harness — hip flex point chafing",
+          "symptom": "intermittent joint dropouts on one leg; CAN bus error frame rate spikes > 100/second during full hip flex; fault clears at rest",
+          "root_cause": "CAN bus twisted-pair wiring inside hip flex conduit experiences repeated bending stress; insulation chafing against conduit edge causes intermittent short correlating with joint angle",
+          "severity": "high",
+          "mtbf_hours": 2500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["electrical", "CAN-bus", "wiring", "harness", "intermittent"],
+          "repair_protocol": {
+            "title": "Hip Flex Point CAN Bus Wiring Harness Repair",
+            "steps": [
+              { "step": 1, "action": "Power off; trace CAN harness from hip controller to leg bus; remove hip shell panels", "tool": "JIS #1 screwdriver" },
+              { "step": 2, "action": "Flex hip joint manually through full ROM while monitoring CAN error counter on laptop; mark angle where error rate spikes", "tool": "laptop with CAN bus analyzer (PEAK PCAN-USB)" },
+              { "step": 3, "action": "Inspect harness at outer flex radius for insulation abrasion", "tool": "magnifying glass, flashlight" },
+              { "step": 4, "action": "Cut harness 30mm either side of damage; splice in new twisted-pair segment using 26AWG shielded CAN cable", "tool": "wire cutters, soldering iron, heat shrink" },
+              { "step": 5, "action": "Apply dual-wall adhesive heat shrink over each joint; verify shield continuity end-to-end with DMM", "tool": "soldering iron, heat gun, DMM" },
+              { "step": 6, "action": "Reroute harness with additional bend radius protection sleeve at flex point; secure with nylon clips", "tool": "nylon wire clips, flex conduit sleeve" },
+              { "step": 7, "action": "Reinstall shell panels; power on; flex hip through full ROM; verify CAN error rate < 1 error/minute", "tool": "laptop with CAN analyzer" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "PEAK PCAN-USB CAN analyzer", "digital multimeter", "soldering iron", "wire cutters", "heat gun", "nylon wire clips", "flex conduit sleeve"],
+            "parts": [
+              { "part_name": "26AWG Shielded CAN Twisted Pair Wire 1m", "part_number": "BELDEN-9841-1M", "supplier": "Belden / Digi-Key", "unit_cost_usd": 8, "qty": 2 },
+              { "part_name": "Dual-Wall Adhesive Heat Shrink 3mm 1m", "part_number": "DWALL-3MM-1M", "supplier": "3M / Mouser Electronics", "unit_cost_usd": 6, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "can_bus_error_frame_rate_per_min", "signal_source": "CAN bus monitor", "threshold_value": 10, "threshold_operator": ">", "threshold_unit": "frames per minute", "lead_time_hours": 12, "confidence": 0.78 },
+            { "signal_name": "joint_dropout_event_count", "signal_source": "locomotion controller fault log", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "events per session", "lead_time_hours": 6, "confidence": 0.72 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Harmonic Drive LLC", "website": "https://harmonicdrive.net", "region": "NA", "component_types": ["harmonic drive", "wave generator", "flexspline"], "lead_time_days": 21, "risk_level": "medium" },
+        { "name": "Unitree Official Store", "website": "https://shop.unitree.com", "region": "CN", "component_types": ["battery", "actuator", "controller", "spare parts"], "lead_time_days": 14, "risk_level": "medium" },
+        { "name": "CUI Devices", "website": "https://www.cuidevices.com", "region": "NA", "component_types": ["encoder", "sensor"], "lead_time_days": 10, "risk_level": "low" },
+        { "name": "ExxonMobil Lubricants", "website": "https://www.mobil.com", "region": "NA", "component_types": ["harmonic drive grease", "lubricant"], "lead_time_days": 5, "risk_level": "low" },
+        { "name": "Mouser Electronics", "website": "https://www.mouser.com", "region": "NA", "component_types": ["electronic components", "sensors", "wire"], "lead_time_days": 3, "risk_level": "low" },
+        { "name": "Digi-Key Electronics", "website": "https://www.digikey.com", "region": "NA", "component_types": ["electronic components", "connectors", "wire"], "lead_time_days": 2, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "unitree-h1-2",
+      "name": "Unitree H1-2",
+      "manufacturer": "Unitree Robotics",
+      "type": "humanoid",
+      "introduced_year": 2024,
+      "specs_json": {
+        "weight_kg": 70,
+        "dof": 27,
+        "battery_wh": 2000,
+        "max_speed_ms": 3.3,
+        "payload_kg": 30,
+        "ip_rating": "IP54",
+        "actuator_type": "harmonic drive + BLDC",
+        "compute": "Nvidia Jetson Orin NX",
+        "comms": "CAN bus + Ethernet",
+        "height_m": 1.8
+      },
+      "failure_modes": [
+        {
+          "component": "knee joint harmonic drive — high-torque flexspline",
+          "symptom": "loud popping or crackling at knee during stair ascent; joint tracking error > 3 degrees under 30kg+ payload; visible lateral wobble in stance phase",
+          "root_cause": "flexspline cup fatigue cracking from repeated high-torque knee extension under payload; H1-2 operates at higher joint torques than G1 due to greater mass and payload; inadequate lubrication re-interval compliance",
+          "severity": "critical",
+          "mtbf_hours": 1100,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "harmonic-drive", "knee", "mechanical", "wear", "payload"],
+          "repair_protocol": {
+            "title": "H1-2 Knee Harmonic Drive Full Module Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off via main switch; engage emergency stop; wait 120 seconds for 48V bus discharge — H1-2 has larger bus capacitors than G1", "tool": null, "warning": "H1-2 capacitor bank holds charge longer — verify 0V with multimeter before proceeding" },
+              { "step": 2, "action": "Hoist robot to chest-high work stand using lift harness attachment points on torso; secure with ratchet straps", "tool": "gantry hoist, lift harness, ratchet straps", "warning": "H1-2 weighs 70kg — 2-person lift required; do not use floor position for this repair" },
+              { "step": 3, "action": "Remove knee outer shell (8x M4 JIS screws, 2 side + 2 front panels)", "tool": "JIS #2 screwdriver" },
+              { "step": 4, "action": "Photograph actuator cable routing and connector orientation", "tool": "smartphone" },
+              { "step": 5, "action": "Disconnect actuator CAN (JST-GH 4-pin) and 48V power (XT60 variant) connectors; label both", "tool": "spudger, label tape" },
+              { "step": 6, "action": "Support lower leg with adjustable limb support sling; remove 12x M5 actuator flange bolts in star pattern", "tool": "4mm hex wrench, limb support sling" },
+              { "step": 7, "action": "Extract full actuator module; weigh — nominal 2.8kg; log any deviation", "tool": "digital scale" },
+              { "step": 8, "action": "Install new actuator module — H1-2 uses CSF-25-100-2UH-LW harmonic drive; align mounting holes and insert flange bolts finger-tight", "tool": "4mm hex wrench" },
+              { "step": 9, "action": "Torque M5 flange bolts to 9.0 Nm in 3-pass star pattern", "tool": "torque wrench 0-25 Nm" },
+              { "step": 10, "action": "Reconnect CAN and power connectors; reinstall shell panels", "tool": "JIS #2 screwdriver" },
+              { "step": 11, "action": "Power on; run joint calibration sequence; verify tracking error < 0.5 deg under 15kg payload on knee", "tool": "laptop with Unitree H1-2 SDK, calibration weights" }
+            ],
+            "tools_required": ["JIS #2 screwdriver", "4mm hex wrench", "torque wrench 0-25 Nm", "gantry hoist", "lift harness", "limb support sling", "multimeter", "laptop with H1-2 SDK"],
+            "parts": [
+              { "part_name": "Harmonic Drive CSF-25-100-2UH-LW Unit", "part_number": "CSF-25-100-2UH-LW", "supplier": "Harmonic Drive LLC", "unit_cost_usd": 620, "qty": 1 },
+              { "part_name": "Mobil SHC 632 Grease 400g", "part_number": "SHC632-400G", "supplier": "ExxonMobil Lubricants", "unit_cost_usd": 45, "qty": 1 }
+            ],
+            "labor_minutes": 150,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "knee_joint_position_error_deg", "signal_source": "servo CAN bus", "threshold_value": 2.0, "threshold_operator": ">", "threshold_unit": "degrees", "lead_time_hours": 48, "confidence": 0.70 },
+            { "signal_name": "knee_current_rms_a", "signal_source": "motor controller telemetry", "threshold_value": 18.0, "threshold_operator": ">", "threshold_unit": "amperes", "lead_time_hours": 72, "confidence": 0.65 },
+            { "signal_name": "gait_lateral_sway_mm", "signal_source": "IMU + kinematic estimator", "threshold_value": 25, "threshold_operator": ">", "threshold_unit": "millimeters", "lead_time_hours": 36, "confidence": 0.60 }
+          ]
+        },
+        {
+          "component": "2000Wh lithium battery pack — thermal runaway risk under sustained high-current draw",
+          "symptom": "battery surface temperature > 55C; BMS emergency shutoff; battery module swelling visible through vents; acrid smell",
+          "root_cause": "H1-2 battery operates at higher sustained current during dynamic locomotion tasks; cell group imbalance allows weaker cells to experience localised lithium plating and exothermic micro-shorts under thermal stress",
+          "severity": "critical",
+          "mtbf_hours": 900,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "thermal", "BMS", "safety", "critical"],
+          "repair_protocol": {
+            "title": "H1-2 Battery Pack Emergency Swap and Inspection",
+            "steps": [
+              { "step": 1, "action": "If robot BMS has triggered emergency shutoff, do NOT override — evacuate area and allow 30-minute cool-down before approach", "tool": null, "warning": "Thermal runaway can re-ignite — have CO2 fire extinguisher standing by; do not use water on Li battery fire" },
+              { "step": 2, "action": "Verify robot surface temperature < 45C with thermal camera before handling", "tool": "FLIR thermal camera or IR thermometer" },
+              { "step": 3, "action": "Remove battery module from torso bay (2x M8 quick-release captive bolts); slide module on rails out of chassis", "tool": "8mm hex socket" },
+              { "step": 4, "action": "Inspect module exterior for swelling deformation (> 1mm bulge = condemn)", "tool": "straight edge ruler" },
+              { "step": 5, "action": "Transfer condemned module to LiPo fire-safe bag immediately; tag for specialist disposal — do not charge", "tool": "LiPo fire-safe bag" },
+              { "step": 6, "action": "Install new OEM battery module; torque M8 bolts to 25 Nm; reconnect XT90 power connector and CAN diagnostic port", "tool": "8mm hex socket, torque wrench 0-50 Nm" },
+              { "step": 7, "action": "Connect BMS diagnostic cable; verify all cell groups within 20mV delta before first charge", "tool": "laptop with H1-2 BMS diagnostic software" },
+              { "step": 8, "action": "Perform initial charge at 0.5C; monitor for 30 minutes; verify no temperature rise > 5C above ambient", "tool": "OEM charger, IR thermometer" }
+            ],
+            "tools_required": ["8mm hex socket", "torque wrench 0-50 Nm", "FLIR thermal camera", "LiPo fire-safe bag", "CO2 extinguisher", "laptop with BMS software", "OEM charger"],
+            "parts": [
+              { "part_name": "Unitree H1-2 Battery Module 2000Wh", "part_number": "H1-2-BAT-2000", "supplier": "Unitree Official Store", "unit_cost_usd": 1200, "qty": 1 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_max_cell_temp_c", "signal_source": "BMS thermistor array via CAN", "threshold_value": 50, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 2, "confidence": 0.88 },
+            { "signal_name": "cell_voltage_delta_mv", "signal_source": "BMS CAN telemetry", "threshold_value": 100, "threshold_operator": ">", "threshold_unit": "millivolts", "lead_time_hours": 24, "confidence": 0.82 },
+            { "signal_name": "battery_internal_resistance_mohm", "signal_source": "BMS diagnostic port", "threshold_value": 90, "threshold_operator": ">", "threshold_unit": "milliohms", "lead_time_hours": 72, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "wrist dexterous actuator — compact harmonic drive",
+          "symptom": "hand/wrist loses grip precision; position overshoot > 5mm at end-effector; audible ratcheting at wrist during fine manipulation",
+          "root_cause": "wrist compact harmonic drive (CSF-11 size) lubricant depletion; wrist operates at high duty cycle during manipulation tasks, accelerating grease consumption beyond service interval",
+          "severity": "medium",
+          "mtbf_hours": 800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "wrist", "harmonic-drive", "manipulation", "lubrication"],
+          "repair_protocol": {
+            "title": "Wrist Harmonic Drive Lubrication Service",
+            "steps": [
+              { "step": 1, "action": "Power off; place arm in horizontal relaxed position; remove wrist outer shell (4x M2.5 JIS screws)", "tool": "JIS #0 screwdriver" },
+              { "step": 2, "action": "Locate harmonic drive grease port (M3 zerk fitting); clean with IPA", "tool": "IPA, lint-free swab" },
+              { "step": 3, "action": "Inject 0.5ml Mobil SHC 632 grease via grease gun; rotate wrist by hand through 5 full cycles to distribute", "tool": "mini grease gun, Mobil SHC 632" },
+              { "step": 4, "action": "If ratcheting persists after lubrication, replace wrist actuator module (full swap, not field rebuildable)", "tool": null },
+              { "step": 5, "action": "Reinstall wrist shell; power on; run wrist calibration; verify grip position error < 1mm at 200mm extension", "tool": "JIS #0 screwdriver, laptop with SDK, pin gauge set" }
+            ],
+            "tools_required": ["JIS #0 screwdriver", "mini grease gun", "IPA 99%", "lint-free swabs", "laptop with H1-2 SDK"],
+            "parts": [
+              { "part_name": "Mobil SHC 632 Grease 100g", "part_number": "SHC632-100G", "supplier": "ExxonMobil Lubricants", "unit_cost_usd": 18, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "wrist_position_overshoot_mm", "signal_source": "servo controller CAN", "threshold_value": 3.0, "threshold_operator": ">", "threshold_unit": "millimeters", "lead_time_hours": 24, "confidence": 0.65 },
+            { "signal_name": "wrist_torque_ripple_pct", "signal_source": "motor controller CAN telemetry", "threshold_value": 10, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.62 }
+          ]
+        },
+        {
+          "component": "IP54 torso sealing — cable gland and panel seam ingress",
+          "symptom": "moisture detected by internal humidity sensor; corrosion visible on connector pins; CAN transceiver faults after outdoor operation in rain",
+          "root_cause": "IP54 sealing depends on panel gaskets and cable gland compression; repeated thermal cycling and panel-remove/replace maintenance cycles degrade gasket compression and cable gland grip torque",
+          "severity": "high",
+          "mtbf_hours": 2200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sealing", "IP54", "water-ingress", "electrical", "corrosion"],
+          "repair_protocol": {
+            "title": "Torso IP54 Sealing Restoration",
+            "steps": [
+              { "step": 1, "action": "Power off; remove all torso panels; inspect all gaskets for compression set, tears, or debris", "tool": "JIS #2 screwdriver, flashlight" },
+              { "step": 2, "action": "Clean all gasket grooves with IPA; remove old gasket material; measure groove depth", "tool": "IPA, plastic scraper, vernier caliper" },
+              { "step": 3, "action": "Install new cut-to-length EPDM closed-cell foam gaskets; press into groove; ensure joints overlap 10mm", "tool": "scissors, EPDM gasket tape" },
+              { "step": 4, "action": "Inspect all cable glands; re-torque to manufacturer spec (typically M12 glands to 2.5 Nm); replace any with visible cracking", "tool": "torque wrench, combination spanner set" },
+              { "step": 5, "action": "Apply thin bead of Dow Corning 732 RTV to any panel seams where gasket coverage is uncertain", "tool": "Dow Corning 732 RTV, applicator gun" },
+              { "step": 6, "action": "Reinstall panels; torque panel screws to 1.2 Nm; perform IP54 water spray test per IEC 60529 with garden hose spray for 3 minutes", "tool": "torque wrench, garden hose with adjustable spray nozzle" },
+              { "step": 7, "action": "Power on; check internal humidity sensor reading; verify < 60% RH", "tool": "laptop with H1-2 diagnostics" }
+            ],
+            "tools_required": ["JIS #2 screwdriver", "torque wrench", "IPA 99%", "EPDM gasket tape", "Dow Corning 732 RTV", "vernier caliper", "garden hose"],
+            "parts": [
+              { "part_name": "EPDM Closed-Cell Foam Gasket Tape 10mm x 3mm x 5m", "part_number": "EPDM-10X3-5M", "supplier": "RS Components", "unit_cost_usd": 22, "qty": 2 },
+              { "part_name": "Dow Corning 732 RTV Multi-Purpose Sealant 90g", "part_number": "DC-732-90G", "supplier": "Dow Corning / Dupont", "unit_cost_usd": 18, "qty": 1 }
+            ],
+            "labor_minutes": 90,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "internal_humidity_rh_pct", "signal_source": "torso humidity sensor", "threshold_value": 70, "threshold_operator": ">", "threshold_unit": "percent RH", "lead_time_hours": 12, "confidence": 0.80 },
+            { "signal_name": "can_transceiver_fault_count", "signal_source": "CAN bus monitor", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "faults per session", "lead_time_hours": 6, "confidence": 0.70 }
+          ]
+        },
+        {
+          "component": "shoulder pitch actuator — motor phase winding",
+          "symptom": "shoulder joint refuses commanded trajectory; motor controller reports phase current asymmetry > 20%; arm hangs limp or locks",
+          "root_cause": "motor phase winding inter-turn short circuit from repeated insulation stress at high continuous current; H1-2 shoulder sees high continuous current during sustained arm-elevated manipulation tasks",
+          "severity": "critical",
+          "mtbf_hours": 2800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["motor", "electrical", "winding", "shoulder", "phase-fault"],
+          "repair_protocol": {
+            "title": "Shoulder Motor Phase Winding Fault Diagnosis and Module Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; verify 0V bus; remove shoulder shell panels", "tool": "multimeter, JIS #2 screwdriver" },
+              { "step": 2, "action": "Disconnect motor phase leads; measure winding resistance between each phase pair with LCR meter — expect 0.15-0.25 ohm; deviation > 30% indicates inter-turn short", "tool": "Hioki LCR meter IM3536 or equivalent" },
+              { "step": 3, "action": "If inter-turn short confirmed, replace full actuator module — field winding repair not feasible without vacuum impregnation equipment", "tool": null },
+              { "step": 4, "action": "Extract shoulder actuator (12x M5 flange bolts); install new module; torque to 9.0 Nm in star pattern", "tool": "4mm hex wrench, torque wrench 0-25 Nm" },
+              { "step": 5, "action": "Flash motor controller configuration for new actuator; run current balance test at 5A and 20A command; verify asymmetry < 3%", "tool": "laptop with H1-2 SDK, clamp meter" }
+            ],
+            "tools_required": ["multimeter", "JIS #2 screwdriver", "Hioki LCR meter", "4mm hex wrench", "torque wrench 0-25 Nm", "clamp meter", "laptop with H1-2 SDK"],
+            "parts": [
+              { "part_name": "Unitree H1-2 Shoulder Actuator Module", "part_number": "H1-2-ACT-SHOULDER-V1", "supplier": "Unitree Official Store", "unit_cost_usd": 680, "qty": 1 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "specialist",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_phase_current_asymmetry_pct", "signal_source": "motor controller CAN telemetry", "threshold_value": 15, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 12, "confidence": 0.82 },
+            { "signal_name": "winding_temp_c", "signal_source": "motor NTC thermistor", "threshold_value": 85, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 4, "confidence": 0.78 }
+          ]
+        },
+        {
+          "component": "foot force/torque sensor — overload from drop landing",
+          "symptom": "foot contact force readings saturate or read zero; balance controller increases oscillation; walking speed reduced automatically by safety governor",
+          "root_cause": "six-axis F/T sensor strain gauge bridge fracture from impulse overload during stair misstep or 30cm+ unintended drop; sensor rated for normal gait impulse, not fall impact",
+          "severity": "high",
+          "mtbf_hours": 3500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "force-torque", "foot", "impact", "mechanical"],
+          "repair_protocol": {
+            "title": "Foot Force/Torque Sensor Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; place robot supine; remove foot outer shell (6x M3 JIS screws)", "tool": "JIS #1 screwdriver" },
+              { "step": 2, "action": "Apply 0N reference to sensor cable output and verify all 6 axes read within 5N/0.5Nm of zero; if any axis saturates, sensor requires replacement", "tool": "laptop with SDK, F/T calibration fixture" },
+              { "step": 3, "action": "Disconnect F/T sensor cable (JST-GH 8-pin); remove 6x M3 mounting bolts; extract sensor disc", "tool": "2.5mm hex wrench, spudger" },
+              { "step": 4, "action": "Install new sensor; align orientation mark to chassis datum; torque M3 bolts to 2.5 Nm in star pattern", "tool": "torque wrench 0-5 Nm, 2.5mm hex wrench" },
+              { "step": 5, "action": "Run full F/T sensor calibration via SDK; apply known reference weights; verify < 2% error across all axes", "tool": "laptop with H1-2 SDK, calibration weights 1kg-20kg" },
+              { "step": 6, "action": "Reinstall foot shell; power on full system; verify balance controller uses updated sensor readings", "tool": "JIS #1 screwdriver" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "2.5mm hex wrench", "torque wrench 0-5 Nm", "spudger", "laptop with H1-2 SDK", "calibration weights"],
+            "parts": [
+              { "part_name": "ATI Gamma F/T Sensor SI-130-10", "part_number": "9105-TIF-GAMMA130-10", "supplier": "ATI Industrial Automation", "unit_cost_usd": 1850, "qty": 1 }
+            ],
+            "labor_minutes": 75,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "foot_fz_reading_n", "signal_source": "F/T sensor CAN bus", "threshold_value": 5, "threshold_operator": "<", "threshold_unit": "newtons (at rest)", "lead_time_hours": 1, "confidence": 0.90 },
+            { "signal_name": "balance_oscillation_amplitude_mm", "signal_source": "IMU + balance controller state", "threshold_value": 15, "threshold_operator": ">", "threshold_unit": "millimeters", "lead_time_hours": 2, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "Jetson Orin NX compute — NVMe SSD failure",
+          "symptom": "robot fails to boot; controller reports file system read error; in-field logs truncated or missing",
+          "root_cause": "NVMe SSD write endurance exhaustion from high-frequency ROS2 bag recording and telemetry logging; M.2 2230 SSD endurance < 150TBW under sustained log workload",
+          "severity": "high",
+          "mtbf_hours": 8760,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["compute", "storage", "NVMe", "SSD", "data-loss"],
+          "repair_protocol": {
+            "title": "Jetson Orin NX NVMe SSD Replacement and OS Restore",
+            "steps": [
+              { "step": 1, "action": "Power off; access compute bay via torso back panel (8x M3 screws)", "tool": "JIS #1 screwdriver" },
+              { "step": 2, "action": "Locate M.2 2230 slot; remove single M2 retaining screw; extract SSD at 30-degree angle", "tool": "JIS #000 screwdriver" },
+              { "step": 3, "action": "Inspect SSD contacts for corrosion; install new Western Digital SN740 M.2 2230 512GB NVMe", "tool": "JIS #000 screwdriver", "warning": "Handle by edges — ESD damage will void warranty" },
+              { "step": 4, "action": "Boot robot with USB recovery drive prepared from H1-2 factory image; follow SDK flash procedure to restore OS and firmware", "tool": "USB-A drive with H1-2 factory image, laptop" },
+              { "step": 5, "action": "After restore, configure log rotation to limit ROS2 bag write rate; verify SSD health with nvme-cli smart-log", "tool": "laptop with SSH access to robot" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "JIS #000 screwdriver", "USB recovery drive", "laptop with SSH"],
+            "parts": [
+              { "part_name": "WD SN740 M.2 2230 512GB NVMe SSD", "part_number": "SDDPTQD-512G", "supplier": "Western Digital / Amazon", "unit_cost_usd": 89, "qty": 1 }
+            ],
+            "labor_minutes": 60,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "ssd_available_spare_pct", "signal_source": "nvme-cli SMART telemetry", "threshold_value": 10, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 168, "confidence": 0.88 },
+            { "signal_name": "ssd_percentage_used_pct", "signal_source": "nvme-cli SMART telemetry", "threshold_value": 90, "threshold_operator": ">", "threshold_unit": "percent used lifetime", "lead_time_hours": 336, "confidence": 0.85 }
+          ]
+        },
+        {
+          "component": "ankle dorsiflexion harmonic drive",
+          "symptom": "ankle joint position error exceeds 4 degrees during toe-off phase; robot adopts compensatory flat-footed gait; step height reduction on stairs",
+          "root_cause": "ankle harmonic drive experiences highest position accuracy demand during toe-off; flexspline wear from high-frequency cyclical loading at near-peak torque in push-off phase",
+          "severity": "high",
+          "mtbf_hours": 1600,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "harmonic-drive", "ankle", "gait", "mechanical"],
+          "repair_protocol": {
+            "title": "Ankle Harmonic Drive Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; 120 second discharge wait; place robot supine; support leg with foam cradle", "tool": "foam cradle" },
+              { "step": 2, "action": "Remove ankle shell (6x M3 JIS screws); disconnect actuator CAN and power connectors", "tool": "JIS #1 screwdriver, spudger, label tape" },
+              { "step": 3, "action": "Remove 8x M4 actuator mounting bolts; extract ankle actuator module", "tool": "3mm hex wrench" },
+              { "step": 4, "action": "Disassemble to harmonic drive; replace flexspline and wave generator bearing; regrease", "tool": "snap-ring pliers, bearing press, Mobil SHC 632, grease syringe" },
+              { "step": 5, "action": "Reassemble and reinstall ankle actuator; torque M4 bolts to 4.5 Nm; reconnect cables", "tool": "torque wrench 0-10 Nm, 3mm hex wrench" },
+              { "step": 6, "action": "Run ankle calibration and gait trial; verify position error < 1 deg during toe-off at normal walking speed", "tool": "laptop with H1-2 SDK" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "3mm hex wrench", "torque wrench 0-10 Nm", "snap-ring pliers", "bearing press", "foam cradle"],
+            "parts": [
+              { "part_name": "Harmonic Drive CSF-20-100-2UH-F5 Flexspline", "part_number": "CSF-20-100-2UH-FS", "supplier": "Harmonic Drive LLC", "unit_cost_usd": 380, "qty": 1 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "ankle_position_error_deg", "signal_source": "servo CAN bus", "threshold_value": 2.5, "threshold_operator": ">", "threshold_unit": "degrees", "lead_time_hours": 48, "confidence": 0.72 },
+            { "signal_name": "toe_off_power_w", "signal_source": "motor power telemetry", "threshold_value": 420, "threshold_operator": ">", "threshold_unit": "watts (abnormal elevation)", "lead_time_hours": 72, "confidence": 0.65 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Harmonic Drive LLC", "website": "https://harmonicdrive.net", "region": "NA", "component_types": ["harmonic drive", "flexspline", "wave generator"], "lead_time_days": 21, "risk_level": "medium" },
+        { "name": "Unitree Official Store", "website": "https://shop.unitree.com", "region": "CN", "component_types": ["battery", "actuator", "controller"], "lead_time_days": 14, "risk_level": "medium" },
+        { "name": "ATI Industrial Automation", "website": "https://www.ati-ia.com", "region": "NA", "component_types": ["force-torque sensor"], "lead_time_days": 30, "risk_level": "medium" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "unitree-b2",
+      "name": "Unitree B2",
+      "manufacturer": "Unitree Robotics",
+      "type": "quadruped",
+      "introduced_year": 2023,
+      "specs_json": {
+        "weight_kg": 60,
+        "payload_kg": 40,
+        "battery_wh": 2000,
+        "max_speed_ms": 6.0,
+        "ip_rating": "IP67",
+        "actuator_type": "harmonic drive + BLDC",
+        "compute": "Nvidia Jetson Orin",
+        "lidar": "mid-360 + Livox",
+        "comms": "CAN bus + Ethernet + LTE",
+        "endurance_hours": 5.0
+      },
+      "failure_modes": [
+        {
+          "component": "knee harmonic drive — IP67 internal water ingress post-immersion",
+          "symptom": "joint torque ripple increases after water immersion; harmonic drive grease appears milky on inspection; gait asymmetry on wet terrain",
+          "root_cause": "IP67 rating requires intact shaft seals and housing o-rings; seal compression degrades after 500+ immersion cycles; water contamination of harmonic drive grease causes lubricant film breakdown and accelerated flexspline wear",
+          "severity": "high",
+          "mtbf_hours": 1200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "harmonic-drive", "IP67", "water-ingress", "knee", "sealing"],
+          "repair_protocol": {
+            "title": "B2 Knee Actuator IP67 Seal Inspection and Grease Flush",
+            "steps": [
+              { "step": 1, "action": "Power off; engage emergency stop; wait 90 seconds; lay robot on side with affected leg up", "tool": null },
+              { "step": 2, "action": "Remove leg outer shell panels (6x M4 JIS screws); expose knee actuator housing", "tool": "JIS #2 screwdriver" },
+              { "step": 3, "action": "Remove IP67 shaft seal cover (3x M3 bolts); inspect o-ring for compression set or cracking", "tool": "2.5mm hex wrench, pick tool", "warning": "Replacement o-ring must be EPDM 70 Shore A — do not substitute NBR which swells with Mobil SHC 632 grease" },
+              { "step": 4, "action": "If o-ring damaged: remove with pick tool; clean groove with IPA; install new EPDM o-ring with thin coat of Molykote 55 o-ring lubricant", "tool": "IPA, lint-free swab, Molykote 55 lubricant" },
+              { "step": 5, "action": "Extract grease via drain port; inspect for milky appearance (water contamination) or gray metallic particles (wear debris)", "tool": "grease extraction syringe, inspection tray" },
+              { "step": 6, "action": "Flush cavity with clean Mobil SHC 632 via injection port; rotate joint 10 full cycles; extract and discard flush grease", "tool": "grease injection syringe, Mobil SHC 632" },
+              { "step": 7, "action": "Fill with fresh Mobil SHC 632 to 80% cavity fill; reinstall seal cover; torque M3 bolts to 2.5 Nm", "tool": "torque wrench 0-5 Nm" },
+              { "step": 8, "action": "Perform IP67 immersion test: submerge knee joint to 1m depth for 30 minutes; verify no water entry", "tool": "immersion tank, 1m depth reference" },
+              { "step": 9, "action": "Power on; run full gait test on level terrain; verify torque ripple < 5% above nominal", "tool": "laptop with B2 SDK" }
+            ],
+            "tools_required": ["JIS #2 screwdriver", "2.5mm hex wrench", "pick tool", "torque wrench 0-5 Nm", "grease injection syringe", "Mobil SHC 632", "IPA", "immersion tank"],
+            "parts": [
+              { "part_name": "EPDM O-Ring ID18mm x 2.5mm Section (actuator shaft seal)", "part_number": "EPDM-18X25-EA", "supplier": "RS Components", "unit_cost_usd": 3, "qty": 4 },
+              { "part_name": "Mobil SHC 632 Grease 400g", "part_number": "SHC632-400G", "supplier": "ExxonMobil Lubricants", "unit_cost_usd": 45, "qty": 1 },
+              { "part_name": "Molykote 55 O-Ring Lubricant 150g", "part_number": "MOLYKOTE-55-150G", "supplier": "Dow Corning / Dupont", "unit_cost_usd": 28, "qty": 1 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "joint_torque_ripple_pct", "signal_source": "servo CAN bus", "threshold_value": 8, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 48, "confidence": 0.68 },
+            { "signal_name": "immersion_cycle_count", "signal_source": "robot operations log", "threshold_value": 400, "threshold_operator": ">", "threshold_unit": "cycles", "lead_time_hours": 72, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "foot contact switch and pressure pad — abrasion wear",
+          "symptom": "gait controller logs missing foot contact events; robot over-extends leg on hard surfaces; stance phase timing errors",
+          "root_cause": "foot rubber pad and embedded contact switch degrade from abrasive terrain contact; B2 designed for outdoor industrial use on gravel/concrete which accelerates foot pad wear beyond 500-hour interval",
+          "severity": "medium",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "foot", "wear", "contact", "terrain"],
+          "repair_protocol": {
+            "title": "Foot Contact Pad and Switch Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; inspect all four foot pads; measure rubber thickness with calipers — replace at < 5mm remaining", "tool": "vernier calipers" },
+              { "step": 2, "action": "Remove foot outer housing (4x M3 screws); extract rubber pad and contact switch assembly", "tool": "JIS #1 screwdriver" },
+              { "step": 3, "action": "Test contact switch continuity with DMM; verify actuation force with spring scale", "tool": "digital multimeter, spring scale 0-50N" },
+              { "step": 4, "action": "Install new foot pad and switch assembly; apply medium-strength Loctite 243 to M3 mounting screws", "tool": "JIS #1 screwdriver, Loctite 243" },
+              { "step": 5, "action": "Reinstall foot housing; power on; run contact calibration; verify all 4 feet trigger at < 10N force", "tool": "laptop with B2 SDK, spring scale" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "vernier calipers", "digital multimeter", "spring scale 0-50N", "Loctite 243"],
+            "parts": [
+              { "part_name": "Unitree B2 Foot Pad and Contact Switch Kit", "part_number": "B2-FOOT-PAD-KIT", "supplier": "Unitree Official Store", "unit_cost_usd": 65, "qty": 4 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "foot_contact_event_missing_pct", "signal_source": "gait controller log", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "percent of steps", "lead_time_hours": 24, "confidence": 0.78 },
+            { "signal_name": "foot_pad_thickness_mm", "signal_source": "manual inspection log", "threshold_value": 6, "threshold_operator": "<", "threshold_unit": "millimeters", "lead_time_hours": 48, "confidence": 0.85 }
+          ]
+        },
+        {
+          "component": "LTE/Wi-Fi communication module — antenna delamination",
+          "symptom": "intermittent loss of remote operation and telemetry; LTE signal drops from -80dBm to -110dBm; connection drops correlate with body flexion motion",
+          "root_cause": "LTE antenna is bonded to interior body panel; repeated body torsion during agile locomotion causes adhesive bond failure between antenna ground plane and panel substrate, reducing signal coupling",
+          "severity": "medium",
+          "mtbf_hours": 3500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["communications", "LTE", "antenna", "intermittent", "connectivity"],
+          "repair_protocol": {
+            "title": "LTE Antenna Rebond and RSSI Verification",
+            "steps": [
+              { "step": 1, "action": "Power off; remove body top panel (6x M4 screws); locate LTE patch antenna on inner panel surface", "tool": "JIS #2 screwdriver" },
+              { "step": 2, "action": "Flex body panel manually; observe antenna; any visible edge lifting confirms delamination", "tool": null },
+              { "step": 3, "action": "Clean antenna back and panel surface with IPA; allow 5-minute dry time", "tool": "IPA, lint-free cloth" },
+              { "step": 4, "action": "Apply 3M 467MP adhesive transfer tape to antenna back; press antenna to panel with 5kg pressure for 60 seconds", "tool": "3M 467MP tape, weight or clamp" },
+              { "step": 5, "action": "Verify U.FL coaxial connector is fully seated on antenna port; re-mate if necessary", "tool": "U.FL seating tool or blunt plastic pry" },
+              { "step": 6, "action": "Reinstall panel; power on; check LTE RSSI in diagnostics — expect > -90dBm in outdoor environment", "tool": "laptop with B2 diagnostics" }
+            ],
+            "tools_required": ["JIS #2 screwdriver", "IPA", "3M 467MP adhesive transfer tape", "lint-free cloth", "laptop with B2 diagnostics"],
+            "parts": [
+              { "part_name": "3M 467MP Adhesive Transfer Tape 1in x 5yd", "part_number": "3M-467MP-1X5", "supplier": "3M / Amazon", "unit_cost_usd": 14, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "lte_rssi_dbm", "signal_source": "LTE modem diagnostics", "threshold_value": -95, "threshold_operator": "<", "threshold_unit": "dBm", "lead_time_hours": 12, "confidence": 0.72 },
+            { "signal_name": "lte_reconnect_count", "signal_source": "communications log", "threshold_value": 10, "threshold_operator": ">", "threshold_unit": "reconnects per hour", "lead_time_hours": 6, "confidence": 0.68 }
+          ]
+        },
+        {
+          "component": "hip abduction motor — bearing failure under lateral impact",
+          "symptom": "hip abduction angle limited to < 15 degrees; robot adopts narrow-stance gait; increased current draw in hip abduction motor; grinding noise on side-step",
+          "root_cause": "hip abduction BLDC motor uses single-row deep-groove bearing rated for primarily radial loads; lateral falls or side impacts transfer axial impulse loads exceeding bearing design limits; race brinelling initiates spalling",
+          "severity": "high",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["motor", "bearing", "hip", "impact", "abduction"],
+          "repair_protocol": {
+            "title": "Hip Abduction Motor Bearing Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; lay robot on side with affected hip up; remove hip abduction shell (8x M4 screws)", "tool": "JIS #2 screwdriver" },
+              { "step": 2, "action": "Disconnect motor phase wires and encoder cable; remove motor from abduction joint (6x M4 flange bolts)", "tool": "3mm hex wrench" },
+              { "step": 3, "action": "Disassemble motor; press out rotor from front bearing; inspect for brinelling (dimples in race)", "tool": "bearing press, inspection light" },
+              { "step": 4, "action": "Press in new FAG 6206-2Z angular contact bearing rated for combined loading; apply Mobilgrease 28 to bearing", "tool": "bearing press, Mobilgrease 28" },
+              { "step": 5, "action": "Reassemble motor; reinstall to hip joint; torque M4 bolts to 5.0 Nm; reconnect phase and encoder", "tool": "torque wrench 0-10 Nm, 3mm hex wrench" },
+              { "step": 6, "action": "Run hip abduction calibration; verify full ROM ±35 degrees; verify current draw < 8A at max ROM", "tool": "laptop with B2 SDK, clamp meter" }
+            ],
+            "tools_required": ["JIS #2 screwdriver", "3mm hex wrench", "torque wrench 0-10 Nm", "bearing press", "inspection light", "clamp meter"],
+            "parts": [
+              { "part_name": "FAG 6206-2Z Deep Groove Ball Bearing", "part_number": "6206-2Z-FAG", "supplier": "Schaeffler / Motion Industries", "unit_cost_usd": 22, "qty": 2 },
+              { "part_name": "Mobilgrease 28 Multi-Purpose Grease 400g", "part_number": "MOBILGREASE28-400G", "supplier": "ExxonMobil Lubricants", "unit_cost_usd": 38, "qty": 1 }
+            ],
+            "labor_minutes": 120,
+            "skill_level": "advanced",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "hip_abduction_current_a", "signal_source": "motor controller CAN telemetry", "threshold_value": 10, "threshold_operator": ">", "threshold_unit": "amperes", "lead_time_hours": 24, "confidence": 0.72 },
+            { "signal_name": "hip_abduction_rom_deg", "signal_source": "joint encoder via CAN", "threshold_value": 20, "threshold_operator": "<", "threshold_unit": "degrees max ROM", "lead_time_hours": 12, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "LiDAR mid-360 — window fouling from mud and dust",
+          "symptom": "point cloud density drops 30-50%; obstacle detection range reduced; false positive obstacle detections from partial returns",
+          "root_cause": "B2 operates close to ground in industrial/outdoor environments; LiDAR rotating prism window accumulates mud splash, concrete dust, and moisture film within 4-8 hours in dirty environments; window has no self-cleaning mechanism",
+          "severity": "medium",
+          "mtbf_hours": 300,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "LiDAR", "contamination", "perception", "maintenance"],
+          "repair_protocol": {
+            "title": "LiDAR Window Cleaning and Verification",
+            "steps": [
+              { "step": 1, "action": "Power off robot; inspect LiDAR window under oblique light for mud or film deposits", "tool": "flashlight" },
+              { "step": 2, "action": "Dampen lens cleaning cloth with methanol or IPA; wipe window in single radial strokes; do not apply circular motion (can create micro-scratches)", "tool": "lens cloth, methanol 99% or IPA 99%", "warning": "Never use compressed air directly on LiDAR window — particulates can embed in lens coating" },
+              { "step": 3, "action": "Inspect for remaining debris with oblique light; repeat with fresh cloth section if needed", "tool": "flashlight" },
+              { "step": 4, "action": "Power on; run LiDAR health diagnostic; verify point count > 95% nominal in open environment", "tool": "laptop with B2 diagnostics, open area 10m clearance" },
+              { "step": 5, "action": "If cleaning does not restore point count, inspect for scratches; scratched window requires replacement of LiDAR sensor assembly", "tool": null }
+            ],
+            "tools_required": ["flashlight", "lens cloth", "methanol 99% or IPA 99%", "laptop with B2 diagnostics"],
+            "parts": [
+              { "part_name": "Unitree B2 LiDAR Sensor Assembly (if window scratched)", "part_number": "B2-LIDAR-MID360", "supplier": "Unitree Official Store", "unit_cost_usd": 380, "qty": 1 }
+            ],
+            "labor_minutes": 15,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "lidar_point_density_pct", "signal_source": "perception software metrics", "threshold_value": 80, "threshold_operator": "<", "threshold_unit": "percent of nominal", "lead_time_hours": 4, "confidence": 0.82 },
+            { "signal_name": "false_positive_obstacle_count", "signal_source": "navigation stack log", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "events per hour", "lead_time_hours": 2, "confidence": 0.70 }
+          ]
+        },
+        {
+          "component": "battery 2000Wh — cold weather capacity derating",
+          "symptom": "runtime drops below 2 hours in ambient < 5C; BMS reports high internal resistance; robot terminates mission early with battery > 20% SOC",
+          "root_cause": "lithium NMC chemistry experiences significant capacity and power derating below 10C ambient; B2 designed for industrial outdoor use including cold climates; BMS thermal management system does not actively heat battery during storage",
+          "severity": "medium",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "thermal", "cold-weather", "performance", "BMS"],
+          "repair_protocol": {
+            "title": "Cold Weather Battery Pre-Conditioning Protocol",
+            "steps": [
+              { "step": 1, "action": "If ambient < 5C, connect charger for 30 minutes before deployment to allow BMS pre-heat cycle", "tool": "OEM charger" },
+              { "step": 2, "action": "Verify battery surface temp > 15C via BMS telemetry before beginning mission", "tool": "laptop with B2 diagnostics" },
+              { "step": 3, "action": "If battery surface remains < 10C after 30-minute charge: apply insulated battery wrap (neoprene pouch rated for operating temperature)", "tool": "neoprene battery insulating pouch" },
+              { "step": 4, "action": "Reduce mission SOC cutoff from 20% to 30% in fleet management settings for ambient < 5C operation", "tool": "fleet management console" },
+              { "step": 5, "action": "After mission, charge immediately while battery is warm — do not store discharged in cold", "tool": "OEM charger" }
+            ],
+            "tools_required": ["OEM charger", "laptop with B2 diagnostics", "neoprene battery insulating pouch"],
+            "parts": [
+              { "part_name": "Neoprene Battery Insulating Pouch (custom cut for B2 battery module)", "part_number": "NEO-B2-BAT-WRAP", "supplier": "Custom fabrication / industrial sewing supplier", "unit_cost_usd": 45, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_temp_c", "signal_source": "BMS thermistor", "threshold_value": 8, "threshold_operator": "<", "threshold_unit": "celsius", "lead_time_hours": 1, "confidence": 0.88 },
+            { "signal_name": "battery_internal_resistance_mohm", "signal_source": "BMS diagnostic port", "threshold_value": 80, "threshold_operator": ">", "threshold_unit": "milliohms", "lead_time_hours": 2, "confidence": 0.82 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Unitree Official Store", "website": "https://shop.unitree.com", "region": "CN", "component_types": ["battery", "foot pad", "actuator", "LiDAR"], "lead_time_days": 14, "risk_level": "medium" },
+        { "name": "RS Components", "website": "https://uk.rs-online.com", "region": "EU", "component_types": ["o-rings", "gasket", "fasteners"], "lead_time_days": 3, "risk_level": "low" },
+        { "name": "ExxonMobil Lubricants", "website": "https://www.mobil.com", "region": "NA", "component_types": ["grease", "lubricant"], "lead_time_days": 5, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "boston-dynamics-spot",
+      "name": "Boston Dynamics Spot",
+      "manufacturer": "Boston Dynamics",
+      "type": "quadruped",
+      "introduced_year": 2020,
+      "specs_json": {
+        "weight_kg": 32.5,
+        "payload_kg": 14,
+        "battery_wh": 605,
+        "max_speed_ms": 1.6,
+        "ip_rating": "IP54",
+        "actuator_type": "series elastic actuator (SEA)",
+        "compute": "Intel Core i5 (arm computer), dedicated motor controllers",
+        "lidar": "optional payload",
+        "comms": "Wi-Fi 802.11a/b/g/n/ac, Bluetooth 5.0, payload ethernet",
+        "endurance_hours": 1.5,
+        "dof": 12
+      },
+      "failure_modes": [
+        {
+          "component": "series elastic actuator (SEA) spring pack — fatigue fracture",
+          "symptom": "joint position control becomes sluggish with 20-40ms lag; torque sensing reads erratic; gait contact timing errors logged; robot triggers fall prevention and halts",
+          "root_cause": "SEA steel spring pack experiences high-cycle metal fatigue from repeated locomotion impacts; Spot designed for up to 1 million steps — spring pack fatigue initiates at 500k steps in high-terrain use; fracture renders SEA force sensing unreliable",
+          "severity": "critical",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["actuator", "SEA", "spring", "fatigue", "critical", "gait"],
+          "repair_protocol": {
+            "title": "SEA Spring Pack Inspection and Module Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; engage e-stop; wait 120 seconds for all actuators to discharge stored spring energy", "tool": null, "warning": "SEA actuators store mechanical energy in compressed springs — never disassemble under load or immediately after power-off" },
+              { "step": 2, "action": "Position robot on padded work stand in standing configuration at working height; support each leg with foam blocks to unload joints", "tool": "padded work stand, foam blocks" },
+              { "step": 3, "action": "Remove leg outer shell panels per Boston Dynamics service manual; expose SEA housing", "tool": "T10 Torx, T20 Torx, 3mm hex" },
+              { "step": 4, "action": "Connect Spot tablet/laptop to robot API; run actuator diagnostics — `spring_deflection_variance` > 0.8mm RMS indicates spring pack fatigue", "tool": "Boston Dynamics Spot API (Python SDK), laptop" },
+              { "step": 5, "action": "If spring pack fatigue confirmed: remove SEA module (6x M5 bolts); weigh and log serial number", "tool": "4mm hex wrench, digital scale" },
+              { "step": 6, "action": "Install factory-refurbished SEA module from Boston Dynamics spare parts program; align spline shaft carefully", "tool": "4mm hex wrench", "warning": "Boston Dynamics does not support field spring-pack-level repair — full SEA module swap only" },
+              { "step": 7, "action": "Torque M5 bolts to 8.0 Nm in star pattern; reconnect SEA CAN connector", "tool": "torque wrench 0-20 Nm" },
+              { "step": 8, "action": "Run Boston Dynamics commissioning script via API; verify `spring_deflection_variance` < 0.3mm RMS; perform 100-step gait trial", "tool": "Boston Dynamics API, laptop" }
+            ],
+            "tools_required": ["T10 Torx", "T20 Torx", "3mm hex", "4mm hex wrench", "torque wrench 0-20 Nm", "laptop with Boston Dynamics Spot API", "foam blocks", "padded work stand"],
+            "parts": [
+              { "part_name": "Boston Dynamics Spot SEA Module (factory refurbished)", "part_number": "BD-SPOT-SEA-FR", "supplier": "Boston Dynamics Authorized Service", "unit_cost_usd": 2200, "qty": 1 }
+            ],
+            "labor_minutes": 180,
+            "skill_level": "specialist",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "sea_spring_deflection_variance_mm", "signal_source": "SEA encoder via CAN bus", "threshold_value": 0.6, "threshold_operator": ">", "threshold_unit": "millimeters RMS", "lead_time_hours": 72, "confidence": 0.75 },
+            { "signal_name": "joint_contact_timing_error_ms", "signal_source": "locomotion controller log", "threshold_value": 15, "threshold_operator": ">", "threshold_unit": "milliseconds", "lead_time_hours": 48, "confidence": 0.70 },
+            { "signal_name": "cumulative_step_count", "signal_source": "robot operations log", "threshold_value": 500000, "threshold_operator": ">", "threshold_unit": "steps", "lead_time_hours": 168, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "605Wh battery pack — cell degradation and connector erosion",
+          "symptom": "runtime drops below 45 minutes; docking station reports charge fault; battery LED shows orange (fault); CLI `battery info` shows SOH < 70%",
+          "root_cause": "lithium cells degrade faster under repeated partial-discharge cycles during multi-shift operation without full charge cycles; battery dock contact pins experience arcing erosion from repeated mate/demate under partial charge residual current",
+          "severity": "high",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "electrical", "connector", "SOH", "dock"],
+          "repair_protocol": {
+            "title": "Spot Battery Pack and Dock Contact Replacement",
+            "steps": [
+              { "step": 1, "action": "Log battery SOH via robot SDK: `robot_state.power_state.locomotion_charge_percentage` and battery info endpoint", "tool": "Boston Dynamics Spot Python SDK" },
+              { "step": 2, "action": "Inspect dock contact pins (4-pin, gold-plated) for pitting or blackening; inspect matching battery receptacle", "tool": "magnifying glass, flashlight" },
+              { "step": 3, "action": "Clean dock pins with contact cleaner and cotton swab; if pitting depth > 0.5mm, replace dock contact assembly", "tool": "DeoxIT D5 contact cleaner, cotton swab, vernier calipers" },
+              { "step": 4, "action": "Press battery release on robot side; slide battery out of bay; install new OEM battery", "tool": null },
+              { "step": 5, "action": "Perform 3 full charge cycles (0-100%) to condition new cells; verify SOH > 95% after conditioning", "tool": "Spot dock, SDK battery monitor" },
+              { "step": 6, "action": "Dispose of old battery per Boston Dynamics battery return program; do not landfill", "tool": null }
+            ],
+            "tools_required": ["Boston Dynamics Spot Python SDK", "magnifying glass", "DeoxIT D5 contact cleaner", "cotton swabs", "vernier calipers"],
+            "parts": [
+              { "part_name": "Boston Dynamics Spot Battery (605Wh)", "part_number": "BD-SPOT-BATT-605", "supplier": "Boston Dynamics Official Store", "unit_cost_usd": 1800, "qty": 1 },
+              { "part_name": "Spot Dock Contact Assembly", "part_number": "BD-SPOT-DOCK-CONTACT", "supplier": "Boston Dynamics Authorized Service", "unit_cost_usd": 280, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_soh_pct", "signal_source": "Spot SDK power_state", "threshold_value": 75, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 168, "confidence": 0.88 },
+            { "signal_name": "runtime_minutes", "signal_source": "operations log", "threshold_value": 60, "threshold_operator": "<", "threshold_unit": "minutes per charge", "lead_time_hours": 48, "confidence": 0.82 }
+          ]
+        },
+        {
+          "component": "IP54 hip panel seal — degradation from cleaning agent exposure",
+          "symptom": "internal moisture alarm; corrosion on payload bay connector pins; IP54 rating compromised after industrial environment deployment",
+          "root_cause": "Spot deployed in industrial inspection environments uses harsh cleaning agents (degreasers, alkaline foam cleaners) for decontamination; some agents degrade EPDM panel gaskets and silicone RTV seals faster than water alone",
+          "severity": "medium",
+          "mtbf_hours": 3000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sealing", "IP54", "chemical", "corrosion", "industrial"],
+          "repair_protocol": {
+            "title": "Hip Panel IP54 Gasket Replacement and Corrosion Treatment",
+            "steps": [
+              { "step": 1, "action": "Power off; remove all payload equipment; remove hip panels per Boston Dynamics service guide (T20 Torx, 12 screws)", "tool": "T20 Torx screwdriver" },
+              { "step": 2, "action": "Inspect all gaskets and RTV beads for chemical attack (swelling, crumbling, discoloration)", "tool": "inspection light, magnifying glass" },
+              { "step": 3, "action": "Remove all degraded gasket material; clean channels with IPA", "tool": "IPA, plastic scraper, lint-free cloth" },
+              { "step": 4, "action": "Treat any corrosion on connector pins with DeoxIT D5; dry with compressed air", "tool": "DeoxIT D5, compressed air", "warning": "Do not use isopropyl alcohol on gold connector pins — causes micro-pitting" },
+              { "step": 5, "action": "Install new silicone gasket tape rated for chemical resistance (EPDM or PTFE-backed); press firmly into groove", "tool": "PTFE or EPDM gasket tape" },
+              { "step": 6, "action": "Apply thin bead of chemical-resistant RTV (Dow Corning 736 Heat Resistant Sealant) to seam areas", "tool": "Dow Corning 736 RTV, applicator" },
+              { "step": 7, "action": "Reinstall panels; torque T20 screws to 2.5 Nm; perform water spray test; monitor humidity sensor < 60% RH", "tool": "torque wrench, garden hose spray nozzle, SDK humidity monitor" }
+            ],
+            "tools_required": ["T20 Torx", "torque wrench", "IPA", "DeoxIT D5", "PTFE gasket tape", "Dow Corning 736 RTV", "compressed air", "garden hose"],
+            "parts": [
+              { "part_name": "PTFE-Backed Self-Adhesive Gasket Tape 8mm x 2mm x 3m", "part_number": "PTFE-8X2-3M", "supplier": "RS Components", "unit_cost_usd": 18, "qty": 2 },
+              { "part_name": "Dow Corning 736 Heat Resistant Sealant 90g", "part_number": "DC-736-90G", "supplier": "Dow Corning / Dupont", "unit_cost_usd": 24, "qty": 1 }
+            ],
+            "labor_minutes": 75,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "internal_humidity_rh_pct", "signal_source": "Spot internal humidity sensor", "threshold_value": 65, "threshold_operator": ">", "threshold_unit": "percent RH", "lead_time_hours": 12, "confidence": 0.80 },
+            { "signal_name": "days_since_last_gasket_service", "signal_source": "maintenance log", "threshold_value": 180, "threshold_operator": ">", "threshold_unit": "days", "lead_time_hours": 168, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "motor controller board — thermal derating from blocked airflow",
+          "symptom": "robot reduces gait speed automatically; SDK reports motor_temp_warning on 1-2 legs; performance restoration after 5-minute rest period",
+          "root_cause": "Spot motor controllers rely on passive conduction cooling through leg housing; dust, mud, or debris buildup on external housing surface reduces thermal conductivity; controller reduces maximum torque output to protect electronics",
+          "severity": "medium",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["thermal", "motor-controller", "cooling", "debris", "maintenance"],
+          "repair_protocol": {
+            "title": "Motor Controller Housing External Thermal Surface Cleaning",
+            "steps": [
+              { "step": 1, "action": "Power off; allow 10-minute cool-down; inspect all leg housing external surfaces for mud or debris buildup", "tool": "flashlight" },
+              { "step": 2, "action": "Use stiff nylon brush to loosen dried mud/debris from heat dissipation fins and housing ribs", "tool": "stiff nylon brush" },
+              { "step": 3, "action": "Wipe all surfaces with damp cloth; dry with compressed air blast", "tool": "damp cloth, compressed air", "warning": "Do not aim compressed air at joint seals — may force debris past IP54 gaskets" },
+              { "step": 4, "action": "Power on; run 10-minute walk; verify motor temp stays < 60C via SDK temp readings", "tool": "laptop with Spot SDK, open environment" },
+              { "step": 5, "action": "If thermal issue persists after cleaning, apply thin layer of Fujipoly XR-m gap filler between motor controller and housing wall", "tool": "Fujipoly XR-m thermal gap pad, plastic scraper" }
+            ],
+            "tools_required": ["nylon brush", "compressed air", "damp cloth", "laptop with Spot SDK"],
+            "parts": [
+              { "part_name": "Fujipoly XR-m Thermal Gap Filler 100x100x1mm", "part_number": "FUJIPOLY-XRM-1MM", "supplier": "Fujipoly / Digi-Key", "unit_cost_usd": 28, "qty": 2 }
+            ],
+            "labor_minutes": 25,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_temp_c_max_leg", "signal_source": "Spot SDK robot_state motor_temperatures", "threshold_value": 58, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 2, "confidence": 0.82 },
+            { "signal_name": "gait_speed_reduction_pct", "signal_source": "locomotion controller log", "threshold_value": 20, "threshold_operator": ">", "threshold_unit": "percent below commanded speed", "lead_time_hours": 1, "confidence": 0.78 }
+          ]
+        },
+        {
+          "component": "foot rubber pad — wear and delamination",
+          "symptom": "traction loss on smooth or wet surfaces; robot slips during direction changes; increased fall protection interventions; foot pad visually worn or delaminated",
+          "root_cause": "foot rubber pads rated for ~1 million steps on typical mixed-terrain; concrete, asphalt, and industrial tile surfaces wear pads 3-5x faster; worn pads expose plastic foot structure causing coefficient of friction drop from 0.8 to 0.3",
+          "severity": "medium",
+          "mtbf_hours": 400,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["foot", "wear", "traction", "safety", "maintenance"],
+          "repair_protocol": {
+            "title": "Spot Foot Rubber Pad Replacement",
+            "steps": [
+              { "step": 1, "action": "Measure rubber pad center thickness with calipers — replace at < 4mm remaining (nominal 12mm)", "tool": "vernier calipers" },
+              { "step": 2, "action": "Remove foot from leg: remove 3x M4 foot-to-lower-leg bolts; disconnect foot (no internal connectors on standard foot)", "tool": "3mm hex wrench" },
+              { "step": 3, "action": "Peel old rubber pad from foot structure; clean bonding surface with IPA", "tool": "plastic pry, IPA, abrasive pad" },
+              { "step": 4, "action": "Apply Loctite 480 rubber bonding adhesive to foot structure; press new pad; clamp for 2 hours", "tool": "Loctite 480, C-clamp, wax paper" },
+              { "step": 5, "action": "Reinstall foot to leg; torque M4 bolts to 4.0 Nm", "tool": "3mm hex wrench, torque wrench 0-10 Nm" },
+              { "step": 6, "action": "Run 5-minute walk trial on hard surface; verify no slipping during sharp turns", "tool": "open hard surface area" }
+            ],
+            "tools_required": ["vernier calipers", "3mm hex wrench", "torque wrench 0-10 Nm", "Loctite 480", "C-clamp", "IPA"],
+            "parts": [
+              { "part_name": "Boston Dynamics Spot Foot Rubber Pad Set (4x)", "part_number": "BD-SPOT-FOOT-PAD-4PK", "supplier": "Boston Dynamics Official Store", "unit_cost_usd": 120, "qty": 1 }
+            ],
+            "labor_minutes": 60,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "foot_pad_thickness_mm", "signal_source": "manual inspection log", "threshold_value": 5, "threshold_operator": "<", "threshold_unit": "millimeters", "lead_time_hours": 48, "confidence": 0.88 },
+            { "signal_name": "slip_event_count_per_hour", "signal_source": "fall prevention controller log", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "events per hour", "lead_time_hours": 12, "confidence": 0.78 }
+          ]
+        },
+        {
+          "component": "Spot Core payload computer — NVMe SSD endurance",
+          "symptom": "Spot Core fails to boot; user payload apps unavailable; SSH connection timeout; Core LED shows error pattern",
+          "root_cause": "NVMe SSD write endurance exhausted from continuous payload application log writing; Spot Core Intel NUC-based compute logs at high rate during inspection missions; M.2 SSD rated 150TBW exceeded after 18-24 months of daily use",
+          "severity": "high",
+          "mtbf_hours": 8760,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["compute", "storage", "payload", "Spot-Core", "NVMe"],
+          "repair_protocol": {
+            "title": "Spot Core NVMe SSD Replacement",
+            "steps": [
+              { "step": 1, "action": "Remove Spot Core from payload bay (4x M4 captive bolts); disconnect Ethernet and power cable", "tool": "3mm hex wrench" },
+              { "step": 2, "action": "Open Spot Core enclosure per service guide (6x T8 Torx screws)", "tool": "T8 Torx" },
+              { "step": 3, "action": "Remove M.2 2280 NVMe SSD (single M2 screw); install new Samsung 990 Pro 1TB M.2 NVMe", "tool": "JIS #0 screwdriver" },
+              { "step": 4, "action": "Restore Spot Core OS from USB recovery image; follow Boston Dynamics Spot Core restore procedure", "tool": "USB-A recovery drive, monitor/keyboard via HDMI" },
+              { "step": 5, "action": "Configure log rotation limits; verify SSD SMART health shows available_spare > 90%; reinstall Core to robot", "tool": "SSH terminal, nvme-cli" }
+            ],
+            "tools_required": ["3mm hex wrench", "T8 Torx", "JIS #0 screwdriver", "USB recovery drive", "SSH terminal"],
+            "parts": [
+              { "part_name": "Samsung 990 Pro 1TB M.2 2280 NVMe SSD", "part_number": "MZ-V9P1T0B/AM", "supplier": "Samsung / Amazon / CDW", "unit_cost_usd": 95, "qty": 1 }
+            ],
+            "labor_minutes": 60,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "ssd_available_spare_pct", "signal_source": "Spot Core nvme-cli SMART", "threshold_value": 10, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 168, "confidence": 0.88 },
+            { "signal_name": "ssd_percentage_used_pct", "signal_source": "Spot Core nvme-cli SMART", "threshold_value": 85, "threshold_operator": ">", "threshold_unit": "percent lifetime used", "lead_time_hours": 336, "confidence": 0.85 }
+          ]
+        },
+        {
+          "component": "wrist / gripper attachment interface — electrical contact fouling",
+          "symptom": "gripper payload loses power intermittently; payload detection fails; SDK shows payload not authenticated; gripper opens unexpectedly mid-task",
+          "root_cause": "Spot payload port uses spring-loaded pogo pin contacts for power and data; industrial environments deposit conductive dust and moisture on pogo pins and mating PCB pads; contact resistance rises above authentication threshold",
+          "severity": "high",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["payload", "gripper", "electrical", "contact", "fouling"],
+          "repair_protocol": {
+            "title": "Spot Gripper/Payload Pogo Pin Contact Cleaning",
+            "steps": [
+              { "step": 1, "action": "Power off robot; remove gripper from wrist payload port", "tool": null },
+              { "step": 2, "action": "Inspect wrist pogo pins (12-pin array) and gripper mating pads under magnification; look for oxidation or debris", "tool": "magnifying glass, flashlight" },
+              { "step": 3, "action": "Apply 1-2 drops DeoxIT D5 to pogo pin contact surface; mate and demate gripper 10x to burnish contacts", "tool": "DeoxIT D5 contact cleaner" },
+              { "step": 4, "action": "Dry with compressed air; wipe mating pads on gripper with IPA-dampened cotton swab", "tool": "compressed air, IPA, cotton swab" },
+              { "step": 5, "action": "Reattach gripper; power on; verify payload authentication succeeds; run grip/open 20 cycles via tablet app", "tool": "Boston Dynamics tablet controller" },
+              { "step": 6, "action": "If contact resistance still high after cleaning, inspect pogo pin spring tension — replace pogo pin block if spring force < 50g measured with spring scale", "tool": "spring scale, pogo pin replacement block" }
+            ],
+            "tools_required": ["magnifying glass", "DeoxIT D5", "compressed air", "IPA", "cotton swabs", "spring scale", "Boston Dynamics tablet"],
+            "parts": [
+              { "part_name": "Boston Dynamics Spot Wrist Pogo Pin Contact Block", "part_number": "BD-SPOT-WRIST-POGO", "supplier": "Boston Dynamics Authorized Service", "unit_cost_usd": 180, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "payload_auth_fail_count", "signal_source": "Spot SDK payload authentication log", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "failures per session", "lead_time_hours": 6, "confidence": 0.85 },
+            { "signal_name": "gripper_power_interrupt_count", "signal_source": "gripper controller log", "threshold_value": 1, "threshold_operator": ">", "threshold_unit": "events per mission", "lead_time_hours": 4, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "front stereo camera pair — calibration drift from thermal shock",
+          "symptom": "3D vision obstacle detection range reduces from 5m to 2m; robot takes wider berth around obstacles than commanded; navigation errors in tight spaces",
+          "root_cause": "Spot front stereo cameras require sub-pixel calibration for accurate depth estimation; rapid temperature changes (indoor/outdoor transitions in winter) cause aluminum camera bracket thermal expansion mismatch with camera module, shifting stereo baseline by 50-100 microns — sufficient to corrupt depth accuracy",
+          "severity": "medium",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "camera", "calibration", "thermal", "stereo-vision", "navigation"],
+          "repair_protocol": {
+            "title": "Front Stereo Camera Recalibration",
+            "steps": [
+              { "step": 1, "action": "Allow robot to equilibrate to ambient temperature for 30 minutes before calibration — never calibrate immediately after temperature transition", "tool": null },
+              { "step": 2, "action": "Set up Boston Dynamics stereo calibration target (1m x 1m checkerboard) at 2m from robot in consistent lighting", "tool": "Boston Dynamics calibration checkerboard, even lighting" },
+              { "step": 3, "action": "Connect laptop to robot via Wi-Fi; run calibration tool via Spot SDK: `bosdyn.client.image_service` calibration routine", "tool": "laptop with Spot SDK" },
+              { "step": 4, "action": "Follow SDK calibration wizard — capture 15-20 positions; wizard will reject positions with insufficient baseline variation", "tool": "Boston Dynamics tablet or laptop" },
+              { "step": 5, "action": "Apply new calibration; verify obstacle detection range > 4.5m on 100mm calibration target", "tool": "Spot SDK depth verification script, measuring tape" }
+            ],
+            "tools_required": ["Boston Dynamics stereo calibration checkerboard", "laptop with Spot SDK", "measuring tape", "consistent lighting setup"],
+            "parts": [],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "stereo_depth_max_range_m", "signal_source": "vision perception diagnostics", "threshold_value": 3.5, "threshold_operator": "<", "threshold_unit": "meters", "lead_time_hours": 8, "confidence": 0.72 },
+            { "signal_name": "indoor_outdoor_transition_count", "signal_source": "mission log", "threshold_value": 20, "threshold_operator": ">", "threshold_unit": "transitions since last calibration", "lead_time_hours": 48, "confidence": 0.65 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Boston Dynamics Authorized Service", "website": "https://bostondynamics.com", "region": "NA", "component_types": ["SEA module", "battery", "pogo pin block", "service parts"], "lead_time_days": 14, "risk_level": "high", "notes": "Official parts only — no third-party SEA modules supported" },
+        { "name": "Boston Dynamics Official Store", "website": "https://bostondynamics.com/store", "region": "NA", "component_types": ["battery", "foot pad", "accessories"], "lead_time_days": 7, "risk_level": "medium" },
+        { "name": "RS Components", "website": "https://uk.rs-online.com", "region": "EU", "component_types": ["gasket tape", "fasteners", "general electronics"], "lead_time_days": 3, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    }
+  ]
+}

@@ -695,6 +695,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <button class="tab-btn" onclick="switchTab('delivery',this)">Delivery</button>
       <button class="tab-btn" onclick="switchTab('industrial',this)">Industrial</button>
       <button class="tab-btn" onclick="switchTab('ebikes',this)">eBikes &amp; Scooters</button>
+      <button class="tab-btn" onclick="switchTab('cleaning',this)">Cleaning &amp; Service</button>
     </div>
   </div>
 
@@ -836,6 +837,87 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=400&auto=format&fit=crop&q=80" alt="Rad Power eBike" loading="lazy"><span class="rcard-badge badge-amber">Commercial Fleet</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://radpowerbikes.com" target="_blank" rel="noopener">Rad Power Bikes</a></div><div class="rcard-name">RadCommercial</div><div class="rcard-desc">Purpose-built commercial eBike for last-mile delivery fleets. Used by FedEx, DHL, Amazon delivery contractors. 750W motor, 45+ mile range, 120 lb payload capacity.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Motor</div><div class="spec-v">750W</div></div><div class="spec"><div class="spec-k">Range</div><div class="spec-v">45+ miles</div></div><div class="spec"><div class="spec-k">Payload</div><div class="spec-v">120 lbs</div></div><div class="spec"><div class="spec-k">Use</div><div class="spec-v">Last-mile</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://radpowerbikes.com/commercial" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
     </div>
     <div class="dots" id="dots-ebikes"></div>
+  </div>
+
+  <!-- CLEANING & SERVICE -->
+  <div id="tab-cleaning" style="display:none;" class="reveal">
+    <div class="cards-track">
+      <div class="rcard">
+        <div class="rcard-img"><img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&auto=format&fit=crop&q=80" alt="Tesla Clean Volt autonomous EV cleaning robot" loading="lazy"><span class="rcard-badge badge-fire">Tesla Client</span></div>
+        <div class="rcard-body">
+          <div class="rcard-maker"><a href="https://tesla.com" target="_blank" rel="noopener">Tesla Energy</a></div>
+          <div class="rcard-name">Clean Volt</div>
+          <div class="rcard-desc">Autonomous EV cleaning robot developed in partnership with Tesla Energy. Designed for high-throughput commercial vehicle wash and surface decontamination at EV fleet depots and charging hubs.</div>
+          <div class="rcard-specs">
+            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">1,500 m²/hr</div></div>
+            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">8 hrs</div></div>
+            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">LTE / WiFi</div></div>
+            <div class="spec"><div class="spec-k">Type</div><div class="spec-v">EV Cleaning</div></div>
+          </div>
+        </div>
+        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://tesla.com" target="_blank" rel="noopener">Learn more &rarr;</a></div>
+      </div>
+      <div class="rcard">
+        <div class="rcard-img"><img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400&auto=format&fit=crop&q=80" alt="Avidbots Neo 2 commercial floor scrubbing AMR" loading="lazy"><span class="rcard-badge badge-green">Active Fleet</span></div>
+        <div class="rcard-body">
+          <div class="rcard-maker"><a href="https://avidbots.com" target="_blank" rel="noopener">Avidbots</a></div>
+          <div class="rcard-name">Neo 2</div>
+          <div class="rcard-desc">Commercial floor scrubbing AMR. Fully autonomous path planning, real-time obstacle avoidance, and cloud-based fleet management. Deployed in airports, warehouses, and retail at scale.</div>
+          <div class="rcard-specs">
+            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">3,500 m²/hr</div></div>
+            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">4.5 hrs</div></div>
+            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi / 4G</div></div>
+            <div class="spec"><div class="spec-k">Type</div><div class="spec-v">Floor Scrubber</div></div>
+          </div>
+        </div>
+        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://avidbots.com" target="_blank" rel="noopener">Learn more &rarr;</a></div>
+      </div>
+      <div class="rcard">
+        <div class="rcard-img"><img src="https://images.unsplash.com/photo-1612358405970-e2f67b37c4e5?w=400&auto=format&fit=crop&q=80" alt="Gaussian Robotics Phantas autonomous scrubber retail logistics" loading="lazy"><span class="rcard-badge badge-green">Retail / Logistics</span></div>
+        <div class="rcard-body">
+          <div class="rcard-maker"><a href="https://gaussian-robotics.com" target="_blank" rel="noopener">Gaussian Robotics</a></div>
+          <div class="rcard-name">Phantas</div>
+          <div class="rcard-desc">Multi-function autonomous scrubber and sweeper for high-traffic retail and logistics environments. AI-driven map learning, multi-machine coordination, and remote fleet oversight via cloud dashboard.</div>
+          <div class="rcard-specs">
+            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">3,200 m²/hr</div></div>
+            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">4 hrs</div></div>
+            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi</div></div>
+            <div class="spec"><div class="spec-k">Use</div><div class="spec-v">Retail / 3PL</div></div>
+          </div>
+        </div>
+        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://gaussian-robotics.com" target="_blank" rel="noopener">Learn more &rarr;</a></div>
+      </div>
+      <div class="rcard">
+        <div class="rcard-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&auto=format&fit=crop&q=80" alt="Karcher KIRA B 50 commercial cleaning robot B2B" loading="lazy"><span class="rcard-badge badge-indigo">B2B Fleet</span></div>
+        <div class="rcard-body">
+          <div class="rcard-maker"><a href="https://karcher.com" target="_blank" rel="noopener">Kärcher</a></div>
+          <div class="rcard-name">KIRA B 50</div>
+          <div class="rcard-desc">Professional B2B autonomous floor cleaning robot from Kärcher. Laser-SLAM navigation, integrated IoT telemetry, and intelligent water management for large indoor commercial surfaces.</div>
+          <div class="rcard-specs">
+            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">1,500 m²/hr</div></div>
+            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">3 hrs</div></div>
+            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi</div></div>
+            <div class="spec"><div class="spec-k">Type</div><div class="spec-v">Scrubber AMR</div></div>
+          </div>
+        </div>
+        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://karcher.com/b2b/cleaning-robots" target="_blank" rel="noopener">Learn more &rarr;</a></div>
+      </div>
+      <div class="rcard">
+        <div class="rcard-img"><img src="https://images.unsplash.com/photo-1601370552761-24b6b2a98c55?w=400&auto=format&fit=crop&q=80" alt="Taski Intellibot Swingobot cleaning AMR Diversey JohnsonControls" loading="lazy"><span class="rcard-badge badge-gold">Diversey / JCI</span></div>
+        <div class="rcard-body">
+          <div class="rcard-maker"><a href="https://diversey.com" target="_blank" rel="noopener">Diversey / JohnsonControls</a></div>
+          <div class="rcard-name">Intellibot Swingobot</div>
+          <div class="rcard-desc">Enterprise cleaning AMR from the Diversey Taski line, deployed by JohnsonControls facility management teams. Autonomous scrubbing and sweeping with remote monitoring for large commercial campuses.</div>
+          <div class="rcard-specs">
+            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">2,000 m²/hr</div></div>
+            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">3.5 hrs</div></div>
+            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi / 4G</div></div>
+            <div class="spec"><div class="spec-k">Operator</div><div class="spec-v">JCI / FM</div></div>
+          </div>
+        </div>
+        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://diversey.com/en/taski" target="_blank" rel="noopener">Learn more &rarr;</a></div>
+      </div>
+    </div>
   </div>
 
 </section>
@@ -1263,6 +1345,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <button class="tab-btn" onclick="switchAcq('drones',this)">Drones</button>
       <button class="tab-btn" onclick="switchAcq('ebikes',this)">eBikes &amp; Scooters</button>
       <button class="tab-btn" onclick="switchAcq('suppliers',this)">Component Suppliers</button>
+      <button class="tab-btn" onclick="switchAcq('cleaning',this)">Cleaning &amp; Service</button>
     </div>
   </div>
 
@@ -1314,6 +1397,16 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     </div>
   </div>
 
+  <div id="acq-cleaning" style="display:none;" class="reveal">
+    <div class="shop-track">
+      <div class="scard"><div class="scard-img"><img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=500&auto=format&fit=crop&q=85" alt="Tesla Clean Volt EV cleaning robot" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://tesla.com" target="_blank" rel="noopener">Tesla Energy</a></div><div class="scard-name">Clean Volt</div><div class="scard-desc">Autonomous EV cleaning robot for fleet depots and charging hubs. High-throughput surface decontamination with LTE connectivity and remote fleet management.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Coverage</div><div class="spec-v">1,500 m²/hr</div></div><div class="scard-spec"><div class="spec-k">Runtime</div><div class="spec-v">8 hrs</div></div><div class="scard-spec"><div class="spec-k">Connect</div><div class="spec-v">LTE / WiFi</div></div><div class="scard-spec"><div class="spec-k">Type</div><div class="spec-v">EV Cleaning</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">Contact</div><div class="scard-sub">Enterprise pricing · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+      <div class="scard"><div class="scard-img"><img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=500&auto=format&fit=crop&q=85" alt="Avidbots Neo 2 floor scrubbing AMR" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://avidbots.com" target="_blank" rel="noopener">Avidbots</a></div><div class="scard-name">Neo 2</div><div class="scard-desc">Commercial floor scrubbing AMR with fully autonomous path planning and cloud-based fleet management. Deployed at airports, warehouses, and retail at scale.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Coverage</div><div class="spec-v">3,500 m²/hr</div></div><div class="scard-spec"><div class="spec-k">Runtime</div><div class="spec-v">4.5 hrs</div></div><div class="scard-spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi / 4G</div></div><div class="scard-spec"><div class="spec-k">Type</div><div class="spec-v">Floor Scrubber</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">Contact</div><div class="scard-sub">Enterprise pricing · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+      <div class="scard"><div class="scard-img"><img src="https://images.unsplash.com/photo-1612358405970-e2f67b37c4e5?w=500&auto=format&fit=crop&q=85" alt="Gaussian Robotics Phantas autonomous scrubber" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://gaussian-robotics.com" target="_blank" rel="noopener">Gaussian Robotics</a></div><div class="scard-name">Phantas</div><div class="scard-desc">Multi-function autonomous scrubber and sweeper for retail and logistics. AI map learning, multi-machine coordination, and cloud fleet oversight.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Coverage</div><div class="spec-v">3,200 m²/hr</div></div><div class="scard-spec"><div class="spec-k">Runtime</div><div class="spec-v">4 hrs</div></div><div class="scard-spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi</div></div><div class="scard-spec"><div class="spec-k">Use</div><div class="spec-v">Retail / 3PL</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">Contact</div><div class="scard-sub">Enterprise pricing · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+      <div class="scard"><div class="scard-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&auto=format&fit=crop&q=85" alt="Karcher KIRA B 50 commercial cleaning robot" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://karcher.com" target="_blank" rel="noopener">Kärcher</a></div><div class="scard-name">KIRA B 50</div><div class="scard-desc">Professional B2B autonomous floor cleaning robot with laser-SLAM navigation, IoT telemetry, and intelligent water management for large commercial indoor spaces.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Coverage</div><div class="spec-v">1,500 m²/hr</div></div><div class="scard-spec"><div class="spec-k">Runtime</div><div class="spec-v">3 hrs</div></div><div class="scard-spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi</div></div><div class="scard-spec"><div class="spec-k">Type</div><div class="spec-v">Scrubber AMR</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">Contact</div><div class="scard-sub">Enterprise pricing · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+      <div class="scard"><div class="scard-img"><img src="https://images.unsplash.com/photo-1601370552761-24b6b2a98c55?w=500&auto=format&fit=crop&q=85" alt="Taski Intellibot Swingobot Diversey JohnsonControls" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://diversey.com" target="_blank" rel="noopener">Diversey / JohnsonControls</a></div><div class="scard-name">Intellibot Swingobot</div><div class="scard-desc">Enterprise cleaning AMR from the Diversey Taski line, deployed by JohnsonControls FM teams. Autonomous scrubbing and sweeping with remote monitoring for large commercial campuses.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Coverage</div><div class="spec-v">2,000 m²/hr</div></div><div class="scard-spec"><div class="spec-k">Runtime</div><div class="spec-v">3.5 hrs</div></div><div class="scard-spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi / 4G</div></div><div class="scard-spec"><div class="spec-k">Operator</div><div class="spec-v">JCI / FM</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">Contact</div><div class="scard-sub">Enterprise pricing · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+    </div>
+  </div>
+
   <!-- Compare Platforms table -->
   <div class="reveal" style="margin-top:56px;">
     <div style="margin-bottom:20px;">
@@ -1327,6 +1420,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <button class="tab-btn" onclick="filterCompare('quadruped',this)">Quadruped</button>
       <button class="tab-btn" onclick="filterCompare('drone',this)">Drone</button>
       <button class="tab-btn" onclick="filterCompare('ebike',this)">eBike</button>
+      <button class="tab-btn" onclick="filterCompare('cleaning',this)">Cleaning &amp; Service</button>
     </div>
     <div style="overflow-x:auto;border-radius:16px;border:1px solid rgba(10,10,15,0.07);background:#fff;">
       <table id="compare-table" style="width:100%;border-collapse:collapse;font-family:var(--display);font-size:13px;">
@@ -1394,6 +1488,41 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
             <td style="padding:14px 16px;color:var(--ink-2);">eBike</td>
             <td style="padding:14px 16px;color:var(--ink-2);">54 kg payload</td>
             <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--fire);font-weight:600;">From $2,199</td>
+            <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
+          </tr>
+          <tr data-type="cleaning" style="border-bottom:1px solid rgba(10,10,15,0.05);transition:background 0.15s;" onmouseover="this.style.background='rgba(10,10,15,0.02)'" onmouseout="this.style.background=''">
+            <td style="padding:14px 20px;font-weight:600;color:var(--ink);">Tesla Clean Volt</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">Cleaning Bot</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">1,500 m²/hr</td>
+            <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);font-weight:600;">Contact</td>
+            <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
+          </tr>
+          <tr data-type="cleaning" style="border-bottom:1px solid rgba(10,10,15,0.05);transition:background 0.15s;" onmouseover="this.style.background='rgba(10,10,15,0.02)'" onmouseout="this.style.background=''">
+            <td style="padding:14px 20px;font-weight:600;color:var(--ink);">Avidbots Neo 2</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">Cleaning Bot</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">3,500 m²/hr</td>
+            <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);font-weight:600;">Contact</td>
+            <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
+          </tr>
+          <tr data-type="cleaning" style="border-bottom:1px solid rgba(10,10,15,0.05);transition:background 0.15s;" onmouseover="this.style.background='rgba(10,10,15,0.02)'" onmouseout="this.style.background=''">
+            <td style="padding:14px 20px;font-weight:600;color:var(--ink);">Gaussian Robotics Phantas</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">Cleaning Bot</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">3,200 m²/hr</td>
+            <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);font-weight:600;">Contact</td>
+            <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
+          </tr>
+          <tr data-type="cleaning" style="border-bottom:1px solid rgba(10,10,15,0.05);transition:background 0.15s;" onmouseover="this.style.background='rgba(10,10,15,0.02)'" onmouseout="this.style.background=''">
+            <td style="padding:14px 20px;font-weight:600;color:var(--ink);">Kärcher KIRA B 50</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">Cleaning Bot</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">1,500 m²/hr</td>
+            <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);font-weight:600;">Contact</td>
+            <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
+          </tr>
+          <tr data-type="cleaning" style="transition:background 0.15s;" onmouseover="this.style.background='rgba(10,10,15,0.02)'" onmouseout="this.style.background=''">
+            <td style="padding:14px 20px;font-weight:600;color:var(--ink);">Taski Intellibot Swingobot</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">Cleaning Bot</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">2,000 m²/hr</td>
+            <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);font-weight:600;">Contact</td>
             <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
           </tr>
         </tbody>
@@ -1531,6 +1660,11 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <a class="pcell" href="https://li.me/business" target="_blank" rel="noopener"><div class="p-logo" style="color:#00c853;">lime</div></a>
     <a class="pcell" href="https://bird.co" target="_blank" rel="noopener"><div class="p-logo">Bird</div></a>
     <a class="pcell" href="https://radpowerbikes.com/commercial" target="_blank" rel="noopener"><div class="p-logo" style="color:#e02020;">RAD POWER<br>BIKES</div></a>
+    <a class="pcell" href="https://tesla.com" target="_blank" rel="noopener"><div class="p-logo">TESLA<br>CLEAN VOLT</div></a>
+    <a class="pcell" href="https://avidbots.com" target="_blank" rel="noopener"><div class="p-logo">AVIDBOTS</div></a>
+    <a class="pcell" href="https://gaussian-robotics.com" target="_blank" rel="noopener"><div class="p-logo">GAUSSIAN<br>ROBOTICS</div></a>
+    <a class="pcell" href="https://karcher.com" target="_blank" rel="noopener"><div class="p-logo">KÄRCHER</div></a>
+    <a class="pcell" href="https://diversey.com" target="_blank" rel="noopener"><div class="p-logo">DIVERSEY /<br>TASKI</div></a>
   </div>
 </section>
 
@@ -1678,6 +1812,12 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <div class="signal-card-title">Bidirectional EV charging deployments grow 3× as utilities expand V2G programs</div>
       <div class="signal-card-desc">Vehicle-to-grid enrollment in utility programs reaches 180,000 vehicles across 22 states. Average grid revenue per enrolled EV: $420/year. Fleet operators see highest yield per asset.</div>
       <div class="signal-card-foot"><span>GreenBiz</span><span>Mar 13, 2026</span></div>
+    </a>
+    <a class="signal-card reveal" href="https://www.roboticsbusinessreview.com" target="_blank" rel="noopener">
+      <div class="signal-card-tag">Cleaning &amp; Service</div>
+      <div class="signal-card-title">Commercial cleaning robot deployments surge as facility operators automate janitorial operations</div>
+      <div class="signal-card-desc">Autonomous floor scrubbing and sweeping robots from Avidbots, Gaussian Robotics, and Kärcher are seeing accelerated enterprise adoption across airports, logistics centers, and large retail chains as facility managers seek to offset labor costs and improve cleaning consistency.</div>
+      <div class="signal-card-foot"><span>Robotics Business Review</span><span>Mar 20, 2026</span></div>
     </a>
   </div>
   <div class="signal-sub-bar reveal">
@@ -1859,7 +1999,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <!-- MODALS -->
 <div class="overlay" id="tm-modal"><div class="modal modal-dark"><div class="modal-hd"><span class="modal-ey">TechMedix AI</span><button class="modal-x" onclick="closeModal('tm-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="tm-form"><div class="modal-title">Start TechMedix</div><p class="modal-sub">AI diagnostics for your robot fleet. We'll onboard you within 24 hours.</p><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="tm-name" name="full_name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="tm-email" name="email" placeholder="jane@company.com"></div><div class="fgroup"><label>Company</label><input type="text" id="tm-co" name="company" placeholder="Acme Robotics"></div><div class="fgroup"><label>Plan</label><select id="tm-plan" name="plan"><option>Operator — $299/robot/mo</option><option>Fleet — $199/robot/mo</option><option>Command — Enterprise</option></select></div><div class="fgroup"><label>Number of robots</label><input type="number" id="tm-robots" name="robot_count" placeholder="5" min="1"></div><button class="fsub-btn" onclick="submitTM()">Submit Request</button></div></div><div id="tm-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Request received. We will be in touch within 24 hours.</div></div></div></div></div>
 
-<div class="overlay" id="acquire-modal"><div class="modal modal-dark"><div class="modal-hd"><span class="modal-ey">Acquire</span><button class="modal-x" onclick="closeModal('acquire-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="acq-form"><div class="modal-title">Request a Quote</div><p class="modal-sub">We'll source, configure, and deliver your robot with TechMedix pre-activated.</p><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="aq-name" name="full_name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="aq-email" name="email" placeholder="jane@company.com"></div><div class="fgroup"><label>Company / Organization</label><input type="text" id="aq-company" name="company" placeholder="Acme Robotics"></div><div class="fgroup"><label>Platform</label><select id="aq-platform" name="platform"><option value="">Select a platform...</option><option>Unitree G1 Basic — $17,990</option><option>Unitree G1 EDU — $43,500</option><option>Unitree H1-2 — $122,455</option><option>Boston Dynamics Spot</option><option>DJI Agras T50</option><option>Other / Custom</option></select></div><div class="fgroup"><label>Message (optional)</label><textarea id="aq-msg" name="message" rows="3" placeholder="Quantity, timeline, deployment context..."></textarea></div><button class="fsub-btn" onclick="submitAcq()">Submit Quote Request</button></div></div><div id="acq-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Quote request sent.</div><p class="form-ok-sub">We'll prepare your quote and reach out within 24 hours.</p></div></div></div></div>
+<div class="overlay" id="acquire-modal"><div class="modal modal-dark"><div class="modal-hd"><span class="modal-ey">Acquire</span><button class="modal-x" onclick="closeModal('acquire-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="acq-form"><div class="modal-title">Request a Quote</div><p class="modal-sub">We'll source, configure, and deliver your robot with TechMedix pre-activated.</p><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="aq-name" name="full_name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="aq-email" name="email" placeholder="jane@company.com"></div><div class="fgroup"><label>Company / Organization</label><input type="text" id="aq-company" name="company" placeholder="Acme Robotics"></div><div class="fgroup"><label>Platform</label><select id="aq-platform" name="platform"><option value="">Select a platform...</option><option>Unitree G1 Basic — $17,990</option><option>Unitree G1 EDU — $43,500</option><option>Unitree H1-2 — $122,455</option><option>Boston Dynamics Spot</option><option>DJI Agras T50</option><option>Tesla Clean Volt</option><option>Avidbots Neo 2</option><option>Gaussian Robotics Phantas</option><option>Kärcher KIRA B 50</option><option>Taski Intellibot Swingobot</option><option>Other / Custom</option></select></div><div class="fgroup"><label>Message (optional)</label><textarea id="aq-msg" name="message" rows="3" placeholder="Quantity, timeline, deployment context..."></textarea></div><button class="fsub-btn" onclick="submitAcq()">Submit Quote Request</button></div></div><div id="acq-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Quote request sent.</div><p class="form-ok-sub">We'll prepare your quote and reach out within 24 hours.</p></div></div></div></div>
 
 <div class="overlay" id="contact-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Contact</span><button class="modal-x" onclick="closeModal('contact-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="contact-form"><div class="modal-title">Get in touch.</div><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="c-name" name="full_name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="c-email" name="email" placeholder="jane@company.com"></div><div class="fgroup"><label>Company / Organization</label><input type="text" id="c-company" name="company" placeholder="Acme Robotics"></div><div class="fgroup"><label>I'm interested in...</label><select id="c-interest" name="interest"><option value="">Select one...</option><option value="habitat">HABITAT Homes</option><option value="techmedix">TechMedix Platform</option><option value="partnership">Partnership Opportunity</option><option value="investment">Investment</option></select></div><div class="fgroup"><label>Message</label><textarea id="c-msg" name="message" rows="3" placeholder="Tell us more about your interest..."></textarea></div><button class="fsub-btn" onclick="submitContact()">Send Message</button></div></div><div id="contact-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Message sent.</div><p class="form-ok-sub">We'll reply within one business day.</p></div></div></div></div>
 
@@ -1895,7 +2035,7 @@ document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e
 document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.overlay.open').forEach(m => closeModal(m.id)); });
 
 // Agent tabs
-const AGENT_TABS = ['humanoids','drones','delivery','industrial'];
+const AGENT_TABS = ['humanoids','drones','delivery','industrial','cleaning'];
 function switchTab(name, btn) {
   AGENT_TABS.forEach(t => {
     const el = document.getElementById('tab-'+t);
@@ -1911,7 +2051,7 @@ function jumpTab(name) {
 }
 
 // Acquire tabs
-const ACQ_TABS = ['humanoids','quadrupeds','drones','ebikes','suppliers'];
+const ACQ_TABS = ['humanoids','quadrupeds','drones','ebikes','suppliers','cleaning'];
 function switchAcq(name, btn) {
   ACQ_TABS.forEach(t => {
     const el = document.getElementById('acq-'+t);

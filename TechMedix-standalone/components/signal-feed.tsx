@@ -1,5 +1,6 @@
 import type { SignalEntry } from "../lib/shared/types";
 import { AiInsightCard } from "./ai-insight-card";
+import { createServiceClient } from "@/lib/supabase-service";
 
 const CATEGORY_LABELS: Record<SignalEntry["category"], string> = {
   robotics:          "Robotics",
@@ -99,8 +100,44 @@ function SignalCard({
   );
 }
 
-export function SignalFeed({ entries }: { entries: SignalEntry[] }) {
-  const [featured, ...rest] = entries;
+async function fetchResearchEntries(): Promise<SignalEntry[]> {
+  try {
+    const supabase = createServiceClient();
+    const { data } = await supabase
+      .from("research_log")
+      .select("id, source_url, content_summary, extracted_at, platform:platforms(slug, name)")
+      .order("extracted_at", { ascending: false })
+      .limit(12);
+
+    if (!data || data.length === 0) return [];
+
+    return data.map((row) => {
+      const rawPlatform = row.platform;
+      const platform = (Array.isArray(rawPlatform) ? rawPlatform[0] : rawPlatform) as { slug: string; name: string } | null;
+      const platformName = platform?.name ?? "Robot Platform";
+      return {
+        id: row.id as string,
+        source: row.source_url
+          ? new URL(row.source_url).hostname.replace(/^www\./, "")
+          : "TechMedix Research",
+        time: row.extracted_at as string,
+        title: `${platformName} — New Research Finding`,
+        summary: (row.content_summary as string | null) ?? "New data extracted from field research.",
+        tags: [platformName, "Research"],
+        category: "robotics" as const,
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
+export async function SignalFeed({ entries }: { entries: SignalEntry[] }) {
+  const researchEntries = await fetchResearchEntries();
+
+  // Merge: research entries first (most recent intelligence), then static entries
+  const merged = [...researchEntries, ...entries].slice(0, 20);
+  const [featured, ...rest] = merged;
 
   return (
     <div className="space-y-4">

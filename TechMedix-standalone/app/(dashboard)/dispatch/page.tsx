@@ -1,6 +1,7 @@
 import { SurfaceCard } from "../../../components/surface-card";
 import { StatusPill } from "../../../components/status-pill";
 import { getDashboardData } from "../../../lib/data";
+import { DispatchJobCard } from "./DispatchJobCard";
 
 export default async function DispatchPage() {
   const { snapshot } = await getDashboardData();
@@ -13,20 +14,12 @@ export default async function DispatchPage() {
             const robot = snapshot.robots.find((entry) => entry.id === job.robotId);
             const tech = snapshot.technicians.find((entry) => entry.id === job.technicianId);
             return (
-              <div key={job.id} className="rounded-[22px] border border-black/5 bg-black/[0.02] p-4">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.22em] text-black/45">{robot?.name ?? "Unknown robot"}</p>
-                    <h3 className="mt-2 text-lg font-semibold text-black">{job.description}</h3>
-                  </div>
-                  <StatusPill label={job.status} />
-                </div>
-                <div className="mt-4 flex flex-wrap gap-5 text-sm text-black/60">
-                  <span>Region: {job.region}</span>
-                  <span>Technician: {tech?.name ?? "Unassigned"}</span>
-                  <span>ETA: {job.etaMinutes ? `${job.etaMinutes} min` : "Pending"}</span>
-                </div>
-              </div>
+              <DispatchJobCard
+                key={job.id}
+                job={job}
+                robotName={robot?.name ?? "Unknown robot"}
+                techName={tech?.name ?? "Unassigned"}
+              />
             );
           })}
         </div>

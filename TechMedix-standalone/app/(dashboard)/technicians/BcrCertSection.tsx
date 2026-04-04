@@ -2,234 +2,354 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, Circle, Download, ChevronRight } from "lucide-react";
+import { ChevronRight, BookOpen, Terminal, CheckCircle2, Circle, Lock } from "lucide-react";
 
-const CERT_TIERS = [
-  {
-    id: "micromobility",
-    title: "Micromobility",
-    subtitle: "eBike / Scooter",
-    status: "available" as const,
-    badge: "Active",
-    badgeStyle: "bg-moss/[0.10] text-moss",
-  },
-  {
-    id: "humanoid",
-    title: "Humanoid Robotics",
-    subtitle: "Bipedal & Bimanual",
-    status: "coming" as const,
-    badge: "Coming Q3 2026",
-    badgeStyle: "bg-black/[0.06] text-black/45",
-  },
-  {
-    id: "drone",
-    title: "Drone / Aerial",
-    subtitle: "Fixed-Wing & Multirotor",
-    status: "coming" as const,
-    badge: "Coming Q4 2026",
-    badgeStyle: "bg-black/[0.06] text-black/45",
-  },
-];
+// ─── Certification level definitions ──────────────────────────────────────────
 
-interface CheckItem {
-  id: string;
-  section: string;
-  label: string;
+export interface CertLevel {
+  id: "L1" | "L2" | "L3" | "L4" | "L5";
+  title: string;
+  jobValueRange: string;
+  color: string;
+  bgColor: string;
+  borderColor: string;
+  badgeColor: string;
+  competencies: string[];
+  prerequisites: string;
+  studyUrl: string;
 }
 
-const CHECKLIST: CheckItem[] = [
-  { id: "k1", section: "Knowledge Requirements", label: "eBike/scooter electrical systems and BMS fundamentals" },
-  { id: "k2", section: "Knowledge Requirements", label: "Hub motor types, current draw profiles, and bearing wear patterns" },
-  { id: "k3", section: "Knowledge Requirements", label: "Hydraulic and mechanical brake system servicing" },
-  { id: "k4", section: "Knowledge Requirements", label: "IoT telemetry basics and TechMedix signal interpretation" },
-  { id: "k5", section: "Knowledge Requirements", label: "BCR field safety protocols and rider incident reporting" },
-  { id: "e1", section: "Equipment Requirements", label: "Calibrated torque wrench (5–50 Nm, certified within 12 months)" },
-  { id: "e2", section: "Equipment Requirements", label: "Multimeter (CAT III, 600V rated) with current clamp" },
-  { id: "e3", section: "Equipment Requirements", label: "BCR-approved diagnostic tablet with TechMedix app installed" },
-  { id: "p1", section: "Platform Access", label: "TechMedix account (Technician tier) — approved by fleet operator" },
-  { id: "p2", section: "Platform Access", label: "Lime DASH / Bird Ops Console access agreement signed" },
-  { id: "p3", section: "Platform Access", label: "Rad Fleet API credentials configured (if servicing RadCommercial)" },
-  { id: "o1", section: "Ongoing Requirements", label: "Annual recertification exam completed" },
-  { id: "o2", section: "Ongoing Requirements", label: "10 documented service events per quarter on record" },
-  { id: "o3", section: "Ongoing Requirements", label: "TechMedix telemetry upload compliance >95%" },
+export const CERT_LEVELS: CertLevel[] = [
+  {
+    id: "L1",
+    title: "Operator",
+    jobValueRange: "$280 – $350 / job",
+    color: "text-emerald-700",
+    bgColor: "bg-emerald-50",
+    borderColor: "border-emerald-200",
+    badgeColor: "bg-emerald-600",
+    competencies: [
+      "Robot safety fundamentals and LOTO protocols",
+      "Basic mechanical inspection and wear assessment",
+      "Battery and power system monitoring",
+      "TechMedix dashboard — alerts, logging, escalation",
+    ],
+    prerequisites: "None — entry level",
+    studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L1_operator",
+  },
+  {
+    id: "L2",
+    title: "Technician",
+    jobValueRange: "$450 – $650 / job",
+    color: "text-sky-700",
+    bgColor: "bg-sky-50",
+    borderColor: "border-sky-200",
+    badgeColor: "bg-sky-600",
+    competencies: [
+      "Diagnostic tools: CAN bus, oscilloscope, ROS 2",
+      "Actuator R&R — BLDC motors, harmonic drives",
+      "Sensor calibration — IMU, F/T, camera, LiDAR",
+      "Firmware update and post-repair validation",
+    ],
+    prerequisites: "L1 Operator certification",
+    studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L2_technician",
+  },
+  {
+    id: "L3",
+    title: "Specialist",
+    jobValueRange: "$800 – $1,100 / job",
+    color: "text-violet-700",
+    bgColor: "bg-violet-50",
+    borderColor: "border-violet-200",
+    badgeColor: "bg-violet-600",
+    competencies: [
+      "Multi-platform diagnostics across 4+ robot families",
+      "FFT analysis and bearing defect frequency calculation",
+      "Fleet-level diagnostics and MTBF trending",
+      "Advanced FMEA — RPN scoring, risk escalation",
+    ],
+    prerequisites: "L2 Technician certification + 6 months field experience",
+    studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L3_specialist",
+  },
+  {
+    id: "L4",
+    title: "Systems Engineer",
+    jobValueRange: "$1,200 – $1,800 / job",
+    color: "text-amber-700",
+    bgColor: "bg-amber-50",
+    borderColor: "border-amber-200",
+    badgeColor: "bg-amber-600",
+    competencies: [
+      "Fleet architecture design and enterprise integrations",
+      "Weibull failure analysis and predictive maintenance scheduling",
+      "Spare parts EOQ optimization and supply chain management",
+      "Team leadership — training L1/L2 technicians, job escalation",
+    ],
+    prerequisites: "L3 Specialist + 12 months multi-platform field experience",
+    studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L4_systems_engineer",
+  },
+  {
+    id: "L5",
+    title: "Autonomous Architect",
+    jobValueRange: "$2,500+ / job",
+    color: "text-rose-700",
+    bgColor: "bg-rose-50",
+    borderColor: "border-rose-200",
+    badgeColor: "bg-rose-600",
+    competencies: [
+      "ML feature engineering on robot telemetry streams",
+      "Edge AI deployment — Jetson AGX Thor, 275 TOPS",
+      "Platform definition authoring for new robot families",
+      "Standards and compliance: ISO 10218, IEC 62061",
+    ],
+    prerequisites: "L4 Systems Engineer + enterprise project lead experience",
+    studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L5_autonomous_architect",
+  },
 ];
 
-const SECTIONS = [...new Set(CHECKLIST.map((c) => c.section))];
+// ─── Platform certification badges ───────────────────────────────────────────
 
-const RATE_CARD = [
-  { service: "Battery Swap / Replace",      range: "$45 – $85",   notes: "Includes cell balance verification" },
-  { service: "Brake Adjustment / Replace",  range: "$25 – $65",   notes: "Hydraulic bleed included when required" },
-  { service: "Tire Swap / Repair",          range: "$20 – $45",   notes: "Sealant-first, tube replacement if needed" },
-  { service: "Hub Motor Diagnostic",        range: "$55 – $120",  notes: "Includes current-draw baseline logging" },
-  { service: "Stem / Fold Inspection",      range: "$30 – $60",   notes: "Torque verification, grease repack" },
-  { service: "Firmware Update",             range: "$15 – $35",   notes: "OTA on platform, manual if OTA unavailable" },
-  { service: "Full Bench Service",          range: "$120 – $200", notes: "All inspection points + report upload" },
-  { service: "Emergency Roadside Response", range: "$85 – $150",  notes: "2hr SLA, mileage surcharge may apply" },
+const PLATFORM_CERTS = [
+  { name: "Unitree G1", country: "CN", status: "Available" },
+  { name: "Unitree H1-2", country: "CN", status: "Available" },
+  { name: "Boston Dynamics Spot", country: "US", status: "Available" },
+  { name: "DJI Agras T50", country: "CN", status: "Available" },
 ];
 
-export function BcrCertSection() {
-  const [checked, setChecked] = useState<Set<string>>(new Set());
-  const [activeTier, setActiveTier] = useState<string>("micromobility");
+// ─── How to get certified steps ───────────────────────────────────────────────
 
-  function toggle(id: string) {
-    setChecked((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  }
+const HOW_TO_STEPS = [
+  { n: 1, title: "Study the curriculum", detail: "Read the level README and curriculum.md from the GitHub link on your target level card." },
+  { n: 2, title: "Complete lab exercises", detail: "Work through the lab exercises. Each lab requires an assessor sign-off for the practical." },
+  { n: 3, title: "Run the CLI quiz", detail: "Install the quiz CLI and run: python cli/quiz.py quiz --level L1 --randomize" },
+  { n: 4, title: "Pass written + practical", detail: "Score above the passing threshold on the written exam and pass all mandatory practical assessments." },
+  { n: 5, title: "Get certified in TechMedix", detail: "Submit your passing quiz result and assessor sign-offs to your fleet operator or BCR admin for dispatch eligibility." },
+];
 
-  const completedCount = CHECKLIST.filter((c) => checked.has(c.id)).length;
-  const progressPct = Math.round((completedCount / CHECKLIST.length) * 100);
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type CertStatus = "certified" | "in-progress" | "locked";
+
+interface LevelCardProps {
+  level: CertLevel;
+  status: CertStatus;
+  isCurrentUserLevel: boolean;
+}
+
+// ─── Level card ───────────────────────────────────────────────────────────────
+
+function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
+  const [expanded, setExpanded] = useState(isCurrentUserLevel);
+
+  const statusIcon =
+    status === "certified" ? (
+      <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+    ) : status === "in-progress" ? (
+      <Circle size={16} className="text-amber-500 shrink-0" />
+    ) : (
+      <Lock size={16} className="text-black/25 shrink-0" />
+    );
+
+  const statusLabel =
+    status === "certified" ? "Certified" : status === "in-progress" ? "In Progress" : "Locked";
+
+  const statusLabelColor =
+    status === "certified"
+      ? "text-emerald-700"
+      : status === "in-progress"
+      ? "text-amber-600"
+      : "text-black/35";
 
   return (
-    <section className="space-y-8">
-      <div>
-        <p className="kicker">Field Operations</p>
-        <h2 className="mt-2 font-header text-3xl leading-none tracking-[-0.04em] text-black">
-          BCR Field Tech Certifications
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
-          Certify your technicians to service BCR-monitored platforms. Certified techs unlock
-          TechMedix dispatch eligibility and access to the BCR marketplace.
-        </p>
-      </div>
+    <div
+      className={[
+        "panel-elevated border transition-all",
+        level.borderColor,
+        isCurrentUserLevel ? "ring-2 ring-offset-1" : "",
+        isCurrentUserLevel ? level.borderColor.replace("border-", "ring-") : "",
+      ].join(" ")}
+    >
+      <button
+        onClick={() => setExpanded((v) => !v)}
+        className="w-full text-left p-5 flex items-center gap-4"
+      >
+        {/* Level badge */}
+        <div
+          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl font-header text-lg font-bold text-white ${level.badgeColor}`}
+        >
+          {level.id}
+        </div>
 
-      {/* Tier cards */}
-      <div className="grid gap-4 md:grid-cols-3">
-        {CERT_TIERS.map((tier) => (
-          <button
-            key={tier.id}
-            onClick={() => tier.status === "available" && setActiveTier(tier.id)}
-            className={[
-              "panel-elevated p-5 text-left flex flex-col gap-3 transition",
-              tier.status === "available"
-                ? "hover:-translate-y-0.5 cursor-pointer"
-                : "opacity-60 cursor-default",
-              activeTier === tier.id ? "ring-1 ring-inset ring-moss/40" : "",
-            ].join(" ")}
-          >
-            <span className={`inline-flex items-center self-start rounded-full px-2.5 py-0.5 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold ${tier.badgeStyle}`}>
-              {tier.badge}
-            </span>
-            <div>
-              <h3 className="font-header text-xl leading-tight text-black">{tier.title}</h3>
-              <p className="mt-0.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-black/40">{tier.subtitle}</p>
-            </div>
-            {tier.status === "available" && (
-              <div className="flex items-center gap-1.5 font-ui text-[0.60rem] uppercase tracking-[0.18em] text-moss mt-auto">
-                <span>View requirements</span>
-                <ChevronRight size={11} />
-              </div>
+        {/* Title + value */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="font-header text-lg leading-tight text-black">
+              {level.id} {level.title}
+            </h3>
+            {isCurrentUserLevel && (
+              <span className="inline-flex items-center rounded-full bg-black/[0.06] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.14em] font-semibold text-black/55">
+                Your level
+              </span>
             )}
-          </button>
-        ))}
-      </div>
+          </div>
+          <p className={`mt-0.5 font-mono text-sm font-semibold ${level.color}`}>
+            {level.jobValueRange}
+          </p>
+        </div>
 
-      {/* Micromobility checklist */}
-      {activeTier === "micromobility" && (
-        <div className="panel-elevated p-6">
-          <div className="mb-6 flex items-end justify-between gap-4 pb-5 border-b border-black/[0.05]">
+        {/* Status */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          {statusIcon}
+          <span className={`font-ui text-[0.58rem] uppercase tracking-[0.16em] font-semibold ${statusLabelColor}`}>
+            {statusLabel}
+          </span>
+        </div>
+
+        <ChevronRight
+          size={16}
+          className={`shrink-0 text-black/25 transition-transform ${expanded ? "rotate-90" : ""}`}
+        />
+      </button>
+
+      {expanded && (
+        <div className={`px-5 pb-5 pt-1 border-t ${level.borderColor}`}>
+          <div className="grid gap-5 sm:grid-cols-2 mt-4">
+            {/* Competencies */}
             <div>
-              <p className="kicker">Micromobility Certification</p>
-              <h3 className="mt-2 font-header text-xl leading-tight text-black">Requirements Checklist</h3>
+              <p className="kicker mb-3">Key Competencies</p>
+              <ul className="space-y-2">
+                {level.competencies.map((c) => (
+                  <li key={c} className="flex items-start gap-2 text-sm text-black/65 leading-snug">
+                    <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${level.badgeColor}`} />
+                    {c}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <a
-              href="/api/certifications/micromobility-guide"
-              className="inline-flex items-center gap-2 rounded-full border border-black/[0.12] px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-black/60 transition hover:bg-black/[0.04] hover:text-black shrink-0"
-            >
-              <Download size={12} />
-              Download Guide
-            </a>
-          </div>
 
-          {/* Progress bar */}
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-2">
-              <p className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40">Progress</p>
-              <p className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/55 font-semibold">
-                {completedCount} of {CHECKLIST.length} complete — {progressPct}%
-              </p>
-            </div>
-            <div className="h-2 w-full rounded-full bg-black/[0.06] overflow-hidden">
-              <div
-                className="h-full rounded-full bg-moss transition-all duration-300"
-                style={{ width: `${progressPct}%` }}
-              />
-            </div>
-          </div>
+            {/* Prerequisites + actions */}
+            <div className="space-y-4">
+              <div>
+                <p className="kicker mb-1">Prerequisites</p>
+                <p className="text-sm text-black/60 leading-snug">{level.prerequisites}</p>
+              </div>
 
-          {/* Sections */}
-          <div className="space-y-6">
-            {SECTIONS.map((section) => {
-              const items = CHECKLIST.filter((c) => c.section === section);
-              const sectionDone = items.filter((c) => checked.has(c.id)).length;
-              return (
-                <div key={section}>
-                  <div className="mb-3 flex items-center gap-2">
-                    <h4 className="font-ui text-[0.62rem] uppercase tracking-[0.20em] text-black/50 font-semibold">
-                      {section}
-                    </h4>
-                    <span className="font-ui text-[0.55rem] text-black/28">{sectionDone}/{items.length}</span>
-                  </div>
-                  <div className="space-y-2">
-                    {items.map((item) => {
-                      const done = checked.has(item.id);
-                      return (
-                        <button
-                          key={item.id}
-                          onClick={() => toggle(item.id)}
-                          className="flex w-full items-start gap-3 rounded-[16px] border border-black/[0.05] bg-black/[0.018] px-4 py-3 text-left transition hover:bg-white/60 hover:border-black/[0.08]"
-                        >
-                          {done ? (
-                            <CheckCircle2 size={16} className="text-moss mt-0.5 shrink-0" />
-                          ) : (
-                            <Circle size={16} className="text-black/20 mt-0.5 shrink-0" />
-                          )}
-                          <span className={`text-sm leading-relaxed ${done ? "text-black/40 line-through" : "text-black/70"}`}>
-                            {item.label}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
+              <div className="flex flex-col gap-2">
+                <a
+                  href={level.studyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-black/[0.12] px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-black/60 transition hover:bg-black/[0.04] hover:text-black"
+                >
+                  <BookOpen size={12} />
+                  Study Resources
+                </a>
+                <div className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-black/40">
+                  <Terminal size={12} />
+                  python cli/quiz.py quiz --level {level.id}
                 </div>
-              );
-            })}
+              </div>
+            </div>
           </div>
         </div>
       )}
+    </div>
+  );
+}
 
-      {/* Rate card */}
+// ─── BcrCertSection — main export ────────────────────────────────────────────
+
+interface BcrCertSectionProps {
+  /** The authenticated user's current cert level ID, if any */
+  userCertLevel?: "L1" | "L2" | "L3" | "L4" | "L5" | null;
+}
+
+export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
+  function getStatus(levelId: CertLevel["id"]): CertStatus {
+    if (!userCertLevel) return levelId === "L1" ? "in-progress" : "locked";
+    const order = ["L1", "L2", "L3", "L4", "L5"] as const;
+    const userIdx = order.indexOf(userCertLevel);
+    const thisIdx = order.indexOf(levelId);
+    if (thisIdx < userIdx) return "certified";
+    if (thisIdx === userIdx) return "in-progress";
+    return "locked";
+  }
+
+  return (
+    <section className="space-y-8">
+      {/* Header */}
+      <div>
+        <p className="kicker">Field Operations</p>
+        <h2 className="mt-2 font-header text-3xl leading-none tracking-[-0.04em] text-black">
+          BCR Technician Certification
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
+          Five levels from entry operator to autonomous architect. Higher certification unlocks higher-value
+          dispatch jobs, fleet management responsibilities, and enterprise contract eligibility.
+        </p>
+      </div>
+
+      {/* Level ladder */}
+      <div className="space-y-3">
+        {CERT_LEVELS.map((level) => (
+          <LevelCard
+            key={level.id}
+            level={level}
+            status={getStatus(level.id)}
+            isCurrentUserLevel={userCertLevel === level.id}
+          />
+        ))}
+      </div>
+
+      {/* Platform certification badges */}
       <div className="panel-elevated p-6">
         <div className="mb-5 pb-5 border-b border-black/[0.05]">
-          <p className="kicker">Compensation</p>
-          <h3 className="mt-2 font-header text-xl leading-tight text-black">Service Rate Card</h3>
+          <p className="kicker">Platform Certifications</p>
+          <h3 className="mt-2 font-header text-xl leading-tight text-black">Supported Robot Platforms</h3>
           <p className="mt-2 text-sm leading-6 text-black/45">
-            Standard rates for BCR-certified micromobility technicians. Final amounts depend on region and operator agreement.
+            Platform-specific certification modules unlock after L2. Each platform adds to your dispatch eligibility.
           </p>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="border-b border-black/[0.05]">
-                {["Service Type", "Rate Range", "Notes"].map((h) => (
-                  <th key={h} className="pb-3 text-left font-ui text-[0.57rem] uppercase tracking-[0.18em] text-black/35 font-medium">
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-black/[0.04]">
-              {RATE_CARD.map((row) => (
-                <tr key={row.service} className="transition-colors hover:bg-black/[0.015]">
-                  <td className="py-3 pr-6 font-medium text-black">{row.service}</td>
-                  <td className="py-3 pr-6 font-mono text-sm text-moss font-semibold whitespace-nowrap">{row.range}</td>
-                  <td className="py-3 text-xs text-black/45">{row.notes}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {PLATFORM_CERTS.map((p) => (
+            <div
+              key={p.name}
+              className="rounded-[20px] border border-black/[0.06] bg-black/[0.018] px-4 py-3"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <p className="text-sm font-semibold text-black leading-snug">{p.name}</p>
+                  <p className="mt-0.5 font-ui text-[0.55rem] uppercase tracking-[0.16em] text-black/38">
+                    {p.country}
+                  </p>
+                </div>
+                <span className="shrink-0 inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.14em] font-semibold text-emerald-700">
+                  {p.status}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* How to get certified */}
+      <div className="panel-elevated p-6">
+        <div className="mb-5 pb-5 border-b border-black/[0.05]">
+          <p className="kicker">Process</p>
+          <h3 className="mt-2 font-header text-xl leading-tight text-black">How to Get Certified</h3>
+        </div>
+        <div className="space-y-4">
+          {HOW_TO_STEPS.map((step) => (
+            <div key={step.n} className="flex items-start gap-4">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black/[0.06] font-ui text-sm font-semibold text-black/55">
+                {step.n}
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-black">{step.title}</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-black/52">{step.detail}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -239,7 +359,7 @@ export function BcrCertSection() {
           <p className="kicker">Marketplace</p>
           <h3 className="mt-2 font-header text-xl leading-tight text-black">Find jobs on the BCR Marketplace</h3>
           <p className="mt-2 text-sm leading-6 text-black/45">
-            Certified techs get access to dispatched service requests from fleet operators in your region.
+            Certified techs get dispatched to service requests from fleet operators in your region.
           </p>
         </div>
         <Link

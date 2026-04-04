@@ -18,6 +18,8 @@ import {
   Waypoints,
   Wrench,
   Zap,
+  Wind,
+  BookOpen,
 } from "lucide-react";
 import { createClient } from "../lib/supabase-browser";
 import type { SessionUser } from "./dashboard-shell";
@@ -26,7 +28,9 @@ const links = [
   { href: "/dashboard",      label: "Overview",       icon: LayoutDashboard },
   { href: "/ar-mode",        label: "AR Mode",        icon: Scan },
   { href: "/maintenance",    label: "Maintenance",    icon: Wrench },
+  { href: "/knowledge",      label: "Knowledge Moat", icon: BookOpen },
   { href: "/nodes",          label: "Fleet & Nodes",  icon: Cpu },
+  { href: "/drones",         label: "Drone Fleet",    icon: Wind },
   { href: "/technicians",    label: "Technicians",    icon: Users },
   { href: "/certifications", label: "Certifications", icon: Award },
   { href: "/habitat",        label: "HABITAT",        icon: Home },

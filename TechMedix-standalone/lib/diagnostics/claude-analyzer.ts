@@ -9,7 +9,7 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
-import type { ClaudeAnalysisInput, ClaudeAnalysisResult } from "./types";
+import type { ClaudeAnalysisInput, ClaudeAnalysisResult, ARGuidanceResponse } from "./types";
 
 function isMockData() { return process.env.NEXT_PUBLIC_MOCK_DATA === "true"; }
 
@@ -157,6 +157,73 @@ function mockAnalysis(input: ClaudeAnalysisInput): ClaudeAnalysisResult {
     confidence: 0.82,
     _meta: { tokensUsed: 0, latencyMs: 0, isMock: true },
   };
+}
+
+// ─── Vision analysis (AR guidance) ───────────────────────────────────────────
+
+const AR_SAFE_FALLBACK: ARGuidanceResponse = {
+  overlay_text: "Inspection in progress",
+  component_highlight: null,
+  next_step: "Continue with standard inspection protocol. Verify all fasteners and connections.",
+  severity: "ok",
+  confidence: 0,
+};
+
+export async function analyzeWithVision(params: {
+  frame: string;
+  platformId: string;
+  activeFault?: string;
+  fmeaContext?: object[];
+}): Promise<ARGuidanceResponse> {
+  const { frame, platformId, activeFault, fmeaContext } = params;
+
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return AR_SAFE_FALLBACK;
+  }
+
+  const client = getClient();
+  const faultContext = activeFault ?? "routine inspection";
+  const fmeaSummary =
+    fmeaContext && fmeaContext.length > 0
+      ? `\nFMEA context: ${JSON.stringify(fmeaContext.slice(0, 3))}`
+      : "";
+
+  try {
+    const message = await client.messages.create({
+      model: "claude-sonnet-4-6",
+      max_tokens: 500,
+      system:
+        "You are an AR diagnostic assistant for robot maintenance technicians. Analyze the camera frame and provide specific, actionable guidance. Respond ONLY with valid JSON matching the schema below. No markdown, no preamble.",
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "image",
+              source: { type: "base64", media_type: "image/jpeg", data: frame },
+            },
+            {
+              type: "text",
+              text: `Platform: ${platformId}. Active fault: ${faultContext}.${fmeaSummary}\nRespond with JSON: {"overlay_text": "brief text max 60 chars", "component_highlight": {"x": 0.5, "y": 0.5, "radius": 0.05, "label": "component"} or null, "next_step": "specific action max 120 chars", "severity": "ok" or "warning" or "critical", "confidence": 0.0}`,
+            },
+          ],
+        },
+      ],
+    });
+
+    const rawText = message.content[0]?.type === "text" ? message.content[0].text : "";
+
+    try {
+      const clean = rawText.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
+      return JSON.parse(clean) as ARGuidanceResponse;
+    } catch {
+      console.error("[analyzeWithVision] JSON parse failed:", rawText.slice(0, 200));
+      return AR_SAFE_FALLBACK;
+    }
+  } catch (err) {
+    console.error("[analyzeWithVision] API error:", err);
+    return AR_SAFE_FALLBACK;
+  }
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────

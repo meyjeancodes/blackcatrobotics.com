@@ -1,0 +1,9 @@
+{
+  "level": "L5",
+  "passing_percentage": 85,
+  "questions_total": 40,
+  "questions_required": 34,
+  "time_limit_minutes": 120,
+  "attempts_allowed": 3,
+  "cooldown_days": 30
+}

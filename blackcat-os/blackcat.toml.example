@@ -1,0 +1,14 @@
+[blackcat]
+robot_target = "192.168.1.100"
+output_dir = "/tmp/blackcat/output"
+recon_dir = "/tmp/blackcat/recon"
+capture_duration_seconds = 60
+atlas_cli_path = "atlas"
+
+[anthropic]
+model = "claude-sonnet-4-20250514"
+max_tokens = 4096
+
+[pipeline]
+skip_stages = []
+verbose = true

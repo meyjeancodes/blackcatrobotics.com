@@ -1,0 +1,1128 @@
+{
+  "platforms": [
+    {
+      "slug": "dji-agras-t50",
+      "name": "DJI Agras T50",
+      "manufacturer": "DJI",
+      "type": "drone",
+      "introduced_year": 2023,
+      "specs_json": {
+        "weight_kg": 47.5,
+        "payload_kg": 50,
+        "tank_capacity_l": 40,
+        "spray_width_m": 9,
+        "max_speed_ms": 10,
+        "battery": "TB50 intelligent flight battery",
+        "ip_rating": "IP67",
+        "drive": "octorotor coaxial",
+        "radar": "true",
+        "rtk": "true"
+      },
+      "failure_modes": [
+        {
+          "component": "spray nozzle — clogging and abrasion wear",
+          "symptom": "spray flow rate drops > 15% below setpoint; uneven swath distribution visible in coverage map; nozzle output pressure alarm",
+          "root_cause": "agricultural chemical residue crystallisation inside flat-fan nozzle orifice during drying between missions; abrasive pesticide particulates erode orifice geometry causing atomization degradation",
+          "severity": "high",
+          "mtbf_hours": 80,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["spray-system", "nozzle", "clogging", "wear", "agricultural"],
+          "repair_protocol": {
+            "title": "Spray Nozzle Cleaning and Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off aircraft; release spray system pressure by opening nozzle caps", "tool": null, "warning": "Never point nozzle at face or unprotected skin — residual chemical pressure" },
+              { "step": 2, "action": "Remove nozzle bodies (quarter-turn unlock); soak in clean water for 10 minutes", "tool": "nozzle removal tool (DJI-NR1)" },
+              { "step": 3, "action": "Use nozzle cleaning brush to clear orifice; backflush with clean water via nozzle cleaning port", "tool": "nozzle cleaning brush set, syringe with clean water" },
+              { "step": 4, "action": "Inspect orifice diameter with nozzle gauge — replace if orifice worn > 5% of nominal diameter", "tool": "nozzle gauge set" },
+              { "step": 5, "action": "Install new nozzle if worn; quarter-turn lock; verify click-lock engagement", "tool": "nozzle removal tool" },
+              { "step": 6, "action": "Run spray system test via DJI Agras app — flow rate must be within 5% of target at operating pressure", "tool": "DJI Agras mobile app, flow rate indicator" }
+            ],
+            "tools_required": ["DJI nozzle removal tool NR1", "nozzle cleaning brush set", "syringe", "nozzle gauge set", "DJI Agras mobile app"],
+            "parts": [
+              { "part_name": "DJI Agras T50 Flat-Fan Nozzle Set (8x)", "part_number": "CP.AG.00000455.01", "supplier": "DJI Official Store", "unit_cost_usd": 48, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "spray_flow_rate_deviation_pct", "signal_source": "flow sensor telemetry", "threshold_value": 10, "threshold_operator": ">", "threshold_unit": "percent from setpoint", "lead_time_hours": 2, "confidence": 0.85 },
+            { "signal_name": "nozzle_operating_hours", "signal_source": "mission log", "threshold_value": 60, "threshold_operator": ">", "threshold_unit": "hours", "lead_time_hours": 8, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "centrifugal pump seal — wear and chemical degradation",
+          "symptom": "spray system pressure drops below 0.3 MPa; pump motor current rises 20%+ above baseline; chemical leak visible at pump body",
+          "root_cause": "pump mechanical seal faces erode from abrasive agricultural chemical suspensions; seal material (PTFE or carbon-graphite) requires replacement every 200 operating hours; some pH extremes in fertiliser mixes accelerate degradation",
+          "severity": "high",
+          "mtbf_hours": 200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["spray-system", "pump", "seal", "chemical", "wear"],
+          "repair_protocol": {
+            "title": "Centrifugal Pump Mechanical Seal Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; drain tank and spray lines completely; wear chemical-resistant gloves throughout", "tool": "gloves, drain bucket", "warning": "Assume all wetted surfaces are contaminated with agricultural chemical — PPE required" },
+              { "step": 2, "action": "Remove pump from airframe (4x M5 bolts); collect any residual fluid", "tool": "4mm hex wrench" },
+              { "step": 3, "action": "Disassemble pump housing (6x M4 screws); expose impeller and seal faces", "tool": "3mm hex wrench" },
+              { "step": 4, "action": "Remove impeller retaining nut; extract impeller; remove worn seal from shaft", "tool": "impeller removal tool, circlip pliers" },
+              { "step": 5, "action": "Clean shaft and housing bore with clean water; inspect for shaft scoring", "tool": "lint-free cloth, water" },
+              { "step": 6, "action": "Install new mechanical seal (PTFE-faced); press rotating seat onto shaft to full contact; install stationary seat in housing", "tool": "seal installation tool, clean gloves" },
+              { "step": 7, "action": "Reinstall impeller; torque nut to 8 Nm; reassemble pump housing; reinstall to airframe", "tool": "torque wrench 0-20 Nm, 4mm hex wrench" },
+              { "step": 8, "action": "Fill tank with clean water; run pump for 3 minutes; inspect for leaks; verify pressure > 0.35 MPa at nominal flow", "tool": "DJI Agras app, pressure gauge" }
+            ],
+            "tools_required": ["4mm hex wrench", "3mm hex wrench", "circlip pliers", "torque wrench 0-20 Nm", "impeller removal tool", "PPE chemical-resistant gloves", "DJI Agras app"],
+            "parts": [
+              { "part_name": "DJI Agras T50 Pump Mechanical Seal Kit", "part_number": "CP.AG.00000438.01", "supplier": "DJI Official Store", "unit_cost_usd": 35, "qty": 1 }
+            ],
+            "labor_minutes": 60,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "pump_pressure_mpa", "signal_source": "spray system pressure sensor", "threshold_value": 0.32, "threshold_operator": "<", "threshold_unit": "MPa", "lead_time_hours": 4, "confidence": 0.80 },
+            { "signal_name": "pump_motor_current_a", "signal_source": "ESC telemetry", "threshold_value": 12, "threshold_operator": ">", "threshold_unit": "amperes", "lead_time_hours": 8, "confidence": 0.72 }
+          ]
+        },
+        {
+          "component": "ESC thermal shutdown — motor overtemperature",
+          "symptom": "mid-mission ESC over-temperature fault; aircraft reduces speed and altitude; asymmetric motor throttle output; ESC LED flashes red",
+          "root_cause": "coaxial octorotor ESC operates at sustained high duty cycle during heavy-payload spray missions; thermal interface between ESC PCB and arm tube degrades from vibration-induced fretting; ESC junction temperature exceeds 95C trip threshold",
+          "severity": "high",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["ESC", "thermal", "electrical", "motor", "payload"],
+          "repair_protocol": {
+            "title": "ESC Thermal Interface Refresh and Inspection",
+            "steps": [
+              { "step": 1, "action": "Power off; remove ESC access cover from arm (2x M3 screws)", "tool": "JIS #1 screwdriver" },
+              { "step": 2, "action": "Remove ESC from arm tube (4x M3 mounting screws); inspect thermal pad between ESC and arm", "tool": "JIS #1 screwdriver" },
+              { "step": 3, "action": "Remove degraded thermal pad; clean ESC back and arm contact surface with IPA", "tool": "IPA, lint-free cloth, plastic scraper" },
+              { "step": 4, "action": "Install new 1mm thermal pad (Fujipoly XR-m or equivalent 6 W/mK); press ESC firmly to arm surface; reinstall mounting screws", "tool": "torque wrench 0-2 Nm" },
+              { "step": 5, "action": "Inspect ESC for capacitor bulging or PCB burn marks; if present, replace ESC module", "tool": "magnifying glass, inspection light" },
+              { "step": 6, "action": "Power on; run DJI Agras diagnostic; verify ESC idle temp < 45C at ambient 25C; perform test flight at 80% payload", "tool": "DJI Agras app" }
+            ],
+            "tools_required": ["JIS #1 screwdriver", "torque wrench 0-2 Nm", "IPA", "lint-free cloth", "magnifying glass", "DJI Agras app"],
+            "parts": [
+              { "part_name": "Fujipoly XR-m Thermal Gap Pad 50x50x1mm", "part_number": "FUJIPOLY-XRM-50X1", "supplier": "Fujipoly / Digi-Key", "unit_cost_usd": 18, "qty": 8 },
+              { "part_name": "DJI Agras T50 ESC Module", "part_number": "CP.AG.00000412.01", "supplier": "DJI Official Store", "unit_cost_usd": 280, "qty": 1 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "esc_temp_max_c", "signal_source": "ESC telemetry via DJI link", "threshold_value": 88, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 2, "confidence": 0.82 },
+            { "signal_name": "esc_throttle_asymmetry_pct", "signal_source": "flight controller telemetry", "threshold_value": 10, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 4, "confidence": 0.70 }
+          ]
+        },
+        {
+          "component": "propeller — blade delamination from chemical exposure",
+          "symptom": "vibration level increases 30%+ above baseline during flight; single propeller RPM drops vs commanded; visual delamination or blistering on prop surface",
+          "root_cause": "agricultural chemicals (herbicides, fungicides) in aerosol overspray contact propeller blade surface; some chemical combinations attack propeller composite matrix resin causing surface delamination; UV exposure accelerates matrix degradation",
+          "severity": "critical",
+          "mtbf_hours": 300,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["propeller", "delamination", "chemical", "structural", "safety"],
+          "repair_protocol": {
+            "title": "Propeller Chemical Damage Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "Pre-flight: inspect all propeller blades under good lighting for surface blistering, delamination, or discoloration; run fingertip across blade surface — any roughness or bubbles = replace", "tool": "flashlight" },
+              { "step": 2, "action": "Remove suspect propeller: loosen motor prop lock (counter-clockwise on CW-rotation motors, clockwise on CCW-rotation motors)", "tool": "DJI prop installation/removal wrench" },
+              { "step": 3, "action": "Inspect motor shaft for chemical corrosion; clean with IPA if surface oxidation present", "tool": "IPA, lint-free cloth" },
+              { "step": 4, "action": "Install new propeller; tighten prop lock to click; verify it cannot be pulled off by hand", "tool": "DJI prop wrench", "warning": "Never reuse delaminating propellers — blade separation during flight will cause crash under heavy payload" },
+              { "step": 5, "action": "Post replacement: run motor run-up test via DJI Agras app; verify vibration < 1.5g RMS on IMU", "tool": "DJI Agras app, vibration monitoring" }
+            ],
+            "tools_required": ["DJI prop installation/removal wrench", "IPA", "DJI Agras app"],
+            "parts": [
+              { "part_name": "DJI Agras T50 Propeller (2x CW + 2x CCW)", "part_number": "CP.AG.00000441.01", "supplier": "DJI Official Store", "unit_cost_usd": 85, "qty": 2 }
+            ],
+            "labor_minutes": 15,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "imu_vibration_rms_g", "signal_source": "flight controller IMU", "threshold_value": 1.8, "threshold_operator": ">", "threshold_unit": "g RMS", "lead_time_hours": 1, "confidence": 0.88 },
+            { "signal_name": "propeller_hours_since_last_inspection", "signal_source": "maintenance log", "threshold_value": 40, "threshold_operator": ">", "threshold_unit": "hours", "lead_time_hours": 8, "confidence": 0.82 }
+          ]
+        },
+        {
+          "component": "TB50 intelligent battery — cell imbalance from agricultural heat",
+          "symptom": "battery remaining capacity shows > 15% drop from last full charge; pre-flight check aborts with battery health warning; battery surface temperature > 50C after charge",
+          "root_cause": "TB50 batteries stored in direct sun on aircraft between spray passes experience ambient temperatures 50-70C in agricultural settings; accelerated cell degradation from sustained heat during operation; cell group imbalance develops faster than BMS can compensate",
+          "severity": "high",
+          "mtbf_hours": 600,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "thermal", "BMS", "agricultural", "storage"],
+          "repair_protocol": {
+            "title": "TB50 Battery Health Assessment and Replacement",
+            "steps": [
+              { "step": 1, "action": "Check battery health via DJI Agras app — navigate to Battery > Battery Details; record cycle count and remaining capacity percentage", "tool": "DJI Agras app" },
+              { "step": 2, "action": "If remaining capacity < 80% of rated or cycle count > 200: retire battery", "tool": null },
+              { "step": 3, "action": "Allow battery to cool to < 40C before charging — never charge hot battery; store in shade", "tool": "IR thermometer" },
+              { "step": 4, "action": "Perform 3 full charge-discharge cycles using DJI battery station to recalibrate BMS capacity estimate", "tool": "DJI Agras battery charging station" },
+              { "step": 5, "action": "If capacity recovers to > 85% after reconditioning, return to service; otherwise replace", "tool": "DJI Agras app" },
+              { "step": 6, "action": "Dispose via DJI battery return program; do not puncture or landfill LiPo batteries", "tool": null }
+            ],
+            "tools_required": ["DJI Agras app", "IR thermometer", "DJI Agras battery charging station"],
+            "parts": [
+              { "part_name": "DJI Agras T50 TB50 Intelligent Flight Battery", "part_number": "CP.AG.00000397.01", "supplier": "DJI Official Store", "unit_cost_usd": 480, "qty": 1 }
+            ],
+            "labor_minutes": 10,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_remaining_capacity_pct", "signal_source": "DJI BMS via link telemetry", "threshold_value": 82, "threshold_operator": "<", "threshold_unit": "percent of rated", "lead_time_hours": 24, "confidence": 0.85 },
+            { "signal_name": "battery_cycle_count", "signal_source": "DJI BMS", "threshold_value": 180, "threshold_operator": ">", "threshold_unit": "cycles", "lead_time_hours": 48, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "phased array radar — radome contamination",
+          "symptom": "obstacle avoidance false positives in clean airspace; radar range reduced from 50m to 20m; field map shows phantom obstacles",
+          "root_cause": "DJI T50 phased array radar uses 77GHz millimeter wave; agricultural chemical residue builds up on radome surface creating dielectric layer that attenuates and reflects radar signal; wet chemical film worse than dry",
+          "severity": "medium",
+          "mtbf_hours": 50,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["radar", "sensor", "contamination", "obstacle-avoidance"],
+          "repair_protocol": {
+            "title": "Radar Radome Chemical Residue Cleaning",
+            "steps": [
+              { "step": 1, "action": "Power off aircraft; inspect radar radome (lower and forward facing) for chemical film or residue deposits", "tool": "flashlight, oblique viewing angle" },
+              { "step": 2, "action": "Dampen microfiber cloth with clean water; gently wipe radome in straight strokes; avoid circular motion", "tool": "microfiber cloth, clean water" },
+              { "step": 3, "action": "If residue persists, use DJI-approved radome cleaner solution (mild pH 7 aqueous); do not use solvents", "tool": "pH-neutral cleaner, microfiber cloth", "warning": "Never use acetone, IPA, or agricultural chemical cleaners on radar radome — will etch the radome coating" },
+              { "step": 4, "action": "Dry with clean microfiber; power on; run radar self-test via DJI Agras app; verify obstacle detection range > 40m in open field", "tool": "DJI Agras app, measuring tape" }
+            ],
+            "tools_required": ["microfiber cloth", "clean water", "pH-neutral cleaner", "DJI Agras app", "measuring tape"],
+            "parts": [],
+            "labor_minutes": 10,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "radar_max_detection_range_m", "signal_source": "DJI radar diagnostics", "threshold_value": 30, "threshold_operator": "<", "threshold_unit": "meters", "lead_time_hours": 2, "confidence": 0.78 },
+            { "signal_name": "radar_false_positive_rate_per_min", "signal_source": "obstacle avoidance log", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "false detections per minute", "lead_time_hours": 1, "confidence": 0.72 }
+          ]
+        },
+        {
+          "component": "motor bearing — dusty/wet agricultural environment wear",
+          "symptom": "motor vibration signature changes; individual motor current deviates > 15% from fleet average; motor temperature 10C above peers at same throttle",
+          "root_cause": "agricultural dust and chemical mist bypass motor can seals over time; bearing contamination accelerates race wear; DJI T50 operates in intensely dusty environments during dry-field applications",
+          "severity": "high",
+          "mtbf_hours": 400,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["motor", "bearing", "dust", "wear", "contamination"],
+          "repair_protocol": {
+            "title": "Motor Bearing Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; identify suspect motor by telemetry; remove propeller", "tool": "DJI prop wrench" },
+              { "step": 2, "action": "Spin motor shaft by hand — feel for roughness, binding, or grinding; any detected: replace motor", "tool": null },
+              { "step": 3, "action": "Remove motor from arm (4x M3 mounting screws)", "tool": "JIS #1 screwdriver" },
+              { "step": 4, "action": "Field-level replacement: install new DJI T50 motor; torque M3 screws to 1.5 Nm in star pattern", "tool": "JIS #1 screwdriver, torque wrench 0-3 Nm" },
+              { "step": 5, "action": "Reinstall propeller; run motor run-up test; verify vibration < 1.2g RMS", "tool": "DJI Agras app" }
+            ],
+            "tools_required": ["DJI prop wrench", "JIS #1 screwdriver", "torque wrench 0-3 Nm", "DJI Agras app"],
+            "parts": [
+              { "part_name": "DJI Agras T50 Motor Assembly", "part_number": "CP.AG.00000418.01", "supplier": "DJI Official Store", "unit_cost_usd": 165, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_current_deviation_pct", "signal_source": "ESC telemetry", "threshold_value": 12, "threshold_operator": ">", "threshold_unit": "percent from fleet average", "lead_time_hours": 8, "confidence": 0.78 },
+            { "signal_name": "motor_temp_delta_c", "signal_source": "motor temperature sensor", "threshold_value": 12, "threshold_operator": ">", "threshold_unit": "celsius above fleet average", "lead_time_hours": 4, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "flow rate sensor — chemical scale buildup",
+          "symptom": "flow rate reading drifts > 10% from actual flow; autopilot spray rate varies across field; coverage map shows inconsistent application bands",
+          "root_cause": "ultrasonic flow sensor exposed to full chemical flow path; dissolved mineral salts and chemical residue crystallise on sensor face and tubing walls; deposits alter acoustic path and reduce measurement accuracy",
+          "severity": "medium",
+          "mtbf_hours": 150,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["spray-system", "sensor", "flow", "scale", "calibration"],
+          "repair_protocol": {
+            "title": "Flow Rate Sensor Descaling and Calibration",
+            "steps": [
+              { "step": 1, "action": "Drain spray system; connect clean water to inlet; flush 5 litres through nozzles", "tool": "clean water source, bucket" },
+              { "step": 2, "action": "Prepare citric acid solution 5% by weight in water; fill tank with 5 litres of solution", "tool": "citric acid powder, 5L water, measuring scale" },
+              { "step": 3, "action": "Run spray pump for 5 minutes; allow solution to soak in lines for 20 minutes; drain and flush with 10 litres clean water", "tool": "DJI Agras app (manual spray mode), bucket" },
+              { "step": 4, "action": "Run flow sensor calibration via DJI Agras app: Maintenance > Spray System > Flow Calibration", "tool": "DJI Agras app, known-volume collection vessel" },
+              { "step": 5, "action": "If calibration error > 10% persists after descaling, replace flow sensor module", "tool": null }
+            ],
+            "tools_required": ["DJI Agras app", "citric acid powder", "measuring scale", "collection vessel 5L", "clean water source"],
+            "parts": [
+              { "part_name": "DJI Agras T50 Flow Sensor Module", "part_number": "CP.AG.00000451.01", "supplier": "DJI Official Store", "unit_cost_usd": 95, "qty": 1 }
+            ],
+            "labor_minutes": 40,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "flow_rate_vs_setpoint_deviation_pct", "signal_source": "spray system controller", "threshold_value": 8, "threshold_operator": ">", "threshold_unit": "percent", "lead_time_hours": 4, "confidence": 0.80 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "DJI Official Store", "website": "https://store.dji.com", "region": "CN", "component_types": ["nozzle", "pump seal", "propeller", "battery", "ESC", "motor", "flow sensor"], "lead_time_days": 7, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "dji-agras-t60",
+      "name": "DJI Agras T60",
+      "manufacturer": "DJI",
+      "type": "drone",
+      "introduced_year": 2024,
+      "specs_json": {
+        "weight_kg": 55.5,
+        "payload_kg": 60,
+        "tank_capacity_l": 50,
+        "spray_width_m": 11,
+        "max_speed_ms": 12,
+        "battery": "TB60 intelligent flight battery",
+        "ip_rating": "IP67",
+        "drive": "octorotor coaxial",
+        "dual_pump": true,
+        "radar": "true",
+        "rtk": "true"
+      },
+      "failure_modes": [
+        {
+          "component": "dual pump solenoid valve — sticky valve from crystallised chemical",
+          "symptom": "one spray boom deactivates mid-mission; flow rate halves; solenoid valve click audible but no flow change; boom isolation fault in app",
+          "root_cause": "T60 dual-pump system uses solenoid valves to isolate left/right booms; chemical residue crystallises on valve seat after missions without flush; valve actuator cannot overcome crystal buildup even with full solenoid force",
+          "severity": "high",
+          "mtbf_hours": 100,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["spray-system", "solenoid-valve", "clogging", "chemical"],
+          "repair_protocol": {
+            "title": "Boom Isolation Solenoid Valve Cleaning and Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; drain all spray lines; identify stuck solenoid valve from boom isolation fault code", "tool": "DJI Agras app fault log" },
+              { "step": 2, "action": "Disconnect valve electrical connector; remove solenoid valve body (2x M4 screws, quick-disconnect fittings)", "tool": "3mm hex wrench, fitting release tool" },
+              { "step": 3, "action": "Soak valve in warm water with 5% citric acid for 30 minutes; actuate manually 20x during soak", "tool": "citric acid solution, container" },
+              { "step": 4, "action": "Rinse with clean water; test electrical actuation with 12V bench supply — valve must fully open in < 100ms", "tool": "12V bench power supply, timer" },
+              { "step": 5, "action": "If valve does not actuate freely after cleaning, replace valve; reinstall with fresh thread seal tape on fittings", "tool": "PTFE thread tape, 3mm hex wrench" },
+              { "step": 6, "action": "Power on; run boom isolation test in DJI Agras app; verify both booms activate and isolate correctly", "tool": "DJI Agras app" }
+            ],
+            "tools_required": ["3mm hex wrench", "fitting release tool", "citric acid", "container", "12V bench power supply", "PTFE thread tape", "DJI Agras app"],
+            "parts": [
+              { "part_name": "DJI Agras T60 Boom Isolation Solenoid Valve", "part_number": "CP.AG.00000512.01", "supplier": "DJI Official Store", "unit_cost_usd": 55, "qty": 1 }
+            ],
+            "labor_minutes": 50,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "boom_flow_asymmetry_pct", "signal_source": "dual flow sensor telemetry", "threshold_value": 15, "threshold_operator": ">", "threshold_unit": "percent left vs right", "lead_time_hours": 2, "confidence": 0.82 }
+          ]
+        },
+        {
+          "component": "50L folding tank baffle — slosh-induced structural fatigue",
+          "symptom": "asymmetric yaw during fast direction reversals with partially filled tank; tank audible sloshing during mission; cracked baffle visible on tank inspection",
+          "root_cause": "T60's 50L tank contains internal baffles to reduce liquid slosh; repeated high-acceleration direction changes at partial fill (25-35L) create hydraulic impact loads on baffle welds exceeding fatigue limit after 500+ full missions",
+          "severity": "medium",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["tank", "structural", "slosh", "fatigue", "flight-dynamics"],
+          "repair_protocol": {
+            "title": "Tank Baffle Inspection and Tank Module Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; drain tank completely; remove tank from aircraft (6x M5 quick-release fasteners)", "tool": "M5 quick-release key" },
+              { "step": 2, "action": "Use inspection camera to view tank interior through fill port; inspect all baffle attachment points for cracks", "tool": "endoscope/borescope camera, phone flashlight" },
+              { "step": 3, "action": "If baffle cracked at weld: condemn tank module — field repair of HDPE tank not possible; install new tank module", "tool": null },
+              { "step": 4, "action": "Install new tank; secure all 6 fasteners; reconnect tank level sensor and drain valve", "tool": "M5 quick-release key, spudger" },
+              { "step": 5, "action": "Fill to 25L with clean water; perform direction reversal hover test; verify IMU yaw does not deviate > 3 degrees during reversal", "tool": "DJI Agras app, remote control" }
+            ],
+            "tools_required": ["M5 quick-release key", "endoscope camera", "spudger", "DJI Agras app"],
+            "parts": [
+              { "part_name": "DJI Agras T60 50L Tank Module", "part_number": "CP.AG.00000498.01", "supplier": "DJI Official Store", "unit_cost_usd": 320, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "yaw_oscillation_amplitude_deg", "signal_source": "IMU flight controller", "threshold_value": 4, "threshold_operator": ">", "threshold_unit": "degrees peak-to-peak", "lead_time_hours": 2, "confidence": 0.70 }
+          ]
+        },
+        {
+          "component": "ESC gate driver IC — failure from voltage spike",
+          "symptom": "specific motor drops to 0 RPM mid-flight; ESC error code motor_fault; remaining motors compensate; aircraft descends to emergency landing",
+          "root_cause": "T60 heavy payload requires high motor current; inductive voltage spikes during rapid throttle changes can exceed gate driver IC breakdown voltage; gate driver ICs in outer arm ESCs experience higher EMI exposure",
+          "severity": "critical",
+          "mtbf_hours": 800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["ESC", "gate-driver", "electrical", "critical", "motor-failure"],
+          "repair_protocol": {
+            "title": "Failed ESC Module Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; identify failed ESC from flight log motor fault codes", "tool": "DJI Agras app flight records" },
+              { "step": 2, "action": "Remove propeller from affected motor; remove ESC cover (2x M3 screws)", "tool": "DJI prop wrench, JIS #1 screwdriver" },
+              { "step": 3, "action": "Remove failed ESC (4x M3 mounting screws); disconnect phase wires, power leads, and CAN connector", "tool": "JIS #1 screwdriver, label tape" },
+              { "step": 4, "action": "Install new ESC module; reconnect phase wires in correct order (label tape reference); reconnect power and CAN", "tool": "JIS #1 screwdriver" },
+              { "step": 5, "action": "Reinstall ESC cover and propeller; power on; run ESC calibration in DJI Agras app", "tool": "DJI Agras app" },
+              { "step": 6, "action": "Perform tethered hover test for 5 minutes; verify all 8 motor currents within 10% of each other", "tool": "safety tether system, DJI Agras app" }
+            ],
+            "tools_required": ["DJI prop wrench", "JIS #1 screwdriver", "label tape", "DJI Agras app", "safety tether system"],
+            "parts": [
+              { "part_name": "DJI Agras T60 ESC Module", "part_number": "CP.AG.00000505.01", "supplier": "DJI Official Store", "unit_cost_usd": 310, "qty": 1 }
+            ],
+            "labor_minutes": 35,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_rpm_deviation_pct", "signal_source": "ESC telemetry", "threshold_value": 8, "threshold_operator": ">", "threshold_unit": "percent from commanded", "lead_time_hours": 2, "confidence": 0.80 },
+            { "signal_name": "esc_voltage_spike_event_count", "signal_source": "ESC protection log", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "spike events per flight", "lead_time_hours": 4, "confidence": 0.72 }
+          ]
+        },
+        {
+          "component": "boom hinge pin — corrosion seizure",
+          "symptom": "spray boom will not fold/unfold; hinge pivot galled; boom folds with abnormal force; hinge shows visible rust or galvanic corrosion",
+          "root_cause": "T60 folding boom hinges are steel pins in aluminium housings; agricultural chemical atmosphere is corrosive; galvanic corrosion at steel/aluminium interface causes hinge seizure when anti-corrosion grease interval is missed",
+          "severity": "medium",
+          "mtbf_hours": 300,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["boom", "hinge", "corrosion", "mechanical", "structural"],
+          "repair_protocol": {
+            "title": "Boom Hinge Pin Lubrication and Replacement",
+            "steps": [
+              { "step": 1, "action": "Inspect all boom hinges for corrosion and smooth operation before each weekly maintenance", "tool": "flashlight, nitrile gloves" },
+              { "step": 2, "action": "Apply Corrosion-X to hinge pin; work boom through full fold/unfold cycle 10x to distribute lubricant", "tool": "Corrosion-X spray" },
+              { "step": 3, "action": "If hinge still stiff or galled: press out hinge pin using 3mm punch and hammer", "tool": "3mm pin punch, small hammer" },
+              { "step": 4, "action": "Clean hinge bore with spiral brush; coat with Molykote BR-2 grease; install new stainless steel hinge pin", "tool": "spiral bore brush, Molykote BR-2, bench press or drift" },
+              { "step": 5, "action": "Verify boom folds/unfolds with < 5N force; install retention clip", "tool": "spring scale 0-20N, snap ring pliers" }
+            ],
+            "tools_required": ["Corrosion-X spray", "3mm pin punch", "small hammer", "spiral bore brush", "Molykote BR-2 grease", "snap ring pliers", "spring scale"],
+            "parts": [
+              { "part_name": "DJI Agras T60 Boom Hinge Pin (2x stainless)", "part_number": "CP.AG.00000519.01", "supplier": "DJI Official Store", "unit_cost_usd": 22, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "boom_fold_force_n", "signal_source": "manual inspection log", "threshold_value": 8, "threshold_operator": ">", "threshold_unit": "newtons to initiate fold", "lead_time_hours": 48, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "TB60 battery — accelerated aging from partial-state charging",
+          "symptom": "usable flight time drops below 8 minutes at 60kg payload; app reports cell capacity < 78%; battery swells visibly",
+          "root_cause": "T60 multi-battery swap operations leave batteries in partial state of charge for hours in hot conditions; repeated partial charge-discharge cycles at high temperature accelerate NMC cell aging through lithium plating at anode",
+          "severity": "high",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "TB60", "NMC", "thermal", "aging"],
+          "repair_protocol": {
+            "title": "TB60 Battery Reconditioning and Retirement Assessment",
+            "steps": [
+              { "step": 1, "action": "Check TB60 battery app report: if remaining capacity < 80% or swelling visible, retire immediately", "tool": "DJI Agras app, visual inspection" },
+              { "step": 2, "action": "For batteries 80-90% remaining: perform DJI battery station reconditioning cycle (discharge to storage, full charge, discharge to storage)", "tool": "DJI battery charging station" },
+              { "step": 3, "action": "Measure post-reconditioning capacity — if < 85% of rated, retire", "tool": "DJI Agras app battery details" },
+              { "step": 4, "action": "During field operations: avoid storing charged TB60 in direct sun; use insulated battery cases between uses", "tool": "insulated battery carrying case" }
+            ],
+            "tools_required": ["DJI Agras app", "DJI battery charging station", "insulated battery carrying case"],
+            "parts": [
+              { "part_name": "DJI Agras T60 TB60 Intelligent Flight Battery", "part_number": "CP.AG.00000489.01", "supplier": "DJI Official Store", "unit_cost_usd": 580, "qty": 1 }
+            ],
+            "labor_minutes": 15,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_capacity_remaining_pct", "signal_source": "DJI BMS app", "threshold_value": 82, "threshold_operator": "<", "threshold_unit": "percent", "lead_time_hours": 24, "confidence": 0.85 }
+          ]
+        },
+        {
+          "component": "RTK antenna — corrosion from chemical spray overspray",
+          "symptom": "RTK positioning accuracy degrades from 2cm to > 1m; aircraft position hold oscillates; GPS fallback mode triggered",
+          "root_cause": "RTK antenna on T60 is mounted above tank; spray mist reaches antenna in crosswind conditions; chemical film changes antenna dielectric environment and degrades SMA connector contacts; repeated chemical exposure eventually corrodes connector",
+          "severity": "medium",
+          "mtbf_hours": 800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["RTK", "antenna", "corrosion", "GPS", "chemical"],
+          "repair_protocol": {
+            "title": "RTK Antenna Cleaning and Connector Inspection",
+            "steps": [
+              { "step": 1, "action": "Power off; inspect RTK antenna patch and SMA connector for chemical residue or corrosion", "tool": "magnifying glass, flashlight" },
+              { "step": 2, "action": "Clean antenna surface with water-dampened cloth; dry completely", "tool": "damp cloth, dry cloth" },
+              { "step": 3, "action": "Apply DeoxIT D5 to SMA connector threads; mate and demate 5x; dry with compressed air", "tool": "DeoxIT D5, compressed air" },
+              { "step": 4, "action": "Inspect SMA connector center pin for corrosion pitting — if visible green or black corrosion on pin face, replace antenna assembly", "tool": "magnifying glass" },
+              { "step": 5, "action": "Apply thin coat of Corrosion-X to SMA connector exterior after cleaning; do not get inside connector", "tool": "Corrosion-X" },
+              { "step": 6, "action": "Power on; check RTK accuracy in open field — verify FIXED solution within 90 seconds and horizontal accuracy < 3cm", "tool": "DJI Agras app RTK status" }
+            ],
+            "tools_required": ["magnifying glass", "DeoxIT D5", "Corrosion-X", "compressed air", "damp cloth", "DJI Agras app"],
+            "parts": [
+              { "part_name": "DJI Agras T60 RTK Antenna Assembly", "part_number": "CP.AG.00000523.01", "supplier": "DJI Official Store", "unit_cost_usd": 75, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "rtk_horizontal_accuracy_cm", "signal_source": "DJI RTK module", "threshold_value": 5, "threshold_operator": ">", "threshold_unit": "centimeters", "lead_time_hours": 4, "confidence": 0.78 },
+            { "signal_name": "rtk_fix_time_sec", "signal_source": "DJI RTK status log", "threshold_value": 120, "threshold_operator": ">", "threshold_unit": "seconds to fixed", "lead_time_hours": 8, "confidence": 0.72 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "DJI Official Store", "website": "https://store.dji.com", "region": "CN", "component_types": ["all T60 parts", "battery", "ESC", "motor", "spray system"], "lead_time_days": 7, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "dji-matrice-350-rtk",
+      "name": "DJI Matrice 350 RTK",
+      "manufacturer": "DJI",
+      "type": "drone",
+      "introduced_year": 2023,
+      "specs_json": {
+        "weight_kg": 6.47,
+        "payload_kg": 2.7,
+        "battery": "TB65 hot-swap dual",
+        "max_speed_ms": 23,
+        "ip_rating": "IP55",
+        "endurance_min": 55,
+        "comms": "O3 Enterprise 20km",
+        "rtk": "true",
+        "lidar": "optional payload",
+        "camera_ports": 3
+      },
+      "failure_modes": [
+        {
+          "component": "gimbal ribbon cable — ZIF connector fatigue",
+          "symptom": "gimbal image freezes intermittently; camera telemetry disappears from app; physical twisting of gimbal arm resolves temporarily",
+          "root_cause": "gimbal ribbon cable routes through pivot point and experiences repeated flex cycles; ZIF connector at drone body end develops fretting oxidation from micro-movement during vibration; ribbon cable outer insulation cracks at bend radius",
+          "severity": "high",
+          "mtbf_hours": 1200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["gimbal", "cable", "ZIF", "intermittent", "electrical"],
+          "repair_protocol": {
+            "title": "Gimbal Ribbon Cable Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; remove gimbal from aircraft (3x M2.5 screws at gimbal mount plate)", "tool": "JIS #0 screwdriver" },
+              { "step": 2, "action": "Trace ribbon cable from gimbal body to ZIF connector at drone; carefully lift ZIF connector latch with spudger", "tool": "spudger, tweezers" },
+              { "step": 3, "action": "Extract ribbon cable from ZIF slot; inspect for cracks along flex zone", "tool": "magnifying glass" },
+              { "step": 4, "action": "Slide new ribbon cable into ZIF connector with contacts facing correct direction; press latch down until click", "tool": "tweezers, spudger" },
+              { "step": 5, "action": "Route cable with same bend radius as original — must not be kinked or pinched by gimbal housing", "tool": null },
+              { "step": 6, "action": "Reinstall gimbal; power on; verify live video from all cameras; perform gimbal auto-calibration", "tool": "DJI Pilot 2 app" }
+            ],
+            "tools_required": ["JIS #0 screwdriver", "spudger", "tweezers", "magnifying glass", "DJI Pilot 2 app"],
+            "parts": [
+              { "part_name": "DJI M350 RTK Gimbal Ribbon Cable", "part_number": "CP.EN.00000395.01", "supplier": "DJI Enterprise Store", "unit_cost_usd": 45, "qty": 1 }
+            ],
+            "labor_minutes": 40,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "camera_signal_dropout_per_hour", "signal_source": "DJI transmission link statistics", "threshold_value": 3, "threshold_operator": ">", "threshold_unit": "dropouts per flight hour", "lead_time_hours": 8, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "TB65 battery pair — cell capacity mismatch between paired units",
+          "symptom": "one battery discharges faster than partner; aircraft lands with asymmetric battery SOC (difference > 15%); system logs dual-battery balance warning",
+          "root_cause": "M350 hot-swap system pairs two TB65 batteries; aging batteries develop differing internal resistance; high-current equalization between mismatched cells stresses the weaker battery and reduces overall capacity",
+          "severity": "medium",
+          "mtbf_hours": 1000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "TB65", "pairing", "dual-battery", "balance"],
+          "repair_protocol": {
+            "title": "TB65 Battery Pair Evaluation and Matched Replacement",
+            "steps": [
+              { "step": 1, "action": "Check both TB65 SOH via DJI app; batteries with > 5% SOH difference should not be paired", "tool": "DJI Pilot 2 app" },
+              { "step": 2, "action": "Perform DJI battery station full discharge-charge cycle on each battery individually; record final capacity", "tool": "DJI battery charging station" },
+              { "step": 3, "action": "Pair two batteries with capacity within 3% of each other; label pairs with matching tape color", "tool": "colored label tape" },
+              { "step": 4, "action": "Retire any battery with SOH < 80%", "tool": null }
+            ],
+            "tools_required": ["DJI Pilot 2 app", "DJI battery charging station", "colored label tape"],
+            "parts": [
+              { "part_name": "DJI M350 TB65 Intelligent Flight Battery", "part_number": "CP.EN.00000353.01", "supplier": "DJI Enterprise Store", "unit_cost_usd": 580, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "dual_battery_soc_delta_pct", "signal_source": "BMS dual-battery management", "threshold_value": 10, "threshold_operator": ">", "threshold_unit": "percent SOC difference", "lead_time_hours": 4, "confidence": 0.82 }
+          ]
+        },
+        {
+          "component": "IP55 ingress protection — gasket degradation",
+          "symptom": "moisture alarm after rain flight; connector pins show corrosion after wet operations; internal humidity sensor > 70%",
+          "root_cause": "M350 IP55 protection depends on perimeter gasket and sealed connector boots; repeated battery removal/replacement cycles flex body panels and compress gaskets permanently; field cleaning with pressure washers accelerates gasket degradation",
+          "severity": "high",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sealing", "IP55", "gasket", "water-ingress", "maintenance"],
+          "repair_protocol": {
+            "title": "M350 Body Gasket Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; remove all payloads and batteries; open body panels per DJI M350 service guide (T10 Torx)", "tool": "T10 Torx driver" },
+              { "step": 2, "action": "Inspect all perimeter gaskets; look for compression set (< 50% original thickness) or tears", "tool": "vernier calipers, magnifying glass" },
+              { "step": 3, "action": "Remove degraded gaskets; clean groove with IPA; install new OEM gasket set", "tool": "IPA, lint-free cloth, plastic scraper" },
+              { "step": 4, "action": "Ensure all connector rubber boots are fully seated; replace any cracked boots", "tool": null },
+              { "step": 5, "action": "Reassemble body panels; torque T10 screws to 1.5 Nm; perform IP55 water spray test 3 minutes at 12.5L/min", "tool": "torque wrench, garden hose adjustable nozzle" },
+              { "step": 6, "action": "Monitor internal humidity via app 30 minutes after spray test — must remain < 60% RH", "tool": "DJI Pilot 2 app humidity monitor" }
+            ],
+            "tools_required": ["T10 Torx", "torque wrench", "IPA", "vernier calipers", "lint-free cloth", "garden hose", "DJI Pilot 2 app"],
+            "parts": [
+              { "part_name": "DJI M350 RTK Body Gasket Set", "part_number": "CP.EN.00000388.01", "supplier": "DJI Enterprise Store", "unit_cost_usd": 38, "qty": 1 }
+            ],
+            "labor_minutes": 60,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "internal_humidity_rh_pct", "signal_source": "M350 internal humidity sensor", "threshold_value": 65, "threshold_operator": ">", "threshold_unit": "percent RH", "lead_time_hours": 8, "confidence": 0.82 }
+          ]
+        },
+        {
+          "component": "O3 Enterprise antenna cable — vibration fatigue at connector",
+          "symptom": "transmission range drops from 20km to < 5km; video latency spikes; connection drops during bank manoeuvres",
+          "root_cause": "O3 Enterprise antenna cables route through airframe from antenna array to main board; vibration at motor mount frequencies creates resonant stress at SMA connector crimp; repeated flex causes partial centre conductor fracture",
+          "severity": "medium",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["communications", "antenna", "cable", "O3", "vibration"],
+          "repair_protocol": {
+            "title": "O3 Antenna Cable Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "Identify failed antenna direction via DJI RCF signal quality display — weakest direction indicates failed antenna", "tool": "DJI RC Plus or DJI Pilot 2 app" },
+              { "step": 2, "action": "Power off; remove airframe access panel for antenna routing area", "tool": "T10 Torx" },
+              { "step": 3, "action": "Gently flex antenna cable near SMA connector while monitoring cable continuity with DMM — opens indicate fracture location", "tool": "digital multimeter, spudger" },
+              { "step": 4, "action": "Disconnect SMA connector; route new OEM cable following original path; reconnect SMA both ends finger-tight + 1/4 turn", "tool": "SMA torque wrench (0.56 Nm)", "warning": "Never overtighten SMA — 0.56 Nm maximum; overtorque cracks centre pin" },
+              { "step": 5, "action": "Reassemble access panel; perform range test at 2km distance; verify RSSI > -85dBm", "tool": "DJI Pilot 2 app, open flight area" }
+            ],
+            "tools_required": ["T10 Torx", "digital multimeter", "SMA torque wrench 0.56 Nm", "spudger", "DJI Pilot 2 app"],
+            "parts": [
+              { "part_name": "DJI M350 O3 Enterprise Antenna Cable Set", "part_number": "CP.EN.00000401.01", "supplier": "DJI Enterprise Store", "unit_cost_usd": 55, "qty": 1 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "o3_rssi_dbm_min", "signal_source": "DJI link telemetry", "threshold_value": -88, "threshold_operator": "<", "threshold_unit": "dBm", "lead_time_hours": 4, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "landing gear strut — damper elastomer fatigue",
+          "symptom": "hard landings despite slow descent; landing vibration spike > 5g on IMU at touchdown; aircraft bounces on landing; damper visually compressed or cracked",
+          "root_cause": "M350 landing gear uses elastomer vibration dampers; repeated hard landings or landing on uneven terrain compress dampers beyond design limits; UV and ozone exposure accelerates elastomer oxidation and cracking",
+          "severity": "medium",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["landing-gear", "damper", "wear", "structural"],
+          "repair_protocol": {
+            "title": "Landing Gear Damper Replacement",
+            "steps": [
+              { "step": 1, "action": "Inspect all 4 landing gear dampers; press each with thumb — damper should spring back; cracked or permanently compressed: replace", "tool": "flashlight" },
+              { "step": 2, "action": "Remove landing gear strut from body (2x M3 screws per strut); extract damper insert from strut tip", "tool": "2.5mm hex wrench, circlip pliers" },
+              { "step": 3, "action": "Press new damper insert into strut tip until seated; reinstall strut; torque M3 screws to 1.5 Nm", "tool": "2.5mm hex wrench, torque wrench 0-3 Nm" },
+              { "step": 4, "action": "Perform 5 practice landings on flat surface; verify IMU touchdown vibration < 3g", "tool": "DJI Pilot 2 app flight data" }
+            ],
+            "tools_required": ["2.5mm hex wrench", "circlip pliers", "torque wrench 0-3 Nm", "DJI Pilot 2 app"],
+            "parts": [
+              { "part_name": "DJI M350 RTK Landing Gear Damper Set (4x)", "part_number": "CP.EN.00000375.01", "supplier": "DJI Enterprise Store", "unit_cost_usd": 32, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "landing_vibration_peak_g", "signal_source": "IMU flight log at touchdown event", "threshold_value": 4.5, "threshold_operator": ">", "threshold_unit": "g", "lead_time_hours": 4, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "RTK antenna — ground plane corrosion",
+          "symptom": "RTK fix takes > 3 minutes; horizontal accuracy degrades to > 10cm in good GNSS conditions; position hold oscillates",
+          "root_cause": "M350 RTK antenna ground plane is aluminium; field exposure to rain, dew, and cleaning agents causes surface oxidation; oxidised ground plane reduces antenna radiation efficiency and multi-path rejection",
+          "severity": "medium",
+          "mtbf_hours": 2500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["RTK", "antenna", "corrosion", "GPS", "positioning"],
+          "repair_protocol": {
+            "title": "RTK Antenna Ground Plane Cleaning and Inspection",
+            "steps": [
+              { "step": 1, "action": "Power off; inspect RTK antenna and ground plane for oxidation (white powder on aluminium)", "tool": "flashlight, magnifying glass" },
+              { "step": 2, "action": "Clean ground plane with aluminium-safe contact cleaner; remove white oxide deposits", "tool": "DeoxIT D5, soft toothbrush" },
+              { "step": 3, "action": "Apply thin coat of ACF-50 anti-corrosion film to ground plane; allow 5 minutes to dry", "tool": "ACF-50 anti-corrosion compound" },
+              { "step": 4, "action": "Check SMA connector on RTK module for corrosion; treat with DeoxIT if needed", "tool": "DeoxIT D5" },
+              { "step": 5, "action": "Power on in open sky; verify RTK FIXED solution < 90 seconds and accuracy < 3cm CEP", "tool": "DJI Pilot 2 app RTK status" }
+            ],
+            "tools_required": ["DeoxIT D5", "soft toothbrush", "ACF-50 anti-corrosion compound", "DJI Pilot 2 app"],
+            "parts": [
+              { "part_name": "DJI M350 RTK Antenna Assembly (if ground plane damaged)", "part_number": "CP.EN.00000408.01", "supplier": "DJI Enterprise Store", "unit_cost_usd": 95, "qty": 1 }
+            ],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "rtk_fix_time_sec", "signal_source": "DJI RTK status", "threshold_value": 120, "threshold_operator": ">", "threshold_unit": "seconds to FIXED", "lead_time_hours": 8, "confidence": 0.75 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "DJI Enterprise Store", "website": "https://enterprise.dji.com", "region": "CN", "component_types": ["all M350 parts", "battery", "gimbal cable", "antenna", "gasket"], "lead_time_days": 5, "risk_level": "low" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "skydio-x10",
+      "name": "Skydio X10",
+      "manufacturer": "Skydio",
+      "type": "drone",
+      "introduced_year": 2023,
+      "specs_json": {
+        "weight_kg": 1.36,
+        "max_speed_ms": 20,
+        "endurance_min": 42,
+        "ip_rating": "IP55",
+        "battery_wh": 106,
+        "comms": "Skydio Secure Link",
+        "obstacle_avoidance": "360 degree AI",
+        "camera": "50MP EO + thermal IR",
+        "compute": "Qualcomm Snapdragon SoC",
+        "storage_gb": 64
+      },
+      "failure_modes": [
+        {
+          "component": "obstacle avoidance cameras — contamination and calibration drift",
+          "symptom": "obstacle avoidance system switches to degraded mode; drone slows and widens clearance margins; false collision warnings in open airspace",
+          "root_cause": "Skydio X10 uses 6 fisheye cameras for 360-degree obstacle avoidance; dust, pollen, or water droplets on camera windows degrade AI confidence scores; thermal shock from indoor-to-outdoor transitions causes lens focus drift",
+          "severity": "high",
+          "mtbf_hours": 100,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["camera", "obstacle-avoidance", "contamination", "calibration", "AI"],
+          "repair_protocol": {
+            "title": "Obstacle Avoidance Camera Cleaning and Recalibration",
+            "steps": [
+              { "step": 1, "action": "Power off; inspect all 6 camera windows under oblique light for dust, smudges, or water spots", "tool": "bright flashlight" },
+              { "step": 2, "action": "Blow loose dust with sensor-safe air blower; never use compressed air cans (propellant can freeze lens coating)", "tool": "sensor-safe rocket blower" },
+              { "step": 3, "action": "Wipe each camera window with dry optical microfiber cloth in straight strokes; use fresh section for each window", "tool": "optical microfiber cloth" },
+              { "step": 4, "action": "If smudge persists: one drop lens cleaning solution on cloth only (never on lens); wipe; dry with fresh cloth section", "tool": "lens cleaning solution (Pancro or equivalent)" },
+              { "step": 5, "action": "Power on; allow 10 minutes temperature equilibration; run Skydio obstacle avoidance calibration via Skydio app", "tool": "Skydio app, open area with known objects at 5m" },
+              { "step": 6, "action": "Verify obstacle detection range > 10m in all quadrants with 1x1m test panel", "tool": "1x1m flat test panel, measuring tape" }
+            ],
+            "tools_required": ["sensor-safe rocket blower", "optical microfiber cloth", "lens cleaning solution", "Skydio app", "1x1m test panel", "measuring tape"],
+            "parts": [],
+            "labor_minutes": 20,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "obstacle_avoidance_confidence_score", "signal_source": "Skydio autonomy telemetry", "threshold_value": 0.70, "threshold_operator": "<", "threshold_unit": "confidence 0-1", "lead_time_hours": 2, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "Qualcomm SoC — thermal throttling from blocked vent",
+          "symptom": "AI inference latency increases; obstacle detection response time > 200ms; drone reduces maximum speed autonomously; SoC temperature alarm",
+          "root_cause": "X10 relies on passive convection through body vents for SoC thermal management; fine dust accumulates in vent mesh reducing airflow; SoC thermal throttles at 85C junction temperature",
+          "severity": "medium",
+          "mtbf_hours": 500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["compute", "thermal", "Qualcomm", "SoC", "vent"],
+          "repair_protocol": {
+            "title": "Body Vent Cleaning for SoC Thermal Management",
+            "steps": [
+              { "step": 1, "action": "Power off; identify vent mesh locations on drone body (typically 4 vent slots on lower body)", "tool": "flashlight" },
+              { "step": 2, "action": "Use sensor-safe blower to blow dust out from inside outward via battery bay access (blow into body, out through vents)", "tool": "sensor-safe rocket blower" },
+              { "step": 3, "action": "Use soft horsehair brush to remove any remaining debris from vent mesh", "tool": "soft horsehair brush" },
+              { "step": 4, "action": "Power on; perform 10-minute flight; verify SoC temperature stays < 78C via Skydio flight data export", "tool": "Skydio app flight data export" }
+            ],
+            "tools_required": ["sensor-safe rocket blower", "soft horsehair brush", "Skydio app"],
+            "parts": [],
+            "labor_minutes": 10,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "soc_temperature_c", "signal_source": "Skydio telemetry", "threshold_value": 80, "threshold_operator": ">", "threshold_unit": "celsius", "lead_time_hours": 2, "confidence": 0.80 },
+            { "signal_name": "obstacle_response_latency_ms", "signal_source": "autonomy system metrics", "threshold_value": 180, "threshold_operator": ">", "threshold_unit": "milliseconds", "lead_time_hours": 1, "confidence": 0.72 }
+          ]
+        },
+        {
+          "component": "motor bearing — pitting from grit contamination",
+          "symptom": "motor vibration signature changes; one motor RPM differs from commanded by > 5%; audible grinding under load; motor current 15%+ above peers",
+          "root_cause": "X10 IP55 motor shaft seals degrade at 18-24 months; fine silica dust from construction inspection or agricultural environments enters motor and causes bearing race pitting; bearing noise often only detectable at high RPM",
+          "severity": "high",
+          "mtbf_hours": 800,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["motor", "bearing", "dust", "wear", "IP55"],
+          "repair_protocol": {
+            "title": "Motor Bearing Inspection and Motor Replacement",
+            "steps": [
+              { "step": 1, "action": "Power off; remove propeller (3x M2 screws)", "tool": "JIS #000 screwdriver" },
+              { "step": 2, "action": "Spin motor shaft by hand at 1 revolution per second; feel for roughness or grinding; even slight roughness = replace motor", "tool": null },
+              { "step": 3, "action": "Remove motor from arm (3x M2 mounting screws from inside arm tube); disconnect 3-phase wire connector", "tool": "JIS #000 screwdriver, tweezers" },
+              { "step": 4, "action": "Install new motor; reconnect 3-phase wire connector (orientation must match — verify in Skydio service manual)", "tool": "JIS #000 screwdriver, tweezers", "warning": "Phase wire reversal will cause motor to spin wrong direction — verify connector orientation before powering on" },
+              { "step": 5, "action": "Reinstall propeller; power on; run motor self-test via Skydio Enterprise Dashboard; verify vibration < 0.8g RMS", "tool": "Skydio Enterprise Dashboard" }
+            ],
+            "tools_required": ["JIS #000 screwdriver", "tweezers", "Skydio Enterprise Dashboard"],
+            "parts": [
+              { "part_name": "Skydio X10 Motor Assembly", "part_number": "SKD-X10-MOTOR-01", "supplier": "Skydio Enterprise Support", "unit_cost_usd": 145, "qty": 1 }
+            ],
+            "labor_minutes": 25,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "motor_vibration_rms_g", "signal_source": "IMU motor health monitor", "threshold_value": 1.0, "threshold_operator": ">", "threshold_unit": "g RMS per motor", "lead_time_hours": 4, "confidence": 0.82 }
+          ]
+        },
+        {
+          "component": "thermal IR payload microbolometer — pixel dropout",
+          "symptom": "thermal image shows fixed dark or bright pixels in same location frame-to-frame; cold spots pattern in uniform-temperature target; thermal measurement accuracy degrades",
+          "root_cause": "uncooled microbolometer detector has pixel non-uniformity that increases with thermal cycling; hot-pixel count increases after 5000+ flight hours; periodic flat field correction (FFC) can compensate but cannot recover pixels with > 50% response loss",
+          "severity": "medium",
+          "mtbf_hours": 5000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "thermal", "IR", "microbolometer", "payload"],
+          "repair_protocol": {
+            "title": "Thermal Payload FFC Calibration and Sensor Assessment",
+            "steps": [
+              { "step": 1, "action": "Run flat field correction: in Skydio app, navigate to Thermal Settings > Calibration > Run FFC; allow 30 seconds", "tool": "Skydio app" },
+              { "step": 2, "action": "Capture thermal image of uniformly-heated blackbody or flat wall > 2m from drone; count hot/cold pixel clusters", "tool": "uniform wall, measuring tape" },
+              { "step": 3, "action": "If < 10 fixed pixels: continue service after FFC recalibration", "tool": null },
+              { "step": 4, "action": "If > 50 fixed pixels or > 1% of frame: escalate to Skydio Enterprise Support for sensor replacement — not field-serviceable", "tool": "Skydio Enterprise Support" }
+            ],
+            "tools_required": ["Skydio app", "uniform flat surface for thermal reference"],
+            "parts": [],
+            "labor_minutes": 15,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "fixed_pixel_count", "signal_source": "thermal camera diagnostics", "threshold_value": 25, "threshold_operator": ">", "threshold_unit": "fixed pixels", "lead_time_hours": 48, "confidence": 0.75 }
+          ]
+        },
+        {
+          "component": "LiHV battery — cold weather sudden voltage collapse",
+          "symptom": "battery voltage drops sharply during high-throttle manoeuvre in ambient < 5C; drone enters forced landing; post-flight battery shows < 20% SOC despite pre-flight indication of 60%+",
+          "root_cause": "LiHV chemistry used in X10 battery has higher nominal voltage (4.35V/cell) but poor low-temperature performance; internal resistance rises 3-4x below 5C; rapid throttle demand causes voltage sag below cutoff threshold triggering emergency land",
+          "severity": "critical",
+          "mtbf_hours": 400,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "LiHV", "cold-weather", "safety", "critical"],
+          "repair_protocol": {
+            "title": "Cold Weather Battery Pre-Warming Protocol",
+            "steps": [
+              { "step": 1, "action": "In ambient < 10C, warm battery to minimum 15C before flight: insert battery in drone and idle aircraft (motors off) for 5 minutes with aircraft powered on; battery self-heating from electronics sufficient", "tool": null },
+              { "step": 2, "action": "Verify battery temperature via Skydio app Battery Health screen shows > 15C before takeoff", "tool": "Skydio app" },
+              { "step": 3, "action": "Reduce maximum speed setting to 80% in cold conditions; reduce mission duration to 70% of nominal endurance", "tool": "Skydio app flight settings" },
+              { "step": 4, "action": "Store batteries at room temperature between flights — never store cold batteries charged", "tool": null }
+            ],
+            "tools_required": ["Skydio app"],
+            "parts": [],
+            "labor_minutes": 10,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "battery_temp_c", "signal_source": "Skydio battery telemetry", "threshold_value": 12, "threshold_operator": "<", "threshold_unit": "celsius at takeoff", "lead_time_hours": 1, "confidence": 0.88 }
+          ]
+        },
+        {
+          "component": "IP55 port covers — loss from repeated access",
+          "symptom": "USB-C and microSD port covers missing; water ingress risk through open ports during IP55-rated operations; moisture detected in storage port area",
+          "root_cause": "Skydio X10 port covers use thin silicone rubber attached to body; repeated port access for data download detaches cover hinge; covers frequently lost in field; once lost, IP55 rating at those ports is void",
+          "severity": "medium",
+          "mtbf_hours": 200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sealing", "IP55", "port-cover", "water-ingress", "prevention"],
+          "repair_protocol": {
+            "title": "Port Cover Replacement and Water Ingress Prevention",
+            "steps": [
+              { "step": 1, "action": "Inspect all port covers (USB-C, microSD, battery contact) before each mission for presence and seating", "tool": null },
+              { "step": 2, "action": "Replace missing port covers from spares kit; press firmly until click", "tool": null },
+              { "step": 3, "action": "If hinge attachment point is damaged, apply thin bead of Loctite 401 to hinge attachment point; allow 5 minutes cure", "tool": "Loctite 401 cyanoacrylate" },
+              { "step": 4, "action": "Never fly in rain without all port covers installed and confirmed seated", "tool": null }
+            ],
+            "tools_required": ["Skydio X10 port cover spares kit", "Loctite 401"],
+            "parts": [
+              { "part_name": "Skydio X10 Port Cover Set", "part_number": "SKD-X10-PORTCOVERS", "supplier": "Skydio Enterprise Support", "unit_cost_usd": 18, "qty": 2 }
+            ],
+            "labor_minutes": 5,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "port_cover_present", "signal_source": "pre-flight visual checklist", "threshold_value": 1, "threshold_operator": "<", "threshold_unit": "boolean (0=missing)", "lead_time_hours": 0, "confidence": 0.95 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Skydio Enterprise Support", "website": "https://www.skydio.com/enterprise", "region": "NA", "component_types": ["motor", "port covers", "battery", "thermal payload"], "lead_time_days": 5, "risk_level": "medium", "notes": "Skydio hardware is US-controlled and has export restrictions" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    },
+    {
+      "slug": "zipline-p2",
+      "name": "Zipline P2 Zip",
+      "manufacturer": "Zipline",
+      "type": "delivery_air",
+      "introduced_year": 2023,
+      "specs_json": {
+        "weight_kg": 8.5,
+        "payload_kg": 2.5,
+        "max_speed_ms": 34,
+        "range_km": 32,
+        "battery": "LiPo custom 6-cell",
+        "wingspan_m": 2.0,
+        "drive": "pusher propeller fixed-wing",
+        "launch": "pneumatic catapult",
+        "recovery": "arrestor wire",
+        "descent": "parachute delivery pod"
+      },
+      "failure_modes": [
+        {
+          "component": "servo actuator — elevator/aileron gear train wear",
+          "symptom": "control surface has play > 2 degrees; autopilot reports control surface limit reached during routine manoeuvre; aircraft oscillates in pitch or roll",
+          "root_cause": "servo output gear train uses plastic final stage gears (weight optimisation); repeated high-speed flight with gusty conditions causes gear tooth wear; aileron servos see highest duty cycle in turbulence",
+          "severity": "critical",
+          "mtbf_hours": 400,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["servo", "gear", "wear", "flight-critical", "control-surface"],
+          "repair_protocol": {
+            "title": "Control Surface Servo Gear Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "With aircraft powered off, manually deflect each control surface; any perceptible freeplay = servo requires replacement", "tool": null },
+              { "step": 2, "action": "Measure freeplay with protractor at control surface — > 1.5 degrees requires immediate servo replacement", "tool": "digital protractor" },
+              { "step": 3, "action": "Remove wing panel per Zipline service procedure; expose servo bay", "tool": "Torx T8, T10 drivers" },
+              { "step": 4, "action": "Disconnect servo connector; remove servo from bay (3x M2.5 screws); disconnect control horn", "tool": "JIS #0 screwdriver" },
+              { "step": 5, "action": "Install new servo; reconnect control horn at same hole position; connect servo connector", "tool": "JIS #0 screwdriver" },
+              { "step": 6, "action": "Run Zipline GCS control surface calibration; verify deflection vs command within 0.5 degrees across full travel", "tool": "Zipline GCS software, laptop" }
+            ],
+            "tools_required": ["T8 Torx", "T10 Torx", "JIS #0 screwdriver", "digital protractor", "Zipline GCS software", "laptop"],
+            "parts": [
+              { "part_name": "Zipline P2 Control Servo (field replacement unit)", "part_number": "ZL-P2-SERVO-FRU", "supplier": "Zipline Field Service", "unit_cost_usd": 85, "qty": 1 }
+            ],
+            "labor_minutes": 45,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "control_surface_freeplay_deg", "signal_source": "pre-flight manual check log", "threshold_value": 1.0, "threshold_operator": ">", "threshold_unit": "degrees", "lead_time_hours": 8, "confidence": 0.88 },
+            { "signal_name": "autopilot_control_limit_event_count", "signal_source": "flight controller fault log", "threshold_value": 2, "threshold_operator": ">", "threshold_unit": "events per flight", "lead_time_hours": 4, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "pusher propeller — delamination from UV and fatigue",
+          "symptom": "vibration increase > 50% on IMU at cruise speed; aircraft speed reduced by autopilot; visible surface delamination on prop blade",
+          "root_cause": "P2 pusher prop is CFRP/fiberglass composite; UV exposure from equatorial deployment sites (Ghana, Rwanda, Nigeria) accelerates matrix resin degradation; high-cycle fatigue from 34m/s cruise and repeated catapult launches",
+          "severity": "critical",
+          "mtbf_hours": 200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["propeller", "delamination", "UV", "composite", "safety"],
+          "repair_protocol": {
+            "title": "Pusher Propeller Inspection and Replacement",
+            "steps": [
+              { "step": 1, "action": "Pre-flight mandatory: inspect propeller under bright light for delamination blistering or any visible damage; feel for surface roughness", "tool": "flashlight, clean hands" },
+              { "step": 2, "action": "Tap prop blade with fingernail along span — hollow sound indicates subsurface delamination; reject any blade with hollow tap response", "tool": null },
+              { "step": 3, "action": "Remove propeller spinner (3x M3 screws); remove propeller nut (CCW thread — turn clockwise to loosen)", "tool": "JIS #1 screwdriver, 13mm socket, thread direction warning" },
+              { "step": 4, "action": "Install new prop; tighten nut to 12 Nm; reinstall spinner", "tool": "torque wrench 0-20 Nm, 13mm socket" },
+              { "step": 5, "action": "Perform ground run-up at 75% power for 30 seconds; verify IMU vibration < baseline +20%", "tool": "Zipline GCS" }
+            ],
+            "tools_required": ["flashlight", "JIS #1 screwdriver", "13mm socket", "torque wrench 0-20 Nm", "Zipline GCS"],
+            "parts": [
+              { "part_name": "Zipline P2 Pusher Propeller", "part_number": "ZL-P2-PROP-FRU", "supplier": "Zipline Field Service", "unit_cost_usd": 55, "qty": 1 }
+            ],
+            "labor_minutes": 15,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "cruise_vibration_rms_g", "signal_source": "autopilot IMU", "threshold_value": 1.5, "threshold_operator": ">", "threshold_unit": "g RMS at cruise", "lead_time_hours": 2, "confidence": 0.88 },
+            { "signal_name": "propeller_flight_count", "signal_source": "Zipline GCS operations log", "threshold_value": 150, "threshold_operator": ">", "threshold_unit": "flights", "lead_time_hours": 24, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "pitot tube — blockage from insects or moisture",
+          "symptom": "airspeed indication erratic; autopilot enters degraded mode; airspeed reads 0 or > 60m/s at known cruise speed",
+          "root_cause": "pitot tube open to airstream for airspeed measurement; small insects (wasps, spiders) create nests inside pitot tube during overnight storage; equatorial humidity causes moisture condensation blockage",
+          "severity": "critical",
+          "mtbf_hours": 200,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["sensor", "pitot", "blockage", "insect", "airspeed", "critical"],
+          "repair_protocol": {
+            "title": "Pitot Tube Inspection and Clearing",
+            "steps": [
+              { "step": 1, "action": "Pre-flight mandatory: visually inspect pitot tube opening; use flashlight to verify clear opening; no nest material visible", "tool": "flashlight" },
+              { "step": 2, "action": "Blow through pitot tube gently with mouth from aircraft end to clear; air must flow freely through both static and total pressure ports", "tool": null, "warning": "Never use compressed air or sharp objects to clear pitot — can damage pressure sensor diaphragm" },
+              { "step": 3, "action": "If blockage persists, use pipe cleaner of appropriate diameter to gently clear tube", "tool": "pipe cleaner 3mm diameter" },
+              { "step": 4, "action": "After clearing, blow through again to confirm clear passage; perform airspeed calibration ground test", "tool": "Zipline GCS airspeed test routine" },
+              { "step": 5, "action": "Preventive: install pitot cover during all ground operations and overnight storage; remove cover as part of pre-flight checklist", "tool": "pitot tube cover (custom fabric cap)" }
+            ],
+            "tools_required": ["flashlight", "3mm pipe cleaner", "Zipline GCS", "pitot cover"],
+            "parts": [
+              { "part_name": "Pitot Tube Fabric Cover (pack of 10)", "part_number": "ZL-PITOT-COVER-10PK", "supplier": "Zipline Field Service", "unit_cost_usd": 12, "qty": 1 }
+            ],
+            "labor_minutes": 10,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "airspeed_reading_at_launch_ms", "signal_source": "autopilot airspeed sensor", "threshold_value": 2, "threshold_operator": "<", "threshold_unit": "m/s on ground (should be 0)", "lead_time_hours": 0, "confidence": 0.95 }
+          ]
+        },
+        {
+          "component": "catapult/arrestor system — fatigue at launch bracket",
+          "symptom": "launch velocity varies > 10% between launches; aircraft enters runway faster than expected; launch abort triggered by autopilot velocity check",
+          "root_cause": "pneumatic catapult launch system imparts 15G+ to aircraft at launch; catapult attachment bracket on aircraft fuselage experiences repeated high impulse loads; bracket-to-fuselage bond fatigues at composite interface",
+          "severity": "critical",
+          "mtbf_hours": 600,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["launch-system", "catapult", "structural", "fatigue", "composite"],
+          "repair_protocol": {
+            "title": "Catapult Bracket Bond Inspection and Recertification",
+            "steps": [
+              { "step": 1, "action": "After every 500 launches: inspect catapult attachment bracket for visible cracks in surrounding composite or bracket edge separation", "tool": "magnifying glass, flashlight, coin tap test" },
+              { "step": 2, "action": "Tap coin around bracket perimeter — hollow sound indicates delamination; any delamination = aircraft grounded", "tool": "coin" },
+              { "step": 3, "action": "If delamination detected: escalate to Zipline aircraft depot for structural recertification — not field repairable", "tool": null, "warning": "Field repair of load-bearing composite structures requires vacuum bagging and controlled cure — do not attempt field repair" },
+              { "step": 4, "action": "Inspect catapult pneumatic line fitting for cracks or O-ring compression set; replace O-ring if needed", "tool": "O-ring removal pick, Molykote 55 lubricant" },
+              { "step": 5, "action": "Log launch velocities from last 10 launches; if standard deviation > 1m/s, inspect pneumatic system for leaks", "tool": "Zipline GCS launch velocity log" }
+            ],
+            "tools_required": ["magnifying glass", "flashlight", "coin", "O-ring pick", "Molykote 55", "Zipline GCS"],
+            "parts": [
+              { "part_name": "Catapult Pneumatic Line O-Ring Kit", "part_number": "ZL-CAT-ORING-KIT", "supplier": "Zipline Field Service", "unit_cost_usd": 8, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "launch_velocity_stddev_ms", "signal_source": "Zipline GCS launch velocity log", "threshold_value": 0.8, "threshold_operator": ">", "threshold_unit": "m/s standard deviation", "lead_time_hours": 4, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "LiPo flight battery — capacity fade from high-rate cycling",
+          "symptom": "flight range drops below 25km; emergency reserve lands at 0% vs 10% expected; battery discharge curve shows flat section indicating dead cell group",
+          "root_cause": "P2 catapult launch requires 10C+ discharge rate instantaneously; repeated high-C discharge cycles accelerate LiPo capacity fade; equatorial high-temperature storage between flights further degrades cell chemistry",
+          "severity": "high",
+          "mtbf_hours": 300,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["battery", "LiPo", "high-rate", "capacity-fade", "range"],
+          "repair_protocol": {
+            "title": "Flight Battery Capacity Assessment and Replacement",
+            "steps": [
+              { "step": 1, "action": "Log flight range from last 5 missions; if average < 28km, perform battery capacity test", "tool": "Zipline GCS mission records" },
+              { "step": 2, "action": "Perform battery capacity discharge test via Zipline battery tester: full charge to 4.20V/cell; discharge at 2C to 3.50V/cell; record Ah", "tool": "Zipline battery tester station" },
+              { "step": 3, "action": "If measured capacity < 85% of rated: retire battery; log serial number and cycle count", "tool": "Zipline battery tester" },
+              { "step": 4, "action": "Install new battery; perform 3 break-in charge-discharge cycles at 1C before high-rate service", "tool": "Zipline battery tester station" }
+            ],
+            "tools_required": ["Zipline GCS", "Zipline battery tester station"],
+            "parts": [
+              { "part_name": "Zipline P2 Flight LiPo Battery Pack", "part_number": "ZL-P2-BATT-FRU", "supplier": "Zipline Field Service", "unit_cost_usd": 380, "qty": 1 }
+            ],
+            "labor_minutes": 15,
+            "skill_level": "basic",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "average_mission_range_km", "signal_source": "Zipline GCS fleet data", "threshold_value": 28, "threshold_operator": "<", "threshold_unit": "kilometers", "lead_time_hours": 12, "confidence": 0.82 }
+          ]
+        },
+        {
+          "component": "parachute delivery pod — deployment failure",
+          "symptom": "payload pod does not separate from aircraft at delivery point; delivery audit shows package not dropped; aircraft returns with payload",
+          "root_cause": "pod release mechanism uses pyrotechnic squib or servo-actuated release; squib moisture degradation in humid equatorial climates; servo release linkage corrosion from humidity",
+          "severity": "critical",
+          "mtbf_hours": 2000,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["delivery", "pod", "release", "pyrotechnic", "critical"],
+          "repair_protocol": {
+            "title": "Delivery Pod Release Mechanism Inspection and Service",
+            "steps": [
+              { "step": 1, "action": "Inspect pod release servo linkage monthly for corrosion; lubricate all pivot points with Corrosion-X", "tool": "Corrosion-X, cotton swab" },
+              { "step": 2, "action": "Test release mechanism with inert training pod: command release from GCS; verify pod separates within 100ms of command", "tool": "Zipline GCS, inert training pod, timer" },
+              { "step": 3, "action": "If release fails: remove pod bay cover; inspect servo arm and release pin for corrosion or binding", "tool": "T8 Torx" },
+              { "step": 4, "action": "If servo arm corroded: replace servo module (full FRU swap); if release pin bent: replace pin", "tool": "JIS #0 screwdriver" },
+              { "step": 5, "action": "If pyrotechnic squib system: check squib date code — replace annually regardless of use; store squibs in dry sealed container", "tool": "squib date code label, sealed dry container", "warning": "Pyrotechnic squib handling requires operator certification — never disassemble or probe live squib" }
+            ],
+            "tools_required": ["Corrosion-X", "T8 Torx", "JIS #0 screwdriver", "Zipline GCS", "inert training pod"],
+            "parts": [
+              { "part_name": "Zipline P2 Release Servo Module", "part_number": "ZL-P2-RELEASE-SRV", "supplier": "Zipline Field Service", "unit_cost_usd": 65, "qty": 1 }
+            ],
+            "labor_minutes": 30,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "release_mechanism_test_pass", "signal_source": "pre-flight release test log", "threshold_value": 1, "threshold_operator": "<", "threshold_unit": "boolean (0=failed test)", "lead_time_hours": 0, "confidence": 0.95 },
+            { "signal_name": "days_since_release_mechanism_service", "signal_source": "maintenance log", "threshold_value": 30, "threshold_operator": ">", "threshold_unit": "days", "lead_time_hours": 48, "confidence": 0.80 }
+          ]
+        },
+        {
+          "component": "pitot heater — open circuit failure in cold elevation deployments",
+          "symptom": "pitot tube icing in missions above 2500m altitude or ambient < 2C; airspeed reads zero after 5 minutes at altitude; autopilot enters airspeed-unavailable mode",
+          "root_cause": "P2 pitot heater is thin-film resistive element; vibration-induced fatigue crack in heater lead wire causes open circuit; heater circuit not monitored in real-time — failure only apparent when icing occurs",
+          "severity": "high",
+          "mtbf_hours": 1500,
+          "source_urls": ["unverified-training-data"],
+          "confidence": "low",
+          "tags": ["pitot", "heater", "icing", "electrical", "altitude"],
+          "repair_protocol": {
+            "title": "Pitot Heater Circuit Continuity Test and Repair",
+            "steps": [
+              { "step": 1, "action": "Monthly maintenance: with aircraft powered off, measure pitot heater resistance at aircraft connector — expect 8-12 ohms; open circuit (>1Mohm) = heater failed", "tool": "digital multimeter" },
+              { "step": 2, "action": "If open circuit: remove nose fairing (6x T8 screws); trace heater wire to fracture point", "tool": "T8 Torx, digital multimeter, spudger" },
+              { "step": 3, "action": "Repair wire fracture with solder splice; insulate with dual-wall heat shrink; ensure strain relief at pitot mount", "tool": "soldering iron, dual-wall heat shrink, heat gun" },
+              { "step": 4, "action": "Verify heater resistance restores to 8-12 ohms; reinstall fairing", "tool": "digital multimeter, T8 Torx" },
+              { "step": 5, "action": "Test heater function: power on aircraft; enable pitot heat from GCS; verify pitot tube surface reaches 40C within 60 seconds via IR thermometer", "tool": "Zipline GCS, IR thermometer" }
+            ],
+            "tools_required": ["digital multimeter", "T8 Torx", "soldering iron", "dual-wall heat shrink", "heat gun", "IR thermometer", "Zipline GCS"],
+            "parts": [
+              { "part_name": "Pitot Heater Wire Repair Kit (22AWG silicone wire + heat shrink)", "part_number": "ZL-PITOT-HEAT-REPAIR", "supplier": "Zipline Field Service", "unit_cost_usd": 12, "qty": 1 }
+            ],
+            "labor_minutes": 40,
+            "skill_level": "intermediate",
+            "source_url": "unverified-training-data"
+          },
+          "predictive_signals": [
+            { "signal_name": "pitot_heater_resistance_ohm", "signal_source": "monthly maintenance DMM check", "threshold_value": 15, "threshold_operator": ">", "threshold_unit": "ohms (open circuit if very high)", "lead_time_hours": 168, "confidence": 0.88 }
+          ]
+        }
+      ],
+      "suppliers": [
+        { "name": "Zipline Field Service", "website": "https://www.flyzipline.com", "region": "NA", "component_types": ["all P2 FRU parts", "battery", "propeller", "servo", "pitot covers"], "lead_time_days": 7, "risk_level": "high", "notes": "Zipline operates closed service model — all parts through Zipline directly; no third-party parts supported" }
+      ],
+      "research_sources": ["unverified-training-data"]
+    }
+  ]
+}

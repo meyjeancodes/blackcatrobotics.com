@@ -1,0 +1,297 @@
+{
+  "platform_id": "unitree_h1_2",
+  "platform_name": "Unitree H1-2",
+  "manufacturer": "Unitree Robotics",
+  "category": "humanoid",
+  "compute_stack": {
+    "primary_compute": "NVIDIA Jetson Orin NX 16GB",
+    "os": "Ubuntu 22.04",
+    "middleware": "ROS 2 Humble",
+    "gpu": "1024-core NVIDIA Ampere"
+  },
+  "actuators": [
+    {
+      "id": "left_hip_yaw",
+      "name": "Left Hip Yaw",
+      "joint": "left_hip_yaw",
+      "dof": 1,
+      "max_torque_nm": 88.0,
+      "max_speed_rpm": 180.0,
+      "control_mode": "torque_position",
+      "can_id": 385
+    },
+    {
+      "id": "left_hip_roll",
+      "name": "Left Hip Roll",
+      "joint": "left_hip_roll",
+      "dof": 1,
+      "max_torque_nm": 88.0,
+      "max_speed_rpm": 180.0,
+      "control_mode": "torque_position",
+      "can_id": 386
+    },
+    {
+      "id": "left_hip_pitch",
+      "name": "Left Hip Pitch",
+      "joint": "left_hip_pitch",
+      "dof": 1,
+      "max_torque_nm": 120.0,
+      "max_speed_rpm": 150.0,
+      "control_mode": "torque_position",
+      "can_id": 387
+    },
+    {
+      "id": "left_knee",
+      "name": "Left Knee",
+      "joint": "left_knee",
+      "dof": 1,
+      "max_torque_nm": 200.0,
+      "max_speed_rpm": 120.0,
+      "control_mode": "torque_position",
+      "can_id": 388
+    },
+    {
+      "id": "left_ankle",
+      "name": "Left Ankle",
+      "joint": "left_ankle",
+      "dof": 1,
+      "max_torque_nm": 40.0,
+      "max_speed_rpm": 300.0,
+      "control_mode": "torque_position",
+      "can_id": 389
+    },
+    {
+      "id": "right_hip_yaw",
+      "name": "Right Hip Yaw",
+      "joint": "right_hip_yaw",
+      "dof": 1,
+      "max_torque_nm": 88.0,
+      "max_speed_rpm": 180.0,
+      "control_mode": "torque_position",
+      "can_id": 390
+    },
+    {
+      "id": "right_hip_roll",
+      "name": "Right Hip Roll",
+      "joint": "right_hip_roll",
+      "dof": 1,
+      "max_torque_nm": 88.0,
+      "max_speed_rpm": 180.0,
+      "control_mode": "torque_position",
+      "can_id": 391
+    },
+    {
+      "id": "right_hip_pitch",
+      "name": "Right Hip Pitch",
+      "joint": "right_hip_pitch",
+      "dof": 1,
+      "max_torque_nm": 120.0,
+      "max_speed_rpm": 150.0,
+      "control_mode": "torque_position",
+      "can_id": 392
+    },
+    {
+      "id": "right_knee",
+      "name": "Right Knee",
+      "joint": "right_knee",
+      "dof": 1,
+      "max_torque_nm": 200.0,
+      "max_speed_rpm": 120.0,
+      "control_mode": "torque_position",
+      "can_id": 393
+    },
+    {
+      "id": "right_ankle",
+      "name": "Right Ankle",
+      "joint": "right_ankle",
+      "dof": 1,
+      "max_torque_nm": 40.0,
+      "max_speed_rpm": 300.0,
+      "control_mode": "torque_position",
+      "can_id": 394
+    }
+  ],
+  "sensors": [
+    {
+      "id": "imu_main",
+      "name": "Main IMU (6-DOF)",
+      "type": "imu",
+      "ros_topic": "/imu/data",
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "MEMS Technology"
+    },
+    {
+      "id": "depth_camera_head",
+      "name": "Head Depth Camera",
+      "type": "depth_camera",
+      "ros_topic": "/camera/depth/image_rect_raw",
+      "sample_rate_hz": 30.0,
+      "manufacturer": "Intel"
+    },
+    {
+      "id": "joint_encoder_array",
+      "name": "Joint State Encoders",
+      "type": "encoder",
+      "ros_topic": "/joint_states",
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Unitree Robotics"
+    },
+    {
+      "id": "lidar_mid360",
+      "name": "Livox MID-360 LiDAR",
+      "type": "lidar",
+      "ros_topic": "/livox/lidar",
+      "sample_rate_hz": 10.0,
+      "manufacturer": "Livox (DJI)"
+    },
+    {
+      "id": "battery_bms",
+      "name": "Battery Management System",
+      "type": "bms",
+      "ros_topic": "/battery_state",
+      "sample_rate_hz": 1.0,
+      "manufacturer": "Unitree Robotics"
+    }
+  ],
+  "communication_protocols": [
+    {
+      "name": "Unitree CAN",
+      "interface": "can0",
+      "baud_rate": 1000000,
+      "version": "2.0B"
+    },
+    {
+      "name": "ROS 2 DDS",
+      "interface": "eth0",
+      "baud_rate": null,
+      "version": "Humble (Cyclone DDS)"
+    },
+    {
+      "name": "Unitree SDK2",
+      "interface": "eth0",
+      "baud_rate": null,
+      "version": "2.0"
+    },
+    {
+      "name": "Livox LiDAR Protocol",
+      "interface": "eth1",
+      "baud_rate": null,
+      "version": "2.0"
+    }
+  ],
+  "telemetry_map": {
+    "knee_torque_left": {
+      "signal_name": "Left Knee Torque",
+      "can_id": 388,
+      "ros_topic": "/joint_states",
+      "data_type": "float32",
+      "unit": "Nm",
+      "normal_range": [0.0, 140.0],
+      "warning_threshold": 170.0,
+      "critical_threshold": 195.0
+    },
+    "knee_torque_right": {
+      "signal_name": "Right Knee Torque",
+      "can_id": 393,
+      "ros_topic": "/joint_states",
+      "data_type": "float32",
+      "unit": "Nm",
+      "normal_range": [0.0, 140.0],
+      "warning_threshold": 170.0,
+      "critical_threshold": 195.0
+    },
+    "joint_temperature": {
+      "signal_name": "Joint Motor Temperature",
+      "can_id": null,
+      "ros_topic": "/motor_states",
+      "data_type": "float32",
+      "unit": "degC",
+      "normal_range": [20.0, 65.0],
+      "warning_threshold": 75.0,
+      "critical_threshold": 85.0
+    },
+    "battery_soc": {
+      "signal_name": "Battery State of Charge",
+      "can_id": null,
+      "ros_topic": "/battery_state",
+      "data_type": "float32",
+      "unit": "percent",
+      "normal_range": [20.0, 100.0],
+      "warning_threshold": 15.0,
+      "critical_threshold": 5.0
+    },
+    "gait_stability_margin": {
+      "signal_name": "Zero-Moment Point Margin",
+      "can_id": null,
+      "ros_topic": "/zmp_margin",
+      "data_type": "float32",
+      "unit": "m",
+      "normal_range": [0.02, 0.15],
+      "warning_threshold": 0.01,
+      "critical_threshold": 0.005
+    }
+  },
+  "diagnostic_rules": [
+    {
+      "rule_id": "H12_KNEE_TORQUE_WARN",
+      "component": "left_knee",
+      "signal": "knee_torque_left",
+      "condition": "> 170",
+      "severity": "warning",
+      "action": "Reduce locomotion speed. Check for mechanical binding in knee assembly. Inspect harmonic drive for wear."
+    },
+    {
+      "rule_id": "H12_BATTERY_CRITICAL",
+      "component": "battery_bms",
+      "signal": "battery_soc",
+      "condition": "< 5",
+      "severity": "critical",
+      "action": "Immediately initiate safe stand-down. Navigate to charging station. Emergency stop if SoC falls below 3%."
+    },
+    {
+      "rule_id": "H12_MOTOR_OVERTEMP",
+      "component": "left_knee",
+      "signal": "joint_temperature",
+      "condition": "> 75",
+      "severity": "warning",
+      "action": "Reduce joint duty cycle by 30%. If temperature exceeds 85C, pause locomotion and initiate 5-minute thermal recovery."
+    }
+  ],
+  "fmea_summary": [
+    {
+      "component": "left_knee",
+      "failure_mode": "Harmonic drive wear in knee actuator from sustained high-torque locomotion",
+      "rpn": 300,
+      "action": "Replace harmonic drive assembly at 1500 operating hours. Monitor torque ripple as early wear indicator."
+    },
+    {
+      "component": "right_hip_pitch",
+      "failure_mode": "Hip actuator failure from excessive lateral load during uneven terrain traversal",
+      "rpn": 252,
+      "action": "Limit terrain gradient to 20 degrees. Add real-time load monitoring to hip actuator control loop."
+    },
+    {
+      "component": "battery_bms",
+      "failure_mode": "Lithium-polymer cell swelling from repeated fast-charge cycles causing pack deformation",
+      "rpn": 210,
+      "action": "Limit fast-charging to 2C rate. Inspect battery pack physically every 200 charge cycles. Replace at 85% capacity retention."
+    },
+    {
+      "component": "imu_main",
+      "failure_mode": "IMU drift accumulation during extended runtime causing balance controller degradation",
+      "rpn": 168,
+      "action": "Perform static IMU recalibration at 4-hour intervals. Fuse IMU with joint encoder odometry for drift correction."
+    }
+  ],
+  "maintenance_schedule": {
+    "inspection_interval_hours": 500,
+    "lubrication_interval_hours": 1000,
+    "calibration_interval_hours": 200,
+    "firmware_update_interval_days": 60,
+    "notes": "Inspect all 10 leg actuators and 17 arm/torso joints for backlash and thermal discoloration. Lubricate harmonic drives with specified grease (Harmonic Drive SK-1A) at 1000h. IMU calibration required every 200h or after any fall event above 0.5g impact. LiDAR window cleaning every 100h in outdoor environments. Battery capacity test every 50 charge cycles. Check all CAN bus terminations and cable routing for wear from motion."
+  },
+  "atlas_cross_reference": "unitree-h1-2",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-04-01T00:00:00Z",
+  "generated_by": "blackcat-os"
+}
