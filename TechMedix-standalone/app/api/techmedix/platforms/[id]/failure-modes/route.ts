@@ -14,9 +14,9 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
   const { searchParams } = new URL(req.url);
   const severity = searchParams.get("severity") ?? undefined;
 
