@@ -1,8 +1,6 @@
 import { Resend } from "resend";
 import { createServiceClient } from "./supabase-service";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface DiagnosticResult {
   id: string;
   robot_id: string;
@@ -93,6 +91,8 @@ export async function sendAlert(
   </div>
 </div>
   `.trim();
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
     const { data, error } = await resend.emails.send({
