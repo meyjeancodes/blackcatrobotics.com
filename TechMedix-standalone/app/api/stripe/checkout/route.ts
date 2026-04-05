@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-03-25.dahlia",
-});
-
 const PLAN_PRICES: Record<string, number> = {
   operator: 29900, // $299/robot/mo * robot_count — we use per-seat pricing
   fleet: 19900,
@@ -12,6 +8,10 @@ const PLAN_PRICES: Record<string, number> = {
 };
 
 export async function POST(req: NextRequest) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2026-03-25.dahlia",
+  });
+
   try {
     const { plan, robot_count, customer_email } = await req.json();
 
