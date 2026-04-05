@@ -1,10 +1,10 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import {
-  Award,
   CreditCard,
   Cpu,
   Home,
@@ -14,7 +14,6 @@ import {
   Scan,
   Server,
   Settings2,
-  Users,
   Waypoints,
   Wrench,
   Zap,
@@ -24,22 +23,33 @@ import {
 import { createClient } from "../lib/supabase-browser";
 import type { SessionUser } from "./dashboard-shell";
 
-const links = [
-  { href: "/dashboard",      label: "Overview",       icon: LayoutDashboard },
-  { href: "/ar-mode",        label: "AR Mode",        icon: Scan },
-  { href: "/maintenance",    label: "Maintenance",    icon: Wrench },
-  { href: "/knowledge",      label: "Repair Intelligence", icon: BookOpen },
-  { href: "/nodes",          label: "Fleet & Nodes",  icon: Cpu },
-  { href: "/drones",         label: "Drone Fleet",    icon: Wind },
-  { href: "/technicians",    label: "Technicians",    icon: Users },
-  { href: "/certifications", label: "Certifications", icon: Award },
-  { href: "/habitat",        label: "HABITAT",        icon: Home },
-  { href: "/datacenter",     label: "Data Centers",   icon: Server },
-  { href: "/network",        label: "Network",        icon: Network },
-  { href: "/operations",     label: "Operations",     icon: Waypoints },
-  { href: "/energy",         label: "Energy & Grid",  icon: Zap },
-  { href: "/billing",        label: "Billing",        icon: CreditCard },
-  { href: "/settings",       label: "Settings",       icon: Settings2 },
+const links: {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+  children?: { href: string; label: string }[];
+}[] = [
+  { href: "/dashboard",   label: "Overview",            icon: LayoutDashboard },
+  { href: "/ar-mode",     label: "AR Mode",             icon: Scan },
+  { href: "/maintenance", label: "Maintenance",         icon: Wrench },
+  {
+    href: "/knowledge",
+    label: "Repair Intelligence",
+    icon: BookOpen,
+    children: [
+      { href: "/technicians",    label: "Technicians"    },
+      { href: "/certifications", label: "Certifications" },
+    ],
+  },
+  { href: "/nodes",       label: "Fleet & Nodes",       icon: Cpu },
+  { href: "/drones",      label: "Drone Fleet",         icon: Wind },
+  { href: "/habitat",     label: "HABITAT",             icon: Home },
+  { href: "/datacenter",  label: "Data Centers",        icon: Server },
+  { href: "/network",     label: "Network",             icon: Network },
+  { href: "/operations",  label: "Operations",          icon: Waypoints },
+  { href: "/energy",      label: "Energy & Grid",       icon: Zap },
+  { href: "/billing",     label: "Billing",             icon: CreditCard },
+  { href: "/settings",    label: "Settings",            icon: Settings2 },
 ];
 
 function initials(name?: string, email?: string): string {
@@ -84,19 +94,38 @@ export function Sidebar({ user }: { user?: SessionUser }) {
             pathname === link.href || pathname.startsWith(`${link.href}/`);
 
           return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={clsx(
-                "flex items-center gap-3 rounded-[14px] px-4 py-2 font-ui text-[0.70rem] uppercase tracking-[0.14em] font-medium transition-all duration-200",
-                active
-                  ? "bg-white/95 text-black shadow-[0_2px_8px_rgba(0,0,0,0.18)]"
-                  : "text-white/52 hover:bg-white/[0.07] hover:text-white/90"
-              )}
-            >
-              <Icon size={15} />
-              <span>{link.label}</span>
-            </Link>
+            <div key={link.href}>
+              <Link
+                href={link.href}
+                className={clsx(
+                  "flex items-center gap-3 rounded-[14px] px-4 py-2 font-ui text-[0.70rem] uppercase tracking-[0.14em] font-medium transition-all duration-200",
+                  active
+                    ? "bg-white/95 text-black shadow-[0_2px_8px_rgba(0,0,0,0.18)]"
+                    : "text-white/52 hover:bg-white/[0.07] hover:text-white/90"
+                )}
+              >
+                <Icon size={15} />
+                <span>{link.label}</span>
+              </Link>
+              {link.children && link.children.map((child) => {
+                const childActive =
+                  pathname === child.href || pathname.startsWith(`${child.href}/`);
+                return (
+                  <Link
+                    key={child.href}
+                    href={child.href}
+                    className={clsx(
+                      "flex items-center rounded-[14px] py-1.5 pl-11 pr-4 font-ui text-[0.62rem] uppercase tracking-[0.14em] font-medium transition-all duration-200",
+                      childActive
+                        ? "bg-white/95 text-black shadow-[0_2px_8px_rgba(0,0,0,0.18)]"
+                        : "text-white/40 hover:bg-white/[0.07] hover:text-white/80"
+                    )}
+                  >
+                    {child.label}
+                  </Link>
+                );
+              })}
+            </div>
           );
         })}
       </nav>
