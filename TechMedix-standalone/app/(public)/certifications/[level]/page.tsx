@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BookOpen, ChevronRight, Lock, DollarSign } from "lucide-react";
-import { CERT_LEVELS } from "../../../(dashboard)/technicians/BcrCertSection";
+import { CERT_LEVELS } from "../../../../lib/cert-levels";
 
 interface Props {
-  params: { level: string };
+  params: Promise<{ level: string }>;
 }
 
 export function generateStaticParams() {
@@ -17,8 +17,9 @@ export function generateStaticParams() {
   ];
 }
 
-export function generateMetadata({ params }: Props) {
-  const cert = CERT_LEVELS.find((c) => c.id === params.level);
+export async function generateMetadata({ params }: Props) {
+  const { level } = await params;
+  const cert = CERT_LEVELS.find((c) => c.id === level);
   if (!cert) return {};
   return {
     title: `${cert.id} ${cert.title} Certification | TechMedix`,
@@ -26,9 +27,10 @@ export function generateMetadata({ params }: Props) {
   };
 }
 
-export default function CertLevelPage({ params }: Props) {
-  const cert = CERT_LEVELS.find((c) => c.id === params.level);
-  if (!cert) notFound();
+export default async function CertLevelPage({ params }: Props) {
+  const { level } = await params;
+  if (!CERT_LEVELS.find((c) => c.id === level)) notFound();
+  const cert = CERT_LEVELS.find((c) => c.id === level)!;
 
   const levelIndex = CERT_LEVELS.indexOf(cert);
   const prev = levelIndex > 0 ? CERT_LEVELS[levelIndex - 1] : null;

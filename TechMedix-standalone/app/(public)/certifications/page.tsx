@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { CERT_LEVELS } from "../../(dashboard)/technicians/BcrCertSection";
+import { CERT_LEVELS } from "../../../lib/cert-levels";
 
 export const metadata = {
   title: "BCR Certification Program | TechMedix",
