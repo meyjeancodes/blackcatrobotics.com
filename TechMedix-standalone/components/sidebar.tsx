@@ -28,7 +28,7 @@ const links = [
   { href: "/dashboard",      label: "Overview",       icon: LayoutDashboard },
   { href: "/ar-mode",        label: "AR Mode",        icon: Scan },
   { href: "/maintenance",    label: "Maintenance",    icon: Wrench },
-  { href: "/knowledge",      label: "Knowledge Moat", icon: BookOpen },
+  { href: "/knowledge",      label: "Repair Intelligence", icon: BookOpen },
   { href: "/nodes",          label: "Fleet & Nodes",  icon: Cpu },
   { href: "/drones",         label: "Drone Fleet",    icon: Wind },
   { href: "/technicians",    label: "Technicians",    icon: Users },

@@ -54,7 +54,7 @@ export default async function KnowledgePage() {
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold text-white">Knowledge Moat</h1>
+          <h1 className="text-2xl font-bold text-white">Repair Intelligence</h1>
           <p className="text-white/50 text-sm mt-1">
             Platform failure intelligence · repair protocols · predictive signals
           </p>
