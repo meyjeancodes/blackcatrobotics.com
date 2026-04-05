@@ -38,7 +38,7 @@ export default async function PlatformKnowledgePage({
       <div className="flex items-start gap-4 flex-wrap">
         <div className="flex-1">
           <p className="text-white/30 text-xs uppercase tracking-widest mb-1">
-            Knowledge Moat · {platform.type.replace(/_/g, " ")}
+            Repair Intelligence · {platform.type.replace(/_/g, " ")}
           </p>
           <h1 className="text-2xl font-bold text-white">{platform.name}</h1>
           <p className="text-white/50 text-sm">{platform.manufacturer}</p>
