@@ -856,6 +856,29 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   </div>
 </div>
       <div class="rcard"><div class="rcard-img"><img src="https://images.unsplash.com/photo-1543photo-1601370552761c55?w=400&auto=format&fit=crop&q=80" alt="Amazon Proteus" loading="lazy"><span class="rcard-badge badge-gold">Amazon</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://amazon.com/robotics" target="_blank" rel="noopener">Amazon Robotics</a></div><div class="rcard-name">Proteus AMR</div><div class="rcard-desc">Amazon's first fully autonomous warehouse robot. Works alongside humans without safety cages. 750,000+ units deployed across Amazon's global fulfillment network.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Deployed</div><div class="spec-v">750K+ units</div></div><div class="spec"><div class="spec-k">Safety</div><div class="spec-v">No cages</div></div><div class="spec"><div class="spec-k">Type</div><div class="spec-v">Warehouse AMR</div></div><div class="spec"><div class="spec-k">Scale</div><div class="spec-v">Global</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://amazon.com/robotics" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
+      <div class="rcard">
+        <div class="rcard-img">
+          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&auto=format&fit=crop&q=80" alt="ROBO-1 robot arm industrial automation" loading="lazy">
+          <span class="rcard-badge badge-green">TechMedix Certified</span>
+        </div>
+        <div class="rcard-body">
+          <div class="rcard-maker"><a href="https://robo.inc" target="_blank" rel="noopener">ROBO Robotics</a></div>
+          <div class="rcard-name">ROBO-1</div>
+          <div class="rcard-desc">6-DOF robot arm built for teachable automation. Standardized hardware means every unit behaves identically — train a policy once, deploy it to any ROBO-1. Native Hugging Face LeRobot support and OCPP-compliant Agent API.</div>
+          <div class="rcard-specs">
+            <div class="spec"><div class="spec-k">DOF</div><div class="spec-v">6 + gripper (7 axes)</div></div>
+            <div class="spec"><div class="spec-k">Reach</div><div class="spec-v">700 mm</div></div>
+            <div class="spec"><div class="spec-k">Payload</div><div class="spec-v">1 kg</div></div>
+            <div class="spec"><div class="spec-k">Interface</div><div class="spec-v">USB-C / Linux, macOS, Windows</div></div>
+            <div class="spec"><div class="spec-k">Weight</div><div class="spec-v">&lt;3 kg</div></div>
+            <div class="spec"><div class="spec-k">Price</div><div class="spec-v">From $2,499</div></div>
+          </div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-status">TechMedix Compatible</span>
+          <a class="rcard-link" href="https://robo.inc" target="_blank" rel="noopener">robo.inc &rarr;</a>
+        </div>
+      </div>
     </div>
   </div>
   <!-- eBIKES & SCOOTERS TAB -->
@@ -1157,6 +1180,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <button class="tab-btn" onclick="switchAcq('quadrupeds',this)">Quadrupeds</button>
       <button class="tab-btn" onclick="switchAcq('drones',this)">Drones</button>
       <button class="tab-btn" onclick="switchAcq('ebikes',this)">eBikes &amp; Scooters</button>
+      <button class="tab-btn" onclick="switchAcq('arms',this)">Robot Arms</button>
       <button class="tab-btn" onclick="switchAcq('suppliers',this)">Component Suppliers</button>
       <button class="tab-btn" onclick="switchAcq('cleaning',this)">Cleaning &amp; Service</button>
     </div>
@@ -1182,6 +1206,12 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <div class="scard hot"><div class="scard-ribbon">Agricultural Leader</div><div class="scard-img"><img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=500&auto=format&fit=crop&q=85" alt="DJI Agras T50" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://ag.dji.com" target="_blank" rel="noopener">DJI Agriculture</a></div><div class="scard-name">Agras T50</div><div class="scard-desc">Professional agricultural drone. 40 kg payload, 40L spray tank, radar + vision obstacle avoidance, AI route planning. Dominant in precision farming globally.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">40 kg</div></div><div class="scard-spec"><div class="spec-k">Tank</div><div class="spec-v">40L spray</div></div><div class="scard-spec"><div class="spec-k">Avoidance</div><div class="spec-v">Radar+Vision</div></div><div class="scard-spec"><div class="spec-k">Nav</div><div class="spec-v">AI Route</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">Contact</div><div class="scard-sub">Enterprise pricing · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
     </div>
   </div>
+  <div id="acq-arms" style="display:none;" class="reveal">
+    <div class="shop-track">
+      <div class="scard hot"><div class="scard-ribbon">New — Arm</div><div class="scard-img"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&auto=format&fit=crop&q=85" alt="ROBO-1 robot arm" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://robo.inc" target="_blank" rel="noopener">ROBO Robotics</a></div><div class="scard-name">ROBO-1</div><div class="scard-desc">6-DOF robot arm with gripper, built for teachable, repeatable automation. Train a policy once on demonstration data, deploy to any ROBO-1 in the fleet. Native LeRobot support, MuJoCo digital twin, and Agent API for multi-arm pipeline orchestration.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">6 + gripper</div></div><div class="scard-spec"><div class="spec-k">Reach</div><div class="spec-v">700 mm</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">1 kg</div></div><div class="scard-spec"><div class="spec-k">Weight</div><div class="spec-v">&lt;3 kg</div></div><div class="scard-spec"><div class="spec-k">API</div><div class="spec-v">Agent API + LeRobot</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Platform Onboarding + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">$2,499</div><div class="scard-sub">+ $499 onboarding · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+    </div>
+  </div>
+
   <div id="acq-ebikes" style="display:none;" class="reveal">
     <div class="shop-track">
       <div class="scard"><div class="scard-img"><img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=500&auto=format&fit=crop&q=85" alt="Lime Gen 4" loading="lazy"></div><div class="scard-body"><div class="scard-maker"><a href="https://li.me/business" target="_blank" rel="noopener">Lime Business</a></div><div class="scard-name">Fleet eBike Program</div><div class="scard-desc">Enterprise eBike fleet deployment for campus, corporate, and last-mile operators. Includes IoT connectivity, swappable batteries, and fleet management dashboard.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">Min Fleet</div><div class="spec-v">25 units</div></div><div class="scard-spec"><div class="spec-k">Battery</div><div class="spec-v">Swappable</div></div><div class="scard-spec"><div class="spec-k">Diag</div><div class="spec-v">IoT real-time</div></div><div class="scard-spec"><div class="spec-k">Support</div><div class="spec-v">24/7</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">Includes Installation + 12 mo TechMedix Fleet</div></div></div><div class="scard-foot"><div><div class="scard-price">Contact</div><div class="scard-sub">Volume pricing · TechMedix free yr 1</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
@@ -1233,6 +1263,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <button class="tab-btn" onclick="filterCompare('quadruped',this)">Quadruped</button>
       <button class="tab-btn" onclick="filterCompare('drone',this)">Drone</button>
       <button class="tab-btn" onclick="filterCompare('ebike',this)">eBike</button>
+      <button class="tab-btn" onclick="filterCompare('arm',this)">Robot Arm</button>
       <button class="tab-btn" onclick="filterCompare('cleaning',this)">Cleaning &amp; Service</button>
     </div>
     <div style="overflow-x:auto;border-radius:16px;border:1px solid rgba(10,10,15,0.07);background:#fff;">
@@ -1331,11 +1362,18 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
             <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);font-weight:600;">Contact</td>
             <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
           </tr>
-          <tr data-type="cleaning" style="transition:background 0.15s;" onmouseover="this.style.background='rgba(10,10,15,0.02)'" onmouseout="this.style.background=''">
+          <tr data-type="cleaning" style="border-bottom:1px solid rgba(10,10,15,0.05);transition:background 0.15s;" onmouseover="this.style.background='rgba(10,10,15,0.02)'" onmouseout="this.style.background=''">
             <td style="padding:14px 20px;font-weight:600;color:var(--ink);">Taski Intellibot Swingobot</td>
             <td style="padding:14px 16px;color:var(--ink-2);">Cleaning Bot</td>
             <td style="padding:14px 16px;color:var(--ink-2);">2,000 m²/hr</td>
             <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--ink-2);font-weight:600;">Contact</td>
+            <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
+          </tr>
+          <tr data-type="arm" style="transition:background 0.15s;" onmouseover="this.style.background='rgba(10,10,15,0.02)'" onmouseout="this.style.background=''">
+            <td style="padding:14px 20px;font-weight:600;color:var(--ink);">ROBO-1 (ROBO Robotics)</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">Robot Arm</td>
+            <td style="padding:14px 16px;color:var(--ink-2);">6 DOF / 1 kg</td>
+            <td style="padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--fire);font-weight:600;">$2,499</td>
             <td style="padding:14px 16px;"><span style="background:rgba(29,185,84,0.1);color:#1db954;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;padding:3px 10px;border-radius:99px;">Active</span></td>
           </tr>
         </tbody>
