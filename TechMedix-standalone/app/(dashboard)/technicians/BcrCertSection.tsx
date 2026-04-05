@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight, BookOpen, Terminal, CheckCircle2, Circle, Lock } from "lucide-react";
+import { ChevronRight, BookOpen, Terminal, CheckCircle2, Circle, Lock, DollarSign } from "lucide-react";
 
 // ─── Certification level definitions ──────────────────────────────────────────
 
 export interface CertLevel {
   id: "L1" | "L2" | "L3" | "L4" | "L5";
   title: string;
+  price: string;
   jobValueRange: string;
   color: string;
   bgColor: string;
   borderColor: string;
   badgeColor: string;
+  covers: string[];
   competencies: string[];
   prerequisites: string;
   studyUrl: string;
@@ -23,11 +25,18 @@ export const CERT_LEVELS: CertLevel[] = [
   {
     id: "L1",
     title: "Operator",
+    price: "$199",
     jobValueRange: "$280 – $350 / job",
     color: "text-emerald-700",
     bgColor: "bg-emerald-50",
     borderColor: "border-emerald-200",
     badgeColor: "bg-emerald-600",
+    covers: [
+      "Basic maintenance",
+      "Visual inspection",
+      "Battery service",
+      "Firmware updates",
+    ],
     competencies: [
       "Robot safety fundamentals and LOTO protocols",
       "Basic mechanical inspection and wear assessment",
@@ -40,11 +49,17 @@ export const CERT_LEVELS: CertLevel[] = [
   {
     id: "L2",
     title: "Technician",
+    price: "$399",
     jobValueRange: "$450 – $650 / job",
     color: "text-sky-700",
     bgColor: "bg-sky-50",
     borderColor: "border-sky-200",
     badgeColor: "bg-sky-600",
+    covers: [
+      "Full mechanical repair",
+      "Actuator replacement",
+      "AR-assisted diagnostics",
+    ],
     competencies: [
       "Diagnostic tools: CAN bus, oscilloscope, ROS 2",
       "Actuator R&R — BLDC motors, harmonic drives",
@@ -57,11 +72,17 @@ export const CERT_LEVELS: CertLevel[] = [
   {
     id: "L3",
     title: "Specialist",
+    price: "$699",
     jobValueRange: "$800 – $1,100 / job",
     color: "text-violet-700",
     bgColor: "bg-violet-50",
     borderColor: "border-violet-200",
     badgeColor: "bg-violet-600",
+    covers: [
+      "Multi-platform diagnostics",
+      "Sensor calibration",
+      "Advanced fault resolution",
+    ],
     competencies: [
       "Multi-platform diagnostics across 4+ robot families",
       "FFT analysis and bearing defect frequency calculation",
@@ -74,11 +95,17 @@ export const CERT_LEVELS: CertLevel[] = [
   {
     id: "L4",
     title: "Systems Engineer",
+    price: "$999",
     jobValueRange: "$1,200 – $1,800 / job",
     color: "text-amber-700",
     bgColor: "bg-amber-50",
     borderColor: "border-amber-200",
     badgeColor: "bg-amber-600",
+    covers: [
+      "Fleet system architecture",
+      "ERP integration support",
+      "Enterprise diagnostics",
+    ],
     competencies: [
       "Fleet architecture design and enterprise integrations",
       "Weibull failure analysis and predictive maintenance scheduling",
@@ -90,12 +117,18 @@ export const CERT_LEVELS: CertLevel[] = [
   },
   {
     id: "L5",
-    title: "Autonomous Architect",
+    title: "Autonomous Systems Architect",
+    price: "$1,499",
     jobValueRange: "$2,500+ / job",
     color: "text-rose-700",
     bgColor: "bg-rose-50",
     borderColor: "border-rose-200",
     badgeColor: "bg-rose-600",
+    covers: [
+      "Full-stack autonomous system diagnosis",
+      "Custom protocol development",
+      "Top-tier enterprise jobs",
+    ],
     competencies: [
       "ML feature engineering on robot telemetry streams",
       "Edge AI deployment — Jetson AGX Thor, 275 TOPS",
@@ -214,27 +247,60 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
       {expanded && (
         <div className={`px-5 pb-5 pt-1 border-t ${level.borderColor}`}>
           <div className="grid gap-5 sm:grid-cols-2 mt-4">
-            {/* Competencies */}
-            <div>
-              <p className="kicker mb-3">Key Competencies</p>
-              <ul className="space-y-2">
-                {level.competencies.map((c) => (
-                  <li key={c} className="flex items-start gap-2 text-sm text-black/65 leading-snug">
-                    <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${level.badgeColor}`} />
-                    {c}
-                  </li>
-                ))}
-              </ul>
+            {/* Covers + competencies */}
+            <div className="space-y-4">
+              <div>
+                <p className="kicker mb-3">Covers</p>
+                <ul className="space-y-2">
+                  {level.covers.map((c) => (
+                    <li key={c} className="flex items-start gap-2 text-sm text-black/65 leading-snug">
+                      <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${level.badgeColor}`} />
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="kicker mb-3">Key Competencies</p>
+                <ul className="space-y-2">
+                  {level.competencies.map((c) => (
+                    <li key={c} className="flex items-start gap-2 text-sm text-black/65 leading-snug">
+                      <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${level.badgeColor}`} />
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            {/* Prerequisites + actions */}
+            {/* Prerequisites + price + actions */}
             <div className="space-y-4">
               <div>
                 <p className="kicker mb-1">Prerequisites</p>
                 <p className="text-sm text-black/60 leading-snug">{level.prerequisites}</p>
               </div>
 
+              <div className="flex items-center gap-2 rounded-xl border border-black/[0.08] bg-black/[0.02] px-4 py-3">
+                <DollarSign size={14} className="shrink-0 text-black/40" />
+                <div>
+                  <p className="text-sm font-semibold text-black">
+                    {level.price}{" "}
+                    <span className="font-normal text-black/40">one-time</span>
+                  </p>
+                  <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/35">
+                    Certification Fee
+                  </p>
+                </div>
+              </div>
+
               <div className="flex flex-col gap-2">
+                <Link
+                  href="/certifications"
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:opacity-90 ${level.badgeColor}`}
+                >
+                  Start {level.id} Certification
+                  <ChevronRight size={11} />
+                </Link>
                 <a
                   href={level.studyUrl}
                   target="_blank"

@@ -12,7 +12,6 @@ const PROTECTED_PREFIXES = [
   "/onboarding",
   "/nodes",
   "/maintenance",
-  "/technicians",
   "/datacenter",
   "/network",
   "/operations",
