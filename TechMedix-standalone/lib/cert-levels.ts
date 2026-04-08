@@ -13,6 +13,8 @@ export interface CertLevel {
   competencies: string[];
   prerequisites: string;
   studyUrl: string;
+  /** Inline study guide — key topics to review before taking the exam */
+  studyGuide: { topic: string; detail: string }[];
 }
 
 export const CERT_LEVELS: CertLevel[] = [
@@ -39,6 +41,13 @@ export const CERT_LEVELS: CertLevel[] = [
     ],
     prerequisites: "None — entry level",
     studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L1_operator",
+    studyGuide: [
+      { topic: "LOTO", detail: "Lock Out Tag Out — applied before any mechanical work. Always confirm zero-energy state before touching a robot." },
+      { topic: "Battery Management", detail: "BMS monitors cell voltage, temperature, and state of charge. Low SOC + high temp = thermal risk. Never charge a swollen pack." },
+      { topic: "Visual Inspection Order", detail: "Start with structural (frame, joints), then electrical (connectors, wiring), then software (status LEDs, ping, dashboard alerts)." },
+      { topic: "TechMedix Alerts", detail: "Critical alerts require escalation, not acknowledgment alone. Use the severity escalation flow, not just the dismiss button." },
+      { topic: "Firmware Updates", detail: "Always back up configuration before updating. Verify the robot is on stable power. Confirm correct firmware file for exact model/variant." },
+    ],
   },
   {
     id: "L2",
@@ -62,6 +71,13 @@ export const CERT_LEVELS: CertLevel[] = [
     ],
     prerequisites: "L1 Operator certification",
     studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L2_technician",
+    studyGuide: [
+      { topic: "CAN Bus", detail: "Controller Area Network — serial protocol for inter-ECU communication. Nodes share a bus; each has an ID. Use a CAN sniffer to read joint state messages." },
+      { topic: "BLDC Motors", detail: "Brushless DC motors need electronic commutation (ESC/FOC). Signs of wear: cogging, current spikes, heat. Replacement requires torque-spec re-check." },
+      { topic: "IMU Calibration", detail: "After any IMU replacement, run static calibration on a level surface. Check accelerometer bias and gyro drift before returning to service." },
+      { topic: "Oscilloscope Diagnostics", detail: "Use to visualize current waveforms. Oscillating draw in a servo indicates mechanical bind or winding short — not a software issue." },
+      { topic: "Post-Repair Validation", detail: "Run the robot through its full operational range after any repair. Compare telemetry baseline pre- and post-fault. Document anomaly count." },
+    ],
   },
   {
     id: "L3",
@@ -85,6 +101,13 @@ export const CERT_LEVELS: CertLevel[] = [
     ],
     prerequisites: "L2 Technician certification + 6 months field experience",
     studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L3_specialist",
+    studyGuide: [
+      { topic: "FFT Analysis", detail: "Fast Fourier Transform converts vibration time-domain data to frequency domain. Bearing defect frequencies (BPFO, BPFI, BSF) appear as peaks above the noise floor." },
+      { topic: "MTBF", detail: "Mean Time Between Failures = total operating time ÷ number of failures. Use fleet telemetry to trend per-platform MTBF and flag degrading units early." },
+      { topic: "FMEA + RPN", detail: "Failure Mode & Effects Analysis. Risk Priority Number = Severity × Occurrence × Detectability (each 1–10). RPN > 200 triggers immediate action." },
+      { topic: "Multi-Platform Diagnostics", detail: "L3 requires expertise across 4+ robot families. Failure modes differ: humanoid ankle drift ≠ drone motor overheat. Learn platform-specific baselines." },
+      { topic: "Fleet-Level Correlation", detail: "Single-robot logs miss systemic issues. Correlate anomaly patterns across robots of the same model — shared failures indicate firmware or design defects." },
+    ],
   },
   {
     id: "L4",
@@ -108,6 +131,13 @@ export const CERT_LEVELS: CertLevel[] = [
     ],
     prerequisites: "L3 Specialist + 12 months multi-platform field experience",
     studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L4_systems_engineer",
+    studyGuide: [
+      { topic: "Weibull Analysis", detail: "Statistical failure distribution model. Shape parameter β < 1 = infant mortality; β = 1 = random failure; β > 1 = wear-out. Use to predict end-of-life timing." },
+      { topic: "EOQ (Economic Order Quantity)", detail: "EOQ = √(2DS/H) where D = demand, S = order cost, H = holding cost. Minimizes total spare parts inventory cost across a fleet." },
+      { topic: "Predictive Maintenance Scheduling", detail: "Combine sensor thresholds (real-time) with Weibull survival curves (statistical) to schedule maintenance before failure, not after." },
+      { topic: "Team Leadership", detail: "L4 signs off on work completed by L1/L2 technicians. Escalation criteria: any critical alert not resolved in 2h, any repeat failure within 30 days." },
+      { topic: "Enterprise SLA Design", detail: "Fleet architecture must account for uptime SLAs (99.5%+ for production), redundancy (hot standby units), and integration points with ERP/WMS systems." },
+    ],
   },
   {
     id: "L5",
@@ -131,5 +161,12 @@ export const CERT_LEVELS: CertLevel[] = [
     ],
     prerequisites: "L4 Systems Engineer + enterprise project lead experience",
     studyUrl: "https://github.com/blackcatrobotics/blackcat-os/tree/main/certifications/levels/L5_autonomous_architect",
+    studyGuide: [
+      { topic: "ISO 10218", detail: "Safety requirements for industrial robots and robot systems. Part 1 = robot design; Part 2 = installation and integration. Workspace separation and speed limits defined here." },
+      { topic: "IEC 62061", detail: "Functional safety of electrical control systems in machinery. Defines Safety Integrity Levels (SIL 1–3). Relevant for autonomous robots operating near humans." },
+      { topic: "Edge AI — Jetson AGX Thor", detail: "275 TOPS on-chip. Used for real-time VLA inference, computer vision, and sensor fusion at the edge. Know memory bandwidth limits and INT8 vs FP16 trade-offs." },
+      { topic: "ML Feature Engineering", detail: "Stationary signal features (RMS, kurtosis, crest factor) outperform raw time-series for failure classification. Derive features from accelerometer, current, and joint torque data." },
+      { topic: "Platform Definition Authoring", detail: "A new platform definition requires: failure mode taxonomy (component → symptom → cause), sensor map (what signals are available), diagnostic protocols, and parts BOM with lead times." },
+    ],
   },
 ];
