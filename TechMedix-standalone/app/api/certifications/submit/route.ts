@@ -1,16 +1,24 @@
 import { NextResponse } from "next/server";
-import { createSupabaseServerClient } from "../../../../lib/supabase-server";
 
 const VALID_LEVELS = ["L1", "L2", "L3", "L4", "L5"] as const;
 type Level = (typeof VALID_LEVELS)[number];
 
-// Passing threshold (percentage) per level
 const PASS_THRESHOLDS: Record<Level, number> = {
   L1: 70,
   L2: 72,
   L3: 75,
   L4: 78,
   L5: 82,
+};
+
+// Local answer key — mirrors the question bank in the exam page client.
+// Used as fallback when the DB is unavailable or not yet seeded.
+const LOCAL_ANSWERS: Record<Level, number[]> = {
+  L1: [0, 2, 1, 1, 2],
+  L2: [0, 1, 1, 1, 1],
+  L3: [1, 0, 1, 1, 2],
+  L4: [1, 1, 1, 1, 1],
+  L5: [1, 2, 2, 1, 1],
 };
 
 export async function POST(request: Request) {
@@ -37,48 +45,68 @@ export async function POST(request: Request) {
   const cleanEmail = email.toLowerCase().trim();
   const threshold = PASS_THRESHOLDS[certLevel];
 
-  const supabase = await createSupabaseServerClient();
+  // ── Score — try DB first, fall back to local answer key ──────────────────────
+  let score = 0;
+  let scoredFromDb = false;
 
-  // Fetch DB questions for this level (if seeded) to score against
-  const { data: questions } = await supabase
-    .from("certification_exam_questions")
-    .select("id, answer_idx")
-    .eq("level", certLevel)
-    .order("created_at");
+  try {
+    const { createSupabaseServerClient } = await import("../../../../lib/supabase-server");
+    const supabase = await createSupabaseServerClient();
 
-  let score: number;
-  if (questions && questions.length > 0) {
-    const correct = questions.filter(
-      (q, i) => q.answer_idx === (answers[i] ?? -1)
-    ).length;
-    score = Math.round((correct / questions.length) * 100);
-  } else {
-    // No questions seeded yet — treat answer completion as a baseline score
-    score = (answers as unknown[]).length >= 5 ? 75 : 50;
+    const { data: questions } = await supabase
+      .from("certification_exam_questions")
+      .select("id, answer_idx")
+      .eq("level", certLevel)
+      .order("created_at");
+
+    if (questions && questions.length > 0) {
+      const correct = questions.filter(
+        (q, i) => q.answer_idx === (answers[i] ?? -1)
+      ).length;
+      score = Math.round((correct / questions.length) * 100);
+      scoredFromDb = true;
+    }
+  } catch {
+    // DB unavailable — fall through to local scoring
+  }
+
+  if (!scoredFromDb) {
+    // Score against local answer key
+    const key = LOCAL_ANSWERS[certLevel];
+    const correct = key.filter((ans, i) => ans === (answers[i] ?? -1)).length;
+    score = Math.round((correct / key.length) * 100);
   }
 
   const passed = score >= threshold;
 
-  // Record enrollment
-  const { data: enrollment } = await supabase
-    .from("certification_enrollments")
-    .insert({
-      email: cleanEmail,
-      name: typeof name === "string" && name.trim() ? name.trim() : null,
-      level: certLevel,
-    })
-    .select("id")
-    .single();
+  // ── Record to DB — best-effort, never blocks the response ────────────────────
+  void (async () => {
+    try {
+      const { createSupabaseServerClient } = await import("../../../../lib/supabase-server");
+      const supabase = await createSupabaseServerClient();
 
-  // Record submission
-  await supabase.from("certification_exam_submissions").insert({
-    enrollment_id: enrollment?.id ?? null,
-    email: cleanEmail,
-    level: certLevel,
-    answers,
-    score,
-    passed,
-  });
+      const { data: enrollment } = await supabase
+        .from("certification_enrollments")
+        .insert({
+          email: cleanEmail,
+          name: typeof name === "string" && name.trim() ? name.trim() : null,
+          level: certLevel,
+        })
+        .select("id")
+        .single();
+
+      await supabase.from("certification_exam_submissions").insert({
+        enrollment_id: enrollment?.id ?? null,
+        email: cleanEmail,
+        level: certLevel,
+        answers,
+        score,
+        passed,
+      });
+    } catch {
+      // Recording failed — score is still valid, don't surface this to user
+    }
+  })();
 
   return NextResponse.json({ score, passed, level: certLevel, threshold });
 }
