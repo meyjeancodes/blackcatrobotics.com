@@ -320,6 +320,29 @@ const PLATFORMS: PlatformProfile[] = [
     maintenanceCta: "Open AMR maintenance ticket",
   },
 
+  // ── Watch List — Pre-Integration ────────────────────────────────────────────
+  {
+    id: "rebot-devarm",
+    name: "reBot-DevArm",
+    manufacturer: "Seeed Studio",
+    category: "industrial",
+    description: "True open-source 6-DOF robot arm — hardware blueprints, full BOM, and 3D print files published on GitHub. Python SDK, ROS1, ROS2, Isaac Sim, and LeRobot compatible. Same simulation stack as ROBO-1. Pre-integration: monitoring adoption curve for full TechMedix onboarding.",
+    badge: "Watch List",
+    specs: [
+      { label: "DOF",        value: "6" },
+      { label: "SDK",        value: "Python, ROS1, ROS2, Isaac Sim, LeRobot" },
+      { label: "Source",     value: "Open — hardware blueprints, full BOM, 3D print files" },
+      { label: "GitHub",     value: "Seeed-Projects/reBot-DevArm" },
+      { label: "TechMedix",  value: "Pre-Integration — Watch List" },
+    ],
+    tlmRanges: { healthScoreMin: 72, healthScoreMax: 96, batteryPctMin: 95, batteryPctMax: 100, motorTempMin: 28, motorTempMax: 65 },
+    failureSignatures: [
+      { id: "joint-backlash",    name: "Joint Backlash",  severity: "warning", description: "EEF position error > 2mm on repetitive trajectory" },
+      { id: "actuator-overheat", name: "Servo Overheat",  severity: "warning", description: "Joint servo > 70°C during sustained high-torque moves" },
+    ],
+    maintenanceCta: "Flag for integration review",
+  },
+
   // ── Micromobility ───────────────────────────────────────────────────────────
   {
     id: "lime-gen4",

@@ -2493,5 +2493,41 @@
       "vlaModels": 0,
       "simPlatforms": 0
     }
+  },
+  {
+    "id": "maximo-aes",
+    "name": "Maximo (AES Corporation)",
+    "type": "oem",
+    "country": "US",
+    "description": "Utility-scale solar construction robot incubated by AES Corporation. Maximo's autonomous robots completed 100MW of solar panel installation at the Bellefield complex in California — double the output of traditional methods. Version 3.0 consistently exceeded one module per minute; version 4.0 is in development. NVIDIA (Omniverse + Isaac Sim) provides simulation and training infrastructure; AWS provides cloud compute. President: Chris Shelton. BLACKCAT GRID PARTNERSHIP TARGET — NOT a TechMedix fleet asset. Partnership angle: BlackCat Grid infrastructure intelligence — telemetry, site diagnostics, and fleet coordination at gigawatt-scale solar projects. Status: Outreach pending. Priority: High. Media contact: Katie Lau ([email protected]). Investor contact: Susan Harcourt ([email protected]).",
+    "robotSpecs": {
+      "status": "Commercial — 100MW milestone achieved",
+      "targetUse": ["Utility Solar", "Renewable Energy Infrastructure"],
+      "techmedixRole": "BlackCat Grid partnership target — telemetry and site diagnostics integration",
+      "aiPartner": "NVIDIA (Omniverse, Isaac Sim)",
+      "cloudPartner": "AWS",
+      "software": "Physics-based simulation via NVIDIA Isaac Sim; operational data via AWS",
+      "dataCollection": "Real-time field telemetry, robotic performance metrics",
+      "versionCurrent": "3.0",
+      "versionNext": "4.0 (in development)",
+      "parentCompany": "AES Corporation",
+      "website": "https://www.aes.com/about-us/innovation/maximo"
+    },
+    "_counts": {
+      "suppliersInbound": 2,
+      "customersOutbound": 0,
+      "vlaModels": 0,
+      "simPlatforms": 1
+    },
+    "_bcr": {
+      "division": "BlackCat Grid",
+      "type": "Partnership Target",
+      "status": "Outreach Pending",
+      "priority": "High",
+      "contacts": [
+        { "name": "Katie Lau", "role": "Media", "email": "[email protected]" },
+        { "name": "Susan Harcourt", "role": "Investor Relations", "email": "[email protected]" }
+      ]
+    }
   }
 ]

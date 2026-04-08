@@ -1,56 +1,97 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import {
+  BookOpen,
+  ChevronLeft,
+  ChevronRight,
   CreditCard,
   Cpu,
-  Home,
   LayoutDashboard,
   LogOut,
   Network,
   Scan,
   Server,
   Settings2,
-  Waypoints,
   Wrench,
-  Zap,
-  Wind,
-  BookOpen,
 } from "lucide-react";
 import { createClient } from "../lib/supabase-browser";
 import type { SessionUser } from "./dashboard-shell";
 
-const links: {
+// ─── Nav structure ────────────────────────────────────────────────────────────
+
+interface NavChild {
   href: string;
   label: string;
+}
+
+interface NavGroup {
+  href?: string;
+  label: string;
   icon: React.ElementType;
-  children?: { href: string; label: string }[];
-}[] = [
-  { href: "/dashboard",   label: "Overview",            icon: LayoutDashboard },
-  { href: "/ar-mode",     label: "AR Mode",             icon: Scan },
-  { href: "/maintenance", label: "Maintenance",         icon: Wrench },
+  children?: NavChild[];
+}
+
+const NAV: NavGroup[] = [
+  {
+    href: "/dashboard",
+    label: "Overview",
+    icon: LayoutDashboard,
+  },
+  {
+    href: "/nodes",
+    label: "Fleet",
+    icon: Cpu,
+    children: [
+      { href: "/nodes",   label: "Fleet & Nodes" },
+      { href: "/drones",  label: "Drone Fleet"   },
+      { href: "/ar-mode", label: "AR Mode"        },
+    ],
+  },
+  {
+    href: "/maintenance",
+    label: "Operations",
+    icon: Wrench,
+    children: [
+      { href: "/maintenance", label: "Maintenance" },
+      { href: "/operations",  label: "Operations"  },
+    ],
+  },
   {
     href: "/knowledge",
-    label: "Repair Intelligence",
+    label: "Repair Intel",
     icon: BookOpen,
     children: [
+      { href: "/knowledge",      label: "Knowledge Base" },
       { href: "/technicians",    label: "Technicians"    },
       { href: "/certifications", label: "Certifications" },
     ],
   },
-  { href: "/nodes",       label: "Fleet & Nodes",       icon: Cpu },
-  { href: "/drones",      label: "Drone Fleet",         icon: Wind },
-  { href: "/habitat",     label: "HABITAT",             icon: Home },
-  { href: "/datacenter",  label: "Data Centers",        icon: Server },
-  { href: "/network",     label: "Network",             icon: Network },
-  { href: "/operations",  label: "Operations",          icon: Waypoints },
-  { href: "/energy",      label: "Energy & Grid",       icon: Zap },
-  { href: "/billing",     label: "Billing",             icon: CreditCard },
-  { href: "/settings",    label: "Settings",            icon: Settings2 },
+  {
+    href: "/network",
+    label: "Infrastructure",
+    icon: Server,
+    children: [
+      { href: "/network",    label: "Network"       },
+      { href: "/habitat",    label: "HABITAT"       },
+      { href: "/datacenter", label: "Data Centers"  },
+      { href: "/energy",     label: "Energy & Grid" },
+    ],
+  },
+  {
+    label: "Account",
+    icon: Settings2,
+    children: [
+      { href: "/billing",  label: "Billing"  },
+      { href: "/settings", label: "Settings" },
+    ],
+  },
 ];
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function initials(name?: string, email?: string): string {
   if (name) {
@@ -63,9 +104,22 @@ function initials(name?: string, email?: string): string {
   return "??";
 }
 
+function isGroupActive(group: NavGroup, pathname: string): boolean {
+  if (group.href && (pathname === group.href || pathname.startsWith(`${group.href}/`))) return true;
+  if (group.children) {
+    return group.children.some(
+      (c) => pathname === c.href || pathname.startsWith(`${c.href}/`)
+    );
+  }
+  return false;
+}
+
+// ─── Sidebar ──────────────────────────────────────────────────────────────────
+
 export function Sidebar({ user }: { user?: SessionUser }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [collapsed, setCollapsed] = useState(false);
 
   async function handleLogout() {
     const supabase = createClient();
@@ -75,87 +129,148 @@ export function Sidebar({ user }: { user?: SessionUser }) {
   }
 
   return (
-    <aside className="sticky top-0 h-screen flex w-full max-w-[272px] flex-col p-5 bg-[#15161b] text-white border-r border-white/[0.07]">
-      {/* Brand */}
-      <div className="mb-4 space-y-2 border-b pb-4" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
-        <p className="font-ui text-[0.62rem] uppercase tracking-[0.38em] text-white/30 font-medium">
-          BlackCat Robotics
-        </p>
-        <div>
-          <h1 className="font-header text-[1.75rem] leading-tight text-white">TechMedix</h1>
-        </div>
+    <aside
+      className={clsx(
+        "sticky top-0 h-screen flex flex-col bg-[#15161b] text-white border-r border-white/[0.07]",
+        "transition-all duration-300 ease-in-out",
+        collapsed ? "w-[64px]" : "w-[272px]"
+      )}
+    >
+      {/* Brand + collapse toggle */}
+      <div
+        className="flex items-center border-b p-4 shrink-0"
+        style={{ borderColor: "rgba(255,255,255,0.07)" }}
+      >
+        {!collapsed && (
+          <div className="flex-1 min-w-0">
+            <p className="font-ui text-[0.56rem] uppercase tracking-[0.38em] text-white/30 font-medium truncate">
+              BlackCat Robotics
+            </p>
+            <h1 className="font-header text-[1.55rem] leading-tight text-white truncate">
+              TechMedix
+            </h1>
+          </div>
+        )}
+        <button
+          onClick={() => setCollapsed((v) => !v)}
+          className={clsx(
+            "flex items-center justify-center rounded-[10px] p-1.5 text-white/30 transition-all duration-200 hover:bg-white/[0.07] hover:text-white/70",
+            collapsed && "mx-auto"
+          )}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+        </button>
       </div>
 
       {/* Nav */}
-      <nav className="space-y-0.5">
-        {links.map((link) => {
-          const Icon = link.icon;
-          const active =
-            pathname === link.href || pathname.startsWith(`${link.href}/`);
+      <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
+        {NAV.map((group) => {
+          const Icon = group.icon;
+          const groupActive = isGroupActive(group, pathname);
 
           return (
-            <div key={link.href}>
-              <Link
-                href={link.href}
-                className={clsx(
-                  "flex items-center gap-3 rounded-[14px] px-4 py-2 font-ui text-[0.70rem] uppercase tracking-[0.14em] font-medium transition-all duration-200",
-                  active
-                    ? "bg-white/95 text-black shadow-[0_2px_8px_rgba(0,0,0,0.18)]"
-                    : "text-white/52 hover:bg-white/[0.07] hover:text-white/90"
-                )}
-              >
-                <Icon size={15} />
-                <span>{link.label}</span>
-              </Link>
-              {link.children && link.children.map((child) => {
-                const childActive =
-                  pathname === child.href || pathname.startsWith(`${child.href}/`);
-                return (
-                  <Link
-                    key={child.href}
-                    href={child.href}
-                    className={clsx(
-                      "flex items-center rounded-[14px] py-1.5 pl-11 pr-4 font-ui text-[0.62rem] uppercase tracking-[0.14em] font-medium transition-all duration-200",
-                      childActive
-                        ? "bg-white/95 text-black shadow-[0_2px_8px_rgba(0,0,0,0.18)]"
-                        : "text-white/40 hover:bg-white/[0.07] hover:text-white/80"
-                    )}
-                  >
-                    {child.label}
-                  </Link>
-                );
-              })}
+            <div key={group.label} className={clsx("mb-0.5", !collapsed && group.children && "mb-2")}>
+              {/* Group parent */}
+              {group.href ? (
+                <Link
+                  href={group.href}
+                  title={collapsed ? group.label : undefined}
+                  className={clsx(
+                    "flex items-center gap-3 rounded-[13px] px-3 py-2 font-ui text-[0.68rem] uppercase tracking-[0.14em] font-medium transition-all duration-200",
+                    collapsed && "justify-center px-0",
+                    groupActive
+                      ? "bg-white/95 text-black shadow-[0_2px_8px_rgba(0,0,0,0.18)]"
+                      : "text-white/55 hover:bg-white/[0.07] hover:text-white/90"
+                  )}
+                >
+                  <Icon size={15} className="shrink-0" />
+                  {!collapsed && <span>{group.label}</span>}
+                </Link>
+              ) : (
+                <div
+                  className={clsx(
+                    "flex items-center gap-3 rounded-[13px] px-3 py-2 font-ui text-[0.68rem] uppercase tracking-[0.14em] font-medium text-white/30",
+                    collapsed && "justify-center px-0"
+                  )}
+                >
+                  <Icon size={15} className="shrink-0" />
+                  {!collapsed && <span>{group.label}</span>}
+                </div>
+              )}
+
+              {/* Children — hidden when collapsed */}
+              {!collapsed && group.children && (
+                <div className="mt-0.5 space-y-0.5 pl-3">
+                  {group.children.map((child) => {
+                    const childActive =
+                      pathname === child.href || pathname.startsWith(`${child.href}/`);
+                    return (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className={clsx(
+                          "flex items-center rounded-[11px] py-1.5 pl-5 pr-3 font-ui text-[0.62rem] uppercase tracking-[0.12em] font-medium transition-all duration-200",
+                          childActive
+                            ? "bg-white/[0.10] text-white/90"
+                            : "text-white/36 hover:bg-white/[0.06] hover:text-white/75"
+                        )}
+                      >
+                        <span
+                          className={clsx(
+                            "mr-2.5 h-1 w-1 rounded-full shrink-0 transition-all duration-200",
+                            childActive ? "bg-white/80 scale-125" : "bg-white/20"
+                          )}
+                        />
+                        {child.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}
       </nav>
 
-
       {/* User + logout */}
       {user && (
-        <div className="mt-auto pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-          <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ember/[0.20] text-xs font-semibold text-ember ring-1 ring-ember/[0.18]">
-              {initials(user.name, user.email)}
-            </div>
-            <div className="min-w-0 flex-1">
-              {user.name && (
-                <p className="truncate text-sm font-medium text-white/90">
-                  {user.name}
-                </p>
-              )}
-              {user.email && (
-                <p className="truncate text-xs text-white/36">{user.email}</p>
-              )}
-            </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="mt-3 flex w-full items-center gap-2 rounded-[14px] px-3 py-2 text-sm text-white/42 transition-all duration-200 hover:bg-white/[0.07] hover:text-white/80"
-          >
-            <LogOut size={13} />
-            <span>Sign out</span>
-          </button>
+        <div
+          className="shrink-0 pt-3 px-2 pb-4"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+        >
+          {!collapsed ? (
+            <>
+              <div className="flex items-center gap-3 px-2 py-1.5">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ember/[0.20] text-[0.60rem] font-semibold text-ember ring-1 ring-ember/[0.18]">
+                  {initials(user.name, user.email)}
+                </div>
+                <div className="min-w-0 flex-1">
+                  {user.name && (
+                    <p className="truncate text-xs font-medium text-white/90">{user.name}</p>
+                  )}
+                  {user.email && (
+                    <p className="truncate text-[0.60rem] text-white/36">{user.email}</p>
+                  )}
+                </div>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="mt-2 flex w-full items-center gap-2 rounded-[12px] px-3 py-1.5 text-xs text-white/38 transition-all duration-200 hover:bg-white/[0.07] hover:text-white/80"
+              >
+                <LogOut size={12} />
+                <span>Sign out</span>
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              title="Sign out"
+              className="mx-auto flex items-center justify-center rounded-[12px] p-2 text-white/30 transition-all duration-200 hover:bg-white/[0.07] hover:text-white/70"
+            >
+              <LogOut size={14} />
+            </button>
+          )}
         </div>
       )}
     </aside>
