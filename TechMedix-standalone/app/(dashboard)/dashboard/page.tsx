@@ -20,6 +20,17 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-8">
+      {/* Page header */}
+      <div>
+        <p className="kicker">Operator Console</p>
+        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-black lg:text-5xl">
+          TechMedix Operations
+        </h1>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
+          Fleet health, alert pressure, technician dispatch, and customer operations for BlackCat Robotics.
+        </p>
+      </div>
+
       {/* Core fleet metrics */}
       <section className="grid gap-4 xl:grid-cols-4">
         <FleetHealthCard

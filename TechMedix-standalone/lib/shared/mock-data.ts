@@ -537,4 +537,13 @@ export const signalEntries: SignalEntry[] = [
     tags: ["Unitree", "OSHA", "ISO 10218"],
     category: "robotics"
   },
+  {
+    id: "sig_011",
+    source: "AGIBOT",
+    time: "2026-01-01T00:00:00.000Z",
+    title: "AGIBOT WORLD 2026 — open humanoid dataset flagged for TechMedix failure-pattern training",
+    summary: "AGIBOT WORLD is an open-source real-world humanoid dataset covering fine-grained manipulation, dual-arm coordination, and error recovery with full annotations. Modalities: RGB(D), tactile, force, LiDAR, IMU, full-body joint states. Digital twin paired (1:1 real + sim). Priority use case: improve TechMedix failure pattern recognition for Unitree G1/H1-2. Evaluate for CaP-RL agent training loop. Status: Evaluate — open source, available now. Priority: Medium. Source: https://agibot-world.com",
+    tags: ["AGIBOT", "Training Data", "Failure Recovery", "Humanoid", "CaP-RL", "Data Source"],
+    category: "ai"
+  },
 ];
