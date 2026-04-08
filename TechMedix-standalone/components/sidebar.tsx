@@ -46,28 +46,27 @@ const NAV: NavGroup[] = [
     label: "Fleet",
     icon: Cpu,
     children: [
-      { href: "/nodes",   label: "Fleet & Nodes" },
-      { href: "/drones",  label: "Drone Fleet"   },
+      { href: "/nodes",   label: "Robots & Nodes" },
+      { href: "/drones",  label: "Drones"         },
       { href: "/ar-mode", label: "AR Mode"        },
     ],
   },
   {
-    href: "/maintenance",
+    href: "/operations",
     label: "Operations",
     icon: Wrench,
     children: [
       { href: "/maintenance", label: "Maintenance" },
-      { href: "/operations",  label: "Operations"  },
+      { href: "/dispatch",    label: "Dispatch"    },
     ],
   },
   {
-    href: "/knowledge",
+    href: "/technicians",
     label: "Repair Intel",
     icon: BookOpen,
     children: [
-      { href: "/knowledge",      label: "Knowledge Base" },
-      { href: "/technicians",    label: "Technicians"    },
-      { href: "/certifications", label: "Certifications" },
+      { href: "/knowledge",                label: "Knowledge Base" },
+      { href: "/technicians/certifications", label: "Certifications" },
     ],
   },
   {

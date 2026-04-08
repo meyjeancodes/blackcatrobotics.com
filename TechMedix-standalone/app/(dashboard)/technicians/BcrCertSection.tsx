@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight, BookOpen, Terminal, CheckCircle2, Circle, Lock, DollarSign } from "lucide-react";
+import { ChevronRight, BookOpen, CheckCircle2, Circle, Lock, DollarSign, GraduationCap } from "lucide-react";
 import { CERT_LEVELS } from "../../../lib/cert-levels";
 import type { CertLevel } from "../../../lib/cert-levels";
 
@@ -16,16 +16,6 @@ const PLATFORM_CERTS = [
   { name: "Unitree H1-2", country: "CN", status: "Available" },
   { name: "Boston Dynamics Spot", country: "US", status: "Available" },
   { name: "DJI Agras T50", country: "CN", status: "Available" },
-];
-
-// ─── How to get certified steps ───────────────────────────────────────────────
-
-const HOW_TO_STEPS = [
-  { n: 1, title: "Study the curriculum", detail: "Read the level README and curriculum.md from the GitHub link on your target level card." },
-  { n: 2, title: "Complete lab exercises", detail: "Work through the lab exercises. Each lab requires an assessor sign-off for the practical." },
-  { n: 3, title: "Run the CLI quiz", detail: "Install the quiz CLI and run: python cli/quiz.py quiz --level L1 --randomize" },
-  { n: 4, title: "Pass written + practical", detail: "Score above the passing threshold on the written exam and pass all mandatory practical assessments." },
-  { n: 5, title: "Get certified in TechMedix", detail: "Submit your passing quiz result and assessor sign-offs to your fleet operator or BCR admin for dispatch eligibility." },
 ];
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -115,76 +105,75 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
 
       {expanded && (
         <div className={`px-5 pb-5 pt-1 border-t ${level.borderColor}`}>
-          <div className="grid gap-5 sm:grid-cols-2 mt-4">
-            {/* Covers + competencies */}
-            <div className="space-y-4">
-              <div>
-                <p className="kicker mb-3">Covers</p>
-                <ul className="space-y-2">
-                  {level.covers.map((c) => (
-                    <li key={c} className="flex items-start gap-2 text-sm text-black/65 leading-snug">
-                      <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${level.badgeColor}`} />
-                      {c}
-                    </li>
-                  ))}
-                </ul>
+          <div className="mt-4 space-y-5">
+
+            {/* Study Guide — inline */}
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <GraduationCap size={13} className="text-black/40" />
+                <p className="kicker">Study Guide — Key Topics</p>
               </div>
-              <div>
-                <p className="kicker mb-3">Key Competencies</p>
-                <ul className="space-y-2">
-                  {level.competencies.map((c) => (
-                    <li key={c} className="flex items-start gap-2 text-sm text-black/65 leading-snug">
-                      <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${level.badgeColor}`} />
-                      {c}
-                    </li>
-                  ))}
-                </ul>
+              <div className="space-y-2">
+                {level.studyGuide.map((item) => (
+                  <div
+                    key={item.topic}
+                    className="rounded-[14px] border border-black/[0.06] bg-black/[0.02] px-4 py-3"
+                  >
+                    <p className="text-xs font-semibold text-black mb-0.5">{item.topic}</p>
+                    <p className="text-xs leading-relaxed text-black/52">{item.detail}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Prerequisites + price + actions */}
-            <div className="space-y-4">
-              <div>
-                <p className="kicker mb-1">Prerequisites</p>
-                <p className="text-sm text-black/60 leading-snug">{level.prerequisites}</p>
-              </div>
+            {/* Key Competencies */}
+            <div>
+              <p className="kicker mb-3">Key Competencies</p>
+              <ul className="space-y-1.5">
+                {level.competencies.map((c) => (
+                  <li key={c} className="flex items-start gap-2 text-sm text-black/65 leading-snug">
+                    <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${level.badgeColor}`} />
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              <div className="flex items-center gap-2 rounded-xl border border-black/[0.08] bg-black/[0.02] px-4 py-3">
-                <DollarSign size={14} className="shrink-0 text-black/40" />
-                <div>
-                  <p className="text-sm font-semibold text-black">
-                    {level.price}{" "}
-                    <span className="font-normal text-black/40">one-time</span>
-                  </p>
-                  <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/35">
-                    Certification Fee
+            {/* Prerequisites + fee + CTAs */}
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between pt-1 border-t border-black/[0.05]">
+              <div className="flex items-center gap-4 flex-wrap">
+                <div className="flex items-center gap-1.5">
+                  <Lock size={12} className="text-black/30 shrink-0" />
+                  <p className="text-xs text-black/50">{level.prerequisites}</p>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <DollarSign size={12} className="text-black/30 shrink-0" />
+                  <p className="text-xs font-semibold text-black">
+                    {level.price} <span className="font-normal text-black/40">one-time</span>
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <Link
-                  href="/certifications"
-                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:opacity-90 ${level.badgeColor}`}
-                >
-                  Start {level.id} Certification
-                  <ChevronRight size={11} />
-                </Link>
+              <div className="flex items-center gap-2 flex-wrap">
                 <a
                   href={level.studyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-black/[0.12] px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-black/60 transition hover:bg-black/[0.04] hover:text-black"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-black/[0.12] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-black/55 transition hover:bg-black/[0.04] hover:text-black"
                 >
-                  <BookOpen size={12} />
-                  Study Resources
+                  <BookOpen size={11} />
+                  Full Curriculum
                 </a>
-                <div className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-black/40">
-                  <Terminal size={12} />
-                  python cli/quiz.py quiz --level {level.id}
-                </div>
+                <Link
+                  href={`/certifications/${level.id}/exam`}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-white transition hover:opacity-90 ${level.badgeColor}`}
+                >
+                  <GraduationCap size={11} />
+                  Take {level.id} Exam
+                </Link>
               </div>
             </div>
+
           </div>
         </div>
       )}
@@ -219,8 +208,8 @@ export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
           BCR Technician Certification
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
-          Five levels from entry operator to autonomous architect. Higher certification unlocks higher-value
-          dispatch jobs, fleet management responsibilities, and enterprise contract eligibility.
+          Five levels from entry operator to autonomous architect. Expand any level to study key
+          topics and take the exam directly from here.
         </p>
       </div>
 
@@ -261,27 +250,6 @@ export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
                 <span className="shrink-0 inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.14em] font-semibold text-emerald-700">
                   {p.status}
                 </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* How to get certified */}
-      <div className="panel-elevated p-6">
-        <div className="mb-5 pb-5 border-b border-black/[0.05]">
-          <p className="kicker">Process</p>
-          <h3 className="mt-2 font-header text-xl leading-tight text-black">How to Get Certified</h3>
-        </div>
-        <div className="space-y-4">
-          {HOW_TO_STEPS.map((step) => (
-            <div key={step.n} className="flex items-start gap-4">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black/[0.06] font-ui text-sm font-semibold text-black/55">
-                {step.n}
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-black">{step.title}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-black/52">{step.detail}</p>
               </div>
             </div>
           ))}
