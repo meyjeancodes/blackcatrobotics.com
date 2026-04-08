@@ -464,8 +464,66 @@ const PLATFORMS: PlatformProfile[] = [
   },
 ];
 
+// ── AI + Edge Compute Platforms ─────────────────────────────────────────────
+const AI_PLATFORMS: PlatformProfile[] = [
+  {
+    id: "nvidia-jetson-agx-thor",
+    name: "NVIDIA Jetson AGX Thor",
+    manufacturer: "NVIDIA",
+    category: "industrial",
+    description: "Flagship edge AI compute module for humanoid robots, surgical systems, and industrial AI. Blackwell GPU, 128GB LPDDR5X, 40-130W. Ships with JetPack 7 / Ubuntu 24.04 / CUDA 13.0. Developer kit $3,499, GA August 2025.",
+    badge: "AI Platform",
+    specs: [
+      { label: "AI Compute", value: "2,070 TFLOPS FP4" },
+      { label: "Memory",     value: "128GB LPDDR5X" },
+      { label: "GPU",        value: "Blackwell" },
+      { label: "Power",      value: "40-130W" },
+      { label: "vs Orin",    value: "7.5x higher compute" },
+      { label: "Dev Kit",    value: "$3,499" },
+    ],
+    tlmRanges: { healthScoreMin: 80, healthScoreMax: 99, batteryPctMin: 0, batteryPctMax: 100, motorTempMin: 25, motorTempMax: 88 },
+    failureSignatures: [
+      { id: "driver-conflict",   name: "JetPack/CUDA Driver Conflict",   severity: "critical", description: "CUDA 13.0 driver mismatch after Orin-to-Thor migration breaks inference stack -- verify JetPack 7 compatibility before migration" },
+      { id: "nim-cold-start",    name: "NIM Microservice Cold Start",     severity: "warning",  description: "Cosmos Reason NIM container latency >5s on first inference call at edge -- pre-warm containers on boot" },
+      { id: "thermal-throttle",  name: "Thermal Throttle",               severity: "warning",  description: "Sustained load >100W triggers clock throttling -- verify thermal paste application and enclosure airflow" },
+      { id: "urdf-import-fail",  name: "Isaac Sim URDF Import Failure",  severity: "info",     description: "Joint limit parsing breaks after Isaac Sim version upgrades -- check joint_type fields match expected schema" },
+      { id: "cumotion-timeout",  name: "cuMotion Trajectory Timeout",    severity: "warning",  description: "Trajectory optimization fails under high joint-count (>7 DOF) scenarios with default timeout settings" },
+      { id: "sim-to-real-gap",   name: "GR00T Sim-to-Real Transfer Gap", severity: "warning",  description: "GR00T N models trained on non-standard morphologies show degraded transfer -- run domain randomization with Newton physics before deployment" },
+    ],
+    maintenanceCta: "Open NVIDIA support ticket",
+  },
+];
+
+// ── Agtech Platforms ──────────────────────────────────────────────────────────
+const AGTECH_PLATFORMS: PlatformProfile[] = [
+  {
+    id: "aigen-element-gen2",
+    name: "Aigen Element gen2",
+    manufacturer: "Aigen",
+    category: "industrial",
+    description: "100% solar-powered agricultural robot for chemical-free weed control at plant level. 350W panel, all-wheel drive, stereo depth vision (gen2), intelligent mesh fleet coordination. Featured by NVIDIA Robotics (April 2026). Deployed in California Central Valley.",
+    badge: "Agtech",
+    specs: [
+      { label: "Power",     value: "Solar + battery (350W)" },
+      { label: "Drive",     value: "All-wheel drive" },
+      { label: "Field Hrs", value: "Up to 14h/day" },
+      { label: "Fleet Cov", value: "200 acres/season" },
+      { label: "Price",     value: "$50K/unit" },
+      { label: "AI Boost",  value: "4x faster (gen2)" },
+    ],
+    tlmRanges: { healthScoreMin: 60, healthScoreMax: 95, batteryPctMin: 10, batteryPctMax: 100, motorTempMin: 18, motorTempMax: 55 },
+    failureSignatures: [
+      { id: "weed-misclass",   name: "Weed Misclassification",      severity: "warning",  description: "Dense cotton canopy (late season) causes false negative rate >15% -- retrain vision model with seasonal field data" },
+      { id: "mesh-dropout",    name: "Mesh Network Dropout",        severity: "critical", description: "Fleet communication loss in hilly terrain -- robot becomes unreachable, manual retrieval required" },
+      { id: "solar-shortfall", name: "Solar Charging Shortfall",    severity: "warning",  description: "Multi-day overcast reduces daily operational range by 40-60% -- pre-charge backup batteries before extended cloudy periods" },
+      { id: "striker-wear",    name: "Mechanical Striker Wear",     severity: "warning",  description: "High-density weed passes accelerate striker contact wear -- inspect every 200 operating hours, replace at 1.5mm wear" },
+    ],
+    maintenanceCta: "Schedule Aigen field service",
+  },
+];
+
 // Merge in datacenter platforms
-const ALL_PLATFORMS: PlatformProfile[] = [...PLATFORMS, ...DATACENTER_PLATFORMS];
+const ALL_PLATFORMS: PlatformProfile[] = [...PLATFORMS, ...AI_PLATFORMS, ...AGTECH_PLATFORMS, ...DATACENTER_PLATFORMS];
 
 export function getPlatformById(id: string): PlatformProfile | undefined {
   return ALL_PLATFORMS.find((p) => p.id === id);

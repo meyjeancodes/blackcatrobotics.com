@@ -2,92 +2,110 @@ import Link from "next/link";
 import { getAllPlatforms } from "@/lib/platforms/index";
 import {
   AlertTriangle,
+  Battery,
   BookOpen,
   Bot,
   Brain,
   ChevronRight,
   Cpu,
   GraduationCap,
+  Hand,
   Layers,
   Play,
+  Radio,
+  RotateCw,
+  Settings2,
+  Shield,
+  User,
   Wrench,
   Zap,
 } from "lucide-react";
+import type { ElementType } from "react";
 
 // ─── Static data: robot components (from Atlas) ───────────────────────────────
 
-const COMPONENTS = [
+interface ComponentEntry {
+  id: string;
+  name: string;
+  icon: ElementType;
+  bottleneck: boolean;
+  summary: string;
+  keyFact: string;
+  humanBridge: string;
+}
+
+const COMPONENTS: ComponentEntry[] = [
   {
     id: "actuators",
     name: "Actuators",
-    icon: "⚙️",
+    icon: Settings2,
     bottleneck: false,
-    summary: "A typical humanoid uses 25–30 actuators split between rotary (shoulders, elbows, hips, knees) and linear (legs, torso). Each rotary actuator combines BLDC motor + harmonic reducer + encoder + torque sensor.",
+    summary: "A typical humanoid uses 25-30 actuators split between rotary (shoulders, elbows, hips, knees) and linear (legs, torso). Each rotary actuator combines BLDC motor + harmonic reducer + encoder + torque sensor.",
     keyFact: "Tesla Optimus: 20 rotary + 14 linear actuators. Cost breakdown: reducer 36%, torque sensor 30%, motor 13.5%.",
-    humanBridge: "Think of actuators as the robot's muscles — they create movement at every joint. When an actuator fails, the robot loses range of motion in that limb.",
+    humanBridge: "Think of actuators as the robot's muscles -- they create movement at every joint. When an actuator fails, the robot loses range of motion in that limb.",
   },
   {
     id: "reducers",
     name: "Harmonic Drive Reducers",
-    icon: "🔩",
+    icon: Zap,
     bottleneck: true,
     summary: "Strain wave reducers provide high gear ratios with near-zero backlash. Largest single cost driver (~36%) in rotary actuators. Only 12% of global machine tool manufacturers meet the precision requirements.",
-    keyFact: "Harmonic Drive holds 20–25% global market share. Alternatives: cycloidal-pin gear, planetary gearbox.",
-    humanBridge: "Reducers are why robots move smoothly rather than jerking. Backlash (slop in the gears) is a primary failure symptom — you'll feel it as imprecision or vibration at the end-effector.",
+    keyFact: "Harmonic Drive holds 20-25% global market share. Alternatives: cycloidal-pin gear, planetary gearbox.",
+    humanBridge: "Reducers are why robots move smoothly rather than jerking. Backlash (slop in the gears) is a primary failure symptom -- you'll feel it as imprecision or vibration at the end-effector.",
   },
   {
     id: "bldc",
     name: "BLDC Motors",
-    icon: "🌀",
+    icon: RotateCw,
     bottleneck: false,
     summary: "Brushless DC motors are the dominant choice across humanoids for high torque density in compact form factors. Controlled by ESC/FOC drivers. No brushes = longer service life vs brushed motors.",
-    keyFact: "Dominant suppliers: Maxon (25–30% share), Kollmorgen (15–20%). China alternative: PMSM low-inertia high-speed motors (Unitree).",
+    keyFact: "Dominant suppliers: Maxon (25-30% share), Kollmorgen (15-20%). China alternative: PMSM low-inertia high-speed motors (Unitree).",
     humanBridge: "If a joint runs hot or draws unusual current, the motor winding or controller (ESC) is your first diagnostic target. Oscilloscope the drive signal before replacing the motor.",
   },
   {
     id: "compute",
     name: "On-Robot Compute",
-    icon: "🖥️",
+    icon: Cpu,
     bottleneck: false,
-    summary: "Largely standardized on NVIDIA Jetson (Orin, AGX Thor at 275 TOPS). Tesla is the exception with its proprietary AI5 SoC. Key metrics: TOPS, TOPS/watt, and memory bandwidth.",
-    keyFact: "NVIDIA Jetson AGX Thor: 275 TOPS. Tesla AI5: proprietary. Chinese alternative: Horizon Robotics.",
+    summary: "Largely standardized on NVIDIA Jetson (Orin, AGX Thor). Tesla is the exception with its proprietary AI5 SoC. Key metrics: TOPS, TOPS/watt, and memory bandwidth.",
+    keyFact: "NVIDIA Jetson AGX Thor: 2,070 FP4 TFLOPS (Blackwell). Tesla AI5: proprietary. Chinese alternative: Horizon Robotics.",
     humanBridge: "The compute module is the robot's brain. Heat + throttling = inference slowdown = sluggish reactions. Check thermal paste and airflow before suspecting software issues.",
   },
   {
     id: "sensors",
     name: "Sensors",
-    icon: "📡",
+    icon: Radio,
     bottleneck: false,
-    summary: "2–7 cameras per robot for perception. IMUs for orientation. Force/torque sensors on joints. LiDAR for mapping (Agility, Unitree, AGIBot). Tactile sensors on hands for dexterous manipulation.",
+    summary: "2-7 cameras per robot for perception. IMUs for orientation. Force/torque sensors on joints. LiDAR for mapping (Agility, Unitree, AGIBot). Tactile sensors on hands for dexterous manipulation.",
     keyFact: "10 of 13 major OEMs have tactile sensing. Sony and Intel RealSense dominate camera supply.",
     humanBridge: "A camera dropout causes immediate autonomy loss. IMU drift causes balance instability. F/T sensor miscalibration causes grip failures. Each sensor has a clear, testable failure signature.",
   },
   {
     id: "batteries",
     name: "Batteries",
-    icon: "🔋",
+    icon: Battery,
     bottleneck: false,
-    summary: "Lithium-ion and lithium-polymer packs. Operating times range 2–14 hrs. Cell imbalance (±50mV delta) is the primary aging indicator. XPeng is pushing toward all solid-state.",
-    keyFact: "Capacity range: 0.84–5 kWh across humanoids. Charging modes: self-charge, hot-swap, wireless inductive.",
-    humanBridge: "Battery health is the most measurable robot health signal. Monitor cell delta voltage, not just total SOC. A swollen pack is a thermal event risk — never charge it.",
+    summary: "Lithium-ion and lithium-polymer packs. Operating times range 2-14 hrs. Cell imbalance (+/-50mV delta) is the primary aging indicator. XPeng is pushing toward all solid-state.",
+    keyFact: "Capacity range: 0.84-5 kWh across humanoids. Charging modes: self-charge, hot-swap, wireless inductive.",
+    humanBridge: "Battery health is the most measurable robot health signal. Monitor cell delta voltage, not just total SOC. A swollen pack is a thermal event risk -- never charge it.",
   },
   {
     id: "hands",
     name: "End Effectors (Hands)",
-    icon: "🖐️",
+    icon: Hand,
     bottleneck: false,
-    summary: "Range from 3-finger grippers to 22-DOF anthropomorphic hands. Drive types: tendon (1X, Tesla) vs motor+gear (Figure, Dexmate). Research standard: Shadow Robot 24 DOF, ~€110K.",
-    keyFact: "Open-source option: ORCA Dexterity (17 DOF, $3.5K–$6.1K) from ETH Zurich spinoff.",
+    summary: "Range from 3-finger grippers to 22-DOF anthropomorphic hands. Drive types: tendon (1X, Tesla) vs motor+gear (Figure, Dexmate). Research standard: Shadow Robot 24 DOF, ~110K EUR.",
+    keyFact: "Open-source option: ORCA Dexterity (17 DOF, $3.5K-$6.1K) from ETH Zurich spinoff.",
     humanBridge: "Hand repairs are the most tactile diagnostic task. Encoder drift, tendon tension loss, and fingertip sensor fouling each have distinct feel and response pattern. L2+ certification required.",
   },
   {
     id: "safety",
     name: "Safety Standards",
-    icon: "🛡️",
+    icon: Shield,
     bottleneck: false,
-    summary: "ISO 25785-1 (bipedal robots) is in working draft — expected 2026–2027. ISO 10218 covers industrial robots. ISO 13482 covers service robots. EU Machinery Regulation applies Jan 2027.",
+    summary: "ISO 25785-1 (bipedal robots) is in working draft -- expected 2026-2027. ISO 10218 covers industrial robots. ISO 13482 covers service robots. EU Machinery Regulation applies Jan 2027.",
     keyFact: "Only Agility Robotics Digit has achieved NRTL field certification. AI Act applies to high-risk autonomous systems from August 2026.",
-    humanBridge: "LOTO (Lock Out Tag Out) and zero-energy verification before any physical work. Know which standard covers the robot you're servicing — it determines your liability and documentation requirements.",
+    humanBridge: "LOTO (Lock Out Tag Out) and zero-energy verification before any physical work. Know which standard covers the robot you're servicing -- it determines your liability and documentation requirements.",
   },
 ];
 
@@ -132,25 +150,25 @@ const SIM_LABS = [
   },
   {
     id: "capx",
-    name: "Cap-X (Capgym)",
-    tag: "Open Source",
+    name: "CaP-X (capgym/cap-x)",
+    tag: "NVIDIA / Berkeley / CMU",
     tagColor: "bg-amber-500/[0.12] text-amber-600",
-    engine: "MuJoCo",
+    engine: "MuJoCo + Isaac Sim (BEHAVIOR tasks)",
     license: "Open Source",
     language: "Python",
-    useCase: "Humanoid robot gym environments for RL policy training. Designed for rapid capability development across locomotion, manipulation, and whole-body control tasks.",
+    useCase: "Benchmark + training framework where LLM/VLM agents write Python control code to operate physical robots. 187 tasks across Robosuite, LIBERO-PRO, and BEHAVIOR. CaP-RL takes a 7B model from 20% to 72% success in 50 iterations. 84% sim-to-real transfer on Franka Panda. Maps to TechMedix cert levels: L1=S1 tasks, L2=S2-S3+M1-M2, L3=S4+M3-M4.",
     link: "https://github.com/capgym/cap-x",
-    certRelevance: "L2–L3",
+    certRelevance: "L1–L3",
   },
   {
     id: "velxio",
     name: "Velxio",
-    tag: "Candidate",
+    tag: "Evaluation",
     tagColor: "bg-orange-500/[0.12] text-orange-600",
     engine: "TBD",
     license: "TBD",
     language: "TBD",
-    useCase: "Under evaluation for integration into TechMedix simulation track. Target use: fault injection scenarios where technicians diagnose simulated failures before working on real hardware.",
+    useCase: "Under evaluation for TechMedix fault injection simulation track. Target use: technicians diagnose simulated hardware failures in a virtual environment before working on real robots.",
     link: "https://github.com/davidmonterocrespo24/velxio",
     certRelevance: "L1–L2",
   },
@@ -397,10 +415,14 @@ export default function KnowledgePage() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {COMPONENTS.map((comp) => (
+          {COMPONENTS.map((comp) => {
+            const CompIcon = comp.icon;
+            return (
             <div key={comp.id} className="panel-elevated flex flex-col gap-3 p-5">
               <div className="flex items-start gap-3">
-                <span className="text-2xl shrink-0">{comp.icon}</span>
+                <div className="mt-0.5 shrink-0 rounded-xl bg-black/[0.04] p-2">
+                  <CompIcon size={16} className="text-black/45" />
+                </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-header text-base leading-tight text-black">{comp.name}</h3>
@@ -421,12 +443,13 @@ export default function KnowledgePage() {
 
               <div className="rounded-[12px] border border-amber-400/[0.20] bg-amber-400/[0.05] px-3.5 py-2.5">
                 <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-amber-700 mb-1 flex items-center gap-1.5">
-                  <span>👤</span> Human Bridge
+                  <User size={10} /> Human Bridge
                 </p>
                 <p className="text-xs leading-relaxed text-black/60">{comp.humanBridge}</p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -518,7 +541,7 @@ export default function KnowledgePage() {
 
                 <div className="rounded-[12px] border border-sky-400/[0.20] bg-sky-400/[0.05] px-3.5 py-2.5">
                   <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-sky-700 mb-1 flex items-center gap-1.5">
-                    <span>🔧</span> Tech-to-Field Bridge
+                    <Wrench size={10} /> Tech-to-Field Bridge
                   </p>
                   <p className="text-xs leading-relaxed text-black/60">{layer.techBridge}</p>
                 </div>

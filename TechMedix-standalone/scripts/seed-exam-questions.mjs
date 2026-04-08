@@ -355,7 +355,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`✓ Seeded ${QUESTIONS.length} questions (L1–L5)`);
+  console.log(`Done: seeded ${QUESTIONS.length} questions (L1-L5)`);
 
   // Verify counts per level
   const { data } = await supabase

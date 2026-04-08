@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, XCircle, ChevronRight, Loader2 } from "lucide-react";
@@ -164,9 +164,10 @@ interface Result {
 
 // ─── Exam page ────────────────────────────────────────────────────────────────
 
-export default function ExamPage({ params }: { params: { level: string } }) {
+export default function ExamPage({ params }: { params: Promise<{ level: string }> }) {
+  const { level: levelParam } = use(params);
   const router = useRouter();
-  const level = params.level.toUpperCase() as keyof typeof QUESTIONS;
+  const level = levelParam.toUpperCase() as keyof typeof QUESTIONS;
   const questions = QUESTIONS[level];
 
   const [step, setStep] = useState<Step>("intro");
