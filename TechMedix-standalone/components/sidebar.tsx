@@ -10,6 +10,7 @@ import {
   ChevronRight,
   CreditCard,
   Cpu,
+  Home,
   LayoutDashboard,
   LogOut,
   Moon,
@@ -18,7 +19,9 @@ import {
   Server,
   Settings2,
   Sun,
+  Wind,
   Wrench,
+  Zap,
 } from "lucide-react";
 import { createClient } from "../lib/supabase-browser";
 import { ThemeToggle } from "./theme-toggle";
@@ -45,51 +48,73 @@ const NAV: NavGroup[] = [
     icon: LayoutDashboard,
   },
   {
-    href: "/nodes",
-    label: "Fleet",
-    icon: Cpu,
-    children: [
-      { href: "/nodes",   label: "Robots & Nodes" },
-      { href: "/drones",  label: "Drones"         },
-      { href: "/ar-mode", label: "AR Mode"        },
-    ],
+    href: "/ar-mode",
+    label: "AR Mode",
+    icon: Scan,
   },
   {
-    href: "/operations",
-    label: "Operations",
+    href: "/maintenance",
+    label: "Maintenance",
     icon: Wrench,
-    children: [
-      { href: "/maintenance", label: "Maintenance" },
-      { href: "/dispatch",    label: "Dispatch"    },
-    ],
   },
   {
-    href: "/technicians",
-    label: "Repair Intel",
+    label: "Repair Intel...",
     icon: BookOpen,
     children: [
-      { href: "/knowledge",                label: "Knowledge Base" },
+      { href: "/knowledge",                 label: "Knowledge Base" },
       { href: "/technicians/certifications", label: "Certifications" },
     ],
   },
   {
-    href: "/network",
-    label: "Infrastructure",
-    icon: Server,
+    label: "Fleet & Nodes",
+    icon: Cpu,
     children: [
-      { href: "/network",    label: "Network"       },
-      { href: "/habitat",    label: "HABITAT"       },
-      { href: "/datacenter", label: "Data Centers"  },
-      { href: "/energy",     label: "Energy & Grid" },
+      { href: "/nodes",  label: "Robots & Nodes" },
+      { href: "/drones", label: "Drones" },
     ],
   },
   {
-    label: "Account",
+    href: "/drones",
+    label: "Drone Fleet",
+    icon: Wind,
+  },
+  {
+    href: "/habitat",
+    label: "Habitat",
+    icon: Home,
+  },
+  {
+    href: "/datacenter",
+    label: "Data Centers",
+    icon: Server,
+  },
+  {
+    href: "/network",
+    label: "Network",
+    icon: Network,
+  },
+  {
+    label: "Operations",
     icon: Settings2,
     children: [
-      { href: "/billing",  label: "Billing"  },
-      { href: "/settings", label: "Settings" },
+      { href: "/dispatch",    label: "Dispatch" },
+      { href: "/operations",  label: "Operations" },
     ],
+  },
+  {
+    href: "/energy",
+    label: "Energy & Grid",
+    icon: Zap,
+  },
+  {
+    href: "/billing",
+    label: "Billing",
+    icon: CreditCard,
+  },
+  {
+    href: "/settings",
+    label: "Settings",
+    icon: Settings2,
   },
 ];
 
