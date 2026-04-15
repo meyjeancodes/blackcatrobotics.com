@@ -122,6 +122,8 @@ const SIM_LABS = [
     language: "Python, C++",
     useCase: "Train humanoid locomotion and manipulation policies. Run thousands of parallel simulations. Integrates with ROS 2 and real hardware via Isaac ROS.",
     link: "https://developer.nvidia.com/isaac/sim",
+    launchUrl: "https://docs.omniverse.nvidia.com/isaacsim/latest/index.html",
+    launchLabel: "Launch Isaac Sim Docs",
     certRelevance: "L3–L5",
   },
   {
@@ -134,6 +136,8 @@ const SIM_LABS = [
     language: "C, Python, JAX",
     useCase: "Fast contact physics. Standard benchmark environment for locomotion RL. Google DeepMind maintains it. MJX runs on GPU via JAX for massively parallel training.",
     link: "https://mujoco.org",
+    launchUrl: "https://mujoco.readthedocs.io/en/stable/programming/index.html",
+    launchLabel: "Open MuJoCo Playground",
     certRelevance: "L2–L4",
   },
   {
@@ -146,6 +150,8 @@ const SIM_LABS = [
     language: "Python",
     useCase: "26 seconds to train a locomotion policy on an RTX 4090. Supports rigid, soft, fluid, and cloth simulation. Best for rapid policy iteration and diverse material interaction.",
     link: "https://genesis-world.readthedocs.io",
+    launchUrl: "https://genesis-world.readthedocs.io/en/latest/user_guide/getting_started/installation.html",
+    launchLabel: "Genesis Quick Start",
     certRelevance: "L3–L5",
   },
   {
@@ -158,6 +164,8 @@ const SIM_LABS = [
     language: "Python",
     useCase: "Benchmark + training framework where LLM/VLM agents write Python control code to operate physical robots. 187 tasks across Robosuite, LIBERO-PRO, and BEHAVIOR. CaP-RL takes a 7B model from 20% to 72% success in 50 iterations. 84% sim-to-real transfer on Franka Panda. Maps to TechMedix cert levels: L1=S1 tasks, L2=S2-S3+M1-M2, L3=S4+M3-M4.",
     link: "https://github.com/capgym/cap-x",
+    launchUrl: "https://github.com/capgym/cap-x",
+    launchLabel: "Browse CaP-X Tasks",
     certRelevance: "L1–L3",
   },
   {
@@ -165,11 +173,13 @@ const SIM_LABS = [
     name: "Velxio",
     tag: "Evaluation",
     tagColor: "bg-orange-500/[0.12] text-orange-600",
-    engine: "TBD",
-    license: "TBD",
-    language: "TBD",
+    engine: "Python / ROS 2 (evaluation)",
+    license: "MIT (evaluation)",
+    language: "Python",
     useCase: "Under evaluation for TechMedix fault injection simulation track. Target use: technicians diagnose simulated hardware failures in a virtual environment before working on real robots.",
     link: "https://github.com/davidmonterocrespo24/velxio",
+    launchUrl: "https://github.com/davidmonterocrespo24/velxio",
+    launchLabel: "View Velxio Repo",
     certRelevance: "L1–L2",
   },
   {
@@ -182,6 +192,8 @@ const SIM_LABS = [
     language: "Python, C++",
     useCase: "NVIDIA + Google DeepMind + Disney Research convergence project. Bridges Isaac Sim and MuJoCo ecosystems. Expected to become the shared physics layer for robot training.",
     link: "https://github.com/newton-physics/newton",
+    launchUrl: "https://github.com/newton-physics/newton",
+    launchLabel: "Newton on GitHub",
     certRelevance: "L4–L5",
   },
 ];
@@ -516,15 +528,26 @@ export default function KnowledgePage() {
                 ))}
               </div>
 
-              <a
-                href={sim.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto inline-flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.10] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
-              >
-                <Play size={10} />
-                Open Repo / Docs
-              </a>
+              <div className="mt-auto flex flex-col gap-2">
+                <a
+                  href={sim.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.10] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
+                >
+                  <BookOpen size={10} />
+                  Open Repo / Docs
+                </a>
+                <a
+                  href={sim.launchUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-ember/[0.10] border border-ember/[0.20] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-ember transition hover:bg-ember/[0.18]"
+                >
+                  <Play size={10} />
+                  {sim.launchLabel}
+                </a>
+              </div>
             </div>
           ))}
         </div>
