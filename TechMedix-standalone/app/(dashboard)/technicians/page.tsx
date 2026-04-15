@@ -51,6 +51,29 @@ export default async function TechniciansPage() {
 
   const earned = certList.filter((c) => earnedIds.has(c.id)).length;
 
+  // Derive the user's highest earned cert level for the cert section
+  const certOrder = ["L1", "L2", "L3", "L4", "L5"] as const;
+  type CertLevelId = typeof certOrder[number];
+
+  // Map Supabase cert records to level IDs using certList
+  const earnedLevelIds = certList
+    .filter((c) => earnedIds.has(c.id))
+    .map((c) => `L${c.level}` as CertLevelId);
+
+  const highestEarnedIdx = Math.max(
+    -1,
+    ...earnedLevelIds.map((id) => certOrder.indexOf(id))
+  );
+
+  // The user's current level is one above their highest earned (in-progress),
+  // or L1 if nothing earned yet.
+  const userCertLevel: CertLevelId | null =
+    highestEarnedIdx >= 0 && highestEarnedIdx < certOrder.length - 1
+      ? certOrder[highestEarnedIdx + 1]
+      : highestEarnedIdx === certOrder.length - 1
+      ? "L5"
+      : "L1";
+
   return (
     <div className="space-y-12">
 
@@ -169,7 +192,7 @@ export default async function TechniciansPage() {
       </section>
 
       {/* ── BCR Field Tech Certifications (client — interactive checklist) ─── */}
-      <BcrCertSection />
+      <BcrCertSection userCertLevel={userCertLevel} />
 
       {/* ── Certification Levels from Supabase ──────────────────────────────── */}
       {certList.length > 0 && (
