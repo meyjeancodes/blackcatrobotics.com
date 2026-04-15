@@ -12,13 +12,16 @@ import {
   Cpu,
   LayoutDashboard,
   LogOut,
+  Moon,
   Network,
   Scan,
   Server,
   Settings2,
+  Sun,
   Wrench,
 } from "lucide-react";
 import { createClient } from "../lib/supabase-browser";
+import { ThemeToggle } from "./theme-toggle";
 import type { SessionUser } from "./dashboard-shell";
 
 // ─── Nav structure ────────────────────────────────────────────────────────────
@@ -253,22 +256,28 @@ export function Sidebar({ user }: { user?: SessionUser }) {
                   )}
                 </div>
               </div>
-              <button
-                onClick={handleLogout}
-                className="mt-2 flex w-full items-center gap-2 rounded-[12px] px-3 py-1.5 text-xs text-white/38 transition-all duration-200 hover:bg-white/[0.07] hover:text-white/80"
-              >
-                <LogOut size={12} />
-                <span>Sign out</span>
-              </button>
+              <div className="mt-2 flex items-center gap-1">
+                <button
+                  onClick={handleLogout}
+                  className="flex flex-1 items-center gap-2 rounded-[12px] px-3 py-1.5 text-xs text-white/38 transition-all duration-200 hover:bg-white/[0.07] hover:text-white/80"
+                >
+                  <LogOut size={12} />
+                  <span>Sign out</span>
+                </button>
+                <ThemeToggle />
+              </div>
             </>
           ) : (
-            <button
-              onClick={handleLogout}
-              title="Sign out"
-              className="mx-auto flex items-center justify-center rounded-[12px] p-2 text-white/30 transition-all duration-200 hover:bg-white/[0.07] hover:text-white/70"
-            >
-              <LogOut size={14} />
-            </button>
+            <div className="flex items-center justify-center gap-1">
+              <button
+                onClick={handleLogout}
+                title="Sign out"
+                className="flex items-center justify-center rounded-[12px] p-2 text-white/30 transition-all duration-200 hover:bg-white/[0.07] hover:text-white/70"
+              >
+                <LogOut size={14} />
+              </button>
+              <ThemeToggle />
+            </div>
           )}
         </div>
       )}

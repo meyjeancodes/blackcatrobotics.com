@@ -39,7 +39,7 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
     ) : status === "in-progress" ? (
       <Circle size={16} className="text-amber-500 shrink-0" />
     ) : (
-      <Lock size={16} className="text-black/25 shrink-0" />
+      <Lock size={16} className="text-[var(--ink)]/25 shrink-0" />
     );
 
   const statusLabel =
@@ -50,7 +50,7 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
       ? "text-emerald-700"
       : status === "in-progress"
       ? "text-amber-600"
-      : "text-black/35";
+      : "text-[var(--ink)]/35";
 
   return (
     <div
@@ -75,11 +75,11 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
         {/* Title + value */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="font-header text-lg leading-tight text-black">
+            <h3 className="font-header text-lg leading-tight text-[var(--ink)]">
               {level.id} {level.title}
             </h3>
             {isCurrentUserLevel && (
-              <span className="inline-flex items-center rounded-full bg-black/[0.06] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.14em] font-semibold text-black/55">
+              <span className="inline-flex items-center rounded-full bg-[var(--ink)]/[0.06] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55">
                 Your level
               </span>
             )}
@@ -99,7 +99,7 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
 
         <ChevronRight
           size={16}
-          className={`shrink-0 text-black/25 transition-transform ${expanded ? "rotate-90" : ""}`}
+          className={`shrink-0 text-[var(--ink)]/25 transition-transform ${expanded ? "rotate-90" : ""}`}
         />
       </button>
 
@@ -110,17 +110,17 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
             {/* Study Guide — inline */}
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <GraduationCap size={13} className="text-black/40" />
+                <GraduationCap size={13} className="text-[var(--ink)]/40" />
                 <p className="kicker">Study Guide — Key Topics</p>
               </div>
               <div className="space-y-2">
                 {level.studyGuide.map((item) => (
                   <div
                     key={item.topic}
-                    className="rounded-[14px] border border-black/[0.06] bg-black/[0.02] px-4 py-3"
+                    className="rounded-[14px] border border-[var(--ink)]/[0.06] bg-[var(--ink)]/[0.02] px-4 py-3"
                   >
-                    <p className="text-xs font-semibold text-black mb-0.5">{item.topic}</p>
-                    <p className="text-xs leading-relaxed text-black/52">{item.detail}</p>
+                    <p className="text-xs font-semibold text-[var(--ink)] mb-0.5">{item.topic}</p>
+                    <p className="text-xs leading-relaxed text-[var(--ink)]/52">{item.detail}</p>
                   </div>
                 ))}
               </div>
@@ -131,7 +131,7 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
               <p className="kicker mb-3">Key Competencies</p>
               <ul className="space-y-1.5">
                 {level.competencies.map((c) => (
-                  <li key={c} className="flex items-start gap-2 text-sm text-black/65 leading-snug">
+                  <li key={c} className="flex items-start gap-2 text-sm text-[var(--ink)]/65 leading-snug">
                     <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${level.badgeColor}`} />
                     {c}
                   </li>
@@ -140,16 +140,16 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
             </div>
 
             {/* Prerequisites + fee + CTAs */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between pt-1 border-t border-black/[0.05]">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between pt-1 border-t border-[var(--ink)]/[0.05]">
               <div className="flex items-center gap-4 flex-wrap">
                 <div className="flex items-center gap-1.5">
-                  <Lock size={12} className="text-black/30 shrink-0" />
-                  <p className="text-xs text-black/50">{level.prerequisites}</p>
+                  <Lock size={12} className="text-[var(--ink)]/30 shrink-0" />
+                  <p className="text-xs text-[var(--ink)]/50">{level.prerequisites}</p>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <DollarSign size={12} className="text-black/30 shrink-0" />
-                  <p className="text-xs font-semibold text-black">
-                    {level.price} <span className="font-normal text-black/40">one-time</span>
+                  <DollarSign size={12} className="text-[var(--ink)]/30 shrink-0" />
+                  <p className="text-xs font-semibold text-[var(--ink)]">
+                    {level.price} <span className="font-normal text-[var(--ink)]/40">one-time</span>
                   </p>
                 </div>
               </div>
@@ -159,7 +159,7 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
                   href={level.studyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-black/[0.12] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-black/55 transition hover:bg-black/[0.04] hover:text-black"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.12] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-black"
                 >
                   <BookOpen size={11} />
                   Full Curriculum
@@ -204,10 +204,10 @@ export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
       {/* Header */}
       <div>
         <p className="kicker">Field Operations</p>
-        <h2 className="mt-2 font-header text-3xl leading-none tracking-[-0.04em] text-black">
+        <h2 className="mt-2 font-header text-3xl leading-none tracking-[-0.04em] text-[var(--ink)]">
           BCR Technician Certification
         </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--ink)]/52">
           Five levels from entry operator to autonomous architect. Expand any level to study key
           topics and take the exam directly from here.
         </p>
@@ -227,10 +227,10 @@ export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
 
       {/* Platform certification badges */}
       <div className="panel-elevated p-6">
-        <div className="mb-5 pb-5 border-b border-black/[0.05]">
+        <div className="mb-5 pb-5 border-b border-[var(--ink)]/[0.05]">
           <p className="kicker">Platform Certifications</p>
-          <h3 className="mt-2 font-header text-xl leading-tight text-black">Supported Robot Platforms</h3>
-          <p className="mt-2 text-sm leading-6 text-black/45">
+          <h3 className="mt-2 font-header text-xl leading-tight text-[var(--ink)]">Supported Robot Platforms</h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--ink)]/45">
             Platform-specific certification modules unlock after L2. Each platform adds to your dispatch eligibility.
           </p>
         </div>
@@ -238,11 +238,11 @@ export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
           {PLATFORM_CERTS.map((p) => (
             <div
               key={p.name}
-              className="rounded-[20px] border border-black/[0.06] bg-black/[0.018] px-4 py-3"
+              className="rounded-[20px] border border-[var(--ink)]/[0.06] bg-[var(--ink)]/[0.018] px-4 py-3"
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <p className="text-sm font-semibold text-black leading-snug">{p.name}</p>
+                  <p className="text-sm font-semibold text-[var(--ink)] leading-snug">{p.name}</p>
                   <p className="mt-0.5 font-ui text-[0.55rem] uppercase tracking-[0.16em] text-black/38">
                     {p.country}
                   </p>
@@ -260,8 +260,8 @@ export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
       <div className="panel-elevated p-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="kicker">Marketplace</p>
-          <h3 className="mt-2 font-header text-xl leading-tight text-black">Find jobs on the BCR Marketplace</h3>
-          <p className="mt-2 text-sm leading-6 text-black/45">
+          <h3 className="mt-2 font-header text-xl leading-tight text-[var(--ink)]">Find jobs on the BCR Marketplace</h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--ink)]/45">
             Certified techs get dispatched to service requests from fleet operators in your region.
           </p>
         </div>

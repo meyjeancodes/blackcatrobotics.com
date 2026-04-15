@@ -57,7 +57,7 @@ export default async function TechniciansPage() {
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div>
         <p className="kicker">Field Operations</p>
-        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-black lg:text-5xl">
+        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-[var(--ink)] lg:text-5xl">
           Technicians & Certifications
         </h1>
       </div>
@@ -66,7 +66,7 @@ export default async function TechniciansPage() {
       <section className="grid gap-4 sm:grid-cols-3">
         <div className="panel px-5 py-4">
           <p className="kicker">Total Technicians</p>
-          <p className="mt-1 text-3xl font-semibold tracking-[-0.04em] text-black">
+          <p className="mt-1 text-3xl font-semibold tracking-[-0.04em] text-[var(--ink)]">
             {techList.length}
           </p>
         </div>
@@ -87,11 +87,11 @@ export default async function TechniciansPage() {
       {/* ── Technician cards ────────────────────────────────────────────────── */}
       <section>
         <div className="mb-5">
-          <h2 className="font-header text-2xl leading-tight text-black">Technician Roster</h2>
+          <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">Technician Roster</h2>
         </div>
 
         {techList.length === 0 ? (
-          <p className="text-sm text-black/40 py-8 text-center">No technicians found.</p>
+          <p className="text-sm text-[var(--ink)]/40 py-8 text-center">No technicians found.</p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {techList.map((tech) => {
@@ -114,8 +114,8 @@ export default async function TechniciansPage() {
                         {tech.name.split(" ").map((n) => n[0]).join("")}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm text-black leading-tight">{tech.name}</h3>
-                        <p className="text-xs text-black/50">{tech.region}</p>
+                        <h3 className="font-semibold text-sm text-[var(--ink)] leading-tight">{tech.name}</h3>
+                        <p className="text-xs text-[var(--ink)]/50">{tech.region}</p>
                       </div>
                     </div>
                     <div
@@ -129,16 +129,16 @@ export default async function TechniciansPage() {
                   {/* Job counts + rating */}
                   <div className="flex gap-4">
                     <div>
-                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/40">Active</p>
+                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">Active</p>
                       <p className="font-semibold text-sm text-ember mt-0.5">{activeJobs}</p>
                     </div>
                     <div>
-                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/40">Completed</p>
+                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">Completed</p>
                       <p className="font-semibold text-sm text-moss mt-0.5">{completedJobs}</p>
                     </div>
                     <div>
-                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/40">Rating</p>
-                      <p className="font-semibold text-sm text-black mt-0.5">{tech.rating?.toFixed(1)}</p>
+                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">Rating</p>
+                      <p className="font-semibold text-sm text-[var(--ink)] mt-0.5">{tech.rating?.toFixed(1)}</p>
                     </div>
                   </div>
 
@@ -147,7 +147,7 @@ export default async function TechniciansPage() {
                     {(tech.platforms ?? []).map((p) => (
                       <span
                         key={p}
-                        className="rounded-full border border-black/8 bg-black/[0.03] px-2.5 py-0.5 text-[0.58rem] text-black/50 uppercase tracking-[0.10em]"
+                        className="rounded-full border border-[var(--ink)]/8 bg-[var(--ink)]/[0.03] px-2.5 py-0.5 text-[0.58rem] text-[var(--ink)]/50 uppercase tracking-[0.10em]"
                       >
                         {p}
                       </span>
@@ -155,11 +155,11 @@ export default async function TechniciansPage() {
                   </div>
 
                   {/* Status + ETA */}
-                  <div className="mt-auto pt-2 border-t border-black/[0.05] flex items-center justify-between">
+                  <div className="mt-auto pt-2 border-t border-[var(--ink)]/[0.05] flex items-center justify-between">
                     <span className={`text-xs font-medium ${tech.available ? "text-moss" : "text-ember"}`}>
                       {tech.available ? "Available" : "Busy"}
                     </span>
-                    <span className="text-xs text-black/35">ETA {tech.eta_minutes} min</span>
+                    <span className="text-xs text-[var(--ink)]/35">ETA {tech.eta_minutes} min</span>
                   </div>
                 </div>
               );
@@ -177,13 +177,13 @@ export default async function TechniciansPage() {
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="kicker">Technician Program</p>
-              <h2 className="mt-0.5 font-header text-2xl leading-tight text-black">Certification Levels</h2>
+              <h2 className="mt-0.5 font-header text-2xl leading-tight text-[var(--ink)]">Certification Levels</h2>
             </div>
             <div className="panel px-4 py-3 flex items-center gap-3">
               <Award className="w-5 h-5 text-amber-500" />
               <div>
                 <p className="text-xs text-zinc-500">Earned</p>
-                <p className="font-header text-lg text-black tracking-tight">
+                <p className="font-header text-lg text-[var(--ink)] tracking-tight">
                   {earned} / {certList.length}
                 </p>
               </div>
@@ -212,7 +212,7 @@ export default async function TechniciansPage() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2 mb-0.5">
-                          <h3 className="font-semibold text-sm text-black leading-tight">{cert.name}</h3>
+                          <h3 className="font-semibold text-sm text-[var(--ink)] leading-tight">{cert.name}</h3>
                           {isEarned && (
                             <span className="flex items-center gap-1 text-[10px] uppercase tracking-wide text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
                               <CheckCircle2 className="w-3 h-3" /> Earned
@@ -227,15 +227,15 @@ export default async function TechniciansPage() {
 
                     <div className="flex gap-6 flex-wrap text-center">
                       <div>
-                        <p className="text-lg font-header text-black tracking-tight">{cert.simulations_required}</p>
+                        <p className="text-lg font-header text-[var(--ink)] tracking-tight">{cert.simulations_required}</p>
                         <p className="text-[10px] text-zinc-400 uppercase tracking-wide">Simulations</p>
                       </div>
                       <div>
-                        <p className="text-lg font-header text-black tracking-tight">{cert.real_repairs_required}</p>
+                        <p className="text-lg font-header text-[var(--ink)] tracking-tight">{cert.real_repairs_required}</p>
                         <p className="text-[10px] text-zinc-400 uppercase tracking-wide">Real Repairs</p>
                       </div>
                       <div>
-                        <p className="text-lg font-header text-black tracking-tight">{cert.ai_score_threshold}%</p>
+                        <p className="text-lg font-header text-[var(--ink)] tracking-tight">{cert.ai_score_threshold}%</p>
                         <p className="text-[10px] text-zinc-400 uppercase tracking-wide">AI Score Min</p>
                       </div>
                     </div>
@@ -260,9 +260,9 @@ export default async function TechniciansPage() {
                     <div className="mt-4">
                       <div className="flex items-center justify-between text-xs text-zinc-500 mb-1">
                         <span>AI Score</span>
-                        <span className="font-medium text-black">{aiScore}%</span>
+                        <span className="font-medium text-[var(--ink)]">{aiScore}%</span>
                       </div>
-                      <div className="h-1.5 bg-black/[0.06] rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-[var(--ink)]/[0.06] rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full ${colors.badge} transition-all`}
                           style={{ width: `${Math.min(100, aiScore)}%` }}

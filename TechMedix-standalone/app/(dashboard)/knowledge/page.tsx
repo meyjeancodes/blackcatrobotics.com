@@ -273,10 +273,10 @@ export default function KnowledgePage() {
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div>
         <p className="kicker">Repair Intelligence</p>
-        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-black lg:text-5xl">
+        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-[var(--ink)] lg:text-5xl">
           Knowledge Hub
         </h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--ink)]/52">
           The bridge between human technicians, robot hardware, and AI systems.
           Study failure modes, understand component anatomy, explore simulation environments,
           and take your certification exam — all from one place.
@@ -285,29 +285,29 @@ export default function KnowledgePage() {
           <div className="panel px-4 py-3 flex items-center gap-3">
             <Bot size={15} className="text-violet-600 shrink-0" />
             <div>
-              <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-black/40">Platforms</p>
-              <p className="font-header text-xl text-black">{totalPlatforms}</p>
+              <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Platforms</p>
+              <p className="font-header text-xl text-[var(--ink)]">{totalPlatforms}</p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <AlertTriangle size={15} className="text-amber-600 shrink-0" />
             <div>
-              <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-black/40">Failure Signatures</p>
-              <p className="font-header text-xl text-black">{totalFailureModes}</p>
+              <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Failure Signatures</p>
+              <p className="font-header text-xl text-[var(--ink)]">{totalFailureModes}</p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <Play size={15} className="text-emerald-600 shrink-0" />
             <div>
-              <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-black/40">Sim Environments</p>
-              <p className="font-header text-xl text-black">{SIM_LABS.length}</p>
+              <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Sim Environments</p>
+              <p className="font-header text-xl text-[var(--ink)]">{SIM_LABS.length}</p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <Brain size={15} className="text-sky-600 shrink-0" />
             <div>
-              <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-black/40">AI Layers</p>
-              <p className="font-header text-xl text-black">{AI_LAYER.length}</p>
+              <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">AI Layers</p>
+              <p className="font-header text-xl text-[var(--ink)]">{AI_LAYER.length}</p>
             </div>
           </div>
         </div>
@@ -317,8 +317,8 @@ export default function KnowledgePage() {
       <section>
         <div className="mb-6">
           <p className="kicker">Layer 1 — Physical</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">Robot Platform Catalog</h2>
-          <p className="mt-2 text-sm text-black/50 max-w-xl">
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Robot Platform Catalog</h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
             Each platform entry includes known failure signatures, severity, and maintenance
             context. Expand any platform to study its repair profile before your exam.
           </p>
@@ -326,7 +326,7 @@ export default function KnowledgePage() {
 
         {Object.entries(byCategory).map(([cat, list]) => (
           <div key={cat} className="mb-8">
-            <p className="mb-3 font-ui text-[0.60rem] uppercase tracking-[0.26em] text-black/38 font-medium">
+            <p className="mb-3 font-ui text-[0.60rem] uppercase tracking-[0.26em] text-[var(--ink)]/38 font-medium">
               {CAT_LABEL[cat] ?? cat}
             </p>
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -335,7 +335,7 @@ export default function KnowledgePage() {
                   {/* Header */}
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold ${CAT_COLOR[platform.category] ?? "bg-black/[0.05] text-black/50"}`}>
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold ${CAT_COLOR[platform.category] ?? "bg-[var(--ink)]/[0.05] text-[var(--ink)]/50"}`}>
                         {CAT_LABEL[platform.category] ?? platform.category}
                       </span>
                       {platform.badge && (
@@ -343,40 +343,40 @@ export default function KnowledgePage() {
                           {platform.badge}
                         </span>
                       )}
-                      <h3 className="mt-2 font-header text-base leading-tight text-black">{platform.name}</h3>
-                      <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-black/40">{platform.manufacturer}</p>
+                      <h3 className="mt-2 font-header text-base leading-tight text-[var(--ink)]">{platform.name}</h3>
+                      <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">{platform.manufacturer}</p>
                     </div>
-                    <Wrench size={13} className="shrink-0 text-black/20 mt-1" />
+                    <Wrench size={13} className="shrink-0 text-[var(--ink)]/20 mt-1" />
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs leading-relaxed text-black/55">{platform.description}</p>
+                  <p className="text-xs leading-relaxed text-[var(--ink)]/55">{platform.description}</p>
 
                   {/* Key specs */}
                   <div className="grid grid-cols-2 gap-1.5">
                     {platform.specs.slice(0, 4).map((s) => (
-                      <div key={s.label} className="rounded-[10px] bg-black/[0.025] px-2.5 py-1.5">
-                        <p className="font-ui text-[0.50rem] uppercase tracking-[0.12em] text-black/35">{s.label}</p>
-                        <p className="font-mono text-[0.65rem] font-semibold text-black/75">{s.value}</p>
+                      <div key={s.label} className="rounded-[10px] bg-[var(--ink)]/[0.025] px-2.5 py-1.5">
+                        <p className="font-ui text-[0.50rem] uppercase tracking-[0.12em] text-[var(--ink)]/35">{s.label}</p>
+                        <p className="font-mono text-[0.65rem] font-semibold text-[var(--ink)]/75">{s.value}</p>
                       </div>
                     ))}
                   </div>
 
                   {/* Failure signatures */}
                   {platform.failureSignatures.length > 0 && (
-                    <div className="space-y-1.5 border-t border-black/[0.05] pt-3">
-                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-black/35 flex items-center gap-1.5">
+                    <div className="space-y-1.5 border-t border-[var(--ink)]/[0.05] pt-3">
+                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-[var(--ink)]/35 flex items-center gap-1.5">
                         <AlertTriangle size={10} />
                         Known Failure Signatures
                       </p>
                       {platform.failureSignatures.slice(0, 3).map((sig) => (
                         <div key={sig.id} className="flex items-start gap-2">
-                          <span className={`mt-0.5 font-ui text-[0.52rem] uppercase tracking-[0.10em] font-semibold shrink-0 ${SEV_COLOR[sig.severity] ?? "text-black/40"}`}>
+                          <span className={`mt-0.5 font-ui text-[0.52rem] uppercase tracking-[0.10em] font-semibold shrink-0 ${SEV_COLOR[sig.severity] ?? "text-[var(--ink)]/40"}`}>
                             {sig.severity === "critical" ? "●" : "○"}
                           </span>
                           <div className="min-w-0">
-                            <p className="text-[0.65rem] font-semibold text-black/75 leading-snug">{sig.name}</p>
-                            <p className="text-[0.60rem] text-black/42 leading-snug">{sig.description}</p>
+                            <p className="text-[0.65rem] font-semibold text-[var(--ink)]/75 leading-snug">{sig.name}</p>
+                            <p className="text-[0.60rem] text-[var(--ink)]/42 leading-snug">{sig.description}</p>
                           </div>
                         </div>
                       ))}
@@ -384,8 +384,8 @@ export default function KnowledgePage() {
                   )}
 
                   {/* CTA */}
-                  <div className="mt-auto pt-2 flex items-center justify-between border-t border-black/[0.05]">
-                    <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/30">
+                  <div className="mt-auto pt-2 flex items-center justify-between border-t border-[var(--ink)]/[0.05]">
+                    <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/30">
                       {platform.failureSignatures.length} signatures
                     </p>
                     <Link
@@ -406,8 +406,8 @@ export default function KnowledgePage() {
       <section>
         <div className="mb-6">
           <p className="kicker">Layer 1 — Physical</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">Component Anatomy</h2>
-          <p className="mt-2 text-sm text-black/50 max-w-xl">
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Component Anatomy</h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
             What is physically inside a robot — and how each part fails. Every entry
             includes a "human bridge" — how to feel, see, or measure the failure before
             you ever open a diagnostic tool.
@@ -420,32 +420,32 @@ export default function KnowledgePage() {
             return (
             <div key={comp.id} className="panel-elevated flex flex-col gap-3 p-5">
               <div className="flex items-start gap-3">
-                <div className="mt-0.5 shrink-0 rounded-xl bg-black/[0.04] p-2">
-                  <CompIcon size={16} className="text-black/45" />
+                <div className="mt-0.5 shrink-0 rounded-xl bg-[var(--ink)]/[0.04] p-2">
+                  <CompIcon size={16} className="text-[var(--ink)]/45" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-header text-base leading-tight text-black">{comp.name}</h3>
+                    <h3 className="font-header text-base leading-tight text-[var(--ink)]">{comp.name}</h3>
                     {comp.bottleneck && (
                       <span className="inline-flex items-center rounded-full bg-red-500/[0.10] px-2 py-0.5 font-ui text-[0.50rem] uppercase tracking-[0.12em] font-semibold text-red-700">
                         Supply Bottleneck
                       </span>
                     )}
                   </div>
-                  <p className="mt-1.5 text-xs leading-relaxed text-black/55">{comp.summary}</p>
+                  <p className="mt-1.5 text-xs leading-relaxed text-[var(--ink)]/55">{comp.summary}</p>
                 </div>
               </div>
 
-              <div className="rounded-[12px] bg-black/[0.025] px-3.5 py-2.5">
-                <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-black/35 mb-1">Key Fact</p>
-                <p className="text-xs leading-relaxed text-black/60">{comp.keyFact}</p>
+              <div className="rounded-[12px] bg-[var(--ink)]/[0.025] px-3.5 py-2.5">
+                <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-[var(--ink)]/35 mb-1">Key Fact</p>
+                <p className="text-xs leading-relaxed text-[var(--ink)]/60">{comp.keyFact}</p>
               </div>
 
               <div className="rounded-[12px] border border-amber-400/[0.20] bg-amber-400/[0.05] px-3.5 py-2.5">
                 <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-amber-700 mb-1 flex items-center gap-1.5">
                   <User size={10} /> Human Bridge
                 </p>
-                <p className="text-xs leading-relaxed text-black/60">{comp.humanBridge}</p>
+                <p className="text-xs leading-relaxed text-[var(--ink)]/60">{comp.humanBridge}</p>
               </div>
             </div>
             );
@@ -457,8 +457,8 @@ export default function KnowledgePage() {
       <section>
         <div className="mb-6">
           <p className="kicker">Layer 2 — Intelligence</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">Simulation Labs</h2>
-          <p className="mt-2 text-sm text-black/50 max-w-xl">
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Simulation Labs</h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
             Where humans get familiar with robot parts, failure scenarios, and toolsets
             before working on real hardware. These environments let you practice repairs,
             run fault injection, and understand how AI policies respond to component failures.
@@ -473,12 +473,12 @@ export default function KnowledgePage() {
                   <span className={`inline-flex items-center rounded-full px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold ${sim.tagColor}`}>
                     {sim.tag}
                   </span>
-                  <h3 className="mt-2 font-header text-base leading-tight text-black">{sim.name}</h3>
+                  <h3 className="mt-2 font-header text-base leading-tight text-[var(--ink)]">{sim.name}</h3>
                 </div>
-                <Play size={13} className="shrink-0 text-black/20 mt-1" />
+                <Play size={13} className="shrink-0 text-[var(--ink)]/20 mt-1" />
               </div>
 
-              <p className="text-xs leading-relaxed text-black/55">{sim.useCase}</p>
+              <p className="text-xs leading-relaxed text-[var(--ink)]/55">{sim.useCase}</p>
 
               <div className="space-y-1">
                 {[
@@ -488,8 +488,8 @@ export default function KnowledgePage() {
                   { label: "Cert Level", value: sim.certRelevance },
                 ].map((row) => (
                   <div key={row.label} className="flex items-center gap-2">
-                    <p className="font-ui text-[0.52rem] uppercase tracking-[0.12em] text-black/35 w-16 shrink-0">{row.label}</p>
-                    <p className="font-mono text-[0.60rem] text-black/60">{row.value}</p>
+                    <p className="font-ui text-[0.52rem] uppercase tracking-[0.12em] text-[var(--ink)]/35 w-16 shrink-0">{row.label}</p>
+                    <p className="font-mono text-[0.60rem] text-[var(--ink)]/60">{row.value}</p>
                   </div>
                 ))}
               </div>
@@ -498,7 +498,7 @@ export default function KnowledgePage() {
                 href={sim.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto inline-flex items-center gap-1.5 rounded-full border border-black/[0.10] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-black/55 transition hover:bg-black/[0.04] hover:text-black"
+                className="mt-auto inline-flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.10] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
               >
                 <Play size={10} />
                 Open Repo / Docs
@@ -512,8 +512,8 @@ export default function KnowledgePage() {
       <section>
         <div className="mb-6">
           <p className="kicker">Layer 2 — Intelligence</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">AI Intelligence Layer</h2>
-          <p className="mt-2 text-sm text-black/50 max-w-xl">
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">AI Intelligence Layer</h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
             How robots think, learn, and generalize — and what it means for diagnostics.
             Understanding the AI stack helps technicians know whether a failure is hardware,
             firmware, or policy-level.
@@ -529,21 +529,21 @@ export default function KnowledgePage() {
                   <div className={`rounded-xl p-2.5 ${layer.bg} shrink-0`}>
                     <Icon size={16} className={layer.color} />
                   </div>
-                  <h3 className="font-header text-base leading-tight text-black">{layer.layer}</h3>
+                  <h3 className="font-header text-base leading-tight text-[var(--ink)]">{layer.layer}</h3>
                 </div>
 
-                <p className="text-xs leading-relaxed text-black/55">{layer.description}</p>
+                <p className="text-xs leading-relaxed text-[var(--ink)]/55">{layer.description}</p>
 
-                <div className="rounded-[12px] bg-black/[0.025] px-3.5 py-2.5">
-                  <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-black/35 mb-1">Examples</p>
-                  <p className="text-xs text-black/55">{layer.examples}</p>
+                <div className="rounded-[12px] bg-[var(--ink)]/[0.025] px-3.5 py-2.5">
+                  <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-[var(--ink)]/35 mb-1">Examples</p>
+                  <p className="text-xs text-[var(--ink)]/55">{layer.examples}</p>
                 </div>
 
                 <div className="rounded-[12px] border border-sky-400/[0.20] bg-sky-400/[0.05] px-3.5 py-2.5">
                   <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-sky-700 mb-1 flex items-center gap-1.5">
                     <Wrench size={10} /> Tech-to-Field Bridge
                   </p>
-                  <p className="text-xs leading-relaxed text-black/60">{layer.techBridge}</p>
+                  <p className="text-xs leading-relaxed text-[var(--ink)]/60">{layer.techBridge}</p>
                 </div>
               </div>
             );
@@ -578,7 +578,7 @@ export default function KnowledgePage() {
           <div className="flex flex-col gap-2 shrink-0">
             <Link
               href="/technicians/certifications"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-black transition hover:bg-white/90"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-[var(--ink)] transition hover:bg-white/90"
             >
               <GraduationCap size={13} />
               View Certifications
