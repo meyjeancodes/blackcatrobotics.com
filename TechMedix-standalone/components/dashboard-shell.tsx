@@ -20,7 +20,10 @@ export function DashboardShell({
       <div className="hidden shrink-0 lg:flex">
         <Sidebar user={user} />
       </div>
-      <main className="min-w-0 flex-1 px-4 py-8 lg:px-8">
+      <main
+        className="min-w-0 flex-1 px-4 py-8 lg:px-8"
+        style={{ contain: "layout style" }}
+      >
         {children}
       </main>
     </div>
