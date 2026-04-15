@@ -388,12 +388,34 @@ export default function KnowledgePage() {
                     <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/30">
                       {platform.failureSignatures.length} signatures
                     </p>
-                    <Link
-                      href="/technicians/certifications"
-                      className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-ember transition hover:opacity-70"
-                    >
-                      Certify <ChevronRight size={10} />
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      {platform.manualUrl && (
+                        <a
+                          href={platform.manualUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
+                        >
+                          <BookOpen size={10} /> Manual
+                        </a>
+                      )}
+                      {platform.diagramUrl && (
+                        <a
+                          href={platform.diagramUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
+                        >
+                          <Layers size={10} /> Diagram
+                        </a>
+                      )}
+                      <Link
+                        href="/technicians/certifications"
+                        className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-ember transition hover:opacity-70"
+                      >
+                        Certify <ChevronRight size={10} />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}

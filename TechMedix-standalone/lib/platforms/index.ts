@@ -31,6 +31,10 @@ export interface PlatformProfile {
   badge?: string;
   /** Optional maintenance interval schedule — used by MaintenanceSchedule component */
   maintenanceIntervals?: Record<string, { interval: string; signal: string | null }>;
+  /** Official service manual or technical documentation URL */
+  manualUrl?: string;
+  /** Technical diagram, exploded view, or datasheet URL */
+  diagramUrl?: string;
 }
 
 const PLATFORMS: PlatformProfile[] = [
@@ -61,6 +65,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "spine-instability", name: "Spine Instability", severity: "warning", description: "Waist RPY variance > 0.05 rad² (static)" },
     ],
     maintenanceCta: "Dispatch G1 technician",
+    manualUrl: "https://support.unitree.com/home/en/G1_developer",
+    diagramUrl: "https://github.com/unitreerobotics/unitree_ros/tree/master/robots/g1_description",
   },
   {
     id: "unitree-h1-2",
@@ -82,6 +88,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 15% during active task" },
     ],
     maintenanceCta: "Schedule H1-2 service",
+    manualUrl: "https://support.unitree.com/home/en/H1_developer",
+    diagramUrl: "https://github.com/unitreerobotics/unitree_ros/tree/master/robots/h1_description",
   },
   {
     id: "unitree-b2",
@@ -102,6 +110,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "ft-sensor-drift", name: "Foot F/T Drift", severity: "warning", description: "Contact detection false positive rate > 5%" },
     ],
     maintenanceCta: "Schedule B2 inspection",
+    manualUrl: "https://support.unitree.com/home/en/B2_developer",
+    diagramUrl: "https://github.com/unitreerobotics/unitree_ros/tree/master/robots/b2_description",
   },
   {
     id: "figure-02",
@@ -122,6 +132,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "camera-offline", name: "Head Camera Drop", severity: "critical", description: "Primary vision system offline > 100ms" },
     ],
     maintenanceCta: "Request Figure technician",
+    manualUrl: "https://www.figure.ai/news/figure-02",
+    diagramUrl: "https://www.figure.ai/news/figure-02",
   },
   {
     id: "optimus-gen3",
@@ -141,6 +153,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 20% during active sequence" },
     ],
     maintenanceCta: "Open Optimus support ticket",
+    manualUrl: "https://www.tesla.com/en_us/AI",
+    diagramUrl: "https://www.tesla.com/en_us/AI",
   },
   {
     id: "digit-v5",
@@ -160,6 +174,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "actuator-overheat", name: "Knee Actuator Overheat", severity: "critical", description: "Knee joint > 76°C during incline traversal" },
     ],
     maintenanceCta: "Schedule Digit field service",
+    manualUrl: "https://agilityrobotics.com/resources",
+    diagramUrl: "https://github.com/AgilityRobotics/digit-interface",
   },
   {
     id: "phantom-mk1",
@@ -178,6 +194,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "gripper-encoder-drift", name: "Gripper Drift", severity: "warning", description: "End-effector grip force variance > 15N" },
     ],
     maintenanceCta: "Open Phantom support ticket",
+    manualUrl: "https://github.com/blackcatrobotics/blackcat-os",
+    diagramUrl: "https://github.com/blackcatrobotics/blackcat-os",
   },
 
   // ── Drones ──────────────────────────────────────────────────────────────────
@@ -199,6 +217,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 15% mid-mission" },
     ],
     maintenanceCta: "Schedule drone maintenance",
+    manualUrl: "https://dl.djicdn.com/downloads/agras_t50/20231113/AGRAS_T50_User_Manual_v1.0_en.pdf",
+    diagramUrl: "https://dl.djicdn.com/downloads/agras_t50/20231113/AGRAS_T50_User_Manual_v1.0_en.pdf",
   },
   {
     id: "skydio-x10",
@@ -218,6 +238,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "vla-inference-stall", name: "Autonomy Stack Stall", severity: "critical", description: "Obstacle avoidance latency > 200ms" },
     ],
     maintenanceCta: "Request Skydio service",
+    manualUrl: "https://support.skydio.com/hc/en-us/categories/360002011492",
+    diagramUrl: "https://support.skydio.com/hc/en-us/categories/360002011492",
   },
   {
     id: "zipline-p2",
@@ -237,6 +259,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "battery-critical", name: "Range Battery Low", severity: "critical", description: "SOC < 25% beyond return threshold" },
     ],
     maintenanceCta: "Schedule Zipline dock service",
+    manualUrl: "https://www.zipline.com/technology",
+    diagramUrl: "https://www.zipline.com/technology",
   },
 
   // ── Delivery ────────────────────────────────────────────────────────────────
@@ -258,6 +282,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "joint-backlash", name: "Wheel Encoder Drift", severity: "warning", description: "Odometry error > 5cm/m traveled" },
     ],
     maintenanceCta: "Dispatch field technician",
+    manualUrl: "https://www.serverobotics.com/technology",
+    diagramUrl: "https://www.serverobotics.com/technology",
   },
   {
     id: "starship-gen3",
@@ -277,6 +303,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "actuator-overheat", name: "Drive Motor Overheat", severity: "warning", description: "Wheel motor > 65°C on incline" },
     ],
     maintenanceCta: "Dispatch Starship technician",
+    manualUrl: "https://www.starship.xyz/press/",
+    diagramUrl: "https://www.starship.xyz/press/",
   },
 
   // ── Industrial ──────────────────────────────────────────────────────────────
@@ -299,6 +327,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "ft-sensor-drift", name: "Foot Sensor Drift", severity: "info", description: "Ground contact confidence < 85%" },
     ],
     maintenanceCta: "Schedule Spot service",
+    manualUrl: "https://support.bostondynamics.com/s/",
+    diagramUrl: "https://github.com/boston-dynamics/spot-sdk",
   },
   {
     id: "proteus-amr",
@@ -318,6 +348,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "camera-offline", name: "LiDAR Dropout", severity: "critical", description: "LiDAR scan rate < 5 Hz" },
     ],
     maintenanceCta: "Open AMR maintenance ticket",
+    manualUrl: "https://www.amazon.science/blog",
+    diagramUrl: "https://www.amazon.science/blog",
   },
 
   // ── Watch List — Pre-Integration ────────────────────────────────────────────
@@ -369,6 +401,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "firmware-drift",     name: "Firmware Drift",       severity: "info",     description: "Version delta >2 builds — OTA update overdue" },
     ],
     maintenanceCta: "Schedule field swap",
+    manualUrl: "https://github.com/blackcatrobotics/blackcat-os",
+    diagramUrl: "https://github.com/blackcatrobotics/blackcat-os",
     maintenanceIntervals: {
       batterySwap:      { interval: "500 cycles or 6 months",  signal: "battery-cell-drift"  },
       brakeInspect:     { interval: "30 days or 500 rides",    signal: "brake-pad-thin"      },
@@ -408,6 +442,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "brake-lever-corrosion", name: "Brake Lever Corrosion",    severity: "warning",  description: "Lever force delta >25% — corrosion on pivot" },
     ],
     maintenanceCta: "Schedule rebalance",
+    manualUrl: "https://github.com/blackcatrobotics/blackcat-os",
+    diagramUrl: "https://github.com/blackcatrobotics/blackcat-os",
     maintenanceIntervals: {
       batteryInspect:   { interval: "6 months or 2,000 rides", signal: "battery-cell-drift"    },
       brakeInspect:     { interval: "30 days or 500 rides",    signal: "brake-pad-thin"        },
@@ -448,6 +484,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "firmware-drift",      name: "Firmware Drift",        severity: "info",     description: "Version delta >2 builds" },
     ],
     maintenanceCta: "Schedule depot maintenance",
+    manualUrl: "https://github.com/blackcatrobotics/blackcat-os",
+    diagramUrl: "https://github.com/blackcatrobotics/blackcat-os",
     maintenanceIntervals: {
       batterySwap:      { interval: "500 cycles or 6 months",    signal: "battery-cell-drift"  },
       brakeInspect:     { interval: "30 days or 500 rides",      signal: "brake-pad-thin"      },
