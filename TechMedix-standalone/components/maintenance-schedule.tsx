@@ -92,10 +92,10 @@ export function MaintenanceSchedule({ platform }: { platform: PlatformProfile })
   return (
     <section className="panel-elevated p-6">
       {/* Header */}
-      <div className="mb-5 flex items-end justify-between gap-4 pb-5 border-b border-black/[0.05]">
+      <div className="mb-5 flex items-end justify-between gap-4 pb-5 border-b border-theme-5">
         <div>
           <p className="kicker">Preventive Maintenance</p>
-          <h2 className="mt-2 font-header text-xl leading-tight text-black">
+          <h2 className="mt-2 font-header text-xl leading-tight text-theme-primary">
             Maintenance Schedule
           </h2>
         </div>
@@ -117,11 +117,11 @@ export function MaintenanceSchedule({ platform }: { platform: PlatformProfile })
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-sm">
           <thead>
-            <tr className="border-b border-black/[0.05]">
+            <tr className="border-b border-theme-5">
               {["Service Item", "Interval", "Last Service", "Status", "Signal"].map((h) => (
                 <th
                   key={h}
-                  className="pb-3 text-left font-ui text-[0.57rem] uppercase tracking-[0.18em] text-black/35 font-medium"
+                  className="pb-3 text-left font-ui text-[0.57rem] uppercase tracking-[0.18em] text-theme-35 font-medium"
                 >
                   {h}
                 </th>
@@ -130,14 +130,14 @@ export function MaintenanceSchedule({ platform }: { platform: PlatformProfile })
           </thead>
           <tbody className="divide-y divide-black/[0.04]">
             {rows.map(({ key, cfg, daysSince, lastDate, status }) => (
-              <tr key={key} className="transition-colors hover:bg-black/[0.015]">
-                <td className="py-3 pr-4 font-medium text-black text-sm">
+              <tr key={key} className="transition-colors hover:bg-theme-15">
+                <td className="py-3 pr-4 font-medium text-theme-primary text-sm">
                   {KEY_LABELS[key] ?? key}
                 </td>
-                <td className="py-3 pr-4 text-xs text-black/55 whitespace-nowrap">
+                <td className="py-3 pr-4 text-xs text-theme-55 whitespace-nowrap">
                   {cfg.interval}
                 </td>
-                <td className="py-3 pr-4 text-xs text-black/45 whitespace-nowrap">
+                <td className="py-3 pr-4 text-xs text-theme-45 whitespace-nowrap">
                   {daysSince === 0
                     ? "Today"
                     : `${lastDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })} (${daysSince}d ago)`}
@@ -149,9 +149,9 @@ export function MaintenanceSchedule({ platform }: { platform: PlatformProfile })
                     {status}
                   </span>
                 </td>
-                <td className="py-3 text-xs text-black/35 font-mono">
+                <td className="py-3 text-xs text-theme-35 font-mono">
                   {cfg.signal ?? (
-                    <span className="text-black/20">—</span>
+                    <span className="text-theme-20">—</span>
                   )}
                 </td>
               </tr>

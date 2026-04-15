@@ -3,19 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --paper: #f2f0eb;
-  --paper-2: #fcfbf8;
-  --ink: #0c0d11;
+  /* ── Light mode (default) ──────────────────────────────────────────────── */
+  --paper:    #f2f0eb;
+  --paper-2:  #fcfbf8;
+  --ink:      #0c0d11;
   --ink-soft: #5d616d;
-  --surface: #17181d;
+  --surface:  #17181d;
   --surface-soft: #23252c;
-  --ember: #e8601e;
-  --moss: #1db87a;
-  --gold: #c3a55b;
+  --ember:    #e8601e;
+  --moss:     #1db87a;
+  --gold:     #c3a55b;
 
-  --font-header: 'Tanker', sans-serif;
-  --font-body: 'Satoshi', 'Helvetica Neue', sans-serif;
-  --font-ui: 'Chakra Petch', monospace;
+  --panel-bg:          rgba(255, 255, 255, 0.82);
+  --panel-border:      rgba(12, 13, 17, 0.06);
+  --panel-elevated-bg: rgba(255, 255, 255, 0.92);
+  --body-gradient-top: var(--paper-2);
+  --body-gradient-bot: var(--paper);
+  --ember-glow:        rgba(232, 96, 30, 0.09);
 
   --shadow-panel:
     0 2px 4px rgba(12,13,17,0.04),
@@ -36,78 +40,130 @@
     0 4px 8px rgba(12,13,17,0.07),
     0 12px 32px rgba(12,13,17,0.12),
     0 32px 72px rgba(12,13,17,0.12);
+
+  --font-header: 'Tanker', sans-serif;
+  --font-body:   'Satoshi', 'Helvetica Neue', sans-serif;
+  --font-ui:     'Chakra Petch', monospace;
+
+  color-scheme: light;
 }
 
-/* ── Dark theme variable overrides ──────────────────────────────────────── */
+/* ── Dark mode — triggered ONLY by data-theme="dark" on <html> ───────────── */
+/* The JS init script sets this attribute before first paint.                 */
+/* We never use @media (prefers-color-scheme) directly in CSS.                */
 
-[data-theme="dark"],
-:root:not([data-theme="light"]) {
+[data-theme="dark"] {
+  --paper:    #111316;
+  --paper-2:  #17191e;
+  --ink:      #e4e5e9;
+  --ink-soft: #8a8d99;
+
+  --panel-bg:          rgba(26, 27, 32, 0.92);
+  --panel-border:      rgba(255, 255, 255, 0.07);
+  --panel-elevated-bg: rgba(22, 23, 28, 0.97);
+  --body-gradient-top: var(--paper-2);
+  --body-gradient-bot: var(--paper);
+  --ember-glow:        rgba(232, 96, 30, 0.06);
+
+  --shadow-panel:
+    0 2px 4px rgba(0,0,0,0.30),
+    0 6px 16px rgba(0,0,0,0.34),
+    0 20px 48px rgba(0,0,0,0.26);
+
+  --shadow-panel-hover:
+    0 2px 4px rgba(0,0,0,0.34),
+    0 8px 24px rgba(0,0,0,0.40),
+    0 24px 56px rgba(0,0,0,0.30);
+
+  --shadow-elevated:
+    0 2px 4px rgba(0,0,0,0.32),
+    0 8px 20px rgba(0,0,0,0.36),
+    0 28px 64px rgba(0,0,0,0.28);
+
+  --shadow-elevated-hover:
+    0 4px 8px rgba(0,0,0,0.38),
+    0 12px 32px rgba(0,0,0,0.44),
+    0 32px 72px rgba(0,0,0,0.32);
+
   color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #111214;
-    --paper-2: #16171c;
-    --ink: #e8e9ec;
-    --ink-soft: #8b8f9a;
-    --border-color: rgba(255,255,255,0.07);
+/* ── Theme-aware Tailwind utility aliases ───────────────────────────────── */
+.text-theme-primary  { color: var(--ink); }
+.text-theme-soft     { color: var(--ink-soft); }
+.text-theme-muted    { color: color-mix(in srgb, var(--ink) 50%, transparent); }
+.text-theme-subtle   { color: color-mix(in srgb, var(--ink) 35%, transparent); }
+.bg-theme-surface    { background: color-mix(in srgb, var(--ink) 3%, transparent); }
+.bg-theme-surface-2  { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.border-theme        { border-color: var(--panel-border); }
 
-    --shadow-panel:
-      0 2px 4px rgba(0,0,0,0.28),
-      0 6px 16px rgba(0,0,0,0.32),
-      0 20px 48px rgba(0,0,0,0.24);
+/* ── Theme-aware text opacity aliases ─────────────────────────────────────── */
+.text-theme-25   { color: color-mix(in srgb, var(--ink) 25%, transparent); }
+.text-theme-30   { color: color-mix(in srgb, var(--ink) 30%, transparent); }
+.text-theme-35   { color: color-mix(in srgb, var(--ink) 35%, transparent); }
+.text-theme-38   { color: color-mix(in srgb, var(--ink) 38%, transparent); }
+.text-theme-40   { color: color-mix(in srgb, var(--ink) 40%, transparent); }
+.text-theme-42   { color: color-mix(in srgb, var(--ink) 42%, transparent); }
+.text-theme-45   { color: color-mix(in srgb, var(--ink) 45%, transparent); }
+.text-theme-50   { color: color-mix(in srgb, var(--ink) 50%, transparent); }
+.text-theme-52   { color: color-mix(in srgb, var(--ink) 52%, transparent); }
+.text-theme-55   { color: color-mix(in srgb, var(--ink) 55%, transparent); }
+.text-theme-60   { color: color-mix(in srgb, var(--ink) 60%, transparent); }
+.text-theme-65   { color: color-mix(in srgb, var(--ink) 65%, transparent); }
+.text-theme-70   { color: color-mix(in srgb, var(--ink) 70%, transparent); }
+.text-theme-75   { color: color-mix(in srgb, var(--ink) 75%, transparent); }
 
-    --shadow-panel-hover:
-      0 2px 4px rgba(0,0,0,0.32),
-      0 8px 24px rgba(0,0,0,0.38),
-      0 24px 56px rgba(0,0,0,0.28);
+.bg-theme-18     { background: color-mix(in srgb, var(--ink) 1.8%, transparent); }
+.bg-theme-25     { background: color-mix(in srgb, var(--ink) 2.5%, transparent); }
+.bg-theme-3      { background: color-mix(in srgb, var(--ink) 3%, transparent); }
+.bg-theme-4      { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+.bg-theme-5      { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.bg-theme-6      { background: color-mix(in srgb, var(--ink) 6%, transparent); }
 
-    --shadow-elevated:
-      0 2px 4px rgba(0,0,0,0.30),
-      0 8px 20px rgba(0,0,0,0.34),
-      0 28px 64px rgba(0,0,0,0.26);
+.border-theme-5  { border-color: var(--panel-border); }
+.border-theme-6  { border-color: var(--panel-border); }
+.border-theme-7  { border-color: var(--panel-border); }
+.border-theme-8  { border-color: var(--panel-border); }
+.border-theme-10 { border-color: var(--panel-border); }
+.border-theme-12 { border-color: var(--panel-border); }
 
-    --shadow-elevated-hover:
-      0 4px 8px rgba(0,0,0,0.36),
-      0 12px 32px rgba(0,0,0,0.42),
-      0 32px 72px rgba(0,0,0,0.30);
-  }
-}
+.text-theme-20   { color: color-mix(in srgb, var(--ink) 20%, transparent); }
+.text-theme-22   { color: color-mix(in srgb, var(--ink) 22%, transparent); }
+.text-theme-28   { color: color-mix(in srgb, var(--ink) 28%, transparent); }
+.text-theme-36   { color: color-mix(in srgb, var(--ink) 36%, transparent); }
+.text-theme-48   { color: color-mix(in srgb, var(--ink) 48%, transparent); }
+.text-theme-58   { color: color-mix(in srgb, var(--ink) 58%, transparent); }
+.text-theme-62   { color: color-mix(in srgb, var(--ink) 62%, transparent); }
+.text-theme-68   { color: color-mix(in srgb, var(--ink) 68%, transparent); }
+.text-theme-80   { color: color-mix(in srgb, var(--ink) 80%, transparent); }
 
-[data-theme="dark"] {
-  --paper: #111214;
-  --paper-2: #16171c;
-  --ink: #e8e9ec;
-  --ink-soft: #8b8f9a;
-  --border-color: rgba(255,255,255,0.07);
+.text-theme-24   { color: color-mix(in srgb, var(--ink) 24%, transparent); }
+.text-theme-32   { color: color-mix(in srgb, var(--ink) 32%, transparent); }
+.border-theme-4  { border-color: var(--panel-border); }
 
-  --shadow-panel:
-    0 2px 4px rgba(0,0,0,0.28),
-    0 6px 16px rgba(0,0,0,0.32),
-    0 20px 48px rgba(0,0,0,0.24);
+.bg-theme-2      { background: color-mix(in srgb, var(--ink) 2%, transparent); }
+.bg-theme-8      { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.bg-theme-20     { background: color-mix(in srgb, var(--ink) 20%, transparent); }
+.bg-theme-30     { background: color-mix(in srgb, var(--ink) 30%, transparent); }
+.border-theme-20 { border-color: color-mix(in srgb, var(--ink) 20%, transparent); }
 
-  --shadow-elevated:
-    0 2px 4px rgba(0,0,0,0.30),
-    0 8px 20px rgba(0,0,0,0.34),
-    0 28px 64px rgba(0,0,0,0.26);
-}
-
-/* ── Theme-aware text utilities ─────────────────────────────────────────── */
-.text-ink-primary { color: var(--ink); }
-.text-ink-soft    { color: var(--ink-soft); }
+.bg-theme-7      { background: color-mix(in srgb, var(--ink) 7%, transparent); }
+.bg-theme-15     { background: color-mix(in srgb, var(--ink) 15%, transparent); }
+.bg-theme-40     { background: color-mix(in srgb, var(--ink) 40%, transparent); }
+.bg-theme-45     { background: color-mix(in srgb, var(--ink) 4.5%, transparent); }
+.border-theme-15 { border-color: color-mix(in srgb, var(--ink) 15%, transparent); }
 
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top right, rgba(232, 96, 30, 0.09), transparent 28%),
-    linear-gradient(180deg, var(--paper-2), var(--paper));
+    radial-gradient(circle at top right, var(--ember-glow), transparent 28%),
+    linear-gradient(180deg, var(--body-gradient-top), var(--body-gradient-bot));
   color: var(--ink);
   font-family: var(--font-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background 280ms ease, color 280ms ease;
+  transition: background 300ms ease, color 300ms ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -126,7 +182,7 @@ code, pre, table, th, td {
 }
 
 * {
-  border-color: var(--border-color, rgba(12, 13, 17, 0.07));
+  border-color: var(--panel-border);
 }
 
 ::selection {
@@ -137,22 +193,11 @@ code, pre, table, th, td {
 
 .panel {
   border-radius: 28px;
-  border: 1px solid var(--border-color, rgba(12,13,17,0.06));
-  background: rgba(255,255,255,0.82);
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
   box-shadow: var(--shadow-panel);
-  transition: box-shadow 220ms ease, transform 220ms ease, background 280ms ease;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .panel {
-    background: rgba(28,29,34,0.90);
-    border-color: rgba(255,255,255,0.07);
-  }
-}
-
-[data-theme="dark"] .panel {
-  background: rgba(28,29,34,0.90);
-  border-color: rgba(255,255,255,0.07);
+  transition: box-shadow 220ms ease, transform 220ms ease,
+              background 300ms ease, border-color 300ms ease;
 }
 
 .panel:hover {
@@ -161,30 +206,19 @@ code, pre, table, th, td {
 
 .panel-elevated {
   border-radius: 28px;
-  border: 1px solid var(--border-color, rgba(12,13,17,0.07));
-  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--panel-border);
+  background: var(--panel-elevated-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: var(--shadow-elevated);
-  transition: box-shadow 220ms ease, transform 220ms ease, background 280ms ease;
+  transition: box-shadow 220ms ease, transform 220ms ease,
+              background 300ms ease, border-color 300ms ease;
 }
 
 .panel-elevated:hover {
-  will-change: transform;
   box-shadow: var(--shadow-elevated-hover);
   transform: translateY(-1px);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .panel-elevated {
-    background: rgba(22,23,28,0.96);
-    border-color: rgba(255,255,255,0.08);
-  }
-}
-
-[data-theme="dark"] .panel-elevated {
-  background: rgba(22,23,28,0.96);
-  border-color: rgba(255,255,255,0.08);
+  will-change: transform;
 }
 
 .panel-dark {
@@ -215,7 +249,7 @@ code, pre, table, th, td {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.34em;
-  color: var(--ink-soft, rgba(12,13,17,0.42));
+  color: var(--ink-soft);
   line-height: 1;
 }
 

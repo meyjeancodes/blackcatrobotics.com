@@ -76,8 +76,8 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
               onClick={() => setStatusFilter(s)}
               className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
                 statusFilter === s
-                  ? "bg-black text-white border-black"
-                  : "border-black/10 text-zinc-600 hover:border-black/20"
+                  ? "bg-[#0c0d11] text-white border-[#0c0d11]"
+                  : "border-theme-10 text-zinc-600 hover:border-theme-10"
               }`}
             >
               {s === "all" ? "All" : s.replace("_", " ")}
@@ -123,7 +123,7 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
                           </span>
                         )}
                       </div>
-                      <p className="font-semibold text-sm text-black leading-tight">
+                      <p className="font-semibold text-sm text-theme-primary leading-tight">
                         {job.procedures?.title ?? "Untitled Procedure"}
                       </p>
                       <p className="text-xs text-zinc-500 mt-0.5">
@@ -176,7 +176,7 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
           <div className="flex items-start justify-between mb-4">
             <div>
               <p className="kicker">Procedure Steps</p>
-              <h3 className="font-header text-base text-black mt-0.5 leading-tight">
+              <h3 className="font-header text-base text-theme-primary mt-0.5 leading-tight">
                 {selectedJob.procedures?.title ?? "Procedure"}
               </h3>
             </div>
@@ -185,7 +185,7 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
                 setSelectedJob(null);
                 setGuidance(null);
               }}
-              className="p-1 hover:bg-black/5 rounded-lg transition-colors"
+              className="p-1 hover:bg-theme-5 rounded-lg transition-colors"
             >
               <X className="w-4 h-4 text-zinc-400" />
             </button>
@@ -204,16 +204,16 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
                   }}
                   className={`w-full text-left rounded-xl p-3 border transition-all ${
                     isActive
-                      ? "border-black/15 bg-black/[0.03]"
-                      : "border-black/5 hover:bg-black/[0.02]"
+                      ? "border-theme-15 bg-theme-3"
+                      : "border-theme-5 hover:bg-theme-2"
                   }`}
                 >
                   <div className="flex items-start gap-2">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-black/[0.06] flex items-center justify-center text-[10px] font-bold text-black/60 mt-0.5">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-theme-6 flex items-center justify-center text-[10px] font-bold text-theme-60 mt-0.5">
                       {i + 1}
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-black leading-tight">
+                      <p className="text-sm font-medium text-theme-primary leading-tight">
                         {step.title}
                       </p>
                       {isActive && (
@@ -240,7 +240,7 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
 
           {/* AI Guidance */}
           {selectedJob.procedures?.ai_guidance_enabled && (
-            <div className="mt-4 space-y-3 border-t border-black/5 pt-4">
+            <div className="mt-4 space-y-3 border-t border-theme-5 pt-4">
               {guidance && (
                 <div className="bg-sky-50 border border-sky-100 rounded-xl p-3">
                   <p className="text-[10px] uppercase tracking-widest text-sky-400 mb-1.5 font-ui">
@@ -252,7 +252,7 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
               <button
                 onClick={() => fetchGuidance(selectedJob, activeStep)}
                 disabled={guidanceLoading}
-                className="w-full flex items-center justify-center gap-2 bg-black hover:bg-zinc-800 disabled:opacity-50 text-white rounded-xl px-4 py-2.5 text-xs font-medium transition-colors"
+                className="w-full flex items-center justify-center gap-2 bg-[#0c0d11] hover:bg-zinc-800 disabled:opacity-50 text-white rounded-xl px-4 py-2.5 text-xs font-medium transition-colors"
               >
                 <Zap className="w-3.5 h-3.5" />
                 {guidanceLoading ? "Thinking…" : "Get AI Guidance for Step"}

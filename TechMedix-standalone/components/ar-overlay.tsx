@@ -196,7 +196,7 @@ export function AROverlay({ robotId, platformId, isActive, activeFault }: AROver
 
   if (permissionDenied) {
     return (
-      <div className="flex flex-col items-center justify-center h-full bg-black text-white p-8 text-center gap-4">
+      <div className="flex flex-col items-center justify-center h-full bg-[#0c0d11] text-white p-8 text-center gap-4">
         <WifiOff size={40} className="text-red-400" />
         <p className="text-lg font-semibold">Camera permission denied</p>
         <p className="text-sm text-white/60 max-w-sm">
@@ -209,7 +209,7 @@ export function AROverlay({ robotId, platformId, isActive, activeFault }: AROver
   const severityColor = guidance ? SEVERITY_COLORS[guidance.severity] : "#22c55e";
 
   return (
-    <div className="relative w-full h-full bg-black overflow-hidden">
+    <div className="relative w-full h-full bg-[#0c0d11] overflow-hidden">
       {/* Video element */}
       <video
         ref={videoRef}
@@ -227,7 +227,7 @@ export function AROverlay({ robotId, platformId, isActive, activeFault }: AROver
 
       {/* Loading indicator */}
       {loading && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-3 py-1.5 rounded-full font-mono">
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-[#0c0d11]/70 text-white text-xs px-3 py-1.5 rounded-full font-mono">
           Analyzing...
         </div>
       )}
@@ -242,7 +242,7 @@ export function AROverlay({ robotId, platformId, isActive, activeFault }: AROver
 
       {/* Info panel — right side */}
       {guidance && (
-        <div className="absolute top-4 right-4 w-72 bg-black/80 border border-white/10 rounded-2xl p-4 space-y-3">
+        <div className="absolute top-4 right-4 w-72 bg-[#17181d]/80 border border-white/10 rounded-2xl p-4 space-y-3">
           {/* Severity indicator */}
           <div className="flex items-center gap-2">
             <div

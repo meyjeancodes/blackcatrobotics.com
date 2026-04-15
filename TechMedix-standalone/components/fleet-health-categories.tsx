@@ -169,7 +169,7 @@ function CategoryCard({
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <div className={`h-2 w-2 rounded-full shrink-0 ${meta.dotClass}`} />
-          <span className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-black/45">
+          <span className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-theme-45">
             {meta.label}
           </span>
         </div>
@@ -188,9 +188,9 @@ function CategoryCard({
       <div>
         <p className={`font-header text-[2.4rem] leading-none tabular-nums tracking-[-0.04em] ${healthColor}`}>
           {stats.avgHealth}
-          <span className="text-xl font-ui font-normal text-black/30 ml-0.5">%</span>
+          <span className="text-xl font-ui font-normal text-theme-30 ml-0.5">%</span>
         </p>
-        <p className="mt-1 font-ui text-[0.57rem] uppercase tracking-[0.16em] text-black/28">
+        <p className="mt-1 font-ui text-[0.57rem] uppercase tracking-[0.16em] text-theme-28">
           Avg health — {stats.robotCount} unit{stats.robotCount !== 1 ? "s" : ""}
         </p>
       </div>
@@ -199,7 +199,7 @@ function CategoryCard({
       <div className={`flex items-end justify-between gap-3 ${sparkColor}`}>
         <Sparkline values={stats.sparkline} colorClass="" />
         <div className="text-right shrink-0">
-          <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/28">7-day</p>
+          <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-28">7-day</p>
           <p className={`font-ui text-[0.60rem] font-semibold tabular-nums ${healthColor}`}>
             {Math.min(...stats.sparkline)}–{Math.max(...stats.sparkline)}
           </p>
@@ -211,13 +211,13 @@ function CategoryCard({
         {meta.platforms.slice(0, 3).map((p) => (
           <span
             key={p}
-            className="rounded-full bg-black/[0.04] px-2 py-0.5 font-ui text-[0.53rem] uppercase tracking-[0.12em] text-black/38"
+            className="rounded-full bg-theme-4 px-2 py-0.5 font-ui text-[0.53rem] uppercase tracking-[0.12em] text-theme-38"
           >
             {p}
           </span>
         ))}
         {meta.platforms.length > 3 && (
-          <span className="rounded-full bg-black/[0.04] px-2 py-0.5 font-ui text-[0.53rem] uppercase tracking-[0.12em] text-black/30">
+          <span className="rounded-full bg-theme-4 px-2 py-0.5 font-ui text-[0.53rem] uppercase tracking-[0.12em] text-theme-30">
             +{meta.platforms.length - 3} more
           </span>
         )}
@@ -245,7 +245,7 @@ export function FleetHealthCategories() {
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
           <p className="kicker">Fleet Intelligence</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-theme-primary">
             Fleet Health by Category
           </h2>
         </div>
@@ -260,7 +260,7 @@ export function FleetHealthCategories() {
           )}
           <Link
             href="/nodes"
-            className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40 transition-colors hover:text-black/70"
+            className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-40 transition-colors hover:text-theme-primary/70"
           >
             All nodes →
           </Link>
@@ -281,8 +281,8 @@ export function FleetHealthCategories() {
 
       {/* Filtered platform list */}
       {activeCategory && (
-        <div className="mt-4 rounded-[20px] border border-black/[0.06] bg-black/[0.018] px-5 py-4">
-          <p className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-black/40 mb-3">
+        <div className="mt-4 rounded-[20px] border border-theme-6 bg-theme-18 px-5 py-4">
+          <p className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-theme-40 mb-3">
             Platforms in {activeCategory.label}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -290,7 +290,7 @@ export function FleetHealthCategories() {
               <Link
                 key={pid}
                 href={`/nodes/${pid}`}
-                className="inline-flex items-center rounded-full border border-black/[0.10] bg-white px-3 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-black/60 transition-colors hover:border-black/20 hover:text-black"
+                className="inline-flex items-center rounded-full border border-theme-10 bg-white px-3 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-60 transition-colors hover:border-theme-10 hover:text-theme-primary"
               >
                 {pid}
               </Link>

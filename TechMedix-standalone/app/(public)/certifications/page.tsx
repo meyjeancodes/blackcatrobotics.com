@@ -13,10 +13,10 @@ export default function CertificationsIndexPage() {
     <div className="space-y-10">
       <div>
         <p className="kicker">Certification Program</p>
-        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-black lg:text-5xl">
+        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-theme-primary lg:text-5xl">
           BCR Field Tech Certifications
         </h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-theme-52">
           Choose your certification level. Each level builds on the last — unlocking higher-value
           dispatch jobs, more platform eligibility, and greater autonomy within the BCR technician
           network.
@@ -39,29 +39,29 @@ export default function CertificationsIndexPage() {
               {level.id}
             </div>
             <div className="min-w-0 flex-1">
-              <h2 className="font-header text-lg leading-tight text-black">
+              <h2 className="font-header text-lg leading-tight text-theme-primary">
                 {level.id} — {level.title}
               </h2>
               <div className="mt-0.5 flex flex-wrap items-baseline gap-3">
                 <p className={`font-mono text-sm font-semibold ${level.color}`}>
                   {level.jobValueRange}
                 </p>
-                <p className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-black/40">
+                <p className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-40">
                   {level.price} one-time
                 </p>
               </div>
-              <p className="mt-1 text-xs text-black/40">{level.prerequisites}</p>
+              <p className="mt-1 text-xs text-theme-40">{level.prerequisites}</p>
             </div>
-            <ChevronRight className="shrink-0 text-black/25" size={18} />
+            <ChevronRight className="shrink-0 text-theme-25" size={18} />
           </Link>
         ))}
       </div>
 
       <div className="panel space-y-3 p-6 text-center">
-        <p className="text-sm text-black/55">Already certified? Sign in to track your progress.</p>
+        <p className="text-sm text-theme-55">Already certified? Sign in to track your progress.</p>
         <Link
           href="/login"
-          className="inline-flex items-center rounded-full border border-black/[0.12] px-5 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-black/60 transition hover:bg-black/[0.04]"
+          className="inline-flex items-center rounded-full border border-theme-12 px-5 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-theme-60 transition hover:bg-theme-4"
         >
           Sign In
         </Link>

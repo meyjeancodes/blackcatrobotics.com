@@ -220,16 +220,16 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
   }
 
   return (
-    <div className="rounded-[22px] border border-black/5 bg-black/[0.02] p-4">
+    <div className="rounded-[22px] border border-theme-5 bg-theme-2 p-4">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-black/45">{robotName}</p>
-          <h3 className="mt-2 text-lg font-semibold text-black">{job.description}</h3>
+          <p className="text-xs uppercase tracking-[0.22em] text-theme-45">{robotName}</p>
+          <h3 className="mt-2 text-lg font-semibold text-theme-primary">{job.description}</h3>
         </div>
         <StatusPill label={job.status} />
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-5 text-sm text-black/60">
+      <div className="mt-4 flex flex-wrap gap-5 text-sm text-theme-60">
         <span>Region: {job.region}</span>
         <span>Technician: {techName}</span>
         <span>ETA: {job.etaMinutes ? `${job.etaMinutes} min` : "Pending"}</span>
@@ -239,7 +239,7 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
       {showProtocol && (
         <div className="mt-4">
           {protocolLoading ? (
-            <div className="h-24 bg-black/5 rounded-xl animate-pulse" />
+            <div className="h-24 bg-theme-5 rounded-xl animate-pulse" />
           ) : protocol ? (
             <RepairProtocolViewer
               failureMode={protocol.failureMode}
@@ -247,9 +247,9 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
               onClose={() => setShowProtocol(false)}
             />
           ) : (
-            <div className="flex items-center justify-between text-xs text-black/40 bg-black/5 rounded-xl px-4 py-3">
+            <div className="flex items-center justify-between text-xs text-theme-40 bg-theme-5 rounded-xl px-4 py-3">
               <span>No repair protocol found for this platform.</span>
-              <button onClick={() => setShowProtocol(false)} className="text-black/30 hover:text-black/60"><X size={12} /></button>
+              <button onClick={() => setShowProtocol(false)} className="text-theme-30 hover:text-theme-primary/60"><X size={12} /></button>
             </div>
           )}
         </div>
@@ -260,7 +260,7 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
         {job.platformId && !showProtocol && (
           <button
             onClick={loadProtocol}
-            className="inline-flex items-center gap-1.5 rounded-full border border-black/[0.10] px-3 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] font-semibold text-black/55 transition hover:bg-black/[0.04] hover:text-black"
+            className="inline-flex items-center gap-1.5 rounded-full border border-theme-10 px-3 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] font-semibold text-theme-55 transition hover:bg-theme-4 hover:text-theme-primary"
           >
             <BookOpen size={11} />
             Repair Protocol
@@ -273,14 +273,14 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
             {briefing === "idle" && (
               <button
                 onClick={briefTechnician}
-                className="inline-flex items-center gap-1.5 rounded-full border border-black/[0.10] px-3 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] font-semibold text-black/55 transition hover:bg-black/[0.04] hover:text-black"
+                className="inline-flex items-center gap-1.5 rounded-full border border-theme-10 px-3 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] font-semibold text-theme-55 transition hover:bg-theme-4 hover:text-theme-primary"
               >
                 <Zap size={11} />
                 Brief AI Assistant
               </button>
             )}
             {briefing === "loading" && (
-              <span className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-black/40">
+              <span className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-40">
                 Briefing technician...
               </span>
             )}
@@ -289,7 +289,7 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
                 <CheckCircle2 size={12} />
                 AI assistant briefed
                 {sessionId && (
-                  <span className="ml-1 font-mono text-black/35">({sessionId})</span>
+                  <span className="ml-1 font-mono text-theme-35">({sessionId})</span>
                 )}
               </div>
             )}
@@ -317,7 +317,7 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
           <div className="flex items-center gap-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-emerald-700">
             <CheckCircle2 size={12} />
             Field verifier booked
-            <span className="ml-1 font-mono text-black/35">({verifierModal.bookingId})</span>
+            <span className="ml-1 font-mono text-theme-35">({verifierModal.bookingId})</span>
           </div>
         )}
       </div>
@@ -346,20 +346,20 @@ interface VerifierModalProps {
 
 function VerifierModal({ modal, onSelect, onConfirm, onClose }: VerifierModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-      <div className="relative w-full max-w-md rounded-[22px] border border-black/8 bg-white p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-theme-30 backdrop-blur-sm">
+      <div className="relative w-full max-w-md rounded-[22px] border border-theme-8 bg-white p-6 shadow-2xl">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-black/30 hover:text-black/60"
+          className="absolute right-4 top-4 text-theme-30 hover:text-theme-primary/60"
         >
           <X size={16} />
         </button>
 
-        <p className="text-xs uppercase tracking-[0.22em] text-black/40 mb-1">RentAHuman</p>
-        <h2 className="text-lg font-semibold text-black mb-4">Book Field Verifier</h2>
+        <p className="text-xs uppercase tracking-[0.22em] text-theme-40 mb-1">RentAHuman</p>
+        <h2 className="text-lg font-semibold text-theme-primary mb-4">Book Field Verifier</h2>
 
         {modal.phase === "searching" && (
-          <div className="flex items-center gap-2 text-sm text-black/55">
+          <div className="flex items-center gap-2 text-sm text-theme-55">
             <Loader2 size={14} className="animate-spin" />
             Searching nearby verifiers...
           </div>
@@ -368,26 +368,26 @@ function VerifierModal({ modal, onSelect, onConfirm, onClose }: VerifierModalPro
         {modal.phase === "results" && (
           <>
             {modal.humans.length === 0 ? (
-              <p className="text-sm text-black/50">No verifiers available nearby. Try expanding the radius.</p>
+              <p className="text-sm text-theme-50">No verifiers available nearby. Try expanding the radius.</p>
             ) : (
               <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
                 {modal.humans.map((h) => (
                   <button
                     key={h.id}
                     onClick={() => onSelect(h)}
-                    className="w-full text-left rounded-xl border border-black/8 bg-black/[0.02] p-3 transition hover:bg-black/[0.05]"
+                    className="w-full text-left rounded-xl border border-theme-8 bg-theme-2 p-3 transition hover:bg-theme-5"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-sm text-black">{h.displayName}</span>
-                      <span className="font-mono text-xs text-black/50">${h.hourlyRateUsd}/hr</span>
+                      <span className="font-semibold text-sm text-theme-primary">{h.displayName}</span>
+                      <span className="font-mono text-xs text-theme-50">${h.hourlyRateUsd}/hr</span>
                     </div>
-                    <div className="mt-1 flex flex-wrap gap-3 text-xs text-black/45">
+                    <div className="mt-1 flex flex-wrap gap-3 text-xs text-theme-45">
                       <span>{h.distanceMiles.toFixed(1)} mi away</span>
                       <span>Rating {h.rating.toFixed(1)} ({h.reviewCount})</span>
                     </div>
                     <div className="mt-1 flex flex-wrap gap-1">
                       {h.skills.map((s) => (
-                        <span key={s} className="rounded-full bg-black/[0.06] px-2 py-0.5 text-[0.6rem] uppercase tracking-wide text-black/50">{s}</span>
+                        <span key={s} className="rounded-full bg-theme-6 px-2 py-0.5 text-[0.6rem] uppercase tracking-wide text-theme-50">{s}</span>
                       ))}
                     </div>
                   </button>
@@ -399,20 +399,20 @@ function VerifierModal({ modal, onSelect, onConfirm, onClose }: VerifierModalPro
 
         {modal.phase === "confirming" && (
           <div>
-            <p className="text-sm text-black/70 mb-4">
-              Confirm booking <span className="font-semibold text-black">{modal.human.displayName}</span> for a 2-hour verification?
+            <p className="text-sm text-theme-70 mb-4">
+              Confirm booking <span className="font-semibold text-theme-primary">{modal.human.displayName}</span> for a 2-hour verification?
             </p>
-            <div className="rounded-xl bg-black/[0.03] border border-black/8 px-4 py-3 text-sm text-black/60 space-y-1 mb-4">
+            <div className="rounded-xl bg-theme-3 border border-theme-8 px-4 py-3 text-sm text-theme-60 space-y-1 mb-4">
               <div className="flex justify-between"><span>Rate</span><span className="font-mono">${modal.human.hourlyRateUsd}/hr</span></div>
               <div className="flex justify-between"><span>Duration</span><span>2 hours</span></div>
-              <div className="flex justify-between font-semibold text-black"><span>Total</span><span className="font-mono">${(modal.human.hourlyRateUsd * 2).toFixed(2)}</span></div>
+              <div className="flex justify-between font-semibold text-theme-primary"><span>Total</span><span className="font-mono">${(modal.human.hourlyRateUsd * 2).toFixed(2)}</span></div>
             </div>
-            <p className="text-xs text-black/40 mb-4">
+            <p className="text-xs text-theme-40 mb-4">
               AI-generated task instructions and verification photo requirements will be sent to the verifier automatically.
             </p>
             <button
               onClick={() => onConfirm(modal.human)}
-              className="w-full rounded-full bg-black text-white font-semibold text-sm py-2.5 transition hover:bg-black/80"
+              className="w-full rounded-full bg-[#0c0d11] text-white font-semibold text-sm py-2.5 transition hover:bg-[#17181d]/80"
             >
               Confirm Booking
             </button>
@@ -420,7 +420,7 @@ function VerifierModal({ modal, onSelect, onConfirm, onClose }: VerifierModalPro
         )}
 
         {modal.phase === "booking" && (
-          <div className="flex items-center gap-2 text-sm text-black/55">
+          <div className="flex items-center gap-2 text-sm text-theme-55">
             <Loader2 size={14} className="animate-spin" />
             Confirming booking with RentAHuman...
           </div>
@@ -431,7 +431,7 @@ function VerifierModal({ modal, onSelect, onConfirm, onClose }: VerifierModalPro
             <p className="text-sm text-red-600 mb-4">{modal.message}</p>
             <button
               onClick={onClose}
-              className="text-xs text-black/40 underline"
+              className="text-xs text-theme-40 underline"
             >
               Dismiss
             </button>

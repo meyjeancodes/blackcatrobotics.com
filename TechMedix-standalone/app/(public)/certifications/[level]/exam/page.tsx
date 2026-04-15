@@ -182,7 +182,7 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
   if (!questions) {
     return (
       <div className="py-24 text-center">
-        <p className="text-sm text-black/40">Invalid certification level.</p>
+        <p className="text-sm text-theme-40">Invalid certification level.</p>
         <Link href="/certifications" className="mt-4 inline-block text-sm text-ember hover:underline">
           ← Back to certifications
         </Link>
@@ -200,15 +200,15 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
         <div>
           <Link
             href={`/certifications/${level}`}
-            className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-black/40 transition hover:text-black"
+            className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-theme-40 transition hover:text-theme-primary"
           >
             ← Back
           </Link>
           <p className="kicker mt-6">Exam</p>
-          <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-black">
+          <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-theme-primary">
             {level} Certification Exam
           </h1>
-          <p className="mt-3 text-sm leading-6 text-black/52">
+          <p className="mt-3 text-sm leading-6 text-theme-52">
             {totalQuestions} questions. Enter your details to begin. Your results will be
             recorded and a passing score qualifies you for dispatch eligibility.
           </p>
@@ -216,7 +216,7 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
 
         <div className="panel p-6 space-y-5">
           <div className="space-y-1.5">
-            <label className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-black/50">
+            <label className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-50">
               Full Name
             </label>
             <input
@@ -224,11 +224,11 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Jane Smith"
-              className="w-full rounded-xl border border-black/[0.10] bg-white px-4 py-2.5 text-sm text-black placeholder:text-black/25 focus:outline-none focus:ring-2 focus:ring-black/10"
+              className="w-full rounded-xl border border-theme-10 bg-white px-4 py-2.5 text-sm text-theme-primary placeholder:text-theme-25 focus:outline-none focus:ring-2 focus:ring-white/10"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-black/50">
+            <label className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-50">
               Email Address <span className="text-ember">*</span>
             </label>
             <input
@@ -236,7 +236,7 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="jane@example.com"
-              className="w-full rounded-xl border border-black/[0.10] bg-white px-4 py-2.5 text-sm text-black placeholder:text-black/25 focus:outline-none focus:ring-2 focus:ring-black/10"
+              className="w-full rounded-xl border border-theme-10 bg-white px-4 py-2.5 text-sm text-theme-primary placeholder:text-theme-25 focus:outline-none focus:ring-2 focus:ring-white/10"
             />
           </div>
 
@@ -296,11 +296,11 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
       <div className="mx-auto max-w-xl space-y-8">
         {/* Progress bar */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between font-ui text-[0.58rem] uppercase tracking-[0.14em] text-black/40">
+          <div className="flex items-center justify-between font-ui text-[0.58rem] uppercase tracking-[0.14em] text-theme-40">
             <span>Question {current + 1} of {totalQuestions}</span>
             <span>{level} Exam</span>
           </div>
-          <div className="h-1 rounded-full bg-black/[0.06]">
+          <div className="h-1 rounded-full bg-theme-6">
             <div
               className="h-full rounded-full bg-ember transition-all"
               style={{ width: `${progress}%` }}
@@ -310,7 +310,7 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
 
         {/* Question */}
         <div className="panel-elevated p-8 space-y-6">
-          <p className="font-header text-xl leading-snug text-black">{q.q}</p>
+          <p className="font-header text-xl leading-snug text-theme-primary">{q.q}</p>
 
           <div className="space-y-2.5">
             {q.options.map((opt, i) => (
@@ -320,11 +320,11 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
                 className={[
                   "w-full rounded-xl border px-5 py-3.5 text-left text-sm transition",
                   selected === i
-                    ? "border-ember bg-ember/[0.06] text-black"
-                    : "border-black/[0.08] bg-white text-black/65 hover:border-black/20 hover:text-black",
+                    ? "border-ember bg-ember/[0.06] text-theme-primary"
+                    : "border-theme-8 bg-white text-theme-65 hover:border-theme-10 hover:text-theme-primary",
                 ].join(" ")}
               >
-                <span className="font-semibold mr-2 text-black/30">
+                <span className="font-semibold mr-2 text-theme-30">
                   {String.fromCharCode(65 + i)}.
                 </span>
                 {opt}
@@ -358,7 +358,7 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
       <div className="flex min-h-[40vh] items-center justify-center">
         <div className="flex flex-col items-center gap-4 text-center">
           <Loader2 className="h-8 w-8 animate-spin text-ember" />
-          <p className="text-sm text-black/50">Scoring your exam…</p>
+          <p className="text-sm text-theme-50">Scoring your exam…</p>
         </div>
       </div>
     );
@@ -378,10 +378,10 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
           )}
 
           <div>
-            <h1 className="font-header text-4xl leading-none tracking-[-0.04em] text-black">
+            <h1 className="font-header text-4xl leading-none tracking-[-0.04em] text-theme-primary">
               {passed ? "You passed!" : "Not quite"}
             </h1>
-            <p className="mt-3 text-sm text-black/50">
+            <p className="mt-3 text-sm text-theme-50">
               {passed
                 ? `Congratulations — you scored ${result.score}% on the ${result.level} exam. Your result has been recorded.`
                 : `You scored ${result.score}%. The passing threshold for ${result.level} is ${result.threshold}%. Review the material and try again.`}
@@ -390,13 +390,13 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
 
           <div className="flex items-center justify-center gap-6 pt-2">
             <div>
-              <p className="font-header text-4xl text-black">{result.score}%</p>
-              <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-black/40">Your Score</p>
+              <p className="font-header text-4xl text-theme-primary">{result.score}%</p>
+              <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-theme-40">Your Score</p>
             </div>
-            <div className="h-10 w-px bg-black/[0.08]" />
+            <div className="h-10 w-px bg-theme-8" />
             <div>
-              <p className="font-header text-4xl text-black">{result.threshold}%</p>
-              <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-black/40">Pass Threshold</p>
+              <p className="font-header text-4xl text-theme-primary">{result.threshold}%</p>
+              <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-theme-40">Pass Threshold</p>
             </div>
           </div>
 
@@ -423,7 +423,7 @@ export default function ExamPage({ params }: { params: Promise<{ level: string }
             )}
             <Link
               href="/certifications"
-              className="inline-flex items-center justify-center rounded-full border border-black/[0.12] px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-black/55 transition hover:bg-black/[0.04]"
+              className="inline-flex items-center justify-center rounded-full border border-theme-12 px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-theme-55 transition hover:bg-theme-4"
             >
               All Certifications
             </Link>

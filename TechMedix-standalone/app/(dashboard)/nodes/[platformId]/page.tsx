@@ -96,13 +96,13 @@ export default function PlatformPage({
       <div className="flex items-center gap-3">
         <Link
           href="/nodes"
-          className="inline-flex items-center gap-1.5 font-ui text-[0.62rem] uppercase tracking-[0.20em] text-black/40 transition-colors hover:text-black/70"
+          className="inline-flex items-center gap-1.5 font-ui text-[0.62rem] uppercase tracking-[0.20em] text-theme-40 transition-colors hover:text-theme-primary/70"
         >
           <ArrowLeft size={12} />
           Nodes
         </Link>
-        <span className="font-ui text-[0.58rem] text-black/25">/</span>
-        <span className="font-ui text-[0.62rem] uppercase tracking-[0.20em] text-black/55">
+        <span className="font-ui text-[0.58rem] text-theme-25">/</span>
+        <span className="font-ui text-[0.62rem] uppercase tracking-[0.20em] text-theme-55">
           {platform.name}
         </span>
       </div>
@@ -122,13 +122,13 @@ export default function PlatformPage({
               </span>
             )}
           </div>
-          <h1 className="font-header text-4xl leading-none tracking-[-0.04em] text-black lg:text-5xl">
+          <h1 className="font-header text-4xl leading-none tracking-[-0.04em] text-theme-primary lg:text-5xl">
             {platform.name}
           </h1>
-          <p className="mt-2 font-ui text-[0.68rem] uppercase tracking-[0.14em] text-black/40">
+          <p className="mt-2 font-ui text-[0.68rem] uppercase tracking-[0.14em] text-theme-40">
             {platform.manufacturer}
           </p>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-black/55">
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-theme-55">
             {platform.description}
           </p>
         </div>
@@ -175,10 +175,10 @@ export default function PlatformPage({
           >
             <div className="flex items-center justify-between">
               <p className="kicker">{m.label}</p>
-              <div className="rounded-xl bg-black/[0.05] p-2 text-black/35">{m.icon}</div>
+              <div className="rounded-xl bg-theme-5 p-2 text-theme-35">{m.icon}</div>
             </div>
-            <p className="font-header text-3xl leading-none tracking-[-0.04em] text-black">{m.value}</p>
-            <p className="text-xs leading-relaxed text-black/42">{m.detail}</p>
+            <p className="font-header text-3xl leading-none tracking-[-0.04em] text-theme-primary">{m.value}</p>
+            <p className="text-xs leading-relaxed text-theme-42">{m.detail}</p>
           </div>
         ))}
       </section>
@@ -194,12 +194,12 @@ export default function PlatformPage({
             {platform.specs.map((spec) => (
               <div
                 key={spec.label}
-                className="flex items-center justify-between border-b border-black/[0.04] pb-3 last:border-0 last:pb-0"
+                className="flex items-center justify-between border-b border-theme-4 pb-3 last:border-0 last:pb-0"
               >
-                <span className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40">
+                <span className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-40">
                   {spec.label}
                 </span>
-                <span className="text-sm font-semibold text-black">{spec.value}</span>
+                <span className="text-sm font-semibold text-theme-primary">{spec.value}</span>
               </div>
             ))}
           </div>
@@ -210,10 +210,10 @@ export default function PlatformPage({
       <section>
         <div className="mb-5">
           <p className="kicker">Diagnostic Intelligence</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-theme-primary">
             Failure Signatures
           </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-black/50">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-theme-50">
             Known failure patterns for this platform. TechMedix monitors live telemetry against
             these signatures and triggers alerts or dispatch automatically.
           </p>
@@ -222,15 +222,15 @@ export default function PlatformPage({
           {platform.failureSignatures.map((sig) => (
             <div
               key={sig.id}
-              className="rounded-[22px] border border-black/[0.05] bg-black/[0.018] p-4 transition-colors hover:bg-white/50 hover:border-black/[0.07]"
+              className="rounded-[22px] border border-theme-5 bg-theme-18 p-4 transition-colors hover:bg-white/50 hover:border-theme-7"
             >
               <div className="flex items-center gap-2.5 mb-2">
                 <div className={`h-2 w-2 rounded-full shrink-0 ${SEVERITY_DOT[sig.severity]}`} />
-                <h3 className="text-sm font-semibold text-black">{sig.name}</h3>
+                <h3 className="text-sm font-semibold text-theme-primary">{sig.name}</h3>
                 <StatusPill label={sig.severity} />
               </div>
-              <p className="text-xs leading-relaxed text-black/50">{sig.description}</p>
-              <p className="mt-2 font-ui text-[0.57rem] uppercase tracking-[0.14em] text-black/28">
+              <p className="text-xs leading-relaxed text-theme-50">{sig.description}</p>
+              <p className="mt-2 font-ui text-[0.57rem] uppercase tracking-[0.14em] text-theme-28">
                 ID: {sig.id}
               </p>
             </div>
@@ -249,10 +249,10 @@ export default function PlatformPage({
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="kicker">Maintenance</p>
-            <h2 className="mt-1.5 font-header text-xl leading-tight text-black">
+            <h2 className="mt-1.5 font-header text-xl leading-tight text-theme-primary">
               Schedule service for {platform.name}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-black/52">
+            <p className="mt-2 text-sm leading-6 text-theme-52">
               TechMedix routes service requests to platform-certified technicians in your region.
               {activeSignatures.length > 0 &&
                 ` ${activeSignatures.length} active failure signature${activeSignatures.length > 1 ? "s" : ""} detected — expedited dispatch recommended.`}
@@ -268,7 +268,7 @@ export default function PlatformPage({
             </Link>
             <Link
               href="/fleet"
-              className="inline-flex items-center gap-2 rounded-full border border-black/[0.12] px-5 py-2.5 text-sm font-semibold text-black/70 transition hover:bg-black/[0.04] hover:text-black"
+              className="inline-flex items-center gap-2 rounded-full border border-theme-12 px-5 py-2.5 text-sm font-semibold text-theme-70 transition hover:bg-theme-4 hover:text-theme-primary"
             >
               View fleet
             </Link>

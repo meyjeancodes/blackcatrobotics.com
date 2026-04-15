@@ -144,10 +144,10 @@ export default function HabitatPage() {
       {/* Header */}
       <div>
         <p className="kicker">BlackCat Robotics</p>
-        <h1 className="mt-2 font-header text-3xl leading-tight text-black">
+        <h1 className="mt-2 font-header text-3xl leading-tight text-theme-primary">
           HABITAT AI Home
         </h1>
-        <p className="mt-2 text-sm leading-6 text-black/55 max-w-xl">
+        <p className="mt-2 text-sm leading-6 text-theme-55 max-w-xl">
           A unified command interface for every system in your HABITAT environment.
           Energy, robotics, EV, climate, security, and network status in one place.
         </p>
@@ -157,7 +157,7 @@ export default function HabitatPage() {
       <section>
         <div className="mb-5">
           <p className="kicker">Connected systems</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-theme-primary">
             System Overview
           </h2>
         </div>
@@ -172,27 +172,27 @@ export default function HabitatPage() {
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <p className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-black/35">
+                  <p className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-theme-35">
                     {sys.detail}
                   </p>
-                  <h3 className="mt-1 font-header text-xl text-black leading-tight">
+                  <h3 className="mt-1 font-header text-xl text-theme-primary leading-tight">
                     {sys.label}
                   </h3>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0 mt-1">
                   <div className={`h-2 w-2 rounded-full ${sys.statusColor}`} />
-                  <span className="font-ui text-[0.60rem] uppercase tracking-[0.16em] text-black/50">
+                  <span className="font-ui text-[0.60rem] uppercase tracking-[0.16em] text-theme-50">
                     {sys.statusLabel}
                   </span>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 {sys.metrics.map((m) => (
-                  <div key={m.key} className="rounded-[12px] bg-black/[0.025] border border-black/[0.04] px-3 py-2">
-                    <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/35 mb-0.5">
+                  <div key={m.key} className="rounded-[12px] bg-theme-25 border border-theme-4 px-3 py-2">
+                    <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-35 mb-0.5">
                       {m.key}
                     </p>
-                    <p className="text-sm font-semibold text-black">{m.value}</p>
+                    <p className="text-sm font-semibold text-theme-primary">{m.value}</p>
                   </div>
                 ))}
               </div>
@@ -206,22 +206,22 @@ export default function HabitatPage() {
         <SurfaceCard title={`${selectedSystem.label} — Detail`} eyebrow="System detail">
           <div className="flex items-start justify-between gap-4 mb-4">
             <div>
-              <p className="text-sm text-black/55 leading-relaxed">{selectedSystem.detail}</p>
+              <p className="text-sm text-theme-55 leading-relaxed">{selectedSystem.detail}</p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <div className={`h-2 w-2 rounded-full ${selectedSystem.statusColor}`} />
-              <span className="font-ui text-[0.62rem] uppercase tracking-[0.18em] text-black/50">
+              <span className="font-ui text-[0.62rem] uppercase tracking-[0.18em] text-theme-50">
                 {selectedSystem.statusLabel}
               </span>
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {selectedSystem.metrics.map((m) => (
-              <div key={m.key} className="rounded-[16px] border border-black/[0.06] bg-black/[0.02] p-4 text-center">
-                <p className="font-ui text-[0.57rem] uppercase tracking-[0.14em] text-black/35 mb-1.5">
+              <div key={m.key} className="rounded-[16px] border border-theme-6 bg-theme-2 p-4 text-center">
+                <p className="font-ui text-[0.57rem] uppercase tracking-[0.14em] text-theme-35 mb-1.5">
                   {m.key}
                 </p>
-                <p className="text-xl font-bold text-black">{m.value}</p>
+                <p className="text-xl font-bold text-theme-primary">{m.value}</p>
               </div>
             ))}
           </div>
@@ -238,7 +238,7 @@ export default function HabitatPage() {
                 <button
                   key={s}
                   onClick={() => sendMessage(s)}
-                  className="rounded-full border border-black/10 px-3 py-1.5 text-xs text-black/60 hover:border-ember/40 hover:text-ember transition-colors"
+                  className="rounded-full border border-theme-10 px-3 py-1.5 text-xs text-theme-60 hover:border-ember/40 hover:text-ember transition-colors"
                 >
                   {s}
                 </button>
@@ -258,7 +258,7 @@ export default function HabitatPage() {
                     className={`max-w-[80%] rounded-[16px] px-4 py-3 text-sm leading-relaxed ${
                       msg.role === "user"
                         ? "bg-ember text-white"
-                        : "bg-black/[0.04] border border-black/[0.06] text-black"
+                        : "bg-theme-4 border border-theme-6 text-theme-primary"
                     }`}
                   >
                     {msg.content}
@@ -267,12 +267,12 @@ export default function HabitatPage() {
               ))}
               {loading && (
                 <div className="flex justify-start">
-                  <div className="rounded-[16px] border border-black/[0.06] bg-black/[0.04] px-4 py-3">
+                  <div className="rounded-[16px] border border-theme-6 bg-theme-4 px-4 py-3">
                     <div className="flex gap-1.5">
                       {[0, 1, 2].map((i) => (
                         <div
                           key={i}
-                          className="h-1.5 w-1.5 rounded-full bg-black/30 animate-bounce"
+                          className="h-1.5 w-1.5 rounded-full bg-theme-30 animate-bounce"
                           style={{ animationDelay: `${i * 0.12}s` }}
                         />
                       ))}
@@ -291,7 +291,7 @@ export default function HabitatPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about your home systems..."
-              className="flex-1 rounded-[14px] border border-black/10 bg-black/[0.025] px-4 py-2.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-ember/40"
+              className="flex-1 rounded-[14px] border border-theme-10 bg-theme-25 px-4 py-2.5 text-sm text-theme-primary placeholder:text-theme-30 focus:outline-none focus:border-ember/40"
               disabled={loading}
             />
             <button
@@ -316,12 +316,12 @@ export default function HabitatPage() {
           ].map((item) => (
             <div
               key={item.label}
-              className="rounded-[16px] border border-black/[0.05] bg-black/[0.018] p-4 flex items-center gap-3"
+              className="rounded-[16px] border border-theme-5 bg-theme-18 p-4 flex items-center gap-3"
             >
               <div className={`h-2 w-2 rounded-full shrink-0 ${item.color}`} />
               <div>
-                <p className="font-ui text-[0.60rem] uppercase tracking-[0.16em] text-black/35">{item.label}</p>
-                <p className="text-sm font-semibold text-black mt-0.5">{item.value}</p>
+                <p className="font-ui text-[0.60rem] uppercase tracking-[0.16em] text-theme-35">{item.label}</p>
+                <p className="text-sm font-semibold text-theme-primary mt-0.5">{item.value}</p>
               </div>
             </div>
           ))}

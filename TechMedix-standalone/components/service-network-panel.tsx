@@ -93,46 +93,46 @@ export function ServiceNetworkPanel() {
       {/* Metrics Row */}
       <div className="panel-elevated p-6 flex flex-col gap-4">
         <p className="kicker">Service Network</p>
-        <h2 className="font-header text-xl leading-tight text-black">Network Status</h2>
-        <p className="text-[0.67rem] text-black/36 leading-snug -mt-2">
+        <h2 className="font-header text-xl leading-tight text-theme-primary">Network Status</h2>
+        <p className="text-[0.67rem] text-theme-36 leading-snug -mt-2">
           Certified BlackCat Technicians — Nationwide Service Network
         </p>
         <div className="mt-2 grid grid-cols-2 gap-3 flex-1 content-start">
-          <div className="rounded-[18px] bg-black/[0.025] border border-black/[0.04] px-4 py-4">
-            <p className="font-ui text-[0.57rem] uppercase tracking-[0.18em] text-black/35 mb-1">
+          <div className="rounded-[18px] bg-theme-25 border border-theme-4 px-4 py-4">
+            <p className="font-ui text-[0.57rem] uppercase tracking-[0.18em] text-theme-35 mb-1">
               Active Techs
             </p>
-            <p className="font-header text-[2rem] leading-none tabular-nums text-black transition-all duration-500">
+            <p className="font-header text-[2rem] leading-none tabular-nums text-theme-primary transition-all duration-500">
               {metrics.activeTechnicians}
             </p>
           </div>
-          <div className="rounded-[18px] bg-black/[0.025] border border-black/[0.04] px-4 py-4">
-            <p className="font-ui text-[0.57rem] uppercase tracking-[0.18em] text-black/35 mb-1">
+          <div className="rounded-[18px] bg-theme-25 border border-theme-4 px-4 py-4">
+            <p className="font-ui text-[0.57rem] uppercase tracking-[0.18em] text-theme-35 mb-1">
               Jobs Active
             </p>
-            <p className="font-header text-[2rem] leading-none tabular-nums text-black transition-all duration-500">
+            <p className="font-header text-[2rem] leading-none tabular-nums text-theme-primary transition-all duration-500">
               {metrics.jobsInProgress}
             </p>
           </div>
-          <div className="rounded-[18px] bg-black/[0.025] border border-black/[0.04] px-4 py-4">
-            <p className="font-ui text-[0.57rem] uppercase tracking-[0.18em] text-black/35 mb-1">
+          <div className="rounded-[18px] bg-theme-25 border border-theme-4 px-4 py-4">
+            <p className="font-ui text-[0.57rem] uppercase tracking-[0.18em] text-theme-35 mb-1">
               Avg Response
             </p>
-            <p className="font-header text-[2rem] leading-none tabular-nums text-black transition-all duration-500">
+            <p className="font-header text-[2rem] leading-none tabular-nums text-theme-primary transition-all duration-500">
               {metrics.avgResponseMinutes}
-              <span className="text-sm font-body text-black/40 ml-1">min</span>
+              <span className="text-sm font-body text-theme-40 ml-1">min</span>
             </p>
           </div>
-          <div className="rounded-[18px] bg-black/[0.025] border border-black/[0.04] px-4 py-4">
-            <p className="font-ui text-[0.57rem] uppercase tracking-[0.18em] text-black/35 mb-1">
+          <div className="rounded-[18px] bg-theme-25 border border-theme-4 px-4 py-4">
+            <p className="font-ui text-[0.57rem] uppercase tracking-[0.18em] text-theme-35 mb-1">
               Next Service
             </p>
-            <p className="text-xs font-semibold leading-snug text-black mt-1">
+            <p className="text-xs font-semibold leading-snug text-theme-primary mt-1">
               {metrics.nextServiceLabel}
             </p>
           </div>
         </div>
-        <div className="mt-1 rounded-[16px] bg-black/[0.025] px-4 py-3 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-black/35 text-center border border-black/[0.04]">
+        <div className="mt-1 rounded-[16px] bg-theme-25 px-4 py-3 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-theme-35 text-center border border-theme-4">
           Updates every 4 seconds
         </div>
       </div>
@@ -140,7 +140,7 @@ export function ServiceNetworkPanel() {
       {/* Status Pipeline */}
       <div className="panel p-6">
         <p className="kicker">Dispatch Pipeline</p>
-        <h2 className="mt-2 font-header text-xl leading-tight text-black">Job Progress</h2>
+        <h2 className="mt-2 font-header text-xl leading-tight text-theme-primary">Job Progress</h2>
         <div className="mt-8 flex flex-col gap-0">
           {STAGES.map((stage, i) => {
             const stageIdx = STAGE_ORDER.indexOf(currentStage);
@@ -159,7 +159,7 @@ export function ServiceNetworkPanel() {
                         ? "bg-ember text-white shadow-[0_0_0_6px_rgba(232,96,30,0.12)]"
                         : isDone
                         ? "bg-moss text-white"
-                        : "bg-black/[0.04] border border-black/[0.06] text-black/30",
+                        : "bg-theme-4 border border-theme-6 text-theme-30",
                     ].join(" ")}
                   >
                     {isDone ? "+" : i + 1}
@@ -168,7 +168,7 @@ export function ServiceNetworkPanel() {
                     <div
                       className={[
                         "w-px flex-1 my-1 transition-all duration-500",
-                        isDone ? "bg-moss/40" : "bg-black/[0.06]",
+                        isDone ? "bg-moss/40" : "bg-theme-6",
                       ].join(" ")}
                       style={{ minHeight: "28px" }}
                     />
@@ -179,13 +179,13 @@ export function ServiceNetworkPanel() {
                   <p
                     className={[
                       "font-ui text-[0.68rem] uppercase tracking-[0.20em] font-semibold transition-colors duration-300",
-                      isActive ? "text-ember" : isDone ? "text-moss" : "text-black/28",
+                      isActive ? "text-ember" : isDone ? "text-moss" : "text-theme-28",
                     ].join(" ")}
                   >
                     {stage.label}
                   </p>
                   {isActive && (
-                    <p className="mt-1 text-xs text-black/45 leading-snug">
+                    <p className="mt-1 text-xs text-theme-45 leading-snug">
                       Active stage — updates live
                     </p>
                   )}
@@ -199,30 +199,30 @@ export function ServiceNetworkPanel() {
       {/* Live Service Feed */}
       <div className="panel p-6 flex flex-col">
         <p className="kicker">Live Activity</p>
-        <h2 className="mt-2 font-header text-xl leading-tight text-black">Service Feed</h2>
+        <h2 className="mt-2 font-header text-xl leading-tight text-theme-primary">Service Feed</h2>
         <div className="mt-5 flex-1 overflow-hidden space-y-1.5">
           {feed.length === 0 && (
-            <p className="font-ui text-[0.63rem] uppercase tracking-[0.18em] text-black/28 text-center py-10">
+            <p className="font-ui text-[0.63rem] uppercase tracking-[0.18em] text-theme-28 text-center py-10">
               Waiting for events...
             </p>
           )}
           {feed.map((entry) => (
             <div
               key={entry.id}
-              className="feed-entry flex items-start gap-2.5 rounded-[14px] bg-black/[0.018] px-3 py-2.5 border border-black/[0.04] transition-colors duration-280"
+              className="feed-entry flex items-start gap-2.5 rounded-[14px] bg-theme-18 px-3 py-2.5 border border-theme-4 transition-colors duration-280"
             >
               <div
                 className={`mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-280 ${SEVERITY_COLOR[entry.severity]}`}
               />
               <div className="min-w-0 flex-1">
-                <p className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-black/32 truncate">
+                <p className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-32 truncate">
                   {entry.time.toLocaleTimeString("en-US", {
                     hour: "2-digit",
                     minute: "2-digit",
                     second: "2-digit",
                   })}
                 </p>
-                <p className="text-xs text-black/58 leading-snug truncate mt-0.5">{entry.message}</p>
+                <p className="text-xs text-theme-58 leading-snug truncate mt-0.5">{entry.message}</p>
               </div>
             </div>
           ))}

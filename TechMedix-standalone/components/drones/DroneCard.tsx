@@ -24,7 +24,7 @@ function CareRefreshBadge({ plan, expiryWarning }: {
 }) {
   if (plan === "NONE") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-black/[0.04] border border-black/[0.06] px-2.5 py-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] text-black/35">
+      <span className="inline-flex items-center gap-1 rounded-full bg-theme-4 border border-theme-6 px-2.5 py-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] text-theme-35">
         <ShieldOff size={10} />
         No Plan
       </span>
@@ -73,8 +73,8 @@ export function DroneCard({ drone }: DroneCardProps) {
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           {/* Drone model icon placeholder */}
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-black/[0.04]">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5 text-black/40">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-theme-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5 text-theme-40">
               <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0" />
               <path d="M12 12l-8-8m8 8l8-8m-8 8l-8 8m8-8l8 8" />
               <circle cx="4" cy="4" r="2" />
@@ -84,10 +84,10 @@ export function DroneCard({ drone }: DroneCardProps) {
             </svg>
           </div>
           <div>
-            <p className="font-ui text-[0.60rem] uppercase tracking-[0.22em] text-black/35">
+            <p className="font-ui text-[0.60rem] uppercase tracking-[0.22em] text-theme-35">
               {drone.model}
             </p>
-            <p className="text-sm font-semibold text-black/80">···{shortSerial}</p>
+            <p className="text-sm font-semibold text-theme-80">···{shortSerial}</p>
           </div>
         </div>
         <HealthScoreRing score={drone.latest_health_score ?? null} size={52} strokeWidth={5} />
@@ -105,13 +105,13 @@ export function DroneCard({ drone }: DroneCardProps) {
       </div>
 
       {/* Last flight + replacements */}
-      <div className="flex items-center justify-between border-t border-black/[0.04] pt-3">
-        <div className="flex items-center gap-1.5 text-[0.62rem] font-ui text-black/35">
+      <div className="flex items-center justify-between border-t border-theme-4 pt-3">
+        <div className="flex items-center gap-1.5 text-[0.62rem] font-ui text-theme-35">
           <Calendar size={10} />
           {lastFlight}
         </div>
         {drone.care_refresh_plan !== "NONE" && (
-          <div className="font-ui text-[0.60rem] uppercase tracking-[0.12em] text-black/35">
+          <div className="font-ui text-[0.60rem] uppercase tracking-[0.12em] text-theme-35">
             {drone.replacements_remaining} repl. left
           </div>
         )}

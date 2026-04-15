@@ -159,7 +159,7 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
                   href={level.studyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.12] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-black"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.12] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-theme-primary"
                 >
                   <BookOpen size={11} />
                   Full Curriculum
@@ -278,7 +278,7 @@ export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <p className="text-sm font-semibold text-[var(--ink)] leading-snug">{p.name}</p>
-                  <p className="mt-0.5 font-ui text-[0.55rem] uppercase tracking-[0.16em] text-black/38">
+                  <p className="mt-0.5 font-ui text-[0.55rem] uppercase tracking-[0.16em] text-theme-38">
                     {p.country}
                   </p>
                 </div>

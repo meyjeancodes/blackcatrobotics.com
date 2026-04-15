@@ -62,35 +62,35 @@ export default async function BillingPage() {
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <p className="metric-value mt-1 capitalize">{customer.plan}</p>
-            <div className="mt-4 space-y-2 rounded-[20px] bg-black/[0.03] p-4">
-              <div className="flex items-center justify-between text-sm text-black/60">
+            <div className="mt-4 space-y-2 rounded-[20px] bg-theme-3 p-4">
+              <div className="flex items-center justify-between text-sm text-theme-60">
                 <span>Monthly spend</span>
-                <strong className="text-black">{formatCurrency(customer.monthlySpend)}</strong>
+                <strong className="text-theme-primary">{formatCurrency(customer.monthlySpend)}</strong>
               </div>
-              <div className="flex items-center justify-between text-sm text-black/60">
+              <div className="flex items-center justify-between text-sm text-theme-60">
                 <span>Fleet size</span>
-                <strong className="text-black">{customer.fleetSize} robots</strong>
+                <strong className="text-theme-primary">{customer.fleetSize} robots</strong>
               </div>
-              <div className="flex items-center justify-between text-sm text-black/60">
+              <div className="flex items-center justify-between text-sm text-theme-60">
                 <span>Status</span>
-                <strong className="capitalize text-black">{customer.status}</strong>
+                <strong className="capitalize text-theme-primary">{customer.status}</strong>
               </div>
-              <div className="flex items-center justify-between text-sm text-black/60">
+              <div className="flex items-center justify-between text-sm text-theme-60">
                 <span>Member since</span>
-                <strong className="text-black">
+                <strong className="text-theme-primary">
                   {new Date(customer.createdAt).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
                 </strong>
               </div>
             </div>
           </div>
-          <div className="rounded-[20px] border border-black/5 bg-black/[0.02] p-5">
+          <div className="rounded-[20px] border border-theme-5 bg-theme-2 p-5">
             <p className="kicker mb-3">Billing tables (future)</p>
-            <div className="space-y-2 text-xs text-black/45">
-              <p className="font-medium text-black/60">Prepared for Stripe integration:</p>
+            <div className="space-y-2 text-xs text-theme-45">
+              <p className="font-medium text-theme-60">Prepared for Stripe integration:</p>
               <p>subscriptions — subscription records per product</p>
               <p>node_usage — per-node billing periods and active hours</p>
               <p>billing_events — payment events and invoice records</p>
-              <p className="mt-3 text-[0.65rem] uppercase tracking-[0.14em] text-black/30">Stripe not yet integrated</p>
+              <p className="mt-3 text-[0.65rem] uppercase tracking-[0.14em] text-theme-30">Stripe not yet integrated</p>
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@ export default async function BillingPage() {
               className={`rounded-[22px] border p-5 ${
                 plan.highlight
                   ? "border-ember/20 bg-ember/[0.04]"
-                  : "border-black/5 bg-black/[0.02]"
+                  : "border-theme-5 bg-theme-2"
               }`}
             >
               {plan.highlight && (
@@ -114,13 +114,13 @@ export default async function BillingPage() {
                 </span>
               )}
               <p className="kicker">{plan.name}</p>
-              <p className="text-[0.65rem] uppercase tracking-[0.14em] text-black/40 mb-2">{plan.range}</p>
-              <p className="text-3xl font-semibold tracking-[-0.04em] text-black">{plan.price}</p>
-              <p className="text-xs text-black/45 mb-4">{plan.unit}</p>
+              <p className="text-[0.65rem] uppercase tracking-[0.14em] text-theme-40 mb-2">{plan.range}</p>
+              <p className="text-3xl font-semibold tracking-[-0.04em] text-theme-primary">{plan.price}</p>
+              <p className="text-xs text-theme-45 mb-4">{plan.unit}</p>
               <ul className="space-y-1.5">
                 {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-xs text-black/55">
-                    <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-black/25" />
+                  <li key={f} className="flex items-start gap-2 text-xs text-theme-55">
+                    <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-theme-25" />
                     {f}
                   </li>
                 ))}
@@ -134,11 +134,11 @@ export default async function BillingPage() {
       <SurfaceCard title="HABITAT" eyebrow="Home as a Service">
         <div className="grid gap-4 sm:grid-cols-3">
           {habitatPlans.map((plan) => (
-            <div key={plan.name} className="rounded-[22px] border border-black/5 bg-black/[0.02] p-5">
+            <div key={plan.name} className="rounded-[22px] border border-theme-5 bg-theme-2 p-5">
               <p className="kicker">{plan.name}</p>
-              <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-black">{plan.price}</p>
-              <p className="text-xs text-black/45 mb-3">{plan.unit}</p>
-              <p className="text-xs leading-relaxed text-black/55">{plan.desc}</p>
+              <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-theme-primary">{plan.price}</p>
+              <p className="text-xs text-theme-45 mb-3">{plan.unit}</p>
+              <p className="text-xs leading-relaxed text-theme-55">{plan.desc}</p>
             </div>
           ))}
         </div>
@@ -147,7 +147,7 @@ export default async function BillingPage() {
       {/* DJI Care Refresh */}
       <SurfaceCard title="DJI Care Refresh" eyebrow="Drone protection plans">
         <div className="space-y-5">
-          <p className="text-sm leading-6 text-black/55">
+          <p className="text-sm leading-6 text-theme-55">
             DJI Care Refresh provides replacement coverage for your drone fleet. TechMedix tracks your
             plan status, remaining replacements, and files claims — all from your drone dashboard.
           </p>
@@ -206,7 +206,7 @@ export default async function BillingPage() {
                 className={`rounded-[22px] border p-5 ${
                   plan.highlight
                     ? "border-[#e8601e]/20 bg-[#e8601e]/[0.04]"
-                    : "border-black/5 bg-black/[0.02]"
+                    : "border-theme-5 bg-theme-2"
                 }`}
               >
                 {plan.highlight && (
@@ -215,12 +215,12 @@ export default async function BillingPage() {
                   </span>
                 )}
                 <p className="kicker">{plan.name}</p>
-                <p className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-black">{plan.price}</p>
-                <p className="text-xs text-black/45 mb-1">{plan.unit}</p>
+                <p className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-theme-primary">{plan.price}</p>
+                <p className="text-xs text-theme-45 mb-1">{plan.unit}</p>
                 <p className="text-[0.65rem] uppercase tracking-[0.14em] text-[#e8601e]/70 font-semibold mb-4">{plan.replacements}</p>
                 <ul className="space-y-1.5">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-xs text-black/55">
+                    <li key={f} className="flex items-start gap-2 text-xs text-theme-55">
                       <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#e8601e]/40" />
                       {f}
                     </li>
@@ -231,12 +231,12 @@ export default async function BillingPage() {
           </div>
 
           {/* TechMedix vs standalone cost comparison */}
-          <div className="rounded-[22px] border border-black/5 bg-black/[0.018] p-5">
+          <div className="rounded-[22px] border border-theme-5 bg-theme-18 p-5">
             <p className="kicker mb-3">TechMedix + Care Refresh vs. standalone</p>
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <p className="text-xs font-semibold text-black/60 mb-2">Without TechMedix</p>
-                <ul className="space-y-1.5 text-xs text-black/45">
+                <p className="text-xs font-semibold text-theme-60 mb-2">Without TechMedix</p>
+                <ul className="space-y-1.5 text-xs text-theme-45">
                   <li>Manual claim filing through DJI portal</li>
                   <li>No expiry or replacement tracking</li>
                   <li>No diagnostic context for claims</li>
@@ -246,7 +246,7 @@ export default async function BillingPage() {
               </div>
               <div>
                 <p className="text-xs font-semibold text-[#e8601e]/80 mb-2">With TechMedix</p>
-                <ul className="space-y-1.5 text-xs text-black/55">
+                <ul className="space-y-1.5 text-xs text-theme-55">
                   <li className="flex items-start gap-1.5"><span className="mt-0.5 h-1 w-1 shrink-0 rounded-full bg-[#1db87a]" />Guided 5-step claim wizard</li>
                   <li className="flex items-start gap-1.5"><span className="mt-0.5 h-1 w-1 shrink-0 rounded-full bg-[#1db87a]" />Automatic expiry + replacement alerts</li>
                   <li className="flex items-start gap-1.5"><span className="mt-0.5 h-1 w-1 shrink-0 rounded-full bg-[#1db87a]" />AI diagnostic linked to claim evidence</li>
@@ -265,8 +265,8 @@ export default async function BillingPage() {
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-[0.6rem] uppercase tracking-[0.22em] text-[#e8601e] font-semibold mb-1">Recommended Bundle</p>
-                <h3 className="font-header text-xl text-black">TechMedix Fleet + DJI Care Refresh+</h3>
-                <p className="mt-2 text-sm text-black/55 max-w-md">
+                <h3 className="font-header text-xl text-theme-primary">TechMedix Fleet + DJI Care Refresh+</h3>
+                <p className="mt-2 text-sm text-theme-55 max-w-md">
                   Pair your TechMedix Fleet subscription with Care Refresh+ on every drone.
                   Full diagnostic coverage, claim automation, and flyaway protection — all in one dashboard.
                 </p>
@@ -280,7 +280,7 @@ export default async function BillingPage() {
             </div>
           </div>
 
-          <p className="text-[0.65rem] text-black/30 leading-relaxed">
+          <p className="text-[0.65rem] text-theme-30 leading-relaxed">
             * DJI Care Refresh pricing shown is approximate and subject to change. Verify current pricing at store.dji.com before purchase.
             TechMedix claim tracking requires an active Care Refresh plan registered to the drone serial number.
           </p>
@@ -291,10 +291,10 @@ export default async function BillingPage() {
       <SurfaceCard title="Enterprise" eyebrow="Platform + Node + Services">
         <div className="grid gap-4 sm:grid-cols-3">
           {enterpriseTiers.map((tier) => (
-            <div key={tier.name} className="rounded-[22px] border border-black/5 bg-black/[0.02] p-5">
+            <div key={tier.name} className="rounded-[22px] border border-theme-5 bg-theme-2 p-5">
               <p className="kicker mb-2">{tier.name}</p>
-              <p className="text-xs leading-relaxed text-black/55">{tier.desc}</p>
-              <p className="mt-4 text-[0.6rem] uppercase tracking-[0.18em] text-black/30">Contact for pricing</p>
+              <p className="text-xs leading-relaxed text-theme-55">{tier.desc}</p>
+              <p className="mt-4 text-[0.6rem] uppercase tracking-[0.18em] text-theme-30">Contact for pricing</p>
             </div>
           ))}
         </div>

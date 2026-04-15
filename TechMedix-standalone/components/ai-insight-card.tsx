@@ -32,29 +32,29 @@ export function AiInsightCard() {
   if (!loading && !insight) return null;
 
   return (
-    <div className="rounded-[22px] border border-black/[0.07] bg-white/60 p-6 shadow-[0_2px_16px_rgba(12,13,17,0.07)]">
+    <div className="rounded-[22px] border border-theme-7 bg-white/60 p-6 shadow-[0_2px_16px_rgba(12,13,17,0.07)]">
       <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center rounded-full border border-black/[0.12] bg-transparent px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.18em] text-black/50">
+          <span className="inline-flex items-center rounded-full border border-theme-12 bg-transparent px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.18em] text-theme-50">
             Featured
           </span>
           <span className="inline-flex items-center rounded-full px-2.5 py-0.5 font-ui text-[0.58rem] uppercase tracking-[0.18em] font-semibold bg-ember/[0.10] text-ember border border-ember/[0.18]">
             Robotics
           </span>
-          <span className="font-ui text-[0.57rem] uppercase tracking-[0.16em] text-black/28">
+          <span className="font-ui text-[0.57rem] uppercase tracking-[0.16em] text-theme-28">
             BlackCat OS
           </span>
         </div>
-        <span className="font-ui text-[0.57rem] uppercase tracking-[0.14em] text-black/28 whitespace-nowrap">
+        <span className="font-ui text-[0.57rem] uppercase tracking-[0.14em] text-theme-28 whitespace-nowrap">
           {loading ? "Loading…" : "Refreshes every 5 min"}
         </span>
       </div>
 
-      <h3 className="text-lg font-bold tracking-[-0.025em] leading-snug text-black">
+      <h3 className="text-lg font-bold tracking-[-0.025em] leading-snug text-theme-primary">
         AI ANALYSIS · BLACKCAT OS
       </h3>
 
-      <p className="mt-2.5 text-sm leading-relaxed text-black/52">
+      <p className="mt-2.5 text-sm leading-relaxed text-theme-52">
         {loading ? "Analyzing fleet data…" : insight}
       </p>
     </div>

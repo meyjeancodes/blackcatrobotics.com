@@ -76,15 +76,15 @@ export default function FleetAnalyticsPage() {
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="kicker">Analytics</p>
-          <h1 className="mt-2 font-header text-3xl leading-tight text-black">Fleet Analytics</h1>
-          <p className="mt-2 text-sm text-black/55">Aggregate health, coverage, and claims data across your drone fleet.</p>
+          <h1 className="mt-2 font-header text-3xl leading-tight text-theme-primary">Fleet Analytics</h1>
+          <p className="mt-2 text-sm text-theme-55">Aggregate health, coverage, and claims data across your drone fleet.</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <button onClick={load} className="flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 text-xs font-ui text-black/55 hover:border-black/20 transition-colors">
+          <button onClick={load} className="flex items-center gap-2 rounded-full border border-theme-10 px-4 py-2 text-xs font-ui text-theme-55 hover:border-theme-10 transition-colors">
             <RefreshCw size={12} />
             Refresh
           </button>
-          <button onClick={exportCSV} className="flex items-center gap-2 rounded-full bg-black/90 px-4 py-2 text-xs font-semibold text-white hover:bg-black transition-colors">
+          <button onClick={exportCSV} className="flex items-center gap-2 rounded-full bg-[#17181d] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0c0d11] transition-colors">
             <Download size={12} />
             Export CSV
           </button>
@@ -97,7 +97,7 @@ export default function FleetAnalyticsPage() {
           <HealthScoreRing score={fleetHealth?.fleet_health_score ?? null} size={64} strokeWidth={6} />
           <div>
             <p className="kicker">Fleet Score</p>
-            <p className="mt-1 text-xs text-black/40">{total} drone{total !== 1 ? "s" : ""} total</p>
+            <p className="mt-1 text-xs text-theme-40">{total} drone{total !== 1 ? "s" : ""} total</p>
           </div>
         </div>
         {[
@@ -107,8 +107,8 @@ export default function FleetAnalyticsPage() {
         ].map((s) => (
           <div key={s.label} className="panel-elevated p-6">
             <p className="kicker">{s.label}</p>
-            <p className="mt-3 font-header text-4xl text-black">{loading ? "—" : s.value}</p>
-            <p className="mt-1 text-xs text-black/40">{s.sub}</p>
+            <p className="mt-3 font-header text-4xl text-theme-primary">{loading ? "—" : s.value}</p>
+            <p className="mt-1 text-xs text-theme-40">{s.sub}</p>
           </div>
         ))}
       </section>
@@ -125,10 +125,10 @@ export default function FleetAnalyticsPage() {
           ].map(({ label, count, color }) => (
             <div key={label}>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-black/55">{label}</span>
+                <span className="text-xs text-theme-55">{label}</span>
                 <span className="font-ui text-xs font-semibold" style={{ color }}>{count}</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-black/[0.05] overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-theme-5 overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-700"
                   style={{ width: `${total > 0 ? (count / total) * 100 : 0}%`, backgroundColor: color }}
@@ -150,10 +150,10 @@ export default function FleetAnalyticsPage() {
             };
             const pct = total > 0 ? Math.round((count / total) * 100) : 0;
             return (
-              <div key={plan} className="rounded-[18px] border border-black/[0.06] bg-black/[0.02] p-4">
-                <p className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/35">{labels[plan]}</p>
-                <p className="mt-2 font-header text-3xl text-black">{count}</p>
-                <p className="mt-1 text-xs text-black/35">{pct}% of fleet</p>
+              <div key={plan} className="rounded-[18px] border border-theme-6 bg-theme-2 p-4">
+                <p className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-35">{labels[plan]}</p>
+                <p className="mt-2 font-header text-3xl text-theme-primary">{count}</p>
+                <p className="mt-1 text-xs text-theme-35">{pct}% of fleet</p>
               </div>
             );
           })}
@@ -162,19 +162,19 @@ export default function FleetAnalyticsPage() {
 
       {/* Drone comparison table */}
       <div className="panel overflow-hidden">
-        <div className="px-6 py-4 border-b border-black/[0.05] flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-theme-5 flex items-center justify-between">
           <div>
             <p className="kicker">Drone Comparison</p>
-            <h2 className="mt-1 font-header text-xl text-black">All Fleet Drones</h2>
+            <h2 className="mt-1 font-header text-xl text-theme-primary">All Fleet Drones</h2>
           </div>
-          <span className="font-ui text-[0.58rem] text-black/30 uppercase tracking-[0.12em]">
+          <span className="font-ui text-[0.58rem] text-theme-30 uppercase tracking-[0.12em]">
             Click column to sort
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-black/[0.05]">
+              <tr className="border-b border-theme-5">
                 {[
                   { label: "Drone", col: null },
                   { label: "Model", col: "model" as const },
@@ -187,7 +187,7 @@ export default function FleetAnalyticsPage() {
                   <th
                     key={label}
                     onClick={col ? () => toggleSort(col) : undefined}
-                    className={`px-5 py-3 text-left font-ui text-[0.58rem] uppercase tracking-[0.18em] text-black/35 ${col ? "cursor-pointer hover:text-black/60" : ""}`}
+                    className={`px-5 py-3 text-left font-ui text-[0.58rem] uppercase tracking-[0.18em] text-theme-35 ${col ? "cursor-pointer hover:text-theme-primary/60" : ""}`}
                   >
                     {label}
                     {col && sortBy === col && (sortDir === "asc" ? " ↑" : " ↓")}
@@ -197,23 +197,23 @@ export default function FleetAnalyticsPage() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={7} className="px-5 py-8 text-center text-sm text-black/35">Loading...</td></tr>
+                <tr><td colSpan={7} className="px-5 py-8 text-center text-sm text-theme-35">Loading...</td></tr>
               ) : sorted.length === 0 ? (
-                <tr><td colSpan={7} className="px-5 py-8 text-center text-sm text-black/35">No drones registered</td></tr>
+                <tr><td colSpan={7} className="px-5 py-8 text-center text-sm text-theme-35">No drones registered</td></tr>
               ) : (
                 sorted.map((drone) => (
-                  <tr key={drone.id} className="border-b border-black/[0.04] hover:bg-black/[0.015] transition-colors">
+                  <tr key={drone.id} className="border-b border-theme-4 hover:bg-theme-15 transition-colors">
                     <td className="px-5 py-3.5">
-                      <span className="font-ui text-[0.68rem] text-black/60">···{drone.serial_number.slice(-6)}</span>
+                      <span className="font-ui text-[0.68rem] text-theme-60">···{drone.serial_number.slice(-6)}</span>
                     </td>
-                    <td className="px-5 py-3.5 text-sm text-black/70">{drone.model}</td>
+                    <td className="px-5 py-3.5 text-sm text-theme-70">{drone.model}</td>
                     <td className="px-5 py-3.5">
                       <HealthScoreRing score={drone.latest_health_score ?? null} size={36} strokeWidth={4} />
                     </td>
                     <td className="px-5 py-3.5">
                       <span className={`font-ui text-[0.58rem] uppercase tracking-[0.14em] px-2.5 py-1 rounded-full border ${
                         drone.care_refresh_plan === "NONE"
-                          ? "bg-black/[0.03] text-black/30 border-black/[0.05]"
+                          ? "bg-theme-3 text-theme-30 border-theme-5"
                           : "bg-[#1db87a]/[0.08] text-[#1db87a] border-[#1db87a]/20"
                       }`}>
                         {drone.care_refresh_plan === "NONE" ? "None" :
@@ -221,15 +221,15 @@ export default function FleetAnalyticsPage() {
                          drone.care_refresh_plan === "TWO_YEAR" ? "2yr" : "1yr"}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-sm text-black/55">
+                    <td className="px-5 py-3.5 text-sm text-theme-55">
                       {drone.replacements_used}/{drone.replacements_used + drone.replacements_remaining}
                     </td>
-                    <td className="px-5 py-3.5 text-xs text-black/45">
+                    <td className="px-5 py-3.5 text-xs text-theme-45">
                       {drone.care_refresh_expires_at
                         ? new Date(drone.care_refresh_expires_at).toLocaleDateString()
                         : "—"}
                     </td>
-                    <td className="px-5 py-3.5 text-xs text-black/45">
+                    <td className="px-5 py-3.5 text-xs text-theme-45">
                       {drone.last_flight_date
                         ? new Date(drone.last_flight_date).toLocaleDateString()
                         : "Never"}

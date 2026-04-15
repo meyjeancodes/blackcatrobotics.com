@@ -70,20 +70,20 @@ export default async function RepairProtocolPage({ params }: PageProps) {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-black/40 font-ui uppercase tracking-[0.14em]">
-        <Link href="/dispatch" className="hover:text-black/70 transition-colors">
+      <nav className="flex items-center gap-2 text-xs text-theme-40 font-ui uppercase tracking-[0.14em]">
+        <Link href="/dispatch" className="hover:text-theme-primary/70 transition-colors">
           Dispatch
         </Link>
         <span>/</span>
         <span>{platformName}</span>
         <span>/</span>
-        <span className="text-black/60">Repair Protocol</span>
+        <span className="text-theme-60">Repair Protocol</span>
       </nav>
 
       {/* Platform label */}
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-black/40 font-ui uppercase tracking-[0.14em] mb-1">
+          <p className="text-xs text-theme-40 font-ui uppercase tracking-[0.14em] mb-1">
             {platformName}
           </p>
           <h1 className="text-2xl font-bold tracking-tight">
@@ -101,14 +101,14 @@ export default async function RepairProtocolPage({ params }: PageProps) {
 
       {/* Source citations */}
       {failureMode.source_urls && failureMode.source_urls.length > 0 && (
-        <div className="rounded-2xl border border-black/[0.06] bg-black/[0.018] p-5">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-black/40 mb-3">
+        <div className="rounded-2xl border border-theme-6 bg-theme-18 p-5">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-theme-40 mb-3">
             Research Sources
           </h2>
           <ol className="space-y-2">
             {failureMode.source_urls.map((url, i) => (
               <li key={i} className="flex items-start gap-2 text-sm">
-                <span className="shrink-0 text-black/30 font-mono text-xs mt-0.5">
+                <span className="shrink-0 text-theme-30 font-mono text-xs mt-0.5">
                   [{i + 1}]
                 </span>
                 <a
@@ -141,7 +141,7 @@ function MarkCompleteButton({ failureModeId }: { failureModeId: string }) {
       <input type="hidden" name="failureModeId" value={failureModeId} />
       <button
         type="submit"
-        className="rounded-xl bg-black px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-80 active:scale-95"
+        className="rounded-xl bg-[#0c0d11] px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-80 active:scale-95"
       >
         Mark Complete
       </button>
