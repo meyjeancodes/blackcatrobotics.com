@@ -49,22 +49,22 @@ function LayerPipeline({
                   "h-2 w-2 rounded-full transition-all duration-300",
                   isLoading ? "bg-amber-400 animate-pulse" :
                   isFired   ? "bg-moss" :
-                  isPending ? "bg-black/15" : "bg-black/15",
+                  isPending ? "bg-theme-15" : "bg-theme-15",
                 ].join(" ")}
               />
               <span
                 className={[
                   "font-ui text-[0.57rem] uppercase tracking-[0.14em]",
-                  isFired   ? "text-black/60" :
+                  isFired   ? "text-theme-60" :
                   isLoading ? "text-amber-600" :
-                              "text-black/25",
+                              "text-theme-25",
                 ].join(" ")}
               >
                 {LAYER_LABELS[layer]}
               </span>
             </div>
             {i < layers.length - 1 && (
-              <ChevronRight size={10} className="text-black/20 shrink-0" />
+              <ChevronRight size={10} className="text-theme-20 shrink-0" />
             )}
           </div>
         );
@@ -87,19 +87,19 @@ function RuleList({ results }: { results: DiagnosticReport["ruleResults"] }) {
       {results.map((r) => (
         <div
           key={r.ruleId}
-          className="flex items-start gap-2.5 rounded-[14px] border border-black/[0.05] bg-black/[0.018] px-3 py-2.5"
+          className="flex items-start gap-2.5 rounded-[14px] border border-theme-5 bg-theme-18 px-3 py-2.5"
         >
-          <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${severityDot[r.severity] ?? "bg-black/20"}`} />
+          <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${severityDot[r.severity] ?? "bg-theme-20"}`} />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-black/40">
+              <span className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-40">
                 {r.ruleId}
               </span>
-              <span className="font-ui text-[0.54rem] text-black/30">
+              <span className="font-ui text-[0.54rem] text-theme-30">
                 {(r.confidence * 100).toFixed(0)}% confidence
               </span>
             </div>
-            <p className="text-xs text-black/58 leading-snug">{r.summary}</p>
+            <p className="text-xs text-theme-58 leading-snug">{r.summary}</p>
           </div>
         </div>
       ))}
@@ -111,22 +111,22 @@ function RuleList({ results }: { results: DiagnosticReport["ruleResults"] }) {
 
 function RecommendationCard({ analysis }: { analysis: NonNullable<DiagnosticReport["claudeAnalysis"]> }) {
   return (
-    <div className="mt-4 rounded-[20px] border border-black/[0.06] bg-white/60 p-5 space-y-4">
+    <div className="mt-4 rounded-[20px] border border-theme-6 bg-white/60 p-5 space-y-4">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
           <p className="kicker">Claude Analysis — Layer 3</p>
-          <h3 className="mt-1 font-header text-lg leading-snug text-black">{analysis.title}</h3>
+          <h3 className="mt-1 font-header text-lg leading-snug text-theme-primary">{analysis.title}</h3>
         </div>
-        <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/30">
+        <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-30">
           {(analysis.confidence * 100).toFixed(0)}% confidence
         </span>
       </div>
 
-      <p className="text-sm leading-6 text-black/60">{analysis.summary}</p>
+      <p className="text-sm leading-6 text-theme-60">{analysis.summary}</p>
 
-      <div className="rounded-[16px] border border-black/[0.05] bg-black/[0.02] p-4 space-y-3">
-        <p className="font-ui text-[0.58rem] uppercase tracking-[0.18em] text-black/35 mb-2">Root Cause</p>
-        <p className="text-sm text-black/65 leading-snug">{analysis.rootCause}</p>
+      <div className="rounded-[16px] border border-theme-5 bg-theme-2 p-4 space-y-3">
+        <p className="font-ui text-[0.58rem] uppercase tracking-[0.18em] text-theme-35 mb-2">Root Cause</p>
+        <p className="text-sm text-theme-65 leading-snug">{analysis.rootCause}</p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-3">
@@ -135,38 +135,38 @@ function RecommendationCard({ analysis }: { analysis: NonNullable<DiagnosticRepo
           const colors = { immediate: "border-ember/[0.18] bg-ember/[0.04]", shortTerm: "border-amber-200/60 bg-amber-50/40", preventive: "border-moss/[0.18] bg-moss/[0.04]" };
           return (
             <div key={key} className={`rounded-[16px] border p-3.5 ${colors[key]}`}>
-              <p className="font-ui text-[0.57rem] uppercase tracking-[0.16em] text-black/38 mb-1.5">
+              <p className="font-ui text-[0.57rem] uppercase tracking-[0.16em] text-theme-38 mb-1.5">
                 {labels[key]}
               </p>
-              <p className="text-xs leading-relaxed text-black/62">{analysis.recommendation[key]}</p>
+              <p className="text-xs leading-relaxed text-theme-62">{analysis.recommendation[key]}</p>
             </div>
           );
         })}
       </div>
 
       {(analysis.affectedComponents.length > 0 || analysis.partsList.length > 0) && (
-        <div className="flex flex-wrap gap-4 text-xs text-black/50">
+        <div className="flex flex-wrap gap-4 text-xs text-theme-50">
           {analysis.affectedComponents.length > 0 && (
             <div>
-              <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/30 mr-1.5">Components:</span>
+              <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-30 mr-1.5">Components:</span>
               {analysis.affectedComponents.join(", ")}
             </div>
           )}
           {analysis.partsList.length > 0 && (
             <div>
-              <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/30 mr-1.5">Parts:</span>
+              <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-30 mr-1.5">Parts:</span>
               {analysis.partsList.join(", ")}
             </div>
           )}
           <div>
-            <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/30 mr-1.5">Downtime:</span>
+            <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-30 mr-1.5">Downtime:</span>
             {analysis.estimatedDowntime}
           </div>
         </div>
       )}
 
-      <div className="flex items-center justify-between border-t border-black/[0.05] pt-3 mt-1">
-        <div className="flex items-center gap-3 font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/28">
+      <div className="flex items-center justify-between border-t border-theme-5 pt-3 mt-1">
+        <div className="flex items-center gap-3 font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-28">
           {analysis._meta.isMock ? (
             <span>Mock mode — demo output</span>
           ) : (
@@ -193,13 +193,13 @@ function CostBadge({ cost }: { cost: DiagnosticReport["costEstimate"] }) {
   const total = cost.layer2 + cost.layer3;
   if (total === 0) {
     return (
-      <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/25">
+      <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-25">
         $0.00 — mock mode
       </span>
     );
   }
   return (
-    <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-black/30">
+    <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-30">
       ${total.toFixed(4)} this run (L2: ${cost.layer2.toFixed(4)} L3: ${cost.layer3.toFixed(4)})
     </span>
   );
@@ -270,10 +270,10 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
       <div className="flex flex-wrap items-start justify-between gap-4 mb-5">
         <div>
           <p className="kicker">Diagnostic Pipeline</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-theme-primary">
             Run Diagnostics
           </h2>
-          <p className="mt-2 text-sm leading-6 text-black/50">
+          <p className="mt-2 text-sm leading-6 text-theme-50">
             Three-layer analysis: rule engine → VLA behavioral comparison → Claude deep analysis.
           </p>
         </div>
@@ -326,7 +326,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
                 <span className={`font-ui text-[0.62rem] uppercase tracking-[0.20em] font-semibold ${sev.text}`}>
                   {sev.label}
                 </span>
-                <span className="font-ui text-[0.55rem] uppercase tracking-[0.12em] text-black/30">
+                <span className="font-ui text-[0.55rem] uppercase tracking-[0.12em] text-theme-30">
                   {report.layersFired.length} layer{report.layersFired.length !== 1 ? "s" : ""} fired
                 </span>
               </div>
@@ -340,7 +340,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
           {/* Rule results */}
           {report.ruleResults.length > 0 && (
             <div>
-              <p className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40 mb-1">
+              <p className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-40 mb-1">
                 Layer 1 — {report.ruleResults.length} rule{report.ruleResults.length !== 1 ? "s" : ""} triggered
               </p>
               <RuleList results={report.ruleResults} />
@@ -349,12 +349,12 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
 
           {/* VLA comparison summary */}
           {report.vlaComparison && (
-            <div className="rounded-[16px] border border-black/[0.05] bg-black/[0.018] px-4 py-3">
-              <p className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-black/35 mb-1.5">
+            <div className="rounded-[16px] border border-theme-5 bg-theme-18 px-4 py-3">
+              <p className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-35 mb-1.5">
                 Layer 2 — VLA Behavioral Score
               </p>
               <div className="flex items-center gap-4">
-                <div className="flex-1 h-1.5 rounded-full bg-black/[0.06]">
+                <div className="flex-1 h-1.5 rounded-full bg-theme-6">
                   <div
                     className={[
                       "h-full rounded-full transition-all duration-700",
@@ -364,12 +364,12 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
                     style={{ width: `${report.vlaComparison.behavioralScore * 100}%` }}
                   />
                 </div>
-                <span className="font-ui text-[0.62rem] font-semibold tabular-nums text-black/60 shrink-0">
+                <span className="font-ui text-[0.62rem] font-semibold tabular-nums text-theme-60 shrink-0">
                   {(report.vlaComparison.behavioralScore * 100).toFixed(1)}%
                 </span>
               </div>
               {report.vlaComparison.mostAnomalousJoints.length > 0 && (
-                <p className="mt-2 text-xs text-black/42 leading-snug">
+                <p className="mt-2 text-xs text-theme-42 leading-snug">
                   Most anomalous: {report.vlaComparison.mostAnomalousJoints.join(", ")}
                 </p>
               )}
@@ -383,7 +383,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
 
           {/* Nominal result */}
           {report.overallSeverity === "nominal" && (
-            <p className="text-sm text-black/50 text-center py-2">
+            <p className="text-sm text-theme-50 text-center py-2">
               All systems nominal — no anomalies detected in this diagnostic cycle.
             </p>
           )}
@@ -403,7 +403,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
 
       {/* Idle state */}
       {!loading && !report && !error && (
-        <p className="text-sm text-black/35 text-center py-6">
+        <p className="text-sm text-theme-35 text-center py-6">
           Click "Run Diagnostics" to analyze live telemetry across all three layers.
         </p>
       )}

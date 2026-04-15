@@ -39,14 +39,14 @@ export function PerformanceKpis() {
             <p className="kicker">Downtime Prevented</p>
             <p className="metric-value mt-3 transition-all duration-500">
               {kpis.downtimePrevented}
-              <span className="font-body text-xl font-normal text-black/38 ml-1.5">hrs</span>
+              <span className="font-body text-xl font-normal text-theme-38 ml-1.5">hrs</span>
             </p>
           </div>
           <div className="shrink-0 rounded-2xl bg-moss/[0.10] p-3 text-moss ring-1 ring-moss/[0.12]">
             <Clock size={18} />
           </div>
         </div>
-        <p className="text-sm leading-6 text-black/55">
+        <p className="text-sm leading-6 text-theme-55">
           Estimated operational hours preserved through predictive intervention this quarter.
         </p>
       </div>
@@ -57,14 +57,14 @@ export function PerformanceKpis() {
             <p className="kicker">System Efficiency</p>
             <p className="metric-value mt-3 transition-all duration-500">
               {kpis.systemEfficiency.toFixed(1)}
-              <span className="font-body text-xl font-normal text-black/38 ml-0.5">%</span>
+              <span className="font-body text-xl font-normal text-theme-38 ml-0.5">%</span>
             </p>
           </div>
           <div className="shrink-0 rounded-2xl bg-ember/[0.08] p-3 text-ember ring-1 ring-ember/[0.12]">
             <TrendingUp size={18} />
           </div>
         </div>
-        <p className="text-sm leading-6 text-black/55">
+        <p className="text-sm leading-6 text-theme-55">
           Cross-fleet operational efficiency index based on uptime, response latency, and task completion.
         </p>
       </div>
@@ -75,14 +75,14 @@ export function PerformanceKpis() {
             <p className="kicker">Active Risk Mitigation</p>
             <p className="metric-value mt-3 transition-all duration-500">
               {kpis.risksMitigated}
-              <span className="font-body text-xl font-normal text-black/38 ml-1.5">events</span>
+              <span className="font-body text-xl font-normal text-theme-38 ml-1.5">events</span>
             </p>
           </div>
           <div className="shrink-0 rounded-2xl bg-gold/[0.14] p-3 text-gold ring-1 ring-gold/[0.16]">
             <ShieldCheck size={18} />
           </div>
         </div>
-        <p className="text-sm leading-6 text-black/55">
+        <p className="text-sm leading-6 text-theme-55">
           Active risk flags tracked and routed through the dispatch and maintenance pipeline.
         </p>
       </div>

@@ -485,7 +485,7 @@ function SubdomainStrip() {
       <div className="mb-4 flex items-center justify-between gap-4">
         <div>
           <p className="kicker">Infrastructure</p>
-          <h2 className="mt-1.5 font-header text-xl leading-tight text-black">Subdomain Health</h2>
+          <h2 className="mt-1.5 font-header text-xl leading-tight text-theme-primary">Subdomain Health</h2>
         </div>
         <div className="flex items-center gap-2">
           <SimBadge />
@@ -495,7 +495,7 @@ function SubdomainStrip() {
               All systems nominal
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-black/40">
+            <span className="inline-flex items-center gap-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-40">
               <RefreshCw size={12} className="animate-spin" />
               Checking…
             </span>
@@ -507,25 +507,25 @@ function SubdomainStrip() {
         {SUBDOMAINS.map((d) => (
           <div
             key={`${d.domain}${d.path}`}
-            className="rounded-[16px] border border-black/[0.05] bg-black/[0.018] p-3.5 flex flex-col gap-2"
+            className="rounded-[16px] border border-theme-5 bg-theme-18 p-3.5 flex flex-col gap-2"
           >
             <div className="flex items-center justify-between gap-2">
               {checked ? (
                 <CheckCircle2 size={14} className="text-moss shrink-0" />
               ) : (
-                <div className="h-3.5 w-3.5 rounded-full bg-black/[0.08] animate-pulse shrink-0" />
+                <div className="h-3.5 w-3.5 rounded-full bg-theme-8 animate-pulse shrink-0" />
               )}
               <span className="inline-flex items-center rounded-full bg-sky-50 px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-sky-600">
                 SSL
               </span>
             </div>
             <div>
-              <p className="font-mono text-[0.65rem] font-semibold text-black/80 truncate">{d.domain}</p>
+              <p className="font-mono text-[0.65rem] font-semibold text-theme-80 truncate">{d.domain}</p>
               {d.path !== "/" && (
-                <p className="font-mono text-[0.58rem] text-black/38">{d.path}</p>
+                <p className="font-mono text-[0.58rem] text-theme-38">{d.path}</p>
               )}
             </div>
-            <p className="font-ui text-[0.55rem] uppercase tracking-[0.12em] text-black/30">{d.note}</p>
+            <p className="font-ui text-[0.55rem] uppercase tracking-[0.12em] text-theme-30">{d.note}</p>
           </div>
         ))}
       </div>
@@ -554,10 +554,10 @@ export default function NetworkPage() {
       {/* Header */}
       <div>
         <p className="kicker">HABITAT Infrastructure</p>
-        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-black lg:text-5xl">
+        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-theme-primary lg:text-5xl">
           Network Health
         </h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-theme-52">
           Mobile Data Center field deployment stack — LEO backhaul, comms truck,
           tethered drone relay, and Construct.Bot mesh connectivity.
         </p>
@@ -625,7 +625,7 @@ export default function NetworkPage() {
       </section>
 
       {/* Footer note */}
-      <p className="text-center font-mono text-[0.60rem] text-black/22 pb-2">
+      <p className="text-center font-mono text-[0.60rem] text-theme-22 pb-2">
         All telemetry panels show simulated data · Real feeds connect when MDC-1 hardware is online
       </p>
     </div>

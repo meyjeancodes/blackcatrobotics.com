@@ -18,11 +18,11 @@ export function MetricCard({
           <p className="kicker">{label}</p>
           <p className="metric-value mt-3">{value}</p>
         </div>
-        <div className="shrink-0 rounded-2xl bg-black/[0.04] p-3 text-ember ring-1 ring-black/[0.04]">
+        <div className="shrink-0 rounded-2xl bg-theme-4 p-3 text-ember ring-1 ring-black/[0.04]">
           {icon}
         </div>
       </div>
-      <p className="text-sm leading-6 text-black/55">{detail}</p>
+      <p className="text-sm leading-6 text-theme-55">{detail}</p>
     </div>
   );
 }

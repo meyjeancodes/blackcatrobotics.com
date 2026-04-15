@@ -105,22 +105,22 @@ export function FlightLogUploader({ droneId, onSuccess }: FlightLogUploaderProps
             transition-all duration-200
             ${isDragging
               ? "border-[#e8601e]/50 bg-[#e8601e]/[0.04]"
-              : "border-black/10 bg-black/[0.02] hover:border-black/20 hover:bg-black/[0.04]"
+              : "border-theme-10 bg-theme-2 hover:border-theme-10 hover:bg-theme-4"
             }
           `}
         >
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/[0.04]">
-            <Upload size={22} className="text-black/35" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-theme-4">
+            <Upload size={22} className="text-theme-35" />
           </div>
           <div className="text-center">
-            <p className="text-sm font-medium text-black/70">
+            <p className="text-sm font-medium text-theme-70">
               Drop your DJI flight log here
             </p>
-            <p className="mt-1 text-xs text-black/40">
+            <p className="mt-1 text-xs text-theme-40">
               Supports DJI Assistant 2 CSV or DJI Fly JSON export
             </p>
           </div>
-          <span className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/30">
+          <span className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-30">
             Or click to browse
           </span>
           <input
@@ -138,18 +138,18 @@ export function FlightLogUploader({ droneId, onSuccess }: FlightLogUploaderProps
 
       {/* File selected — preview */}
       {file && !success && (
-        <div className="rounded-[20px] border border-black/[0.07] bg-black/[0.02] p-5">
+        <div className="rounded-[20px] border border-theme-7 bg-theme-2 p-5">
           <div className="flex items-start justify-between gap-3 mb-4">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#e8601e]/10">
                 <FileText size={16} className="text-[#e8601e]" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-black/80">{file.name}</p>
-                <p className="text-xs text-black/40">{(file.size / 1024).toFixed(1)} KB</p>
+                <p className="text-sm font-semibold text-theme-80">{file.name}</p>
+                <p className="text-xs text-theme-40">{(file.size / 1024).toFixed(1)} KB</p>
               </div>
             </div>
-            <button onClick={reset} className="text-black/30 hover:text-black/60 transition-colors">
+            <button onClick={reset} className="text-theme-30 hover:text-theme-primary/60 transition-colors">
               <X size={16} />
             </button>
           </div>
@@ -168,9 +168,9 @@ export function FlightLogUploader({ droneId, onSuccess }: FlightLogUploaderProps
                   highlight: preview.incidents_found > 0,
                 },
               ].map(({ label, value, highlight }) => (
-                <div key={label} className="rounded-[14px] bg-white/60 border border-black/[0.04] p-2.5">
-                  <p className="font-ui text-[0.56rem] uppercase tracking-[0.12em] text-black/35 mb-0.5">{label}</p>
-                  <p className={`text-sm font-semibold ${highlight ? "text-[#e8601e]" : "text-black/70"}`}>{value}</p>
+                <div key={label} className="rounded-[14px] bg-white/60 border border-theme-4 p-2.5">
+                  <p className="font-ui text-[0.56rem] uppercase tracking-[0.12em] text-theme-35 mb-0.5">{label}</p>
+                  <p className={`text-sm font-semibold ${highlight ? "text-[#e8601e]" : "text-theme-70"}`}>{value}</p>
                 </div>
               ))}
             </div>

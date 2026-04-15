@@ -96,71 +96,71 @@ function JobModal({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-theme-40 p-4 backdrop-blur-sm">
       <div className="panel-elevated w-full max-w-lg p-6 relative">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-1.5 text-black/35 transition hover:bg-black/[0.06] hover:text-black"
+          className="absolute right-4 top-4 rounded-full p-1.5 text-theme-35 transition hover:bg-theme-6 hover:text-theme-primary"
         >
           <X size={16} />
         </button>
 
         <div className="mb-6">
           <p className="kicker">New Job Posting</p>
-          <h2 className="mt-2 font-header text-xl leading-tight text-black">Post a Service Request</h2>
+          <h2 className="mt-2 font-header text-xl leading-tight text-theme-primary">Post a Service Request</h2>
         </div>
 
         <div className="space-y-4">
           <div>
-            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/45 mb-1.5">Platform</label>
+            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-45 mb-1.5">Platform</label>
             <select
               value={form.platform}
               onChange={(e) => set("platform", e.target.value)}
-              className="w-full rounded-[14px] border border-black/[0.10] bg-white px-3 py-2.5 text-sm text-black outline-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
+              className="w-full rounded-[14px] border border-theme-10 bg-white px-3 py-2.5 text-sm text-theme-primary outline-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
             >
               <option value="">Select platform…</option>
               {PLATFORMS.map((p) => <option key={p} value={p}>{p}</option>)}
             </select>
           </div>
           <div>
-            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/45 mb-1.5">Location</label>
+            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-45 mb-1.5">Location</label>
             <input
               type="text"
               value={form.location}
               onChange={(e) => set("location", e.target.value)}
               placeholder="City, State or address"
-              className="w-full rounded-[14px] border border-black/[0.10] bg-white px-3 py-2.5 text-sm text-black outline-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
+              className="w-full rounded-[14px] border border-theme-10 bg-white px-3 py-2.5 text-sm text-theme-primary outline-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
             />
           </div>
           <div>
-            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/45 mb-1.5">Service Type</label>
+            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-45 mb-1.5">Service Type</label>
             <select
               value={form.serviceType}
               onChange={(e) => set("serviceType", e.target.value)}
-              className="w-full rounded-[14px] border border-black/[0.10] bg-white px-3 py-2.5 text-sm text-black outline-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
+              className="w-full rounded-[14px] border border-theme-10 bg-white px-3 py-2.5 text-sm text-theme-primary outline-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
             >
               <option value="">Select service…</option>
               {SERVICE_TYPES.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
           <div>
-            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/45 mb-1.5">Priority</label>
+            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-45 mb-1.5">Priority</label>
             <select
               value={form.priority}
               onChange={(e) => set("priority", e.target.value)}
-              className="w-full rounded-[14px] border border-black/[0.10] bg-white px-3 py-2.5 text-sm text-black outline-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
+              className="w-full rounded-[14px] border border-theme-10 bg-white px-3 py-2.5 text-sm text-theme-primary outline-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
             >
               {PRIORITIES.map((p) => <option key={p} value={p}>{p}</option>)}
             </select>
           </div>
           <div>
-            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/45 mb-1.5">Notes</label>
+            <label className="block font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-45 mb-1.5">Notes</label>
             <textarea
               value={form.notes}
               onChange={(e) => set("notes", e.target.value)}
               rows={3}
               placeholder="Describe the issue or any access requirements…"
-              className="w-full rounded-[14px] border border-black/[0.10] bg-white px-3 py-2.5 text-sm text-black outline-none resize-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
+              className="w-full rounded-[14px] border border-theme-10 bg-white px-3 py-2.5 text-sm text-theme-primary outline-none resize-none focus:border-ember/40 focus:ring-1 focus:ring-ember/20"
             />
           </div>
         </div>
@@ -168,7 +168,7 @@ function JobModal({ onClose }: { onClose: () => void }) {
         <div className="mt-6 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 rounded-full border border-black/[0.12] px-4 py-2.5 font-ui text-[0.62rem] uppercase tracking-[0.18em] font-semibold text-black/55 transition hover:bg-black/[0.04]"
+            className="flex-1 rounded-full border border-theme-12 px-4 py-2.5 font-ui text-[0.62rem] uppercase tracking-[0.18em] font-semibold text-theme-55 transition hover:bg-theme-4"
           >
             Cancel
           </button>
@@ -197,10 +197,10 @@ export default function MarketplacePage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="kicker">Field Operations</p>
-          <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-black lg:text-5xl">
+          <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-theme-primary lg:text-5xl">
             BCR Technician Marketplace
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-theme-52">
             Connect with BCR-certified field technicians for on-demand service and maintenance.
           </p>
         </div>
@@ -222,7 +222,7 @@ export default function MarketplacePage() {
       <section>
         <div className="mb-5">
           <p className="kicker">Available Now</p>
-          <h2 className="mt-2 font-header text-2xl leading-tight text-black">Available Technicians</h2>
+          <h2 className="mt-2 font-header text-2xl leading-tight text-theme-primary">Available Technicians</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {MOCK_TECHS.map((tech) => (
@@ -233,35 +233,35 @@ export default function MarketplacePage() {
                     {tech.name.split(" ").map((n) => n[0]).join("")}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-black text-sm">{tech.name}</h3>
-                    <p className="font-ui text-[0.55rem] uppercase tracking-[0.12em] text-black/40">{tech.certification}</p>
+                    <h3 className="font-semibold text-theme-primary text-sm">{tech.name}</h3>
+                    <p className="font-ui text-[0.55rem] uppercase tracking-[0.12em] text-theme-40">{tech.certification}</p>
                   </div>
                 </div>
                 <StatusPill label={tech.available ? "available" : "busy"} />
               </div>
 
               <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                <div className="flex items-center gap-1.5 text-xs text-black/50">
-                  <MapPin size={11} className="text-black/30 shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs text-theme-50">
+                  <MapPin size={11} className="text-theme-30 shrink-0" />
                   {tech.location}
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-black/50">
-                  <Clock size={11} className="text-black/30 shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs text-theme-50">
+                  <Clock size={11} className="text-theme-30 shrink-0" />
                   {tech.responseTime}
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-black/50">
+                <div className="flex items-center gap-1.5 text-xs text-theme-50">
                   <Star size={11} className="text-amber-400 fill-amber-400 shrink-0" />
                   {tech.rating} ({tech.reviews} reviews)
                 </div>
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-black">
-                  <Wrench size={11} className="text-black/30 shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-theme-primary">
+                  <Wrench size={11} className="text-theme-30 shrink-0" />
                   {tech.rate}
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-1">
                 {tech.platforms.map((p) => (
-                  <span key={p} className="rounded-full bg-black/[0.04] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.10em] text-black/38">
+                  <span key={p} className="rounded-full bg-theme-4 px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.10em] text-theme-38">
                     {p}
                   </span>
                 ))}
@@ -273,7 +273,7 @@ export default function MarketplacePage() {
                   "mt-auto rounded-full px-4 py-2.5 font-ui text-[0.62rem] uppercase tracking-[0.18em] font-semibold transition",
                   tech.available
                     ? "bg-ember text-white hover:bg-ember/90"
-                    : "bg-black/[0.05] text-black/30 cursor-not-allowed",
+                    : "bg-theme-5 text-theme-30 cursor-not-allowed",
                 ].join(" ")}
               >
                 {tech.available ? "Request Dispatch" : "Unavailable"}
@@ -287,30 +287,30 @@ export default function MarketplacePage() {
       <section>
         <div className="mb-5">
           <p className="kicker">In Progress</p>
-          <h2 className="mt-2 font-header text-2xl leading-tight text-black">Active Jobs</h2>
+          <h2 className="mt-2 font-header text-2xl leading-tight text-theme-primary">Active Jobs</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {ACTIVE_JOBS.map((job) => (
             <div key={job.id} className="panel-elevated p-5 flex flex-col gap-3">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <h3 className="font-semibold text-black">{job.platform}</h3>
-                  <p className="mt-0.5 text-xs text-black/45">{job.service}</p>
+                  <h3 className="font-semibold text-theme-primary">{job.platform}</h3>
+                  <p className="mt-0.5 text-xs text-theme-45">{job.service}</p>
                 </div>
                 <StatusPill label={job.status} />
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <p className="font-ui text-[0.56rem] uppercase tracking-[0.16em] text-black/35">Technician</p>
-                  <p className="mt-0.5 text-sm font-medium text-black">{job.techName}</p>
+                  <p className="font-ui text-[0.56rem] uppercase tracking-[0.16em] text-theme-35">Technician</p>
+                  <p className="mt-0.5 text-sm font-medium text-theme-primary">{job.techName}</p>
                 </div>
                 <div>
-                  <p className="font-ui text-[0.56rem] uppercase tracking-[0.16em] text-black/35">ETA</p>
-                  <p className="mt-0.5 text-sm text-black/60">{job.eta}</p>
+                  <p className="font-ui text-[0.56rem] uppercase tracking-[0.16em] text-theme-35">ETA</p>
+                  <p className="mt-0.5 text-sm text-theme-60">{job.eta}</p>
                 </div>
                 <div>
-                  <p className="font-ui text-[0.56rem] uppercase tracking-[0.16em] text-black/35">Est. Cost</p>
-                  <p className="mt-0.5 text-sm font-semibold text-black">{job.cost}</p>
+                  <p className="font-ui text-[0.56rem] uppercase tracking-[0.16em] text-theme-35">Est. Cost</p>
+                  <p className="mt-0.5 text-sm font-semibold text-theme-primary">{job.cost}</p>
                 </div>
               </div>
             </div>

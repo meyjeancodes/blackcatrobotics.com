@@ -39,14 +39,14 @@ function SignalCard({
       className={[
         "rounded-[22px] border transition-all duration-220",
         featured
-          ? "border-black/[0.07] bg-white/60 p-6 shadow-[0_2px_16px_rgba(12,13,17,0.07)] hover:-translate-y-0.5"
-          : "border-black/[0.05] bg-black/[0.018] p-4 hover:bg-white/50 hover:border-black/[0.07] hover:-translate-y-0.5",
+          ? "border-theme-7 bg-white/60 p-6 shadow-[0_2px_16px_rgba(12,13,17,0.07)] hover:-translate-y-0.5"
+          : "border-theme-5 bg-theme-18 p-4 hover:bg-white/50 hover:border-theme-7 hover:-translate-y-0.5",
       ].join(" ")}
     >
       <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
         <div className="flex flex-wrap items-center gap-2">
           {featured && (
-            <span className="inline-flex items-center rounded-full border border-black/[0.12] bg-transparent px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.18em] text-black/50">
+            <span className="inline-flex items-center rounded-full border border-theme-12 bg-transparent px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.18em] text-theme-50">
               Featured
             </span>
           )}
@@ -55,18 +55,18 @@ function SignalCard({
           >
             {CATEGORY_LABELS[entry.category]}
           </span>
-          <span className="font-ui text-[0.57rem] uppercase tracking-[0.16em] text-black/28">
+          <span className="font-ui text-[0.57rem] uppercase tracking-[0.16em] text-theme-28">
             {entry.source}
           </span>
         </div>
-        <span className="font-ui text-[0.57rem] uppercase tracking-[0.14em] text-black/28 whitespace-nowrap">
+        <span className="font-ui text-[0.57rem] uppercase tracking-[0.14em] text-theme-28 whitespace-nowrap">
           {formatSignalTime(entry.time)}
         </span>
       </div>
 
       <h3
         className={[
-          "leading-snug text-black",
+          "leading-snug text-theme-primary",
           featured
             ? "text-lg font-bold tracking-[-0.025em]"
             : "text-sm font-semibold",
@@ -77,7 +77,7 @@ function SignalCard({
 
       <p
         className={[
-          "leading-relaxed text-black/52",
+          "leading-relaxed text-theme-52",
           featured ? "mt-2.5 text-sm" : "mt-1.5 text-xs",
         ].join(" ")}
       >
@@ -89,7 +89,7 @@ function SignalCard({
           {entry.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-black/[0.045] px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.14em] text-black/42 transition-colors duration-200 hover:bg-black/[0.07] hover:text-black/60"
+              className="rounded-full bg-theme-45 px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.14em] text-theme-42 transition-colors duration-200 hover:bg-theme-7 hover:text-theme-primary/60"
             >
               {tag}
             </span>
@@ -150,13 +150,13 @@ export async function SignalFeed({ entries }: { entries: SignalEntry[] }) {
           {(["AI", "Robotics", "Energy", "Infrastructure", "Markets"] as const).map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-black/[0.10] bg-transparent px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.14em] text-black/45 transition-colors duration-200 hover:border-black/20 hover:text-black/65"
+              className="rounded-full border border-theme-10 bg-transparent px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.14em] text-theme-45 transition-colors duration-200 hover:border-theme-10 hover:text-theme-primary/65"
             >
               {tag}
             </span>
           ))}
         </div>
-        <span className="font-ui text-[0.57rem] uppercase tracking-[0.14em] text-black/28">
+        <span className="font-ui text-[0.57rem] uppercase tracking-[0.14em] text-theme-28">
           Updated Daily
         </span>
       </div>
@@ -167,11 +167,11 @@ export async function SignalFeed({ entries }: { entries: SignalEntry[] }) {
       {/* Divider */}
       {featured && rest.length > 0 && (
         <div className="flex items-center gap-4">
-          <div className="h-px flex-1 bg-black/[0.06]" />
-          <span className="font-ui text-[0.55rem] uppercase tracking-[0.20em] text-black/24">
+          <div className="h-px flex-1 bg-theme-6" />
+          <span className="font-ui text-[0.55rem] uppercase tracking-[0.20em] text-theme-24">
             Latest Intelligence
           </span>
-          <div className="h-px flex-1 bg-black/[0.06]" />
+          <div className="h-px flex-1 bg-theme-6" />
         </div>
       )}
 

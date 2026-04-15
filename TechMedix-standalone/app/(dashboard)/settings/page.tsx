@@ -31,19 +31,19 @@ export default function SettingsPage() {
     <div className="space-y-6">
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
         <SurfaceCard title="Runtime configuration" eyebrow="Environment">
-          <div className="space-y-3 text-sm text-black/60">
-            <div className="flex items-center justify-between rounded-[20px] bg-black/[0.03] px-4 py-3"><span>API base URL</span><strong className="text-black">{runtime.apiUrl}</strong></div>
-            <div className="flex items-center justify-between rounded-[20px] bg-black/[0.03] px-4 py-3"><span>Mock data</span><strong className="capitalize text-black">{runtime.mockData}</strong></div>
-            <div className="flex items-center justify-between rounded-[20px] bg-black/[0.03] px-4 py-3"><span>Active role</span><strong className="text-black">{runtime.defaultRole}</strong></div>
+          <div className="space-y-3 text-sm text-theme-60">
+            <div className="flex items-center justify-between rounded-[20px] bg-theme-3 px-4 py-3"><span>API base URL</span><strong className="text-theme-primary">{runtime.apiUrl}</strong></div>
+            <div className="flex items-center justify-between rounded-[20px] bg-theme-3 px-4 py-3"><span>Mock data</span><strong className="capitalize text-theme-primary">{runtime.mockData}</strong></div>
+            <div className="flex items-center justify-between rounded-[20px] bg-theme-3 px-4 py-3"><span>Active role</span><strong className="text-theme-primary">{runtime.defaultRole}</strong></div>
           </div>
         </SurfaceCard>
 
         <SurfaceCard title="Integration checklist" eyebrow="Next production steps">
-          <div className="space-y-4 text-sm leading-7 text-black/60">
-            <p>1. Create the Supabase project, run the SQL migration, and flip <code className="rounded bg-black/5 px-1 py-0.5 text-xs">TECHMEDIX_USE_MOCK_DATA=false</code>.</p>
+          <div className="space-y-4 text-sm leading-7 text-theme-60">
+            <p>1. Create the Supabase project, run the SQL migration, and flip <code className="rounded bg-theme-5 px-1 py-0.5 text-xs">TECHMEDIX_USE_MOCK_DATA=false</code>.</p>
             <p>2. Replace this page’s static environment summary with live ingestion keys, notification toggles, and account preferences.</p>
             <p>3. Add Stripe portal links and real webhook status for billing events once Stripe is integrated.</p>
-            <p>4. Wire role assignment to Supabase Auth <code className="rounded bg-black/5 px-1 py-0.5 text-xs">user_metadata.role</code> field for production RBAC enforcement.</p>
+            <p>4. Wire role assignment to Supabase Auth <code className="rounded bg-theme-5 px-1 py-0.5 text-xs">user_metadata.role</code> field for production RBAC enforcement.</p>
           </div>
         </SurfaceCard>
       </div>
@@ -52,14 +52,14 @@ export default function SettingsPage() {
       <SurfaceCard title="Role-based access" eyebrow="Access control">
         <div className="grid gap-4 sm:grid-cols-3">
           {rbacRoles.map((r) => (
-            <div key={r.role} className="rounded-[20px] border border-black/5 bg-black/[0.02] p-4">
+            <div key={r.role} className="rounded-[20px] border border-theme-5 bg-theme-2 p-4">
               <div className="mb-3">
                 <StatusPill label={r.role.toLowerCase()} />
               </div>
               <ul className="space-y-1.5">
                 {r.access.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-xs text-black/55">
-                    <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-black/20" />
+                  <li key={item} className="flex items-start gap-2 text-xs text-theme-55">
+                    <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-theme-20" />
                     {item}
                   </li>
                 ))}
@@ -73,18 +73,18 @@ export default function SettingsPage() {
       <SurfaceCard title="Audit log" eyebrow="System events">
         <div className="space-y-2">
           {recentLogs.map((log) => (
-            <div key={log.id} className="grid grid-cols-[1fr_auto] items-start gap-4 rounded-[16px] border border-black/5 bg-black/[0.02] px-4 py-3">
+            <div key={log.id} className="grid grid-cols-[1fr_auto] items-start gap-4 rounded-[16px] border border-theme-5 bg-theme-2 px-4 py-3">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                  <span className="text-[0.65rem] uppercase tracking-[0.18em] text-black/40 font-medium">
+                  <span className="text-[0.65rem] uppercase tracking-[0.18em] text-theme-40 font-medium">
                     {log.action.replace(/_/g, " ")}
                   </span>
                   <StatusPill label={log.role} />
                 </div>
-                <p className="text-xs text-black/60">{log.detail ?? log.resource ?? "—"}</p>
-                <p className="text-[0.6rem] uppercase tracking-[0.12em] text-black/30 mt-0.5">{log.user}</p>
+                <p className="text-xs text-theme-60">{log.detail ?? log.resource ?? "—"}</p>
+                <p className="text-[0.6rem] uppercase tracking-[0.12em] text-theme-30 mt-0.5">{log.user}</p>
               </div>
-              <span className="text-[0.6rem] text-black/30 whitespace-nowrap">
+              <span className="text-[0.6rem] text-theme-30 whitespace-nowrap">
                 {new Date(log.timestamp).toLocaleString("en-US", {
                   month: "short",
                   day: "numeric",

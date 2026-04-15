@@ -296,7 +296,7 @@ export default async function TechniciansPage() {
                         style={{ paddingLeft: `${cert.ai_score_threshold}%` }}
                       >
                         <div
-                          className="w-px h-2 bg-black/20 absolute"
+                          className="w-px h-2 bg-theme-20 absolute"
                           style={{ left: `${cert.ai_score_threshold}%` }}
                         />
                       </div>

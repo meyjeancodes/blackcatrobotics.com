@@ -114,7 +114,7 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
   const stepContent: Record<number, React.ReactNode> = {
     0: (
       <div className="space-y-3">
-        <p className="text-sm text-black/55 leading-relaxed mb-4">
+        <p className="text-sm text-theme-55 leading-relaxed mb-4">
           Select the type of damage. Coverage is determined by your current plan.
         </p>
         {DAMAGE_TYPES.map(({ value, label, icon: Icon, description: desc }) => {
@@ -127,21 +127,21 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
               className={`w-full text-left rounded-[18px] border p-4 transition-all duration-150 ${
                 selected
                   ? "border-[#e8601e]/40 bg-[#e8601e]/[0.06]"
-                  : "border-black/[0.06] bg-black/[0.02] hover:border-black/10 hover:bg-black/[0.04]"
+                  : "border-theme-6 bg-theme-2 hover:border-theme-10 hover:bg-theme-4"
               }`}
             >
               <div className="flex items-start gap-3">
-                <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${selected ? "bg-[#e8601e]/15" : "bg-black/[0.05]"}`}>
-                  <Icon size={15} className={selected ? "text-[#e8601e]" : "text-black/40"} />
+                <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${selected ? "bg-[#e8601e]/15" : "bg-theme-5"}`}>
+                  <Icon size={15} className={selected ? "text-[#e8601e]" : "text-theme-40"} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-black/80">{label}</p>
-                  <p className="text-xs text-black/40 mt-0.5 leading-relaxed">{desc}</p>
+                  <p className="text-sm font-semibold text-theme-80">{label}</p>
+                  <p className="text-xs text-theme-40 mt-0.5 leading-relaxed">{desc}</p>
                 </div>
                 <span className={`font-ui text-[0.58rem] uppercase tracking-[0.14em] px-2.5 py-1 rounded-full border shrink-0 ${
                   cov.covered
                     ? "bg-[#1db87a]/10 text-[#1db87a] border-[#1db87a]/20"
-                    : "bg-black/[0.04] text-black/30 border-black/[0.06]"
+                    : "bg-theme-4 text-theme-30 border-theme-6"
                 }`}>
                   {cov.covered ? "Covered" : "Not Covered"}
                 </span>
@@ -152,8 +152,8 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
                 </p>
               )}
               {selected && cov.covered && cov.replacement_fee_usd && (
-                <p className="mt-2.5 text-xs text-black/40 pl-11">
-                  Replacement fee: <strong className="text-black/60">${cov.replacement_fee_usd} USD</strong> per incident
+                <p className="mt-2.5 text-xs text-theme-40 pl-11">
+                  Replacement fee: <strong className="text-theme-60">${cov.replacement_fee_usd} USD</strong> per incident
                 </p>
               )}
             </button>
@@ -165,7 +165,7 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
     1: (
       <div className="space-y-4">
         <div className="space-y-2">
-          <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40">
+          <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-40">
             Incident Description <span className="text-[#e8601e]">*</span>
           </label>
           <textarea
@@ -173,42 +173,42 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
             placeholder="Describe what happened. Be specific about conditions, actions taken, and the resulting damage."
-            className="w-full rounded-[16px] border border-black/10 bg-white/70 px-4 py-3 text-sm text-black/80 placeholder:text-black/30 focus:outline-none focus:border-[#e8601e]/40 focus:ring-2 focus:ring-[#e8601e]/10 resize-none"
+            className="w-full rounded-[16px] border border-theme-10 bg-white/70 px-4 py-3 text-sm text-theme-80 placeholder:text-theme-30 focus:outline-none focus:border-[#e8601e]/40 focus:ring-2 focus:ring-[#e8601e]/10 resize-none"
           />
-          <p className="text-[0.60rem] text-black/30 text-right">{description.length} / 20 min chars</p>
+          <p className="text-[0.60rem] text-theme-30 text-right">{description.length} / 20 min chars</p>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-2">
-            <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40">Date of Incident</label>
+            <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-40">Date of Incident</label>
             <input
               type="date"
               value={incidentDate}
               onChange={(e) => setIncidentDate(e.target.value)}
-              className="w-full rounded-[16px] border border-black/10 bg-white/70 px-4 py-2.5 text-sm text-black/80 focus:outline-none focus:border-[#e8601e]/40"
+              className="w-full rounded-[16px] border border-theme-10 bg-white/70 px-4 py-2.5 text-sm text-theme-80 focus:outline-none focus:border-[#e8601e]/40"
             />
           </div>
           <div className="space-y-2">
-            <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40">Location (optional)</label>
+            <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-40">Location (optional)</label>
             <input
               type="text"
               value={incidentLocation}
               onChange={(e) => setIncidentLocation(e.target.value)}
               placeholder="City, state or coordinates"
-              className="w-full rounded-[16px] border border-black/10 bg-white/70 px-4 py-2.5 text-sm text-black/80 placeholder:text-black/30 focus:outline-none focus:border-[#e8601e]/40"
+              className="w-full rounded-[16px] border border-theme-10 bg-white/70 px-4 py-2.5 text-sm text-theme-80 placeholder:text-theme-30 focus:outline-none focus:border-[#e8601e]/40"
             />
           </div>
         </div>
 
         {(damageType === "FLYAWAY" || damageType === "SIGNAL_LOSS") && (
           <div className="space-y-2">
-            <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40">
+            <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-40">
               Flight Log <span className="text-[#e8601e]">* Required for flyaway claims</span>
             </label>
             <select
               value={selectedLogId}
               onChange={(e) => setSelectedLogId(e.target.value)}
-              className="w-full rounded-[16px] border border-black/10 bg-white/70 px-4 py-2.5 text-sm text-black/80 focus:outline-none focus:border-[#e8601e]/40"
+              className="w-full rounded-[16px] border border-theme-10 bg-white/70 px-4 py-2.5 text-sm text-theme-80 focus:outline-none focus:border-[#e8601e]/40"
             >
               <option value="">Select flight log from incident date</option>
               {flightLogs.map((log) => (
@@ -229,16 +229,16 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
 
     2: (
       <div className="space-y-4">
-        <p className="text-sm text-black/55 leading-relaxed">
+        <p className="text-sm text-theme-55 leading-relaxed">
           Upload at least 2 photos showing the damage. Include a photo of the serial number. Max 8 photos.
         </p>
 
         <label className="block cursor-pointer">
           <div className={`rounded-[20px] border-2 border-dashed p-8 flex flex-col items-center gap-3 transition-colors ${
-            photos.length >= 8 ? "border-black/[0.05] opacity-50 cursor-not-allowed" : "border-black/10 hover:border-[#e8601e]/30 hover:bg-[#e8601e]/[0.02]"
+            photos.length >= 8 ? "border-theme-5 opacity-50 cursor-not-allowed" : "border-theme-10 hover:border-[#e8601e]/30 hover:bg-[#e8601e]/[0.02]"
           }`}>
-            <Upload size={20} className="text-black/30" />
-            <p className="text-sm text-black/50">Click to add photos ({photos.length}/8)</p>
+            <Upload size={20} className="text-theme-30" />
+            <p className="text-sm text-theme-50">Click to add photos ({photos.length}/8)</p>
           </div>
           <input
             type="file"
@@ -255,7 +255,7 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
             {photoNames.map((name, i) => (
               <div key={i} className="flex items-center gap-2 rounded-[14px] bg-[#1db87a]/[0.06] border border-[#1db87a]/15 px-3.5 py-2.5">
                 <CheckCircle size={13} className="text-[#1db87a] shrink-0" />
-                <span className="text-xs text-black/65 truncate">{name}</span>
+                <span className="text-xs text-theme-65 truncate">{name}</span>
               </div>
             ))}
           </div>
@@ -271,8 +271,8 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
 
     3: (
       <div className="space-y-4">
-        <p className="text-sm text-black/55 mb-4">Review your claim before submitting.</p>
-        <div className="rounded-[20px] border border-black/[0.07] bg-black/[0.02] p-5 space-y-3">
+        <p className="text-sm text-theme-55 mb-4">Review your claim before submitting.</p>
+        <div className="rounded-[20px] border border-theme-7 bg-theme-2 p-5 space-y-3">
           <Row label="Drone" value={`${drone.model} ···${drone.serial_number.slice(-6)}`} />
           <Row label="Plan" value={drone.care_refresh_plan === "COMBO" ? "Care Refresh+" : drone.care_refresh_plan === "TWO_YEAR" ? "2-Year" : "1-Year"} />
           <Row label="Damage Type" value={DAMAGE_TYPES.find((d) => d.value === damageType)?.label ?? damageType ?? ""} />
@@ -296,24 +296,24 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
           <CheckCircle size={32} className="text-[#1db87a]" />
         </div>
         <div className="text-center">
-          <h3 className="font-header text-xl text-black">Claim Submitted</h3>
-          <p className="mt-1.5 text-sm text-black/55 leading-relaxed max-w-sm">
+          <h3 className="font-header text-xl text-theme-primary">Claim Submitted</h3>
+          <p className="mt-1.5 text-sm text-theme-55 leading-relaxed max-w-sm">
             Your claim has been submitted. DJI will review and respond within 5–10 business days.
           </p>
           {claimId && (
-            <p className="mt-2 font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/30">
+            <p className="mt-2 font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-30">
               Claim ID: {claimId.slice(0, 8).toUpperCase()}
             </p>
           )}
         </div>
-        <div className="flex items-center gap-2 rounded-[16px] bg-black/[0.03] border border-black/[0.05] px-4 py-3 text-xs text-black/50">
+        <div className="flex items-center gap-2 rounded-[16px] bg-theme-3 border border-theme-5 px-4 py-3 text-xs text-theme-50">
           <Clock size={13} />
           5–10 business days for DJI review. Watch your email for updates.
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="rounded-full border border-black/10 px-6 py-2.5 text-sm text-black/60 hover:border-black/20 hover:text-black/80 transition-colors"
+            className="rounded-full border border-theme-10 px-6 py-2.5 text-sm text-theme-60 hover:border-theme-10 hover:text-theme-primary/80 transition-colors"
           >
             Close
           </button>
@@ -329,14 +329,14 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <p className="kicker">File DJI Care Refresh Claim</p>
-            <span className="font-ui text-[0.60rem] text-black/35">Step {step + 1} of 4</span>
+            <span className="font-ui text-[0.60rem] text-theme-35">Step {step + 1} of 4</span>
           </div>
           <div className="flex gap-1">
             {STEPS.slice(0, 4).map((s, i) => (
               <div
                 key={s}
                 className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-                  i <= step ? "bg-[#e8601e]" : "bg-black/[0.08]"
+                  i <= step ? "bg-[#e8601e]" : "bg-theme-8"
                 }`}
               />
             ))}
@@ -346,7 +346,7 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
               <span
                 key={s}
                 className={`flex-1 text-center font-ui text-[0.55rem] uppercase tracking-[0.12em] ${
-                  i === step ? "text-[#e8601e]" : i < step ? "text-[#1db87a]" : "text-black/25"
+                  i === step ? "text-[#e8601e]" : i < step ? "text-[#1db87a]" : "text-theme-25"
                 }`}
               >
                 {s}
@@ -372,7 +372,7 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
         <div className="mt-6 flex items-center justify-between">
           <button
             onClick={step === 0 ? onClose : () => setStep((s) => s - 1)}
-            className="flex items-center gap-1.5 rounded-full border border-black/10 px-4 py-2 text-sm text-black/55 hover:border-black/20 hover:text-black/75 transition-colors"
+            className="flex items-center gap-1.5 rounded-full border border-theme-10 px-4 py-2 text-sm text-theme-55 hover:border-theme-10 hover:text-theme-primary/75 transition-colors"
           >
             <ArrowLeft size={13} />
             {step === 0 ? "Cancel" : "Back"}
@@ -405,9 +405,9 @@ export function ClaimWizard({ drone, flightLogs, onClose, onClaimCreated }: Clai
 
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
-    <div className="flex items-center justify-between gap-4 py-1.5 border-b border-black/[0.04] last:border-0">
-      <span className="text-xs text-black/40">{label}</span>
-      <span className={`text-xs font-medium ${highlight ? "text-[#e8601e]" : "text-black/65"}`}>{value}</span>
+    <div className="flex items-center justify-between gap-4 py-1.5 border-b border-theme-4 last:border-0">
+      <span className="text-xs text-theme-40">{label}</span>
+      <span className={`text-xs font-medium ${highlight ? "text-[#e8601e]" : "text-theme-65"}`}>{value}</span>
     </div>
   );
 }

@@ -58,17 +58,17 @@ export default function DronesPage() {
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="kicker">Fleet Management</p>
-          <h1 className="mt-2 font-header text-3xl leading-tight text-black">
+          <h1 className="mt-2 font-header text-3xl leading-tight text-theme-primary">
             Drone Fleet
           </h1>
-          <p className="mt-2 text-sm leading-6 text-black/55 max-w-xl">
+          <p className="mt-2 text-sm leading-6 text-theme-55 max-w-xl">
             DJI drone diagnostics, Care Refresh coverage, and AI-powered fleet health monitoring.
           </p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={load}
-            className="flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 text-xs font-ui text-black/55 hover:border-black/20 hover:text-black/75 transition-colors"
+            className="flex items-center gap-2 rounded-full border border-theme-10 px-4 py-2 text-xs font-ui text-theme-55 hover:border-theme-10 hover:text-theme-primary/75 transition-colors"
           >
             <RefreshCw size={12} />
             Refresh
@@ -90,7 +90,7 @@ export default function DronesPage() {
           <HealthScoreRing score={fleetScore} size={72} strokeWidth={7} />
           <div>
             <p className="kicker">Fleet Health Score</p>
-            <p className="mt-1 text-sm text-black/55 leading-snug">
+            <p className="mt-1 text-sm text-theme-55 leading-snug">
               Average across {fleetHealth?.total_drones ?? 0} registered drone{fleetHealth?.total_drones !== 1 ? "s" : ""}
             </p>
           </div>
@@ -121,7 +121,7 @@ export default function DronesPage() {
             <p className={`mt-3 font-header text-4xl leading-none ${stat.color}`}>
               {loading ? "—" : stat.value}
             </p>
-            <p className="mt-2 text-xs text-black/40">{stat.detail}</p>
+            <p className="mt-2 text-xs text-theme-40">{stat.detail}</p>
           </div>
         ))}
       </section>
@@ -135,7 +135,7 @@ export default function DronesPage() {
               <p className="font-ui text-[0.62rem] uppercase tracking-[0.18em] text-amber-600 font-semibold">
                 Care Refresh Expiring Soon
               </p>
-              <p className="mt-1 text-sm text-black/60">
+              <p className="mt-1 text-sm text-theme-60">
                 {fleetHealth!.expiring_soon.length} drone{fleetHealth!.expiring_soon.length !== 1 ? "s" : ""} with Care Refresh expiring within 30 days:{" "}
                 {fleetHealth!.expiring_soon.map((d) => d.model).join(", ")}
               </p>
@@ -146,21 +146,21 @@ export default function DronesPage() {
 
       {/* Filter bar */}
       <div className="flex items-center gap-2 flex-wrap">
-        <Filter size={13} className="text-black/30" />
+        <Filter size={13} className="text-theme-30" />
         {(Object.keys(FILTER_LABELS) as FilterMode[]).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={`rounded-full border px-4 py-1.5 font-ui text-[0.62rem] uppercase tracking-[0.14em] transition-all duration-150 ${
               filter === f
-                ? "bg-black/90 text-white border-black/80"
-                : "border-black/10 text-black/50 hover:border-black/20 hover:text-black/70"
+                ? "bg-[#17181d] text-white border-[#17181d]/80"
+                : "border-theme-10 text-theme-50 hover:border-theme-10 hover:text-theme-primary/70"
             }`}
           >
             {FILTER_LABELS[f]}
           </button>
         ))}
-        <span className="ml-auto font-ui text-[0.58rem] text-black/30 uppercase tracking-[0.14em]">
+        <span className="ml-auto font-ui text-[0.58rem] text-theme-30 uppercase tracking-[0.14em]">
           {filtered.length} drone{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>
@@ -197,14 +197,14 @@ function EmptyState({ filter, onRegister }: { filter: FilterMode; onRegister: ()
   const isAll = filter === "all";
   return (
     <div className="panel flex flex-col items-center gap-4 py-16 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-black/[0.04]">
-        <Cpu size={24} className="text-black/25" />
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-theme-4">
+        <Cpu size={24} className="text-theme-25" />
       </div>
       <div>
-        <p className="text-base font-semibold text-black/60">
+        <p className="text-base font-semibold text-theme-60">
           {isAll ? "No drones registered" : `No drones match "${FILTER_LABELS[filter]}"`}
         </p>
-        <p className="mt-1 text-sm text-black/35">
+        <p className="mt-1 text-sm text-theme-35">
           {isAll ? "Register your first DJI drone to start monitoring." : "Adjust your filter or register more drones."}
         </p>
       </div>
@@ -282,14 +282,14 @@ function RegisterDroneModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-theme-30 backdrop-blur-sm">
       <div className="panel w-full max-w-md p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <p className="kicker">Drone Registration</p>
-            <h2 className="mt-1 font-header text-xl text-black">Register New Drone</h2>
+            <h2 className="mt-1 font-header text-xl text-theme-primary">Register New Drone</h2>
           </div>
-          <button onClick={onClose} className="text-black/30 hover:text-black/60 transition-colors text-lg">✕</button>
+          <button onClick={onClose} className="text-theme-30 hover:text-theme-primary/60 transition-colors text-lg">✕</button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -349,7 +349,7 @@ function RegisterDroneModal({
                 onChange={(e) => setActivatedAt(e.target.value)}
                 className="input-field"
               />
-              <p className="mt-1 text-[0.62rem] text-black/35 font-ui">
+              <p className="mt-1 text-[0.62rem] text-theme-35 font-ui">
                 Must be within 48 hours of first flight. Leave blank to set later.
               </p>
             </Field>
@@ -363,7 +363,7 @@ function RegisterDroneModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-full border border-black/10 py-2.5 text-sm text-black/55 hover:border-black/20 transition-colors"
+              className="flex-1 rounded-full border border-theme-10 py-2.5 text-sm text-theme-55 hover:border-theme-10 transition-colors"
             >
               Cancel
             </button>
@@ -401,7 +401,7 @@ function RegisterDroneModal({
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/40">
+      <label className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-40">
         {label}{required && <span className="text-[#e8601e] ml-1">*</span>}
       </label>
       {children}

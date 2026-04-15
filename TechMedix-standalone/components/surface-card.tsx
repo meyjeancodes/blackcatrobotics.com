@@ -21,7 +21,7 @@ export function SurfaceCard({
 
   return (
     <section className={base}>
-      <div className="mb-6 flex items-center justify-between gap-4 pb-5 border-b border-black/[0.05]" style={dark ? { borderColor: "rgba(255,255,255,0.06)" } : undefined}>
+      <div className="mb-6 flex items-center justify-between gap-4 pb-5 border-b border-theme-5" style={dark ? { borderColor: "rgba(255,255,255,0.06)" } : undefined}>
         <div>
           {eyebrow ? (
             <p className={dark ? "font-ui text-[0.68rem] uppercase tracking-[0.34em] text-white/40 font-medium" : "kicker"}>
@@ -32,7 +32,7 @@ export function SurfaceCard({
             className={
               dark
                 ? "mt-2 font-header text-xl leading-tight text-white"
-                : "mt-2 font-header text-xl leading-tight text-black"
+                : "mt-2 font-header text-xl leading-tight text-theme-primary"
             }
           >
             {title}

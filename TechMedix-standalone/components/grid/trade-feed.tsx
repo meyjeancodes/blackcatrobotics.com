@@ -72,22 +72,22 @@ export function TradeFeed({
 
         {/* Rate display */}
         <div className="mb-4">
-          <p className="font-header text-[2.8rem] leading-none tracking-[-0.04em] text-black">
+          <p className="font-header text-[2.8rem] leading-none tracking-[-0.04em] text-theme-primary">
             ${currentRate.toFixed(3)}
-            <span className="font-ui text-sm text-black/35 ml-1 font-normal">/kWh</span>
+            <span className="font-ui text-sm text-theme-35 ml-1 font-normal">/kWh</span>
           </p>
-          <p className="mt-1 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-black/40">
+          <p className="mt-1 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-theme-40">
             Current grid rate
           </p>
         </div>
 
         <div className="space-y-2 mb-5">
           <div className="flex justify-between text-xs">
-            <span className="text-black/45">Your floor</span>
-            <span className="font-semibold text-black">${sellFloor.toFixed(3)}/kWh</span>
+            <span className="text-theme-45">Your floor</span>
+            <span className="font-semibold text-theme-primary">${sellFloor.toFixed(3)}/kWh</span>
           </div>
           <div className="flex justify-between text-xs">
-            <span className="text-black/45">Spread</span>
+            <span className="text-theme-45">Spread</span>
             <span className={`font-semibold ${isProfitable ? "text-moss" : "text-ember"}`}>
               {isProfitable ? "+" : ""}${spread.toFixed(3)}/kWh
               {" — "}
@@ -95,11 +95,11 @@ export function TradeFeed({
             </span>
           </div>
           <div className="flex justify-between text-xs">
-            <span className="text-black/45">Surplus available</span>
-            <span className="font-semibold text-black">{surplus.toFixed(1)} kWh</span>
+            <span className="text-theme-45">Surplus available</span>
+            <span className="font-semibold text-theme-primary">{surplus.toFixed(1)} kWh</span>
           </div>
           <div className="flex justify-between text-xs">
-            <span className="text-black/45">Estimated return</span>
+            <span className="text-theme-45">Estimated return</span>
             <span className="font-semibold text-moss">${estReturn}</span>
           </div>
         </div>
@@ -113,14 +113,14 @@ export function TradeFeed({
               "w-full font-ui text-[0.65rem] uppercase tracking-[0.14em] py-3 rounded-full transition-colors",
               isProfitable && surplus > 0
                 ? "bg-ember text-white hover:bg-ember/90"
-                : "bg-black/[0.06] text-black/30 cursor-not-allowed",
+                : "bg-theme-6 text-theme-30 cursor-not-allowed",
             ].join(" ")}
           >
             Sell Surplus Now
           </button>
         ) : (
           <div className="space-y-3">
-            <p className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-black/55 text-center">
+            <p className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-55 text-center">
               Confirm: Sell {surplus.toFixed(1)} kWh at ${currentRate.toFixed(3)} = ${estReturn}
             </p>
             <div className="flex gap-2">
@@ -132,7 +132,7 @@ export function TradeFeed({
               </button>
               <button
                 onClick={handleCancel}
-                className="flex-1 font-ui text-[0.62rem] uppercase tracking-[0.14em] border border-black/[0.12] text-black/55 py-2.5 rounded-full hover:bg-black/[0.04] transition-colors"
+                className="flex-1 font-ui text-[0.62rem] uppercase tracking-[0.14em] border border-theme-12 text-theme-55 py-2.5 rounded-full hover:bg-theme-4 transition-colors"
               >
                 Cancel
               </button>
@@ -146,9 +146,9 @@ export function TradeFeed({
         {/* Toggle row */}
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-black/45">Auto-Trade</p>
+            <p className="font-ui text-[0.60rem] uppercase tracking-[0.18em] text-theme-45">Auto-Trade</p>
             {autoTradeEnabled && (
-              <p className="font-ui text-[0.55rem] text-black/35 mt-0.5" style={{ letterSpacing: "0.04em" }}>
+              <p className="font-ui text-[0.55rem] text-theme-35 mt-0.5" style={{ letterSpacing: "0.04em" }}>
                 Sells surplus when rate exceeds floor
               </p>
             )}
@@ -186,16 +186,16 @@ export function TradeFeed({
 
         {/* Floor price input */}
         <div className="flex items-center justify-between gap-3">
-          <label className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-black/40 shrink-0">
+          <label className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-40 shrink-0">
             Floor Price
           </label>
-          <div className="flex items-center gap-1 border border-black/[0.10] rounded-[10px] px-2.5 py-1.5 bg-white">
-            <span className="font-ui text-[0.68rem] text-black/45">$</span>
+          <div className="flex items-center gap-1 border border-theme-10 rounded-[10px] px-2.5 py-1.5 bg-white">
+            <span className="font-ui text-[0.68rem] text-theme-45">$</span>
             <input
               type="text"
               value={floorInput}
               onChange={handleFloorChange}
-              className="font-ui text-[0.72rem] text-black w-14 bg-transparent outline-none"
+              className="font-ui text-[0.72rem] text-theme-primary w-14 bg-transparent outline-none"
               aria-label="Sell floor price"
             />
           </div>
@@ -209,7 +209,7 @@ export function TradeFeed({
           {trades.slice(0, 10).map((t) => (
             <div
               key={t.id}
-              className="flex items-center gap-2 py-2 border-b border-black/[0.04] last:border-0"
+              className="flex items-center gap-2 py-2 border-b border-theme-4 last:border-0"
             >
               {/* Type badge */}
               <span
@@ -223,8 +223,8 @@ export function TradeFeed({
                 {t.type}
               </span>
 
-              <span className="font-ui text-[0.60rem] text-black/55 shrink-0">{t.kwhAmount} kWh</span>
-              <span className="font-ui text-[0.58rem] text-black/35 shrink-0">${t.pricePerKwh}</span>
+              <span className="font-ui text-[0.60rem] text-theme-55 shrink-0">{t.kwhAmount} kWh</span>
+              <span className="font-ui text-[0.58rem] text-theme-35 shrink-0">${t.pricePerKwh}</span>
 
               {/* Total */}
               <span
@@ -238,7 +238,7 @@ export function TradeFeed({
               {/* Status */}
               <span
                 className={`font-ui text-[0.52rem] uppercase tracking-[0.10em] shrink-0 ${
-                  t.status === "completed" ? "text-black/28" : "text-amber-600"
+                  t.status === "completed" ? "text-theme-28" : "text-amber-600"
                 }`}
               >
                 {t.status}
@@ -249,8 +249,8 @@ export function TradeFeed({
 
         {/* Timestamps on last row */}
         <div className="mt-2 flex justify-between">
-          <span className="font-ui text-[0.52rem] text-black/25">Newest first</span>
-          <span className="font-ui text-[0.52rem] text-black/25">
+          <span className="font-ui text-[0.52rem] text-theme-25">Newest first</span>
+          <span className="font-ui text-[0.52rem] text-theme-25">
             Last: {fmtTime(trades[0]?.timestamp ?? new Date())}
           </span>
         </div>

@@ -101,7 +101,7 @@ export function HealthScoreRing({
         </div>
       </div>
       {label && (
-        <span className="font-ui text-[0.58rem] uppercase tracking-[0.18em] text-black/35">
+        <span className="font-ui text-[0.58rem] uppercase tracking-[0.18em] text-theme-35">
           {label}
         </span>
       )}

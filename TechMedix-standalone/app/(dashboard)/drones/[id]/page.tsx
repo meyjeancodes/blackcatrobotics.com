@@ -86,7 +86,7 @@ export default function DroneDetailPage({ params }: { params: Promise<{ id: stri
   if (!drone) {
     return (
       <div className="panel p-10 text-center">
-        <p className="text-black/50">Drone not found.</p>
+        <p className="text-theme-50">Drone not found.</p>
         <Link href="/drones" className="mt-4 inline-flex items-center gap-2 text-sm text-[#e8601e] hover:underline">
           <ArrowLeft size={14} /> Back to fleet
         </Link>
@@ -112,7 +112,7 @@ export default function DroneDetailPage({ params }: { params: Promise<{ id: stri
       <div>
         <Link
           href="/drones"
-          className="inline-flex items-center gap-1.5 font-ui text-[0.62rem] uppercase tracking-[0.18em] text-black/35 hover:text-black/60 transition-colors mb-4"
+          className="inline-flex items-center gap-1.5 font-ui text-[0.62rem] uppercase tracking-[0.18em] text-theme-35 hover:text-theme-primary/60 transition-colors mb-4"
         >
           <ArrowLeft size={11} />
           Fleet
@@ -121,8 +121,8 @@ export default function DroneDetailPage({ params }: { params: Promise<{ id: stri
         {/* Drone header */}
         <div className="panel p-5 flex flex-wrap items-center gap-5">
           {/* Drone icon */}
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-black/[0.04] border border-black/[0.05]">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-7 w-7 text-black/35">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-theme-4 border border-theme-5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-7 w-7 text-theme-35">
               <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0" />
               <path d="M12 12l-8-8m8 8l8-8m-8 8l-8 8m8-8l8 8" />
               <circle cx="4" cy="4" r="2" />
@@ -134,8 +134,8 @@ export default function DroneDetailPage({ params }: { params: Promise<{ id: stri
 
           <div className="flex-1 min-w-0">
             <p className="kicker">{drone.model}</p>
-            <h1 className="mt-1 font-header text-2xl leading-tight text-black">···{shortSerial}</h1>
-            <p className="mt-0.5 text-xs text-black/35 font-ui">
+            <h1 className="mt-1 font-header text-2xl leading-tight text-theme-primary">···{shortSerial}</h1>
+            <p className="mt-0.5 text-xs text-theme-35 font-ui">
               Registered {new Date(drone.created_at).toLocaleDateString()}
               {drone.care_refresh_plan !== "NONE" && (
                 <span className="ml-3">
@@ -159,7 +159,7 @@ export default function DroneDetailPage({ params }: { params: Promise<{ id: stri
               </button>
               <button
                 onClick={() => setActiveTab("claim")}
-                className="flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 text-xs text-black/55 hover:border-black/20 hover:text-black/75 transition-colors"
+                className="flex items-center gap-2 rounded-full border border-theme-10 px-4 py-2 text-xs text-theme-55 hover:border-theme-10 hover:text-theme-primary/75 transition-colors"
               >
                 <Shield size={11} />
                 File Claim
@@ -177,15 +177,15 @@ export default function DroneDetailPage({ params }: { params: Promise<{ id: stri
       )}
 
       {/* Tabs */}
-      <div className="flex gap-1 overflow-x-auto scrollbar-none border-b border-black/[0.06] pb-px">
+      <div className="flex gap-1 overflow-x-auto scrollbar-none border-b border-theme-6 pb-px">
         {TABS.map(({ id: tabId, label, icon: Icon }) => (
           <button
             key={tabId}
             onClick={() => setActiveTab(tabId)}
             className={`flex items-center gap-2 rounded-t-xl px-4 py-2.5 font-ui text-[0.62rem] uppercase tracking-[0.14em] whitespace-nowrap transition-all duration-150 ${
               activeTab === tabId
-                ? "bg-white/95 text-black shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-black/[0.06] border-b-white -mb-px"
-                : "text-black/40 hover:text-black/65 hover:bg-black/[0.03]"
+                ? "bg-white/95 text-theme-primary shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-theme-6 border-b-white -mb-px"
+                : "text-theme-40 hover:text-theme-primary/65 hover:bg-theme-3"
             }`}
           >
             <Icon size={11} />
@@ -292,7 +292,7 @@ function OverviewTab({
               <HealthScoreRing score={score} size={56} strokeWidth={5} />
               <div>
                 <p className="kicker">{label}</p>
-                <p className="mt-0.5 text-xs text-black/40 leading-snug">{detail}</p>
+                <p className="mt-0.5 text-xs text-theme-40 leading-snug">{detail}</p>
               </div>
             </div>
           ))}
@@ -322,28 +322,28 @@ function OverviewTab({
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="panel p-4">
           <p className="kicker">Flight History</p>
-          <p className="mt-2 font-header text-3xl text-black">{flightLogs.length}</p>
-          <p className="mt-1 text-xs text-black/40">Total logged flights</p>
+          <p className="mt-2 font-header text-3xl text-theme-primary">{flightLogs.length}</p>
+          <p className="mt-1 text-xs text-theme-40">Total logged flights</p>
           <button onClick={onViewLogs} className="mt-3 text-xs text-[#e8601e] hover:underline">View all logs →</button>
         </div>
         <div className="panel p-4">
           <p className="kicker">Care Refresh</p>
-          <p className="mt-2 text-sm font-semibold text-black/70">
+          <p className="mt-2 text-sm font-semibold text-theme-70">
             {drone.care_refresh_plan === "NONE" ? "No Plan" :
              drone.care_refresh_plan === "COMBO" ? "Care Refresh+" :
              drone.care_refresh_plan === "TWO_YEAR" ? "2-Year" : "1-Year"}
           </p>
-          <p className="mt-1 text-xs text-black/40">{drone.replacements_remaining} replacement{drone.replacements_remaining !== 1 ? "s" : ""} remaining</p>
+          <p className="mt-1 text-xs text-theme-40">{drone.replacements_remaining} replacement{drone.replacements_remaining !== 1 ? "s" : ""} remaining</p>
           {openClaims > 0 && (
             <p className="mt-2 text-xs text-[#e8601e]">{openClaims} open claim{openClaims !== 1 ? "s" : ""}</p>
           )}
         </div>
         <div className="panel p-4">
           <p className="kicker">Last Diagnostic</p>
-          <p className="mt-2 text-sm font-semibold text-black/70">
+          <p className="mt-2 text-sm font-semibold text-theme-70">
             {latestReport ? new Date(latestReport.generated_at).toLocaleDateString() : "Never run"}
           </p>
-          <p className="mt-1 text-xs text-black/40">
+          <p className="mt-1 text-xs text-theme-40">
             {latestReport ? `Action: ${latestReport.recommended_action}` : "Run diagnostic to analyze"}
           </p>
           <button onClick={onRunDiagnostic} className="mt-3 text-xs text-[#e8601e] hover:underline">Run now →</button>
@@ -385,7 +385,7 @@ function DiagnosticsTab({
 
       {reports.length === 0 ? (
         <div className="panel p-10 text-center">
-          <p className="text-black/45 text-sm">No diagnostics yet. Run your first diagnostic above.</p>
+          <p className="text-theme-45 text-sm">No diagnostics yet. Run your first diagnostic above.</p>
         </div>
       ) : (
         <>
@@ -398,8 +398,8 @@ function DiagnosticsTab({
                   onClick={() => setSelectedIdx(i)}
                   className={`shrink-0 rounded-full border px-3.5 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.12em] transition-all ${
                     i === selectedIdx
-                      ? "bg-black/90 text-white border-black/80"
-                      : "border-black/10 text-black/45 hover:border-black/20"
+                      ? "bg-[#17181d] text-white border-[#17181d]/80"
+                      : "border-theme-10 text-theme-45 hover:border-theme-10"
                   }`}
                 >
                   {i === 0 ? "Latest" : new Date(r.generated_at).toLocaleDateString()}
@@ -445,7 +445,7 @@ function LogsTab({
         <p className="kicker mb-3">Flight History ({flightLogs.length})</p>
         {flightLogs.length === 0 ? (
           <div className="panel p-8 text-center">
-            <p className="text-sm text-black/40">No flight logs uploaded yet.</p>
+            <p className="text-sm text-theme-40">No flight logs uploaded yet.</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -453,21 +453,21 @@ function LogsTab({
               <div key={log.id}>
                 <button
                   onClick={() => setExpanded(expanded === log.id ? null : log.id)}
-                  className="w-full text-left rounded-[20px] border border-black/[0.06] bg-black/[0.02] px-5 py-3.5 hover:bg-black/[0.04] transition-colors"
+                  className="w-full text-left rounded-[20px] border border-theme-6 bg-theme-2 px-5 py-3.5 hover:bg-theme-4 transition-colors"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <p className="text-sm font-semibold text-black/75">
+                      <p className="text-sm font-semibold text-theme-75">
                         {new Date(log.flight_date).toLocaleDateString()}
                       </p>
-                      <p className="text-xs text-black/40 mt-0.5">
+                      <p className="text-xs text-theme-40 mt-0.5">
                         {log.duration_minutes} min · {log.distance_km.toFixed(1)} km · {log.max_altitude_m.toFixed(0)}m max alt
                       </p>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-black/30">Battery</p>
-                        <p className="text-sm font-semibold text-black/65">
+                        <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-theme-30">Battery</p>
+                        <p className="text-sm font-semibold text-theme-65">
                           {log.battery_start_pct}% → {log.battery_end_pct}%
                         </p>
                       </div>
@@ -482,7 +482,7 @@ function LogsTab({
                 </button>
 
                 {expanded === log.id && (
-                  <div className="mt-1.5 rounded-[18px] border border-black/[0.05] bg-white/70 px-5 py-4 space-y-3">
+                  <div className="mt-1.5 rounded-[18px] border border-theme-5 bg-white/70 px-5 py-4 space-y-3">
                     <div className="grid grid-cols-3 gap-4">
                       <Stat label="Max Speed" value={`${log.max_speed_ms.toFixed(1)} m/s`} />
                       <Stat label="Signal Avg" value={`${log.signal_quality_avg}%`} />
@@ -492,7 +492,7 @@ function LogsTab({
                       <div>
                         <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-amber-600 mb-2">Incidents ({log.incidents.length})</p>
                         {log.incidents.map((inc, i) => (
-                          <div key={i} className="text-xs text-black/55 py-1 border-b border-black/[0.04] last:border-0">
+                          <div key={i} className="text-xs text-theme-55 py-1 border-b border-theme-4 last:border-0">
                             <span className={`font-semibold mr-2 ${inc.severity === "error" ? "text-[#e8601e]" : "text-amber-600"}`}>
                               {inc.code}
                             </span>
@@ -515,8 +515,8 @@ function LogsTab({
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="font-ui text-[0.58rem] uppercase tracking-[0.12em] text-black/35">{label}</p>
-      <p className="text-sm font-semibold text-black/65 mt-0.5">{value}</p>
+      <p className="font-ui text-[0.58rem] uppercase tracking-[0.12em] text-theme-35">{label}</p>
+      <p className="text-sm font-semibold text-theme-65 mt-0.5">{value}</p>
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default async function MaintenancePage() {
     <div className="space-y-6">
       <div>
         <p className="kicker">Maintenance Operations</p>
-        <h1 className="font-header text-2xl tracking-[-0.03em] text-black mt-0.5">Jobs</h1>
+        <h1 className="font-header text-2xl tracking-[-0.03em] text-theme-primary mt-0.5">Jobs</h1>
       </div>
 
       <section className="grid gap-4 sm:grid-cols-3">

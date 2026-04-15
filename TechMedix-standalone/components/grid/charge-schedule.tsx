@@ -9,14 +9,14 @@ const PERIOD_BG: Record<RatePeriodType, string> = {
   "off-peak": "bg-moss/[0.14]",
   solar:      "bg-amber-100",
   peak:       "bg-red-100",
-  mid:        "bg-black/[0.05]",
+  mid:        "bg-theme-5",
 };
 
 const PERIOD_TEXT: Record<RatePeriodType, string> = {
   "off-peak": "text-moss",
   solar:      "text-amber-600",
   peak:       "text-red-500",
-  mid:        "text-black/45",
+  mid:        "text-theme-45",
 };
 
 const PERIOD_FILL: Record<RatePeriodType, string> = {
@@ -65,7 +65,7 @@ function Timeline({ blocks }: { blocks: ScheduleBlock[] }) {
       </div>
 
       {/* Schedule blocks + current-time bar */}
-      <div className="relative h-10 rounded-[8px] bg-black/[0.03] overflow-hidden">
+      <div className="relative h-10 rounded-[8px] bg-theme-3 overflow-hidden">
         {blocks.map((block, i) => {
           const left  = (block.startHour / 24) * 100;
           const width = ((block.endHour - block.startHour) / 24) * 100;
@@ -113,7 +113,7 @@ function Timeline({ blocks }: { blocks: ScheduleBlock[] }) {
         {[0, 3, 6, 9, 12, 15, 18, 21, 24].map((h) => (
           <div
             key={h}
-            className="font-ui text-black/28"
+            className="font-ui text-theme-28"
             style={{
               fontSize:    "0.52rem",
               position:    "absolute",
@@ -149,10 +149,10 @@ export function ChargeSchedule({ blocks, onApprove, onApproveAll }: Props) {
   return (
     <div className="panel p-6">
       {/* Header */}
-      <div className="flex items-center justify-between gap-4 mb-6 pb-5 border-b border-black/[0.05]">
+      <div className="flex items-center justify-between gap-4 mb-6 pb-5 border-b border-theme-5">
         <div>
           <p className="kicker">Charge Schedule</p>
-          <h2 className="mt-2 font-header text-xl leading-tight text-black">AI-optimized for next 24 hours</h2>
+          <h2 className="mt-2 font-header text-xl leading-tight text-theme-primary">AI-optimized for next 24 hours</h2>
         </div>
         {hasPending && (
           <button
@@ -177,7 +177,7 @@ export function ChargeSchedule({ blocks, onApprove, onApproveAll }: Props) {
               {["Time", "Type", "Rate Period", "kWh Planned", "Est. Cost / Revenue", "Status"].map((h) => (
                 <th
                   key={h}
-                  className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-black/35 pb-3 pr-4 font-medium"
+                  className="font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-35 pb-3 pr-4 font-medium"
                 >
                   {h}
                 </th>
@@ -186,12 +186,12 @@ export function ChargeSchedule({ blocks, onApprove, onApproveAll }: Props) {
           </thead>
           <tbody>
             {blocks.map((block, i) => (
-              <tr key={i} className="border-t border-black/[0.04]">
-                <td className="py-3 pr-4 font-ui text-xs text-black/70">
+              <tr key={i} className="border-t border-theme-4">
+                <td className="py-3 pr-4 font-ui text-xs text-theme-70">
                   {String(block.startHour).padStart(2, "0")}:00 – {String(block.endHour).padStart(2, "0")}:00
                 </td>
                 <td className="py-3 pr-4">
-                  <span className="font-ui text-[0.60rem] uppercase tracking-[0.12em] text-black/70">
+                  <span className="font-ui text-[0.60rem] uppercase tracking-[0.12em] text-theme-70">
                     {block.type}
                   </span>
                 </td>
@@ -200,10 +200,10 @@ export function ChargeSchedule({ blocks, onApprove, onApproveAll }: Props) {
                     {block.ratePeriod}
                   </span>
                 </td>
-                <td className="py-3 pr-4 font-ui text-xs text-black">
+                <td className="py-3 pr-4 font-ui text-xs text-theme-primary">
                   {block.kwhPlanned > 0 ? `${block.kwhPlanned} kWh` : "—"}
                 </td>
-                <td className="py-3 pr-4 font-ui text-xs text-black/65">
+                <td className="py-3 pr-4 font-ui text-xs text-theme-65">
                   {estCostOrRevenue(block)}
                 </td>
                 <td className="py-3">
@@ -230,9 +230,9 @@ export function ChargeSchedule({ blocks, onApprove, onApproveAll }: Props) {
       </div>
 
       {/* AI reasoning note */}
-      <div className="mt-5 rounded-[18px] bg-black/[0.02] border border-black/[0.04] px-4 py-3">
-        <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-black/30 mb-1">AI Reasoning</p>
-        <p className="font-ui text-[0.62rem] text-black/42 leading-relaxed" style={{ letterSpacing: "0.04em" }}>
+      <div className="mt-5 rounded-[18px] bg-theme-2 border border-theme-4 px-4 py-3">
+        <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-theme-30 mb-1">AI Reasoning</p>
+        <p className="font-ui text-[0.62rem] text-theme-42 leading-relaxed" style={{ letterSpacing: "0.04em" }}>
           Charging during 01:00–04:00 saves $4.20 vs peak rate.
           Solar window 09:00–11:00 adds 14 kWh at $0.00 grid cost.
           19:00–20:00 block pending — approve if vehicle needed before 07:00.

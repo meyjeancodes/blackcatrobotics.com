@@ -13,16 +13,16 @@ export default async function AlertsPage() {
           const robot = snapshot.robots.find((entry) => entry.id === alert.robotId);
 
           return (
-            <article key={alert.id} className="rounded-[24px] border border-black/5 bg-black/[0.02] p-5">
+            <article key={alert.id} className="rounded-[24px] border border-theme-5 bg-theme-2 p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.22em] text-black/45">{robot?.name ?? alert.robotId}</p>
-                  <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-black">{alert.title}</h2>
+                  <p className="text-xs uppercase tracking-[0.22em] text-theme-45">{robot?.name ?? alert.robotId}</p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-theme-primary">{alert.title}</h2>
                 </div>
                 <StatusPill label={alert.severity} />
               </div>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-black/60">{alert.message}</p>
-              <div className="mt-4 flex flex-wrap items-center gap-6 text-xs uppercase tracking-[0.22em] text-black/40">
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-theme-60">{alert.message}</p>
+              <div className="mt-4 flex flex-wrap items-center gap-6 text-xs uppercase tracking-[0.22em] text-theme-40">
                 <span>Created {formatDateTime(alert.createdAt)}</span>
                 <span>Status: {alert.status}</span>
               </div>

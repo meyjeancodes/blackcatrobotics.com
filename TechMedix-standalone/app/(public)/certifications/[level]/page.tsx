@@ -39,12 +39,12 @@ export default async function CertLevelPage({ params }: Props) {
   return (
     <div className="space-y-10">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] text-black/40">
-        <Link href="/certifications" className="transition hover:text-black">
+      <nav className="flex items-center gap-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] text-theme-40">
+        <Link href="/certifications" className="transition hover:text-theme-primary">
           Certifications
         </Link>
         <ChevronRight size={10} />
-        <span className="text-black/70">{cert.id}</span>
+        <span className="text-theme-70">{cert.id}</span>
       </nav>
 
       {/* Header */}
@@ -57,13 +57,13 @@ export default async function CertLevelPage({ params }: Props) {
           </div>
           <div className="min-w-0 flex-1">
             <p className="kicker">Level {levelIndex + 1} of 5</p>
-            <h1 className="mt-1 font-header text-4xl leading-none tracking-[-0.04em] text-black">
+            <h1 className="mt-1 font-header text-4xl leading-none tracking-[-0.04em] text-theme-primary">
               {cert.title}
             </h1>
             <p className={`mt-2 font-mono text-lg font-semibold ${cert.color}`}>
               {cert.jobValueRange}
             </p>
-            <p className="mt-1 font-ui text-[0.60rem] uppercase tracking-[0.14em] text-black/40">
+            <p className="mt-1 font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-40">
               {cert.price} one-time certification fee
             </p>
           </div>
@@ -78,7 +78,7 @@ export default async function CertLevelPage({ params }: Props) {
             <p className="kicker">Covers</p>
             <ul className="mt-3 space-y-2">
               {cert.covers.map((c) => (
-                <li key={c} className="flex items-start gap-3 text-sm text-black/65 leading-snug">
+                <li key={c} className="flex items-start gap-3 text-sm text-theme-65 leading-snug">
                   <div className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${cert.badgeColor}`} />
                   {c}
                 </li>
@@ -87,10 +87,10 @@ export default async function CertLevelPage({ params }: Props) {
           </div>
           <div>
             <p className="kicker">Key Competencies</p>
-            <h2 className="mt-1 font-header text-xl text-black">What you will learn</h2>
+            <h2 className="mt-1 font-header text-xl text-theme-primary">What you will learn</h2>
             <ul className="mt-3 space-y-3">
               {cert.competencies.map((c) => (
-                <li key={c} className="flex items-start gap-3 text-sm text-black/65 leading-snug">
+                <li key={c} className="flex items-start gap-3 text-sm text-theme-65 leading-snug">
                   <div
                     className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${cert.badgeColor}`}
                   />
@@ -106,19 +106,19 @@ export default async function CertLevelPage({ params }: Props) {
           <div className="panel p-6 space-y-3">
             <p className="kicker">Prerequisites</p>
             <div className="flex items-start gap-3">
-              <Lock size={14} className="mt-0.5 shrink-0 text-black/30" />
-              <p className="text-sm text-black/65 leading-snug">{cert.prerequisites}</p>
+              <Lock size={14} className="mt-0.5 shrink-0 text-theme-30" />
+              <p className="text-sm text-theme-65 leading-snug">{cert.prerequisites}</p>
             </div>
           </div>
 
           <div className="panel p-6 space-y-3">
             <p className="kicker">Certification Fee</p>
             <div className="flex items-center gap-3">
-              <DollarSign size={14} className="shrink-0 text-black/40" />
+              <DollarSign size={14} className="shrink-0 text-theme-40" />
               <div>
-                <p className="text-sm font-semibold text-black">
+                <p className="text-sm font-semibold text-theme-primary">
                   {cert.price}{" "}
-                  <span className="font-normal text-black/40">one-time</span>
+                  <span className="font-normal text-theme-40">one-time</span>
                 </p>
               </div>
             </div>
@@ -137,12 +137,12 @@ export default async function CertLevelPage({ params }: Props) {
               href={cert.studyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-black/[0.12] px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-black/60 transition hover:bg-black/[0.04] hover:text-black"
+              className="inline-flex items-center gap-2 rounded-full border border-theme-12 px-4 py-2 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-theme-60 transition hover:bg-theme-4 hover:text-theme-primary"
             >
               <BookOpen size={12} />
               Open Curriculum on GitHub
             </a>
-            <p className="text-xs text-black/40 leading-relaxed">
+            <p className="text-xs text-theme-40 leading-relaxed">
               Review the README and curriculum.md before attempting the exam.
             </p>
           </div>
@@ -153,8 +153,8 @@ export default async function CertLevelPage({ params }: Props) {
       <div className="panel-elevated p-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="kicker">Ready to test?</p>
-          <h2 className="mt-1 font-header text-2xl text-black">Take the {cert.id} Exam</h2>
-          <p className="mt-1 text-sm text-black/45">
+          <h2 className="mt-1 font-header text-2xl text-theme-primary">Take the {cert.id} Exam</h2>
+          <p className="mt-1 text-sm text-theme-45">
             5 questions · Passing score varies by level · Results emailed instantly
           </p>
         </div>
@@ -168,11 +168,11 @@ export default async function CertLevelPage({ params }: Props) {
       </div>
 
       {/* Level nav */}
-      <div className="flex items-center justify-between gap-4 border-t border-black/[0.06] pt-6">
+      <div className="flex items-center justify-between gap-4 border-t border-theme-6 pt-6">
         {prev ? (
           <Link
             href={`/certifications/${prev.id}`}
-            className="text-sm text-black/45 transition hover:text-black"
+            className="text-sm text-theme-45 transition hover:text-theme-primary"
           >
             ← {prev.id} {prev.title}
           </Link>
@@ -182,7 +182,7 @@ export default async function CertLevelPage({ params }: Props) {
         {next ? (
           <Link
             href={`/certifications/${next.id}`}
-            className="text-sm text-black/45 transition hover:text-black"
+            className="text-sm text-theme-45 transition hover:text-theme-primary"
           >
             {next.id} {next.title} →
           </Link>

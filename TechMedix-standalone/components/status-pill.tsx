@@ -40,7 +40,7 @@ export function StatusPill({ label }: { label: string }) {
     <span
       className={clsx(
         "inline-flex rounded-full px-3 py-1 font-ui text-[11px] font-semibold uppercase tracking-[0.16em]",
-        toneMap[key] ?? "bg-black/5 text-black/70"
+        toneMap[key] ?? "bg-theme-5 text-theme-70"
       )}
     >
       {label}

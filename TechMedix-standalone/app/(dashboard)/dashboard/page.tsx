@@ -23,10 +23,10 @@ export default async function DashboardPage() {
       {/* Page header */}
       <div>
         <p className="kicker">Operator Console</p>
-        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-black lg:text-5xl">
+        <h1 className="mt-2 font-header text-4xl leading-none tracking-[-0.04em] text-theme-primary lg:text-5xl">
           TechMedix Operations
         </h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-black/52">
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-theme-52">
           Fleet health, alert pressure, technician dispatch, and customer operations for BlackCat Robotics.
         </p>
       </div>
@@ -75,9 +75,9 @@ export default async function DashboardPage() {
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
             <p className="kicker">Integrated System</p>
-            <h2 className="mt-1.5 font-header text-2xl leading-tight text-black">Connected System Overview</h2>
+            <h2 className="mt-1.5 font-header text-2xl leading-tight text-theme-primary">Connected System Overview</h2>
           </div>
-          <span className="font-ui text-[0.58rem] uppercase tracking-[0.18em] text-black/28 shrink-0">
+          <span className="font-ui text-[0.58rem] uppercase tracking-[0.18em] text-theme-28 shrink-0">
             Real-Time Monitoring
           </span>
         </div>
@@ -94,16 +94,16 @@ export default async function DashboardPage() {
               className="panel-elevated p-5 flex flex-col gap-2.5 transition-all duration-200 hover:-translate-y-1"
             >
               <div className="flex items-center justify-between">
-                <span className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-black/35">
+                <span className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-theme-35">
                   {node.label}
                 </span>
                 <div className={`h-2 w-2 rounded-full ${node.color}`} />
               </div>
-              <p className="font-ui text-[0.68rem] uppercase tracking-[0.18em] font-semibold text-black/70">
+              <p className="font-ui text-[0.68rem] uppercase tracking-[0.18em] font-semibold text-theme-70">
                 {node.status}
               </p>
-              <p className="text-xs text-black/42 leading-snug">{node.detail}</p>
-              <p className="text-[0.65rem] text-black/28 leading-snug border-t border-black/[0.04] pt-2 mt-0.5">
+              <p className="text-xs text-theme-42 leading-snug">{node.detail}</p>
+              <p className="text-[0.65rem] text-theme-28 leading-snug border-t border-theme-4 pt-2 mt-0.5">
                 {node.connection}
               </p>
             </div>
@@ -126,16 +126,16 @@ export default async function DashboardPage() {
             {snapshot.alerts.map((alert) => (
               <div
                 key={alert.id}
-                className="rounded-[22px] border border-black/[0.05] bg-black/[0.018] p-4 transition-colors duration-220 hover:bg-white/50 hover:border-black/[0.07]"
+                className="rounded-[22px] border border-theme-5 bg-theme-18 p-4 transition-colors duration-220 hover:bg-white/50 hover:border-theme-7"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <h3 className="text-base font-semibold leading-snug text-black">{alert.title}</h3>
-                    <p className="mt-1 text-sm leading-6 text-black/52">{alert.message}</p>
+                    <h3 className="text-base font-semibold leading-snug text-theme-primary">{alert.title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-theme-52">{alert.message}</p>
                   </div>
                   <StatusPill label={alert.severity} />
                 </div>
-                <div className="mt-3 flex items-center justify-between font-ui text-[0.62rem] uppercase tracking-[0.22em] text-black/36">
+                <div className="mt-3 flex items-center justify-between font-ui text-[0.62rem] uppercase tracking-[0.22em] text-theme-36">
                   <span>{formatDateTime(alert.createdAt)}</span>
                   <Link
                     href={`/fleet/${alert.robotId}`}
@@ -158,20 +158,20 @@ export default async function DashboardPage() {
               return (
                 <div
                   key={job.id}
-                  className="rounded-[22px] border border-black/[0.05] bg-black/[0.018] p-4 transition-colors duration-220 hover:bg-white/50 hover:border-black/[0.07]"
+                  className="rounded-[22px] border border-theme-5 bg-theme-18 p-4 transition-colors duration-220 hover:bg-white/50 hover:border-theme-7"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <p className="font-ui text-[0.62rem] uppercase tracking-[0.22em] text-black/40">
+                      <p className="font-ui text-[0.62rem] uppercase tracking-[0.22em] text-theme-40">
                         {robot?.name ?? "Unknown robot"}
                       </p>
-                      <h3 className="mt-1.5 text-base font-semibold leading-snug text-black">
+                      <h3 className="mt-1.5 text-base font-semibold leading-snug text-theme-primary">
                         {job.description}
                       </h3>
                     </div>
                     <StatusPill label={job.status} />
                   </div>
-                  <div className="mt-3 flex flex-wrap gap-6 text-sm leading-6 text-black/52">
+                  <div className="mt-3 flex flex-wrap gap-6 text-sm leading-6 text-theme-52">
                     <span>Region: {job.region}</span>
                     <span>Technician: {tech?.name ?? "Pending assignment"}</span>
                     <span>ETA: {job.etaMinutes ? `${job.etaMinutes} min` : "TBD"}</span>
@@ -199,10 +199,10 @@ export default async function DashboardPage() {
               </div>
               <p className="kicker">Infrastructure</p>
             </div>
-            <h2 className="font-header text-2xl leading-tight text-black">
+            <h2 className="font-header text-2xl leading-tight text-theme-primary">
               Privacy-First Infrastructure
             </h2>
-            <p className="mt-3 text-sm leading-6 text-black/52">
+            <p className="mt-3 text-sm leading-6 text-theme-52">
               TechMedix is designed around data sovereignty and operator control. No background
               surveillance, no opaque data flows.
             </p>
@@ -232,13 +232,13 @@ export default async function DashboardPage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="rounded-[20px] border border-black/[0.05] bg-black/[0.018] p-4 transition-colors duration-220 hover:bg-white/60 hover:border-black/[0.07]"
+                className="rounded-[20px] border border-theme-5 bg-theme-18 p-4 transition-colors duration-220 hover:bg-white/60 hover:border-theme-7"
               >
                 <div className="flex items-start gap-2.5 mb-2">
                   <div className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-moss" />
-                  <p className="text-sm font-semibold leading-snug text-black">{item.title}</p>
+                  <p className="text-sm font-semibold leading-snug text-theme-primary">{item.title}</p>
                 </div>
-                <p className="text-xs leading-relaxed text-black/52 pl-4">{item.detail}</p>
+                <p className="text-xs leading-relaxed text-theme-52 pl-4">{item.detail}</p>
               </div>
             ))}
           </div>
@@ -255,8 +255,8 @@ export default async function DashboardPage() {
             </div>
             <p className="kicker">Drone Fleet</p>
           </div>
-          <h3 className="font-header text-xl leading-tight text-black mb-2">DJI Fleet Management</h3>
-          <p className="text-sm leading-relaxed text-black/52 mb-4">
+          <h3 className="font-header text-xl leading-tight text-theme-primary mb-2">DJI Fleet Management</h3>
+          <p className="text-sm leading-relaxed text-theme-52 mb-4">
             AI-powered drone diagnostics, DJI Care Refresh coverage tracking, and claim management for your entire fleet.
           </p>
           <div className="grid grid-cols-2 gap-3 mb-4">
@@ -266,12 +266,12 @@ export default async function DashboardPage() {
               { label: "Flight Logs", detail: "DJI CSV import and parsing" },
               { label: "Fleet Analytics", detail: "Health trends and coverage maps" },
             ].map((item) => (
-              <div key={item.label} className="rounded-[18px] border border-black/[0.05] bg-black/[0.018] p-3">
+              <div key={item.label} className="rounded-[18px] border border-theme-5 bg-theme-18 p-3">
                 <div className="flex items-start gap-1.5 mb-1">
                   <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#e8601e]" />
-                  <p className="text-xs font-semibold text-black/70">{item.label}</p>
+                  <p className="text-xs font-semibold text-theme-70">{item.label}</p>
                 </div>
-                <p className="text-[0.65rem] text-black/40 leading-snug pl-3">{item.detail}</p>
+                <p className="text-[0.65rem] text-theme-40 leading-snug pl-3">{item.detail}</p>
               </div>
             ))}
           </div>
@@ -291,8 +291,8 @@ export default async function DashboardPage() {
             </div>
             <p className="kicker">Certifications</p>
           </div>
-          <h3 className="font-header text-xl leading-tight text-black mb-2">BlackCat OS Certifications</h3>
-          <p className="text-sm leading-relaxed text-black/52 mb-4">
+          <h3 className="font-header text-xl leading-tight text-theme-primary mb-2">BlackCat OS Certifications</h3>
+          <p className="text-sm leading-relaxed text-theme-52 mb-4">
             Five certification levels from Operator to Autonomous Systems Architect. Study free. Get certified through TechMedix. Earn on every dispatch.
           </p>
           <div className="space-y-2 mb-4">
@@ -305,15 +305,15 @@ export default async function DashboardPage() {
             ].map((l) => (
               <div key={l.level} className="flex items-center gap-3">
                 <div className={`h-2 w-2 rounded-full ${l.color} shrink-0`} />
-                <span className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-black/50 w-6">{l.level}</span>
-                <span className="text-xs text-black/65 flex-1">{l.title}</span>
-                <span className="font-ui text-[0.58rem] text-black/35">{l.salary}</span>
+                <span className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-50 w-6">{l.level}</span>
+                <span className="text-xs text-theme-65 flex-1">{l.title}</span>
+                <span className="font-ui text-[0.58rem] text-theme-35">{l.salary}</span>
               </div>
             ))}
           </div>
           <Link
             href="/certifications"
-            className="inline-flex items-center gap-2 rounded-full border border-black/10 px-5 py-2.5 text-sm font-medium text-black/65 hover:border-[#1db87a] hover:text-[#1db87a] transition-colors"
+            className="inline-flex items-center gap-2 rounded-full border border-theme-10 px-5 py-2.5 text-sm font-medium text-theme-65 hover:border-[#1db87a] hover:text-[#1db87a] transition-colors"
           >
             View Certification Path
           </Link>
