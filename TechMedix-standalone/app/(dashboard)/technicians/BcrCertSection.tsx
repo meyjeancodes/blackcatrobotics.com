@@ -213,6 +213,41 @@ export function BcrCertSection({ userCertLevel = null }: BcrCertSectionProps) {
         </p>
       </div>
 
+      {/* How to Get Certified — process steps */}
+      <div className="panel-elevated p-6">
+        <p className="kicker mb-4">Certification Process</p>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            {
+              step: "01",
+              title: "Choose Your Level",
+              detail: "Select the certification level that matches your experience. First-time technicians start at L1 Operator. Each level unlocks higher-value dispatch jobs.",
+            },
+            {
+              step: "02",
+              title: "Study the Guide",
+              detail: "Expand any level card below to access the inline study guide. Review key topics, competencies, and the human-bridge diagnostic approach for your level.",
+            },
+            {
+              step: "03",
+              title: "Take the Exam",
+              detail: "Each level has an AI-evaluated exam accessible directly from this page. No GitHub account required. Exams are open-book and timed at 45 minutes.",
+            },
+            {
+              step: "04",
+              title: "Receive Your Badge",
+              detail: "Pass the exam and your certification badge is issued immediately. Your dispatch eligibility and platform access update automatically in TechMedix.",
+            },
+          ].map((s) => (
+            <div key={s.step} className="flex flex-col gap-2">
+              <p className="font-header text-3xl leading-none text-ember">{s.step}</p>
+              <p className="font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-[var(--ink)]">{s.title}</p>
+              <p className="text-xs leading-relaxed text-[var(--ink)]/52">{s.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Level ladder */}
       <div className="space-y-3">
         {CERT_LEVELS.map((level) => (
