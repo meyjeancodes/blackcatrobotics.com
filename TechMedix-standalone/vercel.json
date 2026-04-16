@@ -12,7 +12,7 @@
     },
     {
       "path": "/api/techmedix/research/run",
-      "schedule": "0 3 * * 1"
+      "schedule": "0 3 * * *"
     }
   ],
   "headers": [

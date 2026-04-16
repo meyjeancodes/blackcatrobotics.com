@@ -5,8 +5,8 @@ import { getDashboardData } from "../../../lib/data";
 
 const techmedixPlans = [
   {
-    id: "starter",
-    name: "Starter",
+    id: "operator",
+    name: "Operator",
     range: "1–4 robots",
     price: "$299",
     unit: "per robot / month",
@@ -16,18 +16,10 @@ const techmedixPlans = [
     id: "fleet",
     name: "Fleet",
     range: "5–19 robots",
-    price: "$229",
+    price: "$199",
     unit: "per robot / month",
     highlight: true,
-    features: ["Everything in Starter", "Unlimited platform integrations", "2 included service hours per robot/month", "Auto technician dispatch", "Priority Slack + phone — 4h response", "Monthly performance report"],
-  },
-  {
-    id: "operator",
-    name: "Operator",
-    range: "Single operator coverage",
-    price: "$299",
-    unit: "per robot / month",
-    features: ["Single-robot coverage", "Diagnostic alerts", "Email support", "On-demand dispatch"],
+    features: ["Everything in Operator", "Unlimited platform integrations", "2 included service hours per robot/month", "Auto technician dispatch", "Priority Slack + phone — 4h response", "Monthly performance report"],
   },
   {
     id: "command",
@@ -98,7 +90,7 @@ export default async function BillingPage() {
 
       {/* TechMedix pricing */}
       <SurfaceCard title="TechMedix" eyebrow="Robot fleet maintenance">
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {techmedixPlans.map((plan) => (
             <div
               key={plan.id}

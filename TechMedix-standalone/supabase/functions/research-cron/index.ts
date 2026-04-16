@@ -31,20 +31,28 @@ type ResearchTarget = {
 };
 
 const PLATFORMS: ResearchTarget[] = [
-  { slug: "unitree_g1",         name: "Unitree G1",                  manufacturer: "Unitree Robotics",      type: "humanoid",        introduced_year: 2024 },
-  { slug: "unitree_h1_2",       name: "Unitree H1-2",                manufacturer: "Unitree Robotics",      type: "humanoid",        introduced_year: 2024 },
-  { slug: "boston_dynamics_spot", name: "Boston Dynamics Spot",      manufacturer: "Boston Dynamics",       type: "quadruped",       introduced_year: 2019 },
-  { slug: "dji_agras_t50",      name: "DJI Agras T50",               manufacturer: "DJI",                   type: "drone",           introduced_year: 2023 },
-  { slug: "dji_matrice_350",    name: "DJI Matrice 350 RTK",         manufacturer: "DJI",                   type: "drone",           introduced_year: 2023 },
-  { slug: "amazon_proteus",     name: "Amazon Proteus AMR",          manufacturer: "Amazon Robotics",       type: "warehouse_amr",   introduced_year: 2022 },
-  { slug: "zipline_p2",         name: "Zipline P2 Zip",              manufacturer: "Zipline",               type: "delivery_air",    introduced_year: 2023 },
-  { slug: "serve_rs2",          name: "Serve Robotics RS2",          manufacturer: "Serve Robotics",        type: "delivery_ground", introduced_year: 2023 },
-  { slug: "starship_gen3",      name: "Starship Gen 3",              manufacturer: "Starship Technologies", type: "delivery_ground", introduced_year: 2023 },
-  { slug: "figure_02",          name: "Figure 02",                   manufacturer: "Figure AI",             type: "humanoid",        introduced_year: 2024 },
-  { slug: "skydio_x10",         name: "Skydio X10",                  manufacturer: "Skydio",                type: "drone",           introduced_year: 2023 },
-  { slug: "lime_gen4",          name: "Lime Gen 4 E-scooter",        manufacturer: "Lime",                  type: "micromobility",   introduced_year: 2023 },
-  { slug: "bird_three",         name: "Bird Three E-scooter",        manufacturer: "Bird",                  type: "micromobility",   introduced_year: 2022 },
-  { slug: "rad_commercial",     name: "Rad Power Commercial eBike",  manufacturer: "Rad Power Bikes",       type: "micromobility",   introduced_year: 2022 },
+  // ── Humanoids ──────────────────────────────────────────────────────────────
+  { slug: "unitree-g1",            name: "Unitree G1",                 manufacturer: "Unitree Robotics",      type: "humanoid",        introduced_year: 2024 },
+  { slug: "unitree-h1-2",          name: "Unitree H1-2",               manufacturer: "Unitree Robotics",      type: "humanoid",        introduced_year: 2024 },
+  { slug: "unitree-b2",            name: "Unitree B2",                  manufacturer: "Unitree Robotics",      type: "quadruped",       introduced_year: 2023 },
+  { slug: "unitree-r1",            name: "Unitree R1 AIR",              manufacturer: "Unitree Robotics",      type: "humanoid",        introduced_year: 2025 },
+  { slug: "figure-02",             name: "Figure 02",                   manufacturer: "Figure AI",             type: "humanoid",        introduced_year: 2024 },
+  { slug: "tesla-optimus",         name: "Tesla Optimus Gen2",          manufacturer: "Tesla",                 type: "humanoid",        introduced_year: 2024 },
+  // ── Quadrupeds ─────────────────────────────────────────────────────────────
+  { slug: "boston-dynamics-spot",  name: "Boston Dynamics Spot",        manufacturer: "Boston Dynamics",       type: "quadruped",       introduced_year: 2019 },
+  // ── Agricultural & Enterprise Drones ───────────────────────────────────────
+  { slug: "dji-agras-t50",         name: "DJI Agras T50",               manufacturer: "DJI",                   type: "drone",           introduced_year: 2023 },
+  { slug: "dji-agras-t60",         name: "DJI Agras T60",               manufacturer: "DJI",                   type: "drone",           introduced_year: 2023 },
+  { slug: "dji-matrice-350",       name: "DJI Matrice 350 RTK",         manufacturer: "DJI",                   type: "drone",           introduced_year: 2023 },
+  { slug: "skydio-x10",            name: "Skydio X10",                  manufacturer: "Skydio",                type: "drone",           introduced_year: 2023 },
+  { slug: "zipline-p2",            name: "Zipline P2 Zip",              manufacturer: "Zipline",               type: "delivery_air",    introduced_year: 2023 },
+  // ── Ground Delivery & Warehouse ────────────────────────────────────────────
+  { slug: "serve-rs2",             name: "Serve Robotics RS2",          manufacturer: "Serve Robotics",        type: "delivery_ground", introduced_year: 2023 },
+  { slug: "starship-gen3",         name: "Starship Gen 3",              manufacturer: "Starship Technologies", type: "delivery_ground", introduced_year: 2023 },
+  { slug: "amazon-proteus",        name: "Amazon Proteus AMR",          manufacturer: "Amazon Robotics",       type: "warehouse_amr",   introduced_year: 2022 },
+  // ── Micromobility ──────────────────────────────────────────────────────────
+  { slug: "lime-gen4",             name: "Lime Gen 4 E-scooter",        manufacturer: "Lime",                  type: "micromobility",   introduced_year: 2023 },
+  { slug: "radcommercial",         name: "Rad Power Commercial eBike",  manufacturer: "Rad Power Bikes",       type: "micromobility",   introduced_year: 2022 },
 ];
 
 async function webSearch(query: string): Promise<Array<{ title: string; snippet: string; link: string }>> {
