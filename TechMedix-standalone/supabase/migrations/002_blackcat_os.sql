@@ -162,6 +162,7 @@ ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE ai_agents ENABLE ROW LEVEL SECURITY;
 
 -- Service role full access
+DROP POLICY IF EXISTS "service_all_suppliers" ON suppliers;
 CREATE POLICY "service_all_suppliers" ON suppliers FOR ALL USING (true);
 CREATE POLICY "service_all_robot_profiles" ON robot_profiles FOR ALL USING (true);
 CREATE POLICY "service_all_components" ON components FOR ALL USING (true);

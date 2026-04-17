@@ -225,7 +225,7 @@ export async function updateProgress(
 
   // Award XP on completion
   if (status === "completed") {
-    await supabase.rpc("increment_xp", { uid: userId, amount: 10 }).catch(
+    await Promise.resolve(supabase.rpc("increment_xp", { uid: userId, amount: 10 })).catch(
       () => undefined // RPC may not exist yet — non-blocking
     );
   }

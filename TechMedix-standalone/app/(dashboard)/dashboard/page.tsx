@@ -16,7 +16,7 @@ import { getDashboardData } from "../../../lib/data";
 export default async function DashboardPage() {
   const { snapshot, stats } = await getDashboardData();
   const flagshipRobot = snapshot.robots[0];
-  const telemetry = snapshot.telemetryHistory[flagshipRobot.id] ?? [];
+  const telemetry = flagshipRobot ? snapshot.telemetryHistory[flagshipRobot.id] ?? [] : [];
 
   return (
     <div className="space-y-8">
@@ -115,8 +115,14 @@ export default async function DashboardPage() {
         <SurfaceCard title="Fleet overview" eyebrow={snapshot.customer.company}>
           <RobotTable robots={snapshot.robots} />
         </SurfaceCard>
-        <SurfaceCard title={`${flagshipRobot.name} trend`} eyebrow="Live telemetry">
-          <TelemetryChart points={telemetry} />
+        <SurfaceCard title={flagshipRobot ? `${flagshipRobot.name} trend` : "Live telemetry"} eyebrow="Live telemetry">
+          {flagshipRobot ? (
+            <TelemetryChart points={telemetry} />
+          ) : (
+            <p className="text-sm text-black/52">
+              No robots are connected to this account yet. Onboard a robot to start seeing live telemetry.
+            </p>
+          )}
         </SurfaceCard>
       </section>
 
