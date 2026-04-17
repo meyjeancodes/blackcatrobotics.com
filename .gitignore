@@ -9,6 +9,7 @@ Research/unitree-vla/
 TechMedix-standalone/node_modules/
 TechMedix-standalone/.next/
 TechMedix-standalone/.env.local
+TechMedix-standalone/.env*.local
 
 # Legal / private docs
 Legal/
