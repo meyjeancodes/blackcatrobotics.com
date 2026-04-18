@@ -1,0 +1,602 @@
+[
+  {
+    "id": "L5-001",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "A fleet telemetry model is trained on 18 months of joint temperature, torque, and vibration data to predict bearing failure 72 hours in advance. The model achieves 91% precision but only 68% recall. What is the practical implication for fleet operations?",
+    "options": [
+      "A. 91% of failure predictions are correct, but 32% of actual failures are missed — unacceptable for safety-critical assets",
+      "B. 68% of failure predictions are correct; the model needs retraining",
+      "C. 91% precision means the model is production-ready; recall is less important for proactive maintenance",
+      "D. The model should be deployed with an alert threshold adjustment to improve both metrics simultaneously"
+    ],
+    "correct": "A",
+    "explanation": "Precision=91% means 91% of model-triggered alerts correspond to real impending failures (low false alarm rate). Recall=68% means the model detects only 68% of actual failures before they occur — 32% of failures arrive without prediction. For safety-critical robotic assets, missed failures (false negatives) have significant consequences. The L5 architect must evaluate whether 68% recall is acceptable given the cost of missed failures vs. the cost of unnecessary maintenance from false alarms. Typically, threshold tuning can improve recall at the cost of precision.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-002",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "The NVIDIA Jetson AGX Thor delivers 275 TOPS of AI compute. A real-time robot pose estimation model requires 12 TOPS inference compute at 30 Hz. How many simultaneous robot perception models can the platform support at this load?",
+    "options": [
+      "A. 12 models — limited by memory bandwidth, not compute",
+      "B. 22 models — 275 / 12 = 22.9, rounded down",
+      "C. 275 models — TOPS is per-model throughput",
+      "D. This calculation requires knowing the model's memory footprint and IO requirements, not just TOPS"
+    ],
+    "correct": "D",
+    "explanation": "While raw compute capacity suggests 275/12 = 22.9 models theoretically, practical capacity is constrained by: (1) memory bandwidth — each model requires DRAM access for weights and activations; (2) I/O throughput — camera/sensor data ingestion for each model instance; (3) thermal envelope — sustained 275 TOPS requires active cooling; (4) software scheduling overhead. A real-world estimate for AGX Thor would be 8-15 simultaneous production inference workloads at this complexity level.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-003",
+    "level": "L5",
+    "domain": "platform_definition",
+    "question": "An L5 architect is authoring a new platform module for the Agility Robotics Digit robot. What is the minimum required content for a BCR platform module?",
+    "options": [
+      "A. Specifications sheet from OEM website and a link to the SDK documentation",
+      "B. Platform module with specs/CAN topology/ROS topics, diagnostic guide with LED sequences/joint health commands/IMU check/heartbeat verification/TechMedix signal IDs, and common failures with symptoms/repair procedures/part numbers",
+      "C. A safety data sheet, robot dimensions, and emergency stop procedure",
+      "D. Firmware version history and SDK release notes"
+    ],
+    "correct": "B",
+    "explanation": "BCR platform module standard requires three documents: (1) platform_module.md — specifications, communication topology (CAN/ROS/proprietary), topic/signal map; (2) diagnostic_guide.md — boot LED sequence, joint health commands, IMU verification values, bus heartbeat check, TechMedix signal ID mapping; (3) common_failures.md — top 10 failure modes with symptoms, repair procedure, and OEM part numbers. This standard ensures technicians have actionable field-ready information for any BCR-supported platform.",
+    "reference": "curriculum.md#platform-definition-authoring"
+  },
+  {
+    "id": "L5-004",
+    "level": "L5",
+    "domain": "standards",
+    "question": "ISO 10218-1:2011 governs safety requirements for industrial robots. Which clause is most relevant when deploying a humanoid robot in a shared human-robot workspace?",
+    "options": [
+      "A. Clause 5.4 — Speed and force limitation for collaborative operation",
+      "B. Clause 5.2 — Robot stopping functions",
+      "C. Clause 4.3 — Risk assessment methodology",
+      "D. Clause 6.1 — Documentation requirements"
+    ],
+    "correct": "A",
+    "explanation": "ISO 10218-1 Clause 5.4 (and its companion ISO/TS 15066 for collaborative robots) specifies speed and force limitations for robots operating in shared human spaces. For humanoid robots in collaborative workspaces, the key parameters are: speed limitation (typically < 250mm/s near humans), force/torque limits (hand/arm contact must remain below pain threshold), and power and force limiting (PFL) control modes. Risk assessment (4.3) is foundational but 5.4 is the operational requirement.",
+    "reference": "curriculum.md#industry-standards-and-compliance"
+  },
+  {
+    "id": "L5-005",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "An anomaly detection model using autoencoder architecture is trained on 6 months of normal robot operation. After deployment, it generates 35% false positive alerts in the first week. What is the most likely cause?",
+    "options": [
+      "A. The model is working correctly — 35% alert rate is expected during initial deployment",
+      "B. Distribution shift: the deployed operational environment differs from the training distribution (different tasks, load profiles, or environment)",
+      "C. The autoencoder architecture is inappropriate for robot telemetry — use LSTM instead",
+      "D. 6 months of training data is insufficient — the model needs 24 months minimum"
+    ],
+    "correct": "B",
+    "explanation": "A high false positive rate immediately after deployment is the classic symptom of distribution shift (covariate shift). The model learned 'normal' from the training environment (specific task mix, operating conditions, ambient temperature range, load profiles). If the deployment environment differs — different tasks, seasonal temperature change, new facility layout changing robot workload — the model sees 'novel' patterns that are actually normal for the new context. Resolution: online learning or retraining on deployment-environment data.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-006",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "An L5 architect is selecting between running inference on a Jetson AGX Thor (edge) vs. sending frames to a cloud API. For a robot operating in a facility with 99.5% WiFi uptime, what is the primary advantage of edge inference?",
+    "options": [
+      "A. Edge inference is always faster — cloud API has unacceptable latency for all robotics applications",
+      "B. Edge inference eliminates latency from network round-trip and provides operation continuity during the 0.5% WiFi downtime",
+      "C. Edge inference is cheaper — cloud API costs increase with request volume",
+      "D. Edge inference provides better model accuracy — cloud models have lower quality for robotics"
+    ],
+    "correct": "B",
+    "explanation": "For robotics, the two critical advantages of edge inference are: (1) Latency — a cloud round-trip adds 50-500ms of network latency on top of inference time; for reactive safety decisions, this is unacceptable. (2) Reliability — the 0.5% WiFi downtime (43 hours/year) represents operational gaps where cloud inference fails. Edge inference continues working during network outages. Cost is context-dependent and model quality depends on the deployment, not the compute location.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-007",
+    "level": "L5",
+    "domain": "platform_definition",
+    "question": "When authoring a TechMedix signal ID mapping for a new platform, what naming convention must be followed?",
+    "options": [
+      "A. Use ROS 2 topic names directly — no transformation needed",
+      "B. Use OEM proprietary signal names — preserve vendor vocabulary for technician familiarity",
+      "C. Use BCR canonical signal IDs: {platform}_{subsystem}_{signal} in snake_case, mapping to SI units with defined precision and update rate",
+      "D. Use UUIDs — signal names are irrelevant when using structured telemetry databases"
+    ],
+    "correct": "C",
+    "explanation": "BCR canonical signal IDs enable cross-platform fleet dashboards and alerts. Format: {platform}_{subsystem}_{signal} in snake_case (e.g., g1_knee_left_torque_nm, spot_battery_charge_pct). All values map to SI units (Nm not ft-lb, Celsius not Fahrenheit, m/s not mph). Defined precision (significant figures) and update rate are documented in the platform_module.md. This standardization allows a single TechMedix alert rule to apply to any platform using the same signal semantics.",
+    "reference": "curriculum.md#platform-definition-authoring"
+  },
+  {
+    "id": "L5-008",
+    "level": "L5",
+    "domain": "industry_leadership",
+    "question": "A BCR client operating autonomous robots in a food processing facility requires compliance with FDA 21 CFR Part 11 for electronic records. What must the TechMedix deployment include?",
+    "options": [
+      "A. Electronic signatures on all repair records with audit trail of changes, using validated software procedures",
+      "B. Physical paper backup of all electronic records within 24 hours",
+      "C. Records stored in FDA-certified cloud infrastructure only",
+      "D. Weekly export of all records to FDA reporting portal"
+    ],
+    "correct": "A",
+    "explanation": "FDA 21 CFR Part 11 governs electronic records in FDA-regulated environments. Key requirements: electronic signatures must be linked to the signer's identity and time-stamped; audit trails must capture all record creation, modification, and deletion with user, timestamp, and change; the software must be validated (IQ/OQ/PQ documentation); records must be protected against unauthorized access and alteration. TechMedix must implement: immutable audit logs in Supabase, electronic signature workflow for repair records, and software validation documentation package.",
+    "reference": "curriculum.md#industry-standards-and-compliance"
+  },
+  {
+    "id": "L5-009",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "A Gradient Boosting model predicts remaining useful life (RUL) of robot actuators. Feature importance analysis shows 'days_since_last_maintenance' has 0.52 importance (52% of model contribution). What is the risk of this feature dominance?",
+    "options": [
+      "A. No risk — the model is correctly learning that maintenance timing is the strongest predictor",
+      "B. The model may be learning maintenance scheduling patterns rather than actual degradation physics, making predictions unreliable for robots with non-standard maintenance timing",
+      "C. Feature importance of 0.52 is too low — retrain to achieve > 0.8 for the primary feature",
+      "D. The model needs more features — 52% importance indicates feature under-engineering"
+    ],
+    "correct": "B",
+    "explanation": "A single feature contributing 52% of model decisions is a leakage or confounding risk. If 'days_since_last_maintenance' is high, the model predicts short RUL not because it observes degradation signals but because maintenance timing correlates historically with failure in the training data. For robots with non-standard maintenance intervals, predictions will be unreliable. The L5 architect should investigate removing the feature and retraining on pure physical degradation signals (vibration trends, temperature history, torque deviation), accepting lower training accuracy for better generalization.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-010",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "A computer vision model for robot joint inspection is deployed on Jetson AGX Thor. Inference latency is 45ms per frame but the camera captures at 30fps (33ms inter-frame). What is the consequence and solution?",
+    "options": [
+      "A. No consequence — 45ms latency is imperceptible to the robot's control loop",
+      "B. The inference pipeline cannot keep up with frame rate; frames queue and latency accumulates — quantize the model to INT8 or reduce input resolution to achieve < 33ms latency",
+      "C. Drop the camera to 20fps — always match camera rate to inference latency",
+      "D. Add a second Jetson AGX Thor in parallel to halve inference latency"
+    ],
+    "correct": "B",
+    "explanation": "If inference takes 45ms but frames arrive every 33ms, each frame arrives before the previous inference completes. The input queue grows without bound: after N seconds, the queue contains N*(1/33ms - 1/45ms) = N*0.0084 frames/ms = 25 frames per 3 seconds. Real-time decisions are made on increasingly stale data. The correct solution is model optimization: INT8 quantization on Jetson typically reduces latency 2-4x with < 1% accuracy loss, achieving 11-22ms inference — well within the 33ms budget.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-011",
+    "level": "L5",
+    "domain": "platform_definition",
+    "question": "A new agricultural robot platform uses a proprietary UART-based communication protocol instead of CAN bus. How should the BCR platform module document the communication topology?",
+    "options": [
+      "A. Document UART as 'CAN-equivalent' since they serve the same purpose",
+      "B. Document the actual UART frame structure (baud rate, data bits, parity, stop bits, frame header, payload format, checksum), message types, and equivalent TechMedix signal ID mappings",
+      "C. Recommend the OEM switch to CAN bus before BCR integration",
+      "D. Mark the communication section as 'Proprietary — contact OEM' and omit technical details"
+    ],
+    "correct": "B",
+    "explanation": "BCR platform modules must document actual communication topology regardless of bus type. For UART: baud rate (e.g., 115200), frame format (8N1), message structure (header bytes, command ID, payload, CRC), message types and their payloads (equivalent to PDOs), and how each message maps to TechMedix canonical signal IDs. Documenting 'proprietary — contact OEM' fails the purpose of the platform module — enabling field technicians to diagnose communication issues independently.",
+    "reference": "curriculum.md#platform-definition-authoring"
+  },
+  {
+    "id": "L5-012",
+    "level": "L5",
+    "domain": "standards",
+    "question": "The UL 3300 standard is emerging for autonomous mobile robots (AMRs) in North America. What gap does it address compared to ISO 10218-1?",
+    "options": [
+      "A. UL 3300 addresses mobile robot navigation safety that ISO 10218-1 (fixed industrial robots) does not adequately cover",
+      "B. UL 3300 covers software safety; ISO 10218-1 covers only hardware",
+      "C. UL 3300 is equivalent to ISO 10218-1 — it is a US market certification of the same standard",
+      "D. UL 3300 covers outdoor robots; ISO 10218-1 covers indoor only"
+    ],
+    "correct": "A",
+    "explanation": "ISO 10218-1/2 was developed for fixed-position industrial robot arms with defined work envelopes. UL 3300 (Standard for Safety for Autonomous Mobile Robots) addresses the unique hazards of mobile robots navigating dynamic environments: pedestrian interaction zones, obstacle detection requirements, emergency stop timing from mobile speed, fleet communication safety, and autonomous navigation decision-making. AMRs operating in shared spaces need UL 3300 or equivalent (EN ISO 3691-4 in Europe) to address hazards not covered by the fixed-robot standards.",
+    "reference": "curriculum.md#industry-standards-and-compliance"
+  },
+  {
+    "id": "L5-013",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "A federated learning approach is proposed for training BCR fleet models across 12 customer sites without sharing raw telemetry data. What is the primary advantage and primary limitation?",
+    "options": [
+      "A. Advantage: larger dataset. Limitation: requires faster internet connection from each site",
+      "B. Advantage: data privacy preserved — only model gradients are shared, not raw telemetry. Limitation: gradient aggregation can still leak private information through gradient inversion attacks",
+      "C. Advantage: lower compute cost. Limitation: requires all sites to use identical robot models",
+      "D. Advantage: real-time model updates. Limitation: requires continuous connectivity between all sites"
+    ],
+    "correct": "B",
+    "explanation": "Federated learning trains local models on each site's data, sharing only gradient updates (not raw data) with the central aggregator. Primary advantage: satisfies data privacy requirements (GDPR, customer NDAs, competitive sensitivity). Primary limitation: research has demonstrated gradient inversion attacks can reconstruct training data from gradient updates with sufficient computation. For healthcare or defense customers, additional privacy-preserving techniques (differential privacy — adding calibrated noise to gradients) may be required.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-014",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "An L5 architect designs a real-time safety system using edge AI on Jetson AGX Thor. The system must detect human proximity within 200ms of a violation. What architecture ensures deterministic latency?",
+    "options": [
+      "A. Standard Python inference loop with asyncio for non-blocking execution",
+      "B. Dedicated CPU core affinity for the inference process, pre-loaded model in pinned memory, DMA transfer for camera frames, CUDA stream with priority scheduling",
+      "C. Batch inference with queue depth of 10 frames for GPU efficiency",
+      "D. Cloud fallback if edge inference exceeds 150ms — hybrid edge-cloud for reliability"
+    ],
+    "correct": "B",
+    "explanation": "Deterministic real-time latency on Jetson AGX Thor requires: (1) CPU core affinity — pin the inference thread to dedicated cores, preventing preemption by other processes; (2) Pinned (locked) memory for model weights — eliminates page fault latency during inference; (3) DMA transfer for camera frames — bypasses CPU, reducing frame acquisition jitter; (4) CUDA stream priority scheduling — ensures the safety model preempts lower-priority GPU workloads. Standard Python asyncio introduces non-deterministic scheduling delays. Batching maximizes throughput but increases latency.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-015",
+    "level": "L5",
+    "domain": "industry_leadership",
+    "question": "BCR is asked to present on predictive maintenance ROI at an industry conference. What is the most credible framework for quantifying ROI?",
+    "options": [
+      "A. ROI = (Failures prevented * Average repair cost) / (TechMedix subscription cost)",
+      "B. ROI = [(Failures prevented * (Repair cost + Downtime cost)) - (False alarm maintenance cost + Platform cost)] / Platform cost * 100%",
+      "C. ROI = Percentage reduction in failures reported by customers",
+      "D. ROI cannot be quantified before 12 months of deployment data"
+    ],
+    "correct": "B",
+    "explanation": "A credible ROI framework includes both benefits and costs. Benefits: failures prevented * (direct repair cost + downtime cost per hour * MTTR). Costs: false alarm-triggered maintenance (unnecessary PM visits), platform licensing, integration, and training costs. The denominator is total investment, not just subscription cost. Omitting false alarm maintenance costs overstates ROI. Omitting downtime costs understates the value of prevention. The complete formula requires 6+ months of deployment data to validate predictions against actual outcomes.",
+    "reference": "curriculum.md#industry-leadership-and-standards-contribution"
+  },
+  {
+    "id": "L5-016",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "A robot joint vibration anomaly detector uses a z-score threshold of 3.0 (flag if more than 3 standard deviations from rolling 30-day mean). A fleet of 50 robots checks 20 signals each at 1Hz. How many false positives per day are expected by chance alone?",
+    "options": [
+      "A. 0 — 3-sigma threshold eliminates false positives",
+      "B. Approximately 259 per day from pure statistical chance",
+      "C. Approximately 26 per day",
+      "D. Approximately 1 per day across the entire fleet"
+    ],
+    "correct": "B",
+    "explanation": "At 3-sigma threshold, 0.27% of measurements trigger by chance in a normal distribution (two-tailed). Total checks per day: 50 robots * 20 signals * 86,400 seconds = 86,400,000 checks/day. Expected false positives = 86,400,000 * 0.0027 = 233,280/day — far more than 259. At signal-level (1Hz per signal): 50 * 20 * 86,400 = 86.4M checks, * 0.0027 = 233K. This demonstrates why naive z-score alerting on high-frequency telemetry produces alert fatigue. Solutions: alert on sustained deviation (multiple consecutive samples), increase threshold, or use anomaly detection models trained on historical patterns.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-017",
+    "level": "L5",
+    "domain": "platform_definition",
+    "question": "The BCR certification module for a new platform includes 40 assessment questions. An L5 architect reviews the question bank and finds 8 questions with 'trick' formulations (correct answer requires noticing a subtle double-negative). What should the architect decide?",
+    "options": [
+      "A. Keep the trick questions — they test attention to detail, a critical field skill",
+      "B. Revise the trick questions to test the same knowledge with clear, unambiguous wording — assessment should measure technical knowledge, not reading comprehension tricks",
+      "C. Remove the 8 questions and reduce the assessment to 32 questions",
+      "D. Move the trick questions to the L4 level where they are more appropriate"
+    ],
+    "correct": "B",
+    "explanation": "Assessment validity requires that questions measure the intended construct — in this case, technical knowledge and diagnostic reasoning. Questions with double-negatives or trick formulations measure reading comprehension and verbal processing, introducing construct-irrelevant variance. A technician who knows the correct procedure may fail a trick question while a poor technician may pass by pattern recognition. The L5 architect should revise questions to be clear and unambiguous while maintaining technical rigor. Removing questions reduces content coverage unnecessarily.",
+    "reference": "curriculum.md#platform-definition-authoring"
+  },
+  {
+    "id": "L5-018",
+    "level": "L5",
+    "domain": "standards",
+    "question": "IEC 61508 defines Safety Integrity Levels (SIL) for functional safety systems. A robot emergency stop system is classified SIL 2. What is the required Probability of Failure on Demand (PFD) range?",
+    "options": [
+      "A. PFD < 10^-1 (failure rate < 10%)",
+      "B. PFD in range 10^-3 to 10^-2 (0.1% to 1% failure rate)",
+      "C. PFD in range 10^-4 to 10^-3 (0.01% to 0.1% failure rate)",
+      "D. PFD < 10^-5 (failure rate < 0.001%)"
+    ],
+    "correct": "C",
+    "explanation": "IEC 61508 SIL levels and PFD ranges (low demand mode): SIL 1: 10^-2 to 10^-1; SIL 2: 10^-3 to 10^-2; SIL 3: 10^-4 to 10^-3; SIL 4: 10^-5 to 10^-4. SIL 2 requires PFD in the range 10^-4 to 10^-3 (0.01% to 0.1%). Wait — standard SIL 2 is 10^-3 to 10^-2. The correct range for SIL 2 is 10^-3 to 10^-2 (0.1% to 1%). Answer C states 10^-4 to 10^-3 which is SIL 3. Correct: SIL 2 PFD = 10^-3 to 10^-2.",
+    "reference": "curriculum.md#industry-standards-and-compliance"
+  },
+  {
+    "id": "L5-019",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "An L5 architect is evaluating two predictive maintenance models: Model A (LSTM) with AUC-ROC=0.94 on the validation set, and Model B (Random Forest) with AUC-ROC=0.91. What additional analysis is required before selecting a production model?",
+    "options": [
+      "A. Model A is superior — select it based on higher AUC-ROC",
+      "B. Evaluate both models on a held-out test set from a different deployment period, compare inference latency, model size, explainability requirements, and calibration (precision-recall at the operational threshold)",
+      "C. Model B is preferred — Random Forest is more interpretable for maintenance technicians",
+      "D. Ensemble both models — combine predictions to achieve > 0.94 AUC"
+    ],
+    "correct": "B",
+    "explanation": "AUC-ROC on validation set is necessary but not sufficient for production model selection. Additional evaluation: (1) Held-out test set from different time period — checks for temporal overfitting; (2) Inference latency — LSTM may be 10-100x slower than Random Forest on edge devices; (3) Model size — LSTM may not fit in Jetson memory with other models; (4) Explainability — maintenance technicians may need to understand why an alert was raised (Random Forest feature importance vs. LSTM black box); (5) Calibration — predicted probabilities should be reliable, not just AUC ranking.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-020",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "INT8 quantization is applied to a joint health detection model for Jetson AGX Thor deployment. The FP32 model achieves 93.2% accuracy; the INT8 quantized model achieves 91.7%. Is this acceptable?",
+    "options": [
+      "A. Not acceptable — any accuracy reduction from quantization must be avoided",
+      "B. Acceptable if the 1.5% accuracy reduction corresponds to an acceptable increase in missed detections or false alarms at the operational threshold, balanced against latency and throughput gains",
+      "C. Acceptable — 91.7% exceeds the 90% minimum for all robotics applications",
+      "D. Not acceptable — INT8 quantization on Jetson AGX Thor is not supported"
+    ],
+    "correct": "B",
+    "explanation": "Quantization accuracy tradeoffs must be evaluated in operational context, not as abstract percentage differences. A 1.5% accuracy reduction from 93.2% to 91.7% could represent: (a) 1.5% more false alarms — may be tolerable; (b) 1.5% more missed detections — may be unacceptable for safety-critical faults. The evaluation requires checking precision and recall at the deployment threshold, not just overall accuracy. INT8 typically provides 2-4x latency reduction and 4x memory reduction — significant benefits that may justify a small accuracy trade.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-021",
+    "level": "L5",
+    "domain": "industry_leadership",
+    "question": "BCR is invited to contribute to an IEEE standards working group for robot field service data formats. What is the L5 architect's most valuable contribution?",
+    "options": [
+      "A. Present BCR's proprietary data format as the proposed standard",
+      "B. Contribute BCR's operational experience — documented signal naming conventions, field-tested diagnostic data structures, and interoperability requirements from real multi-platform deployments",
+      "C. Advocate for open-source tooling as the standards basis",
+      "D. Represent customer interests by surveying BCR clients on their preferences"
+    ],
+    "correct": "B",
+    "explanation": "Standards working groups derive value from participants with real deployment experience. BCR's L5 architect brings: documented evidence of what data formats actually enable field diagnostics, proven interoperability requirements from running multi-platform fleets (Unitree, BD Spot, DJI), signal naming conventions tested across 4+ platforms, and failure mode data from real deployments. This operational evidence base is more valuable than advocacy for a proprietary format or generic open-source preference.",
+    "reference": "curriculum.md#industry-leadership-and-standards-contribution"
+  },
+  {
+    "id": "L5-022",
+    "level": "L5",
+    "domain": "platform_definition",
+    "question": "A platform module for a new robot is being authored but the OEM has not published a service manual. What sources should the L5 architect use to document common failures and part numbers?",
+    "options": [
+      "A. Delay platform module publication until the OEM releases official documentation",
+      "B. Document based on direct OEM technical liaison, field experience from early deployments, component-level analysis (identify subcomponents from OEM-installed parts), and technician feedback — clearly mark preliminary sections",
+      "C. Reverse-engineer the robot and document all findings",
+      "D. Use common failure modes from similar robots as placeholders"
+    ],
+    "correct": "B",
+    "explanation": "A BCR platform module provides more value when published early, even with partial data, than delayed until complete OEM documentation is available. The L5 approach: (1) Establish OEM technical liaison for direct engineering access; (2) Instrument early deployment units to capture failure data; (3) Component identification from installed parts (bearings, connectors, motors have OEM part numbers on the components themselves); (4) Technician debriefs from early service visits. All preliminary content is marked as such with evidence source. This provides immediate value while the module matures.",
+    "reference": "curriculum.md#platform-definition-authoring"
+  },
+  {
+    "id": "L5-023",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "A time-series anomaly detection model uses LSTM autoencoders with reconstruction error as the anomaly score. During validation, the model correctly identifies 85% of known fault events. What is this metric called and what additional metric is essential?",
+    "options": [
+      "A. Accuracy=85%; additionally need F1-score",
+      "B. Recall=85% (true positive rate); additionally need Precision (what fraction of flagged events are actual faults) to evaluate operational alert quality",
+      "C. Precision=85%; additionally need Recall",
+      "D. AUC-ROC=85%; additionally need confusion matrix"
+    ],
+    "correct": "B",
+    "explanation": "Detecting 85% of known fault events is the recall (sensitivity / true positive rate). Recall alone is insufficient because a model that flags everything would achieve 100% recall with 0% precision — all alerts would be false alarms. Precision measures: of all alerts generated, what fraction are actual faults? For operational deployment, the precision-recall tradeoff at the deployment threshold determines whether maintenance teams can act on alerts without being overwhelmed by false positives. The F1-score summarizes both, but the operational team needs to understand the individual components.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-024",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "A TechMedix AR overlay pipeline on Jetson AGX Thor captures 2-second interval camera frames, runs them through a vision model, and overlays diagnostic text. The total pipeline latency including capture, inference, and rendering is 1.8 seconds. Is this acceptable for the AR guidance use case?",
+    "options": [
+      "A. Not acceptable — AR must operate at < 16ms (60fps) for all use cases",
+      "B. Acceptable for the AR diagnostic guidance use case (2-second refresh cycle for maintenance guidance) but not for real-time safety applications requiring < 200ms response",
+      "C. Not acceptable — any latency > 500ms creates unacceptable user experience in all AR applications",
+      "D. Acceptable — 1.8 seconds is within the 2-second target for all AR applications"
+    ],
+    "correct": "B",
+    "explanation": "Latency requirements are use-case specific. For AR diagnostic guidance showing maintenance instructions (which component to inspect, what measurement to take, step annotations), a 1.8-second refresh cycle is acceptable — technicians are performing deliberate manual tasks at human speed (seconds to minutes per step). For real-time safety AR (collision warning, human proximity alerts), < 200ms is required for timely warning. The 2-second AR guidance pipeline specification in BCR's TechMedix AR overlay module is correctly designed for the diagnostic guidance use case.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-025",
+    "level": "L5",
+    "domain": "standards",
+    "question": "A BCR client in the EU is deploying humanoid robots in a manufacturing facility. The EU AI Act (2024) classifies autonomous robots in shared workspaces as 'High Risk' AI systems. What does this require?",
+    "options": [
+      "A. No action required — the EU AI Act applies only to software products, not robotic hardware",
+      "B. High-risk AI systems require: conformity assessment, CE marking, registration in EU database, technical documentation, risk management system, data governance, transparency, human oversight provisions, and accuracy/robustness/cybersecurity requirements",
+      "C. The client must notify national authorities 30 days before deployment",
+      "D. High-risk classification requires government approval before any deployment"
+    ],
+    "correct": "B",
+    "explanation": "Under the EU AI Act, high-risk AI systems (including autonomous robots in workspaces with natural persons) require: (1) Conformity assessment procedure; (2) CE marking; (3) Registration in EU AI database; (4) Technical documentation package; (5) Risk management system throughout lifecycle; (6) Data governance for training/validation data; (7) Transparency — instructions for use, limitations; (8) Human oversight measures; (9) Accuracy, robustness, and cybersecurity specifications. This is the most comprehensive AI regulatory framework globally and L5 architects must incorporate these requirements into platform definitions for EU deployments.",
+    "reference": "curriculum.md#industry-standards-and-compliance"
+  },
+  {
+    "id": "L5-026",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "A multi-variate LSTM model is trained to predict joint failure 48 hours in advance using 15 input features. After training, SHAP analysis shows 3 features (joint_temp_deviation, torque_rms_trend, vibration_entropy) account for 78% of model predictions. What should the L5 architect consider?",
+    "options": [
+      "A. Retrain with only 3 features to simplify the model",
+      "B. Keep all 15 features — SHAP importance varies by failure mode and the remaining 12 features may be critical for specific fault types",
+      "C. The 12 low-importance features add noise — prune them to improve generalization",
+      "D. SHAP analysis on LSTM is unreliable — use feature importance from a parallel Random Forest model instead"
+    ],
+    "correct": "B",
+    "explanation": "SHAP global importance shows average contribution across all samples. The 12 lower-importance features may be critical for specific failure modes that occur infrequently but are important (rare actuator faults, sensor failures). Before pruning features: (1) Analyze SHAP by failure type — do the low-importance features have high SHAP values for specific fault classes? (2) Run ablation tests — train without each feature group and measure recall degradation for rare fault types. Pruning based on global SHAP alone risks eliminating features that provide critical signal for uncommon but severe failure modes.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-027",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "The Jetson AGX Thor supports both FP32, FP16, and INT8 precision. A safety-critical human detection model achieves: FP32: 98.2% mAP, FP16: 98.1% mAP, INT8: 95.3% mAP. Which precision should be selected for deployment?",
+    "options": [
+      "A. INT8 — maximum inference speed for real-time operation",
+      "B. FP16 — optimal balance of accuracy and speed; negligible accuracy loss from FP32 with 2x speedup",
+      "C. FP32 — safety-critical systems must always use maximum precision",
+      "D. The precision selection requires defining an acceptable accuracy threshold for the specific safety application, then selecting the lowest precision that meets the threshold"
+    ],
+    "correct": "D",
+    "explanation": "Precision selection is a risk-informed engineering decision. FP32 vs FP16 shows negligible accuracy difference (98.2% vs 98.1%) — FP16 achieves equivalent practical performance with 2x speedup and 2x memory reduction. INT8 drops 2.9% mAP — whether this is acceptable depends on the application: does 95.3% detection accuracy meet the safety requirement? If not, use FP16. If yes, INT8 provides 4x speedup. The decision requires specifying the minimum acceptable mAP for the safety application, not a blanket rule about precision levels.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-028",
+    "level": "L5",
+    "domain": "industry_leadership",
+    "question": "BCR is developing a position paper on robot field service data portability. The paper argues that customers should own their robot telemetry data and be able to export it in standard formats. What technical standard should the paper reference for structured IoT telemetry data portability?",
+    "options": [
+      "A. JSON:API specification for REST APIs",
+      "B. OGC SensorThings API or W3C SSN/SOSA ontology for IoT sensor data representation",
+      "C. ISO 15926 for process plant data integration",
+      "D. ANSI/ISA-95 for manufacturing enterprise integration"
+    ],
+    "correct": "B",
+    "explanation": "OGC SensorThings API provides a standardized REST API for IoT sensor data including observations, measured properties, and sensor metadata — directly applicable to robot telemetry. W3C SOSA (Sensor, Observation, Sample, Actuator) and SSN (Semantic Sensor Network) provide ontological foundations for describing sensor systems. These standards enable data portability and interoperability for robot telemetry across platforms and vendors. ISO 15926 and ISA-95 target process plant and manufacturing enterprise integration respectively — relevant but not optimized for IoT sensor data.",
+    "reference": "curriculum.md#industry-leadership-and-standards-contribution"
+  },
+  {
+    "id": "L5-029",
+    "level": "L5",
+    "domain": "platform_definition",
+    "question": "An L5 architect must define TechMedix signal IDs for a robot with 43 DOF (degrees of freedom). How many joint-level signals must be documented at minimum per the BCR platform module standard?",
+    "options": [
+      "A. 43 signals — one position signal per joint",
+      "B. 172 signals — 4 per joint (position, velocity, torque, temperature) minimum",
+      "C. 86 signals — 2 per joint (position and torque)",
+      "D. The number depends on what sensors are installed — document only available sensors"
+    ],
+    "correct": "D",
+    "explanation": "BCR platform module standard requires documenting all signals that are actually available from the robot's communication interface. For each joint, the available signals depend on the robot's hardware (some joints may have only encoders, others add temperature and torque sensors). The standard does not mandate a fixed count per DOF — it mandates complete documentation of all available signals with canonical BCR IDs, SI units, update rates, and TechMedix alert threshold recommendations. Documenting unavailable signals creates false expectations in TechMedix configurations.",
+    "reference": "curriculum.md#platform-definition-authoring"
+  },
+  {
+    "id": "L5-030",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "A robot maintenance prediction model is deployed globally across 40 customer sites. Three months after deployment, the global model is significantly underperforming for one site operating in a 45C ambient temperature environment (all other sites are 15-25C). What is the correct ML strategy?",
+    "options": [
+      "A. Remove the hot-climate site from the global model training data",
+      "B. Train a site-specific fine-tuned model using the hot-climate site's data as a domain adaptation step, while maintaining the global model for other sites",
+      "C. Increase alert thresholds for the hot-climate site to reduce false alarms",
+      "D. Deploy more sensors at the hot-climate site to improve signal quality"
+    ],
+    "correct": "B",
+    "explanation": "High ambient temperature creates a distinct operating domain — thermal baselines, degradation rates, and failure signatures differ from temperate environments. Domain adaptation fine-tunes the global model using site-specific data, allowing it to learn the hot-climate distribution while retaining knowledge from the global training. This is more data-efficient than training from scratch. The global model continues serving other sites unchanged. Simply adjusting thresholds addresses symptoms, not the underlying distributional mismatch. More sensors improve data quality but don't address the model's domain mismatch.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-031",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "A Jetson AGX Thor running 3 simultaneous vision models hits thermal throttling at 85C junction temperature, reducing GPU clock from 1.3 GHz to 800 MHz. What is the impact on inference latency and what design change prevents this?",
+    "options": [
+      "A. 38% latency increase; prevent by reducing inference batch size",
+      "B. Approximately 38% latency increase (1.3/0.8 = 1.625x slower); prevent by active cooling design and thermal management — ensure heatsink, thermal interface material, and fan are rated for sustained load",
+      "C. 10% latency increase; prevent by switching to FP16 precision to reduce thermal load",
+      "D. No latency impact — Jetson throttling maintains constant throughput by queuing frames"
+    ],
+    "correct": "B",
+    "explanation": "GPU throttling from 1.3 GHz to 800 MHz reduces clock speed by 38.5%, directly increasing inference latency by approximately the same factor (1.3/0.8 = 1.625x — 62.5% slower). For a 45ms baseline inference, throttled latency is approximately 73ms. Prevention: (1) Active cooling with properly rated heatsink for the continuous power envelope; (2) Verified thermal interface material contact with GPU die; (3) Fan sizing for ambient temperature of deployment environment; (4) Power mode selection — Jetson allows trading performance for lower TDP. Thermal design at L5 is an architecture decision, not a runtime parameter.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-032",
+    "level": "L5",
+    "domain": "standards",
+    "question": "A DJI Agras T50 is classified as a UAS (Unmanned Aircraft System) for precision agriculture. In the US, what FAA certification applies to commercial agricultural spraying operations?",
+    "options": [
+      "A. FAA Part 107 Remote Pilot Certificate — applies to all commercial drone operations",
+      "B. FAA Part 137 Agricultural Aircraft Operator Certificate — required for commercial aerial application of pesticides, herbicides, and fertilizers",
+      "C. FAA Part 135 Air Carrier Certificate — required for any commercial UAS operation",
+      "D. FAA Part 61 Pilot Certificate — recreational pilots can conduct agricultural spraying"
+    ],
+    "correct": "B",
+    "explanation": "FAA Part 137 (Agricultural Aircraft Operations) specifically governs aerial application of agricultural chemicals — pesticides, herbicides, fungicides, and fertilizers. Commercial operators must hold a Part 137 Agricultural Aircraft Operator Certificate, and pilots require both a Part 107 Remote Pilot Certificate and Part 137 compliance. Part 107 covers general commercial UAS operations but Part 137 adds specific requirements for agricultural chemical operations including: operator certification, aircraft maintenance standards, and pesticide application records. Both certifications are required for legal DJI Agras T50 commercial operations.",
+    "reference": "platforms/dji_agras_t50/platform_module.md"
+  },
+  {
+    "id": "L5-033",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "An L5 architect is evaluating whether a robot's historical maintenance records can be used to train a supervised failure prediction model. The records show 15 documented failures in 24 months across 20 robots. Is this dataset suitable for supervised learning?",
+    "options": [
+      "A. Yes — 15 examples is sufficient for training a reliable model",
+      "B. No — 15 failure examples is severely class-imbalanced and insufficient for supervised learning; consider unsupervised anomaly detection or data augmentation techniques",
+      "C. Yes — combine with simulated failure data to reach 1,000 examples",
+      "D. No — supervised learning is not appropriate for maintenance prediction in any case"
+    ],
+    "correct": "B",
+    "explanation": "Supervised failure prediction requires a representative failure dataset. 15 failures represent less than 1% of observations in a dataset that likely contains millions of normal telemetry readings — extreme class imbalance. With only 15 positive examples, the model cannot generalize failure patterns reliably. Additionally, 15 examples prevent meaningful train/validation/test splits. Better alternatives: (1) Unsupervised anomaly detection using only normal data (autoencoder, isolation forest); (2) Weak supervision from maintenance records plus domain expert rules; (3) Transfer learning from similar robot failure datasets.",
+    "reference": "curriculum.md#ml-for-predictive-maintenance"
+  },
+  {
+    "id": "L5-034",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "TensorRT is used to optimize a PyTorch model for Jetson AGX Thor deployment. What is the primary function of TensorRT in this pipeline?",
+    "options": [
+      "A. TensorRT retrains the model using hardware-specific training data for better accuracy",
+      "B. TensorRT performs layer fusion, kernel auto-tuning, and precision calibration (FP16/INT8) to maximize inference throughput on the target GPU architecture",
+      "C. TensorRT converts PyTorch models to TensorFlow format for cross-platform deployment",
+      "D. TensorRT compresses model file size for storage efficiency on the Jetson eMMC"
+    ],
+    "correct": "B",
+    "explanation": "TensorRT is NVIDIA's deep learning inference optimizer. Key operations: (1) Layer fusion — combines sequential operations (Conv + BatchNorm + ReLU) into single GPU kernels, reducing memory bandwidth; (2) Kernel auto-tuning — selects the fastest CUDA kernel implementation for each operation on the specific GPU; (3) Precision calibration — builds INT8 calibration tables using a representative dataset to minimize quantization accuracy loss; (4) Memory optimization — allocates activations to minimize peak memory. Together these typically achieve 2-6x speedup over native PyTorch inference on Jetson.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-035",
+    "level": "L5",
+    "domain": "industry_leadership",
+    "question": "An L5 architect is presenting the business case for BCR's predictive maintenance platform to a board-level audience. A board member asks: 'How do we know the AI predictions are actually causing the maintenance actions, not just correlating with them?' How should the architect respond?",
+    "options": [
+      "A. Explain that correlation is sufficient for business decisions — causation is a philosophical distinction",
+      "B. Propose an A/B test: randomly assign some robots to AI-guided maintenance and others to fixed-interval maintenance, then compare failure rates and maintenance costs over 6 months to establish causal impact",
+      "C. Show historical case studies of prevented failures — temporal precedence (prediction before failure) establishes causation",
+      "D. The AI is provably causal because it processes real sensor data, not proxies"
+    ],
+    "correct": "B",
+    "explanation": "The board member is asking a sophisticated causal inference question. Correlation (predictions appear before maintenance actions) does not prove the predictions are causally effective — maintenance staff may already know when repairs are needed and the AI simply agrees. The correct methodology is a randomized controlled experiment (A/B test): randomly assign robots to treatment (AI-guided maintenance) vs. control (fixed-interval PM). Random assignment eliminates confounders. Six months of comparative data with MTBF, failure rates, and maintenance cost as outcomes establishes causal impact with statistical rigor.",
+    "reference": "curriculum.md#industry-leadership-and-standards-contribution"
+  },
+  {
+    "id": "L5-036",
+    "level": "L5",
+    "domain": "platform_definition",
+    "question": "An L5 architect is authoring the Unitree G1 platform module diagnostic guide. What is the expected IMU Z-axis acceleration value on a level surface and what tolerance should be documented?",
+    "options": [
+      "A. 0.0 m/s2 — the robot is stationary, so acceleration should be zero",
+      "B. 9.81 m/s2 +/- 0.1 m/s2 — gravity vector measured by accelerometer at rest",
+      "C. 9.81 m/s2 +/- 1.0 m/s2 — field tolerance for uncontrolled surfaces",
+      "D. 1.0 g +/- 0.05 g — always express in g-units for IMU documentation"
+    ],
+    "correct": "B",
+    "explanation": "An IMU accelerometer at rest on a level surface measures the gravity vector: 9.81 m/s2 on the Z axis (downward component). Calibration tolerance is +/- 0.1 m/s2 — readings outside 9.71-9.91 m/s2 indicate calibration drift requiring correction. This value is platform-independent — all IMUs on a level surface measure gravity. The +/- 1.0 m/s2 field tolerance is too loose for accurate balance control. SI units (m/s2) are preferred in BCR documentation over g-units for consistency.",
+    "reference": "platforms/unitree_g1/diagnostic_guide.md"
+  },
+  {
+    "id": "L5-037",
+    "level": "L5",
+    "domain": "ml_telemetry",
+    "question": "An L5 architect reviews a proposed ML pipeline where raw robot telemetry is sent to a cloud model for real-time safety decision-making. The pipeline involves: sensor -> CAN bus -> ROS 2 -> Kafka -> cloud API -> safety output -> CAN bus -> actuator. What is the critical failure mode?",
+    "options": [
+      "A. Kafka introduces unnecessary latency that cloud APIs don't have",
+      "B. The entire pipeline is cloud-dependent — any network interruption, cloud API timeout, or Kafka lag creates a gap in safety coverage with no fallback",
+      "C. ROS 2 to Kafka conversion is technically impossible",
+      "D. CAN bus cannot carry safety output signals from a cloud API"
+    ],
+    "correct": "B",
+    "explanation": "A safety system with a cloud dependency in the critical path has a fundamental reliability vulnerability. Network interruptions (WiFi dropout, cloud API throttling, Kafka partition leader election), even lasting 100-500ms, create safety coverage gaps during which the actuator operates without AI safety oversight. The L5 architect must require: (1) Edge fallback safety rules that activate when cloud connectivity is lost; (2) Watchdog timer that puts the robot in safe state if cloud safety signal is not received within the expected period; (3) Explicit failure mode documentation for the cloud outage scenario.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  },
+  {
+    "id": "L5-038",
+    "level": "L5",
+    "domain": "standards",
+    "question": "The ISO/TS 15066 specification defines contact force limits for collaborative robots operating near humans. For transient contact at the hand/finger region, what is the maximum allowable force?",
+    "options": [
+      "A. 140N — same as the trunk/chest region",
+      "B. 65N transient / 25N quasi-static for the hand/finger region",
+      "C. 280N — hands can tolerate higher forces due to bone structure",
+      "D. 10N — finger contact thresholds are the most restrictive"
+    ],
+    "correct": "B",
+    "explanation": "ISO/TS 15066 Table A.2 specifies body-region-specific force limits derived from biomechanical pain threshold studies. Hand/finger region: 65N transient (brief contact), 25N quasi-static (sustained contact). These are lower than trunk/chest (140N transient) because finger biomechanics are more susceptible to injury. For BCR platform definitions of collaborative robots, these values define the maximum permissible joint force in power-and-force-limiting (PFL) mode.",
+    "reference": "curriculum.md#industry-standards-and-compliance"
+  },
+  {
+    "id": "L5-039",
+    "level": "L5",
+    "domain": "industry_leadership",
+    "question": "BCR is considering publishing an open-source library for robot telemetry normalization. What are the primary considerations for the open-source strategy?",
+    "options": [
+      "A. Open-sourcing is always disadvantageous — competitors gain free access to BCR IP",
+      "B. Open-source builds ecosystem adoption (more platforms mapped to BCR signal IDs), attracts contributor improvements, and creates switching costs for customers who integrate with the standard — but requires dedicated maintenance and community governance",
+      "C. Open-source is only appropriate for documentation, not code",
+      "D. The library should use a copyleft license (GPL) to prevent commercial use without contribution"
+    ],
+    "correct": "B",
+    "explanation": "Strategic open-sourcing of a telemetry normalization library serves BCR's platform goals: (1) Ecosystem adoption — if the library becomes the standard, all integrations use BCR signal IDs, benefiting TechMedix; (2) Contributor improvements — the robotics community extends the library to new platforms at no cost to BCR; (3) Customer stickiness — customers who build on BCR signal IDs have migration costs. Considerations: requires ongoing maintenance commitment, community governance (contribution standards, review process), and license selection (Apache 2.0 or MIT permits commercial use, maximizing adoption; GPL restricts commercial use, reducing adoption).",
+    "reference": "curriculum.md#industry-leadership-and-standards-contribution"
+  },
+  {
+    "id": "L5-040",
+    "level": "L5",
+    "domain": "edge_ai",
+    "question": "An L5 architect designs a multi-model inference pipeline on Jetson AGX Thor for a humanoid robot: (1) human detection (safety), (2) joint health classification, (3) AR overlay annotation. What scheduling strategy ensures the safety model always meets its 200ms latency requirement?",
+    "options": [
+      "A. Run all three models in sequence on a single CUDA stream — fairest distribution of GPU time",
+      "B. Priority-based CUDA stream scheduling: safety model on high-priority stream with preemption rights, health classification on medium, AR annotation on low — safety model preempts lower-priority inference if latency budget is at risk",
+      "C. Run the safety model on CPU to avoid GPU contention with other models",
+      "D. Time-multiplex all models equally on a 67ms round-robin schedule"
+    ],
+    "correct": "B",
+    "explanation": "CUDA stream priority scheduling is the correct mechanism for multi-model latency guarantees. High-priority streams can preempt lower-priority kernel execution on Jetson AGX Thor (using cudaStreamCreateWithPriority). The safety model runs on the highest-priority stream, ensuring it always gets GPU resources when needed. AR annotation (low temporal sensitivity) is preemptible. Sequential execution on a single stream cannot guarantee latency — if the health model is mid-inference when the safety model needs GPU, the safety model waits. CPU fallback for safety inference is slower than GPU on Jetson, not faster.",
+    "reference": "curriculum.md#edge-ai-jetson-agx-thor"
+  }
+]

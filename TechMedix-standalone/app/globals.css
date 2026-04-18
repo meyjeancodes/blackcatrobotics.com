@@ -265,6 +265,29 @@ code, pre, table, th, td {
 .font-body   { font-family: var(--font-body); }
 .font-ui     { font-family: var(--font-ui); }
 
+/* ── Cert curriculum prose ───────────────────────────────────────────────── */
+
+.cert-prose { color: var(--ink); line-height: 1.65; font-size: 0.95rem; }
+.cert-prose h1 { font-family: var(--font-header); font-size: 1.85rem; margin: 0 0 1rem; color: var(--ink); }
+.cert-prose h2 { font-family: var(--font-header); font-size: 1.4rem; margin: 2.2rem 0 0.75rem; color: var(--ink); border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); padding-top: 1.2rem; }
+.cert-prose h2:first-of-type { border-top: none; padding-top: 0; }
+.cert-prose h3 { font-family: var(--font-header); font-size: 1.1rem; margin: 1.6rem 0 0.5rem; color: var(--ink); }
+.cert-prose h4 { font-family: var(--font-ui); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; margin: 1.4rem 0 0.4rem; color: var(--ink-soft); }
+.cert-prose p { margin: 0 0 0.9rem; }
+.cert-prose ul, .cert-prose ol { margin: 0 0 1rem 1.25rem; padding: 0; }
+.cert-prose li { margin: 0.3rem 0; }
+.cert-prose li > ul, .cert-prose li > ol { margin-top: 0.3rem; }
+.cert-prose strong { color: var(--ink); font-weight: 600; }
+.cert-prose code { background: color-mix(in srgb, var(--ink) 4%, transparent); padding: 0.12em 0.35em; border-radius: 4px; font-size: 0.85em; }
+.cert-prose pre { background: color-mix(in srgb, var(--ink) 4%, transparent); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 0 0 1rem; font-size: 0.85rem; }
+.cert-prose pre code { background: transparent; padding: 0; }
+.cert-prose blockquote { margin: 0 0 1rem; padding: 0.6rem 1rem; border-left: 3px solid color-mix(in srgb, var(--ink) 12%, transparent); color: var(--ink-soft); }
+.cert-prose hr { border: none; border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); margin: 2rem 0; }
+.cert-prose a { color: var(--accent, #2563eb); text-decoration: underline; }
+.cert-prose table { width: 100%; border-collapse: collapse; margin: 0 0 1.25rem; font-size: 0.88rem; }
+.cert-prose th, .cert-prose td { border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+.cert-prose th { background: color-mix(in srgb, var(--ink) 4%, transparent); font-weight: 600; }
+
 /* ── Live Feed Animation ─────────────────────────────────────────────────── */
 
 @keyframes feed-in {

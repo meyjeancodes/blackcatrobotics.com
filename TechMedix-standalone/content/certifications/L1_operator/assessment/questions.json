@@ -1,0 +1,452 @@
+[
+  {
+    "id": "L1-001",
+    "level": "L1",
+    "domain": "safety",
+    "question": "A Unitree G1 is in standby mode (powered on, not moving) and you need to replace a camera lens cover. What is the correct first step?",
+    "options": [
+      "A. Begin work immediately — standby mode means the robot is safe to approach",
+      "B. Issue a software stop via TechMedix, then press the hardware E-stop button",
+      "C. Disconnect only the battery to ensure all motion is prevented",
+      "D. Ask a colleague to monitor the robot while you work quickly"
+    ],
+    "correct": "B",
+    "explanation": "Software stop and hardware E-stop must both be engaged before any maintenance. Standby mode does not prevent the robot from receiving new motion commands. Battery disconnection alone does not address stored kinetic energy or software restart risk.",
+    "reference": "curriculum.md#robot-safety-fundamentals"
+  },
+  {
+    "id": "L1-002",
+    "level": "L1",
+    "domain": "safety",
+    "question": "What is the minimum exclusion zone around a powered humanoid robot that is not in a confirmed stopped state?",
+    "options": [
+      "A. 0.5 meters — the width of the robot's body",
+      "B. 1 meter — standard industrial machinery exclusion",
+      "C. 2 meters — accounting for maximum arm reach plus safety margin",
+      "D. 5 meters — because humanoid robots have unpredictable gait patterns"
+    ],
+    "correct": "C",
+    "explanation": "The 2-meter exclusion zone for powered humanoid robots accounts for maximum arm reach (typically 0.8-1.2m from torso center) plus a 0.5m safety margin. This is the BCR standard and applies to all bipedal platforms in the BCR catalog.",
+    "reference": "curriculum.md#safe-approach-protocols"
+  },
+  {
+    "id": "L1-003",
+    "level": "L1",
+    "domain": "safety",
+    "question": "Which E-stop tier has the highest priority and cannot be overridden by software?",
+    "options": [
+      "A. Communication cutoff — removing network connectivity",
+      "B. Software E-stop — API command via TechMedix",
+      "C. Hardwired E-stop — physical button wired directly to motor power contactor",
+      "D. Battery disconnect — physically removing the main battery"
+    ],
+    "correct": "C",
+    "explanation": "The hardwired E-stop is wired directly to the motor power contactor and cuts power within 10-50ms. It cannot be overridden by any software command. Software E-stops take 100-500ms due to software stack latency and can theoretically be bypassed by software bugs.",
+    "reference": "curriculum.md#e-stop-hierarchy"
+  },
+  {
+    "id": "L1-004",
+    "level": "L1",
+    "domain": "safety",
+    "question": "You activate an E-stop on a Unitree G1 due to an obstacle in the robot's path. The obstacle is cleared. What must you verify before releasing the E-stop?",
+    "options": [
+      "A. That the battery level is above 20% to ensure safe restart",
+      "B. That all personnel are outside the 2-meter exclusion zone and the fault cause is resolved",
+      "C. That TechMedix shows the robot as offline — confirming E-stop is effective",
+      "D. That the software stop was also activated to create redundancy"
+    ],
+    "correct": "B",
+    "explanation": "Before releasing an E-stop, confirm all personnel are clear of the exclusion zone and the root cause of the E-stop is resolved. The robot will restart after E-stop release and subsequent power-on, so the area must be clear. Battery level and TechMedix status are secondary checks.",
+    "reference": "curriculum.md#e-stop-hierarchy"
+  },
+  {
+    "id": "L1-005",
+    "level": "L1",
+    "domain": "safety",
+    "question": "A DJI Agras T50 shows 3 solid LEDs on its battery indicator and the DJI Pilot 2 app shows 'DISARMED.' What is the minimum safe exclusion zone during battery swap?",
+    "options": [
+      "A. 0 meters — the drone is disarmed and the indicator confirms it is safe",
+      "B. 1 meter — standard close-work distance",
+      "C. 3 meters — to allow safe access to the battery bay",
+      "D. 10 meters — the exclusion zone for armed drones applies at all times"
+    ],
+    "correct": "C",
+    "explanation": "When the drone is confirmed DISARMED by both the app and LED indicators, a 3-meter propeller clearance is maintained as a work safety buffer. The 10-meter exclusion zone applies to armed drones where motors can spin up. A disarmed drone with battery connected still has residual risk from accidental arming.",
+    "reference": "curriculum.md#safe-approach-protocols"
+  },
+  {
+    "id": "L1-006",
+    "level": "L1",
+    "domain": "safety",
+    "question": "During a robot inspection you notice grease seeping heavily from the right knee harmonic drive seal — significantly more than a light coating. What is the correct action?",
+    "options": [
+      "A. Wipe the excess grease and continue with deployment",
+      "B. Apply additional SK-2 grease to top up the seal",
+      "C. Note the finding and escalate to L2 — this exceeds normal seepage",
+      "D. Issue a P1 alert — heavy seepage is always a critical safety hazard"
+    ],
+    "correct": "C",
+    "explanation": "Heavy grease seepage from a harmonic drive seal indicates the seal may be failing or the harmonic drive is over-greased. This is beyond the L1 scope of work and requires escalation to L2 for actuator inspection. It does not automatically warrant a P1 alert unless combined with performance degradation.",
+    "reference": "curriculum.md#basic-mechanical-inspection"
+  },
+  {
+    "id": "L1-007",
+    "level": "L1",
+    "domain": "safety",
+    "question": "You are performing LOTO on a humanoid robot connected to a BCR management network. Which step is most commonly skipped and creates the most risk?",
+    "options": [
+      "A. Applying the lockout hasp and tag",
+      "B. Network isolation — disconnecting the robot from WiFi and Ethernet",
+      "C. Verifying zero-energy state by attempting to power on",
+      "D. Confirming all joints are at rest position"
+    ],
+    "correct": "B",
+    "explanation": "Network isolation is the most commonly skipped LOTO step for robotic systems. Without it, a robot that is physically locked out can still receive a remote restart command from the management system, bypassing the physical lockout. Standard industrial LOTO does not include this step — it must be added explicitly for networked robots.",
+    "reference": "curriculum.md#loto-adapted-for-robotic-systems"
+  },
+  {
+    "id": "L1-008",
+    "level": "L1",
+    "domain": "safety",
+    "question": "Situational awareness requires checking TechMedix before entering a robot work area. Which TechMedix indicator most directly tells you the robot is not in an active autonomous task?",
+    "options": [
+      "A. Fleet health score above 70",
+      "B. No P1 alerts for this robot",
+      "C. Dispatch queue shows no active job assigned to this robot",
+      "D. Battery SoC above 15%"
+    ],
+    "correct": "C",
+    "explanation": "An active dispatch job means the robot may be executing an autonomous task. The dispatch queue shows the robot's current assignment. Fleet health score and alert count do not directly indicate whether the robot is in an active task. Battery SoC is unrelated to task assignment.",
+    "reference": "curriculum.md#situational-awareness"
+  },
+  {
+    "id": "L1-009",
+    "level": "L1",
+    "domain": "safety",
+    "question": "An incident occurs where the robot makes an unexpected motion during a powered inspection. You were inside the 2-meter exclusion zone and no injury resulted. What is your first action after the situation is controlled?",
+    "options": [
+      "A. Complete the inspection and report the incident in the work order at the end of the day",
+      "B. File an incident report within 4 hours and call the BCR operations line immediately",
+      "C. Document the incident in your personal notes and report it at the next team meeting",
+      "D. Report only if there was injury — unexpected motion without injury is a near-miss and does not require reporting"
+    ],
+    "correct": "B",
+    "explanation": "Uncontrolled robot movement during service requires an incident report within 4 hours and a direct call to the BCR operations line, even if no injury occurred. Near-miss events are critical safety data. Delayed or partial reporting violates BCR compliance requirements and may void incident liability protection.",
+    "reference": "curriculum.md#incident-reporting"
+  },
+  {
+    "id": "L1-010",
+    "level": "L1",
+    "domain": "safety",
+    "question": "What is the significance of the 'stored mechanical energy' risk in humanoid robot LOTO compared to conventional industrial equipment?",
+    "options": [
+      "A. There is no difference — stored mechanical energy risk is the same for all machinery",
+      "B. Humanoid robots have gas-charged actuators that conventional machinery does not",
+      "C. Spring-loaded joints, gravity-loaded arm positions, and gas-charged actuators retain energy after power cutoff, requiring physical support of limbs",
+      "D. Humanoid robots automatically move all joints to a safe position when powered off, eliminating stored energy risk"
+    ],
+    "correct": "C",
+    "explanation": "Humanoid robots store energy in springs, gas-charged actuators, and gravity-loaded limb positions. Unlike many conventional machines, powering off does not automatically release this energy. Arms extended horizontally or legs not fully supported will continue exerting force. Physical support with props or stands may be required during some procedures.",
+    "reference": "curriculum.md#loto-adapted-for-robotic-systems"
+  },
+  {
+    "id": "L1-011",
+    "level": "L1",
+    "domain": "mechanical",
+    "question": "What is the maximum acceptable joint play (backlash) for a Unitree G1 knee joint before scheduling for L2 inspection?",
+    "options": [
+      "A. 0.1 degrees — any play is unacceptable on a production unit",
+      "B. 0.5 degrees — nominal acceptable maximum",
+      "C. 2 degrees — the threshold above which L2 inspection should be scheduled",
+      "D. 5 degrees — acceptable for field robots with accumulated wear"
+    ],
+    "correct": "C",
+    "explanation": "The Unitree G1 knee joint has a nominal acceptable play of less than 0.5 degrees. When play exceeds 2 degrees, this indicates bearing wear and the joint should be scheduled for L2 inspection. Between 0.5 and 2 degrees is a caution zone — document and monitor at next inspection.",
+    "reference": "curriculum.md#wear-indicators-and-thresholds"
+  },
+  {
+    "id": "L1-012",
+    "level": "L1",
+    "domain": "mechanical",
+    "question": "What is the BCR-specified lubricant for Unitree G1 harmonic drives, and what is the service interval?",
+    "options": [
+      "A. Mobil SHC 634, every 1,000 hours",
+      "B. Harmonic Grease SK-2, every 500 hours or 12 months",
+      "C. Molykote G-1000, every 250 hours",
+      "D. WD-40 Specialist Grease, no fixed interval"
+    ],
+    "correct": "B",
+    "explanation": "Harmonic Grease SK-2 is the OEM-specified lubricant for Unitree G1 harmonic drives. The service interval is 500 hours of operation or 12 months, whichever comes first. Incorrect lubricant or missed service intervals can accelerate harmonic drive wear significantly.",
+    "reference": "curriculum.md#wear-indicators-and-thresholds"
+  },
+  {
+    "id": "L1-013",
+    "level": "L1",
+    "domain": "mechanical",
+    "question": "During a visual inspection you find a cable at the shoulder junction with a bend radius smaller than 10x the cable diameter. What action do you take?",
+    "options": [
+      "A. No action required — cables are flexible and can handle tight bends",
+      "B. Document it as a finding and escalate to L2 — this is a cable routing violation",
+      "C. Manually reroute the cable to increase the bend radius",
+      "D. Apply cable ties to hold the cable in place and prevent further bending"
+    ],
+    "correct": "B",
+    "explanation": "A cable bent tighter than 10x its diameter is at risk of internal conductor fracture and insulation damage. L1 operators document this finding and escalate — cable rerouting at shoulder junction requires L2 competency to safely access and reroute without disturbing the actuator harness.",
+    "reference": "curriculum.md#visual-inspection-checklist"
+  },
+  {
+    "id": "L1-014",
+    "level": "L1",
+    "domain": "mechanical",
+    "question": "What does heavy grease extrusion from a harmonic drive seal indicate?",
+    "options": [
+      "A. The drive is well-lubricated and in excellent condition",
+      "B. The drive was recently serviced and excess grease is normal for the first 10 hours",
+      "C. The seal may be failing or the drive was over-greased — escalate to L2",
+      "D. The ambient temperature is too high — move the robot to a cooler environment"
+    ],
+    "correct": "C",
+    "explanation": "Slight grease seepage at harmonic drive seals is normal. Heavy extrusion indicates either a seal failure (allowing grease to escape under pressure) or over-greasing at the last service (excess grease will eventually push past the seal). Both conditions require L2 inspection to determine if the drive requires service or seal replacement.",
+    "reference": "curriculum.md#wear-indicators-and-thresholds"
+  },
+  {
+    "id": "L1-015",
+    "level": "L1",
+    "domain": "mechanical",
+    "question": "When manually articulating a powered-off robot joint during inspection, you hear a faint grinding sound. What does this indicate?",
+    "options": [
+      "A. Normal — all geared joints produce some noise when moved without lubrication pressure",
+      "B. Potential bearing wear or debris in the joint — document and escalate to L2",
+      "C. The E-stop is still engaged — release it before testing the joint",
+      "D. The robot needs a firmware update to calibrate joint position sensors"
+    ],
+    "correct": "B",
+    "explanation": "Grinding during manual articulation of a powered-off joint indicates metal-on-metal contact, which can be caused by bearing wear, debris contamination, or grease depletion. This is beyond L1 scope — document the finding with the specific joint location and sound characteristics, then escalate to L2.",
+    "reference": "curriculum.md#visual-inspection-checklist"
+  },
+  {
+    "id": "L1-016",
+    "level": "L1",
+    "domain": "mechanical",
+    "question": "Where should critical fasteners be torque-verified, and who has authority to perform this check?",
+    "options": [
+      "A. All fasteners, by L1 operators at every inspection",
+      "B. Critical fasteners at every 250-hour service, by L2+ technicians with calibrated tools",
+      "C. No fasteners — robots are assembled with thread-locking compound that prevents loosening",
+      "D. Battery fasteners only, by anyone with a standard screwdriver"
+    ],
+    "correct": "B",
+    "explanation": "Torque verification of critical fasteners is performed at the 250-hour service interval using a calibrated torque wrench. L1 operators verify that fasteners are present and not obviously loose (visual check), but formal torque verification requires L2 certification and a calibrated CAT III tool.",
+    "reference": "curriculum.md#wear-indicators-and-thresholds"
+  },
+  {
+    "id": "L1-017",
+    "level": "L1",
+    "domain": "mechanical",
+    "question": "What is the correct sequence for a pre-deployment visual inspection of a humanoid robot?",
+    "options": [
+      "A. Start with the most accessible area and work inward",
+      "B. Start with the area where the last fault occurred",
+      "C. Follow the defined inspection sequence from curriculum — head to torso to arms to legs",
+      "D. Any sequence is acceptable as long as all areas are eventually inspected"
+    ],
+    "correct": "C",
+    "explanation": "A defined inspection sequence prevents skipping areas through distraction or rushing. The BCR standard sequence (head, torso, right arm, left arm, right leg, left leg) ensures full coverage and makes it easier to confirm completion. Ad hoc inspection order leads to more missed defects.",
+    "reference": "curriculum.md#visual-inspection-checklist"
+  },
+  {
+    "id": "L1-018",
+    "level": "L1",
+    "domain": "mechanical",
+    "question": "A camera lens shows fine scratches across 20% of the aperture. What impact does this have, and what action is required?",
+    "options": [
+      "A. No impact — scratches only affect aesthetics, not image quality",
+      "B. Document and note in inspection report — minor scratches are tracked for progression",
+      "C. Replace the camera immediately — any scratch degrades navigation safety",
+      "D. Clean with lens cloth — scratches indicate improper cleaning technique"
+    ],
+    "correct": "B",
+    "explanation": "Fine scratches across 20% of the aperture will cause some image degradation (hazing, reduced contrast) but do not immediately require replacement. Document the condition, including approximate coverage percentage, and track progression across inspections. L2+ can assess whether the scratch pattern affects navigation safety thresholds.",
+    "reference": "curriculum.md#visual-inspection-checklist"
+  },
+  {
+    "id": "L1-019",
+    "level": "L1",
+    "domain": "power",
+    "question": "A Unitree G1 NMC battery cell reads 2.85V under a light load check. What does this indicate?",
+    "options": [
+      "A. Normal — NMC cells regularly operate below 3.0V under load",
+      "B. Low but acceptable — the cell is below nominal but still safe to charge",
+      "C. Deep discharge — cell may be damaged; assess before recharging",
+      "D. Cell is fully charged — the 2.85V reading indicates the BMS is balancing"
+    ],
+    "correct": "C",
+    "explanation": "NMC cell minimum discharge cutoff is 3.0V. A reading of 2.85V indicates deep discharge below the safe cutoff threshold. Deep-discharged lithium cells may have permanent capacity loss or internal damage. The cell must be assessed before charging — do not place it on a standard charger without evaluating recovery voltage first.",
+    "reference": "curriculum.md#cell-voltage-ranges"
+  },
+  {
+    "id": "L1-020",
+    "level": "L1",
+    "domain": "power",
+    "question": "At what cell voltage imbalance level should you flag a battery for investigation (not immediate replacement)?",
+    "options": [
+      "A. 5mV — any imbalance is a quality concern",
+      "B. 20mV — healthy pack maximum",
+      "C. 50mV — investigate threshold",
+      "D. 100mV — immediate replacement threshold"
+    ],
+    "correct": "C",
+    "explanation": "A healthy battery pack shows less than 20mV imbalance. At greater than 50mV imbalance, investigate — this may indicate a damaged cell or failing balancing circuit. At greater than 100mV persistent imbalance, replace the pack. The 50mV threshold triggers investigation before the condition reaches the replace level.",
+    "reference": "curriculum.md#state-of-health-indicators"
+  },
+  {
+    "id": "L1-021",
+    "level": "L1",
+    "domain": "power",
+    "question": "What is the maximum field charging rate that preserves battery longevity for standard field operations?",
+    "options": [
+      "A. 3C — fastest available, minimize downtime",
+      "B. 2C — balance of speed and safety",
+      "C. 1C — maximum for field charging; 0.5C preferred for long-term battery health",
+      "D. 0.1C — only safe rate for NMC chemistry"
+    ],
+    "correct": "C",
+    "explanation": "1C is the maximum recommended rate for field charging (1C = charging at a rate that would theoretically fill the battery in 1 hour). For long-term battery health, 0.5C is preferred as it reduces heat generation and cycle degradation. Higher rates accelerate capacity loss and increase thermal risk.",
+    "reference": "curriculum.md#charging-safety"
+  },
+  {
+    "id": "L1-022",
+    "level": "L1",
+    "domain": "power",
+    "question": "A battery SoH reads 76% on two consecutive assessments. What category does this fall into?",
+    "options": [
+      "A. Serviceable — above 75% minimum",
+      "B. Marginal — monitor closely and schedule replacement",
+      "C. Replace — below the 80% serviceable threshold",
+      "D. Replace immediately — any SoH below 80% is a safety hazard"
+    ],
+    "correct": "B",
+    "explanation": "SoH 70-80% is the Marginal category. The battery is still functional but should be monitored closely. Schedule replacement at the next maintenance window. Above 80% is Serviceable; below 70% is Replace immediately. SoH below 80% is not automatically a safety hazard but reduces mission completion reliability.",
+    "reference": "curriculum.md#state-of-health-indicators"
+  },
+  {
+    "id": "L1-023",
+    "level": "L1",
+    "domain": "power",
+    "question": "Which battery chemistry is most commonly used in current-generation humanoid robots like the Unitree G1, and what is its key advantage over older Li-ion?",
+    "options": [
+      "A. LiPo — highest energy density of all lithium chemistries",
+      "B. NMC — better balance of energy density, cycle life, and safety",
+      "C. LiFePO4 — safest chemistry with widest operating temperature range",
+      "D. NiMH — proven reliability in automotive applications"
+    ],
+    "correct": "B",
+    "explanation": "NMC (Nickel Manganese Cobalt) is the dominant chemistry in advanced humanoid platforms including the Unitree G1. It provides better energy density than LiFePO4, better cycle life than LiPo, and better safety characteristics than older Li-ion (cylindrical NCA cells). NiMH is obsolete for this application.",
+    "reference": "curriculum.md#battery-chemistry"
+  },
+  {
+    "id": "L1-024",
+    "level": "L1",
+    "domain": "power",
+    "question": "You arrive on site and find a battery left on charge unattended overnight without automatic cutoff. The battery is warm but not hot. What do you do?",
+    "options": [
+      "A. Continue using the battery — it charged overnight so it should be full",
+      "B. Disconnect the charger, allow the battery to cool, assess for swelling before further use",
+      "C. Check the SoH immediately with the charger still connected",
+      "D. Discharge the battery to 50% to reduce any overcharge risk before using"
+    ],
+    "correct": "B",
+    "explanation": "A battery that has been charged overnight without automatic cutoff may be overcharged. Overcharging lithium cells above 4.2V per cell causes irreversible capacity loss, gas generation, and potential swelling. Disconnect the charger, allow cooling, and inspect for physical swelling before any further use or charging.",
+    "reference": "curriculum.md#charging-safety"
+  },
+  {
+    "id": "L1-025",
+    "level": "L1",
+    "domain": "power",
+    "question": "What is the ideal storage voltage per NMC cell for long-term battery storage?",
+    "options": [
+      "A. 4.2V — fully charged for maximum availability",
+      "B. 3.8V — storage voltage that minimizes calendar degradation",
+      "C. 3.6V — nominal voltage, safe for indefinite storage",
+      "D. 3.0V — minimum safe voltage to prevent deep discharge"
+    ],
+    "correct": "B",
+    "explanation": "3.8V per cell is the ideal storage voltage for NMC chemistry. Full charge (4.2V) during storage accelerates electrolyte oxidation and calendar degradation. Storage below 3.6V risks self-discharge to deep discharge levels over time. 3.8V is a compromise that minimizes both oxidation and self-discharge risk.",
+    "reference": "curriculum.md#cell-voltage-ranges"
+  },
+  {
+    "id": "L1-026",
+    "level": "L1",
+    "domain": "techmedix",
+    "question": "A TechMedix P1 alert has been open for 90 minutes without acknowledgment. What does this mean for SLA compliance?",
+    "options": [
+      "A. SLA is met — P1 requires response within 2 hours",
+      "B. SLA is approaching — 30 minutes remain before breach",
+      "C. SLA is already breached — P1 requires response within 1 hour",
+      "D. No SLA exists for P1 — it is for informational awareness only"
+    ],
+    "correct": "B",
+    "explanation": "P1 alerts require technician response within 2 hours. At 90 minutes, 30 minutes remain before SLA breach. The technician should acknowledge and begin response immediately. SLA breach triggers escalation notifications to BCR operations and may affect technician performance metrics.",
+    "reference": "curriculum.md#alert-severity-levels"
+  },
+  {
+    "id": "L1-027",
+    "level": "L1",
+    "domain": "techmedix",
+    "question": "A fleet health score of 48 appears on the TechMedix dashboard. What does this indicate?",
+    "options": [
+      "A. Normal — fleet health fluctuates and 48 is within acceptable range",
+      "B. Investigate — score is below the 70 threshold",
+      "C. Immediate attention required — score is below 50",
+      "D. System error — fleet health scores should not fall below 60"
+    ],
+    "correct": "C",
+    "explanation": "Fleet health scores below 50 require immediate attention. Below 70 triggers investigation. A score of 48 falls in the 'immediate attention' zone, indicating multiple robots with degraded health or active faults. Open the alert panel and review the contributing factors before taking any robot offline.",
+    "reference": "curriculum.md#fleet-health-overview"
+  },
+  {
+    "id": "L1-028",
+    "level": "L1",
+    "domain": "techmedix",
+    "question": "Which of these is a P3 (informational) alert, not P1 or P2?",
+    "options": [
+      "A. Motor overtemperature on the right knee joint",
+      "B. Battery cell imbalance of 110mV",
+      "C. Firmware version mismatch detected",
+      "D. Lubrication interval for harmonic drives approaching"
+    ],
+    "correct": "D",
+    "explanation": "Lubrication interval approaching is a P3 alert — it can be addressed at the next scheduled maintenance window. Motor overtemperature is P1 (critical). Battery cell imbalance of 110mV is P1 (exceeds the 100mV replace threshold). Firmware version mismatch is P2 (warning — address within 24 hours).",
+    "reference": "curriculum.md#alert-severity-levels"
+  },
+  {
+    "id": "L1-029",
+    "level": "L1",
+    "domain": "techmedix",
+    "question": "When should a TechMedix work order be marked 'Onsite'?",
+    "options": [
+      "A. When the technician leaves their home base",
+      "B. When the technician arrives at the service location",
+      "C. When the first inspection finding is logged",
+      "D. When the repair is complete and the robot is confirmed operational"
+    ],
+    "correct": "B",
+    "explanation": "Work order status 'Onsite' should be set immediately upon arrival at the service location. This timestamp is used for SLA calculation, billing, and GPS verification. Setting it late (e.g., after the first finding) or early (when leaving home base) produces inaccurate SLA data.",
+    "reference": "curriculum.md#logging-requirements"
+  },
+  {
+    "id": "L1-030",
+    "level": "L1",
+    "domain": "documentation",
+    "question": "A defective sensor is removed from a robot for transport to the BCR parts depot. What is the correct chain of custody procedure?",
+    "options": [
+      "A. Place the sensor in any available bag and drop it at the depot within 2 weeks",
+      "B. Tag with robot ID, removal date, and technician ID; photograph before and after; log serial numbers; use anti-static bag; return within 5 business days",
+      "C. Take a photograph and discard the sensor — it is defective and has no value",
+      "D. Hold the sensor until the next scheduled visit to the depot to save trips"
+    ],
+    "correct": "B",
+    "explanation": "Chain of custody for removed parts requires: tag (robot ID, removal date, technician ID), photographs pre- and post-removal, serial numbers of both removed and replacement parts logged, appropriate packaging (anti-static bag for electronics), and return to BCR parts depot within 5 business days. This protects warranty claims and enables root cause analysis.",
+    "reference": "curriculum.md#chain-of-custody"
+  }
+]

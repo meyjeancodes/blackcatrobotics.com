@@ -1,0 +1,18 @@
+{
+  "level": "L1",
+  "total_questions": 30,
+  "passing_score_percent": 75,
+  "passing_score_questions": 23,
+  "time_limit_minutes": 45,
+  "practical_required": true,
+  "practical_passing_standard": "Competent in all safety domains, Developing or above in all others",
+  "retake_wait_days": 7,
+  "max_attempts": 3,
+  "domain_minimums": {
+    "safety": "8/10",
+    "mechanical": "6/8",
+    "power": "4/6",
+    "techmedix": "2/4",
+    "documentation": "1/2"
+  }
+}
