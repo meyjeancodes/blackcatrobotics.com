@@ -13,13 +13,10 @@ import {
   Home,
   LayoutDashboard,
   LogOut,
-  Moon,
   Network,
   Scan,
   Server,
   Settings2,
-  Sun,
-  Wind,
   Wrench,
   Zap,
 } from "lucide-react";
@@ -53,20 +50,24 @@ const NAV: NavGroup[] = [
     icon: Scan,
   },
   {
-    href: "/maintenance",
     label: "Maintenance",
     icon: Wrench,
+    children: [
+      { href: "/maintenance", label: "Jobs & Protocols" },
+      { href: "/dispatch",    label: "Dispatch" },
+      { href: "/operations",  label: "Operations" },
+    ],
   },
   {
-    label: "Repair Intel...",
+    label: "Knowledge",
     icon: BookOpen,
     children: [
-      { href: "/knowledge",                 label: "Knowledge Base" },
+      { href: "/knowledge",                  label: "Knowledge Hub" },
       { href: "/technicians/certifications", label: "Certifications" },
     ],
   },
   {
-    label: "Fleet & Nodes",
+    label: "Fleet",
     icon: Cpu,
     children: [
       { href: "/nodes",  label: "Robots & Nodes" },
@@ -74,37 +75,14 @@ const NAV: NavGroup[] = [
     ],
   },
   {
-    href: "/drones",
-    label: "Drone Fleet",
-    icon: Wind,
-  },
-  {
-    href: "/habitat",
-    label: "Habitat",
-    icon: Home,
-  },
-  {
-    href: "/datacenter",
-    label: "Data Centers",
+    label: "Infrastructure",
     icon: Server,
-  },
-  {
-    href: "/network",
-    label: "Network",
-    icon: Network,
-  },
-  {
-    label: "Operations",
-    icon: Settings2,
     children: [
-      { href: "/dispatch",    label: "Dispatch" },
-      { href: "/operations",  label: "Operations" },
+      { href: "/habitat",    label: "Habitat" },
+      { href: "/datacenter", label: "Data Centers" },
+      { href: "/network",    label: "Network" },
+      { href: "/energy",     label: "Energy & Grid" },
     ],
-  },
-  {
-    href: "/energy",
-    label: "Energy & Grid",
-    icon: Zap,
   },
   {
     href: "/billing",

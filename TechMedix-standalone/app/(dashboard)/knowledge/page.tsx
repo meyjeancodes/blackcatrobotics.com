@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPlatforms } from "@/lib/platforms/index";
+import { KnowledgeHubClient } from "@/components/knowledge-hub-client";
 import {
   AlertTriangle,
   Battery,
@@ -434,6 +435,20 @@ export default function KnowledgePage() {
             </div>
           </div>
         ))}
+      </section>
+
+      {/* ── Interactive Diagrams ─────────────────────────────────────────────── */}
+      <section>
+        <div className="mb-6">
+          <p className="kicker">Layer 1 — Physical</p>
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Interactive Diagrams</h2>
+          <p className="mt-2 max-w-xl text-sm text-[var(--ink)]/50">
+            Dissect any platform part by part. Click a component to inspect its failure signature,
+            diagnostic cue, and replacement protocol. Launch the full sim lab for orbit, exploded
+            view, and fault-injection drills.
+          </p>
+        </div>
+        <KnowledgeHubClient platforms={platforms} />
       </section>
 
       {/* ── Component Anatomy ───────────────────────────────────────────────── */}
