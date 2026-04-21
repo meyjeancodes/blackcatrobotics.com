@@ -45,7 +45,7 @@ const PLATFORMS: PlatformProfile[] = [
     manufacturer: "Unitree Robotics",
     category: "humanoid",
     description: "43-DOF bimanual humanoid with Dex1 hands. VLA-capable via UnifoLM-VLA-0. Official TechMedix partner platform.",
-    badge: "Featured Partner",
+    badge: "TechMedix Compatible",
     specs: [
       { label: "Total DOF", value: "43" },
       { label: "Arm DOF", value: "7 per arm" },

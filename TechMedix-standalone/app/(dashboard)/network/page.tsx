@@ -364,13 +364,13 @@ function LatencyToggle() {
           <p className="mt-2 font-mono text-2xl font-semibold">
             {isCloud ? <span className="text-green-400">~41ms</span> : <span className="text-white">~41ms</span>}
           </p>
-          <p className="mt-1 font-mono text-[0.58rem] text-white/30">Claude API · LEO hop</p>
+          <p className="mt-1 font-mono text-[0.58rem] text-white/30">AI API · LEO hop</p>
         </div>
       </div>
 
       <p className="font-mono text-[0.58rem] text-white/25">
         {isCloud
-          ? "Cloud mode: all Layer 3 diagnostics routed via Starlink → Anthropic API"
+          ? "Cloud mode: all Layer 3 diagnostics routed via Starlink → AI API"
           : "Local mode: Layer 1–2 on truck GPU, Layer 3 cached or deferred until online"}
       </p>
     </div>
