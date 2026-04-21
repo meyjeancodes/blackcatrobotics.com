@@ -398,6 +398,7 @@
     <a href="#principles">Principles</a>
     <a href="#team">Team</a>
     <a href="#journey">Journey</a>
+    <a href="#investors">Investors</a>
     <a href="#" class="nav-cta">Start TechMedix</a>
   </div>
 </nav>
@@ -605,6 +606,31 @@
   </div>
 </section>
 
+<!-- INVESTOR DECK -->
+<section class="section-dark" id="investors">
+  <div class="eyebrow">Investors</div>
+  <h2 class="section-heading">Request the <em>deck.</em></h2>
+  <p class="section-body">
+    We're building the infrastructure layer for the autonomous world. 
+    If you're interested in what we're building, we'd love to share our story.
+  </p>
+  <div style="max-width:480px;margin-top:48px;">
+    <div id="inv-deck-form">
+      <form action="https://formspree.io/f/xreyrndq" method="POST" onsubmit="handleInvDeck(event)">
+        <input type="hidden" name="_subject" value="Investor Deck Request">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <input type="text" name="full_name" placeholder="Full Name" required style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Satoshi',sans-serif;font-size:14px;outline:none;">
+          <input type="email" name="email" placeholder="Work Email" required style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Satoshi',sans-serif;font-size:14px;outline:none;">
+          <input type="text" name="company" placeholder="Company / Fund" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Satoshi',sans-serif;font-size:14px;outline:none;">
+          <textarea name="message" placeholder="Message (optional)" rows="3" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Satoshi',sans-serif;font-size:14px;outline:none;resize:vertical;"></textarea>
+          <button type="submit" id="inv-deck-btn" class="btn-primary" style="border:none;cursor:pointer;">Request Deck</button>
+        </div>
+      </form>
+    </div>
+    <div id="inv-deck-ok" style="display:none;color:#fff;font-size:15px;line-height:1.7;margin-top:16px;">Request received. We will be in touch within 24 hours.</div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section">
   <div class="eyebrow">Join Us</div>
@@ -623,13 +649,39 @@
 <footer>
   <div class="footer-logo">BlackCat<span>.</span></div>
   <div class="footer-links">
-    <a href="#">Platform</a>
-    <a href="#">Pricing</a>
-    <a href="#">Documentation</a>
-    <a href="#">GitHub</a>
-    <a href="#">About</a>
+    <a href="index.html">Platform</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="index.html#signal">Signal</a>
+    <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener">TechMedix</a>
+    <a href="about.html">About</a>
   </div>
 </footer>
+
+<script>
+function handleInvDeck(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('inv-deck-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(r => {
+    if (r.ok) {
+      document.getElementById('inv-deck-form').style.display = 'none';
+      document.getElementById('inv-deck-ok').style.display = 'block';
+    } else {
+      btn.textContent = 'Error — try again';
+      btn.disabled = false;
+    }
+  }).catch(() => {
+    btn.textContent = 'Error — try again';
+    btn.disabled = false;
+  });
+}
+</script>
 
 </body>
 </html>
