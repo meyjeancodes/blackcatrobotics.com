@@ -895,7 +895,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   <div id="tab-cleaning" style="display:none;" class="reveal">
     <div class="cards-track">
       <div class="rcard">
-        <div class="rcard-img"><img src="/images/platforms/tesla_clean_volt.svg" alt="Tesla Clean Volt autonomous EV cleaning robot" loading="lazy"><span class="rcard-badge badge-fire">Tesla Client</span></div>
+        <div class="rcard-img"><img src="/images/platforms/tesla_clean_volt.svg" alt="Tesla Clean Volt autonomous EV cleaning robot" loading="lazy"><span class="rcard-badge badge-fire">Concept Platform</span></div>
         <div class="rcard-body">
           <div class="rcard-maker"><a href="https://tesla.com" target="_blank" rel="noopener">Tesla Energy</a></div>
           <div class="rcard-name">Clean Volt</div>
@@ -1022,7 +1022,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
         <li class="tm-feat"><span class="tm-feat-dot"></span>48-hour predictive failure alerts — know before it breaks</li>
         <li class="tm-feat"><span class="tm-feat-dot"></span>Automated technician dispatch via global AI agent network</li>
         <li class="tm-feat"><span class="tm-feat-dot"></span>Cross-platform: humanoids, drones, delivery robots, AMRs</li>
-        <li class="tm-feat"><span class="tm-feat-dot"></span>Built using Anthropic's Claude for development and AI-assisted diagnostics</li>
+        <li class="tm-feat"><span class="tm-feat-dot"></span>AI-assisted diagnostics powered by proprietary machine learning models</li>
       </ul>
       <button class="btn btn-fire" onclick="openModal('tm-modal')">Start TechMedix</button>
     </div>
@@ -1914,7 +1914,7 @@ async function loadSignalFeed() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-sonnet-4-20250514" /* internal API call — not user-facing */,
         max_tokens: 1000,
         messages: [{
           role: "user",
