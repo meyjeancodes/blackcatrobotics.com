@@ -44,7 +44,6 @@ export function DashboardShell({
             </button>
           </div>
         )}
-content-honesty-pass
         {children}
       </main>
     </div>
