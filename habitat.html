@@ -167,12 +167,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .step-row.is-done~.step-row .step-seg,.step-row.is-active .step-seg{background:linear-gradient(180deg,var(--fire),rgba(224,90,30,0.2));}
 /* Step content panel */
 .step-panel{flex:1;padding:8px 0 52px;}
-.step-panel-inner{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:28px 28px 26px;transition:all 0.4s;opacity:0.45;transform:translateX(8px);}
+.step-panel-inner{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:28px 28px 26px;transition:all 0.4s;opacity:0.75;transform:translateX(4px);}
 .step-row.is-active .step-panel-inner{opacity:1;transform:translateX(0);border-color:var(--border-fire);box-shadow:0 4px 32px rgba(224,90,30,0.08);}
-.step-row.is-done .step-panel-inner{opacity:0.6;transform:translateX(0);}
+.step-row.is-done .step-panel-inner{opacity:0.75;transform:translateX(0);}
 .step-panel-tag{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);margin-bottom:8px;}
 .step-panel-title{font-family:var(--tanker);font-size:24px;color:var(--cream);letter-spacing:0.01em;margin-bottom:10px;line-height:1.05;}
-.step-panel-desc{font-family:var(--satoshi);font-size:14px;font-weight:400;line-height:1.72;color:var(--cream-dim);}
+.step-panel-desc{font-family:var(--satoshi);font-size:14px;font-weight:400;line-height:1.72;color:var(--cream);}
 .step-panel-detail{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
 .step-detail-pill{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,229,223,0.45);background:var(--bg-3);border:1px solid var(--border);border-radius:var(--pill);padding:4px 10px;}
 
@@ -439,12 +439,12 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
     <p class="hero-sub">One platform. Every decision.<br>Every material. Every bolt.</p>
     <p class="hero-p">HABITAT is the world&#8217;s first vertically integrated AI-driven construction platform, taking you from initial concept to a fully built, furnished, and move-in-ready home. Powered by autonomous Construct.Bot fleets.</p>
     <div class="hero-btns">
-      <a href="mailto:blackcatrobotics.ai@gmail.com?subject=Design%20My%20HABITAT%20Inquiry" class="btn btn-fire">
-        Design My HABITAT
+      <a href="#waitlist" class="btn btn-fire">
+        Start Your Design
         <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a href="mailto:blackcatrobotics.ai@gmail.com?subject=HABITAT%20Inquiry" class="btn btn-ghost">
-        Talk to HABITAT AI
+      <a href="#bot-specs" class="btn btn-ghost">
+        View Tech Specs
         <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -460,7 +460,11 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
       <div>
         <div class="stat-num">Net-Zero</div>
         <div class="stat-lbl">From move-in day</div>
-      </div>
+              <div>
+          <div class="stat-num" style="font-size: 28px;">🔒 247</div>
+          <div class="stat-lbl">Waitlisted builders</div>
+        </div>
+</div>
     </div>
   </div>
   <div class="hero-right">
