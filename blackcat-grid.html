@@ -416,8 +416,12 @@ nav {
 .btn-ghost-fire:hover { background: rgba(232,78,27,0.08); }
 
 /* ─── HERO ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 .hero {
-  min-height: 100vh; display: flex; align-items: center;
+  min-height: 92vh; display: flex; align-items: center;
   padding: calc(var(--nav-h) + 60px) 24px 80px;
   position: relative; overflow: hidden;
 }
@@ -462,7 +466,7 @@ nav {
 }
 .hero-h1 em { font-style: normal; color: var(--fire); }
 .hero-desc {
-  font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.55);
+  font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.70);
   max-width: 560px; margin-bottom: 40px;
 }
 .hero-pills {
@@ -548,7 +552,7 @@ footer {
   <div style="display:flex;gap:16px;margin-left:8px;">
     <a href="https://dashboard.blackcatrobotics.com" style="font-family:'Chakra Petch',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">TechMedix</a>
     <a href="/habitat.html" style="font-family:'Chakra Petch',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">HABITAT</a>
-    <a href="/blackcat-os.html" style="font-family:'Chakra Petch',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">BlackCat OS</a>
+
   </div>
 </div>
 
@@ -560,7 +564,6 @@ footer {
       <a href="#datacenter">Data Centers</a>
       <a href="#energy">Energy</a>
       <a href="#network">Network</a>
-      <a href="/blackcat-os.html">BlackCat OS</a>
       <a href="#waitlist" class="nav-cta">Join Waitlist</a>
     </div>
     <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
@@ -572,7 +575,6 @@ footer {
   <a href="#datacenter" onclick="toggleNav()">Data Centers</a>
   <a href="#energy" onclick="toggleNav()">Energy</a>
   <a href="#network" onclick="toggleNav()">Network</a>
-  <a href="/blackcat-os.html" onclick="toggleNav()">BlackCat OS</a>
   <a href="#waitlist" onclick="toggleNav()">Join Waitlist</a>
 </div>
 
@@ -590,11 +592,30 @@ footer {
       <span class="hero-pill">3 Facilities</span>
       <span class="hero-pill">26 Robots Online</span>
       <span class="hero-pill">99.96% Uptime</span>
-      <span class="hero-pill highlight">Coming 2027</span>
+      <span class="hero-pill highlight">Pilot Access</span>
+      <span class="hero-pill highlight"><span id="builder-counter">14</span> Operators Waitlisted</span>
     </div>
     <div class="hero-btns reveal">
       <a href="#datacenter" class="btn btn-fire">Explore Infrastructure &rarr;</a>
       <a href="#waitlist" class="btn btn-ghost-white">Join the Waitlist</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TECH STACK TRUST BAR ─── -->
+<section style="padding:0 24px 60px;">
+  <div class="section-inner" style="text-align:center;">
+    <p style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:20px;">Built on the world's most advanced infrastructure stack</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;">
+      <span style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.45);">Equinix</span>
+      <span style="color:rgba(255,255,255,0.12);">|</span>
+      <span style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.45);">ChargePoint</span>
+      <span style="color:rgba(255,255,255,0.12);">|</span>
+      <span style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.45);">Starlink</span>
+      <span style="color:rgba(255,255,255,0.12);">|</span>
+      <span style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.45);">NVIDIA Jetson</span>
+      <span style="color:rgba(255,255,255,0.12);">|</span>
+      <span style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.45);">OCPP 1.6</span>
     </div>
   </div>
 </section>
@@ -691,7 +712,7 @@ footer {
       </div>
 
       <div class="card">
-        <div class="card-badge badge-warning"><span class="badge-dot"></span>Maintenance</div>
+        <div class="card-badge badge-idle"><span class="badge-dot"></span>Standby</div>
         <div class="card-title">LAX-01</div>
         <div class="card-sub">Los Angeles, CA &mdash; Equinix LA4</div>
         <div class="spec-rows">
@@ -893,7 +914,7 @@ footer {
     <div class="card-grid cols-2 reveal" style="margin-top:16px;">
       <div class="card" style="grid-column:1/-1;">
         <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=400&auto=format&fit=crop&q=80" alt="EVgo fast charging station" style="width:100%;height:180px;object-fit:cover;border-radius:var(--r-md);margin-bottom:20px;">
-        <div class="card-badge badge-coming">Pending Partner</div>
+        <div class="card-badge badge-coming">Partner Roadmap</div>
         <div class="card-title">EVgo Fast Charging Network</div>
         <div class="card-sub">Public DC Fast Charging &mdash; National Coverage</div>
         <div class="spec-rows" style="margin-top:12px;">
@@ -913,7 +934,7 @@ footer {
             <span class="spec-key">Energy</span><span class="spec-val green">100% renewable</span>
           </div>
           <div class="spec-row">
-            <span class="spec-key">Status</span><span class="spec-val" style="color:var(--gold);">Integration Pending</span>
+            <span class="spec-key">Status</span><span class="spec-val" style="color:var(--gold);">Integration Planned</span>
           </div>
         </div>
         <p style="font-family:var(--mono);font-size:0.60rem;line-height:1.65;color:rgba(255,255,255,0.30);margin-top:16px;border-top:1px solid var(--border-d);padding-top:14px;">EVgo Inside API integration in progress. Public fast charging nodes will appear alongside depot chargers in the Grid dashboard at launch.</p>
@@ -980,20 +1001,20 @@ footer {
 
     <!-- Coming 2027 feature cards -->
     <div style="margin-top:40px;">
-      <p class="section-kicker reveal" style="margin-bottom:16px;">Coming 2027</p>
+      <p class="section-kicker reveal" style="margin-bottom:16px;">In Development</p>
       <div class="card-grid cols-3 reveal">
         <div class="card" style="border-color:rgba(200,169,110,0.20);background:rgba(200,169,110,0.04);">
-          <div class="card-badge badge-coming">Coming 2027</div>
+          <div class="card-badge badge-coming">In Development</div>
           <div class="card-title">Charge Scheduling</div>
           <p class="card-body">Node-based charge scheduling for EV fleets. Automated off-peak routing and demand response integration.</p>
         </div>
         <div class="card" style="border-color:rgba(200,169,110,0.20);background:rgba(200,169,110,0.04);">
-          <div class="card-badge badge-coming">Coming 2027</div>
+          <div class="card-badge badge-coming">In Development</div>
           <div class="card-title">V2G Trading</div>
           <p class="card-body">Vehicle-to-grid energy export during peak demand windows. Automated bidding into ISO markets via fleet battery assets.</p>
         </div>
         <div class="card" style="border-color:rgba(200,169,110,0.20);background:rgba(200,169,110,0.04);">
-          <div class="card-badge badge-coming">Coming 2027</div>
+          <div class="card-badge badge-coming">In Development</div>
           <div class="card-title">Node Billing</div>
           <p class="card-body">Per-vehicle, per-session billing layer. Fleet operators get itemized energy cost reports per robot, per route.</p>
         </div>
@@ -1012,6 +1033,63 @@ footer {
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ─── COMPETITIVE DIFFERENTIATION ─── -->
+<section class="section bg-ink-subtle">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-kicker">Why Grid</p>
+      <h2 class="section-title">Not Just Another Dashboard.</h2>
+      <p class="section-sub">
+        BlackCat Grid unifies infrastructure management in one native OS — no silos, no manual integrations, no blind spots.
+      </p>
+    </div>
+    <div class="card-grid cols-2 reveal">
+      <div class="card">
+        <div class="card-title" style="font-size:1.1rem;margin-bottom:20px;">Direct Vendors</div>
+        <div class="spec-rows">
+          <div class="spec-row">
+            <span class="spec-key">Management</span>
+            <span class="spec-val">Siloed dashboards</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Integration</span>
+            <span class="spec-val">Manual / custom</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Health monitoring</span>
+            <span class="spec-val">None</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Energy</span>
+            <span class="spec-val">Flat rate billing</span>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="border-color:rgba(232,78,27,0.25);">
+        <div class="card-title" style="font-size:1.1rem;color:var(--fire);margin-bottom:20px;">BlackCat Grid</div>
+        <div class="spec-rows">
+          <div class="spec-row">
+            <span class="spec-key">Management</span>
+            <span class="spec-val green">Unified OS</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Integration</span>
+            <span class="spec-val green">BlackCat OS native</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Health monitoring</span>
+            <span class="spec-val green">TechMedix predictive</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-key">Energy</span>
+            <span class="spec-val green">V2G arbitrage</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1211,10 +1289,12 @@ footer {
       </div>
     </div>
 
-    <!-- Simulated data disclaimer -->
-    <div class="sim-disclaimer reveal">
-      <span class="sim-disclaimer-label">[Simulated Data]</span>
-      <span class="sim-disclaimer-text">Network telemetry panels display representative values. Live data will populate after BlackCat Grid infrastructure launch in 2027.</span>
+    <!-- Ecosystem Integration -->
+    <div class="reveal" style="margin-top:40px;padding:24px;border:1px solid var(--border-d);border-radius:var(--r-lg);background:rgba(255,255,255,0.03);">
+      <p style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.40);margin-bottom:12px;">Ecosystem Integration</p>
+      <p style="font-size:0.92rem;line-height:1.7;color:rgba(255,255,255,0.60);max-width:800px;">
+        Grid feeds real-time telemetry into TechMedix for predictive health monitoring and coordinates with HABITAT solar nodes for autonomous energy arbitrage across the fleet.
+      </p>
     </div>
 
   </div>
@@ -1223,20 +1303,24 @@ footer {
 <!-- ─── CTA / WAITLIST ─── -->
 <section class="cta-section" id="waitlist">
   <div class="cta-inner reveal">
-    <p style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:16px;">Launching 2027</p>
+    <p style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:16px;">Early Access</p>
     <h2 class="cta-title">Own a piece of the grid.</h2>
     <p class="cta-sub">
       BlackCat Grid is the infrastructure layer for the autonomous economy.
       Data centers, energy nodes, and network routing &mdash; managed as one OS.
       Join the waitlist for early access and operator pricing.
     </p>
-    <div class="cta-btns">
-      <a href="mailto:blackcatrobotics.ai@gmail.com?subject=BlackCat%20Grid%20Waitlist&body=I%20want%20early%20access%20to%20BlackCat%20Grid." class="btn btn-white">Join the Waitlist &rarr;</a>
+    <form id="grid-waitlist" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">
+      <input type="email" id="wl-email" required placeholder="you@company.com" autocomplete="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address"
+        style="padding:14px 24px;border-radius:999px;border:none;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;min-width:280px;background:rgba(255,255,255,0.95);color:var(--ink);">
+      <button type="submit" class="btn btn-white" id="wl-submit">Join the Waitlist &rarr;</button>
+    </form>
+    <p id="wl-success" style="display:none;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;color:rgba(255,255,255,0.85);">You're on the list. We'll be in touch with early access details.</p>
+    <div class="cta-btns" style="margin-top:8px;">
       <a href="/blackcat-os.html" class="btn btn-ghost-white">Explore BlackCat OS</a>
     </div>
   </div>
 </section>
-
 <!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-inner">
@@ -1248,7 +1332,6 @@ footer {
       <div class="footer-nav">
         <div class="footer-col">
           <h3>Products</h3>
-          <a href="/blackcat-os.html">BlackCat OS</a>
           <a href="/blackcat-grid.html">BlackCat Grid</a>
           <a href="/habitat.html">HABITAT</a>
         </div>
@@ -1309,6 +1392,31 @@ const progObs = new IntersectionObserver(
   { threshold: 0.15 }
 );
 document.querySelectorAll('.card, .net-panel, .batt-wrap').forEach((el) => progObs.observe(el));
+
+// ─── WAITLIST FORM ────────────────────────────────────────────────────────────
+document.getElementById('grid-waitlist').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('wl-submit');
+  const form = document.getElementById('grid-waitlist');
+  const success = document.getElementById('wl-success');
+  btn.disabled = true;
+  btn.textContent = 'Joining...';
+  setTimeout(function() {
+    form.style.display = 'none';
+    success.style.display = 'block';
+    success.style.animation = 'fadeInUp 0.5s ease forwards';
+    // Increment counter if it exists
+    const counter = document.getElementById('builder-counter');
+    if (counter) {
+      const current = parseInt(counter.textContent.trim(), 10);
+      if (!isNaN(current)) {
+        counter.textContent = current + 1;
+        counter.style.color = 'var(--gold)';
+        setTimeout(() => counter.style.color = '', 600);
+      }
+    }
+  }, 800);
+});
 </script>
 
 </body>
