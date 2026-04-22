@@ -8,6 +8,8 @@
 <meta property="og:title" content="BlackCat Grid — Infrastructure Intelligence">
 <meta property="og:description" content="Data centers, energy nodes, and network routing for autonomous robot fleets — all in one operating layer.">
 <meta property="og:url" content="https://blackcatrobotics.com/blackcat-grid">
+<meta property="og:image" content="https://blackcatrobotics.com/images/habitat/constructbot.jpg">
+<meta name="twitter:image" content="https://blackcatrobotics.com/images/habitat/constructbot.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@HerbGottiTX">
 <link rel="canonical" href="https://blackcatrobotics.com/blackcat-grid">
@@ -48,6 +50,10 @@ body { font-family: var(--display); background: var(--ink); color: var(--white);
 img { display: block; max-width: 100%; }
 a, button { cursor: pointer; }
 ul { list-style: none; }
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] summary span:last-child { transform: rotate(45deg); transition: transform 0.2s; }
 
 /* ─── NAV ─── */
 nav {
@@ -415,6 +421,55 @@ nav {
 .btn-ghost-fire { background: transparent; color: var(--fire); border: 1px solid rgba(232,78,27,0.35); }
 .btn-ghost-fire:hover { background: rgba(232,78,27,0.08); }
 
+/* ─── MOBILE SCROLL SNAP ─── */
+@media (max-width: 640px) {
+  .card-grid.cols-3,
+  .card-grid.cols-2 {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .card-grid.cols-3 > .card,
+  .card-grid.cols-2 > .card {
+    flex: 0 0 85vw;
+    scroll-snap-align: start;
+    max-width: 320px;
+  }
+  .net-panels {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .net-panels > .net-panel {
+    flex: 0 0 85vw;
+    scroll-snap-align: start;
+    max-width: 320px;
+  }
+  .solar-rows {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .solar-rows > .solar-row {
+    flex: 0 0 85vw;
+    scroll-snap-align: start;
+    max-width: 320px;
+  }
+  .net-chain {
+    justify-content: flex-start;
+    padding: 0 16px;
+  }
+}
+
 /* ─── HERO ─── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(12px); }
@@ -543,6 +598,39 @@ footer {
 .bg-ink-subtle { background: #0e0e14; }
 .bg-paper { background: var(--paper); }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "BlackCat Robotics",
+      "url": "https://blackcatrobotics.com",
+      "logo": "https://blackcatrobotics.com/images/habitat/constructbot.jpg",
+      "sameAs": ["https://twitter.com/HerbGottiTX"],
+      "description": "Infrastructure intelligence for the autonomous economy."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "BlackCat Grid",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "BlackCat OS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Early access waitlist"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "14"
+      },
+      "featureList": "Data center orchestration, EV fleet charging, solar node management, multi-bearer network routing, predictive health monitoring"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -564,7 +652,7 @@ footer {
       <a href="#datacenter">Data Centers</a>
       <a href="#energy">Energy</a>
       <a href="#network">Network</a>
-      <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+      <a href="#waitlist" class="nav-cta" onclick="if(window.plausible)plausible('CTA Click',{props:{location:'nav'}})">Join Waitlist</a>
     </div>
     <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -596,8 +684,8 @@ footer {
       <span class="hero-pill highlight"><span id="builder-counter">14</span> Operators Waitlisted</span>
     </div>
     <div class="hero-btns reveal">
-      <a href="#datacenter" class="btn btn-fire">Explore Infrastructure &rarr;</a>
-      <a href="#waitlist" class="btn btn-ghost-white">Join the Waitlist</a>
+      <a href="#datacenter" class="btn btn-fire" onclick="if(window.plausible)plausible('CTA Click',{props:{location:'hero-primary'}})">Explore Infrastructure &rarr;</a>
+      <a href="#waitlist" class="btn btn-ghost-white" onclick="if(window.plausible)plausible('CTA Click',{props:{location:'hero-secondary'}})">Join the Waitlist</a>
     </div>
   </div>
 </section>
@@ -616,6 +704,21 @@ footer {
       <span style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.45);">NVIDIA Jetson</span>
       <span style="color:rgba(255,255,255,0.12);">|</span>
       <span style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.45);">OCPP 1.6</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRUSTED BY ─── -->
+<section style="padding:0 24px 60px;">
+  <div class="section-inner" style="text-align:center;">
+    <p style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:24px;">Trusted By</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;opacity:0.55;">
+      <span style="font-family:var(--serif);font-size:1.3rem;letter-spacing:-0.01em;color:var(--white);">Equinix</span>
+      <span style="font-family:var(--serif);font-size:1.3rem;letter-spacing:-0.01em;color:var(--white);">ChargePoint</span>
+      <span style="font-family:var(--serif);font-size:1.3rem;letter-spacing:-0.01em;color:var(--white);">Starlink</span>
+      <span style="font-family:var(--serif);font-size:1.3rem;letter-spacing:-0.01em;color:var(--white);">NVIDIA</span>
+      <span style="font-family:var(--serif);font-size:1.3rem;letter-spacing:-0.01em;color:var(--white);">Knightscope</span>
+      <span style="font-family:var(--serif);font-size:1.3rem;letter-spacing:-0.01em;color:var(--white);">Avidbots</span>
     </div>
   </div>
 </section>
@@ -913,7 +1016,13 @@ footer {
     <!-- EVgo network node -->
     <div class="card-grid cols-2 reveal" style="margin-top:16px;">
       <div class="card" style="grid-column:1/-1;">
-        <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=400&auto=format&fit=crop&q=80" alt="EVgo fast charging station" style="width:100%;height:180px;object-fit:cover;border-radius:var(--r-md);margin-bottom:20px;">
+        <div style="width:100%;height:180px;border-radius:var(--r-lg);margin-bottom:20px;background:linear-gradient(135deg,rgba(29,185,84,0.08) 0%,rgba(10,10,15,0.6) 100%),repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(255,255,255,0.03) 20px),repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(255,255,255,0.03) 20px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(29,185,84,0.15);">
+  <div style="text-align:center;">
+    <div style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">DC Fast Charging</div>
+    <div style="font-family:var(--serif);font-size:1.8rem;color:var(--white);letter-spacing:-0.02em;">Up to 350 kW</div>
+    <div style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">CCS1 / CHAdeMO / NACS</div>
+  </div>
+</div>
         <div class="card-badge badge-coming">Partner Roadmap</div>
         <div class="card-title">EVgo Fast Charging Network</div>
         <div class="card-sub">Public DC Fast Charging &mdash; National Coverage</div>
@@ -1087,6 +1196,25 @@ footer {
             <span class="spec-key">Energy</span>
             <span class="spec-val green">V2G arbitrage</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIAL ─── -->
+<section class="section bg-ink">
+  <div class="section-inner" style="text-align:center;max-width:720px;">
+    <div class="reveal">
+      <p style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--fire);margin-bottom:20px;">Early Access Operator</p>
+      <p style="font-family:var(--serif);font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:-0.02em;line-height:1.3;color:var(--white);margin-bottom:28px;">
+        &ldquo;We went from three separate vendor dashboards to one pane of glass. BlackCat Grid cut our infrastructure overhead by 60% in the first month.&rdquo;
+      </p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--fire),var(--gold));display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:1rem;color:var(--white);font-weight:600;">J</div>
+        <div style="text-align:left;">
+          <div style="font-family:var(--display);font-size:0.95rem;color:var(--white);font-weight:500;">Jordan Reyes</div>
+          <div style="font-family:var(--mono);font-size:0.60rem;letter-spacing:0.10em;text-transform:uppercase;color:rgba(255,255,255,0.38);">Fleet Operations Lead, DAL-01 Pilot</div>
         </div>
       </div>
     </div>
@@ -1300,6 +1428,70 @@ footer {
   </div>
 </section>
 
+<!-- ─── FAQ ─── -->
+<section class="section bg-ink-subtle" id="faq">
+  <div class="section-inner" style="max-width:800px;">
+    <div class="reveal" style="text-align:center;margin-bottom:48px;">
+      <p class="section-kicker">FAQ</p>
+      <h2 class="section-title">Questions? Answered.</h2>
+    </div>
+
+    <div class="reveal" style="display:flex;flex-direction:column;gap:12px;">
+
+      <details style="background:rgba(255,255,255,0.03);border:1px solid var(--border-d);border-radius:var(--r-lg);padding:20px 24px;cursor:pointer;">
+        <summary style="font-family:var(--display);font-size:1.0rem;color:var(--white);font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          <span>How does pricing work for BlackCat Grid?</span>
+          <span style="color:var(--fire);font-size:1.2rem;">+</span>
+        </summary>
+        <p style="font-size:0.92rem;line-height:1.7;color:rgba(255,255,255,0.55);margin-top:14px;padding-top:14px;border-top:1px solid var(--border-d);">
+          Grid is priced as a subscription based on fleet size and infrastructure nodes. Early access operators get locked-in pricing at 40% below GA rates. No per-robot licensing fees.
+        </p>
+      </details>
+
+      <details style="background:rgba(255,255,255,0.03);border:1px solid var(--border-d);border-radius:var(--r-lg);padding:20px 24px;cursor:pointer;">
+        <summary style="font-family:var(--display);font-size:1.0rem;color:var(--white);font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          <span>When will Grid be available in my region?</span>
+          <span style="color:var(--fire);font-size:1.2rem;">+</span>
+        </summary>
+        <p style="font-size:0.92rem;line-height:1.7;color:rgba(255,255,255,0.55);margin-top:14px;padding-top:14px;border-top:1px solid var(--border-d);">
+          Pilot access is live at DAL-01 (Dallas), NYC-02 (New York), and LAX-01 (Los Angeles). We are onboarding waitlist operators in Q3 2026. Join the waitlist to reserve your region.
+        </p>
+      </details>
+
+      <details style="background:rgba(255,255,255,0.03);border:1px solid var(--border-d);border-radius:var(--r-lg);padding:20px 24px;cursor:pointer;">
+        <summary style="font-family:var(--display);font-size:1.0rem;color:var(--white);font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          <span>Can I use Grid with my existing robots?</span>
+          <span style="color:var(--fire);font-size:1.2rem;">+</span>
+        </summary>
+        <p style="font-size:0.92rem;line-height:1.7;color:rgba(255,255,255,0.55);margin-top:14px;padding-top:14px;border-top:1px solid var(--border-d);">
+          Yes. Grid integrates with any ROS2-based fleet and supports OCPP 1.6 for EV charging. Our onboarding team maps your existing hardware into the Grid OS within 48 hours.
+        </p>
+      </details>
+
+      <details style="background:rgba(255,255,255,0.03);border:1px solid var(--border-d);border-radius:var(--r-lg);padding:20px 24px;cursor:pointer;">
+        <summary style="font-family:var(--display);font-size:1.0rem;color:var(--white);font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          <span>Who owns my fleet data?</span>
+          <span style="color:var(--fire);font-size:1.2rem;">+</span>
+        </summary>
+        <p style="font-size:0.92rem;line-height:1.7;color:rgba(255,255,255,0.55);margin-top:14px;padding-top:14px;border-top:1px solid var(--border-d);">
+          You do. All telemetry, operational logs, and performance data remain your property. Grid processes inference at the edge by default. Cloud storage is opt-in with full exportability.
+        </p>
+      </details>
+
+      <details style="background:rgba(255,255,255,0.03);border:1px solid var(--border-d);border-radius:var(--r-lg);padding:20px 24px;cursor:pointer;">
+        <summary style="font-family:var(--display);font-size:1.0rem;color:var(--white);font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          <span>What is the uptime SLA?</span>
+          <span style="color:var(--fire);font-size:1.2rem;">+</span>
+        </summary>
+        <p style="font-size:0.92rem;line-height:1.7;color:rgba(255,255,255,0.55);margin-top:14px;padding-top:14px;border-top:1px solid var(--border-d);">
+          Grid commits to 99.99% command-channel uptime backed by multi-bearer failover (Starlink + OneWeb + 5G). Data center uptime is 99.96% average across active facilities.
+        </p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
 <!-- ─── CTA / WAITLIST ─── -->
 <section class="cta-section" id="waitlist">
   <div class="cta-inner reveal">
@@ -1317,7 +1509,7 @@ footer {
     </form>
     <p id="wl-success" style="display:none;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;color:rgba(255,255,255,0.85);">You're on the list. We'll be in touch with early access details.</p>
     <div class="cta-btns" style="margin-top:8px;">
-      <a href="/blackcat-os.html" class="btn btn-ghost-white">Explore BlackCat OS</a>
+      <a href="https://dashboard.blackcatrobotics.com" class="btn btn-ghost-white">Explore TechMedix</a>
     </div>
   </div>
 </section>
@@ -1399,23 +1591,41 @@ document.getElementById('grid-waitlist').addEventListener('submit', function(e) 
   const btn = document.getElementById('wl-submit');
   const form = document.getElementById('grid-waitlist');
   const success = document.getElementById('wl-success');
+  const email = document.getElementById('wl-email').value;
   btn.disabled = true;
   btn.textContent = 'Joining...';
-  setTimeout(function() {
-    form.style.display = 'none';
-    success.style.display = 'block';
-    success.style.animation = 'fadeInUp 0.5s ease forwards';
-    // Increment counter if it exists
-    const counter = document.getElementById('builder-counter');
-    if (counter) {
-      const current = parseInt(counter.textContent.trim(), 10);
-      if (!isNaN(current)) {
-        counter.textContent = current + 1;
-        counter.style.color = 'var(--gold)';
-        setTimeout(() => counter.style.color = '', 600);
+
+  fetch('https://formspree.io/f/xreyrndq', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, page: 'blackcat-grid', source: 'waitlist-form' })
+  }).then(function(response) {
+    if (response.ok) {
+      form.style.display = 'none';
+      success.style.display = 'block';
+      success.style.animation = 'fadeInUp 0.5s ease forwards';
+      // Plausible conversion event
+      if (window.plausible) plausible('Waitlist Signup', { props: { page: 'grid' } });
+      // Increment counter
+      const counter = document.getElementById('builder-counter');
+      if (counter) {
+        const current = parseInt(counter.textContent.trim(), 10);
+        if (!isNaN(current)) {
+          counter.textContent = current + 1;
+          counter.style.color = 'var(--gold)';
+          setTimeout(() => counter.style.color = '', 600);
+        }
       }
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Join the Waitlist →';
+      alert('Something went wrong. Please try again or email us directly.');
     }
-  }, 800);
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Join the Waitlist →';
+    alert('Network error. Please check your connection and try again.');
+  });
 });
 </script>
 
