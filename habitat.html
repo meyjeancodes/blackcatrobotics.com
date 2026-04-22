@@ -5,6 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BlackCat HABITAT — Designed by you. Built by tomorrow.</title>
 <meta name="description" content="AI-driven autonomous home construction. From blueprint to build — powered by BlackCat Robotics.">
+    <!-- SEO + Social -->
+    <meta property="og:title" content="BlackCat HABITAT — AI-Driven Autonomous Home Construction">
+    <meta property="og:description" content="HABITAT is the world's first vertically integrated AI-driven construction platform. From blueprint to fully built, furnished, move-in-ready home in weeks, not months.">
+    <meta property="og:image" content="https://blackcatrobotics.com/images/habitat/constructbot.jpg">
+    <meta property="og:url" content="https://blackcatrobotics.com/habitat.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BlackCat HABITAT — AI-Driven Autonomous Home Construction">
+    <meta name="twitter:description" content="From blueprint to move-in in under 2 weeks. Powered by autonomous Construct.Bot fleets and HABITAT AI.">
+    <meta name="twitter:image" content="https://blackcatrobotics.com/images/habitat/constructbot.jpg">
+    <link rel="canonical" href="https://blackcatrobotics.com/habitat.html">
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "BlackCat Robotics",
+      "url": "https://blackcatrobotics.com",
+      "logo": "https://blackcatrobotics.com/images/logo.svg",
+      "description": "BlackCat Robotics builds autonomous construction systems including HABITAT (AI-driven home construction) and TechMedix (predictive maintenance platform).",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "blackcatrobotics.ai@gmail.com",
+        "contactType": "Customer Support",
+        "areaServed": "US",
+        "availableLanguage": "en"
+      },
+      "sameAs": [
+        "https://github.com/blackcatrobotics"
+      ]
+    }
+    </script>
+
+    
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=tanker@400&display=swap" rel="stylesheet">
@@ -37,6 +72,9 @@ a{text-decoration:none;color:inherit;}
   --satoshi:'Satoshi','Helvetica Neue',sans-serif;
   --r:10px;--r-lg:18px;--r-xl:26px;--pill:999px;
 }
+/* Smooth scroll offset for fixed nav */
+section{scroll-margin-top:100px;}
+
 
 .wrap{max-width:1240px;margin:0 auto;padding:0 56px;}
 .sec{padding:100px 0;}
@@ -72,6 +110,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .hero-sub{font-family:var(--chakra);font-size:clamp(13px,1.3vw,16px);font-weight:300;font-style:italic;color:var(--cream-dim);line-height:1.5;margin-bottom:28px;letter-spacing:0.04em;}
 .hero-p{font-family:var(--satoshi);font-size:16px;font-weight:400;line-height:1.75;color:var(--cream-dim);max-width:440px;margin-bottom:36px;}
 .hero-btns{display:flex;align-items:center;gap:12px;margin-bottom:52px;}
+.hero-btns .btn{min-height:48px;padding:14px 24px;}
+@media(max-width:768px){
+  .hero-btns{flex-direction:column;align-items:stretch;gap:10px;margin-bottom:36px;}
+  .hero-btns .btn{width:100%;justify-content:center;}
+}
 .hero-stats{display:flex;gap:36px;padding-top:36px;border-top:1px solid var(--border);}
 .stat-num{font-family:var(--tanker);font-size:34px;color:var(--cream);line-height:1;letter-spacing:0.02em;}
 .stat-lbl{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;color:rgba(232,229,223,0.38);margin-top:4px;text-transform:uppercase;}
@@ -618,15 +661,15 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
 <!-- ============================================
    POWERED BY — tech stack trust bar
    ============================================ -->
-<div class="tech-strip" style="
+  <div class="tech-strip fade-in" style="
   background: var(--bg-2);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 28px 0;
+  padding: 24px 0;
   margin: 0;
   text-align: center;
 ">
-  <div class="wrap" style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+  <div class="wrap" style="display:flex; flex-direction:column; align-items:center; gap:16px;">
     <div class="tech-label" style="
       font-family: var(--chakra);
       font-size: 10px;
@@ -634,8 +677,81 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(232,229,223,0.4);
-      margin-bottom: 8px;
     ">Powered by the world&apos;s most advanced robotics stack</div>
+    
+    <div class="tech-logos" style="
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      gap: 20px 32px;
+    ">
+      <!-- NVIDIA -->
+      <a href="https://www.nvidia.com/en-us/omniverse/" target="_blank" rel="noopener" class="tech-logo" style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        background:var(--bg-3);
+        border:1px solid rgba(118,185,0,0.2);
+        border-radius:var(--r);
+        padding:8px 16px;
+        transition:border-color 0.2s;
+        text-decoration:none;
+      " onmouseover="this.style.borderColor='rgba(118,185,0,0.5)'" onmouseout="this.style.borderColor='rgba(118,185,0,0.2)'">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#76b900;" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span style="font-family:var(--chakra);font-size:12px;font-weight:700;color:#76b900;letter-spacing:0.08em;">NVIDIA</span>
+      </a>
+
+      <!-- ROS2 -->
+      <a href="https://www.ros.org/" target="_blank" rel="noopener" class="tech-logo" style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        background:var(--bg-3);
+        border:1px solid var(--border);
+        border-radius:var(--r);
+        padding:8px 16px;
+        transition:all 0.2s;
+        text-decoration:none;
+      " onmouseover="this.style.borderColor='var(--border-fire)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateY(0)'">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--fire);" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+        <span style="font-family:var(--chakra);font-size:12px;font-weight:700;color:var(--cream-dim);letter-spacing:0.08em;">ROS2 + Nav2</span>
+      </a>
+
+      <!-- TechMedix -->
+      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="tech-logo" style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        background:var(--bg-3);
+        border:1px solid var(--border);
+        border-radius:var(--r);
+        padding:8px 16px;
+        transition:all 0.2s;
+        text-decoration:none;
+      " onmouseover="this.style.borderColor='var(--border-fire)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateY(0)'">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--fire);" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+        <span style="font-family:var(--chakra);font-size:12px;font-weight:700;color:var(--cream-dim);letter-spacing:0.08em;">TechMedix</span>
+      </a>
+    </div>
+    
+    <div style="
+      font-family: var(--chakra);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--fire);
+      opacity: 0.7;
+    ">Partnerships available — <a href="#partners" style="color:var(--fire);text-decoration:underline;">learn more</a></div>
+  </div>
+</div>
     <div class="tech-logos" style="
       display:flex;
       flex-wrap:wrap;
