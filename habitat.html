@@ -75,7 +75,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .hero-stats{display:flex;gap:36px;padding-top:36px;border-top:1px solid var(--border);}
 .stat-num{font-family:var(--tanker);font-size:34px;color:var(--cream);line-height:1;letter-spacing:0.02em;}
 .stat-lbl{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;color:rgba(232,229,223,0.38);margin-top:4px;text-transform:uppercase;}
-.hero-right{position:relative;background:var(--bg-3);overflow:hidden;min-height:600px;}
+.hero-right{position:relative;background:var(--bg-3);overflow:hidden;min-height:480px;}
 .hero-img{position:absolute;inset:0;filter:brightness(0.45) saturate(0.6);}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(11,12,14,0.3) 0%,rgba(11,12,14,0.65) 100%);}
 /* Construct.Bot hero HUD overlay */
@@ -569,6 +569,72 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
     <span class="m-item"><span class="m-dot"></span>NVIDIA Powered</span>
   </div>
 </div>
+<!-- ============================================
+   POWERED BY — tech stack trust bar
+   ============================================ -->
+<div class="tech-strip" style="
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 0;
+  margin: 0;
+  text-align: center;
+">
+  <div class="wrap" style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+    <div class="tech-label" style="
+      font-family: var(--chakra);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(232,229,223,0.4);
+      margin-bottom: 8px;
+    ">Powered by the world&apos;s most advanced robotics stack</div>
+    <div class="tech-logos" style="
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      gap: 48px 64px;
+      max-width: 900px;
+    ">
+      <span class="tech-logo" style="
+        font-family: var(--chakra);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--fire);
+        letter-spacing: 0.08em;
+        opacity: 0.9;
+      ">NVIDIA Omniverse + Isaac + Jetson</span>
+      <span class="tech-logo" style="
+        font-family: var(--chakra);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--cream-dim);
+        letter-spacing: 0.08em;
+        opacity: 0.9;
+      ">ROS2 + Nav2</span>
+      <span class="tech-logo" style="
+        font-family: var(--chakra);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--cream-dim);
+        letter-spacing: 0.08em;
+        opacity: 0.9;
+      ">TechMedix Predictive Health</span>
+    </div>
+    <div class="tech-cta" style="
+      font-family: var(--chakra);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--fire);
+      opacity: 0.6;
+      margin-top: 8px;
+    ">Partnerships available — <a href="#partners" style="color:var(--fire);text-decoration:underline;">inquire here</a></div>
+  </div>
+</div>
+
 
 <!-- ============================================
      CONSTRUCT.BOT DEEP SPEC + COMPETITOR TABLE
@@ -619,48 +685,55 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
         <table class="cmp-table">
           <thead>
             <tr>
-              <th style="min-width:190px;">Feature</th>
-              <th style="min-width:170px;">ICON Vulcan</th>
-              <th style="min-width:170px;">WASP Crane WASP</th>
-              <th class="cmp-us-head" style="min-width:200px;">Construct.Bot <span class="cmp-badge">Our Tech</span></th>
+              <th style="min-width:140px;">Feature</th>
+              <th style="min-width:125px;">ICON Vulcan</th>
+              <th style="min-width:125px;">WASP Crane</th>
+              <th style="min-width:145px; background: rgba(224,90,30,0.06); border-bottom: 2px solid var(--border-fire);">Construct.Bot</th>
+              <th style="min-width:165px; background: rgba(224,90,30,0.11); border-bottom: 2px solid var(--border-fire);">HABITAT Platform</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Operator required</td>
+              <td><strong>Operator required</strong></td>
               <td>Yes</td>
               <td>Yes</td>
-              <td class="cmp-us-cell">No — autonomous</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.04);">No — autonomous</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.09); font-weight: 600; color: var(--fire);">Yes (autonomous fleet)</td>
             </tr>
             <tr>
-              <td>Software layer</td>
+              <td><strong>Software layer</strong></td>
               <td>Tablet OS only</td>
               <td>App only</td>
-              <td class="cmp-us-cell">Full AI + BlackCat OS</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.04);">Full AI + BlackCat OS</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.09); font-weight: 600; color: var(--fire);">HABITAT AI + OTA</td>
             </tr>
             <tr>
-              <td>Materials</td>
+              <td><strong>Materials</strong></td>
               <td>Lavacrete only</td>
               <td>Cement / earth</td>
-              <td class="cmp-us-cell">Any — AI-mixed per site</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.04);">Any — AI-mixed per site</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.09); font-weight: 600; color: var(--fire);">Full marketplace access</td>
             </tr>
             <tr>
-              <td>Maintenance platform</td>
+              <td><strong>Maintenance</strong></td>
               <td>None</td>
               <td>None</td>
-              <td class="cmp-us-cell">TechMedix built-in</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.04);">TechMedix built-in</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.09); font-weight: 600; color: var(--fire);">Predictive + lifetime</td>
             </tr>
             <tr>
-              <td>Energy independence</td>
+              <td><strong>Energy</strong></td>
               <td>Add-on</td>
               <td>Not included</td>
-              <td class="cmp-us-cell">Standard — solar + battery</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.04);">Standard — solar + battery</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.09); font-weight: 600; color: var(--fire);">Net-Zero from day one</td>
             </tr>
             <tr>
-              <td>Business model</td>
+              <td><strong>Business model</strong></td>
               <td>Per-build</td>
               <td>Hardware sale</td>
-              <td class="cmp-us-cell">Home as a Service</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.04);">Home as a Service</td>
+              <td class="cmp-us-cell" style="background: rgba(224,90,30,0.09); font-weight: 600; color: var(--fire);">Subscription + outcome</td>
             </tr>
           </tbody>
         </table>
@@ -1483,7 +1556,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
       <h2 class="cta-h2">Be first to build<br><em>with HABITAT</em></h2>
       <p class="cta-p">Join the waitlist for early access to the AI design agent, priority project scheduling, and founding client pricing. Off-grid and disaster relief partners move to the front of the queue.</p>
       <form class="cta-form" onsubmit="handleWL(event)">
-        <input type="email" class="cta-input" placeholder="your@email.com" required>
+        <input type="email" class="cta-input" placeholder="you@company.com — join waitlist" required>
         <button type="submit" class="btn btn-fire">
           Join Waitlist
           <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
