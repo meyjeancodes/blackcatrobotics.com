@@ -404,6 +404,48 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
 .haas-col-p{font-family:var(--satoshi);font-size:15px;line-height:1.82;color:var(--cream-dim);}
 @media(max-width:1024px){.cb-spec-grid{grid-template-columns:1fr 1fr;}.haas-cols{grid-template-columns:1fr;gap:36px;}}
 @media(max-width:600px){.cb-spec-grid{grid-template-columns:1fr;}}
+
+/* Waitlist form states */
+.cta-form button[data-submitting] {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: scale(0.98);
+  transition: all 0.2s ease;
+}
+.cta-form button[data-submitting]::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  margin-left: 8px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Success message fade-in */
+.cta-success {
+  display: none;
+  animation: fadeInUp 0.5s ease forwards;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Counter pulse animation */
+@keyframes counterPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); color: var(--fire); }
+  100% { transform: scale(1); }
+}
+.counter-pulse {
+  animation: counterPulse 0.6s ease;
+}
+
 </style>
 </head>
 <body>
@@ -467,7 +509,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
   <!-- Trust indicator positioned between stats and hero-right -->
   <div style="text-align: center; margin-top: 8px;">
     <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px; border-radius: 6px; background: rgba(224,90,30,0.06);">
-      <div class="stat-num" style="font-size: 22px; color: var(--fire); margin: 0;">247</div>
+      <div class="stat-num" id="builder-counter" style="font-size: 22px; color: var(--fire); margin: 0;">247</div>
       <div class="stat-lbl" style="margin: 0; color: var(--cream-dim);">Builders on waitlist</div>
     </div>
   </div>
@@ -1560,7 +1602,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
       <h2 class="cta-h2">Be first to build<br><em>with HABITAT</em></h2>
       <p class="cta-p">Join the waitlist for early access to the AI design agent, priority project scheduling, and founding client pricing. Off-grid and disaster relief partners move to the front of the queue.</p>
       <form class="cta-form" onsubmit="handleWL(event)">
-        <input type="email" class="cta-input" placeholder="you@company.com — join waitlist" required>
+        <input type="email" class="cta-input" placeholder="you@company.com — join waitlist" required autocomplete="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
         <button type="submit" class="btn btn-fire">
           Join Waitlist
           <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1600,16 +1642,38 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 // Waitlist form
 function handleWL(e){
   e.preventDefault();
-  const btn=e.target.querySelector('button');
-  const inp=e.target.querySelector('input');
-  const suc=document.getElementById('wl-success');
-  btn.textContent='Submitting…';
-  btn.disabled=true;
+  const btn = e.target.querySelector('button');
+  const inp = e.target.querySelector('input');
+  const suc = document.getElementById('wl-success');
+  
+  // Validate email (browser does this via required+pattern, but double-check)
+  if (!inp.checkValidity()) {
+    inp.focus();
+    return;
+  }
+  
+  btn.setAttribute('data-submitting', '');
+  btn.disabled = true;
+  
+  // Simulate API call
   setTimeout(()=>{
-    inp.value='';
-    btn.textContent='Joined!';
-    suc.style.display='block';
-  },800);
+    inp.value = '';
+    btn.removeAttribute('data-submitting');
+    
+    // Increment builder counter with animation
+    const counter = document.getElementById('builder-counter');
+    if (counter) {
+      const current = parseInt(counter.textContent.trim(), 10);
+      if (!isNaN(current)) {
+        counter.textContent = current + 1;
+        counter.classList.add('counter-pulse');
+        setTimeout(()=>counter.classList.remove('counter-pulse'), 600);
+      }
+    }
+    
+    btn.textContent = 'Joined!';
+    suc.style.display = 'block';
+  }, 1200);
 }
 
 // Fade-in on scroll
