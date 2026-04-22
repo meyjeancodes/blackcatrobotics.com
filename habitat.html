@@ -47,7 +47,7 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:#f2efe8;color:#1a1a1a;font-family:'Satoshi','Helvetica Neue',sans-serif;overflow-x:hidden;line-height:1.6;}
+body{background:#f2efe8;color:#0a0a0f;font-family:'Satoshi','Helvetica Neue',sans-serif;overflow-x:hidden;line-height:1.6;}
 img{display:block;width:100%;height:100%;object-fit:cover;}
 a{text-decoration:none;color:inherit;}
 
@@ -57,13 +57,13 @@ a{text-decoration:none;color:inherit;}
   --bg-3:#ddd9d0;
   --surface:#f7f5f0;
   --surface-2:#edeae4;
-  --cream:#1a1a1a;
-  --cream-dim:rgba(26,26,26,0.55);
-  --cream-faint:rgba(26,26,26,0.12);
+  --cream:#0a0a0f;
+  --cream-dim:rgba(10,10,10,0.65);
+  --cream-faint:rgba(10,10,10,0.18);
   --fire:#e05a1e;
   --fire-2:#c44d17;
   --fire-faint:rgba(224,90,30,0.08);
-  --border:rgba(26,26,26,0.08);
+  --border:rgba(10,10,10,0.12);
   --border-fire:rgba(224,90,30,0.3);
   --sh:0 2px 16px rgba(0,0,0,0.08);
   --sh-lg:0 8px 48px rgba(0,0,0,0.12);
@@ -96,7 +96,7 @@ section{scroll-margin-top:100px;}
 nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(250,248,245,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:border-color 0.3s;}
 .nav-brand{display:flex;align-items:center;gap:12px;}
 .nav-mark{width:32px;height:32px;background:var(--fire);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--chakra);font-size:9px;font-weight:700;color:#fff;letter-spacing:0.08em;flex-shrink:0;}
-.nav-parent{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(26,26,26,0.38);display:block;}
+.nav-parent{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(10,10,10,0.48);display:block;}
 .nav-name{font-family:var(--tanker);font-size:18px;color:var(--cream);line-height:1;letter-spacing:0.02em;}
 .nav-menu{display:flex;align-items:center;gap:32px;list-style:none;}
 .nav-menu a{font-family:var(--chakra);font-size:12px;font-weight:400;letter-spacing:0.08em;color:var(--cream-dim);transition:color 0.2s;}
@@ -117,7 +117,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 }
 .hero-stats{display:flex;gap:36px;padding-top:36px;border-top:1px solid var(--border);}
 .stat-num{font-family:var(--tanker);font-size:34px;color:var(--cream);line-height:1;letter-spacing:0.02em;}
-.stat-lbl{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;color:rgba(26,26,26,0.45);margin-top:4px;text-transform:uppercase;}
+.stat-lbl{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;color:rgba(10,10,10,0.55);margin-top:4px;text-transform:uppercase;}
 .hero-right{position:relative;background:var(--bg-2);overflow:hidden;min-height:480px;}
 .hero-img{position:absolute;inset:0;filter:brightness(0.82) saturate(0.92);}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(250,248,245,0.25) 0%,rgba(250,248,245,0.55) 100%);}
@@ -138,9 +138,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 /* HUD data panels */
 .hero-bot-hud-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .hero-bot-hud-panel{background:rgba(26,26,26,0.88);border:1px solid var(--border-fire);border-radius:var(--r);padding:12px 14px;backdrop-filter:blur(10px);}
-.hero-bot-hud-panel-label{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(26,26,26,0.42);margin-bottom:4px;}
+.hero-bot-hud-panel-label{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(10,10,10,0.52);margin-bottom:4px;}
 .hero-bot-hud-panel-val{font-family:var(--chakra);font-size:13px;font-weight:700;letter-spacing:0.06em;color:var(--fire);}
-.hero-bot-hud-panel-sub{font-family:var(--chakra);font-size:9px;color:rgba(26,26,26,0.40);margin-top:2px;letter-spacing:0.06em;}
+.hero-bot-hud-panel-sub{font-family:var(--chakra);font-size:9px;color:rgba(10,10,10,0.50);margin-top:2px;letter-spacing:0.06em;}
 /* Animated counter */
 @keyframes countup{from{opacity:0.4;}to{opacity:1;}}
 .hero-counter{animation:countup 0.8s ease infinite alternate;}
@@ -156,7 +156,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .marquee{background:var(--surface-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;overflow:hidden;white-space:nowrap;}
 .marquee-track{display:inline-flex;animation:ticker 32s linear infinite;}
 @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.m-item{display:inline-flex;align-items:center;gap:14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(26,26,26,0.35);padding:0 28px;}
+.m-item{display:inline-flex;align-items:center;gap:14px;font-family:var(--chakra);font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(10,10,10,0.45);padding:0 28px;}
 .m-dot{width:3px;height:3px;border-radius:50%;background:var(--fire);flex-shrink:0;}
 
 /* ========================================
@@ -183,7 +183,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .bot-spec{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;transition:border-color 0.2s;}
 .bot-spec:hover{border-color:var(--border-fire);}
 .bot-spec-icon{font-family:var(--chakra);font-size:18px;font-weight:700;color:var(--fire);margin-bottom:6px;line-height:1;}
-.bot-spec-label{font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(26,26,26,0.42);margin-bottom:3px;}
+.bot-spec-label{font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(10,10,10,0.52);margin-bottom:3px;}
 .bot-spec-val{font-family:var(--satoshi);font-size:13px;font-weight:600;color:var(--cream);}
 
 /* ========================================
@@ -198,7 +198,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .step-row+.step-row{margin-top:0;}
 .step-connector{width:44px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding-top:10px;}
 .step-dot-wrap{position:relative;z-index:1;}
-.step-dot{width:44px;height:44px;border-radius:50%;background:var(--bg-3);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--chakra);font-size:13px;font-weight:700;color:rgba(26,26,26,0.45);transition:all 0.4s;flex-shrink:0;}
+.step-dot{width:44px;height:44px;border-radius:50%;background:var(--bg-3);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--chakra);font-size:13px;font-weight:700;color:rgba(10,10,10,0.55);transition:all 0.4s;flex-shrink:0;}
 .step-row.is-active .step-dot{background:var(--fire);border-color:var(--fire);color:#fff;box-shadow:0 0 0 6px rgba(224,90,30,0.12),0 0 24px rgba(224,90,30,0.3);}
 .step-row.is-done .step-dot{background:var(--surface-2);border-color:rgba(224,90,30,0.4);color:var(--fire);}
 .step-tick{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;transition:opacity 0.3s;}
@@ -217,7 +217,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .step-panel-title{font-family:var(--tanker);font-size:24px;color:var(--cream);letter-spacing:0.01em;margin-bottom:10px;line-height:1.05;}
 .step-panel-desc{font-family:var(--satoshi);font-size:14px;font-weight:400;line-height:1.72;color:var(--cream-dim);}
 .step-panel-detail{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
-.step-detail-pill{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(26,26,26,0.45);background:var(--bg-2);border:1px solid var(--border);border-radius:var(--pill);padding:4px 10px;}
+.step-detail-pill{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(10,10,10,0.55);background:var(--bg-2);border:1px solid var(--border);border-radius:var(--pill);padding:4px 10px;}
 
 /* ========================================
    WHAT WE BUILD — 3D PRINTED HOME IMAGES
@@ -252,14 +252,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .tech-orbit-node{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;text-align:center;transition:border-color 0.2s;}
 .tech-orbit-node:hover{border-color:var(--border-fire);}
 .tech-orbit-icon{font-size:16px;margin-bottom:4px;}
-.tech-orbit-lbl{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(26,26,26,0.45);}
+.tech-orbit-lbl{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(10,10,10,0.55);}
 /* Partner logos strip */
 .tech-partners{display:flex;gap:16px;margin:24px 0 28px;flex-wrap:wrap;align-items:center;}
 .tech-partner{display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:10px 16px;transition:all 0.18s;cursor:pointer;text-decoration:none;}
 .tech-partner:hover{border-color:var(--border-fire);background:var(--fire-faint);}
 .tech-partner-logo{height:18px;width:auto;display:block;opacity:0.55;transition:opacity 0.18s;}
 .tech-partner:hover .tech-partner-logo{opacity:0.85;}
-.tech-partner-name{font-family:var(--chakra);font-size:11px;font-weight:600;letter-spacing:0.08em;color:rgba(26,26,26,0.55);transition:color 0.18s;}
+.tech-partner-name{font-family:var(--chakra);font-size:11px;font-weight:600;letter-spacing:0.08em;color:rgba(10,10,10,0.65);transition:color 0.18s;}
 .tech-partner:hover .tech-partner-name{color:var(--cream);}
 /* Nvidia inline SVG styling */
 .nvidia-svg{height:16px;width:auto;display:block;opacity:0.55;transition:opacity 0.18s;fill:#1a1a1a;}
@@ -272,7 +272,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .tech-mod:hover{background:var(--fire-faint);border-color:var(--border-fire);}
 .tech-mod-label{font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--fire);margin-bottom:5px;}
 .tech-mod-name{font-family:var(--satoshi);font-size:14px;font-weight:700;color:var(--cream);margin-bottom:4px;}
-.tech-mod-desc{font-family:var(--satoshi);font-size:12px;font-weight:400;line-height:1.55;color:rgba(26,26,26,0.45);}
+.tech-mod-desc{font-family:var(--satoshi);font-size:12px;font-weight:400;line-height:1.55;color:rgba(10,10,10,0.55);}
 
 /* MARKETS */
 .markets-sec{background:var(--bg-2);}
@@ -315,18 +315,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;ali
 .cta-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 20px;font-family:var(--satoshi);font-size:15px;color:var(--cream);outline:none;transition:border-color 0.2s;}
 .cta-input:focus{border-color:var(--fire);}
 .cta-input::placeholder{color:rgba(255,255,255,0.55);}
-.cta-note{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(26,26,26,0.32);}
+.cta-note{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(10,10,10,0.42);}
 .cta-success{display:none;font-family:var(--chakra);font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--fire);margin-top:12px;}
 
 /* FOOTER */
 footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56px;}
 .foot{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
 .foot-name{font-family:var(--tanker);font-size:20px;color:var(--cream);letter-spacing:0.02em;}
-.foot-sub{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(26,26,26,0.35);margin-top:4px;}
+.foot-sub{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(10,10,10,0.45);margin-top:4px;}
 .foot-links{display:flex;gap:28px;list-style:none;}
-.foot-links a{font-family:var(--chakra);font-size:12px;font-weight:600;letter-spacing:0.07em;color:rgba(26,26,26,0.38);transition:color 0.18s;text-transform:uppercase;}
+.foot-links a{font-family:var(--chakra);font-size:12px;font-weight:600;letter-spacing:0.07em;color:rgba(10,10,10,0.48);transition:color 0.18s;text-transform:uppercase;}
 .foot-links a:hover{color:var(--fire);}
-.foot-copy{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.06em;color:rgba(26,26,26,0.25);}
+.foot-copy{font-family:var(--chakra);font-size:10px;font-weight:400;letter-spacing:0.06em;color:rgba(10,10,10,0.35);}
 
 /* ANIMATIONS */
 .fade-in{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
@@ -405,11 +405,11 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
 .cmp-table{width:100%;border-collapse:collapse;font-family:var(--chakra);font-size:11px;}
 .cmp-table th,.cmp-table td{padding:14px 20px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle;}
 .cmp-table tr:last-child td,.cmp-table tr:last-child th{border-bottom:none;}
-.cmp-table thead th{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(26,26,26,0.35);background:var(--surface-2);}
+.cmp-table thead th{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(10,10,10,0.45);background:var(--surface-2);}
 .cmp-table thead .cmp-us-head{color:var(--fire);background:rgba(224,90,30,0.08);}
 .cmp-table tbody tr:hover td{background:rgba(26,26,26,0.025);}
-.cmp-table tbody td:first-child{color:rgba(26,26,26,0.45);font-size:10px;letter-spacing:0.08em;white-space:nowrap;}
-.cmp-table tbody td{color:rgba(26,26,26,0.55);}
+.cmp-table tbody td:first-child{color:rgba(10,10,10,0.55);font-size:10px;letter-spacing:0.08em;white-space:nowrap;}
+.cmp-table tbody td{color:rgba(10,10,10,0.65);}
 .cmp-table tbody td.cmp-us-cell{color:var(--cream);font-weight:600;background:rgba(224,90,30,0.04);}
 .cmp-badge{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:0.14em;color:var(--fire);background:rgba(224,90,30,0.1);border:1px solid rgba(224,90,30,0.25);border-radius:var(--pill);padding:3px 10px;margin-left:8px;vertical-align:middle;}
 
@@ -427,15 +427,15 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
 .build-card-status{position:absolute;top:12px;left:12px;font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;padding:5px 11px;border-radius:var(--pill);backdrop-filter:blur(8px);}
 .build-card-status.complete{color:#4ade80;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);}
 .build-card-status.in-progress{color:var(--fire);background:rgba(224,90,30,0.12);border:1px solid var(--border-fire);}
-.build-card-status.planned{color:rgba(26,26,26,0.50);background:rgba(26,26,26,0.08);border:1px solid rgba(26,26,26,0.12);}
+.build-card-status.planned{color:rgba(10,10,10,0.60);background:rgba(10,10,10,0.12);border:1px solid rgba(10,10,10,0.18);}
 .build-card-tag{position:absolute;bottom:12px;right:12px;font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--fire);background:rgba(26,26,26,0.88);border:1px solid var(--border-fire);border-radius:var(--pill);padding:4px 10px;backdrop-filter:blur(6px);}
 .build-card-body{padding:22px 24px 26px;}
 .build-card-id{font-family:var(--chakra);font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);margin-bottom:6px;}
 .build-card-title{font-family:var(--tanker);font-size:20px;color:var(--cream);margin-bottom:14px;letter-spacing:0.01em;line-height:1.05;}
 .build-card-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .build-spec-item{display:flex;flex-direction:column;gap:2px;}
-.build-spec-lbl{font-family:var(--chakra);font-size:8px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(26,26,26,0.35);}
-.build-spec-val{font-family:var(--chakra);font-size:11px;font-weight:600;color:rgba(26,26,26,0.75);letter-spacing:0.04em;}
+.build-spec-lbl{font-family:var(--chakra);font-size:8px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(10,10,10,0.45);}
+.build-spec-val{font-family:var(--chakra);font-size:11px;font-weight:600;color:rgba(10,10,10,0.80);letter-spacing:0.04em;}
 
 /* ========================================
    HOME AS A SERVICE
@@ -676,7 +676,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(26,26,26,0.45);
+      color: rgba(10,10,10,0.55);
     ">Powered by the world&apos;s most advanced robotics stack</div>
     
     <div class="tech-logos" style="
@@ -1054,14 +1054,14 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
       <div class="eyebrow" style="justify-content:center;">HABITAT Systems</div>
       <h2 class="t-h2">Choose Your <em>HABITAT</em> System</h2>
       <p class="t-body" style="margin-top:14px;">Every HABITAT starts with intelligence. Choose the tier that matches your vision.</p>
-      <p style="font-family:var(--satoshi);font-size:15px;font-weight:400;line-height:1.75;color:rgba(26,26,26,0.45);max-width:520px;margin:16px auto 0;">A fully managed living system designed to eliminate maintenance, reduce long-term costs, and future-proof your home.</p>
+      <p style="font-family:var(--satoshi);font-size:15px;font-weight:400;line-height:1.75;color:rgba(10,10,10,0.55);max-width:520px;margin:16px auto 0;">A fully managed living system designed to eliminate maintenance, reduce long-term costs, and future-proof your home.</p>
     </div>
     <div class="tiers-grid fade-in">
       <!-- CORE -->
       <div class="tier-card">
         <div class="tier-name">HABITAT CORE</div>
         <div class="tier-sub">Entry Tier</div>
-        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(26,26,26,0.45);margin-bottom:20px;">Starting at $185,000</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(10,10,10,0.55);margin-bottom:20px;">Starting at $185,000</div>
         <div class="tier-divider"></div>
         <ul class="tier-features">
           <li class="tier-feature">Intelligent 3D Printed Home</li>
@@ -1076,8 +1076,8 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
         <div class="tier-popular-badge">Most Popular</div>
         <div class="tier-name">HABITAT PRO</div>
         <div class="tier-sub">Recommended Tier</div>
-        <div style="font-family:var(--satoshi);font-size:13px;font-weight:400;line-height:1.55;color:rgba(26,26,26,0.55);margin-bottom:6px;">The complete, fully managed home experience.</div>
-        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(26,26,26,0.45);margin-bottom:20px;">From $2,200/month — financing available</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:400;line-height:1.55;color:rgba(10,10,10,0.65);margin-bottom:6px;">The complete, fully managed home experience.</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(10,10,10,0.55);margin-bottom:20px;">From $2,200/month — financing available</div>
         <div class="tier-divider"></div>
         <ul class="tier-features">
           <li class="tier-feature">Everything in Core</li>
@@ -1092,7 +1092,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
       <div class="tier-card">
         <div class="tier-name">HABITAT ELITE</div>
         <div class="tier-sub">Advanced Tier</div>
-        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(26,26,26,0.45);margin-bottom:20px;">Custom Pricing</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(10,10,10,0.55);margin-bottom:20px;">Custom Pricing</div>
         <div class="tier-divider"></div>
         <ul class="tier-features">
           <li class="tier-feature">Everything in Pro</li>
@@ -1107,7 +1107,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
       <div class="tier-card tier-card-signature">
         <div class="tier-name">HABITAT SIGNATURE</div>
         <div class="tier-sub">Flagship Tier</div>
-        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(26,26,26,0.45);margin-bottom:20px;">Private Consultation</div>
+        <div style="font-family:var(--satoshi);font-size:13px;font-weight:500;color:rgba(10,10,10,0.55);margin-bottom:20px;">Private Consultation</div>
         <div class="tier-divider"></div>
         <ul class="tier-features">
           <li class="tier-feature">Everything in Elite</li>
@@ -1211,7 +1211,7 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
             <div id="progress-bar" style="height:100%;width:20%;background:var(--fire);border-radius:2px;transition:width 0.6s ease;"></div>
           </div>
           <div style="display:flex;justify-content:space-between;margin-top:6px;">
-            <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.1em;color:rgba(26,26,26,0.35);">STEP <span id="step-counter">1</span> OF 5</span>
+            <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.1em;color:rgba(10,10,10,0.45);">STEP <span id="step-counter">1</span> OF 5</span>
             <span style="font-family:var(--chakra);font-size:9px;letter-spacing:0.1em;color:var(--fire);" id="step-pct">20%</span>
           </div>
         </div>
@@ -1479,12 +1479,12 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
           </a>
           <!-- ROS2 -->
           <a href="https://ros.org" target="_blank" rel="noopener" class="tech-partner" title="ROS2">
-            <svg style="width:18px;height:18px;fill:rgba(26,26,26,0.55);flex-shrink:0;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"/></svg>
+            <svg style="width:18px;height:18px;fill:rgba(10,10,10,0.65);flex-shrink:0;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"/></svg>
             <span class="tech-partner-name">ROS2 + Nav2</span>
           </a>
           <!-- AI Diagnostics -->
           <a href="https://anthropic.com" target="_blank" rel="noopener" class="tech-partner" title="AI Diagnostics by Anthropic">
-            <svg style="width:16px;height:16px;fill:rgba(26,26,26,0.55);flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <svg style="width:16px;height:16px;fill:rgba(10,10,10,0.65);flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             <span class="tech-partner-name">AI Diagnostics</span>
           </a>
         </div>
@@ -1803,7 +1803,7 @@ document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 // Nav scroll tint
 window.addEventListener('scroll',()=>{
   const nav=document.getElementById('main-nav');
-  if(nav) nav.style.borderBottomColor=window.scrollY>60?'rgba(224,90,30,0.2)':'rgba(26,26,26,0.10)';
+  if(nav) nav.style.borderBottomColor=window.scrollY>60?'rgba(224,90,30,0.2)':'rgba(10,10,10,0.15)';
 });
 
 // =============================================
