@@ -13,8 +13,15 @@ export default async function ModulePage({
   const { moduleId } = await params;
 
   const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const userId = user?.id ?? "";
+  let userId = "";
+  if (supabase) {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      userId = user?.id ?? "";
+    } catch {
+      // Auth offline
+    }
+  }
 
   const { module, lessons } = await getModuleLessons(moduleId, userId);
   if (!module) notFound();
