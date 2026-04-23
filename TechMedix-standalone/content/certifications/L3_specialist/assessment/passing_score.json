@@ -1,0 +1,22 @@
+{
+  "level": "L3",
+  "total_questions": 40,
+  "passing_score_percent": 80,
+  "passing_score_questions": 32,
+  "time_limit_minutes": 75,
+  "practical_required": true,
+  "practical_passing_standard": "Competent in all analysis and multi-platform domains; Developing or above in all others",
+  "prerequisite_level": "L2",
+  "prerequisite_experience_months": 6,
+  "retake_wait_days": 14,
+  "max_attempts": 3,
+  "domain_minimums": {
+    "diagnostics": "10/12",
+    "actuators": "8/10",
+    "fleet_analysis": "3/4",
+    "fmea": "3/4",
+    "safety": "5/6",
+    "documentation": "2/2",
+    "repair": "3/4"
+  }
+}

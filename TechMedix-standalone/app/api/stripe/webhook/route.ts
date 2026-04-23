@@ -30,9 +30,41 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session;
     const supabase = createServiceClient();
 
-    const { customer_email, plan, robot_count } = session.metadata ?? {};
+    const { customer_email, plan, robot_count, design_id, user_id } = session.metadata ?? {};
 
-    if (customer_email) {
+    // Habitat design deposit
+    if (design_id && user_id) {
+      const { error } = await supabase
+        .from("designs")
+        .update({
+          status: "deposited",
+          deposit_amount: session.amount_total ?? 0,
+          stripe_payment_intent_id: session.payment_intent as string,
+        })
+        .eq("id", design_id)
+        .eq("user_id", user_id);
+
+      if (error) {
+        console.error("Supabase design update error after Stripe webhook:", error);
+      }
+
+      // Admin notification (best-effort)
+      try {
+        const { Resend } = await import("resend");
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: "HABITAT AI <no-reply@blackcatrobotics.com>",
+          to: "blackcatrobotics.ai@gmail.com",
+          subject: "New HABITAT Design Deposit",
+          text: `Design ${design_id} received a deposit of $${((session.amount_total ?? 0) / 100).toFixed(2)}. User: ${user_id}`,
+        });
+      } catch (e) {
+        console.error("Admin alert email failed:", e);
+      }
+    }
+
+    // Existing subscription checkout
+    if (customer_email && !design_id) {
       const { error } = await supabase
         .from("customers")
         .update({

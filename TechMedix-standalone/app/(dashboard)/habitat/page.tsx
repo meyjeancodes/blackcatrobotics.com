@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
+import Link from "next/link";
 import { SurfaceCard } from "../../../components/surface-card";
 
 const HABITAT_SYSTEMS = [
@@ -84,60 +85,10 @@ const HABITAT_SYSTEMS = [
   },
 ];
 
-const CHAT_STARTERS = [
-  "What is my current energy status?",
-  "Are all robots healthy?",
-  "Is the EV ready to drive?",
-  "Show me today's solar generation.",
-  "Any active alerts across systems?",
-];
-
-type Message = { role: "user" | "assistant"; content: string };
-
 export default function HabitatPage() {
   const [selected, setSelected] = useState<string | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const selectedSystem = HABITAT_SYSTEMS.find((s) => s.id === selected);
-
-  async function sendMessage(text: string) {
-    const trimmed = text.trim();
-    if (!trimmed || loading) return;
-
-    const next: Message[] = [...messages, { role: "user", content: trimmed }];
-    setMessages(next);
-    setInput("");
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/habitat-ai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
-      });
-      const data = await res.json();
-      setMessages([
-        ...next,
-        { role: "assistant", content: data.reply ?? "No response received." },
-      ]);
-    } catch {
-      setMessages([
-        ...next,
-        { role: "assistant", content: "Connection error. Please try again." },
-      ]);
-    } finally {
-      setLoading(false);
-      setTimeout(() => inputRef.current?.focus(), 50);
-    }
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    sendMessage(input);
-  }
 
   return (
     <div className="space-y-8">
@@ -151,6 +102,28 @@ export default function HabitatPage() {
           A unified command interface for every system in your HABITAT environment.
           Energy, robotics, EV, climate, security, and network status in one place.
         </p>
+      </div>
+
+      {/* Design CTA */}
+      <div className="panel-elevated p-5 flex items-center justify-between gap-4">
+        <div>
+          <p className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-theme-35">
+            HABITAT AI Designer
+          </p>
+          <h2 className="mt-1 font-header text-xl text-theme-primary leading-tight">
+            Design or redesign your HABITAT
+          </h2>
+          <p className="mt-1 text-sm text-theme-55 max-w-lg">
+            Describe your ideal home in plain language. Our AI extracts every detail,
+            generates a floor plan, and produces a real quote — all in one conversation.
+          </p>
+        </div>
+        <Link
+          href="/habitat/design"
+          className="shrink-0 rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#e85d2a] transition-colors"
+        >
+          Start Designing
+        </Link>
       </div>
 
       {/* System Grid */}
@@ -227,83 +200,6 @@ export default function HabitatPage() {
           </div>
         </SurfaceCard>
       )}
-
-      {/* HABITAT AI Chat */}
-      <SurfaceCard title="HABITAT AI" eyebrow="Ask anything">
-        <div className="space-y-4">
-          {/* Starter prompts */}
-          {messages.length === 0 && (
-            <div className="flex flex-wrap gap-2">
-              {CHAT_STARTERS.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => sendMessage(s)}
-                  className="rounded-full border border-theme-10 px-3 py-1.5 text-xs text-theme-60 hover:border-ember/40 hover:text-ember transition-colors"
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Message thread */}
-          {messages.length > 0 && (
-            <div className="space-y-3 max-h-[360px] overflow-y-auto pr-1">
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-[16px] px-4 py-3 text-sm leading-relaxed ${
-                      msg.role === "user"
-                        ? "bg-ember text-white"
-                        : "bg-theme-4 border border-theme-6 text-theme-primary"
-                    }`}
-                  >
-                    {msg.content}
-                  </div>
-                </div>
-              ))}
-              {loading && (
-                <div className="flex justify-start">
-                  <div className="rounded-[16px] border border-theme-6 bg-theme-4 px-4 py-3">
-                    <div className="flex gap-1.5">
-                      {[0, 1, 2].map((i) => (
-                        <div
-                          key={i}
-                          className="h-1.5 w-1.5 rounded-full bg-theme-30 animate-bounce"
-                          style={{ animationDelay: `${i * 0.12}s` }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Input */}
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about your home systems..."
-              className="flex-1 rounded-[14px] border border-theme-10 bg-theme-25 px-4 py-2.5 text-sm text-theme-primary placeholder:text-theme-30 focus:outline-none focus:border-ember/40"
-              disabled={loading}
-            />
-            <button
-              type="submit"
-              disabled={loading || !input.trim()}
-              className="rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#e85d2a] disabled:opacity-50 transition-colors"
-            >
-              Send
-            </button>
-          </form>
-        </div>
-      </SurfaceCard>
 
       {/* Automation summary */}
       <div className="panel px-6 py-5">

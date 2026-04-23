@@ -155,15 +155,13 @@ function LevelCard({ level, status, isCurrentUserLevel }: LevelCardProps) {
               </div>
 
               <div className="flex items-center gap-2 flex-wrap">
-                <a
+                <Link
                   href={level.studyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.12] px-3.5 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-theme-primary"
                 >
                   <BookOpen size={11} />
                   Full Curriculum
-                </a>
+                </Link>
                 <Link
                   href={`/certifications/${level.id}/exam`}
                   className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-white transition hover:opacity-90 ${level.badgeColor}`}

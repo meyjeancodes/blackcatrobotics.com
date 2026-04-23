@@ -45,7 +45,7 @@ const PLATFORMS: PlatformProfile[] = [
     manufacturer: "Unitree Robotics",
     category: "humanoid",
     description: "43-DOF bimanual humanoid with Dex1 hands. VLA-capable via UnifoLM-VLA-0. Official TechMedix partner platform.",
-    badge: "Featured Partner",
+    badge: "TechMedix Compatible",
     specs: [
       { label: "Total DOF", value: "43" },
       { label: "Arm DOF", value: "7 per arm" },
@@ -194,8 +194,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "gripper-encoder-drift", name: "Gripper Drift", severity: "warning", description: "End-effector grip force variance > 15N" },
     ],
     maintenanceCta: "Open Phantom support ticket",
-    manualUrl: "https://github.com/blackcatrobotics/blackcat-os",
-    diagramUrl: "https://github.com/blackcatrobotics/blackcat-os",
+    manualUrl: "https://www.physicalintelligence.company/research",
+    diagramUrl: "https://www.physicalintelligence.company/research",
   },
 
   // ── Drones ──────────────────────────────────────────────────────────────────
@@ -348,8 +348,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "camera-offline", name: "LiDAR Dropout", severity: "critical", description: "LiDAR scan rate < 5 Hz" },
     ],
     maintenanceCta: "Open AMR maintenance ticket",
-    manualUrl: "https://www.amazon.science/blog",
-    diagramUrl: "https://www.amazon.science/blog",
+    manualUrl: "https://www.aboutamazon.com/news/operations/amazon-introduces-new-robotics-solutions",
+    diagramUrl: "https://www.aboutamazon.com/news/operations/amazon-introduces-new-robotics-solutions",
   },
 
   // ── Watch List — Pre-Integration ────────────────────────────────────────────
@@ -373,6 +373,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "actuator-overheat", name: "Servo Overheat",  severity: "warning", description: "Joint servo > 70°C during sustained high-torque moves" },
     ],
     maintenanceCta: "Flag for integration review",
+    manualUrl: "https://github.com/Seeed-Projects/reBot-DevArm",
+    diagramUrl: "https://github.com/Seeed-Projects/reBot-DevArm",
   },
 
   // ── Micromobility ───────────────────────────────────────────────────────────
@@ -401,8 +403,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "firmware-drift",     name: "Firmware Drift",       severity: "info",     description: "Version delta >2 builds — OTA update overdue" },
     ],
     maintenanceCta: "Schedule field swap",
-    manualUrl: "https://github.com/blackcatrobotics/blackcat-os",
-    diagramUrl: "https://github.com/blackcatrobotics/blackcat-os",
+    manualUrl: "https://www.li.me/safety",
+    diagramUrl: "https://www.li.me/safety",
     maintenanceIntervals: {
       batterySwap:      { interval: "500 cycles or 6 months",  signal: "battery-cell-drift"  },
       brakeInspect:     { interval: "30 days or 500 rides",    signal: "brake-pad-thin"      },
@@ -442,8 +444,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "brake-lever-corrosion", name: "Brake Lever Corrosion",    severity: "warning",  description: "Lever force delta >25% — corrosion on pivot" },
     ],
     maintenanceCta: "Schedule rebalance",
-    manualUrl: "https://github.com/blackcatrobotics/blackcat-os",
-    diagramUrl: "https://github.com/blackcatrobotics/blackcat-os",
+    manualUrl: "https://www.bird.co/safety/",
+    diagramUrl: "https://www.bird.co/safety/",
     maintenanceIntervals: {
       batteryInspect:   { interval: "6 months or 2,000 rides", signal: "battery-cell-drift"    },
       brakeInspect:     { interval: "30 days or 500 rides",    signal: "brake-pad-thin"        },
@@ -484,8 +486,8 @@ const PLATFORMS: PlatformProfile[] = [
       { id: "firmware-drift",      name: "Firmware Drift",        severity: "info",     description: "Version delta >2 builds" },
     ],
     maintenanceCta: "Schedule depot maintenance",
-    manualUrl: "https://github.com/blackcatrobotics/blackcat-os",
-    diagramUrl: "https://github.com/blackcatrobotics/blackcat-os",
+    manualUrl: "https://www.radpowerbikes.com/pages/user-manual",
+    diagramUrl: "https://www.radpowerbikes.com/pages/user-manual",
     maintenanceIntervals: {
       batterySwap:      { interval: "500 cycles or 6 months",    signal: "battery-cell-drift"  },
       brakeInspect:     { interval: "30 days or 500 rides",      signal: "brake-pad-thin"      },
@@ -529,6 +531,8 @@ const AI_PLATFORMS: PlatformProfile[] = [
       { id: "sim-to-real-gap",   name: "GR00T Sim-to-Real Transfer Gap", severity: "warning",  description: "GR00T N models trained on non-standard morphologies show degraded transfer -- run domain randomization with Newton physics before deployment" },
     ],
     maintenanceCta: "Open NVIDIA support ticket",
+    manualUrl: "https://developer.nvidia.com/embedded/jetson-agx-thor",
+    diagramUrl: "https://developer.nvidia.com/embedded/jetson-agx-thor",
   },
 ];
 
@@ -557,6 +561,8 @@ const AGTECH_PLATFORMS: PlatformProfile[] = [
       { id: "striker-wear",    name: "Mechanical Striker Wear",     severity: "warning",  description: "High-density weed passes accelerate striker contact wear -- inspect every 200 operating hours, replace at 1.5mm wear" },
     ],
     maintenanceCta: "Schedule Aigen field service",
+    manualUrl: "https://www.aigen.io/technology",
+    diagramUrl: "https://www.aigen.io/technology",
   },
 ];
 

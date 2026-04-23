@@ -1,206 +1,150 @@
 /**
- * Hermes Agent — autonomous dispatch coordinator
+ * Hermes Agent — BCR Internal Dispatch Coordinator
  *
- * Hermes can handle the full dispatch lifecycle including autonomously
- * booking RentAHuman field verifiers for low-severity jobs (severity 1-2)
- * without requiring human approval.
+ * Hermes is an employee of BlackCat Robotics.
+ * It reasons about incoming jobs using a local Ollama/hermes3 model,
+ * determines severity and minimum cert level required, then queues
+ * the job and notifies all eligible BCR-certified technicians.
  *
- * MCP server integration: RentAHuman is registered as a tool provider
- * so Hermes can call searchHumans / bookHuman directly in its reasoning loop.
+ * No third-party dispatch APIs. All routing is internal.
  */
 
-import { searchHumans, bookHuman, getBookingStatus } from "../dispatch/rentahuman-client";
-import type {
-  RentAHumanResult,
-  RentAHumanBooking,
-  RentAHumanBookingStatus,
-} from "../dispatch/rentahuman-client";
+import { queueAndNotify } from "../dispatch/bcr-dispatch-client";
 
-// ── MCP server tool definitions ────────────────────────────────────────────────
-// These declarations describe RentAHuman tools in the MCP tool-spec format so
-// that any MCP-compatible agent runtime (Claude claude-agent-sdk, LangChain, etc.)
-// can discover and invoke them automatically.
+const OLLAMA_URL = process.env.HERMES_OLLAMA_URL ?? "http://127.0.0.1:11434";
+const OLLAMA_MODEL = process.env.HERMES_OLLAMA_MODEL ?? "hermes3";
+const OLLAMA_DISABLED = OLLAMA_MODEL === "disabled";
 
-export const RENTAHUMAN_MCP_SERVER_CONFIG = {
-  name: "rentahuman",
-  version: "1.0.0",
-  description:
-    "RentAHuman field verifier marketplace. Use for dispatching on-demand human workers to physically inspect sites when no certified technician is available.",
-  tools: [
-    {
-      name: "searchHumans",
-      description:
-        "Search for available field verifiers near a job site. Returns workers sorted by distance with hourly rates and skill tags.",
-      inputSchema: {
-        type: "object",
-        properties: {
-          lat:         { type: "number", description: "Job site latitude" },
-          lng:         { type: "number", description: "Job site longitude" },
-          radiusMiles: { type: "number", description: "Search radius in miles", default: 25 },
-          skills:      { type: "array", items: { type: "string" }, description: "Required skill tags" },
-        },
-        required: ["lat", "lng"],
-      },
-    },
-    {
-      name: "bookHuman",
-      description:
-        "Book a field verifier for a job. Returns a booking ID and estimated arrival time.",
-      inputSchema: {
-        type: "object",
-        properties: {
-          humanId:          { type: "string", description: "Worker ID from searchHumans" },
-          taskInstructions: { type: "string", description: "Plain-language task instructions" },
-          durationHours:    { type: "number", description: "Estimated hours on-site" },
-          budgetUsd:        { type: "number", description: "Maximum budget in USD" },
-        },
-        required: ["humanId", "taskInstructions", "durationHours", "budgetUsd"],
-      },
-    },
-    {
-      name: "getBookingStatus",
-      description:
-        "Fetch current status of a booking, including verification photos uploaded by the worker.",
-      inputSchema: {
-        type: "object",
-        properties: {
-          bookingId: { type: "string", description: "Booking ID from bookHuman" },
-        },
-        required: ["bookingId"],
-      },
-    },
-  ],
-} as const;
+// ── Types ──────────────────────────────────────────────────────────────────────
 
-// ── Tool dispatch (MCP call handler) ──────────────────────────────────────────
-// When the agent runtime invokes a RentAHuman tool, it calls executeTool.
-
-export async function executeTool(
-  toolName: string,
-  args: Record<string, unknown>
-): Promise<RentAHumanResult[] | RentAHumanBooking | RentAHumanBookingStatus> {
-  switch (toolName) {
-    case "searchHumans":
-      return searchHumans(
-        args.lat as number,
-        args.lng as number,
-        (args.radiusMiles as number | undefined) ?? 25,
-        (args.skills as string[] | undefined) ?? []
-      );
-
-    case "bookHuman":
-      return bookHuman(
-        args.humanId as string,
-        args.taskInstructions as string,
-        args.durationHours as number,
-        args.budgetUsd as number
-      );
-
-    case "getBookingStatus":
-      return getBookingStatus(args.bookingId as string);
-
-    default:
-      throw new Error(`Unknown RentAHuman tool: ${toolName}`);
-  }
-}
-
-// ── Autonomous field verifier dispatch ────────────────────────────────────────
-
-export interface AutoDispatchOptions {
+export interface HermesJobInput {
   jobId: string;
-  description: string;
-  lat: number;
-  lng: number;
-  severity: number;          // 1–5; Hermes acts autonomously for 1–2
-  faultCode?: string;
-  platformId?: string;
-  taskInstructions: string;
-  maxBudgetUsd?: number;
+  workOrderId: string;
+  robotId: string;
+  robotName: string;
+  platformId: string;
+  faultCode: string;
+  faultDescription?: string;
+  fmeaContext?: unknown[];
 }
 
-export interface AutoDispatchResult {
-  dispatched: boolean;
-  reason: string;
-  booking?: RentAHumanBooking;
-  selectedHuman?: RentAHumanResult;
+export interface HermesReasoning {
+  severity: number;          // 1–5
+  minCertLevel: number;      // 1–5
+  summary: string;           // plain-language triage summary
+  escalate: boolean;         // true if severity 4–5 (supervisor alert)
 }
+
+export interface HermesDispatchResult {
+  agentSessionId: string;
+  reasoning: HermesReasoning;
+  dispatch: {
+    queued: boolean;
+    notified: string[];
+    jobQueueId?: string;
+    reason: string;
+  };
+}
+
+// ── Session ID ─────────────────────────────────────────────────────────────────
+
+export function generateSessionId(): string {
+  const ts = Date.now().toString(36).toUpperCase();
+  const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `HS-${ts}-${rand}`;
+}
+
+// ── Ollama reasoning ───────────────────────────────────────────────────────────
 
 /**
- * Hermes autonomous field verifier dispatch.
- *
- * For severity 1–2 jobs, Hermes searches for the nearest available verifier
- * and books them without requiring human approval. For severity 3+ jobs it
- * returns a recommendation that must be confirmed by a human dispatcher.
+ * Ask hermes3 (local Ollama) to triage the job and return structured reasoning.
+ * Falls back to rule-based defaults if Ollama is unavailable.
  */
-export async function autonomousFieldVerifierDispatch(
-  opts: AutoDispatchOptions
-): Promise<AutoDispatchResult> {
-  const {
-    severity,
-    lat,
-    lng,
-    taskInstructions,
-    maxBudgetUsd = 200,
-  } = opts;
+export async function reasonWithHermes(
+  input: HermesJobInput
+): Promise<HermesReasoning> {
+  const prompt = [
+    "You are Hermes, a dispatch coordinator for BlackCat Robotics.",
+    "BlackCat Robotics is a robot and drone diagnostics and repair company.",
+    "Analyze the following job and return ONLY valid JSON — no explanation, no markdown.",
+    "",
+    `Fault Code: ${input.faultCode}`,
+    `Platform: ${input.platformId}`,
+    `Robot: ${input.robotName}`,
+    input.faultDescription ? `Description: ${input.faultDescription}` : "",
+    input.fmeaContext?.length
+      ? `FMEA Records: ${JSON.stringify(input.fmeaContext)}`
+      : "FMEA Records: none",
+    "",
+    "Return JSON with exactly these fields:",
+    '{ "severity": <1-5>, "minCertLevel": <1-5>, "summary": "<one sentence triage>", "escalate": <true if severity >= 4> }',
+  ]
+    .filter(Boolean)
+    .join("\n");
 
-  // Severity 3+ requires human approval
-  if (severity > 2) {
-    return {
-      dispatched: false,
-      reason: `Severity ${severity} exceeds autonomous threshold (≤2). Human approval required.`,
-    };
-  }
-
-  // Search for nearest available verifier
-  let humans: RentAHumanResult[];
+  if (OLLAMA_DISABLED) throw new Error("Ollama disabled — using rule-based fallback");
   try {
-    humans = await searchHumans(lat, lng, 25, [
-      "drone_inspection",
-      "electronics",
-      "field_verification",
-    ]);
+    const res = await fetch(`${OLLAMA_URL}/api/generate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: OLLAMA_MODEL,
+        prompt,
+        stream: false,
+        format: "json",
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+
+    if (!res.ok) throw new Error(`Ollama ${res.status}`);
+
+    const data = await res.json();
+    const parsed = JSON.parse(data.response);
+
+    return {
+      severity: Math.min(5, Math.max(1, Number(parsed.severity) || 2)),
+      minCertLevel: Math.min(5, Math.max(1, Number(parsed.minCertLevel) || 2)),
+      summary: String(parsed.summary ?? "Triage complete."),
+      escalate: Boolean(parsed.escalate),
+    };
   } catch (err) {
+    console.warn("[hermes/agent] Ollama unavailable — using rule-based fallback:", err);
+    // Rule-based fallback
+    const sev = input.fmeaContext?.length ? 2 : 3;
     return {
-      dispatched: false,
-      reason: `RentAHuman search failed: ${err instanceof Error ? err.message : String(err)}`,
+      severity: sev,
+      minCertLevel: sev >= 3 ? 3 : 2,
+      summary: `Rule-based triage for fault ${input.faultCode} on ${input.platformId}.`,
+      escalate: sev >= 4,
     };
   }
+}
 
-  if (humans.length === 0) {
-    return {
-      dispatched: false,
-      reason: "No field verifiers available within 25 miles.",
-    };
-  }
+// ── Main dispatch entry point ──────────────────────────────────────────────────
 
-  // Pick the best candidate: closest with budget ≤ maxBudgetUsd for 2 hours
-  const affordable = humans.filter((h) => h.hourlyRateUsd * 2 <= maxBudgetUsd);
-  const best = affordable[0] ?? humans[0]; // fall back to closest if over budget
+export async function hermesDispatch(
+  supabase: any,
+  input: HermesJobInput
+): Promise<HermesDispatchResult> {
+  const agentSessionId = generateSessionId();
 
-  if (best.hourlyRateUsd * 2 > maxBudgetUsd) {
-    return {
-      dispatched: false,
-      reason: `Nearest verifier costs $${(best.hourlyRateUsd * 2).toFixed(2)} which exceeds budget of $${maxBudgetUsd}.`,
-      selectedHuman: best,
-    };
-  }
+  // 1. Reason about the job
+  const reasoning = await reasonWithHermes(input);
 
-  // Book autonomously
-  let booking: RentAHumanBooking;
-  try {
-    booking = await bookHuman(best.id, taskInstructions, 2, best.hourlyRateUsd * 2);
-  } catch (err) {
-    return {
-      dispatched: false,
-      reason: `Booking failed: ${err instanceof Error ? err.message : String(err)}`,
-      selectedHuman: best,
-    };
-  }
+  // 2. Queue and notify eligible BCR techs
+  const dispatch = await queueAndNotify(supabase, {
+    jobId: input.jobId,
+    platformId: input.platformId,
+    faultCode: input.faultCode,
+    robotName: input.robotName,
+    severity: reasoning.severity,
+    minCertLevel: reasoning.minCertLevel,
+    agentSessionId,
+  });
 
   return {
-    dispatched: true,
-    reason: `Autonomously booked ${best.displayName} (severity ${severity} ≤ 2).`,
-    booking,
-    selectedHuman: best,
+    agentSessionId,
+    reasoning,
+    dispatch,
   };
 }

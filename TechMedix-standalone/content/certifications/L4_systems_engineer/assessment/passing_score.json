@@ -1,0 +1,9 @@
+{
+  "level": "L4",
+  "passing_percentage": 82,
+  "questions_total": 40,
+  "questions_required": 33,
+  "time_limit_minutes": 90,
+  "attempts_allowed": 3,
+  "cooldown_days": 14
+}

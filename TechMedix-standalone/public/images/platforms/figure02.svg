@@ -1,0 +1,16 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#0d0d0d"/>
+  <g transform="translate(200,60)" fill="none" stroke="#e8601e" stroke-width="2.5" stroke-linecap="round">
+    <ellipse cx="0" cy="30" rx="22" ry="28"/>
+    <circle cx="-7" cy="25" r="3" fill="#e8601e"/><circle cx="7" cy="25" r="3" fill="#e8601e"/>
+    <line x1="0" y1="58" x2="0" y2="140"/>
+    <line x1="0" y1="75" x2="-45" y2="120"/><line x1="-45" y1="120" x2="-50" y2="155"/>
+    <line x1="0" y1="75" x2="45" y2="120"/><line x1="45" y1="120" x2="50" y2="155"/>
+    <line x1="0" y1="140" x2="-25" y2="230"/><line x1="-25" y1="230" x2="-30" y2="290"/>
+    <line x1="0" y1="140" x2="25" y2="230"/><line x1="25" y1="230" x2="30" y2="290"/>
+    <rect x="-18" y="65" width="36" height="50" rx="8" stroke-width="1.5" opacity="0.5"/>
+    <circle cx="0" cy="0" r="32" stroke-width="0"/>
+    <text x="0" y="5" text-anchor="middle" fill="#e8601e" font-family="monospace" font-size="11" font-weight="700">02</text>
+  </g>
+  <text x="200" y="380" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="monospace" font-size="9" letter-spacing="0.15em">FIGURE 02 · HUMANOID</text>
+</svg>
