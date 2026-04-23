@@ -7,7 +7,6 @@ const nextConfig = {
     return [
       { source: '/about', destination: '/about.html' },
       { source: '/blackcat-grid', destination: '/blackcat-grid.html' },
-      { source: '/home', destination: '/index.html' },
       { source: '/habitat-landing', destination: '/habitat.html' },
       { source: '/certifications-landing', destination: '/certifications.html' },
     ];
