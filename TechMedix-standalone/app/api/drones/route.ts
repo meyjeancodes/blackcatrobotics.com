@@ -16,8 +16,7 @@ async function isAuthenticated(req: NextRequest): Promise<boolean> {
 
 export async function GET(req: NextRequest) {
   const authed = await isAuthenticated(req);
-  if (!authed) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
+  
   if (!isSupabaseConfigured()) {
     return NextResponse.json({ drones: MOCK_DRONES, mock: true }, { status: 200 });
   }
@@ -26,6 +25,11 @@ export async function GET(req: NextRequest) {
     const supabase = await createSupabaseServerClient();
     if (!supabase) {
       return NextResponse.json({ drones: MOCK_DRONES, mock: true }, { status: 200 });
+    }
+
+    if (!authed) {
+      // Auth required for live data — serve mocks instead of 401
+      return NextResponse.json({ drones: MOCK_DRONES, mock: true, auth_required: true });
     }
 
     const { data: drones, error } = await supabase
