@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient } from "../../../../lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
 import { generateFleetInsight, generateEnergyInsight } from "../../../../lib/blackcat/ai/insights";
 import type { BlackCatRobot, BlackCatAlert, EnergyTransaction } from "../../../../types/blackcat";
 
@@ -26,6 +26,10 @@ export async function POST(req: NextRequest) {
       { error: 'type must be "fleet" or "energy"' },
       { status: 400 }
     );
+  }
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
   }
 
   try {

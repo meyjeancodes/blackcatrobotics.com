@@ -1,4 +1,4 @@
-import { createSupabaseServerClient } from "../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseConfigured } from "../../../lib/supabase-server";
 import type { Certification } from "../../../types/atlas";
 import { CheckCircle2, Circle, Award } from "lucide-react";
 import { BcrCertSection } from "./BcrCertSection";
@@ -22,17 +22,7 @@ function techLevel(rating: number): number {
 }
 
 export default async function TechniciansPage() {
-  const supabase = await createSupabaseServerClient();
-
-  const [{ data: techs }, { data: jobs }, { data: certs }, { data: techCerts }] =
-    await Promise.all([
-      supabase.from("technicians").select("*").order("name"),
-      supabase.from("dispatch_jobs").select("technician_id, status"),
-      supabase.from("certifications").select("*").order("level"),
-      supabase.from("technician_certifications").select("certification_id, ai_score, earned_at"),
-    ]);
-
-  const techList = (techs ?? []) as Array<{
+  let techList: Array<{
     id: string;
     name: string;
     region: string;
@@ -40,12 +30,35 @@ export default async function TechniciansPage() {
     platforms: string[];
     rating: number;
     eta_minutes: number;
-  }>;
-  const jobList = (jobs ?? []) as Array<{ technician_id: string; status: string }>;
-  const certList = (certs ?? []) as Certification[];
-  const earnedIds = new Set((techCerts ?? []).map((tc) => tc.certification_id));
+  }> = [];
+  let jobList: Array<{ technician_id: string; status: string }> = [];
+  let certList: Certification[] = [];
+  let techCerts: Array<{ certification_id: string; ai_score: number | null; earned_at: string }> = [];
+
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createSupabaseServerClient();
+      if (supabase) {
+        const [{ data: techs }, { data: jobs }, { data: certs }, { data: tCerts }] =
+          await Promise.all([
+            supabase.from("technicians").select("*").order("name"),
+            supabase.from("dispatch_jobs").select("technician_id, status"),
+            supabase.from("certifications").select("*").order("level"),
+            supabase.from("technician_certifications").select("certification_id, ai_score, earned_at"),
+          ]);
+        techList = (techs ?? []) as typeof techList;
+        jobList = (jobs ?? []) as typeof jobList;
+        certList = (certs ?? []) as Certification[];
+        techCerts = (tCerts ?? []) as typeof techCerts;
+      }
+    } catch {
+      // Non-fatal: render empty state
+    }
+  }
+
+  const earnedIds = new Set(techCerts.map((tc) => tc.certification_id));
   const scoreMap: Record<string, number> = {};
-  for (const tc of techCerts ?? []) {
+  for (const tc of techCerts) {
     if (tc.ai_score != null) scoreMap[tc.certification_id] = tc.ai_score;
   }
 

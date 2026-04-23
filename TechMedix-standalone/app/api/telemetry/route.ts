@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient } from "../../../lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "../../../lib/supabase-service";
 import { runDiagnostics } from "../../../lib/diagnostics";
 import { sendAlert } from "../../../lib/alerts";
 
@@ -10,6 +10,10 @@ export async function POST(req: NextRequest) {
   }
 
   const apiKey = authHeader.replace("Bearer ", "").trim();
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
+
   const supabase = createServiceClient();
 
   // Validate API key

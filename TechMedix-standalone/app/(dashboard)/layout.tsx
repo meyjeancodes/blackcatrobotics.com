@@ -6,8 +6,10 @@ export default async function ConsoleLayout({ children }: { children: ReactNode 
   let user = null;
   try {
     const supabase = await createSupabaseServerClient();
-    const { data } = await supabase.auth.getUser();
-    user = data.user;
+    if (supabase) {
+      const { data } = await supabase.auth.getUser();
+      user = data.user;
+    }
   } catch {
     // cookies() may throw outside a request context (e.g. during static rendering)
   }

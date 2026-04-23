@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS suppliers (
 
 CREATE TABLE IF NOT EXISTS robot_profiles (
   id                uuid primary key default gen_random_uuid(),
-  robot_id          uuid references robots(id) on delete cascade,
+  robot_id          text references robots(id) on delete cascade,
   model             text not null,
   oem               text not null,
   description       text,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS robot_profiles (
 
 CREATE TABLE IF NOT EXISTS components (
   id                  uuid primary key default gen_random_uuid(),
-  robot_id            uuid references robots(id) on delete cascade,
+  robot_id            text references robots(id) on delete cascade,
   name                text not null,
   type                component_type not null,
   oem_supplier_id     uuid references suppliers(id) on delete set null,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS technician_certifications (
 
 CREATE TABLE IF NOT EXISTS jobs (
   id                uuid primary key default gen_random_uuid(),
-  robot_id          uuid references robots(id) on delete set null,
+  robot_id          text references robots(id) on delete set null,
   technician_id     uuid references technicians(id) on delete set null,
   procedure_id      uuid references procedures(id) on delete set null,
   component_id      uuid references components(id) on delete set null,

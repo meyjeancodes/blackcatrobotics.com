@@ -1,21 +1,29 @@
-import { createSupabaseServerClient } from "../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseConfigured } from "../../../lib/supabase-server";
 import { JobList } from "./JobList";
 import type { Job } from "../../../types/atlas";
 
 export const revalidate = 30;
 
 export default async function MaintenancePage() {
-  const supabase = await createSupabaseServerClient();
+  let jobList: Job[] = [];
 
-  const { data: jobs } = await supabase
-    .from("jobs")
-    .select(
-      `*, procedures ( id, title, procedure_type, steps, estimated_minutes, ai_guidance_enabled ),
-       components ( id, name, type, criticality, description )`
-    )
-    .order("created_at", { ascending: false });
-
-  const jobList = (jobs ?? []) as Job[];
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createSupabaseServerClient();
+      if (supabase) {
+        const { data: jobs } = await supabase
+          .from("jobs")
+          .select(
+            `*, procedures ( id, title, procedure_type, steps, estimated_minutes, ai_guidance_enabled ),
+             components ( id, name, type, criticality, description )`
+          )
+          .order("created_at", { ascending: false });
+        jobList = (jobs ?? []) as Job[];
+      }
+    } catch {
+      // Non-fatal: render empty state
+    }
+  }
 
   const pending = jobList.filter((j) => j.status === "pending").length;
   const inProgress = jobList.filter((j) => j.status === "in_progress").length;

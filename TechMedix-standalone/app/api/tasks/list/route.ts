@@ -1,9 +1,16 @@
 import { NextResponse } from "next/server";
-import { createServiceClient } from "../../../../lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
 
 export async function GET() {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ tasks: [], mock: true });
+  }
+
   try {
     const supabase = createServiceClient();
+    if (!supabase) {
+      return NextResponse.json({ tasks: [], mock: true });
+    }
 
     const { data, error } = await supabase
       .from("tasks")

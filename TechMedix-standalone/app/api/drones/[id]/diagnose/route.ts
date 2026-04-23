@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { createSupabaseServerClient } from "../../../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseConfigured } from "../../../../../lib/supabase-server";
 import { checkCoverage } from "../../../../../lib/dji-care-coverage";
 import type {
   DiagnoseBody,
@@ -103,6 +103,10 @@ export async function POST(
     body = await req.json();
   } catch {
     body = {};
+  }
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
   }
 
   try {

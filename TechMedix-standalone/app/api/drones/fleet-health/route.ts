@@ -4,10 +4,11 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient } from "../../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseConfigured } from "../../../../lib/supabase-server";
+import { MOCK_FLEET_HEALTH } from "../../../../lib/drone-mock-data";
 
 async function isAuthenticated(req: NextRequest): Promise<boolean> {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return true;
+  if (!isSupabaseConfigured()) return true;
   return req.cookies.getAll().some((c) => c.name.includes("auth-token"));
 }
 
@@ -15,8 +16,15 @@ export async function GET(req: NextRequest) {
   const authed = await isAuthenticated(req);
   if (!authed) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ ...MOCK_FLEET_HEALTH, mock: true });
+  }
+
   try {
     const supabase = await createSupabaseServerClient();
+    if (!supabase) {
+      return NextResponse.json({ ...MOCK_FLEET_HEALTH, mock: true });
+    }
 
     // Fetch all drones with their latest diagnostic
     const { data: drones, error: dronesError } = await supabase

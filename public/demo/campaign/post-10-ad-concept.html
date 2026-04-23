@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1080px;
+    background: #0d0e13;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    overflow: hidden; position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none;
+  }
+  .content {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 80px;
+  }
+  .line1 {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 28px; color: rgba(255,255,255,0.65);
+    margin-bottom: 8px;
+  }
+  .headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 110px; font-weight: 700;
+    color: #e8601e;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .line3 {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 28px; color: rgba(255,255,255,0.65);
+    margin-bottom: 48px;
+  }
+  .divider {
+    width: 35%; height: 1px;
+    background: rgba(232,96,30,0.3);
+    margin-bottom: 40px;
+  }
+  .subtext {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 22px; color: rgba(255,255,255,0.7);
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
+  .cta-btn {
+    background: #e8601e;
+    border: none;
+    border-radius: 10px;
+    padding: 20px 48px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 18px; font-weight: 600;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  .footer {
+    margin-top: 48px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="content">
+    <div class="line1">Stop losing</div>
+    <div class="headline">$260K/hr</div>
+    <div class="line3">to robot downtime</div>
+    <div class="divider"></div>
+    <div class="subtext">
+      TechMedix predicts failures 48 hours early.<br>
+      Certified technicians dispatched automatically.
+    </div>
+    <div class="cta-btn">See How It Works</div>
+    <div class="footer">TechMedix by BlackCat Robotics</div>
+  </div>
+</body>
+</html>

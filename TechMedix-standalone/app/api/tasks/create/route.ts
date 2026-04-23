@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient } from "../../../../lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
 import type { TaskType, TaskStatus } from "../../../../types/blackcat";
 
 function isAuthorized(req: NextRequest): boolean {
@@ -31,6 +31,10 @@ export async function POST(req: NextRequest) {
       { error: `type must be one of: ${validTypes.join(", ")}` },
       { status: 400 }
     );
+  }
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
   }
 
   try {

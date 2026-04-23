@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient } from "../../../../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseConfigured } from "../../../../../../lib/supabase-server";
 import type { ClaimStatus } from "../../../../../../types/dji-drone";
 
 async function isAuthenticated(req: NextRequest): Promise<boolean> {
@@ -20,6 +20,10 @@ export async function GET(
   if (!authed) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { id, claim_id } = await params;
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
 
   try {
     const supabase = await createSupabaseServerClient();
