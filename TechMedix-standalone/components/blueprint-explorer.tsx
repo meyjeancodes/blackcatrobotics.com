@@ -6,15 +6,13 @@ import { getPlatformById } from "@/lib/platforms/index";
 import {
   CircleDot,
   Crosshair,
-  Grid3x3,
-  Layers,
+  Grid3X3,
   Maximize2,
   Minimize2,
   RotateCcw,
+  Ruler,
   Wrench,
   X,
-  ZoomIn,
-  ZoomOut,
 } from "lucide-react";
 
 const CATEGORY_COLOR: Record<PartCategory, { bg: string; stroke: string; badge: string; glow: string }> = {
@@ -30,12 +28,6 @@ const CATEGORY_COLOR: Record<PartCategory, { bg: string; stroke: string; badge: 
   safety:       { bg: "#EF4444", stroke: "#EF4444", badge: "bg-red-500/[0.12] text-red-700", glow: "rgba(239,68,68,0.35)" },
 };
 
-const SEVERITY_COLOR: Record<string, string> = {
-  critical: "text-red-600",
-  warning:  "text-amber-600",
-  info:     "text-sky-600",
-};
-
 interface Props {
   platformId: string;
   onClose?: () => void;
@@ -48,8 +40,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
   const [selectedPartId, setSelectedPartId] = useState<string | null>(null);
   const [exploded, setExploded] = useState(false);
   const [wireframe, setWireframe] = useState(false);
-  const [showCutaway, setShowCutaway] = useState(false);
-  const [showGrid, setShowGrid] = useState(true);
+  const [showDimensions, setShowDimensions] = useState(false);
   const [rotY, setRotY] = useState(-18);
   const [rotX, setRotX] = useState(12);
   const [isDragging, setIsDragging] = useState(false);
@@ -61,7 +52,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
     setRotX((x) => Math.max(-80, Math.min(80, x + dy)));
   }, []);
 
-  // ── Toolbar button ─────────────────────────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────────────────────
   function ToolbarBtn({
     icon,
     label,
@@ -78,7 +69,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
         onClick={onClick}
         className={`inline-flex items-center gap-1.5 rounded-full px-2 py-1 font-mono text-[0.52rem] uppercase tracking-[0.10em] transition ${
           active
-            ? "bg-ember/12 text-ember border border-ember/25"
+            ? "bg-sky-500/12 text-sky-600 border border-sky-500/25"
             : "text-white/45 border border-transparent hover:bg-white/8 hover:text-white/70"
         }`}
         title={label}
@@ -89,7 +80,6 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
     );
   }
 
-  // ── Detail row ──────────────────────────────────────────────────────────────
   function DetailRow({
     label,
     value,
@@ -110,41 +100,33 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
     );
   }
 
-  // ── Transform SVG path ──────────────────────────────────────────────────────
   function transformPath(d: string, dx: number, dy: number): string {
     return d.replace(
       /([MLHVCSQTAZ])([^MLHVCSQTAZ]*)/gi,
       (_, cmd, rest) => {
         if (cmd === "Z" || cmd === "z") return "Z";
-        const nums = rest
-          .trim()
-          .split(/[\s,]+/)
-          .filter(Boolean)
-          .map(Number);
+        const nums = rest.trim().split(/[\s,]+/).filter(Boolean).map(Number);
         let out = cmd.toUpperCase();
         for (let i = 0; i < nums.length; i += 2) {
-          const x = nums[i] + dx;
-          const y = nums[i + 1] + dy;
-          out += ` ${x.toFixed(1)},${y.toFixed(1)}`;
+          out += ` ${(nums[i] + dx).toFixed(1)},${(nums[i + 1] + dy).toFixed(1)}`;
         }
         return out;
       }
     );
   }
 
-  // ── ViewBox helpers ─────────────────────────────────────────────────────────
   const vbNumbers = useMemo(() => chassis.viewBox.split(" ").map(Number), [chassis.viewBox]);
   const vbCx = vbNumbers[0] + vbNumbers[2] / 2;
   const vbCy = vbNumbers[1] + vbNumbers[3] / 2;
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
-    <div className="flex h-full flex-col bg-[#050508] text-slate-200">
+    <div className="flex h-full flex-col bg-[#030306] text-slate-200">
       {/* Toolbar */}
       <div className="shrink-0 flex items-center justify-between border-b border-white/6 bg-black/40 px-4 py-2 backdrop-blur">
         <div className="flex items-center gap-2">
           <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-white/40">
-            Blueprint View
+            Technical Blueprint
           </span>
           <span className="rounded-full border border-white/8 bg-white/3 px-2 py-0.5 font-mono text-[0.55rem] uppercase tracking-[0.10em] text-white/30">
             {platform.name}
@@ -152,22 +134,16 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
         </div>
         <div className="flex items-center gap-1">
           <ToolbarBtn
-            icon={<Grid3x3 size={13} />}
-            label="Grid"
-            active={showGrid}
-            onClick={() => setShowGrid(!showGrid)}
-          />
-          <ToolbarBtn
-            icon={<Layers size={13} />}
+            icon={<Grid3X3 size={13} />}
             label="Wireframe"
             active={wireframe}
             onClick={() => setWireframe(!wireframe)}
           />
           <ToolbarBtn
-            icon={<Crosshair size={13} />}
-            label="Cutaway"
-            active={showCutaway}
-            onClick={() => setShowCutaway(!showCutaway)}
+            icon={<Ruler size={13} />}
+            label="Dimensions"
+            active={showDimensions}
+            onClick={() => setShowDimensions(!showDimensions)}
           />
           <div className="ml-2 h-5 w-px bg-white/8" />
           <ToolbarBtn
@@ -176,14 +152,10 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
             active={exploded}
             onClick={() => setExploded(!exploded)}
           />
-          <div className="ml-2 h-5 w-px bg-white/8" />
           <button
-            onClick={() => {
-              setRotY(-18);
-              setRotX(12);
-            }}
-            className="rounded-full p-1.5 text-white/45 transition hover:bg-white/10 hover:text-white/80"
-            title="Reset Camera"
+            onClick={() => { setRotY(-18); setRotX(12); }}
+            className="ml-2 rounded-full p-1.5 text-white/45 transition hover:bg-white/10 hover:text-white/80"
+            title="Reset View"
           >
             <RotateCcw size={13} />
           </button>
@@ -199,7 +171,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
         </div>
       </div>
 
-      {/* Main canvas */}
+      {/* Canvas */}
       <div
         className="relative flex-1 overflow-hidden cursor-move select-none"
         onMouseDown={(e) => {
@@ -207,7 +179,8 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
           const startX = e.clientX, startY = e.clientY;
           const startRotY = rotY, startRotX = rotX;
           const onMove = (ev: MouseEvent) => {
-            handleRotate(ev.clientX - startX, ev.clientY - startY);
+            setRotY(startRotY + (ev.clientX - startX));
+            setRotX(Math.max(-80, Math.min(80, startRotX + (ev.clientY - startY))));
           };
           const onUp = () => {
             setIsDragging(false);
@@ -218,42 +191,48 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
           document.addEventListener("mouseup", onUp);
         }}
       >
-        {/* Blueprint grid background */}
-        {showGrid && (
-          <div
-            className="pointer-events-none absolute inset-0 opacity-15"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)
-              `,
-              backgroundSize: "20px 20px",
-            }}
-          />
-        )}
+        {/* Blueprint grid with subtle axis lines */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(100,150,255,0.08) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(100,150,255,0.08) 1px, transparent 1px)
+            `,
+            backgroundSize: "16px 16px",
+          }}
+        />
 
-        {/* SVG robot chassis */}
+        {/* Center axis cross */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-10"
+          style={{
+            background: `repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.06) 80px), repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.06) 80px)`,
+            backgroundSize: "160px 160px",
+            backgroundPosition: "center",
+          }}
+        />
+
+        {/* SVG chassis */}
         <div className="absolute inset-0 flex items-center justify-center">
           <svg
             viewBox={chassis.viewBox}
-            className={`transition-transform duration-500 ${wireframe ? "opacity-65" : "opacity-95"}`}
+            className="transition-transform duration-500"
             style={{
               width: "min(420px, 70vh)",
               height: "auto",
               transform: `rotateY(${rotY}deg) rotateX(${rotX}deg)`,
               transformStyle: "preserve-3d",
-              filter: selectedPart
-                ? `drop-shadow(0 0 18px ${CATEGORY_COLOR[selectedPart.category].glow})`
-                : "none",
+              filter: selectedPart ? `drop-shadow(0 0 20px ${CATEGORY_COLOR[selectedPart.category].glow})` : "none",
             }}
           >
-            {/* Silhouette / structural outline */}
+            {/* Silhouette/structural outline */}
             {chassis.silhouette && (
               <path
                 d={chassis.silhouette}
-                fill={wireframe ? "none" : "rgba(255,255,255,0.02)"}
-                stroke={wireframe ? "rgba(60,100,255,0.4)" : "rgba(255,255,255,0.06)"}
-                strokeWidth={wireframe ? 1 : 1.5}
+                fill="rgba(255,255,255,0.015)"
+                stroke="rgba(255,255,255,0.06)"
+                strokeWidth={1.2}
               />
             )}
 
@@ -267,8 +246,9 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                     cy={a.cy}
                     r={a.r}
                     fill="none"
-                    stroke={a.stroke || "rgba(255,255,255,0.05)"}
+                    stroke={a.stroke || "rgba(255,255,255,0.04)"}
                     strokeWidth={1}
+                    strokeDasharray="2 2"
                   />
                 );
               }
@@ -278,7 +258,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                     key={i}
                     d={a.d}
                     fill="none"
-                    stroke={a.stroke || "rgba(255,255,255,0.05)"}
+                    stroke={a.stroke || "rgba(255,255,255,0.04)"}
                     strokeWidth={1}
                   />
                 );
@@ -286,24 +266,16 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
               return null;
             })}
 
-            {/* Interactive parts */}
+            {/* Parts */}
             {chassis.parts.map((part) => {
               const isSelected = selectedPartId === part.id;
-              const activeColor = CATEGORY_COLOR[part.category];
+              const color = CATEGORY_COLOR[part.category];
               const [ex, ey] = exploded ? part.explodeOffset : [0, 0];
-              const transformedD = transformPath(part.d, ex, ey);
+              const d = transformPath(part.d, ex, ey);
 
-              const fill = wireframe
-                ? "none"
-                : isSelected
-                ? activeColor.bg + "66"
-                : activeColor.bg + "35";
-              const stroke = isSelected
-                ? activeColor.stroke
-                : wireframe
-                ? activeColor.stroke + "99"
-                : activeColor.stroke + "80";
-              const strokeW = isSelected ? 2.2 : wireframe ? 1 : 1.1;
+              const fill = wireframe ? "none" : isSelected ? color.bg + "55" : color.bg + "30";
+              const stroke = isSelected ? color.stroke : wireframe ? color.stroke + "aa" : color.stroke + "70";
+              const strokeW = isSelected ? 2.3 : wireframe ? 1 : 1;
 
               const failure = platform.failureSignatures?.find(
                 (f) => f.id.toLowerCase().includes(part.id.toLowerCase())
@@ -317,11 +289,9 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                     setSelectedPartId(isSelected ? null : part.id);
                   }}
                   style={{ cursor: "pointer" }}
-                  className={`transition-all duration-300 ${isSelected ? "z-10" : ""}`}
                 >
-                  {/* Part shape */}
                   <path
-                    d={transformedD}
+                    d={d}
                     fill={fill}
                     stroke={stroke}
                     strokeWidth={strokeW}
@@ -329,12 +299,12 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                     className="transition-all duration-500"
                   />
 
-                  {/* Failure indicator dot */}
+                  {/* Failure severity indicator */}
                   {failure && !wireframe && (
                     <circle
                       cx={part.labelAnchor[0] + ex}
-                      cy={part.labelAnchor[1] + ey - 8}
-                      r={isSelected ? 4.5 : 3}
+                      cy={part.labelAnchor[1] + ey - 10}
+                      r={isSelected ? 5 : 3.5}
                       className={`transition-all duration-300 ${
                         failure.severity === "critical"
                           ? "fill-red-500"
@@ -345,36 +315,38 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                     />
                   )}
 
-                  {/* Part label */}
+                  {/* Part label (collapsed when wireframe) */}
                   {!wireframe && (
                     <text
                       x={part.labelAnchor[0] + ex}
-                      y={part.labelAnchor[1] + ey - 14}
+                      y={part.labelAnchor[1] + ey - 18}
                       textAnchor="middle"
-                      className="fill-white/55 font-mono text-[7px] uppercase tracking-wider pointer-events-none select-none"
+                      className="fill-white/50 font-mono text-[7px] uppercase tracking-wider pointer-events-none select-none"
                       style={{ fontFamily: "Chakra Petch, monospace" }}
                     >
                       {part.name.split(" ")[0]}
                     </text>
                   )}
 
-                  {/* Callout anchor (tiny crosshair) */}
-                  {isSelected && (
+                  {/* Dimension lines (when selected + dimensions mode) */}
+                  {showDimensions && isSelected && (
                     <g className="opacity-60">
+                      {/* Vertical dimension */}
                       <line
-                        x1={part.labelAnchor[0] + ex - 6}
-                        y1={part.labelAnchor[1] + ey}
-                        x2={part.labelAnchor[0] + ex + 6}
-                        y2={part.labelAnchor[1] + ey}
-                        stroke="white"
+                        x1={part.labelAnchor[0] + ex + 10}
+                        y1={part.labelAnchor[1] + ey - 25}
+                        x2={part.labelAnchor[0] + ex + 10}
+                        y2={part.labelAnchor[1] + ey + 25}
+                        stroke="rgba(100,200,255,0.5)"
                         strokeWidth={0.7}
                       />
+                      {/* Horizontal dimension */}
                       <line
-                        x1={part.labelAnchor[0] + ex}
-                        y1={part.labelAnchor[1] + ey - 6}
-                        x2={part.labelAnchor[0] + ex}
-                        y2={part.labelAnchor[1] + ey + 6}
-                        stroke="white"
+                        x1={part.labelAnchor[0] + ex - 30}
+                        y1={part.labelAnchor[1] + ey + 35}
+                        x2={part.labelAnchor[0] + ex + 30}
+                        y2={part.labelAnchor[1] + ey + 35}
+                        stroke="rgba(100,200,255,0.5)"
                         strokeWidth={0.7}
                       />
                     </g>
@@ -382,30 +354,14 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                 </g>
               );
             })}
-
-            {/* Cutaway plane */}
-            {showCutaway && (
-              <line
-                x1="0"
-                y1={vbCy}
-                x2={vbNumbers[2]}
-                y2={vbCy}
-                stroke="rgba(255,255,255,0.25)"
-                strokeWidth={1}
-                strokeDasharray="4 3"
-              />
-            )}
           </svg>
         </div>
 
-        {/* Selected Part Detail Panel */}
+        {/* Selected part info card */}
         {selectedPart && (
           <div
-            className={`absolute right-4 top-4 h-fit max-h-[calc(100%-3rem)] w-80 transform overflow-y-auto rounded-xl border border-white/10 bg-black/70 p-5 backdrop-blur-xl transition-all duration-300 ${
-              selectedPart ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"
-            }`}
+            className="absolute right-4 top-4 h-fit max-h-[calc(100%-3rem)] w-80 overflow-y-auto rounded-xl border border-white/10 bg-black/75 p-5 backdrop-blur-xl transition-all duration-300"
           >
-            {/* Header */}
             <div className="mb-3 flex items-start justify-between">
               <div>
                 <p className="font-ui text-[0.50rem] uppercase tracking-[0.14em] text-white/35">
@@ -423,7 +379,6 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
               </button>
             </div>
 
-            {/* Category badge */}
             <div className="mb-4">
               <span
                 className={`inline-flex items-center rounded-full px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.10em] font-semibold ${
@@ -434,7 +389,6 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
               </span>
             </div>
 
-            {/* Summary */}
             <p className="mb-4 text-xs leading-relaxed text-white/60">
               {selectedPart.summary}
             </p>
@@ -458,13 +412,13 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
               </div>
             )}
 
-            {/* Specs */}
+            {/* Technical details */}
             <div className="space-y-3">
               <p className="font-ui text-[0.52rem] uppercase tracking-[0.12em] text-white/35">
                 Technical Details
               </p>
               <div className="rounded-lg bg-white/2 border border-white/5 p-3 space-y-2.5">
-                <DetailRow label="Component Overview" value={selectedPart.details} />
+                <DetailRow label="Overview" value={selectedPart.details} />
                 <DetailRow
                   label="Diagnostic Cue"
                   value={selectedPart.diagnosticCue}
@@ -478,7 +432,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
               </div>
             </div>
 
-            {/* Anchor coords */}
+            {/* Anchor coordinates */}
             <div className="mt-4 pt-3 border-t border-white/8">
               <p className="font-ui text-[0.50rem] uppercase tracking-[0.12em] text-white/25 mb-1">
                 Callout anchor
@@ -492,18 +446,18 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
         )}
       </div>
 
-      {/* Footer status bar */}
+      {/* Status bar */}
       <div className="shrink-0 border-t border-white/6 bg-black/40 px-4 py-1.5 text-[0.60rem] font-mono text-white/30 backdrop-blur">
-        <span className="uppercase tracking-wider">Status:</span>{" "}
-        {exploded ? "Exploded — parts separated for inspection" : "Assembled — normal operating configuration"}
-        {showCutaway && " · Cutaway active"}
+        <span className="uppercase tracking-wider">Mode:</span>{" "}
+        {exploded ? "Exploded" : "Assembled"}
+        {showDimensions && " · Dimensions"}
         {wireframe && " · Wireframe"}
+        {selectedPart && ` · Selected: ${selectedPart.name}`}
       </div>
     </div>
   );
 }
 
-// Helper to compute actual label coords with explode offset applied
 function partLabelX(part: Part, exploded: boolean): number {
   return exploded ? part.labelAnchor[0] + part.explodeOffset[0] : part.labelAnchor[0];
 }

@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BookOpen, Expand, Layers, Maximize2, Play, X } from "lucide-react";
+import { BookOpen, Crosshair, Expand, Layers, Maximize2, Play, X } from "lucide-react";
 import { PlatformExplorer } from "./platform-explorer";
 import { SimLab } from "./sim-lab";
+import { BlueprintExplorer } from "./blueprint-explorer";
 import type { PlatformProfile } from "../lib/platforms/index";
 
 type Modal =
   | { kind: "explorer"; platformId: string }
+  | { kind: "blueprint"; platformId: string }
   | { kind: "sim"; platformId: string }
   | null;
 
@@ -52,6 +54,14 @@ export function KnowledgeHubClient({ platforms }: Props) {
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
+                onClick={() => setModal({ kind: "blueprint", platformId: p.id })}
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-sky-500/[0.18] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-sky-600 transition hover:bg-sky-500/[0.06] hover:text-sky-700"
+                title="Interactive technical blueprint — rotate, explode, cutaway"
+              >
+                <Crosshair size={10} /> Blueprint
+              </button>
+              <button
+                type="button"
                 onClick={() => setModal({ kind: "sim", platformId: p.id })}
                 className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-[var(--ink)]/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
               >
@@ -72,7 +82,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
         ))}
       </div>
 
-      {/* TechMedix Sim Lab launcher */}
+      {/* TechMedix Sandbox launcher */}
       <div className="mt-10 rounded-[20px] border border-ember/[0.18] bg-gradient-to-br from-ember/[0.06] to-transparent p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
@@ -130,6 +140,8 @@ export function KnowledgeHubClient({ platforms }: Props) {
             <div className="h-full">
               {modal.kind === "explorer" ? (
                 <PlatformExplorer platformId={modal.platformId} />
+              ) : modal.kind === "blueprint" ? (
+                <BlueprintExplorer platformId={modal.platformId} onClose={() => setModal(null)} />
               ) : (
                 <SimLab initialPlatformId={modal.platformId} />
               )}
