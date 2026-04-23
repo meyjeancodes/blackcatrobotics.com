@@ -22,3 +22,4 @@ Legal/
 # Nested git repos (use submodules intentionally if needed)
 bcr-live/
 .vercel
+.hermes/

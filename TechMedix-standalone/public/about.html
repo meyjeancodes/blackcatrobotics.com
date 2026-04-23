@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — BlackCat Robotics</title>
+
+<!-- Brand Fonts -->
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400;500;700&f[]=tanker@400&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-dark: #0A0A0F;
+    --bg-light: #F0F0E8;
+    --bg-card: #FAFAF4;
+    --accent: #E84E1B;
+    --text-dark: #0A0A0F;
+    --text-light: #FFFFFF;
+    --text-muted: #8888A0;
+    --text-dim: rgba(255,255,255,0.4);
+    --border-subtle: rgba(255,255,255,0.07);
+    --accent-bg: rgba(232,92,26,0.08);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Satoshi', sans-serif;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  /* === Nav === */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(240, 239, 232, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(10,10,15,0.06);
+    padding: 0 48px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Tanker', sans-serif; font-size: 20px;
+    letter-spacing: 0.02em; color: var(--text-dark); text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+
+  .nav-links a {
+    font-family: 'Chakra Petch', sans-serif; font-size: 13px;
+    font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-dark); }
+
+  .nav-cta {
+    font-family: 'Satoshi', sans-serif !important; font-size: 14px !important;
+    font-weight: 500 !important; text-transform: none !important;
+    letter-spacing: 0 !important; background: var(--accent);
+    color: var(--text-light) !important; padding: 8px 20px;
+    border-radius: 6px; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.9; }
+
+  /* === Hero === */
+  .hero {
+    background: var(--bg-dark);
+    padding: 180px 48px 120px;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(232,78,27,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-overline {
+    font-family: 'Chakra Petch', sans-serif; font-size: 12px;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Tanker', sans-serif;
+    font-size: clamp(42px, 6vw, 80px);
+    line-height: 1.05; color: var(--text-light);
+    max-width: 800px; letter-spacing: -0.01em;
+  }
+
+  .hero h1 em {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic; font-weight: 400;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .hero-sub {
+    font-size: 18px; color: var(--text-muted);
+    max-width: 560px; margin-top: 28px; line-height: 1.75;
+  }
+
+  /* === Shared === */
+  .section-light {
+    background: var(--bg-light); padding: 120px 48px;
+  }
+  .section-dark {
+    background: var(--bg-dark); padding: 120px 48px;
+    color: var(--text-light);
+  }
+
+  .eyebrow {
+    font-family: 'Chakra Petch', sans-serif; font-size: 12px;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .section-light .eyebrow {
+    background: var(--accent-bg); display: inline-block;
+    padding: 4px 12px; border-radius: 4px;
+  }
+
+  .section-heading {
+    font-family: 'Tanker', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.1; max-width: 700px;
+  }
+  .section-dark .section-heading { color: var(--text-light); }
+  .section-light .section-heading { color: var(--text-dark); }
+  .section-heading em {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic; font-weight: 400;
+  }
+  .section-dark .section-heading em { color: rgba(255,255,255,0.5); }
+  .section-light .section-heading em { color: var(--text-muted); }
+
+  .section-body {
+    font-size: 17px; line-height: 1.8;
+    max-width: 640px; margin-top: 24px;
+  }
+  .section-dark .section-body { color: rgba(255,255,255,0.6); }
+  .section-light .section-body { color: rgba(10,10,15,0.65); }
+
+  /* === Origin Story === */
+  .origin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 80px;
+    align-items: start;
+  }
+
+  .origin-block {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .origin-block::before {
+    content: '';
+    position: absolute; left: 0; top: 4px; bottom: 4px;
+    width: 3px; background: var(--accent); border-radius: 2px;
+    opacity: 0.4;
+  }
+
+  .origin-year {
+    font-family: 'Chakra Petch', sans-serif; font-size: 13px;
+    font-weight: 600; color: var(--accent); letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .origin-title {
+    font-family: 'Satoshi', sans-serif; font-size: 20px;
+    font-weight: 700; color: var(--text-dark); margin-bottom: 12px;
+  }
+
+  .origin-text {
+    font-size: 15px; line-height: 1.7;
+    color: rgba(10,10,15,0.6);
+  }
+
+  /* === Principles === */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 64px;
+  }
+
+  .principle {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 36px 32px;
+  }
+
+  .principle-num {
+    font-family: 'Tanker', sans-serif; font-size: 36px;
+    color: var(--accent); opacity: 0.4; line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .principle-title {
+    font-family: 'Satoshi', sans-serif; font-size: 18px;
+    font-weight: 700; color: var(--text-light); margin-bottom: 10px;
+  }
+
+  .principle-desc {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* === Team === */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+  }
+
+  .team-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(10,10,15,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .team-card:hover { border-color: rgba(232,78,27,0.2); }
+
+  .team-photo {
+    width: 100%; aspect-ratio: 4/3;
+    background: var(--bg-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Tanker', sans-serif; font-size: 48px;
+    color: var(--accent); opacity: 0.3;
+  }
+
+  .team-info { padding: 24px; }
+
+  .team-name {
+    font-family: 'Satoshi', sans-serif; font-size: 18px;
+    font-weight: 700; color: var(--text-dark);
+  }
+
+  .team-role {
+    font-family: 'Chakra Petch', sans-serif; font-size: 12px;
+    font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); margin-top: 4px;
+  }
+
+  .team-bio {
+    font-size: 14px; line-height: 1.6;
+    color: rgba(10,10,15,0.55); margin-top: 12px;
+  }
+
+  /* === Timeline === */
+  .timeline {
+    margin-top: 64px;
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 1px; background: rgba(255,255,255,0.1);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -36px; top: 6px;
+    width: 10px; height: 10px;
+    background: var(--accent); border-radius: 50%;
+  }
+
+  .timeline-date {
+    font-family: 'Chakra Petch', sans-serif; font-size: 13px;
+    font-weight: 500; color: var(--accent); letter-spacing: 0.04em;
+  }
+
+  .timeline-title {
+    font-family: 'Satoshi', sans-serif; font-size: 17px;
+    font-weight: 700; color: var(--text-light); margin-top: 6px;
+  }
+
+  .timeline-desc {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.45); margin-top: 6px;
+    max-width: 560px;
+  }
+
+  /* === Quote === */
+  .quote-section {
+    background: var(--bg-light); padding: 100px 48px;
+    text-align: center;
+  }
+
+  .quote-mark {
+    font-family: Georgia, serif; font-size: 72px;
+    color: var(--accent); opacity: 0.2; line-height: 0.5;
+  }
+
+  .quote-text {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic; font-size: clamp(22px, 3vw, 32px);
+    color: var(--text-dark); max-width: 700px;
+    margin: 24px auto 0; line-height: 1.5;
+  }
+
+  .quote-attr {
+    font-family: 'Chakra Petch', sans-serif; font-size: 13px;
+    color: var(--text-muted); margin-top: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  /* === CTA === */
+  .cta-section {
+    text-align: center; padding: 120px 48px;
+    background: var(--bg-dark);
+  }
+
+  .btn-primary {
+    font-family: 'Satoshi', sans-serif; font-size: 15px;
+    font-weight: 500; background: var(--accent);
+    color: var(--text-light); padding: 14px 28px;
+    border-radius: 8px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+
+  .btn-secondary {
+    font-family: 'Satoshi', sans-serif; font-size: 15px;
+    font-weight: 500; color: var(--text-muted); padding: 14px 28px;
+    text-decoration: none; display: inline-flex;
+    align-items: center; gap: 8px; transition: color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--text-light); }
+
+  .cta-actions {
+    display: flex; justify-content: center; gap: 16px; margin-top: 40px;
+  }
+
+  /* === Footer === */
+  footer {
+    background: var(--bg-dark);
+    border-top: 1px solid var(--border-subtle);
+    padding: 48px; display: flex;
+    justify-content: space-between; align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Tanker', sans-serif; font-size: 16px;
+    color: var(--text-light);
+  }
+  .footer-logo span { color: var(--accent); }
+
+  .footer-links { display: flex; gap: 24px; }
+
+  .footer-links a {
+    font-family: 'Chakra Petch', sans-serif; font-size: 12px;
+    color: var(--text-dim); text-decoration: none;
+    letter-spacing: 0.04em; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text-light); }
+
+  /* === Responsive === */
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 130px 24px 80px; }
+    .section-light, .section-dark { padding: 80px 24px; }
+    .origin-grid { grid-template-columns: 1fr; gap: 40px; }
+    .principles { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .quote-section { padding: 80px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">BlackCat<span>.</span></a>
+  <div class="nav-links">
+    <a href="#story">Our Story</a>
+    <a href="#principles">Principles</a>
+    <a href="#team">Team</a>
+    <a href="#journey">Journey</a>
+    <a href="#investors">Investors</a>
+    <a href="https://dashboard.blackcatrobotics.com" class="nav-cta">Start TechMedix</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-overline">About BlackCat Robotics</div>
+  <h1>Two founders.<br><em>One conviction.</em></h1>
+  <p class="hero-sub">
+    BlackCat Robotics builds TechMedix — the AI diagnostic platform that keeps 
+    autonomous systems running. We pair predictive failure analysis with a network 
+    of certified human technicians. 14+ robot platforms. Live since Q1 2026.
+  </p>
+</section>
+
+<!-- Origin Story -->
+<section class="section-light" id="story">
+  <div class="eyebrow">How We Started</div>
+  <h2 class="section-heading">It started with a <em>broken drone.</em></h2>
+  <p class="section-body">
+    In early 2026, a $15,000 DJI Agras T50 sat dead in a warehouse for three 
+    weeks — water damage, firmware fault. Parts were available. Knowledge existed. 
+    But there was no system connecting AI diagnostics to a human who could open 
+    the chassis and fix it. We built TechMedix to close that gap.
+  </p>
+
+  <div class="origin-grid">
+    <div class="origin-block">
+      <div class="origin-year">The Problem</div>
+      <div class="origin-title">Robots are deploying faster than humans can maintain them</div>
+      <div class="origin-text">
+        275,000 commercial drones in service by 2030. 5,500+ humanoids already 
+        deployed. 750,000+ warehouse robots at Amazon alone. The maintenance 
+        market is projected to reach $10.2 billion by 2033 — but the workforce 
+        pipeline is 3:1 short on demand.
+      </div>
+    </div>
+    <div class="origin-block">
+      <div class="origin-year">The Answer</div>
+      <div class="origin-title">AI diagnostics paired with human technicians</div>
+      <div class="origin-text">
+        TechMedix AI handles what machines do best — pattern recognition, 
+        predictive failure analysis, fleet-wide anomaly detection. Our network 
+        of certified human technicians handles what only humans can — physical 
+        repair, calibration, and the judgment calls that no algorithm makes 
+        alone.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quote -->
+<section class="quote-section">
+  <div class="quote-mark">"</div>
+  <p class="quote-text">
+    The future runs on robots. We keep them running. Not by replacing 
+    technicians with algorithms — by giving technicians algorithms 
+    that make them superhuman.
+  </p>
+  <div class="quote-attr">— BlackCat Robotics, founding principle</div>
+</section>
+
+<!-- Principles -->
+<section class="section-dark" id="principles">
+  <div class="eyebrow">What We Believe</div>
+  <h2 class="section-heading">Three things we <em>don't compromise on.</em></h2>
+
+  <div class="principles">
+    <div class="principle">
+      <div class="principle-num">01</div>
+      <div class="principle-title">Validation before features</div>
+      <div class="principle-desc">
+        We don't build what we think the market wants. We fix real robots, 
+        talk to real technicians, and ship what the data shows is broken. 
+        Every feature starts with a repair ticket, not a roadmap slide.
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">02</div>
+      <div class="principle-title">AI augments, never replaces</div>
+      <div class="principle-desc">
+        TechMedix AI predicts failure 48 hours before it happens. But the 
+        technician who shows up, opens the chassis, and replaces the motor 
+        — that's a human. We build tools that make skilled trades more 
+        powerful, not obsolete.
+      </div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">03</div>
+      <div class="principle-title">Open by default</div>
+      <div class="principle-desc">
+        Our 185-question certification curriculum is open source. Our 
+        diagnostic models improve with every repair logged. The robotics 
+        maintenance industry is too new for walled gardens — we share 
+        what we learn because a bigger ecosystem lifts everyone.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="section-light" id="team">
+  <div class="eyebrow">The Team</div>
+  <h2 class="section-heading">Small team. <em>Big machines.</em></h2>
+  <p class="section-body">
+    We're a founder-led team building infrastructure for the robot economy. 
+    Every team member has hands on real robots — not just dashboards.
+  </p>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-photo">BC</div>
+      <div class="team-info">
+        <div class="team-name">Megan</div>
+        <div class="team-role">CEO & Vision</div>
+        <div class="team-bio">
+          Built TechMedix from first repair ticket. Led DJI Care Refresh 
+          integration and Unitree partnership. Currently handling sales, 
+          investor relations, and product validation on real hardware.
+        </div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo">HM</div>
+      <div class="team-info">
+        <div class="team-name">Hermes</div>
+        <div class="team-role">Infrastructure & Automation</div>
+        <div class="team-bio">
+          Built the TechMedix diagnostic engine, automation pipelines, 
+          and monitoring stack. Manages deployment, cron infrastructure, 
+          and the systems that run 24/7 — from Supabase to Vercel to 
+          the 185-question certification platform.
+        </div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo">+</div>
+      <div class="team-info">
+        <div class="team-name">You?</div>
+        <div class="team-role">Robotics Technician</div>
+        <div class="team-bio">
+          We're building the world's first AI-dispatched human tech 
+          network. If you're a robotics technician, mechatronics 
+          engineer, or fleet specialist — we want to hear from you.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Journey -->
+<section class="section-dark" id="journey">
+  <div class="eyebrow">The Journey</div>
+  <h2 class="section-heading">What we've <em>built so far.</em></h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">Q1 2026</div>
+      <div class="timeline-title">Founded BlackCat Robotics</div>
+      <div class="timeline-desc">
+        Started with a simple observation: the robot economy needs 
+        maintenance infrastructure, and nobody was building it.
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Q1 2026</div>
+      <div class="timeline-title">First validation: DJI drone repair</div>
+      <div class="timeline-desc">
+        Free water damage repairs for local DJI drone owners. 
+        Learned what technicians actually need — and it's not 
+        another dashboard.
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Q1 2026</div>
+      <div class="timeline-title">TechMedix AI platform live</div>
+      <div class="timeline-desc">
+        Launched diagnostic AI with DJI Care Refresh integration, 
+        supporting 24 drone models. Dashboard at 
+        dashboard.blackcatrobotics.com.
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Q2 2026</div>
+      <div class="timeline-title">Unitree Robotics partnership</div>
+      <div class="timeline-desc">
+        Official TechMedix partner. G1, H1-2, and B2 humanoid 
+        platforms fully supported with AI diagnostics.
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Q2 2026</div>
+      <div class="timeline-title">Open source certification curriculum</div>
+      <div class="timeline-desc">
+        185-question BlackCat OS curriculum now live on GitHub. 
+        Training the next generation of robotics technicians.
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Now</div>
+      <div class="timeline-title">Building the technician network</div>
+      <div class="timeline-desc">
+        14+ robot platforms supported across humanoids, drones, delivery, 
+        and cleaning. AWS APN submitted. Menlo AI partnership in discussion. 
+        Building the first AI-dispatched human technician network.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTOR DECK -->
+<section class="section-dark" id="investors">
+  <div class="eyebrow">Investors</div>
+  <h2 class="section-heading">Request the <em>deck.</em></h2>
+  <p class="section-body">
+    We're building the infrastructure layer for the autonomous world. 
+    If you're interested in what we're building, we'd love to share our story.
+  </p>
+  <div style="max-width:480px;margin-top:48px;">
+    <div id="inv-deck-form">
+      <form action="https://formspree.io/f/xreyrndq" method="POST" onsubmit="handleInvDeck(event)">
+        <input type="hidden" name="_subject" value="Investor Deck Request">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <input type="text" name="full_name" placeholder="Full Name" required style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Satoshi',sans-serif;font-size:14px;outline:none;">
+          <input type="email" name="email" placeholder="Work Email" required style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Satoshi',sans-serif;font-size:14px;outline:none;">
+          <input type="text" name="company" placeholder="Company / Fund" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Satoshi',sans-serif;font-size:14px;outline:none;">
+          <textarea name="message" placeholder="Message (optional)" rows="3" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:#fff;font-family:'Satoshi',sans-serif;font-size:14px;outline:none;resize:vertical;"></textarea>
+          <button type="submit" id="inv-deck-btn" class="btn-primary" style="border:none;cursor:pointer;">Request Deck</button>
+        </div>
+      </form>
+    </div>
+    <div id="inv-deck-ok" style="display:none;color:#fff;font-size:15px;line-height:1.7;margin-top:16px;">Request received. We will be in touch within 24 hours.</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="eyebrow">Join Us</div>
+  <h2 class="section-heading">The robot economy needs <em>you.</em></h2>
+  <p class="section-body" style="margin: 24px auto 0; text-align: center;">
+    Whether you're a technician, an engineer, or a fleet operator — 
+    there's a place for you in what we're building.
+  </p>
+  <div class="cta-actions">
+    <a href="#" class="btn-primary">Apply to the Network →</a>
+    <a href="https://dashboard.blackcatrobotics.com" class="btn-secondary">Start TechMedix — $299/mo</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">BlackCat<span>.</span></div>
+  <div class="footer-links">
+    <a href="index.html">Platform</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="index.html#signal">Signal</a>
+    <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener">TechMedix</a>
+    <a href="about.html">About</a>
+  </div>
+</footer>
+
+<script>
+function handleInvDeck(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('inv-deck-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(r => {
+    if (r.ok) {
+      document.getElementById('inv-deck-form').style.display = 'none';
+      document.getElementById('inv-deck-ok').style.display = 'block';
+    } else {
+      btn.textContent = 'Error — try again';
+      btn.disabled = false;
+    }
+  }).catch(() => {
+    btn.textContent = 'Error — try again';
+    btn.disabled = false;
+  });
+}
+</script>
+
+</body>
+</html>
