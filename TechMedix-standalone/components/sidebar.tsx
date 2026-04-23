@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   LogOut,
   Network,
+  Pencil,
   Scan,
   Server,
   Settings2,
@@ -48,6 +49,11 @@ const NAV: NavGroup[] = [
     href: "/ar-mode",
     label: "AR Mode",
     icon: Scan,
+  },
+  {
+    href: "/habitat/design",
+    label: "HABITAT Designer",
+    icon: Pencil,
   },
   {
     label: "Maintenance",
