@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { Metadata } from "next";
 import { getAllPlatforms } from "@/lib/platforms/index";
-import { Crosshair } from "lucide-react";
+import { Crosshair, ChevronLeft } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Blueprint Explorer · Knowledge Hub",
@@ -12,6 +13,21 @@ export default function BlueprintIndexPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-10 lg:px-10">
+      {/* Breadcrumb */}
+      <div className="mb-6">
+        <Link
+          href="/knowledge"
+          className="inline-flex items-center gap-1 font-ui text-[0.60rem] uppercase tracking-[0.12em] text-[var(--ink)]/40 transition hover:text-[var(--ink)]/70"
+        >
+          <ChevronLeft size={12} />
+          Knowledge Hub
+        </Link>
+        <span className="mx-1.5 text-[var(--ink)]/20">/</span>
+        <span className="font-ui text-[0.60rem] uppercase tracking-[0.12em] text-[var(--ink)]/60">
+          Blueprint Explorer
+        </span>
+      </div>
+
       {/* Header */}
       <div className="mb-10">
         <p className="kicker">Knowledge Hub · Layer 1 — Physical</p>
