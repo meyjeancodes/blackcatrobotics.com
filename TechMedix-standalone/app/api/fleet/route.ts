@@ -43,10 +43,13 @@ export async function GET(req: NextRequest) {
 
     if (robotErr) {
       console.error("[fleet/GET] robots query error:", robotErr);
-      return NextResponse.json(
-        { error: "Failed to fetch robots" },
-        { status: 500 }
-      );
+      // Return mock data as fallback when query fails (schema mismatch, etc.)
+      const fallbackRobots = MOCK_ROBOTS.map((r) => ({
+        ...r,
+        latestAlert: MOCK_ALERTS.find((a) => a.robotId === r.id && a.status === "active") ?? null,
+        openJob: MOCK_JOBS.find((j) => j.robotId === r.id && !["completed", "resolved"].includes(j.status)) ?? null,
+      }));
+      return NextResponse.json({ robots: fallbackRobots, mock: true, query_error: true });
     }
 
     if (!robots || robots.length === 0) {
