@@ -6,11 +6,12 @@ import { getPlatformById } from "@/lib/platforms/index";
 import { ChevronLeft } from "lucide-react";
 
 interface Props {
-  params: { platformId: string };
+  params: Promise<{ platformId: string }>;
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const platform = getPlatformById(params.platformId);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { platformId } = await params;
+  const platform = getPlatformById(platformId);
   if (!platform) {
     return { title: "Blueprint Not Found · TechMedix" };
   }
@@ -20,8 +21,9 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function BlueprintPlatformPage({ params }: Props) {
-  const platform = getPlatformById(params.platformId);
+export default async function BlueprintPlatformPage({ params }: Props) {
+  const { platformId } = await params;
+  const platform = getPlatformById(platformId);
 
   if (!platform) {
     notFound();
@@ -52,7 +54,7 @@ export default function BlueprintPlatformPage({ params }: Props) {
       </div>
 
       <div className="min-h-0 flex-1">
-        <BlueprintExplorer platformId={params.platformId} />
+        <BlueprintExplorer platformId={platformId} />
       </div>
     </div>
   );
