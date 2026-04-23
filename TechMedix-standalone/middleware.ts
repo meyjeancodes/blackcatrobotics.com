@@ -1,42 +1,113 @@
-import { NextResponse, NextRequest } from 'next/server';
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const host = request.headers.get('host')?.replace(/^.*?:/, '') ?? '';
-  const { pathname } = request.nextUrl;
+const PROTECTED_PREFIXES = [
+  "/dashboard",
+  "/fleet",
+  "/alerts",
+  "/dispatch",
+  "/billing",
+  "/settings",
+  "/admin",
+  "/onboarding",
+  "/nodes",
+  "/maintenance",
+  "/datacenter",
+  "/network",
+  "/operations",
+  "/energy",
+  "/grid",
+];
 
-  // Always let API routes through to Next.js
-  if (pathname.startsWith('/api/')) {
-    return NextResponse.next();
-  }
+const AUTH_ROUTES = ["/login", "/signup"];
 
-  // Serve static marketing site on blackcatrobotics.com
-  if (host === 'blackcatrobotics.com' || host === 'blackcatrobotics.com:443') {
-    // Map root to static index.html
-    if (pathname === '/') {
+export async function middleware(request: NextRequest) {
+  try {
+    const host = request.headers.get("host") || "";
+    const { pathname } = request.nextUrl;
+
+    // Redirect www to apex domain
+    if (host === "www.blackcatrobotics.com") {
       const url = request.nextUrl.clone();
-      url.pathname = '/index.html';
-      return NextResponse.rewrite(url);
+      url.host = "blackcatrobotics.com";
+      return NextResponse.redirect(url, 301);
     }
 
-    // Clean URLs for static pages (about, certifications, habitat-landing, blackcat-grid)
-    const cleanRoutes = ['/about', '/certifications', '/habitat-landing', '/blackcat-grid'];
-    if (cleanRoutes.includes(pathname) && !pathname.endsWith('.html')) {
-      const url = request.nextUrl.clone();
-      url.pathname = pathname + '.html';
-      return NextResponse.rewrite(url);
+    // Serve static marketing site on blackcatrobotics.com
+    if (host === "blackcatrobotics.com" || host === "blackcatrobotics.com:443") {
+      // Root → static index.html
+      if (pathname === "/") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/index.html";
+        return NextResponse.rewrite(url);
+      }
+
+      // Clean URLs for static pages
+      const cleanRoutes = ["/about", "/certifications", "/habitat-landing", "/blackcat-grid"];
+      if (cleanRoutes.includes(pathname) && !pathname.endsWith(".html")) {
+        const url = request.nextUrl.clone();
+        url.pathname = pathname + ".html";
+        return NextResponse.rewrite(url);
+      }
     }
 
-    // For any other path on marketing domain, try static files as-is
-    // Let Next.js static file handler serve if file exists; otherwise 404
-  }
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  // dashboard.blackcatrobotics.com → normal Next.js app (dashboard, auth, etc.)
-  return NextResponse.next();
+    // If env vars are missing, let the request through
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.next({ request });
+    }
+
+    let supabaseResponse = NextResponse.next({ request });
+
+    const supabase = createServerClient(supabaseUrl, supabaseKey, {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          );
+          supabaseResponse = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          );
+        },
+      },
+    });
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const isProtected = PROTECTED_PREFIXES.some((prefix) =>
+      pathname.startsWith(prefix)
+    );
+    const isAuthRoute = AUTH_ROUTES.some((route) => pathname === route);
+
+    if (!user && isProtected) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+
+    if (user && isAuthRoute) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
+
+    return supabaseResponse;
+  } catch {
+    // If anything goes wrong, let the request through rather than 500-ing
+    return NextResponse.next({ request });
+  }
 }
 
 export const config = {
   matcher: [
-    // Run on all routes except static files, Next.js internals, and images
-    '/((?!_next/static|_next/image|favicon\\.ico|.*\\.[a-zA-Z0-9]+$).*)',
+    "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
