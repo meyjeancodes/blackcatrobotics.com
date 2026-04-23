@@ -4,21 +4,33 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient } from "../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseConfigured } from "../../../lib/supabase-server";
 import { getExpiryWarning } from "../../../lib/dji-care-coverage";
+import { MOCK_DRONES, MOCK_FLEET_HEALTH } from "../../../lib/drone-mock-data";
 import type { RegisterDroneBody, CareRefreshPlan } from "../../../types/dji-drone";
 
 async function isAuthenticated(req: NextRequest): Promise<boolean> {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return true;
+  if (!isSupabaseConfigured()) return true;
   return req.cookies.getAll().some((c) => c.name.includes("auth-token"));
 }
 
 export async function GET(req: NextRequest) {
   const authed = await isAuthenticated(req);
-  if (!authed) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ drones: MOCK_DRONES, mock: true }, { status: 200 });
+  }
 
   try {
     const supabase = await createSupabaseServerClient();
+    if (!supabase) {
+      return NextResponse.json({ drones: MOCK_DRONES, mock: true }, { status: 200 });
+    }
+
+    if (!authed) {
+      // Auth required for live data — serve mocks instead of 401
+      return NextResponse.json({ drones: MOCK_DRONES, mock: true, auth_required: true });
+    }
 
     const { data: drones, error } = await supabase
       .from("dji_drones")
@@ -106,6 +118,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const supabase = await createSupabaseServerClient();
+    if (!supabase) {
+      return NextResponse.json(
+        { error: "Supabase not configured — cannot register drone in offline mode" },
+        { status: 503 }
+      );
+    }
 
     const { data, error } = await supabase
       .from("dji_drones")

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    width: 1080px; height: 1080px;
+    background: #0d0e13;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Grid background */
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .content {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 80px;
+  }
+
+  .stat {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 140px; font-weight: 700;
+    color: #e8601e;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .per-hour {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 28px; font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    margin-top: 8px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    width: 40%; height: 1px;
+    background: rgba(232,96,30,0.3);
+    margin: 48px 0;
+  }
+
+  .subtext {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 24px; font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .brand {
+    margin-top: auto;
+    text-align: center;
+  }
+
+  .brand-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px; font-weight: 700;
+    color: #e8601e;
+    letter-spacing: 2px;
+  }
+
+  .tagline {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 14px; font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    margin-top: 8px;
+    letter-spacing: 3px;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="content">
+    <div class="stat">$260,000</div>
+    <div class="per-hour">/ hour</div>
+    <div class="divider"></div>
+    <div class="subtext">That's what unplanned robot downtime costs.<br>Most systems find out when the robot stops.</div>
+    <div class="brand">
+      <div class="brand-name">TechMedix</div>
+      <div class="tagline">Predict. Dispatch. Repair.</div>
+    </div>
+  </div>
+</body>
+</html>

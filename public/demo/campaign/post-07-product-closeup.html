@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1080px;
+    background: #0d0e13;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    overflow: hidden; position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none;
+  }
+  .content {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 60px;
+    gap: 24px;
+  }
+  .panel {
+    width: 100%;
+    background: #1a1b20;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 36px 44px;
+    display: flex; align-items: center;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .panel-text { flex: 1; }
+  .panel-kicker {
+    font-size: 10px; color: rgba(255,255,255,0.38);
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .panel-value {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 72px; font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .panel-detail {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 15px; color: rgba(255,255,255,0.45);
+  }
+  .panel-icon {
+    font-size: 48px; opacity: 0.15;
+    position: absolute; right: 40px; top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .caption {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 20px;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="content">
+    <div class="panel">
+      <div class="panel-text">
+        <div class="panel-kicker">Fleet Health</div>
+        <div class="panel-value" style="color:white;">95%</div>
+        <div class="panel-detail">Average health score across active robots.</div>
+      </div>
+      <div class="panel-icon" style="color:#e8601e;">⚙</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-text">
+        <div class="panel-kicker">Critical Alerts</div>
+        <div class="panel-value" style="color:#1db87a;">0</div>
+        <div class="panel-detail">No active critical events.</div>
+      </div>
+      <div class="panel-icon" style="color:#1db87a;">✓</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-text">
+        <div class="panel-kicker">Open Jobs</div>
+        <div class="panel-value" style="color:white;">7</div>
+        <div class="panel-detail">Dispatch jobs in progress.</div>
+      </div>
+      <div class="panel-icon" style="color:#e8601e;">→</div>
+    </div>
+
+    <div class="caption">Real-time. Unified. Operational from day one.</div>
+  </div>
+</body>
+</html>

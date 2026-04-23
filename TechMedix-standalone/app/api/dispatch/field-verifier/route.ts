@@ -9,7 +9,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient as createClient } from "../../../../lib/supabase-server";
+import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../../lib/supabase-server";
 import { searchHumans, bookHuman } from "../../../../lib/blackcat/dispatch/rentahuman-client";
 
 export const runtime = "nodejs";
@@ -71,6 +71,10 @@ export async function POST(req: NextRequest) {
   }
 
   // 2. Upsert into dispatch_jobs with verifier metadata
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
+
   try {
     const supabase = await createClient();
 

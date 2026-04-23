@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1350px;
+    background: #0d0e13;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    overflow: hidden;
+    position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .content {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 60px;
+  }
+
+  /* Waveform visualization */
+  .waveform-container {
+    width: 90%; height: 320px;
+    position: relative;
+    margin-bottom: 48px;
+  }
+  .waveform-label {
+    position: absolute; top: 0; left: 0;
+    font-size: 11px; color: rgba(255,255,255,0.38);
+    text-transform: uppercase; letter-spacing: 2px;
+  }
+  .waveform {
+    position: absolute; top: 40px; left: 0; right: 0; bottom: 0;
+  }
+  .waveform svg { width: 100%; height: 100%; }
+
+  /* Anomaly marker */
+  .anomaly-marker {
+    position: absolute;
+    left: 60%; top: 36px; bottom: 0;
+    border-left: 2px dashed #f59e0b;
+    opacity: 0.6;
+  }
+  .anomaly-label {
+    position: absolute;
+    left: 60%; top: 12px;
+    transform: translateX(-50%);
+    font-size: 10px; color: #f59e0b;
+    letter-spacing: 2px; text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Alert panel */
+  .alert-panel {
+    width: 90%;
+    background: #1a1b20;
+    border: 1px solid rgba(232,96,30,0.35);
+    border-radius: 16px;
+    padding: 36px 40px;
+    margin-bottom: 48px;
+  }
+  .alert-title {
+    font-size: 16px; font-weight: 700;
+    color: #e8601e;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  .alert-line {
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .alert-line:last-child { border-bottom: none; }
+  .alert-line .label {
+    display: inline-block;
+    width: 120px;
+    color: rgba(255,255,255,0.4);
+  }
+  .alert-line.warning .value { color: #f59e0b; }
+  .alert-line.action .value {
+    color: #1db87a;
+    font-weight: 600;
+  }
+
+  .caption {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 22px;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    line-height: 1.5;
+    margin-top: auto;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="content">
+    <!-- Waveform -->
+    <div class="waveform-container">
+      <div class="waveform-label">Joint Shoulder_R — Live Telemetry</div>
+      <div class="anomaly-label">Anomaly Onset</div>
+      <div class="anomaly-marker"></div>
+      <div class="waveform">
+        <svg viewBox="0 0 900 250" preserveAspectRatio="none">
+          <!-- Healthy portion (green) -->
+          <path d="M0,125 Q30,40 60,125 Q90,210 120,125 Q150,40 180,125 Q210,210 240,125 Q270,40 300,125 Q330,210 360,125 Q390,40 420,125 Q450,210 480,125 Q510,40 540,125"
+                fill="none" stroke="#1db87a" stroke-width="3" opacity="0.9"/>
+          <!-- Transition (amber) -->
+          <path d="M540,125 Q555,60 570,130 Q585,195 595,115"
+                fill="none" stroke="#f59e0b" stroke-width="3" opacity="0.8"/>
+          <!-- Anomaly (red) -->
+          <path d="M595,115 Q610,30 625,140 Q640,200 650,100 Q660,20 670,145 Q680,210 690,90 Q700,15 710,150 Q720,220 730,80 Q740,10 750,155 Q760,230 770,70 Q780,5 790,160 Q800,235 810,65 Q820,0 830,165 Q840,240 850,60 Q860,0 870,170 Q880,245 900,55"
+                fill="none" stroke="#e8601e" stroke-width="3" opacity="0.9"/>
+          <!-- Glow effect on anomaly -->
+          <path d="M595,115 Q610,30 625,140 Q640,200 650,100 Q660,20 670,145 Q680,210 690,90 Q700,15 710,150 Q720,220 730,80 Q740,10 750,155 Q760,230 770,70 Q780,5 790,160 Q800,235 810,65 Q820,0 830,165 Q840,240 850,60 Q860,0 870,170 Q880,245 900,55"
+                fill="none" stroke="#e8601e" stroke-width="8" opacity="0.15"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Alert Panel -->
+    <div class="alert-panel">
+      <div class="alert-title">PREDICTIVE ALERT</div>
+      <div class="alert-line"><span class="label">Platform</span><span class="value">Unitree G1-004</span></div>
+      <div class="alert-line"><span class="label">Component</span><span class="value">Joint Shoulder_R</span></div>
+      <div class="alert-line"><span class="label">Signature</span><span class="value">Harmonic drive backlash</span></div>
+      <div class="alert-line warning"><span class="label">Severity</span><span class="value">WARNING</span></div>
+      <div class="alert-line"><span class="label">Prediction</span><span class="value">47.3 hr to failure</span></div>
+      <div class="alert-line action"><span class="label">Action</span><span class="value">DISPATCH QUEUED</span></div>
+    </div>
+
+    <div class="caption">TechMedix detects the failure signature.<br>47 hours before the unit goes down.</div>
+  </div>
+</body>
+</html>

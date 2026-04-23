@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { createServiceClient } from "../../../../lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
 
 export async function POST(req: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -15,6 +15,10 @@ export async function POST(req: NextRequest) {
   }
 
   let event: Stripe.Event;
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
+
   try {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
   } catch (err) {

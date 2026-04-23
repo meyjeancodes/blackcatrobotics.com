@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1080px;
+    background: #0d0e13;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    overflow: hidden; position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none;
+  }
+  .content {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    display: flex;
+  }
+  .divider {
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.2);
+    z-index: 5;
+  }
+  .data-dots {
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 8px; margin-left: -4px;
+    z-index: 6;
+  }
+  .data-dot {
+    position: absolute;
+    width: 6px; height: 6px;
+    background: #38bdf8;
+    border-radius: 50%;
+    left: 1px;
+    animation: stream 3s linear infinite;
+  }
+  @keyframes stream {
+    0% { top: 10%; opacity: 1; }
+    100% { top: 90%; opacity: 0; }
+  }
+  .data-dot:nth-child(2) { animation-delay: 0.6s; }
+  .data-dot:nth-child(3) { animation-delay: 1.2s; }
+  .data-dot:nth-child(4) { animation-delay: 1.8s; }
+  .data-dot:nth-child(5) { animation-delay: 2.4s; }
+
+  /* Left panel */
+  .panel-left {
+    width: 50%; height: 100%;
+    padding: 48px 40px 48px 56px;
+    display: flex; flex-direction: column;
+    border-right: 2px solid rgba(232,96,30,0.2);
+  }
+  .panel-title-left {
+    font-size: 11px; color: #e8601e; opacity: 0.8;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+  .figure-container {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .figure {
+    position: relative;
+    width: 200px; height: 380px;
+  }
+  .fig-head {
+    width: 50px; height: 50px;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+  .fig-body {
+    width: 2px; height: 120px;
+    background: rgba(255,255,255,0.5);
+    margin: 0 auto;
+  }
+  .fig-arm {
+    position: absolute;
+    width: 2px; height: 80px;
+    background: rgba(255,255,255,0.5);
+    top: 60px;
+  }
+  .fig-arm.left { left: 30px; transform: rotate(30deg); transform-origin: top; }
+  .fig-arm.right { right: 30px; transform: rotate(-30deg); transform-origin: top; }
+  .fig-leg {
+    position: absolute;
+    width: 2px; height: 100px;
+    background: rgba(255,255,255,0.5);
+    bottom: 0;
+  }
+  .fig-leg.left { left: 70px; transform: rotate(15deg); transform-origin: top; }
+  .fig-leg.right { right: 70px; transform: rotate(-15deg); transform-origin: top; }
+
+  /* Shoulder highlight */
+  .shoulder-highlight {
+    position: absolute;
+    top: 50px; right: 10px;
+    width: 40px; height: 40px;
+    border: 2px solid #f59e0b;
+    border-radius: 50%;
+    background: rgba(245,158,11,0.2);
+    animation: shoulder-pulse 2s ease-in-out infinite;
+  }
+  @keyframes shoulder-pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245,158,11,0.4); }
+    50% { transform: scale(1.1); box-shadow: 0 0 20px 5px rgba(245,158,11,0.1); }
+  }
+
+  /* Crosshair */
+  .crosshair {
+    position: absolute;
+    top: 40px; right: 0;
+    width: 60px; height: 60px;
+  }
+  .ch { position: absolute; width: 16px; height: 2px; background: #e8601e; }
+  .ch.tl { top: 0; left: 0; }
+  .ch.tr { top: 0; right: 0; }
+  .ch.bl { bottom: 0; left: 0; }
+  .ch.br { bottom: 0; right: 0; }
+  .chv { position: absolute; width: 2px; height: 16px; background: #e8601e; }
+  .chv.tl { top: 0; left: 0; }
+  .chv.tr { top: 0; right: 0; }
+  .chv.bl { bottom: 0; left: 0; }
+  .chv.br { bottom: 0; right: 0; }
+
+  /* Callout */
+  .callout {
+    position: absolute;
+    top: 80px; right: -40px;
+    background: #1a1b20;
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    width: 260px;
+  }
+  .callout-line {
+    font-size: 11px; color: rgba(255,255,255,0.7);
+    padding: 3px 0;
+  }
+  .callout-line .cl { color: rgba(255,255,255,0.4); display: inline-block; width: 85px; }
+  .callout-line .cv { color: white; }
+  .callout-line.guided .cv { color: #f59e0b; font-weight: 600; }
+
+  /* Right panel */
+  .panel-right {
+    width: 50%; height: 100%;
+    padding: 48px 56px 48px 40px;
+    display: flex; flex-direction: column;
+  }
+  .panel-title-right {
+    font-size: 11px; color: #38bdf8; opacity: 0.8;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+  .annotations {
+    display: flex; gap: 16px;
+    margin-bottom: 24px;
+    justify-content: center;
+  }
+  .anno-dot {
+    width: 36px; height: 36px;
+    border: 2px solid #38bdf8;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #38bdf8; font-weight: 600;
+    background: rgba(56,189,248,0.1);
+  }
+  .expert-info {
+    margin-top: auto;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 20px;
+  }
+  .expert-line {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    padding: 4px 0;
+    display: flex; justify-content: space-between;
+  }
+  .expert-line .el { color: rgba(255,255,255,0.35); }
+  .expert-line .ev { color: rgba(255,255,255,0.7); }
+
+  .caption {
+    position: absolute;
+    bottom: 40px; left: 0; right: 0;
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="content">
+    <div class="divider"></div>
+    <div class="data-dots">
+      <div class="data-dot"></div>
+      <div class="data-dot"></div>
+      <div class="data-dot"></div>
+      <div class="data-dot"></div>
+      <div class="data-dot"></div>
+    </div>
+
+    <!-- Left: AR View -->
+    <div class="panel-left">
+      <div class="panel-title-left">Field Technician — AR View</div>
+      <div class="figure-container">
+        <div class="figure">
+          <div class="fig-head"></div>
+          <div class="fig-body"></div>
+          <div class="fig-arm left"></div>
+          <div class="fig-arm right"></div>
+          <div class="fig-leg left"></div>
+          <div class="fig-leg right"></div>
+          <div class="shoulder-highlight"></div>
+          <div class="crosshair">
+            <div class="ch tl"></div><div class="ch tr"></div>
+            <div class="ch bl"></div><div class="ch br"></div>
+            <div class="chv tl"></div><div class="chv tr"></div>
+            <div class="chv bl"></div><div class="chv br"></div>
+          </div>
+          <div class="callout">
+            <div class="callout-line"><span class="cl">Component</span><span class="cv">Shoulder_R</span></div>
+            <div class="callout-line"><span class="cl">Step 3 / 7</span><span class="cv">Remove actuator</span></div>
+            <div class="callout-line"><span class="cl">Torque spec</span><span class="cv">14.2 Nm</span></div>
+            <div class="callout-line guided"><span class="cl">Status</span><span class="cv">AR GUIDED</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Expert HQ -->
+    <div class="panel-right">
+      <div class="panel-title-right">Remote Expert — HQ</div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+        <div style="text-align:center;">
+          <div class="annotations">
+            <div class="anno-dot">1</div>
+            <div class="anno-dot">2</div>
+            <div class="anno-dot">3</div>
+          </div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:16px;">
+            3 active annotations
+          </div>
+        </div>
+      </div>
+      <div class="expert-info">
+        <div class="expert-line"><span class="el">Live feed</span><span class="ev">Connected</span></div>
+        <div class="expert-line"><span class="el">Annotations</span><span class="ev">3 active</span></div>
+        <div class="expert-line"><span class="el">Guide mode</span><span class="ev">Active</span></div>
+        <div class="expert-line"><span class="el">Expert</span><span class="ev">Dr. Chen · L5</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="caption">The expert sees exactly what the technician sees. Real-time. Annotated. Guided.</div>
+</body>
+</html>

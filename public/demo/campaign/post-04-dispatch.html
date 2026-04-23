@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1920px;
+    background: #0d0e13;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    overflow: hidden; position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none;
+  }
+  .content {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    padding: 60px 48px;
+  }
+
+  /* Map area */
+  .map {
+    flex: 1;
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .landmass {
+    position: absolute;
+    width: 700px; height: 500px;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    background: #1e1f26;
+    clip-path: polygon(15% 30%, 30% 15%, 55% 20%, 75% 10%, 85% 25%, 90% 50%, 80% 70%, 60% 85%, 35% 80%, 10% 65%);
+    opacity: 0.8;
+  }
+
+  /* Robot pins */
+  .pin {
+    position: absolute;
+    width: 16px; height: 16px;
+    background: #e8601e;
+    transform: rotate(45deg);
+    border-radius: 2px;
+  }
+  .pin::after {
+    content: '';
+    position: absolute;
+    width: 32px; height: 32px;
+    border: 2px solid #e8601e;
+    border-radius: 50%;
+    top: -10px; left: -10px;
+    opacity: 0.3;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .pin-label {
+    position: absolute;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+    transform: rotate(-45deg);
+    top: 24px; left: -8px;
+  }
+  .pin.failing { background: #f59e0b; }
+  .pin.failing::after { border-color: #f59e0b; animation: pulse-fail 1s ease-in-out infinite; }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.5); opacity: 0; }
+  }
+  @keyframes pulse-fail {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(2); opacity: 0; }
+  }
+
+  /* Technician pin */
+  .tech-pin {
+    position: absolute;
+    width: 20px; height: 20px;
+    background: #1db87a;
+    border-radius: 50%;
+  }
+  .tech-label {
+    position: absolute;
+    font-size: 10px; color: #1db87a;
+    white-space: nowrap;
+    top: 26px; left: -20px;
+  }
+
+  /* Dispatch path */
+  .dispatch-path {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .dispatch-path svg { width: 100%; height: 100%; }
+
+  /* ETA tag */
+  .eta-tag {
+    position: absolute;
+    left: 55%; top: 55%;
+    background: #1a1b20;
+    border: 1px solid rgba(232,96,30,0.4);
+    border-radius: 10px;
+    padding: 12px 20px;
+  }
+  .eta-main { font-size: 14px; font-weight: 700; color: #e8601e; }
+  .eta-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+  /* Dispatch card */
+  .dispatch-card {
+    background: #1a1b20;
+    border: 1px solid rgba(232,96,30,0.35);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 40px;
+  }
+  .dispatch-title {
+    font-size: 16px; font-weight: 700;
+    color: #e8601e; letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .dispatch-line {
+    font-size: 14px;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between;
+  }
+  .dispatch-line .label { color: rgba(255,255,255,0.4); }
+  .dispatch-line .value { color: rgba(255,255,255,0.85); }
+  .dispatch-line:last-child { border-bottom: none; }
+  .dispatch-line.status .value {
+    color: #1db87a; font-weight: 600;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .caption {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 20px;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    margin-top: auto;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="content">
+    <!-- Map -->
+    <div class="map">
+      <div class="landmass"></div>
+      <!-- Robot pins -->
+      <div class="pin" style="left:25%;top:35%"><div class="pin-label">G1-001</div></div>
+      <div class="pin" style="left:45%;top:45%"><div class="pin-label">G1-002</div></div>
+      <div class="pin" style="left:60%;top:55%"><div class="pin-label">G1-003</div></div>
+      <div class="pin failing" style="left:70%;top:30%"><div class="pin-label">G1-004</div></div>
+      <div class="pin" style="left:30%;top:65%"><div class="pin-label">G1-005</div></div>
+      <!-- Technician -->
+      <div class="tech-pin" style="left:72%;top:78%">
+        <div class="tech-label">TEC · Martinez · L2</div>
+      </div>
+      <!-- Dispatch path SVG -->
+      <div class="dispatch-path">
+        <svg viewBox="0 0 1080 1100">
+          <path d="M777,858 Q820,500 756,330"
+                fill="none" stroke="#e8601e" stroke-width="2"
+                stroke-dasharray="8 6" opacity="0.6"/>
+        </svg>
+      </div>
+      <!-- ETA tag -->
+      <div class="eta-tag">
+        <div class="eta-main">ETA 23 MIN</div>
+        <div class="eta-sub">Job #4821 · Shoulder_R replacement</div>
+      </div>
+    </div>
+
+    <!-- Dispatch card -->
+    <div class="dispatch-card">
+      <div class="dispatch-title">DISPATCH ISSUED</div>
+      <div class="dispatch-line"><span class="label">Technician</span><span class="value">J. Martinez</span></div>
+      <div class="dispatch-line"><span class="label">Cert Level</span><span class="value">L2</span></div>
+      <div class="dispatch-line"><span class="label">ETA</span><span class="value">23 min</span></div>
+      <div class="dispatch-line"><span class="label">Job Value</span><span class="value">$520</span></div>
+      <div class="dispatch-line status"><span class="label">Status</span><span class="value">EN ROUTE</span></div>
+    </div>
+
+    <div class="caption">Certified technician. Right platform expertise.<br>Dispatched automatically.</div>
+  </div>
+</body>
+</html>

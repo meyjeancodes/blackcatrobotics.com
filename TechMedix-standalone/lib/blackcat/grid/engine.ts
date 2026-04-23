@@ -95,6 +95,22 @@ export async function runGridEngine(): Promise<void> {
 export async function getGridState() {
   const supabase = createServiceClient();
 
+  if (!supabase) {
+    // Offline mock state
+    return {
+      supply: [],
+      demand: [],
+      transactions: [],
+      totals: {
+        supply_kwh: 0,
+        demand_kwh: 0,
+        transaction_count: 0,
+        total_traded_kwh: 0,
+      },
+      mock: true,
+    };
+  }
+
   const [statesRes, txRes] = await Promise.all([
     supabase.from("energy_states").select("*"),
     supabase

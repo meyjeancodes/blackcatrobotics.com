@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient } from "../../../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseConfigured } from "../../../../../lib/supabase-server";
 import type { FlightLogUploadBody, FlightIncident } from "../../../../../types/dji-drone";
 
 async function isAuthenticated(req: NextRequest): Promise<boolean> {
@@ -24,6 +24,10 @@ export async function GET(
   const page = parseInt(url.searchParams.get("page") ?? "1", 10);
   const pageSize = parseInt(url.searchParams.get("pageSize") ?? "20", 10);
   const offset = (page - 1) * pageSize;
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
 
   try {
     const supabase = await createSupabaseServerClient();

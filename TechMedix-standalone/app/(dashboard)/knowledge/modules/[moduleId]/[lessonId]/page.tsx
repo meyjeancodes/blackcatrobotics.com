@@ -12,8 +12,15 @@ export default async function LessonPage({
   const { moduleId, lessonId } = await params;
 
   const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const userId = user?.id ?? "";
+  let userId = "";
+  if (supabase) {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      userId = user?.id ?? "";
+    } catch {
+      // Auth offline
+    }
+  }
 
   const [lesson, { module, lessons }] = await Promise.all([
     getLesson(lessonId, userId),
