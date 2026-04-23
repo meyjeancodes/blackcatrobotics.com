@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useMemo, useEffect } from "react";
+import Link from "next/link";
 import { ChatPanel } from "./components/ChatPanel";
 import { DesignCanvas } from "./components/DesignCanvas";
 import { QuotePanel } from "./components/QuotePanel";
@@ -216,6 +217,14 @@ export default function HabitatDesignPage() {
       {/* Header */}
       <div className="mb-8 flex items-end justify-between">
         <div>
+          <div className="flex items-center gap-2 mb-1">
+            <Link
+              href="/habitat"
+              className="text-xs text-theme-50 hover:text-ember transition-colors"
+            >
+              &larr; Back to HABITAT
+            </Link>
+          </div>
           <p className="kicker">BlackCat Robotics</p>
           <h1 className="mt-2 font-header text-3xl leading-tight text-theme-primary">
             HABITAT AI Designer

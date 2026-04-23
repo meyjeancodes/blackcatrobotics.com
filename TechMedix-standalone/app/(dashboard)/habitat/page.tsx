@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Link from "next/link";
 import { SurfaceCard } from "../../../components/surface-card";
 
 const HABITAT_SYSTEMS = [
@@ -151,6 +152,28 @@ export default function HabitatPage() {
           A unified command interface for every system in your HABITAT environment.
           Energy, robotics, EV, climate, security, and network status in one place.
         </p>
+      </div>
+
+      {/* Design CTA */}
+      <div className="panel-elevated p-5 flex items-center justify-between gap-4">
+        <div>
+          <p className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-theme-35">
+            HABITAT AI Designer
+          </p>
+          <h2 className="mt-1 font-header text-xl text-theme-primary leading-tight">
+            Design or redesign your HABITAT
+          </h2>
+          <p className="mt-1 text-sm text-theme-55 max-w-lg">
+            Describe your ideal home in plain language. Our AI extracts every detail,
+            generates a floor plan, and produces a real quote — all in one conversation.
+          </p>
+        </div>
+        <Link
+          href="/habitat/design"
+          className="shrink-0 rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#e85d2a] transition-colors"
+        >
+          Start Designing
+        </Link>
       </div>
 
       {/* System Grid */}
