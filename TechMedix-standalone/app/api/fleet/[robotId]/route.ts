@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient as createClient } from "../../../../lib/supabase-server";
+import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../../lib/supabase-server";
 
 export const runtime = "nodejs";
 
@@ -15,8 +15,21 @@ export async function GET(
 ) {
   const { robotId } = await params;
 
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({
+      robot: { id: robotId, name: "Demo Robot", platform: "Unitree G1", status: "online", health_score: 92, battery_level: 87 },
+      telemetry: [],
+      alerts: [],
+      jobs: [],
+      mock: true,
+    });
+  }
+
   try {
     const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json({ error: "Supabase unavailable" }, { status: 503 });
+    }
 
     // 1. Robot
     const { data: robot, error: robotErr } = await supabase
@@ -106,6 +119,9 @@ export async function PATCH(
 
   try {
     const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json({ error: "Supabase unavailable" }, { status: 503 });
+    }
 
     const { data: robot, error } = await supabase
       .from("robots")

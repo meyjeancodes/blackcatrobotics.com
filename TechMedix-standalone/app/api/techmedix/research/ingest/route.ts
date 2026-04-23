@@ -29,7 +29,7 @@ import {
   insertPredictiveSignal,
   logResearch,
 } from "@/lib/blackcat/knowledge/db";
-import { createServiceClient } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "@/lib/supabase-service";
 
 function isAuthorized(req: NextRequest): boolean {
   const secret = req.headers.get("x-blackcat-secret");
@@ -55,6 +55,10 @@ export async function POST(req: NextRequest) {
   for (const raw of platforms) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const p = raw as any;
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+    }
+
     try {
       // 1. Upsert platform
       const platformId = await upsertPlatform({

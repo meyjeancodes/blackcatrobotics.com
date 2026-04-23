@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAnthropicClient } from "../../../lib/anthropic";
-import { createSupabaseServerClient as createClient } from "../../../lib/supabase-server";
+import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../lib/supabase-server";
 
 export const runtime = "nodejs";
 
@@ -53,6 +53,10 @@ export async function POST(req: NextRequest) {
 
     // Determine platform name from robotId (best-effort lookup)
     let platformName = "robotic system";
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+    }
+
     try {
       const supabase = await createClient();
       const { data: robot } = await supabase

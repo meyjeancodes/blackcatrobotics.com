@@ -1,9 +1,21 @@
 import { NextResponse } from "next/server";
-import { createServiceClient } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "@/lib/supabase-service";
 
 export async function GET() {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({
+      status_counts: { online: 4, warning: 1, service: 0, offline: 0 },
+      fleet_health_avg: 92,
+      total: 5,
+      mock: true,
+    });
+  }
+
   try {
     const supabase = createServiceClient();
+    if (!supabase) {
+      return NextResponse.json({ error: "Supabase unavailable" }, { status: 503 });
+    }
     const { data, error } = await supabase.from("robots").select("status, health_score");
     if (error) throw error;
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient } from "../../../../lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
 import { sendAlert } from "../../../../lib/alerts";
 
 /**
@@ -16,6 +16,10 @@ export async function POST(req: NextRequest) {
   }
 
   let body: { customer_id?: string; robot_id?: string; severity?: string };
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
+
   try {
     body = await req.json();
   } catch {

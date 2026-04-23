@@ -9,7 +9,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient as createClient } from "../../../../lib/supabase-server";
+import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../../lib/supabase-server";
 import { Resend } from "resend";
 
 export const runtime = "nodejs";
@@ -46,6 +46,10 @@ export async function POST(req: NextRequest) {
   }
 
   let supabase: Awaited<ReturnType<typeof createClient>>;
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
+
   try {
     supabase = await createClient();
   } catch (err) {

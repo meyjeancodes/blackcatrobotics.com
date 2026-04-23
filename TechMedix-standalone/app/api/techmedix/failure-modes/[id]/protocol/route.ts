@@ -8,7 +8,7 @@ import {
   getRepairProtocol,
   getPredictiveSignals,
 } from "@/lib/blackcat/knowledge/db";
-import { createServiceClient } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "@/lib/supabase-service";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +17,10 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
 
   try {
     // Fetch failure mode details

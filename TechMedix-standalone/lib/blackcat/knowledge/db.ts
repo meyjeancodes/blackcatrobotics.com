@@ -3,7 +3,7 @@
  * Reads from: platforms, failure_modes, repair_protocols, predictive_signals, suppliers, research_log
  */
 
-import { createServiceClient } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseConfigured } from "@/lib/supabase-service";
 
 export type KnowledgePlatform = {
   id: string;
@@ -103,7 +103,9 @@ export type PlatformWithFailures = KnowledgePlatform & {
 // ── Query functions ────────────────────────────────────────────────────────────
 
 export async function listPlatforms(): Promise<KnowledgePlatform[]> {
+  if (!isSupabaseConfigured()) return [];
   const supabase = createServiceClient();
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from("platforms")
     .select("*")
@@ -113,7 +115,9 @@ export async function listPlatforms(): Promise<KnowledgePlatform[]> {
 }
 
 export async function getPlatformBySlug(slug: string): Promise<KnowledgePlatform | null> {
+  if (!isSupabaseConfigured()) return null;
   const supabase = createServiceClient();
+  if (!supabase) return null;
   const { data, error } = await supabase
     .from("platforms")
     .select("*")
@@ -127,7 +131,9 @@ export async function getFailureModesByPlatform(
   platformId: string,
   severity?: string
 ): Promise<FailureModeWithProtocol[]> {
+  if (!isSupabaseConfigured()) return [];
   const supabase = createServiceClient();
+  if (!supabase) return [];
   let q = supabase
     .from("failure_modes")
     .select(`
@@ -147,7 +153,9 @@ export async function getFailureModesByPlatform(
 }
 
 export async function getRepairProtocol(failureModeId: string): Promise<RepairProtocol | null> {
+  if (!isSupabaseConfigured()) return null;
   const supabase = createServiceClient();
+  if (!supabase) return null;
   const { data, error } = await supabase
     .from("repair_protocols")
     .select("*")
@@ -160,7 +168,9 @@ export async function getRepairProtocol(failureModeId: string): Promise<RepairPr
 }
 
 export async function getRepairProtocolById(id: string): Promise<RepairProtocol | null> {
+  if (!isSupabaseConfigured()) return null;
   const supabase = createServiceClient();
+  if (!supabase) return null;
   const { data, error } = await supabase
     .from("repair_protocols")
     .select("*")
@@ -173,7 +183,9 @@ export async function getRepairProtocolById(id: string): Promise<RepairProtocol 
 export async function getCriticalFailureModes(): Promise<
   (FailureMode & { platform: KnowledgePlatform })[]
 > {
+  if (!isSupabaseConfigured()) return [];
   const supabase = createServiceClient();
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from("failure_modes")
     .select("*, platform:platforms(*)")
@@ -184,7 +196,9 @@ export async function getCriticalFailureModes(): Promise<
 }
 
 export async function getPredictiveSignals(failureModeId: string): Promise<PredictiveSignal[]> {
+  if (!isSupabaseConfigured()) return [];
   const supabase = createServiceClient();
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from("predictive_signals")
     .select("*")
@@ -195,7 +209,9 @@ export async function getPredictiveSignals(failureModeId: string): Promise<Predi
 }
 
 export async function listSuppliers(region?: string): Promise<Supplier[]> {
+  if (!isSupabaseConfigured()) return [];
   const supabase = createServiceClient();
+  if (!supabase) return [];
   let q = supabase.from("suppliers").select("*").order("risk_level");
   if (region) q = q.eq("region", region);
   const { data, error } = await q;
@@ -204,7 +220,9 @@ export async function listSuppliers(region?: string): Promise<Supplier[]> {
 }
 
 export async function getPlatformCatalog(): Promise<PlatformWithFailures[]> {
+  if (!isSupabaseConfigured()) return [];
   const supabase = createServiceClient();
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from("platforms")
     .select(`

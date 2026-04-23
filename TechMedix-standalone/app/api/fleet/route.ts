@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient as createClient } from "../../../lib/supabase-server";
+import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../lib/supabase-server";
 
 export const runtime = "nodejs";
 
@@ -18,8 +18,15 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ robots: [], mock: true });
+  }
+
   try {
     const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json({ robots: [], mock: true });
+    }
 
     // Fetch robots
     const { data: robots, error: robotErr } = await supabase
@@ -122,6 +129,9 @@ export async function POST(req: NextRequest) {
 
   try {
     const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json({ error: "Supabase unavailable" }, { status: 503 });
+    }
     const now = new Date().toISOString();
 
     const { data: robot, error } = await supabase

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isSupabaseConfigured } from "../../../../lib/supabase-server";
 
 const VALID_LEVELS = ["L1", "L2", "L3", "L4", "L5"] as const;
 type Level = (typeof VALID_LEVELS)[number];
@@ -48,6 +49,10 @@ export async function POST(request: Request) {
   // ── Score — try DB first, fall back to local answer key ──────────────────────
   let score = 0;
   let scoredFromDb = false;
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  }
 
   try {
     const { createSupabaseServerClient } = await import("../../../../lib/supabase-server");
