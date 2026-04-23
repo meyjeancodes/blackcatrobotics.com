@@ -10,7 +10,6 @@ import {
   ChevronRight,
   CreditCard,
   Cpu,
-  Home,
   LayoutDashboard,
   LogOut,
   Network,
@@ -50,14 +49,6 @@ const NAV: NavGroup[] = [
     icon: Scan,
   },
   {
-    label: "HABITAT",
-    icon: Home,
-    children: [
-      { href: "/habitat",        label: "Overview" },
-      { href: "/habitat/design", label: "Designer" },
-    ],
-  },
-  {
     label: "Maintenance",
     icon: Wrench,
     children: [
@@ -86,6 +77,7 @@ const NAV: NavGroup[] = [
     label: "Infrastructure",
     icon: Server,
     children: [
+      { href: "/habitat",    label: "Habitat" },
       { href: "/datacenter", label: "Data Centers" },
       { href: "/network",    label: "Network" },
       { href: "/energy",     label: "Energy & Grid" },
