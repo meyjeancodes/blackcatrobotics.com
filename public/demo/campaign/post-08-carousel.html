@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .slide {
+    width: 1080px; height: 1080px;
+    background: #0d0e13;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    overflow: hidden; position: relative;
+    margin-bottom: 4px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 80px;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none;
+  }
+  .slide-num {
+    position: absolute; top: 40px; right: 48px;
+    font-size: 12px; color: rgba(255,255,255,0.25);
+  }
+  .slide-brand {
+    position: absolute; bottom: 36px; left: 0; right: 0;
+    text-align: center;
+    font-size: 12px; color: #e8601e; opacity: 0.4;
+    letter-spacing: 2px;
+  }
+  .swipe-hint {
+    position: absolute; bottom: 80px; right: 60px;
+    font-size: 24px; color: #e8601e; opacity: 0.5;
+  }
+
+  /* Slide-specific styles */
+  .hook-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 44px; font-weight: 700;
+    text-align: center; line-height: 1.2;
+    color: white;
+    margin-bottom: 20px;
+  }
+  .hook-sub {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 22px; color: rgba(255,255,255,0.55);
+    text-align: center;
+  }
+  .stat-big {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 96px; font-weight: 700;
+    color: #e8601e; line-height: 1;
+    margin-bottom: 16px;
+  }
+  .stat-label {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 24px; color: white;
+    margin-bottom: 12px;
+  }
+  .stat-sub {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 18px; color: rgba(255,255,255,0.45);
+  }
+
+  /* Fleet dots */
+  .fleet-dots {
+    display: flex; gap: 32px;
+    margin-bottom: 40px;
+  }
+  .fleet-dot {
+    width: 60px; height: 60px;
+    background: #1db87a;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 20px rgba(29,184,122,0.3);
+  }
+  .fleet-dot.alert {
+    background: #f59e0b;
+    box-shadow: 0 0 30px rgba(245,158,11,0.4);
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+  .fleet-label {
+    font-size: 10px; color: rgba(255,255,255,0.4);
+    position: absolute; bottom: -20px; left: 50%;
+    transform: translateX(-50%); white-space: nowrap;
+  }
+  .fleet-text {
+    font-size: 13px; color: #f59e0b;
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-top: 16px;
+  }
+  .fleet-sub {
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 20px; color: rgba(255,255,255,0.6);
+    margin-top: 24px; text-align: center;
+  }
+
+  /* Alert panel in slide 4 */
+  .alert-panel {
+    background: #1a1b20;
+    border: 1px solid rgba(232,96,30,0.35);
+    border-radius: 16px;
+    padding: 32px 40px;
+    width: 80%;
+    margin-top: 24px;
+  }
+  .ap-title { font-size: 14px; color: #e8601e; font-weight: 700; margin-bottom: 12px; letter-spacing: 2px; }
+  .ap-line { font-size: 14px; color: rgba(255,255,255,0.7); padding: 5px 0; }
+  .ap-line .lbl { color: rgba(255,255,255,0.35); display: inline-block; width: 100px; }
+
+  /* Map in slide 5 */
+  .mini-map {
+    width: 600px; height: 300px;
+    background: #1e1f26;
+    border-radius: 12px;
+    position: relative;
+    margin-bottom: 24px;
+    clip-path: polygon(10% 20%, 25% 10%, 50% 15%, 75% 5%, 90% 20%, 85% 60%, 70% 80%, 40% 85%, 15% 70%);
+  }
+  .mpin {
+    position: absolute;
+    width: 12px; height: 12px;
+    background: #e8601e;
+    border-radius: 2px;
+    transform: rotate(45deg);
+  }
+  .mpin.fail { background: #f59e0b; }
+  .mpin.tech {
+    background: #1db87a;
+    border-radius: 50%;
+    transform: none;
+    width: 14px; height: 14px;
+  }
+  .eta-badge {
+    background: #1a1b20;
+    border: 1px solid rgba(232,96,30,0.4);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 13px; color: #e8601e; font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .dispatch-mini {
+    font-size: 13px; color: rgba(255,255,255,0.6);
+    text-align: center;
+  }
+
+  /* CTA slide */
+  .cta-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 64px; font-weight: 700;
+    color: #e8601e;
+    margin-bottom: 24px;
+  }
+  .cta-tagline {
+    font-size: 22px; color: rgba(255,255,255,0.6);
+    margin-bottom: 8px;
+  }
+  .cta-url {
+    font-size: 16px; color: rgba(255,255,255,0.3);
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Hook -->
+<div class="slide">
+  <div class="grid"></div>
+  <div class="slide-num">1 / 7</div>
+  <div class="hook-text">Your robot is 48 hours from failure.<br>Here's what happens next.</div>
+  <div class="swipe-hint">→</div>
+  <div class="slide-brand">TECHMEDIX</div>
+</div>
+
+<!-- SLIDE 2: Problem -->
+<div class="slide">
+  <div class="grid"></div>
+  <div class="slide-num">2 / 7</div>
+  <div class="stat-big">$260,000</div>
+  <div class="stat-label">per hour</div>
+  <div class="stat-sub">That's what unplanned downtime costs.<br>Most systems don't know until the robot stops.</div>
+  <div class="slide-brand">TECHMEDIX</div>
+</div>
+
+<!-- SLIDE 3: Detect -->
+<div class="slide">
+  <div class="grid"></div>
+  <div class="slide-num">3 / 7</div>
+  <div class="fleet-dots">
+    <div class="fleet-dot"><div class="fleet-label">G1-001</div></div>
+    <div class="fleet-dot"><div class="fleet-label">G1-002</div></div>
+    <div class="fleet-dot"><div class="fleet-label">G1-003</div></div>
+    <div class="fleet-dot alert"><div class="fleet-label">G1-004</div></div>
+    <div class="fleet-dot"><div class="fleet-label">G1-005</div></div>
+    <div class="fleet-dot"><div class="fleet-label">G1-006</div></div>
+  </div>
+  <div class="fleet-text">ANOMALY DETECTED</div>
+  <div class="fleet-sub">AI detects failure signatures before humans can.</div>
+  <div class="slide-brand">TECHMEDIX</div>
+</div>
+
+<!-- SLIDE 4: Predict -->
+<div class="slide">
+  <div class="grid"></div>
+  <div class="slide-num">4 / 7</div>
+  <div style="width:100%;display:flex;flex-direction:column;align-items:center;">
+    <svg viewBox="0 0 600 150" style="width:60%;margin-bottom:24px;">
+      <path d="M0,75 Q30,20 60,75 Q90,130 120,75 Q150,20 180,75 Q210,130 240,75 Q270,20 300,75 Q330,130 360,75" fill="none" stroke="#1db87a" stroke-width="3" opacity="0.8"/>
+      <path d="M360,75 Q375,30 390,80" fill="none" stroke="#f59e0b" stroke-width="3"/>
+      <path d="M390,80 Q410,15 430,100 Q450,140 470,60 Q490,10 510,110 Q530,150 550,50 Q570,5 600,120" fill="none" stroke="#e8601e" stroke-width="3"/>
+    </svg>
+    <div class="alert-panel">
+      <div class="ap-title">PREDICTIVE ALERT</div>
+      <div class="ap-line"><span class="lbl">Platform</span>Unitree G1-004</div>
+      <div class="ap-line"><span class="lbl">Component</span>Joint Shoulder_R</div>
+      <div class="ap-line"><span class="lbl">Prediction</span>47.3 hr to failure</div>
+    </div>
+  </div>
+  <div class="slide-brand">TECHMEDIX</div>
+</div>
+
+<!-- SLIDE 5: Dispatch -->
+<div class="slide">
+  <div class="grid"></div>
+  <div class="slide-num">5 / 7</div>
+  <div class="mini-map">
+    <div class="mpin" style="left:25%;top:35%"></div>
+    <div class="mpin" style="left:45%;top:50%"></div>
+    <div class="mpin fail" style="left:65%;top:30%"></div>
+    <div class="mpin" style="left:50%;top:70%"></div>
+    <div class="mpin tech" style="left:70%;top:75%"></div>
+  </div>
+  <div class="eta-badge">ETA 23 MIN</div>
+  <div class="dispatch-mini">J. Martinez · L2 · $520 · Shoulder_R replacement</div>
+  <div class="slide-brand">TECHMEDIX</div>
+</div>
+
+<!-- SLIDE 6: Repair -->
+<div class="slide">
+  <div class="grid"></div>
+  <div class="slide-num">6 / 7</div>
+  <div style="display:flex;gap:48px;align-items:center;">
+    <div style="text-align:center;">
+      <div style="font-size:11px;color:#e8601e;letter-spacing:2px;margin-bottom:16px;">FIELD TECH</div>
+      <div style="width:120px;height:200px;border:2px solid rgba(255,255,255,0.3);border-radius:8px;position:relative;">
+        <div style="width:30px;height:30px;border:2px solid #f59e0b;border-radius:50%;position:absolute;top:40px;right:20px;background:rgba(245,158,11,0.2);"></div>
+      </div>
+      <div style="font-size:10px;color:#f59e0b;margin-top:8px;">Step 3/7</div>
+    </div>
+    <div style="font-size:48px;color:rgba(255,255,255,0.15);">⟷</div>
+    <div style="text-align:center;">
+      <div style="font-size:11px;color:#38bdf8;letter-spacing:2px;margin-bottom:16px;">EXPERT HQ</div>
+      <div style="display:flex;gap:12px;justify-content:center;">
+        <div style="width:36px;height:36px;border:2px solid #38bdf8;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:#38bdf8;">1</div>
+        <div style="width:36px;height:36px;border:2px solid #38bdf8;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:#38bdf8;">2</div>
+        <div style="width:36px;height:36px;border:2px solid #38bdf8;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:#38bdf8;">3</div>
+      </div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:12px;">Dr. Chen · L5</div>
+    </div>
+  </div>
+  <div style="margin-top:40px;font-family:'Satoshi','Inter',sans-serif;font-size:18px;color:rgba(255,255,255,0.6);text-align:center;">
+    AR-guided repair. Remote expert annotating live.<br>Torque spec: 14.2 Nm.
+  </div>
+  <div class="slide-brand">TECHMEDIX</div>
+</div>
+
+<!-- SLIDE 7: CTA -->
+<div class="slide">
+  <div class="grid"></div>
+  <div class="slide-num">7 / 7</div>
+  <div class="cta-title">TechMedix</div>
+  <div class="cta-tagline">Predict. Dispatch. Repair.</div>
+  <div class="cta-url">blackcatrobotics.com</div>
+  <div class="slide-brand">TECHMEDIX</div>
+</div>
+
+</body>
+</html>

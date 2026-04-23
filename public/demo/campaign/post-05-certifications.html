@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1080px;
+    background: #0d0e13;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    overflow: hidden; position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none;
+  }
+  .content {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    padding: 56px 64px;
+  }
+  .kicker {
+    font-size: 11px; color: rgba(255,255,255,0.38);
+    text-transform: uppercase; letter-spacing: 3px;
+    margin-bottom: 40px;
+  }
+  .cert-row {
+    display: flex; align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+  .cert-label {
+    width: 220px;
+    font-size: 13px; color: white;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .cert-bar-bg {
+    flex: 1; height: 36px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .cert-bar {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e8601e, #c3a55b);
+    opacity: 0.85;
+  }
+  .cert-value {
+    width: 180px;
+    font-size: 13px; color: #1db87a;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  /* Counter */
+  .counter {
+    position: absolute;
+    top: 56px; right: 64px;
+    font-size: 16px; color: #1db87a; opacity: 0.7;
+    text-align: right;
+  }
+  .counter-num { font-weight: 700; font-size: 22px; }
+
+  /* Bracket */
+  .bracket-area {
+    position: absolute;
+    left: 32px; top: 170px; bottom: 420px;
+    display: flex; align-items: center;
+  }
+  .bracket {
+    width: 2px; height: 100%;
+    background: rgba(255,255,255,0.15);
+    border-radius: 1px;
+    position: relative;
+  }
+  .bracket::before, .bracket::after {
+    content: '';
+    position: absolute; left: -4px;
+    width: 10px; height: 2px;
+    background: rgba(255,255,255,0.15);
+  }
+  .bracket::before { top: 0; }
+  .bracket::after { bottom: 0; }
+  .bracket-label {
+    font-size: 9px; color: rgba(255,255,255,0.35);
+    text-transform: uppercase; letter-spacing: 2px;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    margin-left: 8px;
+  }
+
+  .caption {
+    margin-top: auto;
+    font-family: 'Satoshi', 'Inter', sans-serif;
+    font-size: 20px;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="content">
+    <div class="kicker">Layer 3 — Human / Certification Program</div>
+    <div class="counter">
+      <div class="counter-num">1,200+</div>
+      <div>certified technicians</div>
+    </div>
+
+    <div class="bracket-area">
+      <div class="bracket"></div>
+      <div class="bracket-label">TechMedix Certified</div>
+    </div>
+
+    <div style="margin-left: 60px;">
+      <div class="cert-row">
+        <div class="cert-label">L1 — Operator</div>
+        <div class="cert-bar-bg"><div class="cert-bar" style="width:100%"></div></div>
+        <div class="cert-value">$280–$350/job</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-label">L2 — Technician</div>
+        <div class="cert-bar-bg"><div class="cert-bar" style="width:75%"></div></div>
+        <div class="cert-value">$450–$650/job</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-label">L3 — Specialist</div>
+        <div class="cert-bar-bg"><div class="cert-bar" style="width:50%"></div></div>
+        <div class="cert-value">$800–$1,100/job</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-label">L4 — Systems Eng.</div>
+        <div class="cert-bar-bg"><div class="cert-bar" style="width:35%"></div></div>
+        <div class="cert-value">$1,200–$1,800/job</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-label">L5 — Architect</div>
+        <div class="cert-bar-bg"><div class="cert-bar" style="width:20%"></div></div>
+        <div class="cert-value">$2,200–$3,500/job</div>
+      </div>
+    </div>
+
+    <div class="caption">Five certification levels. AI-evaluated exams.<br>Platform-specific dispatch eligibility.</div>
+  </div>
+</body>
+</html>
