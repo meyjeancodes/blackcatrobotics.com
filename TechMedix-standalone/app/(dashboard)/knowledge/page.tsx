@@ -8,6 +8,7 @@ import {
   Bot,
   Brain,
   ChevronRight,
+  Crosshair,
   Cpu,
   GraduationCap,
   Hand,
@@ -501,6 +502,60 @@ export default function KnowledgePage() {
           })}
         </div>
       </section>
+      {/* ── Blueprint Explorer CTA ────────────────────────────────────────────── */}
+      <section
+        className="rounded-[28px] p-8"
+        style={{
+          background: "linear-gradient(135deg, rgba(56,189,248,0.06) 0%, rgba(167,139,250,0.04) 100%)",
+          border: "1px solid rgba(100,150,255,0.08)",
+        }}
+      >
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p className="kicker" style={{ color: "rgba(56,189,248,0.7)" }}>
+              Layer 1 — Physical
+            </p>
+            <h2 className="mt-2 font-header text-2xl leading-tight text-[var(--ink)]">
+              Technical Blueprint Explorer
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-[var(--ink)]/52 max-w-lg">
+              Dissect any robot interactively — rotate, explode, slice through, and inspect
+              component-level failure signatures. The closest thing to holding the service
+              manual in your hands.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {["3D Orbit", "Exploded View", "Cross-Section", "Wireframe", "Failure Overlay"].map(
+                (feat) => (
+                  <span
+                    key={feat}
+                    className="rounded-full border border-sky-500/[0.18] bg-sky-500/[0.04] px-2.5 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] text-sky-700"
+                  >
+                    {feat}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 shrink-0">
+            <a
+              href="/knowledge/blueprint"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-500 px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:bg-sky-600"
+            >
+              <Crosshair size={13} />
+              Open Blueprint Explorer
+            </a>
+            <a
+              href="/knowledge/blueprint/unitree-g1"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-sky-500/[0.25] px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-sky-700 transition hover:bg-sky-500/[0.08]"
+            >
+              Try Unitree G1 Example
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+
 
       {/* ── Simulation Labs ──────────────────────────────────────────────────── */}
       <section>
