@@ -8,18 +8,27 @@ export const metadata = {
 };
 
 export default async function DashboardCertificationsPage() {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  let user = null;
+  let earned: { level: string }[] = [];
 
-  // Fetch user's existing certifications if logged in
-  const { data: earned } = user
-    ? await supabase
-        .from("certifications")
-        .select("level, issued_at")
-        .eq("user_id", user.id)
-    : { data: [] };
+  try {
+    const supabase = await createSupabaseServerClient();
+    if (supabase) {
+      const { data: { user: u } } = await supabase.auth.getUser();
+      user = u;
+      if (user) {
+        const { data } = await supabase
+          .from("certifications")
+          .select("level, issued_at")
+          .eq("user_id", user.id);
+        earned = data ?? [];
+      }
+    }
+  } catch {
+    // Auth/DB offline — render without user state
+  }
 
-  const earnedSet = new Set((earned ?? []).map((c: { level: string }) => c.level));
+  const earnedSet = new Set(earned.map((c) => c.level));
 
   return (
     <div className="space-y-8">
