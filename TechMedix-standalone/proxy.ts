@@ -23,6 +23,21 @@ const AUTH_ROUTES = ["/login", "/signup"];
 
 export async function proxy(request: NextRequest) {
   try {
+    const host = request.headers.get("host") || "";
+    const { pathname } = request.nextUrl;
+
+    // Redirect www to apex domain
+    if (host === "www.blackcatrobotics.com") {
+      const url = request.nextUrl.clone();
+      url.host = "blackcatrobotics.com";
+      return NextResponse.redirect(url, 301);
+    }
+
+    // Serve marketing homepage on blackcatrobotics.com root
+    if ((host === "blackcatrobotics.com") && pathname === "/") {
+      return NextResponse.rewrite(new URL("/index.html", request.url));
+    }
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -53,8 +68,6 @@ export async function proxy(request: NextRequest) {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-
-    const { pathname } = request.nextUrl;
 
     const isProtected = PROTECTED_PREFIXES.some((prefix) =>
       pathname.startsWith(prefix)
