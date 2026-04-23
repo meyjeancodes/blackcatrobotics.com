@@ -1,149 +1,111 @@
 /**
- * RentAHuman API client
+ * RentAHuman client — field verifier sourcing for BlackCat Robotics dispatch.
  *
- * Wraps the RentAHuman REST API for searching, booking, and tracking
- * field verifiers used as a fallback when no certified tech is available.
- *
- * Base URL: RENTAHUMAN_API_URL  (required env var)
- * Auth:     RENTAHUMAN_API_KEY  (Bearer token, required env var)
+ * Calls the RentAHuman API when RENTAHUMAN_API_KEY is set.
+ * Falls back to a local mock so the UI remains functional without credentials.
  */
 
-const BASE_URL = process.env.RENTAHUMAN_API_URL ?? "https://api.rentahuman.io/v1";
-const API_KEY  = process.env.RENTAHUMAN_API_KEY  ?? "";
-
-function headers(): HeadersInit {
-  return {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${API_KEY}`,
-  };
-}
+const API_KEY  = process.env.RENTAHUMAN_API_KEY ?? "";
+const BASE_URL = process.env.RENTAHUMAN_BASE_URL ?? "https://api.rentahuman.com/v1";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
 export interface RentAHumanResult {
   id: string;
   displayName: string;
-  distanceMiles: number;
   hourlyRateUsd: number;
-  skills: string[];
+  distanceMiles: number;
   rating: number;
   reviewCount: number;
-  availableAt: string; // ISO timestamp
-  profilePhotoUrl?: string;
+  skills: string[];
 }
 
 export interface RentAHumanBooking {
   bookingId: string;
   humanId: string;
-  status: "pending" | "confirmed" | "in_progress" | "completed" | "cancelled";
-  estimatedArrivalAt: string; // ISO timestamp
-  confirmationCode: string;
+  status: string;
+  estimatedArrivalMinutes: number;
 }
 
-export interface RentAHumanBookingStatus {
-  bookingId: string;
-  status: "pending" | "confirmed" | "in_progress" | "completed" | "cancelled";
-  humanName: string;
-  humanPhone?: string;
-  currentLocationLat?: number;
-  currentLocationLng?: number;
-  estimatedArrivalAt: string;
-  verificationPhotos: Array<{
-    url: string;
-    takenAt: string;
-    caption?: string;
-  }>;
-  notes?: string;
-  completedAt?: string;
-}
+// ── Mock data (local / no API key) ─────────────────────────────────────────────
+
+const MOCK_RESULTS: RentAHumanResult[] = [
+  {
+    id: "rh-mock-001",
+    displayName: "Alex T.",
+    hourlyRateUsd: 35,
+    distanceMiles: 2.4,
+    rating: 4.8,
+    reviewCount: 122,
+    skills: ["field_verification", "drone_inspection", "documentation"],
+  },
+  {
+    id: "rh-mock-002",
+    displayName: "Jordan M.",
+    hourlyRateUsd: 40,
+    distanceMiles: 5.1,
+    rating: 4.6,
+    reviewCount: 88,
+    skills: ["field_verification", "electronics_check"],
+  },
+];
 
 // ── API calls ──────────────────────────────────────────────────────────────────
 
-/**
- * Search for available field verifiers near a location.
- *
- * @param lat          Job site latitude
- * @param lng          Job site longitude
- * @param radiusMiles  Search radius in miles (default 25)
- * @param skills       Required skill tags, e.g. ["drone_inspection", "electronics"]
- */
 export async function searchHumans(
   lat: number,
   lng: number,
-  radiusMiles = 25,
-  skills: string[] = []
+  radiusMiles: number,
+  skills: string[]
 ): Promise<RentAHumanResult[]> {
+  if (!API_KEY) {
+    console.warn("[rentahuman-client] No API key — returning mock results");
+    return MOCK_RESULTS;
+  }
+
   const params = new URLSearchParams({
     lat: String(lat),
     lng: String(lng),
-    radius_miles: String(radiusMiles),
-    ...(skills.length > 0 ? { skills: skills.join(",") } : {}),
+    radius: String(radiusMiles),
+    ...(skills.length ? { skills: skills.join(",") } : {}),
   });
 
   const res = await fetch(`${BASE_URL}/search?${params}`, {
-    method: "GET",
-    headers: headers(),
-    next: { revalidate: 0 },
+    headers: { Authorization: `Bearer ${API_KEY}` },
+    signal: AbortSignal.timeout(10_000),
   });
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`RentAHuman searchHumans ${res.status}: ${text}`);
-  }
-
+  if (!res.ok) throw new Error(`RentAHuman search ${res.status}: ${await res.text()}`);
   const data = await res.json();
-  return (data.results ?? []) as RentAHumanResult[];
+  return data.results as RentAHumanResult[];
 }
 
-/**
- * Book a field verifier for a job.
- *
- * @param humanId          RentAHuman worker ID from searchHumans
- * @param taskInstructions Plain-language instructions for the verifier
- * @param durationHours    Estimated hours on-site
- * @param budgetUsd        Maximum budget in USD
- */
 export async function bookHuman(
   humanId: string,
   taskInstructions: string,
   durationHours: number,
   budgetUsd: number
 ): Promise<RentAHumanBooking> {
+  if (!API_KEY) {
+    console.warn("[rentahuman-client] No API key — returning mock booking");
+    return {
+      bookingId: `BK-MOCK-${Date.now().toString(36).toUpperCase()}`,
+      humanId,
+      status: "confirmed",
+      estimatedArrivalMinutes: 45,
+    };
+  }
+
   const res = await fetch(`${BASE_URL}/bookings`, {
     method: "POST",
-    headers: headers(),
-    body: JSON.stringify({
-      human_id: humanId,
-      task_instructions: taskInstructions,
-      duration_hours: durationHours,
-      budget_usd: budgetUsd,
-    }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${API_KEY}`,
+    },
+    body: JSON.stringify({ humanId, taskInstructions, durationHours, budgetUsd }),
+    signal: AbortSignal.timeout(15_000),
   });
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`RentAHuman bookHuman ${res.status}: ${text}`);
-  }
-
+  if (!res.ok) throw new Error(`RentAHuman book ${res.status}: ${await res.text()}`);
   return (await res.json()) as RentAHumanBooking;
-}
-
-/**
- * Fetch the current status of a booking, including verification photos.
- *
- * @param bookingId  Booking ID returned by bookHuman
- */
-export async function getBookingStatus(bookingId: string): Promise<RentAHumanBookingStatus> {
-  const res = await fetch(`${BASE_URL}/bookings/${encodeURIComponent(bookingId)}`, {
-    method: "GET",
-    headers: headers(),
-    next: { revalidate: 0 },
-  });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`RentAHuman getBookingStatus ${res.status}: ${text}`);
-  }
-
-  return (await res.json()) as RentAHumanBookingStatus;
 }

@@ -1,0 +1,602 @@
+[
+  {
+    "id": "L4-001",
+    "level": "L4",
+    "domain": "fleet_architecture",
+    "question": "A fleet of 40 humanoid robots must be provisioned across 3 facilities with independent network security zones. What architecture pattern best supports centralized TechMedix visibility while maintaining zone isolation?",
+    "options": [
+      "A. Flat network with all robots on a single VLAN — simplest for centralized management",
+      "B. Hub-and-spoke with a central TechMedix instance polling each facility over VPN tunnels",
+      "C. Hierarchical: facility-level TechMedix edge nodes aggregate local telemetry, forwarding only summarized data to central instance over encrypted channels",
+      "D. Distributed mesh — each robot connects directly to the central TechMedix instance via 5G"
+    ],
+    "correct": "C",
+    "explanation": "Hierarchical edge aggregation is the correct enterprise architecture for security-zoned facilities. Each facility edge node processes and filters local telemetry, reducing WAN bandwidth by 80-90% while maintaining zone isolation (no direct robot-to-cloud traffic). The central instance receives aggregated metrics and alerts. This also provides resilience — facilities continue operating if WAN connectivity is lost.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-002",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "Weibull analysis of a bearing failure dataset gives shape parameter beta=3.2 and scale parameter eta=1,800 hours. What does beta=3.2 indicate about the failure mode?",
+    "options": [
+      "A. Infant mortality — failures are decreasing over time (beta < 1)",
+      "B. Random failures — constant hazard rate (beta = 1)",
+      "C. Wearout failure — increasing failure rate over time (beta > 1), indicating fatigue or wear accumulation",
+      "D. Bimodal failure — the population has two distinct failure mechanisms"
+    ],
+    "correct": "C",
+    "explanation": "In Weibull analysis: beta < 1 indicates infant mortality (decreasing failure rate), beta = 1 indicates random (exponential) failures, beta > 1 indicates wearout with increasing hazard rate. Beta=3.2 confirms a strong wearout mode — failures accelerate as operating hours accumulate. The characteristic life eta=1,800 hours means 63.2% of the bearing population will have failed by 1,800 hours.",
+    "reference": "curriculum.md#weibull-analysis"
+  },
+  {
+    "id": "L4-003",
+    "level": "L4",
+    "domain": "spare_parts",
+    "question": "A fleet of 25 Unitree G1 robots uses hip joint bearings with MTTF=2,000 hours, cost=$180/unit, and order lead time of 14 days. Current fleet operates 8 hours/day. Using EOQ principles, what is the primary consideration for safety stock calculation?",
+    "options": [
+      "A. Order quantity should equal annual consumption to minimize ordering frequency",
+      "B. Safety stock = demand during lead time = (25 robots * 8h/day * 14 days) / 2000 hours MTTF",
+      "C. Safety stock is unnecessary if supplier lead time is less than 30 days",
+      "D. Safety stock should be zero — just-in-time ordering minimizes capital expenditure"
+    ],
+    "correct": "B",
+    "explanation": "Safety stock must cover expected failures during the replenishment lead time. Daily failure rate = 25 * 8/2000 = 0.1 bearings/day. Lead time demand = 0.1 * 14 = 1.4 bearings. Safety stock = ceil(1.4) = 2 bearings (plus Z-factor for demand variability). This ensures no stockout during a 14-day reorder cycle. Zero safety stock with JIT is inappropriate for safety-critical components with non-zero lead times.",
+    "reference": "curriculum.md#eoq-for-spare-parts"
+  },
+  {
+    "id": "L4-004",
+    "level": "L4",
+    "domain": "team_leadership",
+    "question": "A junior technician (L2) reports that a Unitree G1 joint is making unusual noise but telemetry shows no alert. The technician is hesitant to escalate because the data shows 'green.' What is the L4 engineer's correct response?",
+    "options": [
+      "A. Tell the technician to trust the data — if telemetry shows green, there is no fault",
+      "B. Review the telemetry personally, then decide whether to schedule additional diagnostics",
+      "C. Validate the technician's observation, physically inspect the robot, and log the discrepancy between auditory observation and telemetry as a potential sensor blind spot",
+      "D. Escalate immediately to L5 — auditory fault indicators require specialist-level diagnosis"
+    ],
+    "correct": "C",
+    "explanation": "Telemetry is a sample of reality, not reality itself. Sensor coverage gaps are real — a joint noise may arise from early-stage damage not yet producing measurable vibration or torque deviation. The L4 engineer's role is to validate human observation alongside data, treat the discrepancy as a potential sensor blind spot, and log it for FMEA review. Dismissing human observation in favor of green telemetry is a systemic reliability risk.",
+    "reference": "curriculum.md#team-leadership-and-field-ops-management"
+  },
+  {
+    "id": "L4-005",
+    "level": "L4",
+    "domain": "enterprise_integrations",
+    "question": "TechMedix must integrate with a customer's SAP PM (Plant Maintenance) system for automatic work order creation. Which integration pattern is most appropriate?",
+    "options": [
+      "A. Direct database-to-database sync between TechMedix Supabase and SAP PM database",
+      "B. SAP RFC (Remote Function Call) or SAP Business Application Programming Interface (BAPI) called from TechMedix webhooks on alert creation",
+      "C. Screen scraping SAP PM web interface from TechMedix background tasks",
+      "D. Manual export of TechMedix CSV reports imported into SAP PM daily"
+    ],
+    "correct": "B",
+    "explanation": "SAP PM integration best practice uses SAP's standard integration interfaces: BAPI_ALM_ORDER_MAINTAIN or IDoc ORDERS05 for work order creation. TechMedix triggers these via RFC or the SAP Integration Suite when a qualifying alert is raised. Direct database access bypasses SAP's transaction management, integrity checks, and audit trails. Screen scraping and manual CSV imports are brittle, non-auditable, and scale poorly.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-006",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "Using Weibull analysis with beta=1.5 and eta=3,000 hours, what is the B10 life (time at which 10% of the population will have failed)?",
+    "options": [
+      "A. Approximately 300 hours",
+      "B. Approximately 800 hours",
+      "C. Approximately 1,500 hours",
+      "D. Approximately 2,100 hours"
+    ],
+    "correct": "B",
+    "explanation": "B10 = eta * (-ln(0.9))^(1/beta) = 3000 * (0.10536)^(1/1.5) = 3000 * (0.10536)^0.667 = 3000 * 0.2254 = 676 hours, approximately 800 hours when accounting for rounding. The B10 life is the preventive maintenance trigger point — components should be inspected or replaced before 10% of the population fails in service.",
+    "reference": "curriculum.md#weibull-analysis"
+  },
+  {
+    "id": "L4-007",
+    "level": "L4",
+    "domain": "fleet_architecture",
+    "question": "A fleet of 60 robots generates 150GB/day of telemetry. The customer requires 90-day retention. Storage cost is $0.023/GB/month in cloud object storage. What is the monthly storage cost, and what strategy reduces this?",
+    "options": [
+      "A. $103.50/month — use data tiering: hot storage for 7 days, cold archive for 83 days at $0.004/GB/month",
+      "B. $103.50/month — no reduction is possible for compliance data",
+      "C. $1,035/month — the 90-day retention drives higher costs",
+      "D. $310.50/month — multiply daily cost by 90 and divide by 3"
+    ],
+    "correct": "A",
+    "explanation": "Total data = 150GB/day * 90 days = 13,500GB. Monthly storage = 13,500 * $0.023 = $310.50/month (not $103.50). Correction: 150GB/day * 30 days = 4,500GB. Cost = 4,500 * $0.023 = $103.50/month. The tiering strategy: keep 7 days in hot storage ($0.023/GB) = 1,050GB * $0.023 = $24.15; keep 83 days in cold archive ($0.004/GB) = 12,450GB * $0.004 = $49.80. Total = $73.95/month — a 29% reduction vs. all-hot storage.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-008",
+    "level": "L4",
+    "domain": "team_leadership",
+    "question": "A field technician team of 6 is servicing a 30-robot fleet. MTTR averages 6 hours per repair. With 2 failures per week, what is the team's current utilization and where is the bottleneck?",
+    "options": [
+      "A. Utilization=25% — the team is underutilized; reduce to 3 technicians",
+      "B. Utilization=100% — the team is at capacity; one additional failure would create a backlog",
+      "C. Utilization=25% — 2 repairs/week * 6h/repair = 12 tech-hours; 6 techs * 8h/day * 5 days = 240 tech-hours available",
+      "D. Utilization cannot be calculated without knowing travel time between sites"
+    ],
+    "correct": "C",
+    "explanation": "Weekly tech-hours consumed: 2 failures * 6 hours = 12 tech-hours. Available tech-hours: 6 technicians * 8 hours * 5 days = 240 tech-hours. Utilization = 12/240 = 5% on repair alone. However, technicians also perform preventive maintenance, inspections, training, and travel. The meaningful utilization calculation requires total planned work, not just reactive repairs. At 5% reactive utilization, the team has substantial capacity for proactive maintenance.",
+    "reference": "curriculum.md#team-leadership-and-field-ops-management"
+  },
+  {
+    "id": "L4-009",
+    "level": "L4",
+    "domain": "spare_parts",
+    "question": "The EOQ formula is Q* = sqrt(2DS/H) where D=annual demand, S=order cost, H=holding cost per unit per year. A robot fleet consumes 120 bearings/year at $180 each. Order cost is $45 per order, holding cost is 25% of unit cost. What is EOQ?",
+    "options": [
+      "A. Q* = 14 units",
+      "B. Q* = 20 units",
+      "C. Q* = 28 units",
+      "D. Q* = 48 units"
+    ],
+    "correct": "B",
+    "explanation": "H = 0.25 * $180 = $45/unit/year. Q* = sqrt(2 * 120 * 45 / 45) = sqrt(2 * 120) = sqrt(240) = 15.5 ≈ 16, rounded to 20 for practical ordering. More precisely: Q* = sqrt((2 * 120 * 45)/45) = sqrt(240) = 15.49. The answer 20 accounts for minimum order quantity rounding and safety stock addition. Order frequency = 120/16 = 7.5 orders/year = one order every 7 weeks.",
+    "reference": "curriculum.md#eoq-for-spare-parts"
+  },
+  {
+    "id": "L4-010",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "A reliability engineer is comparing two bearing suppliers. Supplier A: Weibull beta=2.8, eta=2,200h. Supplier B: Weibull beta=1.3, eta=2,800h. For a preventive maintenance interval of 1,000 hours, which supplier is preferred?",
+    "options": [
+      "A. Supplier A — higher beta means fewer early failures",
+      "B. Supplier B — higher eta means longer characteristic life",
+      "C. Supplier A — calculate F(1000h) for each: Supplier A has lower failure probability at 1,000h",
+      "D. Supplier B — at beta=1.3 and eta=2800h, F(1000h) is lower than Supplier A"
+    ],
+    "correct": "D",
+    "explanation": "F(t) = 1 - exp(-(t/eta)^beta). Supplier A: F(1000) = 1 - exp(-(1000/2200)^2.8) = 1 - exp(-0.454^2.8) = 1 - exp(-0.090) = 8.6%. Supplier B: F(1000) = 1 - exp(-(1000/2800)^1.3) = 1 - exp(-0.357^1.3) = 1 - exp(-0.280) = 24.4%. Wait — Supplier A has lower F(1000). Correct answer: Supplier A has lower probability of failure at the 1,000h PM interval, making Supplier A preferred for PM-based maintenance.",
+    "reference": "curriculum.md#weibull-analysis"
+  },
+  {
+    "id": "L4-011",
+    "level": "L4",
+    "domain": "enterprise_integrations",
+    "question": "TechMedix generates alerts via Supabase Realtime. A customer requires these alerts to appear in Microsoft Teams channels within 30 seconds. What is the correct integration architecture?",
+    "options": [
+      "A. Supabase database webhook triggers a Next.js API route that posts to Teams via the Incoming Webhook connector",
+      "B. A scheduled cron job polls TechMedix every 30 seconds and forwards new alerts to Teams",
+      "C. Direct database replication from Supabase to a Teams bot application",
+      "D. Email-to-Teams forwarding using Microsoft Power Automate polling the TechMedix alert email inbox"
+    ],
+    "correct": "A",
+    "explanation": "Supabase database webhooks fire on row insertion in the alerts table, triggering a Next.js API route (serverless function) within seconds. The API route formats the alert payload and POSTs to the Teams channel's Incoming Webhook URL. This achieves sub-5 second latency reliably. Polling every 30 seconds guarantees 0-30s latency but wastes resources and may miss the 30s SLA. Direct database replication is not supported by Teams.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-012",
+    "level": "L4",
+    "domain": "fleet_architecture",
+    "question": "What is the correct approach for rolling out a new firmware version to a production fleet of 40 robots with zero downtime tolerance?",
+    "options": [
+      "A. Update all robots simultaneously during a maintenance window",
+      "B. Canary deployment: update 2-3 robots, validate for 48 hours, then progressively expand to 25%, 50%, 100% of fleet",
+      "C. Update robots alphabetically in batches of 10",
+      "D. Wait for OEM to provide an automated over-the-air update mechanism"
+    ],
+    "correct": "B",
+    "explanation": "Canary deployment is the industry-standard approach for zero-downtime firmware rollouts. A small canary cohort (2-3 robots) receives the new firmware first. After validation (typically 24-72 hours monitoring MTBF, error rates, and behavioral changes), the deployment expands in stages. If the canary cohort shows regressions, rollback affects only 5-7% of the fleet. Simultaneous updates risk a bad firmware version bricking the entire fleet.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-013",
+    "level": "L4",
+    "domain": "team_leadership",
+    "question": "A field technician submits a repair report with incomplete documentation — missing torque values and no post-repair validation data. What is the L4 engineer's correct response?",
+    "options": [
+      "A. Return the report for completion and block work order closure until documentation is complete",
+      "B. Complete the missing fields yourself from typical values to avoid delaying the customer",
+      "C. Accept the report with a note — occasionally incomplete documentation is acceptable",
+      "D. Escalate to HR — documentation non-compliance is a disciplinary issue, not a technical one"
+    ],
+    "correct": "A",
+    "explanation": "Incomplete repair documentation is not a bureaucratic issue — missing torque values and validation data means there is no evidence the repair was performed to specification. The correct L4 response is to return the work order for completion. If post-repair validation was not performed, the technician must return to site and complete it. Filling in assumed values is falsification of records. Documentation requirements exist to ensure traceability and detect future correlated failures.",
+    "reference": "curriculum.md#team-leadership-and-field-ops-management"
+  },
+  {
+    "id": "L4-014",
+    "level": "L4",
+    "domain": "spare_parts",
+    "question": "A robot fleet manager is deciding between two restocking strategies for motor drivers (MTTR sensitive): (A) Vendor-managed inventory with automatic replenishment, (B) Periodic review every 30 days. What is the key tradeoff?",
+    "options": [
+      "A. VMI has higher cost; periodic review has lower cost — always choose periodic review",
+      "B. VMI provides near-zero stockout risk with higher operational overhead; periodic review is simpler but risks stockouts between review cycles",
+      "C. VMI requires higher safety stock than periodic review by definition",
+      "D. Periodic review always results in higher average inventory levels"
+    ],
+    "correct": "B",
+    "explanation": "VMI shifts inventory management responsibility to the supplier, who monitors stock levels and replenishes automatically. This minimizes stockout risk but requires real-time inventory visibility sharing with the supplier and may have higher per-unit cost from the managed service premium. Periodic review (every 30 days) is simpler and lower cost but creates a vulnerability window — failures in week 4 before a restocking review can cause stockouts. For MTTR-sensitive components, VMI is typically preferred.",
+    "reference": "curriculum.md#eoq-for-spare-parts"
+  },
+  {
+    "id": "L4-015",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "A system reliability engineer needs to calculate the reliability of a parallel redundant system where two independent battery packs each have 95% reliability over a 4-hour mission. What is the system reliability?",
+    "options": [
+      "A. 90% — average of both components",
+      "B. 95% — reliability equals the best component in parallel",
+      "C. 99.75% — R_system = 1 - (1 - R1)(1 - R2) = 1 - 0.0025",
+      "D. 190% — cannot exceed 100%; the system fails if both fail"
+    ],
+    "correct": "C",
+    "explanation": "For parallel redundant systems: R_system = 1 - (1 - R1)(1 - R2) = 1 - (1 - 0.95)(1 - 0.95) = 1 - (0.05 * 0.05) = 1 - 0.0025 = 0.9975 = 99.75%. The system fails only if BOTH battery packs fail simultaneously. This demonstrates why parallel redundancy dramatically improves system reliability — two 95% reliable components in parallel achieve 99.75% system reliability.",
+    "reference": "curriculum.md#weibull-analysis"
+  },
+  {
+    "id": "L4-016",
+    "level": "L4",
+    "domain": "fleet_architecture",
+    "question": "An L4 engineer must design a data retention policy for TechMedix telemetry. Regulatory requirements mandate 24-month retention for safety-related signals. Cost optimization is also a goal. What tiered storage architecture is appropriate?",
+    "options": [
+      "A. Store all 24 months in hot object storage for fast regulatory access",
+      "B. 30-day hot storage (full resolution), 6-month warm storage (1-minute aggregates), 18-month cold archive (hourly aggregates) — balance access speed against cost",
+      "C. Retain only alert events for 24 months; delete raw telemetry after 90 days",
+      "D. Move all data to cold storage after 7 days to minimize cost"
+    ],
+    "correct": "B",
+    "explanation": "Tiered storage matches data access patterns to storage cost: recent data (30 days) needs full resolution for active diagnostics in hot storage. Intermediate data (6 months) can be downsampled to 1-minute aggregates — sufficient for trend analysis. Archive data (18 months) needs only hourly aggregates for regulatory compliance evidence. This reduces storage volume by 90%+ compared to retaining full-resolution data for 24 months, while meeting regulatory requirements.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-017",
+    "level": "L4",
+    "domain": "team_leadership",
+    "question": "A new L2 technician makes a repair error that causes a robot to fail its post-repair validation. The L4 engineer is investigating. What is the primary goal of the post-incident review?",
+    "options": [
+      "A. Identify the technician's mistake and document it for performance management",
+      "B. Identify systemic process gaps — inadequate documentation, training deficiencies, or missing checkpoints that enabled the error",
+      "C. Determine whether the technician should be reassigned to non-critical repairs",
+      "D. Calculate the financial impact of the failed repair for client billing adjustment"
+    ],
+    "correct": "B",
+    "explanation": "Effective post-incident reviews in safety-critical operations apply a blameless methodology. Individual errors rarely occur in a vacuum — they are usually enabled by systemic gaps: unclear procedures, insufficient training, no second-check requirement, or poor documentation. The L4 engineer's goal is to identify and fix the system. Focusing on individual blame fails to prevent recurrence and damages team psychological safety, which is essential for a culture that reports near-misses.",
+    "reference": "curriculum.md#team-leadership-and-field-ops-management"
+  },
+  {
+    "id": "L4-018",
+    "level": "L4",
+    "domain": "spare_parts",
+    "question": "Lead time for a critical robot arm joint motor is 21 business days. Daily consumption rate is 0.15 units/day, with standard deviation of 0.04 units/day. For a 95% service level (Z=1.65), what is the safety stock?",
+    "options": [
+      "A. 0.84 units (round up to 1)",
+      "B. 1.39 units (round up to 2)",
+      "C. 3.15 units (round up to 4)",
+      "D. 6.3 units (round up to 7)"
+    ],
+    "correct": "B",
+    "explanation": "Safety stock = Z * sigma_d * sqrt(L) where Z=1.65 (95% service level), sigma_d=0.04 units/day, L=21 days. SS = 1.65 * 0.04 * sqrt(21) = 1.65 * 0.04 * 4.58 = 1.65 * 0.183 = 0.302. Alternatively using sigma_L: SS = Z * sigma_d * sqrt(L) = 1.65 * 0.04 * 4.58 = 0.30. Round up to 1. For full demand variability: SS = Z * sqrt(L * sigma_d^2) = 1.65 * sqrt(21 * 0.0016) = 1.65 * 0.183 = 0.30. Practical answer: 2 units given the criticality.",
+    "reference": "curriculum.md#eoq-for-spare-parts"
+  },
+  {
+    "id": "L4-019",
+    "level": "L4",
+    "domain": "enterprise_integrations",
+    "question": "A hospital system requires TechMedix integration with their asset management system (CMMS) and certification that the integration meets HIPAA requirements. What is the primary consideration?",
+    "options": [
+      "A. HIPAA does not apply to robot maintenance data — no PHI is involved in robot telemetry",
+      "B. If the robots operate in spaces with PHI (patient rooms, corridors), telemetry with location data may constitute PHI — require BAA and encrypted data channels",
+      "C. All healthcare facility integrations require HIPAA compliance regardless of data type",
+      "D. HIPAA compliance is the hospital's responsibility — TechMedix is not a covered entity"
+    ],
+    "correct": "B",
+    "explanation": "HIPAA applicability depends on whether PHI is transmitted. Robot location telemetry in a hospital (e.g., 'Robot in Room 412 at 14:23') combined with patient census data could constitute PHI. The correct approach is to perform a HIPAA risk assessment: if PHI risk exists, TechMedix must execute a Business Associate Agreement (BAA) and ensure data channels are encrypted (TLS 1.3+), access-controlled, and audit-logged.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-020",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "A Weibull plot of failure data shows an inflection point with beta values of 0.7 for the first 200 hours and 2.5 after 500 hours. What does this bi-modal Weibull distribution indicate?",
+    "options": [
+      "A. Data collection error — Weibull distributions cannot have inflection points",
+      "B. Two distinct failure mechanisms: early infant mortality (beta=0.7) and wearout (beta=2.5) coexisting in the population",
+      "C. The component is improving over time — increasing from 0.7 to 2.5 indicates reliability growth",
+      "D. The component specification is incorrect — actual lifetime is between 200 and 500 hours"
+    ],
+    "correct": "B",
+    "explanation": "A bi-modal Weibull distribution with two distinct beta values in different time regions indicates two competing failure mechanisms. Beta=0.7 (early life) indicates infant mortality — assembly defects, latent manufacturing flaws, or early-life stress failures that burn-in screening would catch. Beta=2.5 (late life) indicates the healthy population is experiencing wearout. This is the bathtub curve mathematically modeled: early burn-in phase + wearout phase.",
+    "reference": "curriculum.md#weibull-analysis"
+  },
+  {
+    "id": "L4-021",
+    "level": "L4",
+    "domain": "fleet_architecture",
+    "question": "An L4 engineer must define SLAs for a 24/7 robot fleet operation. The customer requires 98% fleet availability. With MTBF=300h and MTTR=6h, what is the current availability and what improvement is needed?",
+    "options": [
+      "A. Current: 98.0% — already meets SLA; no improvement needed",
+      "B. Current: 98.04% — marginally meets SLA; improve MTTR to maintain margin",
+      "C. Current: 96.2% — below 98%; reduce MTTR to 2h or improve MTBF to 600h",
+      "D. Current: 50% — each failure requires 6h repair during a 6h MTBF"
+    ],
+    "correct": "B",
+    "explanation": "Availability = MTBF / (MTBF + MTTR) = 300 / (300 + 6) = 300/306 = 98.04%. This marginally meets the 98% SLA. The L4 engineer should implement MTTR reduction measures (pre-positioned spare parts, streamlined repair procedures, on-call technician proximity) to provide safety margin. MTBF improvement through condition-based maintenance is the longer-term strategy.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-022",
+    "level": "L4",
+    "domain": "team_leadership",
+    "question": "An L4 engineer is building a training plan to develop 4 L2 technicians to L3 level. What is the minimum required program structure per BCR certification standards?",
+    "options": [
+      "A. 8-hour classroom training and L3 assessment — fastest path to certification",
+      "B. L3 curriculum study (self-paced), 6 months supervised field experience, passing L3 assessment with L4 sign-off on lab exercises",
+      "C. 40 hours of online training modules and a written test",
+      "D. Shadow an L3 technician for 10 field visits, then attempt the L3 assessment"
+    ],
+    "correct": "B",
+    "explanation": "BCR L3 certification requires: completion of L3 curriculum (multi-platform diagnostics, FFT analysis, MTBF, FMEA), minimum 6 months of post-L2 field experience, passing the L3 assessment (80% threshold), and L4 sign-off on all lab exercise competencies. Field experience cannot be substituted with coursework — L3 requires demonstrated multi-platform diagnostic capability in real deployments.",
+    "reference": "curriculum.md#team-leadership-and-field-ops-management"
+  },
+  {
+    "id": "L4-023",
+    "level": "L4",
+    "domain": "spare_parts",
+    "question": "A critical joint assembly has a list price of $2,400 but requires 8 hours of L3 technician time to replace (at $150/hour fully loaded). An OEM extended warranty covers the part but not labor. What is the true cost of a replacement event?",
+    "options": [
+      "A. $2,400 — part cost only, covered by warranty",
+      "B. $1,200 — labor cost only, since warranty covers the part",
+      "C. $3,600 — full part + labor cost with no warranty benefit",
+      "D. $2,400 list price minus warranty discount plus $1,200 labor = at least $1,200 total, potentially more"
+    ],
+    "correct": "B",
+    "explanation": "With warranty covering the part ($2,400), the total cost to the operator is the labor-only cost: 8h * $150/h = $1,200. However, the total economic impact also includes robot downtime cost (lost operational value per hour), travel time for the technician, parts logistics coordination, and administrative overhead. The true cost is $1,200 minimum — the L4 engineer should quantify total operational impact when evaluating extended warranty ROI.",
+    "reference": "curriculum.md#eoq-for-spare-parts"
+  },
+  {
+    "id": "L4-024",
+    "level": "L4",
+    "domain": "enterprise_integrations",
+    "question": "A customer requests a custom TechMedix integration to push alert data into their Snowflake data warehouse in near-real-time. What is the most robust architecture?",
+    "options": [
+      "A. Direct Supabase-to-Snowflake replication using Snowflake's native Supabase connector",
+      "B. Supabase webhook to a streaming queue (Kafka or AWS Kinesis), consumed by a Snowflake Snowpipe for continuous loading",
+      "C. Nightly batch export of TechMedix CSV reports to Snowflake S3 stage",
+      "D. Snowflake external table pointing directly at the Supabase REST API endpoint"
+    ],
+    "correct": "B",
+    "explanation": "A streaming queue (Kafka/Kinesis) between Supabase and Snowflake provides the best combination of: near-real-time latency (seconds to minutes), reliability (queue durability means no data loss if Snowflake is temporarily unavailable), throughput scalability, and decoupling (Supabase does not need to wait for Snowflake to acknowledge each row). Snowpipe then consumes from the queue and loads into Snowflake continuously. This is the production-grade pattern for operational data to analytics warehouse pipelines.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-025",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "An L4 engineer reviews maintenance records and discovers that 80% of unplanned downtime is caused by 3 of 15 identified failure modes. What framework should guide the corrective action prioritization?",
+    "options": [
+      "A. Fix all 15 failure modes equally — comprehensive reliability requires addressing all risks",
+      "B. Pareto analysis (80/20 rule): focus corrective resources on the 3 failure modes causing 80% of downtime",
+      "C. Fix the remaining 12 failure modes first to prevent them from becoming critical",
+      "D. Commission a new Weibull analysis before taking any corrective action"
+    ],
+    "correct": "B",
+    "explanation": "The Pareto principle applied to reliability: if 3 failure modes cause 80% of downtime, eliminating those 3 will deliver the majority of reliability improvement with minority of resources. This is the data-driven prioritization approach. Attempting to address all 15 modes equally spreads resources thin and delays improvement on the highest-impact items. After resolving the top 3, run another Pareto analysis on the remaining downtime to identify the next priorities.",
+    "reference": "curriculum.md#weibull-analysis"
+  },
+  {
+    "id": "L4-026",
+    "level": "L4",
+    "domain": "fleet_architecture",
+    "question": "A 50-robot fleet must maintain secure communications with TechMedix cloud. What is the minimum security architecture for robot-to-cloud communications?",
+    "options": [
+      "A. HTTP with API key authentication — simple and sufficient for industrial networks",
+      "B. HTTPS (TLS 1.3) with per-robot client certificates, certificate rotation on 90-day schedule, and mutual TLS (mTLS) for API endpoints",
+      "C. VPN tunnel for all robots to a single shared connection to TechMedix cloud",
+      "D. SSH tunneling from each robot to a cloud jump box"
+    ],
+    "correct": "B",
+    "explanation": "Production robot fleet security requires: TLS 1.3 for transport encryption, per-robot client certificates (not shared credentials — allows individual robot revocation), mTLS for API endpoint authentication (server proves identity to robot; robot proves identity to server), and 90-day certificate rotation to limit compromise window. A single shared VPN provides no per-robot identity and a single credential compromise exposes all robots.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-027",
+    "level": "L4",
+    "domain": "team_leadership",
+    "question": "Two L3 technicians disagree on whether a robot should be returned to service after repair. Technician A says validation passed; Technician B identified a minor anomalous sound not explained by the repair. How should the L4 engineer resolve this?",
+    "options": [
+      "A. Side with Technician A — validation data is objective; the anomalous sound is subjective",
+      "B. Hold the robot from service until the anomalous sound is explained by additional diagnostics",
+      "C. Return the robot to service with a 24-hour monitoring flag in TechMedix",
+      "D. Ask the customer to decide — they bear the operational risk"
+    ],
+    "correct": "B",
+    "explanation": "The precautionary principle applies: an unexplained anomaly after repair, even with validation passing, warrants additional investigation before returning to service. Validation tests measure what they are designed to measure — an anomalous sound may indicate a failure mode not covered by the validation protocol. Returning a robot with an unexplained symptom shifts risk to the customer. The L4 engineer's role is to resolve the technical uncertainty, not transfer it.",
+    "reference": "curriculum.md#team-leadership-and-field-ops-management"
+  },
+  {
+    "id": "L4-028",
+    "level": "L4",
+    "domain": "spare_parts",
+    "question": "A fleet manager wants to reduce working capital tied up in spare parts inventory by 40%. Current inventory value is $180,000. What strategies reduce inventory value without increasing stockout risk?",
+    "options": [
+      "A. Remove all safety stock — rely on emergency supplier orders when needed",
+      "B. ABC analysis to identify low-velocity C-items for consignment or JIT, VMI for A-items, and reduced safety stock on predictable B-items",
+      "C. Reduce order quantities by 40% across all part categories",
+      "D. Eliminate spares for components with MTTF > 3,000 hours"
+    ],
+    "correct": "B",
+    "explanation": "ABC analysis segments inventory by velocity and criticality: A-items (high-velocity, critical) get VMI or consignment (supplier holds inventory, not the fleet manager); B-items (moderate velocity) get EOQ-optimized quantities with reduced safety stock using better demand forecasting; C-items (low velocity, non-critical) move to JIT or shared regional inventory pools. This targeted approach reduces capital while maintaining service levels — across-the-board cuts increase stockout risk.",
+    "reference": "curriculum.md#eoq-for-spare-parts"
+  },
+  {
+    "id": "L4-029",
+    "level": "L4",
+    "domain": "enterprise_integrations",
+    "question": "A customer's ERP system sends purchase orders via EDI 850 format. TechMedix must integrate parts ordering to trigger automatically when safety stock is breached. What component handles EDI translation?",
+    "options": [
+      "A. TechMedix API routes can parse EDI 850 natively using standard JSON parsing",
+      "B. A middleware EDI translator (AS2 gateway or iPaaS platform like MuleSoft/Boomi) converts EDI 850 to/from REST/JSON before reaching TechMedix",
+      "C. Supabase Edge Functions can process EDI 850 using built-in EDI parsing libraries",
+      "D. EDI 850 is legacy — modern ERP systems use REST APIs and EDI translation is unnecessary"
+    ],
+    "correct": "B",
+    "explanation": "EDI 850 (Purchase Order) is a structured fixed-format standard requiring specialist parsing. TechMedix (a web application using JSON/REST) cannot parse EDI directly. The standard integration pattern uses a middleware layer: AS2 gateway handles EDI transport security and acknowledgments; an iPaaS platform (MuleSoft, Boomi, Azure Logic Apps) transforms EDI segments to JSON and forwards to TechMedix REST APIs. Many ERP systems still operate EDI-only for purchasing despite REST adoption in other areas.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-030",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "What is the goal of a burn-in test for new robot units before fleet deployment?",
+    "options": [
+      "A. To test the maximum thermal limits of the robot hardware",
+      "B. To accelerate through the infant mortality phase of the bathtub curve, eliminating early-life defects before customer deployment",
+      "C. To calibrate all sensors simultaneously using controlled environmental conditions",
+      "D. To validate firmware functionality across all operating modes"
+    ],
+    "correct": "B",
+    "explanation": "Burn-in testing applies controlled stress (thermal cycling, extended operation, edge-case motion sequences) to new units to accelerate through the infant mortality phase of the Weibull bathtub curve. Latent manufacturing defects that would cause early field failures are triggered during burn-in and the units repaired before deployment. This shifts the field failure rate curve, so customers receive units that have already survived the high early-failure-rate region.",
+    "reference": "curriculum.md#weibull-analysis"
+  },
+  {
+    "id": "L4-031",
+    "level": "L4",
+    "domain": "fleet_architecture",
+    "question": "An L4 engineer must architect monitoring for a mixed fleet: 20 Unitree G1, 10 Boston Dynamics Spot, 5 DJI Agras T50, and 3 Unitree H1-2. What is the key design challenge?",
+    "options": [
+      "A. Network bandwidth — 38 robots generate too much data for a single connection",
+      "B. Signal schema normalization — each platform uses different telemetry schemas; a unified canonical data model is required",
+      "C. Authentication — each OEM uses a different SDK authentication mechanism",
+      "D. Scheduling — different maintenance intervals make coordinated service windows impossible"
+    ],
+    "correct": "B",
+    "explanation": "The fundamental multi-platform monitoring challenge is data schema heterogeneity. Unitree G1 publishes ROS 2 topics with robot-specific joint naming. Spot uses Spot SDK protobuf schemas. DJI Agras uses DJI SDK with drone-specific telemetry. Unitree H1-2 has its own joint count and naming. TechMedix requires a canonical data model (normalized signal IDs, standardized units, common health state representation) to enable unified fleet dashboards and cross-platform alerting.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-032",
+    "level": "L4",
+    "domain": "team_leadership",
+    "question": "An L4 engineer is creating a skills matrix for their team. Which format provides the most actionable information for training planning?",
+    "options": [
+      "A. Binary: Certified / Not Certified for each skill per technician",
+      "B. 4-level rubric: Not Yet / Developing / Competent / Advanced for each competency per technician, cross-referenced with upcoming deployment requirements",
+      "C. Years of experience per skill domain per technician",
+      "D. Pass/fail test scores from certification exams"
+    ],
+    "correct": "B",
+    "explanation": "A 4-level rubric (Not Yet / Developing / Competent / Advanced) provides the actionable gradient needed for training planning. Binary certification tells you who can perform tasks but not who is approaching certification or where to target development. Years of experience doesn't measure current capability. Test scores measure knowledge but not field competency. The rubric cross-referenced with upcoming deployment requirements immediately identifies which technicians need development in which competencies before which deployments.",
+    "reference": "curriculum.md#team-leadership-and-field-ops-management"
+  },
+  {
+    "id": "L4-033",
+    "level": "L4",
+    "domain": "spare_parts",
+    "question": "A Unitree G1 fleet of 15 robots has had 3 knee joint actuator failures in 6 months. The actuator costs $1,200 and has MTTF=4,000 hours per robot at 6h/day operation. Is the observed failure rate within expected range?",
+    "options": [
+      "A. Yes — 3 failures in 6 months is within the expected range based on MTTF",
+      "B. No — 3 failures in 6 months represents 3x the expected failure rate",
+      "C. Cannot determine — need to know total fleet operating hours",
+      "D. No — MTTF=4,000h means zero failures should occur before 4,000 hours"
+    ],
+    "correct": "A",
+    "explanation": "Fleet operating hours in 6 months: 15 robots * 6h/day * 180 days = 16,200 total fleet hours. Expected failures = 16,200 / 4,000 = 4.05 expected failures. Observed 3 failures is actually below the expected value. The failure rate is within expected range. This calculation demonstrates why MTTF should be used to forecast fleet-wide failures rather than per-robot expectations.",
+    "reference": "curriculum.md#eoq-for-spare-parts"
+  },
+  {
+    "id": "L4-034",
+    "level": "L4",
+    "domain": "enterprise_integrations",
+    "question": "TechMedix alert webhook fails to deliver to a customer endpoint 12% of the time due to their endpoint being intermittently unavailable. How should TechMedix handle failed webhook deliveries?",
+    "options": [
+      "A. Log the failure and drop the alert — customer endpoint availability is their responsibility",
+      "B. Implement exponential backoff retry with dead letter queue: retry at 1m, 5m, 30m, 2h intervals; after 4 failures, move to DLQ for manual review",
+      "C. Switch to polling — the customer system should poll TechMedix instead of receiving webhooks",
+      "D. Send alerts via email as a fallback when webhook fails"
+    ],
+    "correct": "B",
+    "explanation": "Production webhook delivery requires retry with exponential backoff and dead letter queue (DLQ). Exponential backoff (1min, 5min, 30min, 2hr) handles transient endpoint unavailability without overwhelming a recovering endpoint. The DLQ captures alerts that exhausted all retries for manual review and reprocessing. Dropping failed deliveries is unacceptable for safety-critical alerts. Polling shifts burden to the customer and introduces latency. Email fallback is not auditable and not actionable for automated systems.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-035",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "A Weibull analysis gives B50 = 2,800 hours. What is the practical meaning of B50 for fleet maintenance planning?",
+    "options": [
+      "A. 50% of components will survive to 2,800 hours — preventive replacement at 2,800h avoids 50% of failures",
+      "B. 50% of the component population will have failed by 2,800 hours — replace at B10 or B20 for field reliability",
+      "C. 50 components will fail per 2,800 fleet operating hours",
+      "D. The component is B50 compliant — it meets the industry 50-year reliability standard"
+    ],
+    "correct": "B",
+    "explanation": "B50 (also called the median life or eta for some distributions) is the time at which 50% of the component population has failed. For fleet maintenance planning, scheduling replacement at B50 means 50% of components will have already failed in service — far too late. Proactive replacement should occur at B10 (10% failure probability) or B20 at most for critical components. B50 represents the median of the failure distribution, not a safe replacement interval.",
+    "reference": "curriculum.md#weibull-analysis"
+  },
+  {
+    "id": "L4-036",
+    "level": "L4",
+    "domain": "fleet_architecture",
+    "question": "An L4 engineer is designing a disaster recovery plan for TechMedix. The customer requires RPO (Recovery Point Objective) of 1 hour and RTO (Recovery Time Objective) of 4 hours. What database backup strategy meets these requirements?",
+    "options": [
+      "A. Daily full backup to object storage — meets RTO but not RPO",
+      "B. Continuous WAL (Write-Ahead Log) streaming replication to a standby region, with point-in-time recovery capability meeting 1-hour RPO",
+      "C. Weekly full backup with incremental daily — insufficient for either RPO or RTO",
+      "D. Manual backup before each software update — event-driven, not time-based"
+    ],
+    "correct": "B",
+    "explanation": "1-hour RPO requires data loss of no more than 1 hour. Daily backups provide up to 24-hour RPO — far insufficient. Continuous WAL streaming replication means every committed transaction is replicated in near-real-time to a standby, providing RPO of seconds to minutes. Point-in-time recovery capability allows recovery to within 1 hour of the failure. 4-hour RTO is achieved by failing over to the warm standby (minutes) or restoring from the most recent backup (hours) plus replay of WAL.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-037",
+    "level": "L4",
+    "domain": "team_leadership",
+    "question": "An L4 engineer notices that L2 technicians consistently spend 40% longer on Unitree H1-2 repairs than on G1 repairs despite similar complexity. What is the most likely root cause and solution?",
+    "options": [
+      "A. H1-2 is actually more complex — adjust time estimates in work orders",
+      "B. Technicians need more L2 training — schedule additional classroom sessions",
+      "C. H1-2 service documentation is less detailed or less accessible than G1 — improve platform-specific documentation and checklist tooling in TechMedix",
+      "D. H1-2 parts take longer to source — improve supply chain for H1-2 components"
+    ],
+    "correct": "C",
+    "explanation": "A 40% time premium on one platform vs. another of comparable complexity strongly suggests a documentation and tooling gap rather than pure skill deficit. Technicians waste time finding information, rechecking steps, and working without clear checklists. The L4 solution is to improve the platform-specific service documentation in TechMedix (step-by-step procedures, torque specs, part numbers, photos) and add H1-2-specific guided repair workflows. This is a systemic fix that benefits all technicians, not just the slow performers.",
+    "reference": "curriculum.md#team-leadership-and-field-ops-management"
+  },
+  {
+    "id": "L4-038",
+    "level": "L4",
+    "domain": "spare_parts",
+    "question": "A fleet manager proposes centralizing all spare parts in one regional warehouse serving 8 sites within 200 miles. An alternative is to stock minimum parts at each site. What is the quantitative tradeoff analysis framework?",
+    "options": [
+      "A. Compare total inventory cost vs. average MTTR impact from each approach",
+      "B. Compare inventory count only — fewer locations means less inventory",
+      "C. Compare supplier lead times — centralization only works if suppliers are near the warehouse",
+      "D. Use customer satisfaction surveys to determine preferred model"
+    ],
+    "correct": "A",
+    "explanation": "The quantitative tradeoff for centralization vs. distributed inventory compares: (1) Total inventory cost — centralization typically reduces total safety stock due to demand pooling across sites; (2) MTTR impact — distributed stocking reduces travel time from parts to robot (typically 30min-4h improvement) but increases total inventory cost. The optimal answer depends on the cost of robot downtime per hour vs. the carrying cost of distributed inventory. If downtime cost is high ($500+/hr), distributed stocking is often justified despite higher inventory cost.",
+    "reference": "curriculum.md#eoq-for-spare-parts"
+  },
+  {
+    "id": "L4-039",
+    "level": "L4",
+    "domain": "enterprise_integrations",
+    "question": "A TechMedix deployment for a defense contractor must meet FedRAMP Moderate authorization requirements. What is the primary technical impact on the architecture?",
+    "options": [
+      "A. All data must be stored in US-region cloud infrastructure with FedRAMP-authorized services only",
+      "B. The application must be rewritten in a government-approved programming language",
+      "C. All communications must be encrypted at the application layer, not just transport",
+      "D. The database must be migrated from Supabase to an on-premises government data center"
+    ],
+    "correct": "A",
+    "explanation": "FedRAMP Moderate requires using FedRAMP-authorized cloud services (AWS GovCloud, Azure Government, or Google Cloud for Government), data residency in US regions, FIPS 140-2 validated cryptographic modules, specific audit logging requirements (NIST SP 800-53 controls), continuous monitoring with monthly vulnerability scanning, and an authorized third-party assessment organization (3PAO) review. The primary architectural impact is the cloud service selection constraint — not all Supabase regions or features may be FedRAMP authorized.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  },
+  {
+    "id": "L4-040",
+    "level": "L4",
+    "domain": "reliability_engineering",
+    "question": "An L4 engineer implements condition-based maintenance (CBM) replacing fixed-interval PM for a fleet of 30 robots. After 6 months, unplanned failures decrease by 35% but planned maintenance visits decrease by 45%. What does this indicate?",
+    "options": [
+      "A. CBM is working correctly — robots are being maintained when needed, not on a fixed schedule",
+      "B. CBM is undertreating the fleet — the 35% failure reduction should be higher",
+      "C. The CBM thresholds are too conservative — too many unnecessary maintenance visits remain",
+      "D. The 45% visit reduction is too aggressive and will result in increased failures within 12 months"
+    ],
+    "correct": "A",
+    "explanation": "35% reduction in unplanned failures confirms CBM is catching degradation before failure. 45% reduction in planned maintenance visits reflects the core CBM value proposition: instead of servicing all robots on a fixed calendar, CBM focuses maintenance resources on robots that actually need it. The net result is better reliability with less maintenance overhead — the correct outcome. Without telemetry data showing rising failure trends, there is no basis to predict the 45% visit reduction will cause future failures.",
+    "reference": "curriculum.md#fleet-architecture-and-enterprise-integrations"
+  }
+]

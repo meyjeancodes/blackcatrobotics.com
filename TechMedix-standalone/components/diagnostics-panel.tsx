@@ -20,7 +20,7 @@ const SEVERITY_CONFIG = {
 const LAYER_LABELS: Record<LayerName, string> = {
   "rule-engine":    "Rule Engine",
   "vla-comparator": "VLA Behavioral",
-  "claude-analyzer": "Claude Analysis",
+  "claude-analyzer": "AI Analysis",
 };
 
 function LayerPipeline({
@@ -107,15 +107,15 @@ function RuleList({ results }: { results: DiagnosticReport["ruleResults"] }) {
   );
 }
 
-// ─── Claude recommendation card ───────────────────────────────────────────────
+// ─── AI recommendation card ───────────────────────────────────────────────
 
 function RecommendationCard({ analysis }: { analysis: NonNullable<DiagnosticReport["claudeAnalysis"]> }) {
   return (
     <div className="mt-4 rounded-[20px] border border-theme-6 bg-white/60 p-5 space-y-4">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
-          <p className="kicker">Claude Analysis — Layer 3</p>
-          <h3 className="mt-1 font-header text-lg leading-snug text-theme-primary">{analysis.title}</h3>
+          <p className="kicker">AI Analysis — Layer 3</p>
+          <h3 className="mt-1 font-header text-lg leading-snug text-theme-primary">{analysis.title}</h3>ntent-honesty-pass
         </div>
         <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-theme-30">
           {(analysis.confidence * 100).toFixed(0)}% confidence
@@ -274,7 +274,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
             Run Diagnostics
           </h2>
           <p className="mt-2 text-sm leading-6 text-theme-50">
-            Three-layer analysis: rule engine → VLA behavioral comparison → Claude deep analysis.
+            Three-layer analysis: rule engine → VLA behavioral comparison → AI deep analysis.ntent-honesty-pass
           </p>
         </div>
         <button
@@ -376,7 +376,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
             </div>
           )}
 
-          {/* Claude recommendation */}
+          {/* AI recommendation */}
           {report.claudeAnalysis && (
             <RecommendationCard analysis={report.claudeAnalysis} />
           )}

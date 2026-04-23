@@ -1,0 +1,602 @@
+[
+  {
+    "id": "L3-001",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "You are diagnosing a Boston Dynamics Spot using the Spot SDK. What is the correct API client to retrieve robot joint state data?",
+    "options": [
+      "A. ROS 2 topic echo /joint_states — Spot publishes via standard ROS 2 topics",
+      "B. robot.ensure_client('robot-state').get_robot_state() — Spot uses the robot-state service",
+      "C. candump can0 — Spot CAN bus is accessible via standard socketcan",
+      "D. curl http://192.168.80.3/api/joints — Spot exposes a REST JSON API"
+    ],
+    "correct": "B",
+    "explanation": "Boston Dynamics Spot uses a proprietary internal bus inaccessible via standard CAN tools. The Spot Python SDK's robot-state client provides joint state access. Spot does not publish ROS 2 topics natively (third-party bridges exist but are not the native interface).",
+    "reference": "curriculum.md#multi-platform-diagnostics"
+  },
+  {
+    "id": "L3-002",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "For a bearing with N=12 balls, d=5mm, D=38mm, contact angle 0 degrees, running at 450 RPM, what is the approximate BPFO?",
+    "options": [
+      "A. 18 Hz",
+      "B. 30 Hz",
+      "C. 35 Hz",
+      "D. 45 Hz"
+    ],
+    "correct": "C",
+    "explanation": "BPFO = (N/2) * (RPM/60) * (1 - (d/D) * cos(alpha)) = (12/2) * (450/60) * (1 - (5/38) * cos(0)) = 6 * 7.5 * (1 - 0.132) = 45 * 0.868 = 39.1 Hz. Rounding and approximation make 35 Hz the closest answer given real-world context.",
+    "reference": "curriculum.md#fft-analysis-and-bearing-defect-detection"
+  },
+  {
+    "id": "L3-003",
+    "level": "L3",
+    "domain": "fmea",
+    "question": "An FMEA entry shows Severity=8, Occurrence=7, Detectability=4. Should this be escalated immediately?",
+    "options": [
+      "A. No — RPN = 224, below the 500 escalation threshold",
+      "B. Yes — RPN = 224 is in the priority maintenance range, but Severity >= 9 is the immediate escalation trigger. Severity=8 does not trigger immediate escalation",
+      "C. Yes — RPN = 224 exceeds the 200 priority threshold, requiring immediate escalation to L4",
+      "D. Yes — any Severity >= 8 requires immediate escalation regardless of RPN"
+    ],
+    "correct": "B",
+    "explanation": "RPN = 8 * 7 * 4 = 224, which is in the 200-500 range (priority maintenance flag). Immediate escalation triggers are RPN > 500 OR Severity >= 9. Severity=8 does not trigger immediate escalation. This item goes into the priority maintenance backlog.",
+    "reference": "curriculum.md#advanced-fmea"
+  },
+  {
+    "id": "L3-004",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "A fleet of 6 robots accumulates 1,200 total operating hours with 10 failures. What is the MTBF?",
+    "options": [
+      "A. 60 hours",
+      "B. 120 hours",
+      "C. 200 hours",
+      "D. 1,200 hours"
+    ],
+    "correct": "B",
+    "explanation": "MTBF = Total Operating Hours / Number of Failures = 1,200 / 10 = 120 hours. This means on average a failure occurs every 120 hours of fleet operation. Preventive maintenance should be scheduled at 80% of MTBF = 96 hours.",
+    "reference": "curriculum.md#mtbf-analysis"
+  },
+  {
+    "id": "L3-005",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "An FFT of a robot joint vibration shows strong peaks at 29 Hz and 58 Hz. The calculated BPFO for this bearing is 29.5 Hz. What does the 58 Hz peak indicate?",
+    "options": [
+      "A. A different bearing fault — inner race defect at the same frequency",
+      "B. Electrical noise from the motor at 58 Hz",
+      "C. The second harmonic of BPFO — confirms the outer race defect signature",
+      "D. A resonance frequency of the robot chassis unrelated to the bearing"
+    ],
+    "correct": "C",
+    "explanation": "When a bearing defect produces vibration at BPFO, harmonics appear at 2x, 3x, etc. BPFO. A peak at 58 Hz (2 * 29 Hz) is the second harmonic of the 29 Hz fundamental, which strongly confirms the outer race defect diagnosis.",
+    "reference": "curriculum.md#fft-analysis-and-bearing-defect-detection"
+  },
+  {
+    "id": "L3-006",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "A DJI Agras T50 operational on a Spot farm shows CAN Bus Error Rate of 3.2% over a 4-hour deployment. The threshold for investigation is 1%. What is the correct escalation path?",
+    "options": [
+      "A. No action until 5% — the 1% threshold is overly conservative",
+      "B. Log the error rate, flag as P3, and schedule inspection within 48 hours",
+      "C. Immediately ground the T50 — 3.2% error rate indicates imminent bus failure",
+      "D. Reset the CAN bus and retest — transient errors do not require reporting"
+    ],
+    "correct": "B",
+    "explanation": "A sustained 3.2% CAN error rate over 4 hours is a real, persistent fault — not a transient. At L3, the correct response is to log the telemetry data, raise a P3 (non-urgent fault) ticket in TechMedix, and schedule physical inspection within 48 hours. Grounding is not warranted unless the error rate exceeds 8% or hard faults occur. Resetting without logging destroys diagnostic data.",
+    "reference": "curriculum.md#fleet-diagnostics-and-mtbf-trending"
+  },
+  {
+    "id": "L3-007",
+    "level": "L3",
+    "domain": "fmea",
+    "question": "An FMEA table assigns Severity=9, Occurrence=3, Detectability=2. What is the RPN and what immediate action is required?",
+    "options": [
+      "A. RPN=54 — no action required; RPN is low",
+      "B. RPN=54 — immediate escalation required because Severity >= 9, regardless of RPN",
+      "C. RPN=54 — schedule maintenance within 30 days",
+      "D. RPN=54 — assign to L2 technician for monitoring"
+    ],
+    "correct": "B",
+    "explanation": "RPN = 9 * 3 * 2 = 54, which is low. However, Severity >= 9 is an independent escalation trigger in BCR FMEA methodology. A severity 9 failure mode (near-catastrophic consequence) requires immediate escalation to L4+ and a mandatory risk review, regardless of how low the RPN is from low occurrence and detectability.",
+    "reference": "shared/fmea_methodology.md#escalation"
+  },
+  {
+    "id": "L3-008",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "MTBF data for a fleet shows a decreasing trend over 6 months: 180h, 165h, 142h, 128h, 110h, 95h. What does this indicate?",
+    "options": [
+      "A. Normal wear — MTBF always decreases over a fleet's lifetime",
+      "B. Wearout failure mode — the fleet is entering the end-of-life phase of the bathtub curve",
+      "C. Infant mortality — new failures are appearing as the robots age",
+      "D. Data collection error — MTBF should remain constant for a stable fleet"
+    ],
+    "correct": "B",
+    "explanation": "A consistently declining MTBF trend indicates the fleet is entering the wearout phase of the reliability bathtub curve. Components are reaching end-of-service life simultaneously, causing increasing failure rates. The L3 action is to perform a fleet-wide FMEA, identify which components are driving the wearout, and proactively replace them before catastrophic failure.",
+    "reference": "curriculum.md#mtbf-analysis"
+  },
+  {
+    "id": "L3-009",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "When performing multi-platform diagnostics on both a Unitree G1 and a Boston Dynamics Spot in the same facility, what is the most critical network configuration step?",
+    "options": [
+      "A. Assign both robots to the same subnet for easier management",
+      "B. Configure unique ROS_DOMAIN_IDs for each robot and ensure the Spot SDK traffic is isolated from the ROS 2 DDS domain",
+      "C. Place both robots on separate VLANs with no routing between them",
+      "D. Use the same robot username and password for consistent access"
+    ],
+    "correct": "B",
+    "explanation": "Multi-platform facilities require both domain isolation and SDK protocol separation. Unique ROS_DOMAIN_IDs prevent cross-robot command interference on the ROS 2 side. Spot SDK traffic uses gRPC on its own ports and must not be routed through the same network path as ROS 2 DDS multicast to prevent packet flooding. Separate VLANs are ideal but at minimum separate domain IDs are mandatory.",
+    "reference": "curriculum.md#multi-platform-diagnostics"
+  },
+  {
+    "id": "L3-010",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "The Unitree H1-2 reports a joint temperature of 68C on the left hip pitch motor after 45 minutes of operation. Thermal specification is 70C continuous / 85C peak. What is the correct response?",
+    "options": [
+      "A. Shut down immediately — the motor is near thermal limit",
+      "B. Log the temperature, increase monitoring frequency, and continue operation with shortened duty cycle",
+      "C. No action needed — 68C is within specification",
+      "D. Replace the thermal interface material on the motor — temperature indicates TIM degradation"
+    ],
+    "correct": "B",
+    "explanation": "68C is 2C below the continuous specification limit (70C). The robot should not be shut down unnecessarily, but the proximity to the limit warrants increased monitoring frequency and a shortened duty cycle to prevent exceeding the threshold. Log the event in TechMedix as a thermal anomaly, note the ambient temperature and workload, and schedule TIM inspection at the next maintenance window.",
+    "reference": "platforms/unitree_h1_2/diagnostic_guide.md"
+  },
+  {
+    "id": "L3-011",
+    "level": "L3",
+    "domain": "fmea",
+    "question": "What does 'Detectability' mean in FMEA scoring, and what score represents the most detectable failure mode?",
+    "options": [
+      "A. How easily the failure can be detected by end users; score 10 is most detectable",
+      "B. The probability that existing controls will detect the failure before it reaches the customer; score 1 is most detectable",
+      "C. Whether the failure produces visible damage; score 1 is most detectable",
+      "D. The time delay between failure onset and detection; score 10 is most detectable"
+    ],
+    "correct": "B",
+    "explanation": "In FMEA, Detectability (D) scores the effectiveness of current detection controls. Score 1 means the failure will always be detected before reaching the next process or customer — highest detectability. Score 10 means detection is impossible or impractical — lowest detectability. A low D score reduces RPN even for high-severity, high-occurrence failures.",
+    "reference": "shared/fmea_methodology.md#scoring-scales"
+  },
+  {
+    "id": "L3-012",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "Fleet telemetry shows battery SoC at end-of-mission averaging 8% across all 8 robots after a 3-hour deployment. The minimum safe SoC is 15%. What should the L3 specialist recommend?",
+    "options": [
+      "A. No action — ending at 8% SoC means the battery was used efficiently",
+      "B. Reduce mission duration or add mid-mission charging stops to maintain above 15% SoC end-of-mission",
+      "C. Replace all batteries — 8% end SoC indicates cell degradation",
+      "D. Increase the battery minimum threshold setting to 20% in all robot configurations"
+    ],
+    "correct": "B",
+    "explanation": "Consistently ending missions at 8% SoC when 15% is the minimum safe margin indicates the mission profile is overrunning battery capacity. The systemic fix is to reduce mission duration, add scheduled charging stops, or redefine mission waypoints to return to base earlier. Battery replacement is premature without capacity testing (discharge curves). Simply raising the firmware threshold without addressing mission planning creates operational alerts without solving the root cause.",
+    "reference": "curriculum.md#fleet-diagnostics-and-mtbf-trending"
+  },
+  {
+    "id": "L3-013",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "FFT analysis of a Unitree G1 hip joint shows a broad noise floor elevation from 100-500 Hz, not a discrete peak. What does this pattern suggest?",
+    "options": [
+      "A. A bearing defect — BPFO peaks always appear as broad bands",
+      "B. Distributed mechanical looseness — multiple components with small clearances producing wideband noise",
+      "C. Electrical interference from the motor driver switching frequency",
+      "D. Normal operation — all robot joints produce wideband noise in the 100-500 Hz range"
+    ],
+    "correct": "B",
+    "explanation": "Discrete bearing defect peaks appear as narrow spectral lines. A broad noise floor elevation across 100-500 Hz indicates mechanical looseness — worn fasteners, excessive joint play, or degraded preload bearings — where many small contacts produce incoherent wideband noise rather than the coherent periodic signature of a single defect. Physical inspection for looseness and play is indicated.",
+    "reference": "curriculum.md#fft-analysis-and-bearing-defect-detection"
+  },
+  {
+    "id": "L3-014",
+    "level": "L3",
+    "domain": "fmea",
+    "question": "An FMEA recommends adding a vibration sensor to improve detectability from 8 to 3 for a gear failure mode with S=7, O=5. What is the RPN reduction?",
+    "options": [
+      "A. From 280 to 105 — a 62.5% reduction",
+      "B. From 280 to 175 — reducing D from 8 to 3",
+      "C. From 280 to 210 — adding sensors does not change the RPN formula",
+      "D. From 280 to 35 — vibration sensors eliminate the failure mode"
+    ],
+    "correct": "A",
+    "explanation": "Original RPN = S * O * D = 7 * 5 * 8 = 280. After improvement: RPN = 7 * 5 * 3 = 105. Reduction = 280 - 105 = 175, which is 62.5% of 280. This demonstrates the high leverage of improving detectability — it provides a compounding RPN reduction without requiring the failure to become less likely or less severe.",
+    "reference": "shared/fmea_methodology.md#rpn"
+  },
+  {
+    "id": "L3-015",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "A fleet maintenance schedule uses fixed-interval service every 500 hours regardless of actual robot usage patterns. What is the primary disadvantage of this approach?",
+    "options": [
+      "A. Fixed intervals waste resources on robots with low utilization and risk under-servicing high-utilization robots",
+      "B. Fixed intervals are too frequent for modern robots with 5,000-hour component lifespans",
+      "C. Regulatory requirements mandate condition-based maintenance over fixed intervals",
+      "D. Fixed intervals are the industry standard — there is no primary disadvantage"
+    ],
+    "correct": "A",
+    "explanation": "Fixed-interval maintenance creates two failure modes: for low-utilization robots, it wastes technician time and parts on components that have not accumulated wear; for high-utilization robots deployed in aggressive environments, 500 hours may be too long. Condition-based maintenance (CBM) driven by TechMedix telemetry — vibration trends, thermal history, fault codes — optimizes service intervals per individual robot based on actual health state.",
+    "reference": "curriculum.md#fleet-diagnostics-and-mtbf-trending"
+  },
+  {
+    "id": "L3-016",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "When diagnosing a DJI Agras T50 spray system fault, the onboard computer reports 'Nozzle 3 flow deviation > 15%.' What sequence of diagnostic steps should the L3 specialist follow?",
+    "options": [
+      "A. Replace nozzle 3 immediately — flow deviation indicates hardware failure",
+      "B. Check flow sensor calibration, then physically inspect nozzle 3 for blockage, then test under controlled flow conditions",
+      "C. Recalibrate the entire spray system — one nozzle deviation may indicate systemic calibration drift",
+      "D. Log the fault and clear it — intermittent flow deviations are expected in agricultural environments"
+    ],
+    "correct": "B",
+    "explanation": "Structured diagnostic sequence: (1) Verify flow sensor calibration before assuming a hardware fault — a miscalibrated sensor would report false deviation. (2) Physical inspection of nozzle 3 for partial blockage. (3) Controlled flow test to quantify actual flow rate against specification. Replacing the nozzle before diagnosing the sensor risks unnecessary part consumption if the sensor is at fault.",
+    "reference": "platforms/dji_agras_t50/diagnostic_guide.md"
+  },
+  {
+    "id": "L3-017",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "The Spot SDK get_robot_state() returns a mobility_params with max_vel set to 0.5 m/s when the specification is 1.6 m/s. What does this indicate?",
+    "options": [
+      "A. A firmware fault has reset the mobility parameters to safe defaults",
+      "B. An operator has configured a site-specific speed limit that overrides defaults",
+      "C. Either A or B — check the Spot mission log and operator configuration before diagnosing as a fault",
+      "D. The motors are in a degraded state and the firmware has automatically reduced speed"
+    ],
+    "correct": "C",
+    "explanation": "Reduced max_vel can be either an operator-intentional site constraint or an automatic fault response. Before diagnosing a hardware or firmware fault, check the mission configuration file and operator notes. If no site constraint is recorded, then check fault logs. Treating an intentional speed limit as a fault leads to miscommunication and unnecessary maintenance actions.",
+    "reference": "platforms/boston_dynamics_spot/diagnostic_guide.md"
+  },
+  {
+    "id": "L3-018",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "Fleet data shows 3 robots from the same production batch all failing the same bearing at approximately 800 hours. The overall fleet MTBF is 1,200 hours. What analysis should the L3 specialist initiate?",
+    "options": [
+      "A. Replace only the failed bearings and continue monitoring",
+      "B. Initiate a batch-specific FMEA and proactively inspect all same-batch robots at 700 hours",
+      "C. File an OEM warranty claim — batch failures indicate a manufacturing defect",
+      "D. Increase the maintenance interval to 600 hours for all robots in the fleet"
+    ],
+    "correct": "B",
+    "explanation": "Three co-batch failures at ~800 hours is a statistically significant cluster — this is not random failure but likely a systematic weakness in that production batch (material lot, manufacturing variance, assembly tolerance). The L3 response is a batch-specific FMEA to characterize the failure mode, then proactive inspection of all same-batch units before they reach 800 hours. Warranty claim may follow but does not substitute for proactive fleet protection.",
+    "reference": "curriculum.md#advanced-fmea"
+  },
+  {
+    "id": "L3-019",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "A technician runs FFT on a Unitree G1 right knee joint. The vibration spectrum shows sidebands around the mesh frequency at +/- 12 Hz spacing. What does sideband modulation indicate?",
+    "options": [
+      "A. Normal gear meshing — sidebands are expected on all gears",
+      "B. Amplitude modulation of the mesh frequency, indicating cyclic load variation from an eccentricity or gear fault",
+      "C. The gear mesh frequency measurement is incorrect due to encoder resolution limits",
+      "D. Resonance from the robot chassis amplifying the mesh frequency harmonics"
+    ],
+    "correct": "B",
+    "explanation": "Sidebands at regular spacing around the gear mesh frequency indicate amplitude modulation of the meshing vibration. This occurs when a rotating fault (eccentricity, a chipped tooth, or waviness on one gear) periodically varies the mesh contact stress as the defect rotates into and out of engagement. The sideband spacing equals the shaft rotation frequency of the defective gear.",
+    "reference": "curriculum.md#fft-analysis-and-bearing-defect-detection"
+  },
+  {
+    "id": "L3-020",
+    "level": "L3",
+    "domain": "fmea",
+    "question": "After completing an FMEA for a battery management system, the team identifies a failure mode with RPN=620. Recommended action is to add a temperature cutoff relay. After adding the relay, Detectability improves from 7 to 2. What is the post-action RPN?",
+    "options": [
+      "A. 177",
+      "B. 210",
+      "C. 248",
+      "D. 310"
+    ],
+    "correct": "A",
+    "explanation": "Original: S * O * D = S * O * 7 = 620, so S * O = 88.6 (approximate, let S=10, O=9, D=7 = 630 close). Using S=10, O=9: Original RPN = 10 * 9 * 7 = 630. Post: 10 * 9 * 2 = 180. For RPN=620 exactly: S*O = 620/7 = 88.57. Post RPN = 88.57 * 2 = 177. The answer is 177.",
+    "reference": "shared/fmea_methodology.md#rpn"
+  },
+  {
+    "id": "L3-021",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "What is the formula for calculating Availability (A) from MTBF and MTTR?",
+    "options": [
+      "A. A = MTBF + MTTR",
+      "B. A = MTBF / (MTBF + MTTR)",
+      "C. A = MTTR / MTBF",
+      "D. A = 1 - (MTTR / MTBF)"
+    ],
+    "correct": "B",
+    "explanation": "Availability = MTBF / (MTBF + MTTR). If MTBF=120h and MTTR=4h, then A = 120/(120+4) = 120/124 = 96.8%. This means the robot is available for operation 96.8% of the time. Improving either MTBF (reliability) or reducing MTTR (repair time) increases availability.",
+    "reference": "curriculum.md#mtbf-analysis"
+  },
+  {
+    "id": "L3-022",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "Boston Dynamics Spot SDK returns a battery_charge_percentage of 22% and estimated_runtime_seconds of 480 seconds. What does the runtime figure represent?",
+    "options": [
+      "A. Time until complete battery shutdown — after 480s the robot will power off",
+      "B. Estimated time until the battery reaches the minimum operational threshold at current load",
+      "C. Average runtime remaining based on historical discharge curves",
+      "D. Time until the next scheduled charging cycle"
+    ],
+    "correct": "B",
+    "explanation": "Spot's estimated_runtime_seconds is calculated by the battery management system from current discharge rate, remaining capacity, and the minimum operational threshold (typically 15-20% SoC). At 22% charge with 8 minutes remaining, the discharge rate is elevated. This is the time to return to dock, not time to shutdown. The technician should immediately initiate return-to-dock if the robot is mid-mission.",
+    "reference": "platforms/boston_dynamics_spot/diagnostic_guide.md"
+  },
+  {
+    "id": "L3-023",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "Shannon entropy H is calculated for two signals: Signal A produces H=0.4 bits, Signal B produces H=3.8 bits. Which signal is more likely to indicate abnormal sensor behavior?",
+    "options": [
+      "A. Signal A — low entropy indicates a near-constant signal that may mean the sensor is stuck",
+      "B. Signal B — high entropy indicates excessive noise or sensor failure",
+      "C. Both signals are abnormal — healthy sensors produce H between 1 and 3 bits",
+      "D. Neither — entropy values cannot distinguish sensor health from signal characteristics"
+    ],
+    "correct": "A",
+    "explanation": "Signal A (H=0.4) is near-zero entropy, indicating an almost constant signal. For a sensor that should be measuring a dynamic physical quantity, near-zero entropy is a strong indicator the sensor is stuck, frozen, or outputting a constant fault value. Signal B (H=3.8) with higher entropy may be a noisy but functional sensor. Stuck sensor detection is a key use case for Shannon entropy in predictive maintenance.",
+    "reference": "shared/signal_theory.md"
+  },
+  {
+    "id": "L3-024",
+    "level": "L3",
+    "domain": "fmea",
+    "question": "A robot arm has a failure mode: 'Payload drops during transport.' Three potential causes are: (1) gripper motor overload, (2) command timeout, (3) power interruption. How should this be structured in FMEA?",
+    "options": [
+      "A. One FMEA row with three causes listed together and a combined RPN",
+      "B. Three separate FMEA rows — one per cause — each with independent S, O, D scores",
+      "C. One row per effect, not per cause — the FMEA structure is effect-driven",
+      "D. Two rows: hardware causes combined (1+3) and software causes separate (2)"
+    ],
+    "correct": "B",
+    "explanation": "FMEA methodology requires one row per failure cause, even when multiple causes share the same effect. Each cause has different Occurrence (how likely is the specific cause?) and Detectability (what detects that specific cause?) scores. Combining causes produces meaningless averaged RPNs and prevents targeted corrective actions for each root cause.",
+    "reference": "shared/fmea_methodology.md#methodology"
+  },
+  {
+    "id": "L3-025",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "TechMedix signals show that 7 of 10 fleet robots spike to high motor temperature within 20 minutes of a specific task sequence. The other 3 do not. What variable should the L3 specialist investigate first?",
+    "options": [
+      "A. Battery age — older batteries supply lower current under load",
+      "B. Robot serial number — check if the 7 affected robots share a production batch or firmware version",
+      "C. Network bandwidth — data throttling may cause delayed cooling fan commands",
+      "D. Ambient temperature — environmental differences explain the 7 vs 3 split"
+    ],
+    "correct": "B",
+    "explanation": "The 7/3 split is a systematic pattern, not random variation. The first investigation variable is whether the 7 affected robots share something structural: same firmware version (different thermal management code?), same production batch (different thermal compound application?), or same hardware revision. This systematic investigation is an L3 competency — identifying population-level patterns rather than individual robot issues.",
+    "reference": "curriculum.md#fleet-diagnostics-and-mtbf-trending"
+  },
+  {
+    "id": "L3-026",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "A Unitree G1 IMU reports a constant angular velocity offset of 0.003 rad/s on the yaw axis during a period of confirmed stationary operation. What is the 10-minute accumulated heading error?",
+    "options": [
+      "A. 0.003 radians (0.17 degrees)",
+      "B. 0.03 radians (1.7 degrees)",
+      "C. 1.8 radians (103 degrees)",
+      "D. 18 radians (1031 degrees)"
+    ],
+    "correct": "C",
+    "explanation": "Heading error = bias * time = 0.003 rad/s * 600 seconds = 1.8 radians = 103.1 degrees. This demonstrates why even a small gyroscope bias (below the 0.01 rad/s specification) becomes catastrophic over a 10-minute integration window. For position-sensitive operations, IMUs must be within specification and external correction (odometry, GPS) must be fused to bound the accumulated error.",
+    "reference": "shared/signal_theory.md"
+  },
+  {
+    "id": "L3-027",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "A Unitree G1 CAN bus scan shows node ID 0x05 (hip joint) not responding to SDO read requests, but CAN heartbeat 0x705 (heartbeat for node 5) is still received. What does this indicate?",
+    "options": [
+      "A. Node 5 has failed — CAN heartbeat and SDO are both required for a healthy node",
+      "B. Node 5 is in a pre-operational state — SDO reads are available but no PDOs are active",
+      "C. Node 5 is operational (heartbeat present) but its SDO server has encountered an internal error",
+      "D. The SDO read is being sent to the wrong node ID — check the request frame structure"
+    ],
+    "correct": "C",
+    "explanation": "CANopen NMT heartbeat (0x700 + Node ID) runs independently of the SDO server. Heartbeat present but SDO unresponsive indicates the node is alive and broadcasting its state, but the SDO server process has faulted. This is an application-layer failure within the node firmware, not a bus fault or full node failure. The corrective action is an NMT reset_communication command to that node.",
+    "reference": "shared/can_bus_primer.md#canopen"
+  },
+  {
+    "id": "L3-028",
+    "level": "L3",
+    "domain": "fmea",
+    "question": "An FMEA for a spray drone shows Failure Mode: 'Tank overfill during field refill.' The current control is 'visual inspection by operator.' The detectability score assigned is 3. Is this appropriate?",
+    "options": [
+      "A. Yes — visual inspection is reliable and 3 is appropriate",
+      "B. No — visual inspection is subject to human error; detectability should be 6-7 for operator visual checks",
+      "C. No — detectability should be 1 because the operator can always see the tank level",
+      "D. Yes — the FMEA score is relative; 3 is appropriate if historical overfill incidents are rare"
+    ],
+    "correct": "B",
+    "explanation": "FMEA scoring for human visual inspection typically assigns D=6-7 because visual checks are subject to: lighting conditions, operator fatigue, angle of view, distraction, and tank opacity. A score of 3 implies near-automatic detection, which overstates reliability. The FMEA should be revised to D=6-7 and a corrective action to add a liquid level sensor with automatic shutoff should be evaluated.",
+    "reference": "shared/fmea_methodology.md#scoring-scales"
+  },
+  {
+    "id": "L3-029",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "A TechMedix dashboard signal for /battery_voltage shows Pearson correlation of -0.91 with /motor_temperature across a 30-day dataset. What does this correlation indicate?",
+    "options": [
+      "A. As battery voltage increases, motor temperature increases — positive feedback loop",
+      "B. As battery voltage decreases, motor temperature increases — consistent with increased current draw from degraded cells",
+      "C. Battery voltage and motor temperature are unrelated — 0.91 is within noise for fleet data",
+      "D. The signal IDs are swapped — these two signals should not be correlated"
+    ],
+    "correct": "B",
+    "explanation": "A Pearson correlation of -0.91 is a strong negative correlation: as battery voltage decreases, motor temperature increases. This is physically consistent — degraded battery cells with higher internal resistance supply lower terminal voltage under load, while motors compensate by drawing higher current (P = V*I), increasing resistive heating. This signal pair is a reliable early indicator of battery degradation.",
+    "reference": "curriculum.md#fleet-diagnostics-and-mtbf-trending"
+  },
+  {
+    "id": "L3-030",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "The Agras T50 propulsion system reports RPM asymmetry of 8% between motors M1 and M3 during level hover. Specification is < 3%. What is the first diagnostic step?",
+    "options": [
+      "A. Replace both M1 and M3 motors",
+      "B. Inspect M1 and M3 propellers for damage, contamination, or improper installation",
+      "C. Flash the latest ESC firmware — RPM asymmetry is a known firmware bug",
+      "D. Recalibrate the RPM sensors — asymmetry is a measurement artifact"
+    ],
+    "correct": "B",
+    "explanation": "RPM asymmetry in multirotor drones most commonly arises from propeller damage (chipped blade, bent leading edge), propeller contamination (crop residue buildup changing blade angle), or incorrect installation (reversed pitch, wrong variant). These are non-destructive, field-correctable causes. Mechanical inspection before electronic or software replacement is the correct L3 sequence.",
+    "reference": "platforms/dji_agras_t50/diagnostic_guide.md"
+  },
+  {
+    "id": "L3-031",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "TechMedix alert shows 'P99 joint temperature across fleet exceeds 65C' on a dashboard graph. What does the P99 metric specifically mean?",
+    "options": [
+      "A. The average joint temperature across all robots is 65C",
+      "B. 99% of joints are below 65C; only 1% are at or above this temperature",
+      "C. The peak recorded temperature across all robots is 65C",
+      "D. 99 robots in the fleet have joint temperatures above 65C"
+    ],
+    "correct": "B",
+    "explanation": "P99 (99th percentile) means that 99% of the sampled measurements fall below the threshold, and 1% are at or above it. In fleet diagnostics, P99 is preferred over maximum because it eliminates single-measurement outliers while still capturing tail-end anomalies. A P99 of 65C indicates that the hottest 1% of joints are at or above 65C, representing the robots requiring immediate thermal inspection.",
+    "reference": "curriculum.md#fleet-diagnostics-and-mtbf-trending"
+  },
+  {
+    "id": "L3-032",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "A Unitree G1 operating outdoors shows GPS-related location drift of 3m in a 30-minute stationary deployment. What should the L3 specialist check first?",
+    "options": [
+      "A. GPS antenna cable continuity and connector seating",
+      "B. Number of GPS satellites acquired and HDOP value",
+      "C. Whether the GPS receiver firmware is up to date",
+      "D. Magnetic declination offset in the navigation configuration"
+    ],
+    "correct": "B",
+    "explanation": "Before checking hardware or firmware, verify the geometric dilution of precision (HDOP) and satellite count. High HDOP (> 2.0) or low satellite count (< 6) from building obstruction or poor sky view causes multipath errors, producing 2-5m drift even with functional hardware. If HDOP and satellite count are nominal, then investigate hardware (antenna cable) and firmware.",
+    "reference": "curriculum.md#multi-platform-diagnostics"
+  },
+  {
+    "id": "L3-033",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "What is the key difference between MTTF (Mean Time To Failure) and MTBF (Mean Time Between Failures) in the context of robot fleet reliability?",
+    "options": [
+      "A. MTTF applies to non-repairable components; MTBF applies to repairable systems",
+      "B. MTTF measures time to first failure; MTBF measures time between any two consecutive failures",
+      "C. They are identical metrics with different naming conventions",
+      "D. MTTF is measured in hours; MTBF is measured in cycles"
+    ],
+    "correct": "A",
+    "explanation": "MTTF is the expected time until a non-repairable component fails and is replaced (e.g., a battery cell, a bearing). MTBF applies to repairable systems where the component is repaired and returned to service — it measures the average time between failure events. For robot fleet management: bearings use MTTF (replace, not repair), while the overall robot system uses MTBF (repair and return to service).",
+    "reference": "curriculum.md#mtbf-analysis"
+  },
+  {
+    "id": "L3-034",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "An oscilloscope connected to a robot's power rail shows 120mV peak-to-peak ripple at 50kHz. The specification is < 50mV. What component is the most likely source?",
+    "options": [
+      "A. A failed bulk electrolytic capacitor on the power board",
+      "B. Switching frequency noise from a DC-DC converter operating at 50kHz",
+      "C. Ground loop interference from the CAN bus shield",
+      "D. Motor back-EMF coupling into the power rail"
+    ],
+    "correct": "B",
+    "explanation": "50kHz ripple frequency directly corresponds to a DC-DC converter switching at 50kHz. The ripple amplitude of 120mV (2.4x the 50mV specification) indicates insufficient output filtering — typically a degraded output capacitor on the converter. This is a common failure point in robots operating in high-vibration environments where capacitor electrolyte degrades. Replace the DC-DC converter output filter capacitor.",
+    "reference": "curriculum.md#signal-analysis-tools"
+  },
+  {
+    "id": "L3-035",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "A fleet of Spot robots in a warehouse shows MTBF of 200 hours. OEM specification is 500 hours MTBF under standard conditions. What is the reliability efficiency ratio and what investigation is warranted?",
+    "options": [
+      "A. 40% efficiency — investigate environment, payload, floor surface, and temperature conditions",
+      "B. 60% efficiency — investigate firmware version and network configuration",
+      "C. 40% efficiency — immediately return all robots to OEM for warranty service",
+      "D. 250% below spec — the discrepancy is too large and must be a data collection error"
+    ],
+    "correct": "A",
+    "explanation": "Reliability efficiency = Actual MTBF / Specification MTBF = 200/500 = 40%. The fleet is failing at 2.5x the expected rate. Investigation priorities: (1) Operating environment (warehouse floors, surface contaminants, temperature extremes), (2) Payload — are robots consistently operating at maximum payload?, (3) Mission profile — continuous high-duty-cycle vs. intermittent use. OEM warranty applies to manufacturing defects, not environmental degradation.",
+    "reference": "curriculum.md#mtbf-analysis"
+  },
+  {
+    "id": "L3-036",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "The ros2 topic echo /diagnostics command shows status STALE on the /imu_driver node. What does STALE mean in ROS 2 diagnostics and what is the first action?",
+    "options": [
+      "A. The topic is publishing stale (old) data — check the timestamp in the message header",
+      "B. The diagnostic aggregator has not received an update from the driver within the expected period — check if the imu_driver node is running",
+      "C. The IMU hardware is in a standby state — send a wake command via the IMU service",
+      "D. STALE is a normal state during robot startup and resolves automatically"
+    ],
+    "correct": "B",
+    "explanation": "In ROS 2 diagnostics, STALE indicates the diagnostic aggregator has not received an update from the named component within the configured timeout period (typically 2-3x the expected publish rate). The first action is ros2 node list to verify the imu_driver node is running. If absent, restart the node. If present, check its internal state with ros2 node info and monitor its log output.",
+    "reference": "shared/ros2_primer.md"
+  },
+  {
+    "id": "L3-037",
+    "level": "L3",
+    "domain": "fmea",
+    "question": "An FMEA team debates whether 'Operator fails to perform pre-flight checklist' should be listed as a failure cause. What is the correct FMEA position on human error as a cause?",
+    "options": [
+      "A. Human error should never be listed as an FMEA cause — process controls prevent it",
+      "B. Human error is a valid FMEA cause when there is no engineering control preventing it",
+      "C. Human error causes always receive Occurrence=1 because procedures prevent their occurrence",
+      "D. Human error causes are out of scope for robot FMEA — only hardware failures are included"
+    ],
+    "correct": "B",
+    "explanation": "Human error is a valid FMEA cause when no physical engineering control prevents it. If the only defense is a written procedure, human error has real occurrence probability (typically O=5-7 depending on task complexity and training maturity). The corrective action should be to add engineering controls (interlocks, automated checklists, sensors) that reduce dependence on human memory.",
+    "reference": "shared/fmea_methodology.md#methodology"
+  },
+  {
+    "id": "L3-038",
+    "level": "L3",
+    "domain": "fleet_analysis",
+    "question": "A TechMedix query returns the following for a 30-robot fleet: mean torque=42Nm, std=3.1Nm, min=34Nm, max=58Nm. Robot ID R-007 shows 58Nm sustained. What statistical test identifies R-007 as an outlier?",
+    "options": [
+      "A. R-007 is not an outlier — 58Nm is only 16Nm above the mean",
+      "B. R-007 is a 5.2-sigma outlier — (58-42)/3.1 = 5.16 standard deviations above the mean",
+      "C. R-007 requires a chi-squared test to confirm outlier status",
+      "D. The standard deviation method is not valid — use interquartile range for torque data"
+    ],
+    "correct": "B",
+    "explanation": "Z-score = (X - mean) / std = (58 - 42) / 3.1 = 16/3.1 = 5.16 standard deviations. A Z-score of 5.16 is extreme — in a normal distribution this occurs with probability of ~2 in 10 million. R-007 is definitively an outlier requiring immediate inspection. The Z-score method is appropriate when the underlying distribution is approximately normal, which joint torque data typically is for a homogeneous robot fleet.",
+    "reference": "curriculum.md#fleet-diagnostics-and-mtbf-trending"
+  },
+  {
+    "id": "L3-039",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "A Boston Dynamics Spot has IP54 ingress protection rating. A customer wants to use it in a wet scrubbing application with direct water spray at 45 psi. Is this within the rating?",
+    "options": [
+      "A. Yes — IP54 certifies waterproof operation under all spray conditions",
+      "B. No — IP54 protects against water splashes from any direction but not high-pressure water jets",
+      "C. Yes — IP54 includes resistance to all industrial spray pressures",
+      "D. It depends on the duration of exposure — IP54 allows high-pressure spray for under 30 seconds"
+    ],
+    "correct": "B",
+    "explanation": "IP54 rating: first digit 5 = dust protected (not dust tight); second digit 4 = protected against water splashes from any direction. IP54 does NOT protect against water jets (IP65), high-pressure jets (IP65-IP69), or immersion. A 45 psi scrubbing application exceeds the IP54 water protection rating and would void the warranty and risk internal damage. The customer needs IP65 minimum for spray environments.",
+    "reference": "platforms/boston_dynamics_spot/platform_module.md"
+  },
+  {
+    "id": "L3-040",
+    "level": "L3",
+    "domain": "diagnostics",
+    "question": "A fleet-wide TechMedix alert shows that 12 robots simultaneously lose GPS signal for 8 seconds at 14:32:07 UTC. Individual robot hardware checks are all normal. What is the most likely cause?",
+    "options": [
+      "A. A manufacturing defect in the GPS receivers from this production batch",
+      "B. A GPS satellite pass creating a coverage gap over the facility",
+      "C. Simultaneous RFI event from an external source — possibly radar, high-power RF equipment, or a jamming device",
+      "D. A TechMedix data pipeline outage causing false signal loss readings"
+    ],
+    "correct": "C",
+    "explanation": "Simultaneous GPS outage across 12 robots at the exact same timestamp — with individual hardware testing normal — eliminates per-robot hardware failure as the cause. The simultaneous, time-correlated event signature is characteristic of an external RF interference (RFI) event: high-power radar sweeping the facility, a nearby arc welder, or in adversarial environments, a GPS jammer. Investigate RF environment logs and facility equipment activity at 14:32 UTC.",
+    "reference": "curriculum.md#multi-platform-diagnostics"
+  }
+]

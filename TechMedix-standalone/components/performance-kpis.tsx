@@ -36,7 +36,7 @@ export function PerformanceKpis() {
       <div className="panel-elevated p-6">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
-            <p className="kicker">Downtime Prevented</p>
+            <p className="kicker">Downtime Prevented <span className="text-black/40">(demo data)</span></p>
             <p className="metric-value mt-3 transition-all duration-500">
               {kpis.downtimePrevented}
               <span className="font-body text-xl font-normal text-theme-38 ml-1.5">hrs</span>
@@ -54,7 +54,7 @@ export function PerformanceKpis() {
       <div className="panel-elevated p-6">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
-            <p className="kicker">System Efficiency</p>
+            <p className="kicker">System Efficiency <span className="text-black/40">(demo data)</span></p>
             <p className="metric-value mt-3 transition-all duration-500">
               {kpis.systemEfficiency.toFixed(1)}
               <span className="font-body text-xl font-normal text-theme-38 ml-0.5">%</span>

@@ -4,10 +4,6 @@ import { useState, useEffect } from "react";
 import {
   Wifi,
   WifiOff,
-  CheckCircle2,
-  AlertCircle,
-  XCircle,
-  RefreshCw,
   Thermometer,
   Zap,
   HardDrive,
@@ -64,21 +60,6 @@ const INITIAL_BEARERS: Bearer[] = [
   { id: "starlink",  name: "Starlink Gen 3",    carrier: "SpaceX",          status: "active",  latencyMs: 28,  extra: "Signal: −68 dBm"         },
   { id: "oneweb",    name: "OneWeb Enterprise", carrier: "OneWeb",          status: "standby", latencyMs: 42,  extra: "SLA: 99.95% · Contracted" },
   { id: "cellular",  name: "5G Bonded",         carrier: "Peplink BMAX 5G", status: "standby", latencyMs: 18,  extra: "VZW + ATT + TMO bonded"   },
-];
-
-interface SubdomainEntry {
-  domain: string;
-  path: string;
-  ssl: boolean;
-  status: NodeStatus;
-  note: string;
-}
-
-const SUBDOMAINS: SubdomainEntry[] = [
-  { domain: "blackcatrobotics.com",          path: "/",                  ssl: true,  status: "online",  note: "Cloudflare Pages" },
-  { domain: "blackcatrobotics.com",          path: "/blackcat-os.html",  ssl: true,  status: "online",  note: "Static HTML" },
-  { domain: "habitat.blackcatrobotics.com",  path: "/",                  ssl: true,  status: "online",  note: "Subdomain redirect" },
-  { domain: "dashboard.blackcatrobotics.com",path: "/",                  ssl: true,  status: "online",  note: "Vercel · TechMedix" },
 ];
 
 // ─── Simulated data badge ─────────────────────────────────────────────────────
@@ -364,13 +345,13 @@ function LatencyToggle() {
           <p className="mt-2 font-mono text-2xl font-semibold">
             {isCloud ? <span className="text-green-400">~41ms</span> : <span className="text-white">~41ms</span>}
           </p>
-          <p className="mt-1 font-mono text-[0.58rem] text-white/30">Claude API · LEO hop</p>
+          <p className="mt-1 font-mono text-[0.58rem] text-white/30">AI API · LEO hop</p>
         </div>
       </div>
 
       <p className="font-mono text-[0.58rem] text-white/25">
         {isCloud
-          ? "Cloud mode: all Layer 3 diagnostics routed via Starlink → Anthropic API"
+          ? "Cloud mode: all Layer 3 diagnostics routed via Starlink → AI API"
           : "Local mode: Layer 1–2 on truck GPU, Layer 3 cached or deferred until online"}
       </p>
     </div>
@@ -470,69 +451,6 @@ function DroneRelayPanel() {
   );
 }
 
-// ─── F. Subdomain health strip ────────────────────────────────────────────────
-
-function SubdomainStrip() {
-  const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setChecked(true), 800);
-    return () => clearTimeout(t);
-  }, []);
-
-  return (
-    <div className="panel-elevated p-5">
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <div>
-          <p className="kicker">Infrastructure</p>
-          <h2 className="mt-1.5 font-header text-xl leading-tight text-theme-primary">Subdomain Health</h2>
-        </div>
-        <div className="flex items-center gap-2">
-          <SimBadge />
-          {checked ? (
-            <span className="inline-flex items-center gap-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-moss font-semibold">
-              <CheckCircle2 size={12} />
-              All systems nominal
-            </span>
-          ) : (
-            <span className="inline-flex items-center gap-1.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-theme-40">
-              <RefreshCw size={12} className="animate-spin" />
-              Checking…
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-        {SUBDOMAINS.map((d) => (
-          <div
-            key={`${d.domain}${d.path}`}
-            className="rounded-[16px] border border-theme-5 bg-theme-18 p-3.5 flex flex-col gap-2"
-          >
-            <div className="flex items-center justify-between gap-2">
-              {checked ? (
-                <CheckCircle2 size={14} className="text-moss shrink-0" />
-              ) : (
-                <div className="h-3.5 w-3.5 rounded-full bg-theme-8 animate-pulse shrink-0" />
-              )}
-              <span className="inline-flex items-center rounded-full bg-sky-50 px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-sky-600">
-                SSL
-              </span>
-            </div>
-            <div>
-              <p className="font-mono text-[0.65rem] font-semibold text-theme-80 truncate">{d.domain}</p>
-              {d.path !== "/" && (
-                <p className="font-mono text-[0.58rem] text-theme-38">{d.path}</p>
-              )}
-            </div>
-            <p className="font-ui text-[0.55rem] uppercase tracking-[0.12em] text-theme-30">{d.note}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function NetworkPage() {
@@ -562,9 +480,6 @@ export default function NetworkPage() {
           tethered drone relay, and Construct.Bot mesh connectivity.
         </p>
       </div>
-
-      {/* Subdomain strip */}
-      <SubdomainStrip />
 
       {/* Topology map */}
       <section

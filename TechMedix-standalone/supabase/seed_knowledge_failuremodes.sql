@@ -523,17 +523,17 @@ VALUES
 -- SUPPLIERS (cross-platform)
 -- ══════════════════════════════════════════════════════════════════════════════
 
-INSERT INTO suppliers (name, website, region, component_types, platforms_served, lead_time_days, risk_level, notes)
+INSERT INTO suppliers (name, component_type, website, region, component_types, platforms_served, lead_time_days, risk_level, notes)
 VALUES
-  ('Harmonic Drive LLC', 'https://harmonicdrive.net', 'NA', ARRAY['harmonic drive','strain wave gear','actuator'], ARRAY['unitree-g1','unitree-h1-2','unitree-b2','boston-dynamics-spot'], 21, 'medium', 'US distributor for HD Systems — 3-4 week lead typical'),
-  ('DJI Enterprise Store', 'https://enterprise.dji.com', 'global', ARRAY['ESC','motor','battery','nozzle','spray pump','camera module'], ARRAY['dji-agras-t50','dji-agras-t60','dji-matrice-350'], 7, 'low', 'Direct OEM — fastest lead time for DJI parts'),
-  ('NTN Bearing Americas', 'https://ntnamericas.com', 'NA', ARRAY['bearing','deep groove ball bearing','sealed bearing'], ARRAY['lime-gen4','radcommercial','serve-rs2','starship-gen3'], 5, 'low', 'Stocked at major distributors (Grainger, Motion)'),
-  ('SKF Bearing', 'https://skfbearings.com', 'global', ARRAY['bearing','seal','lubrication'], ARRAY['lime-gen4','radcommercial','boston-dynamics-spot'], 3, 'low', 'Most widely distributed bearing supplier globally'),
-  ('Boston Dynamics Store', 'https://shop.bostondynamics.com', 'NA', ARRAY['foot pad','battery','spare parts'], ARRAY['boston-dynamics-spot'], 14, 'medium', 'OEM only — no third-party Spot parts currently'),
-  ('Unitree Official Store', 'https://shop.unitree.com', 'CN', ARRAY['battery','actuator','spare parts'], ARRAY['unitree-g1','unitree-h1-2','unitree-b2'], 14, 'medium', '14-day lead from CN; consider NA stocking'),
-  ('Caig Laboratories', 'https://caig.com', 'NA', ARRAY['contact cleaner','DeoxIT','electronics maintenance'], ARRAY['dji-matrice-350','skydio-x10'], 3, 'low', 'DeoxIT D5 and F5 for RF and PCB contact maintenance'),
-  ('Fujipoly', 'https://fujipoly.com', 'NA', ARRAY['thermal pad','thermal interface material'], ARRAY['unitree-g1','dji-agras-t50'], 7, 'low', 'XR-m series for high-conductivity motor controller TIMs'),
-  ('Miller-Stephenson', 'https://miller-stephenson.com', 'NA', ARRAY['Krytox lubricant','PFPE grease','aerospace lubricant'], ARRAY['boston-dynamics-spot','unitree-b2'], 10, 'medium', 'Krytox GPL 205/226 for strain wave gear and SEA lubrication')
+  ('Harmonic Drive LLC', 'harmonic drive', 'https://harmonicdrive.net', 'NA', ARRAY['harmonic drive','strain wave gear','actuator'], ARRAY['unitree-g1','unitree-h1-2','unitree-b2','boston-dynamics-spot'], 21, 'medium', 'US distributor for HD Systems — 3-4 week lead typical'),
+  ('DJI Enterprise Store', 'ESC', 'https://enterprise.dji.com', 'global', ARRAY['ESC','motor','battery','nozzle','spray pump','camera module'], ARRAY['dji-agras-t50','dji-agras-t60','dji-matrice-350'], 7, 'low', 'Direct OEM — fastest lead time for DJI parts'),
+  ('NTN Bearing Americas', 'bearing', 'https://ntnamericas.com', 'NA', ARRAY['bearing','deep groove ball bearing','sealed bearing'], ARRAY['lime-gen4','radcommercial','serve-rs2','starship-gen3'], 5, 'low', 'Stocked at major distributors (Grainger, Motion)'),
+  ('SKF Bearing', 'bearing', 'https://skfbearings.com', 'global', ARRAY['bearing','seal','lubrication'], ARRAY['lime-gen4','radcommercial','boston-dynamics-spot'], 3, 'low', 'Most widely distributed bearing supplier globally'),
+  ('Boston Dynamics Store', 'spare parts', 'https://shop.bostondynamics.com', 'NA', ARRAY['foot pad','battery','spare parts'], ARRAY['boston-dynamics-spot'], 14, 'medium', 'OEM only — no third-party Spot parts currently'),
+  ('Unitree Official Store', 'battery', 'https://shop.unitree.com', 'CN', ARRAY['battery','actuator','spare parts'], ARRAY['unitree-g1','unitree-h1-2','unitree-b2'], 14, 'medium', '14-day lead from CN; consider NA stocking'),
+  ('Caig Laboratories', 'contact cleaner', 'https://caig.com', 'NA', ARRAY['contact cleaner','DeoxIT','electronics maintenance'], ARRAY['dji-matrice-350','skydio-x10'], 3, 'low', 'DeoxIT D5 and F5 for RF and PCB contact maintenance'),
+  ('Fujipoly', 'thermal pad', 'https://fujipoly.com', 'NA', ARRAY['thermal pad','thermal interface material'], ARRAY['unitree-g1','dji-agras-t50'], 7, 'low', 'XR-m series for high-conductivity motor controller TIMs'),
+  ('Miller-Stephenson', 'lubricant', 'https://miller-stephenson.com', 'NA', ARRAY['Krytox lubricant','PFPE grease','aerospace lubricant'], ARRAY['boston-dynamics-spot','unitree-b2'], 10, 'medium', 'Krytox GPL 205/226 for strain wave gear and SEA lubrication')
 ON CONFLICT (name, region) DO UPDATE SET
   component_types = EXCLUDED.component_types,
   platforms_served = EXCLUDED.platforms_served,

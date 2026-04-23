@@ -4,7 +4,7 @@ import { ArrowRight, ShieldCheck, Waypoints, Wrench } from "lucide-react";
 const pillars = [
   {
     title: "Predictive diagnostics",
-    copy: "Run Claude-backed maintenance analysis against live telemetry and surface actionable repair protocols before downtime hits.",
+    copy: "Run AI-powered maintenance analysis against live telemetry and surface actionable repair protocols before downtime hits.",
     icon: ShieldCheck
   },
   {

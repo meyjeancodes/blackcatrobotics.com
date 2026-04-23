@@ -214,7 +214,7 @@ export default function DataCenterPage() {
             <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">
               BCR colocation partnership reduces AI inference cost to{" "}
               <span className="text-white/90 font-semibold">&lt;$0.10/robot/month</span> — keeping
-              Layer 3 Claude diagnostics affordable at fleet scale across all data center deployments.
+              Layer 3 AI diagnostics affordable at fleet scale across all data center deployments.
             </p>
           </div>
           <a

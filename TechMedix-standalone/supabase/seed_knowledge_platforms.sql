@@ -34,6 +34,15 @@ INSERT INTO platforms (slug, name, manufacturer, type, introduced_year, specs_js
  'supported',
  'Industrial quadruped. IP67 rated. Common in inspection and security deployments.'),
 
+('unitree-r1',
+ 'Unitree R1',
+ 'Unitree Robotics',
+ 'humanoid',
+ 2025,
+ '{"weight_kg":27,"dof":20,"leg_dof":6,"arm_dof":4,"waist_dof":2,"head_dof":2,"max_arm_torque_kg":2,"dimensions_mm":"1230x357x190","calf_thigh_length_mm":600,"forearm_upper_arm_length_mm":420,"actuator_type":"PMSM","cooling":"local air cooling","electrical_routing":"hollow + internal","dexterous_hand":"optional","price_usd":4900}',
+ 'supported',
+ 'Ultra-lightweight humanoid at $4,900. 20 DOF, PMSM motors, 2-DOF head. Entry-level platform for education, research, and entertainment.'),
+
 -- ── Quadruped ──────────────────────────────────────────────────────────────────
 ('boston-dynamics-spot',
  'Boston Dynamics Spot',

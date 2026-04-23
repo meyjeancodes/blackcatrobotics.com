@@ -142,7 +142,7 @@ export async function getDashboardData() {
   const supabase = createClient();
 
   const [customerRes, robotsRes, alertsRes, jobsRes, techniciansRes] = await Promise.all([
-    supabase.from("customers").select("*").eq("id", customerId).single(),
+    supabase.from("customers").select("*").eq("id", customerId).maybeSingle(),
     supabase.from("robots").select("*").eq("customer_id", customerId),
     supabase.from("alerts").select("*").eq("customer_id", customerId).eq("resolved", false),
     supabase.from("dispatch_jobs").select("*").eq("customer_id", customerId).neq("status", "completed").neq("status", "resolved"),
@@ -154,6 +154,12 @@ export async function getDashboardData() {
   if (alertsRes.error) throw new Error(alertsRes.error.message);
   if (jobsRes.error) throw new Error(jobsRes.error.message);
   if (techniciansRes.error) throw new Error(techniciansRes.error.message);
+
+  if (!customerRes.data) {
+    console.warn(`[techmedix] customer "${customerId}" not found in Supabase — falling back to mock data`);
+    const snapshot = buildDashboardSnapshot(defaultCustomerId);
+    return { snapshot, stats: buildDashboardStats(snapshot) };
+  }
 
   const robots = (robotsRes.data ?? []).map(mapRobot);
   const robotIds = robots.map((r) => r.id);
