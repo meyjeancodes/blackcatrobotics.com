@@ -413,16 +413,12 @@ export default function KnowledgePage() {
                           <BookOpen size={10} /> Manual
                         </a>
                       )}
-                      {platform.diagramUrl && (
-                        <a
-                          href={platform.diagramUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
-                        >
-                          <Layers size={10} /> Diagram
-                        </a>
-                      )}
+                      <Link
+                        href={`/knowledge/blueprint/${platform.id}`}
+                        className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-sky-600 transition hover:text-sky-700"
+                      >
+                        <Crosshair size={10} /> Blueprint
+                      </Link>
                       <Link
                         href="/technicians/certifications"
                         className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-ember transition hover:opacity-70"
