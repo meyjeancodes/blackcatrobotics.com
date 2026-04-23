@@ -114,6 +114,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const supabase = await createSupabaseServerClient();
+    if (!supabase) {
+      return NextResponse.json(
+        { error: "Supabase not configured — cannot register drone in offline mode" },
+        { status: 503 }
+      );
+    }
 
     const { data, error } = await supabase
       .from("dji_drones")
