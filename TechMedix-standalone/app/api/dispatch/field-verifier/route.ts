@@ -1,118 +1,49 @@
+import { NextRequest, NextResponse } from "next/server";
+import { searchFieldVerifiers, bookFieldVerifier } from "../../../../lib/blackcat/dispatch/field-verifier-client";
+
 /**
- * Field Verifier booking API
- *
- * GET  /api/dispatch/field-verifier?lat=&lng=&radius=&skills=
- *   → returns available RentAHuman workers near the job site
- *
  * POST /api/dispatch/field-verifier
- *   → books a field verifier and records the booking on the dispatch job
+ *   ?action=search  → returns available field verifiers near the job site
+ *   ?action=book    → books the selected verifier
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../../lib/supabase-server";
-import { searchHumans, bookHuman } from "../../../../lib/blackcat/dispatch/rentahuman-client";
-
-export const runtime = "nodejs";
-
-// ── GET — search ───────────────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
-  const { searchParams } = req.nextUrl;
-  const lat    = parseFloat(searchParams.get("lat")    ?? "");
-  const lng    = parseFloat(searchParams.get("lng")    ?? "");
-  const radius = parseFloat(searchParams.get("radius") ?? "25");
-  const skills = searchParams.get("skills")?.split(",").filter(Boolean) ?? [];
+  const { searchParams } = new URL(req.url);
+  const action = searchParams.get("action");
 
-  if (isNaN(lat) || isNaN(lng)) {
-    return NextResponse.json({ error: "lat and lng are required" }, { status: 400 });
+  if (action === "search") {
+    const lat = parseFloat(searchParams.get("lat") ?? "0");
+    const lng = parseFloat(searchParams.get("lng") ?? "0");
+    try {
+      const results = await searchFieldVerifiers({ lat, lng });
+      return NextResponse.json({ results });
+    } catch {
+      return NextResponse.json({ error: "Field verifier search failed" }, { status: 502 });
+    }
   }
 
-  try {
-    const results = await searchHumans(lat, lng, radius, skills);
-    return NextResponse.json({ results });
-  } catch (err) {
-    console.error("[field-verifier/GET]", err);
-    return NextResponse.json({ error: "RentAHuman search failed" }, { status: 502 });
-  }
-}
-
-// ── POST — book ────────────────────────────────────────────────────────────────
-interface BookRequest {
-  jobId: string;
-  humanId: string;
-  taskInstructions: string;
-  durationHours: number;
-  budgetUsd: number;
+  return NextResponse.json({ error: "Unknown action" }, { status: 400 });
 }
 
 export async function POST(req: NextRequest) {
-  let body: BookRequest;
+  const body = await req.json().catch(() => ({}));
+
   try {
-    body = await req.json();
+    // 1. Book via field verifier provider
+    const booking = await bookFieldVerifier({
+      verifierId: body.verifierId,
+      jobId: body.jobId,
+      notes: body.notes,
+    });
+
+    // 2. Return combined result
+    return NextResponse.json({
+      bookingId: booking.bookingId,
+      status: booking.status,
+      etaMin: booking.etaMin,
+      source: "external",
+    });
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return NextResponse.json({ error: "Field verifier booking failed" }, { status: 502 });
   }
-
-  const { jobId, humanId, taskInstructions, durationHours, budgetUsd } = body;
-
-  if (!jobId || !humanId || !taskInstructions) {
-    return NextResponse.json(
-      { error: "jobId, humanId, and taskInstructions are required" },
-      { status: 400 }
-    );
-  }
-
-  // 1. Book via RentAHuman
-  let booking;
-  try {
-    booking = await bookHuman(humanId, taskInstructions, durationHours ?? 2, budgetUsd ?? 150);
-  } catch (err) {
-    console.error("[field-verifier/POST] bookHuman error:", err);
-    return NextResponse.json({ error: "RentAHuman booking failed" }, { status: 502 });
-  }
-
-  // 2. Upsert into dispatch_jobs with verifier metadata
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
-  }
-
-  try {
-    const supabase = await createClient();
-
-    // Create or find an L0 technician record for this verifier
-    const { data: verifierTech } = await supabase
-      .from("technicians")
-      .upsert(
-        {
-          name: `Field Verifier (${booking.humanId})`,
-          region: "on-demand",
-          platforms: ["field_verification"],
-          rating: 4.0,
-          available: false,
-          eta_minutes: null,
-          cert_level: "L0",
-          source: "rentahuman",
-          technician_type: "field_verifier",
-        },
-        { onConflict: "external_id", ignoreDuplicates: false }
-      )
-      .select("id")
-      .single();
-
-    // Update dispatch job with verifier booking details
-    await supabase
-      .from("dispatch_jobs")
-      .update({
-        technician_id: verifierTech?.id ?? null,
-        technician_type: "field_verifier",
-        external_booking_id: booking.bookingId,
-        status: "assigned",
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", jobId);
-  } catch (err) {
-    console.error("[field-verifier/POST] Supabase update error:", err);
-    // Non-fatal — still return booking confirmation
-  }
-
-  return NextResponse.json({ booking });
 }
