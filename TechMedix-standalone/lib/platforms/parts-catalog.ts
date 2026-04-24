@@ -74,7 +74,43 @@ const HUMANOID: ChassisDefinition = {
   id: "humanoid",
   label: "Humanoid",
   viewBox: "0 0 200 360",
-  silhouette: "",
+  // Full-body outline – each sub-path traces one body section as a thin background stroke
+  silhouette: [
+    // Head
+    "M88,2 Q88,0 100,0 Q112,0 112,2 L114,44 Q114,52 100,52 Q86,52 86,44 Z",
+    // Neck connector
+    "M91,52 L91,68 L109,68 L109,52 Z",
+    // Torso
+    "M70,68 L130,68 L132,170 L68,170 Z",
+    // Left shoulder pad
+    "M46,68 L72,68 L70,98 L44,98 Z",
+    // Right shoulder pad
+    "M128,68 L154,68 L156,98 L130,98 Z",
+    // Left upper arm
+    "M40,98 L70,98 L68,135 L38,135 Z",
+    // Right upper arm
+    "M130,98 L160,98 L162,135 L132,135 Z",
+    // Left forearm
+    "M36,135 L68,135 L66,172 L34,172 Z",
+    // Right forearm
+    "M132,135 L164,135 L166,172 L134,172 Z",
+    // Left hand
+    "M32,172 L66,172 L65,192 L31,192 Z",
+    // Right hand
+    "M134,172 L168,172 L169,192 L135,192 Z",
+    // Left thigh
+    "M68,170 L98,170 L95,220 L65,220 Z",
+    // Right thigh
+    "M102,170 L132,170 L135,220 L105,220 Z",
+    // Left shin
+    "M63,220 L95,220 L92,268 L60,268 Z",
+    // Right shin
+    "M105,220 L135,220 L138,268 L108,268 Z",
+    // Left foot
+    "M54,268 L92,268 L90,308 L46,308 Z",
+    // Right foot
+    "M108,268 L146,268 L150,308 L110,308 Z",
+  ].join(" "),
   platformIds: [
     "unitree-g1",
     "unitree-h1-2",
