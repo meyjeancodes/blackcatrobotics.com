@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
   AlertTriangle,
@@ -54,6 +55,10 @@ const SEV_COLOR: Record<string, string> = {
 export function KnowledgeHubClient({ platforms }: Props) {
   const [modal, setModal] = useState<Modal>(null);
   const [closing, setClosing] = useState(false);
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   const byCategory = useMemo(() => {
     return platforms.reduce<Record<string, PlatformProfile[]>>((acc, p) => {
@@ -66,6 +71,12 @@ export function KnowledgeHubClient({ platforms }: Props) {
   const openModal = (m: Modal) => {
     setClosing(false);
     setModal(m);
+  };
+
+  const openBlueprint = (platformId: string) => {
+    setHighlightedId(platformId);
+    setTimeout(() => setHighlightedId(null), 500);
+    openModal({ kind: "blueprint", platformId });
   };
 
   const closeModal = () => {
@@ -97,7 +108,13 @@ export function KnowledgeHubClient({ platforms }: Props) {
             {list.map((platform) => (
               <div
                 key={platform.id}
-                className="panel-elevated flex flex-col gap-3 p-5"
+                className="panel-elevated flex flex-col gap-3 p-5 transition-all duration-300"
+                style={{
+                  boxShadow: highlightedId === platform.id
+                    ? "0 0 0 2px rgba(56,189,248,0.35), 0 0 40px rgba(56,189,248,0.12)"
+                    : "",
+                  transform: highlightedId === platform.id ? "scale(1.012)" : "scale(1)",
+                }}
               >
                 {/* Header */}
                 <div className="flex items-start justify-between gap-2">
@@ -203,14 +220,9 @@ export function KnowledgeHubClient({ platforms }: Props) {
                     )}
                     <button
                       type="button"
-                      onClick={() =>
-                        openModal({
-                          kind: "blueprint",
-                          platformId: platform.id,
-                        })
-                      }
+                      onClick={() => openBlueprint(platform.id)}
                       className="flex items-center gap-1.5 rounded-full border border-sky-500/[0.18] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-sky-600 transition hover:bg-sky-500/[0.06] hover:text-sky-700"
-                      title="Interactive technical blueprint — rotate, explode, cutaway"
+                      title="Interactive technical blueprint — part-by-part reveal, explode view"
                     >
                       <Crosshair size={10} /> Blueprint
                     </button>
@@ -280,8 +292,8 @@ export function KnowledgeHubClient({ platforms }: Props) {
         </div>
       </div>
 
-      {/* ── Modal ──────────────────────────────────────────────────────────── */}
-      {modal && (
+      {/* ── Modal (portal to document.body so fixed positioning is viewport-relative) */}
+      {mounted && modal && createPortal(
         <div
           className={`t-modal-backdrop fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm ${closing ? "is-closing" : "is-open"}`}
           onClick={(e) => {
@@ -312,7 +324,8 @@ export function KnowledgeHubClient({ platforms }: Props) {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

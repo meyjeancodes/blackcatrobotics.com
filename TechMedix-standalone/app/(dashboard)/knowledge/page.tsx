@@ -8,7 +8,9 @@ import {
   Bot,
   Brain,
   Cpu,
+  ExternalLink,
   GraduationCap,
+  Globe,
   Hand,
   Layers,
   Play,
@@ -16,6 +18,7 @@ import {
   RotateCw,
   Settings2,
   Shield,
+  Terminal,
   User,
   Wrench,
   Zap,
@@ -150,6 +153,44 @@ const AI_LAYER = [
     examples: "Isaac Lab DR, MuJoCo domain randomization, Genesis material variation",
     techBridge: "Policies that work in sim but fail on hardware usually have a sensor calibration mismatch or a joint friction model error. The fix is hardware measurement, not re-training.",
   },
+];
+
+// ─── Study resources (curated from awesome-robotics + broader ecosystem) ─────
+
+const SIM_ENVS = [
+  { name: "NVIDIA Isaac Sim", tag: "GPU-native", desc: "Photo-realistic simulation for AMRs and manipulators. Deep ROS2 integration, domain randomization built-in, Isaac Lab RL framework.", url: "https://developer.nvidia.com/isaac/sim" },
+  { name: "MuJoCo", tag: "Physics", desc: "DeepMind's high-fidelity physics engine. Industry standard for RL research and whole-body control. Free since 2022.", url: "https://mujoco.org" },
+  { name: "Gazebo / Gz Sim", tag: "ROS2", desc: "The canonical open-source simulator for ROS/ROS2. Large community, sensor plugins, multi-robot support.", url: "https://gazebosim.org" },
+  { name: "Webots", tag: "Open Source", desc: "Cross-platform, MIT-licensed. Supports Python, C++, Java, MATLAB. Good for teaching and rapid prototyping.", url: "https://cyberbotics.com" },
+  { name: "Genesis", tag: "Research", desc: "Ultra-fast, GPU-parallel physics. Built for large-scale sim-to-real RL training. Python-native, 430 000x faster than real-time.", url: "https://genesis-world.readthedocs.io" },
+  { name: "Drake", tag: "Controls", desc: "MIT's trajectory optimization and control toolkit. First-class support for humanoid whole-body planning. Used in Atlas, Spot research.", url: "https://drake.mit.edu" },
+];
+
+const TOOLS = [
+  { name: "ROS 2 (Jazzy / Iron)", desc: "The de-facto middleware for robotics. DDS transport, rclpy/rclcpp, lifecycle nodes, Nav2, MoveIt 2.", tag: "Middleware" },
+  { name: "MoveIt 2", desc: "Motion planning framework for manipulators. OMPL integration, inverse kinematics, collision checking, trajectory execution.", tag: "Planning" },
+  { name: "Nav2", desc: "Navigation stack for autonomous ground robots. SLAM, costmaps, BT-based mission execution, recovery behaviors.", tag: "Navigation" },
+  { name: "PythonRobotics", desc: "Clean Python implementations of 100+ robotics algorithms — SLAM, path planning, localization. Great for study.", tag: "Algorithms" },
+  { name: "ONNX Runtime", desc: "Cross-platform inference for vision and policy models. Deploy PyTorch/TF models to Jetson/x86 at production latency.", tag: "Inference" },
+  { name: "ROS 2 Control", desc: "Hardware abstraction layer for actuators and sensors. Standardizes controllers across robot platforms.", tag: "Hardware" },
+];
+
+const COURSES = [
+  { title: "Robotic Manipulation", org: "MIT (Drake)", desc: "Open-source course using Drake. Covers manipulation, perception, sim-to-real. Full problem sets available.", url: "https://manipulation.csail.mit.edu" },
+  { title: "Introduction to Robotics", org: "Stanford CS223A", desc: "Prof. Oussama Khatib. Kinematics, dynamics, trajectory generation. Classic fundamentals course.", url: "https://cs.stanford.edu/groups/manips/teaching/cs223a" },
+  { title: "Robotics Specialization", org: "Coursera · UPenn", desc: "6-course specialization — aerial robotics, kinematics, estimation, perception, capstone. Strong math foundation.", url: "https://www.coursera.org/specializations/robotics" },
+  { title: "Autonomous Mobile Robots", org: "edX · ETH Zurich", desc: "State estimation, localization, motion planning for mobile robots. Rigorous and practical.", url: "https://www.edx.org/learn/robotics/eth-zurich-autonomous-mobile-robots" },
+  { title: "Self-Driving Cars Specialization", org: "Coursera · Toronto", desc: "State estimation, visual perception, motion planning. Directly applicable to AMR and delivery robot work.", url: "https://www.coursera.org/specializations/self-driving-cars" },
+  { title: "Deep RL Bootcamp", org: "Berkeley", desc: "Policy gradients, model-based RL, sim-to-real transfer. Free lecture slides and videos from the 2017 bootcamp still highly relevant.", url: "https://sites.google.com/view/deep-rl-bootcamp/lectures" },
+];
+
+const COMMUNITIES = [
+  { name: "r/robotics", platform: "Reddit", desc: "Active general robotics community. Hardware teardowns, job posts, research discussion." },
+  { name: "ROS Discourse", platform: "Forum", desc: "Official ROS community forum. Best place for ROS2 questions, package announcements, and migration guidance." },
+  { name: "Stack Exchange Robotics", platform: "Q&A", desc: "High-signal Q&A for robotics algorithms, ROS, kinematics, sensor fusion." },
+  { name: "IEEE Spectrum Robotics", platform: "Publication", desc: "Professional coverage of robotics research and industry developments." },
+  { name: "The Robot Report", platform: "Industry", desc: "Supply chain, market analysis, and product announcements covering the commercial robotics space." },
+  { name: "r/MachineLearning", platform: "Reddit", desc: "Covers RL, sim-to-real, VLA models, and embodied AI at a research level." },
 ];
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -311,6 +352,106 @@ export default function KnowledgePage() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* ── Study Resources ─────────────────────────────────────────────────── */}
+      <section>
+        <div className="mb-6">
+          <p className="kicker">Layer 3 — Study</p>
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Study Resources</h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
+            Simulation environments, tools, free courses, and communities used by
+            working robotics engineers and researchers.
+          </p>
+        </div>
+
+        {/* Simulation environments */}
+        <div className="mb-8">
+          <p className="mb-3 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-[var(--ink)]/35 font-medium flex items-center gap-2">
+            <Play size={10} className="text-emerald-600" /> Simulation Environments
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {SIM_ENVS.map((env) => (
+              <a
+                key={env.name}
+                href={env.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="panel group flex flex-col gap-2 p-4 transition hover:ring-1 hover:ring-[var(--ink)]/[0.10]"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <p className="font-header text-[0.90rem] leading-tight text-[var(--ink)] group-hover:text-sky-600 transition">{env.name}</p>
+                  <ExternalLink size={11} className="shrink-0 mt-0.5 text-[var(--ink)]/25 group-hover:text-sky-600 transition" />
+                </div>
+                <span className="inline-flex w-fit items-center rounded-full bg-emerald-500/[0.08] px-2 py-0.5 font-ui text-[0.48rem] uppercase tracking-[0.12em] text-emerald-700">{env.tag}</span>
+                <p className="text-xs leading-relaxed text-[var(--ink)]/50">{env.desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Tools */}
+        <div className="mb-8">
+          <p className="mb-3 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-[var(--ink)]/35 font-medium flex items-center gap-2">
+            <Terminal size={10} className="text-amber-600" /> Key Tools
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {TOOLS.map((tool) => (
+              <div key={tool.name} className="panel flex flex-col gap-2 p-4">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="font-header text-[0.90rem] leading-tight text-[var(--ink)]">{tool.name}</p>
+                  <span className="inline-flex items-center rounded-full bg-amber-500/[0.08] px-2 py-0.5 font-ui text-[0.48rem] uppercase tracking-[0.12em] text-amber-700 shrink-0">{tool.tag}</span>
+                </div>
+                <p className="text-xs leading-relaxed text-[var(--ink)]/50">{tool.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Free courses */}
+        <div className="mb-8">
+          <p className="mb-3 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-[var(--ink)]/35 font-medium flex items-center gap-2">
+            <BookOpen size={10} className="text-violet-600" /> Free Courses
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {COURSES.map((course) => (
+              <a
+                key={course.title}
+                href={course.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="panel group flex flex-col gap-2 p-4 transition hover:ring-1 hover:ring-[var(--ink)]/[0.10]"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="font-header text-[0.90rem] leading-tight text-[var(--ink)] group-hover:text-violet-600 transition">{course.title}</p>
+                    <p className="font-ui text-[0.50rem] uppercase tracking-[0.12em] text-[var(--ink)]/40 mt-0.5">{course.org}</p>
+                  </div>
+                  <ExternalLink size={11} className="shrink-0 mt-0.5 text-[var(--ink)]/25 group-hover:text-violet-600 transition" />
+                </div>
+                <p className="text-xs leading-relaxed text-[var(--ink)]/50">{course.desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Communities */}
+        <div>
+          <p className="mb-3 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-[var(--ink)]/35 font-medium flex items-center gap-2">
+            <Globe size={10} className="text-sky-600" /> Communities
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {COMMUNITIES.map((comm) => (
+              <div key={comm.name} className="panel flex flex-col gap-2 p-4">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="font-header text-[0.90rem] leading-tight text-[var(--ink)]">{comm.name}</p>
+                  <span className="inline-flex items-center rounded-full bg-sky-500/[0.08] px-2 py-0.5 font-ui text-[0.48rem] uppercase tracking-[0.12em] text-sky-700 shrink-0">{comm.platform}</span>
+                </div>
+                <p className="text-xs leading-relaxed text-[var(--ink)]/50">{comm.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

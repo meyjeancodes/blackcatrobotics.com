@@ -30,7 +30,6 @@ export function DashboardShell({
       </div>
       <main
         className="min-w-0 flex-1 px-4 py-8 lg:px-8"
-        style={{ contain: "layout style" }}
       >
         {!dismissed && (
           <div className="mb-6 flex items-center justify-between rounded-lg bg-amber-100 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-300">
