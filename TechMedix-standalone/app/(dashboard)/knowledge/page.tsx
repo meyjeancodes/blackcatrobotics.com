@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { getAllPlatforms } from "@/lib/platforms/index";
 import { KnowledgeHubClient } from "@/components/knowledge-hub-client";
-import { AnimatedStat, StaggerContainer } from "@/components/animated-stat";
 import {
   AlertTriangle,
   Battery,
   BookOpen,
   Bot,
   Brain,
-  ChevronRight,
   Cpu,
   GraduationCap,
   Hand,
@@ -241,42 +239,10 @@ const AI_LAYER = [
   },
 ];
 
-// ─── Category labels ──────────────────────────────────────────────────────────
-
-const CAT_LABEL: Record<string, string> = {
-  humanoid: "Humanoid",
-  drone: "Drone",
-  industrial: "Industrial",
-  delivery: "Delivery",
-  micromobility: "Micromobility",
-  datacenter: "Data Center",
-};
-
-const CAT_COLOR: Record<string, string> = {
-  humanoid: "bg-violet-500/[0.10] text-violet-700",
-  drone: "bg-sky-500/[0.10] text-sky-700",
-  industrial: "bg-amber-500/[0.10] text-amber-700",
-  delivery: "bg-emerald-500/[0.10] text-emerald-700",
-  micromobility: "bg-rose-500/[0.10] text-rose-700",
-  datacenter: "bg-slate-500/[0.10] text-slate-700",
-};
-
-const SEV_COLOR: Record<string, string> = {
-  critical: "text-red-600",
-  warning: "text-amber-600",
-  info: "text-sky-600",
-};
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function KnowledgePage() {
   const platforms = getAllPlatforms().filter((p) => p.category !== "datacenter");
-
-  const byCategory = platforms.reduce<Record<string, typeof platforms>>((acc, p) => {
-    if (!acc[p.category]) acc[p.category] = [];
-    acc[p.category].push(p);
-    return acc;
-  }, {});
 
   const totalPlatforms = platforms.length;
   const totalFailureModes = platforms.reduce((sum, p) => sum + p.failureSignatures.length, 0);
@@ -300,153 +266,43 @@ export default function KnowledgePage() {
             <Bot size={15} className="text-violet-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Platforms</p>
-              <p className="font-header text-xl text-[var(--ink)]"><AnimatedStat value={totalPlatforms} delay={100} /></p>
+              <p className="font-header text-xl text-[var(--ink)]">{totalPlatforms}</p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <AlertTriangle size={15} className="text-amber-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Failure Signatures</p>
-              <p className="font-header text-xl text-[var(--ink)]"><AnimatedStat value={totalFailureModes} delay={200} /></p>
+              <p className="font-header text-xl text-[var(--ink)]">{totalFailureModes}</p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <Play size={15} className="text-emerald-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Sim Environments</p>
-              <p className="font-header text-xl text-[var(--ink)]"><AnimatedStat value={SIM_LABS.length} delay={300} /></p>
+              <p className="font-header text-xl text-[var(--ink)]">{SIM_LABS.length}</p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <Brain size={15} className="text-sky-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">AI Layers</p>
-              <p className="font-header text-xl text-[var(--ink)]"><AnimatedStat value={AI_LAYER.length} delay={400} /></p>
+              <p className="font-header text-xl text-[var(--ink)]">{AI_LAYER.length}</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Platform Catalog ─────────────────────────────────────────────────── */}
+      {/* ── Platform Catalog + Interactive Diagrams ──────────────────────────── */}
       <section>
         <div className="mb-6">
           <p className="kicker">Layer 1 — Physical</p>
           <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Robot Platform Catalog</h2>
           <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
-            Each platform entry includes known failure signatures, severity, and maintenance
-            context. Expand any platform to study its repair profile before your exam.
-          </p>
-        </div>
-
-        {Object.entries(byCategory).map(([cat, list]) => (
-          <div key={cat} className="mb-8">
-            <p className="mb-3 font-ui text-[0.60rem] uppercase tracking-[0.26em] text-[var(--ink)]/38 font-medium">
-              {CAT_LABEL[cat] ?? cat}
-            </p>
-            <StaggerContainer className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {list.map((platform) => (
-                <div key={platform.id} className="panel-elevated flex flex-col gap-3 p-5">
-                  {/* Header */}
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold ${CAT_COLOR[platform.category] ?? "bg-[var(--ink)]/[0.05] text-[var(--ink)]/50"}`}>
-                        {CAT_LABEL[platform.category] ?? platform.category}
-                      </span>
-                      {platform.badge && (
-                        <span className="ml-1.5 inline-flex items-center rounded-full bg-amber-400/[0.14] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-amber-700">
-                          {platform.badge}
-                        </span>
-                      )}
-                      <h3 className="mt-2 font-header text-base leading-tight text-[var(--ink)]">{platform.name}</h3>
-                      <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">{platform.manufacturer}</p>
-                    </div>
-                    <Wrench size={13} className="shrink-0 text-[var(--ink)]/20 mt-1" />
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-xs leading-relaxed text-[var(--ink)]/55">{platform.description}</p>
-
-                  {/* Key specs */}
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {platform.specs.slice(0, 4).map((s) => (
-                      <div key={s.label} className="rounded-[10px] bg-[var(--ink)]/[0.025] px-2.5 py-1.5">
-                        <p className="font-ui text-[0.50rem] uppercase tracking-[0.12em] text-[var(--ink)]/35">{s.label}</p>
-                        <p className="font-mono text-[0.65rem] font-semibold text-[var(--ink)]/75">{s.value}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Failure signatures */}
-                  {platform.failureSignatures.length > 0 && (
-                    <div className="space-y-1.5 border-t border-[var(--ink)]/[0.05] pt-3">
-                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-[var(--ink)]/35 flex items-center gap-1.5">
-                        <AlertTriangle size={10} />
-                        Known Failure Signatures
-                      </p>
-                      {platform.failureSignatures.slice(0, 3).map((sig) => (
-                        <div key={sig.id} className="flex items-start gap-2">
-                          <span className={`mt-0.5 font-ui text-[0.52rem] uppercase tracking-[0.10em] font-semibold shrink-0 ${SEV_COLOR[sig.severity] ?? "text-[var(--ink)]/40"}`}>
-                            {sig.severity === "critical" ? "●" : "○"}
-                          </span>
-                          <div className="min-w-0">
-                            <p className="text-[0.65rem] font-semibold text-[var(--ink)]/75 leading-snug">{sig.name}</p>
-                            <p className="text-[0.60rem] text-[var(--ink)]/42 leading-snug">{sig.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* CTA */}
-                  <div className="mt-auto pt-2 flex items-center justify-between border-t border-[var(--ink)]/[0.05]">
-                    <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/30">
-                      {platform.failureSignatures.length} signatures
-                    </p>
-                    <div className="flex items-center gap-2">
-                      {platform.manualUrl && (
-                        <a
-                          href={platform.manualUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
-                        >
-                          <BookOpen size={10} /> Manual
-                        </a>
-                      )}
-                      {platform.diagramUrl && (
-                        <a
-                          href={platform.diagramUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
-                        >
-                          <Layers size={10} /> Diagram
-                        </a>
-                      )}
-                      <Link
-                        href="/technicians/certifications"
-                        className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-ember transition hover:opacity-70"
-                      >
-                        Certify <ChevronRight size={10} />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </StaggerContainer>
-          </div>
-        ))}
-      </section>
-
-      {/* ── Interactive Diagrams ─────────────────────────────────────────────── */}
-      <section>
-        <div className="mb-6">
-          <p className="kicker">Layer 1 — Physical</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Interactive Diagrams</h2>
-          <p className="mt-2 max-w-xl text-sm text-[var(--ink)]/50">
-            Dissect any platform part by part. Click a component to inspect its failure signature,
-            diagnostic cue, and replacement protocol. Launch the full sim lab for orbit, exploded
-            view, and fault-injection drills.
+            Each platform entry includes specs, known failure signatures, severity, and an
+            interactive diagram. Click a component to inspect its failure signature and
+            diagnostic cue — or launch the full blueprint explorer and sim lab without leaving
+            the page.
           </p>
         </div>
         <KnowledgeHubClient platforms={platforms} />
@@ -464,7 +320,7 @@ export default function KnowledgePage() {
           </p>
         </div>
 
-        <StaggerContainer className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {COMPONENTS.map((comp) => {
             const CompIcon = comp.icon;
             return (
@@ -500,7 +356,7 @@ export default function KnowledgePage() {
             </div>
             );
           })}
-        </StaggerContainer>
+        </div>
       </section>
 
       {/* ── Simulation Labs ──────────────────────────────────────────────────── */}
@@ -515,7 +371,7 @@ export default function KnowledgePage() {
           </p>
         </div>
 
-        <StaggerContainer className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {SIM_LABS.map((sim) => (
             <div key={sim.id} className="panel-elevated flex flex-col gap-3 p-5">
               <div className="flex items-start justify-between gap-2">
@@ -566,7 +422,7 @@ export default function KnowledgePage() {
               </div>
             </div>
           ))}
-        </StaggerContainer>
+        </div>
       </section>
 
       {/* ── AI Intelligence Layer ────────────────────────────────────────────── */}
@@ -581,7 +437,7 @@ export default function KnowledgePage() {
           </p>
         </div>
 
-        <StaggerContainer className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {AI_LAYER.map((layer) => {
             const Icon = layer.icon;
             return (
@@ -609,7 +465,7 @@ export default function KnowledgePage() {
               </div>
             );
           })}
-        </StaggerContainer>
+        </div>
       </section>
 
       {/* ── Cert CTA ─────────────────────────────────────────────────────────── */}

@@ -21,7 +21,7 @@ const PROTECTED_PREFIXES = [
 
 const AUTH_ROUTES = ["/login", "/signup"];
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   try {
     const host = request.headers.get("host") || "";
     const { pathname } = request.nextUrl;
@@ -33,9 +33,22 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(url, 301);
     }
 
-    // Serve marketing homepage on blackcatrobotics.com root
-    if ((host === "blackcatrobotics.com") && pathname === "/") {
-      return NextResponse.rewrite(new URL("/index.html", request.url));
+    // Serve static marketing site on blackcatrobotics.com
+    if (host === "blackcatrobotics.com" || host === "blackcatrobotics.com:443") {
+      // Root → static index.html
+      if (pathname === "/") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/index.html";
+        return NextResponse.rewrite(url);
+      }
+
+      // Clean URLs for static pages
+      const cleanRoutes = ["/about", "/certifications", "/habitat-landing", "/blackcat-grid"];
+      if (cleanRoutes.includes(pathname) && !pathname.endsWith(".html")) {
+        const url = request.nextUrl.clone();
+        url.pathname = pathname + ".html";
+        return NextResponse.rewrite(url);
+      }
     }
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
