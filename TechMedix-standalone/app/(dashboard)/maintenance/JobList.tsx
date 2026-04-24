@@ -69,12 +69,12 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
       {/* Job list */}
       <div className="flex-1 min-w-0">
         {/* Filter tabs */}
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-4 overflow-x-auto scrollbar-none">
           {(["all", "pending", "in_progress", "completed"] as const).map((s) => (
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
-              className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+              className={`shrink-0 text-xs px-3 py-1.5 rounded-lg border transition-colors ${
                 statusFilter === s
                   ? "bg-[#0c0d11] text-white border-[#0c0d11]"
                   : "border-theme-10 text-zinc-600 hover:border-theme-10"
