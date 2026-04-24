@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SurfaceCard } from "../../../components/surface-card";
+import { BillingCheckoutButton } from "../../../components/billing-checkout-button";
 import { formatCurrency } from "../../../lib/format";
 import { getDashboardData } from "../../../lib/data";
 
@@ -83,15 +84,23 @@ export default async function BillingPage() {
               </div>
             </div>
           </div>
-          <div className="rounded-[20px] border border-theme-5 bg-theme-2 p-5">
-            <p className="kicker mb-3">Billing tables (future)</p>
-            <div className="space-y-2 text-xs text-theme-45">
-              <p className="font-medium text-theme-60">Prepared for Stripe integration:</p>
-              <p>subscriptions — subscription records per product</p>
-              <p>node_usage — per-node billing periods and active hours</p>
-              <p>billing_events — payment events and invoice records</p>
-              <p className="mt-3 text-[0.65rem] uppercase tracking-[0.14em] text-theme-30">Stripe not yet integrated</p>
-            </div>
+          <div className="rounded-[20px] border border-theme-5 bg-theme-2 p-5 flex flex-col gap-3">
+            <p className="kicker">Upgrade or change plan</p>
+            <p className="text-xs leading-relaxed text-theme-55">
+              Manage your subscription directly through Stripe. Changes take effect immediately and are prorated.
+            </p>
+            <BillingCheckoutButton
+              plan="fleet"
+              robotCount={customer.fleetSize || 1}
+              label="Manage Subscription →"
+              highlight
+            />
+            <a
+              href="mailto:support@blackcatrobotics.com"
+              className="text-center text-[0.60rem] font-ui uppercase tracking-[0.14em] text-theme-40 hover:text-theme-primary transition"
+            >
+              Contact for enterprise pricing
+            </a>
           </div>
         </div>
       </SurfaceCard>
@@ -117,7 +126,7 @@ export default async function BillingPage() {
               <p className="text-[0.65rem] uppercase tracking-[0.14em] text-theme-40 mb-2">{plan.range}</p>
               <p className="text-3xl font-semibold tracking-[-0.04em] text-theme-primary">{plan.price}</p>
               <p className="text-xs text-theme-45 mb-4">{plan.unit}</p>
-              <ul className="space-y-1.5">
+              <ul className="space-y-1.5 mb-4">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-2 text-xs text-theme-55">
                     <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-theme-25" />
@@ -125,6 +134,12 @@ export default async function BillingPage() {
                   </li>
                 ))}
               </ul>
+              <BillingCheckoutButton
+                plan={plan.id}
+                label={plan.id === "command" ? "Contact Sales →" : "Subscribe →"}
+                highlight={!!plan.highlight}
+                disabled={plan.id === "command"}
+              />
             </div>
           ))}
         </div>
