@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
-import { sendAlert } from "../../../../lib/alerts";
+import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { sendAlert } from "@/lib/alerts";
 
 /**
  * POST /api/alerts/test
@@ -16,10 +16,6 @@ export async function POST(req: NextRequest) {
   }
 
   let body: { customer_id?: string; robot_id?: string; severity?: string };
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
-  }
-
   try {
     body = await req.json();
   } catch {
@@ -30,6 +26,18 @@ export async function POST(req: NextRequest) {
 
   if (!customer_id) {
     return NextResponse.json({ error: "customer_id is required" }, { status: 400 });
+  }
+
+  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+    // Mock mode — return simulated success
+    return NextResponse.json({
+      success: true,
+      resend_id: `mock-${Date.now()}`,
+      customer: { email: "test@mock.local", name: "Mock Customer" },
+      robot_id,
+      severity,
+      mock: true,
+    });
   }
 
   const supabase = createServiceClient();

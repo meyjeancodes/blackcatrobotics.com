@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
-import { generateFleetInsight, generateEnergyInsight } from "../../../../lib/blackcat/ai/insights";
-import type { BlackCatRobot, BlackCatAlert, EnergyTransaction } from "../../../../types/blackcat";
+import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { generateFleetInsight, generateEnergyInsight } from "@/lib/blackcat/ai/insights";
+import type { BlackCatRobot, BlackCatAlert, EnergyTransaction } from "@/types/blackcat";
 
 function isAuthorized(req: NextRequest): boolean {
   const secret = req.headers.get("x-blackcat-secret");
@@ -28,8 +28,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+    return NextResponse.json(
+      { insight: "AI insights are temporarily unavailable — database is offline." },
+      { status: 503 }
+    );
   }
 
   try {
