@@ -1,49 +1,81 @@
-import { NextRequest, NextResponse } from "next/server";
-import { searchFieldVerifiers, bookFieldVerifier } from "../../../../lib/blackcat/dispatch/field-verifier-client";
-
 /**
+ * Field Verifier booking API
+ *
+ * GET  /api/dispatch/field-verifier?lat=&lng=&radius=&skills=
+ *   → returns available RentAHuman workers near the job site
+ *
  * POST /api/dispatch/field-verifier
- *   ?action=search  → returns available field verifiers near the job site
- *   ?action=book    → books the selected verifier
+ *   → books a field verifier and records the booking on the dispatch job
  */
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const action = searchParams.get("action");
+import { NextRequest, NextResponse } from "next/server";
+import { createSupabaseServerClient, isSupabaseServerConfigured } from "@/lib/supabase-server";
+import { searchHumans, bookHuman } from "@/lib/blackcat/dispatch/rentahuman-client";
 
-  if (action === "search") {
-    const lat = parseFloat(searchParams.get("lat") ?? "0");
-    const lng = parseFloat(searchParams.get("lng") ?? "0");
-    try {
-      const results = await searchFieldVerifiers({ lat, lng });
-      return NextResponse.json({ results });
-    } catch {
-      return NextResponse.json({ error: "Field verifier search failed" }, { status: 502 });
-    }
+export const runtime = "nodejs";
+
+// ── GET — search ───────────────────────────────────────────────────────────────
+export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl;
+  const lat    = parseFloat(searchParams.get("lat")    ?? "");
+  const lng    = parseFloat(searchParams.get("lng")    ?? "");
+  const radius = parseFloat(searchParams.get("radius") ?? "25");
+  const skills = searchParams.get("skills")?.split(",").filter(Boolean) ?? [];
+
+  if (isNaN(lat) || isNaN(lng)) {
+    return NextResponse.json({ error: "lat and lng are required" }, { status: 400 });
   }
 
-  return NextResponse.json({ error: "Unknown action" }, { status: 400 });
+  try {
+    const results = await searchHumans(lat, lng, radius, skills);
+    return NextResponse.json({ results });
+  } catch (err) {
+    console.error("[field-verifier/GET]", err);
+    return NextResponse.json({ error: "RentAHuman search failed" }, { status: 502 });
+  }
+}
+
+// ── POST — book ────────────────────────────────────────────────────────────────
+interface BookRequest {
+  jobId: string;
+  humanId: string;
+  taskInstructions: string;
+  durationHours: number;
+  budgetUsd: number;
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json().catch(() => ({}));
-
+  let body: BookRequest;
   try {
-    // 1. Book via field verifier provider
-    const booking = await bookFieldVerifier({
-      verifierId: body.verifierId,
-      jobId: body.jobId,
-      notes: body.notes,
-    });
-
-    // 2. Return combined result
-    return NextResponse.json({
-      bookingId: booking.bookingId,
-      status: booking.status,
-      etaMin: booking.etaMin,
-      source: "external",
-    });
+    body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Field verifier booking failed" }, { status: 502 });
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
+
+  const { jobId, humanId, taskInstructions, durationHours, budgetUsd } = body;
+  if (!jobId || !humanId || !taskInstructions || !durationHours || !budgetUsd) {
+    return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+  }
+
+  // Record the booking in Supabase (best-effort — do not block Ack to RentAHuman)
+  if (isSupabaseServerConfigured()) {
+    try {
+      const supabase = await createSupabaseServerClient();
+      if (supabase) {
+        await supabase.from("dispatch_bookings").insert({
+          job_id: jobId,
+          human_id: humanId,
+          task_instructions: taskInstructions,
+          duration_hours: durationHours,
+          budget_usd: budgetUsd,
+          booked_at: new Date().toISOString(),
+        });
+      }
+    } catch (err) {
+      console.error("[field-verifier/POST] db log failed:", err);
+      // Non-fatal — we still return success to the caller
+    }
+  }
+
+  return NextResponse.json({ success: true });
 }

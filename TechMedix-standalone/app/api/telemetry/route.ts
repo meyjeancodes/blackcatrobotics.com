@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient, isSupabaseConfigured } from "../../../lib/supabase-service";
-import { runDiagnostics } from "../../../lib/diagnostics";
-import { sendAlert } from "../../../lib/alerts";
+import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { runDiagnostics } from "@/lib/diagnostics";
+import { sendAlert } from "@/lib/alerts";
 
 export async function POST(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
@@ -10,11 +10,21 @@ export async function POST(req: NextRequest) {
   }
 
   const apiKey = authHeader.replace("Bearer ", "").trim();
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+
+  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+    return NextResponse.json(
+      { error: "Supabase unavailable — telemetry cannot be accepted" },
+      { status: 503 }
+    );
   }
 
   const supabase = createServiceClient();
+  if (!supabase) {
+    return NextResponse.json(
+      { error: "Supabase client not initialized" },
+      { status: 503 }
+    );
+  }
 
   // Validate API key
   const { data: customer, error: authError } = await supabase
@@ -83,7 +93,6 @@ export async function POST(req: NextRequest) {
     if (diagnosticId) {
       alertsTriggered = 1;
 
-      // Fetch the diagnostic result for alerting
       const { data: diagResult } = await supabase
         .from("diagnostic_results")
         .select("*")

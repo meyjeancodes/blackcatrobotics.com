@@ -5,13 +5,12 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient, isSupabaseConfigured } from "../../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseServerConfigured } from "../../../../lib/supabase-server";
 import { getExpiryWarning, getCoverageSummary } from "../../../../lib/dji-care-coverage";
-import { MOCK_DRONES } from "../../../../lib/drone-mock-data";
 import type { CareRefreshPlan } from "../../../../types/dji-drone";
 
 async function isAuthenticated(req: NextRequest): Promise<boolean> {
-  if (!isSupabaseConfigured()) return true;
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return true;
   return req.cookies.getAll().some((c) => c.name.includes("auth-token"));
 }
 
@@ -24,34 +23,14 @@ export async function GET(
 
   const { id } = await params;
 
-  if (!isSupabaseConfigured()) {
-    const drone = MOCK_DRONES.find((d) => d.id === id);
-    if (!drone) {
-      return NextResponse.json({ error: "Drone not found" }, { status: 404 });
-    }
-    const plan = drone.care_refresh_plan as CareRefreshPlan;
-    const coverageSummary = getCoverageSummary(plan);
-    let expiryWarning = null;
-    if (drone.care_refresh_expires_at) {
-      expiryWarning = getExpiryWarning(new Date(drone.care_refresh_expires_at));
-    }
-    return NextResponse.json({
-      drone: {
-        ...drone,
-        drone_diagnostic_reports: [],
-        drone_flight_logs: [],
-        drone_care_refresh_claims: [],
-        coverage_summary: coverageSummary,
-        expiry_warning: expiryWarning,
-      },
-      mock: true,
-    });
+  if (!isSupabaseServerConfigured()) {
+    return NextResponse.json({ error: "Database offline — drone details unavailable" }, { status: 503 });
   }
 
   try {
     const supabase = await createSupabaseServerClient();
     if (!supabase) {
-      return NextResponse.json({ error: "Supabase unavailable" }, { status: 503 });
+      return NextResponse.json({ error: "Supabase client not initialized" }, { status: 503 });
     }
 
     const { data: drone, error } = await supabase
@@ -146,8 +125,15 @@ export async function DELETE(
 
   const { id } = await params;
 
+  if (!isSupabaseServerConfigured() || !(await createSupabaseServerClient())) {
+    return NextResponse.json({ error: "Supabase offline" }, { status: 503 });
+  }
+
   try {
     const supabase = await createSupabaseServerClient();
+    if (!supabase) {
+      return NextResponse.json({ error: "Supabase client not initialized" }, { status: 503 });
+    }
 
     const { error } = await supabase.from("dji_drones").delete().eq("id", id);
     if (error) throw error;

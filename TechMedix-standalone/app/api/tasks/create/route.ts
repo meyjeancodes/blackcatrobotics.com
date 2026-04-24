@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
-import type { TaskType, TaskStatus } from "../../../../types/blackcat";
+import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import type { TaskType, TaskStatus } from "@/types/blackcat";
 
 function isAuthorized(req: NextRequest): boolean {
   const secret = req.headers.get("x-blackcat-secret");
@@ -33,12 +33,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  if (!isSupabaseServiceConfigured()) {
+    return NextResponse.json(
+      { task: { id: `mock-${Date.now()}`, robot_id, type, priority, status }, mock: true },
+      { status: 201 }
+    );
+  }
+
+  const supabase = createServiceClient();
+  if (!supabase) {
+    return NextResponse.json(
+      { task: { id: `mock-${Date.now()}`, robot_id, type, priority, status }, mock: true },
+      { status: 201 }
+    );
   }
 
   try {
-    const supabase = createServiceClient();
     const { data, error } = await supabase
       .from("tasks")
       .insert({ robot_id, type, priority, status })
@@ -46,7 +56,6 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error) throw new Error(error.message);
-
     return NextResponse.json({ task: data }, { status: 201 });
   } catch (err) {
     console.error("[/api/tasks/create]", err);

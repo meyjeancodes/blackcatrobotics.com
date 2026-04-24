@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
+import { isSupabaseServiceConfigured, createServiceClient } from "@/lib/supabase-service";
 
 export async function POST(req: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -15,10 +15,6 @@ export async function POST(req: NextRequest) {
   }
 
   let event: Stripe.Event;
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
-  }
-
   try {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
   } catch (err) {
@@ -26,45 +22,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Webhook signature invalid" }, { status: 400 });
   }
 
+  // Always ACK Stripe first — we don't want retries
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    const supabase = createServiceClient();
+    const { customer_email, plan, robot_count } = session.metadata ?? {};
 
-    const { customer_email, plan, robot_count, design_id, user_id } = session.metadata ?? {};
-
-    // Habitat design deposit
-    if (design_id && user_id) {
-      const { error } = await supabase
-        .from("designs")
-        .update({
-          status: "deposited",
-          deposit_amount: session.amount_total ?? 0,
-          stripe_payment_intent_id: session.payment_intent as string,
-        })
-        .eq("id", design_id)
-        .eq("user_id", user_id);
-
-      if (error) {
-        console.error("Supabase design update error after Stripe webhook:", error);
-      }
-
-      // Admin notification (best-effort)
-      try {
-        const { Resend } = await import("resend");
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
-          from: "HABITAT AI <no-reply@blackcatrobotics.com>",
-          to: "blackcatrobotics.ai@gmail.com",
-          subject: "New HABITAT Design Deposit",
-          text: `Design ${design_id} received a deposit of $${((session.amount_total ?? 0) / 100).toFixed(2)}. User: ${user_id}`,
-        });
-      } catch (e) {
-        console.error("Admin alert email failed:", e);
-      }
+    if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+      // Supabase down — log and ack; customer update will need manual reconciliation
+      console.warn(
+        "[stripe/webhook] Supabase not configured — customer upgrade not persisted. " +
+        `Email: ${customer_email}, Plan: ${plan}, Robots: ${robot_count}`
+      );
+      return NextResponse.json({ received: true, note: "Supabase offline — update will be retried later" });
     }
 
-    // Existing subscription checkout
-    if (customer_email && !design_id) {
+    const supabase = createServiceClient();
+    if (!supabase) {
+      console.warn(
+        "[stripe/webhook] Supabase client null — customer upgrade not persisted. " +
+        `Email: ${customer_email}, Plan: ${plan}, Robots: ${robot_count}`
+      );
+      return NextResponse.json({ received: true, note: "Supabase offline — update will be retried later" });
+    }
+
+    if (customer_email) {
       const { error } = await supabase
         .from("customers")
         .update({
@@ -79,6 +60,7 @@ export async function POST(req: NextRequest) {
 
       if (error) {
         console.error("Supabase update error after Stripe webhook:", error);
+        return NextResponse.json({ received: true, db_error: error.message });
       }
     }
   }

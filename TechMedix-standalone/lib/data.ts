@@ -140,63 +140,74 @@ export async function getDashboardData() {
   }
 
   const supabase = createClient();
-
-  const [customerRes, robotsRes, alertsRes, jobsRes, techniciansRes] = await Promise.all([
-    supabase.from("customers").select("*").eq("id", customerId).maybeSingle(),
-    supabase.from("robots").select("*").eq("customer_id", customerId),
-    supabase.from("alerts").select("*").eq("customer_id", customerId).eq("resolved", false),
-    supabase.from("dispatch_jobs").select("*").eq("customer_id", customerId).neq("status", "completed").neq("status", "resolved"),
-    supabase.from("technicians").select("*")
-  ]);
-
-  if (customerRes.error) throw new Error(customerRes.error.message);
-  if (robotsRes.error) throw new Error(robotsRes.error.message);
-  if (alertsRes.error) throw new Error(alertsRes.error.message);
-  if (jobsRes.error) throw new Error(jobsRes.error.message);
-  if (techniciansRes.error) throw new Error(techniciansRes.error.message);
-
-  if (!customerRes.data) {
-    console.warn(`[techmedix] customer "${customerId}" not found in Supabase — falling back to mock data`);
-    const snapshot = buildDashboardSnapshot(defaultCustomerId);
+  if (!supabase) {
+    console.warn("[techmedix] Supabase not configured — using mock data");
+    const snapshot = buildDashboardSnapshot(customerId);
     return { snapshot, stats: buildDashboardStats(snapshot) };
   }
 
-  const robots = (robotsRes.data ?? []).map(mapRobot);
-  const robotIds = robots.map((r) => r.id);
+  try {
+    const [customerRes, robotsRes, alertsRes, jobsRes, techniciansRes] = await Promise.all([
+      supabase.from("customers").select("*").eq("id", customerId).maybeSingle(),
+      supabase.from("robots").select("*").eq("customer_id", customerId),
+      supabase.from("alerts").select("*").eq("customer_id", customerId).eq("resolved", false),
+      supabase.from("dispatch_jobs").select("*").eq("customer_id", customerId).neq("status", "completed").neq("status", "resolved"),
+      supabase.from("technicians").select("*")
+    ]);
 
-  const [diagnosticsRes, telemetryRes] = await Promise.all([
-    robotIds.length > 0
-      ? supabase.from("diagnostic_reports").select("*").in("robot_id", robotIds)
-      : Promise.resolve({ data: [] as Row[], error: null }),
-    robotIds.length > 0
-      ? supabase.from("telemetry_snapshots").select("*").in("robot_id", robotIds).order("timestamp", { ascending: true })
-      : Promise.resolve({ data: [] as Row[], error: null })
-  ]);
+    if (customerRes.error) throw new Error(customerRes.error.message);
+    if (robotsRes.error) throw new Error(robotsRes.error.message);
+    if (alertsRes.error) throw new Error(alertsRes.error.message);
+    if (jobsRes.error) throw new Error(jobsRes.error.message);
+    if (techniciansRes.error) throw new Error(techniciansRes.error.message);
 
-  if (diagnosticsRes.error) throw new Error(diagnosticsRes.error.message);
-  if (telemetryRes.error) throw new Error(telemetryRes.error.message);
+    if (!customerRes.data) {
+      console.warn(`[techmedix] customer "${customerId}" not found in Supabase — falling back to mock data`);
+      const snapshot = buildDashboardSnapshot(defaultCustomerId);
+      return { snapshot, stats: buildDashboardStats(snapshot) };
+    }
 
-  const telemetryHistory: DashboardSnapshot["telemetryHistory"] = {};
-  for (const row of telemetryRes.data ?? []) {
-    const rid = (row.robot_id ?? row.robotId) as string;
-    if (!telemetryHistory[rid]) telemetryHistory[rid] = [];
-    telemetryHistory[rid].push(mapTelemetryPoint(row));
+    const robots = (robotsRes.data ?? []).map(mapRobot);
+    const robotIds = robots.map((r) => r.id);
+
+    const [diagnosticsRes, telemetryRes] = await Promise.all([
+      robotIds.length > 0
+        ? supabase.from("diagnostic_reports").select("*").in("robot_id", robotIds)
+        : Promise.resolve({ data: [] as Row[], error: null }),
+      robotIds.length > 0
+        ? supabase.from("telemetry_snapshots").select("*").in("robot_id", robotIds).order("timestamp", { ascending: true })
+        : Promise.resolve({ data: [] as Row[], error: null })
+    ]);
+
+    if (diagnosticsRes.error) throw new Error(diagnosticsRes.error.message);
+    if (telemetryRes.error) throw new Error(telemetryRes.error.message);
+
+    const telemetryHistory: DashboardSnapshot["telemetryHistory"] = {};
+    for (const row of telemetryRes.data ?? []) {
+      const rid = (row.robot_id ?? row.robotId) as string;
+      if (!telemetryHistory[rid]) telemetryHistory[rid] = [];
+      telemetryHistory[rid].push(mapTelemetryPoint(row));
+    }
+
+    const snapshot: DashboardSnapshot = {
+      customer: mapCustomer(customerRes.data),
+      robots,
+      alerts: (alertsRes.data ?? []).map(mapAlert),
+      jobs: (jobsRes.data ?? []).map(mapJob),
+      diagnostics: (diagnosticsRes.data ?? []).map(mapDiagnosticReport),
+      technicians: (techniciansRes.data ?? []).map(mapTechnician),
+      telemetryHistory
+    };
+
+    return {
+      snapshot,
+      stats: buildDashboardStats(snapshot)
+    };
+  } catch (err) {
+    console.error("[techmedix] getDashboardData failed — falling back to mock:", err);
+    const snapshot = buildDashboardSnapshot(customerId);
+    return { snapshot, stats: buildDashboardStats(snapshot) };
   }
-
-  const snapshot: DashboardSnapshot = {
-    customer: mapCustomer(customerRes.data),
-    robots,
-    alerts: (alertsRes.data ?? []).map(mapAlert),
-    jobs: (jobsRes.data ?? []).map(mapJob),
-    diagnostics: (diagnosticsRes.data ?? []).map(mapDiagnosticReport),
-    technicians: (techniciansRes.data ?? []).map(mapTechnician),
-    telemetryHistory
-  };
-
-  return {
-    snapshot,
-    stats: buildDashboardStats(snapshot)
-  };
 }
 
 export async function getRobotPageData(robotId: string) {

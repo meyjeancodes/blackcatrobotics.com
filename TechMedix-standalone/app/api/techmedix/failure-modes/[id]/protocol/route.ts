@@ -1,14 +1,6 @@
-/**
- * GET /api/techmedix/failure-modes/[id]/protocol
- * Returns the most recent repair protocol for a failure mode ID
- * Used by the RepairProtocolViewer in the technician dispatch view
- */
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getRepairProtocol,
-  getPredictiveSignals,
-} from "@/lib/blackcat/knowledge/db";
-import { createServiceClient, isSupabaseConfigured } from "@/lib/supabase-service";
+import { getRepairProtocol, getPredictiveSignals } from "@/lib/blackcat/knowledge/db";
+import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
 
 export const dynamic = "force-dynamic";
 
@@ -18,13 +10,22 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+    return NextResponse.json(
+      { error: "Database unavailable — repair protocol cannot be loaded" },
+      { status: 503 }
+    );
   }
 
   try {
-    // Fetch failure mode details
     const supabase = createServiceClient();
+    if (!supabase) {
+      return NextResponse.json(
+        { error: "Supabase client not initialized" },
+        { status: 503 }
+      );
+    }
+
     const { data: fm, error: fmErr } = await supabase
       .from("failure_modes")
       .select("*, platform:platforms(slug, name, manufacturer)")
