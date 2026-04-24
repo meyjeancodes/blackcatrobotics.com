@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, Expand, Layers, Maximize2, Play, X } from "lucide-react";
 import { PlatformExplorer } from "./platform-explorer";
 import { SimLab } from "./sim-lab";
+import { StaggerContainer } from "./animated-stat";
 import type { PlatformProfile } from "../lib/platforms/index";
 
 type Modal =
@@ -17,11 +18,25 @@ interface Props {
 
 export function KnowledgeHubClient({ platforms }: Props) {
   const [modal, setModal] = useState<Modal>(null);
+  const [closing, setClosing] = useState(false);
+
+  const openModal = (m: Modal) => {
+    setClosing(false);
+    setModal(m);
+  };
+
+  const closeModal = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setModal(null);
+      setClosing(false);
+    }, 150); // match --modal-close-dur
+  };
 
   useEffect(() => {
     if (!modal) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setModal(null);
+      if (e.key === "Escape") closeModal();
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -30,7 +45,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
   return (
     <>
       {/* Platform action row — inline tile grid below each platform summary */}
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <StaggerContainer className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {platforms.map((p) => (
           <div
             key={p.id}
@@ -47,12 +62,12 @@ export function KnowledgeHubClient({ platforms }: Props) {
             <PlatformExplorer
               platformId={p.id}
               compact
-              onOpen={() => setModal({ kind: "explorer", platformId: p.id })}
+              onOpen={() => openModal({ kind: "explorer", platformId: p.id })}
             />
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
-                onClick={() => setModal({ kind: "sim", platformId: p.id })}
+                onClick={() => openModal({ kind: "sim", platformId: p.id })}
                 className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-[var(--ink)]/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
               >
                 <Play size={10} /> Sim
@@ -70,7 +85,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
             </div>
           </div>
         ))}
-      </div>
+      </StaggerContainer>
 
       {/* TechMedix Sim Lab launcher */}
       <div className="mt-10 rounded-[20px] border border-ember/[0.18] bg-gradient-to-br from-ember/[0.06] to-transparent p-6">
@@ -100,7 +115,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
           </div>
           <button
             type="button"
-            onClick={() => setModal({ kind: "sim", platformId: "unitree-g1" })}
+            onClick={() => openModal({ kind: "sim", platformId: "unitree-g1" })}
             className="inline-flex items-center gap-2 rounded-full bg-ember px-5 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:opacity-90"
           >
             <Play size={12} /> Launch Sim Lab
@@ -111,17 +126,17 @@ export function KnowledgeHubClient({ platforms }: Props) {
       {/* ── Modal ──────────────────────────────────────────────────────────── */}
       {modal && (
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+          className={`fixed inset-0 z-[200] flex items-center justify-center p-4 backdrop-blur-sm t-modal-backdrop ${closing ? "is-closing" : "is-open"}`}
           onClick={(e) => {
-            if (e.target === e.currentTarget) setModal(null);
+            if (e.target === e.currentTarget) closeModal();
           }}
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative h-full max-h-[92vh] w-full max-w-[1400px] overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#0b0b10]">
+          <div className={`relative h-full max-h-[92vh] w-full max-w-[1400px] overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#0b0b10] t-modal ${closing ? "is-closing" : "is-open"}`}>
             <button
               type="button"
-              onClick={() => setModal(null)}
+              onClick={closeModal}
               className="absolute right-3 top-3 z-[210] rounded-full border border-white/[0.12] bg-black/50 p-2 text-white/70 backdrop-blur transition hover:bg-black/70 hover:text-white"
               aria-label="Close"
             >

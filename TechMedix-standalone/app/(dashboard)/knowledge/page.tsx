@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllPlatforms } from "@/lib/platforms/index";
 import { KnowledgeHubClient } from "@/components/knowledge-hub-client";
+import { AnimatedStat, StaggerContainer } from "@/components/animated-stat";
 import {
   AlertTriangle,
   Battery,
@@ -299,28 +300,28 @@ export default function KnowledgePage() {
             <Bot size={15} className="text-violet-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Platforms</p>
-              <p className="font-header text-xl text-[var(--ink)]">{totalPlatforms}</p>
+              <p className="font-header text-xl text-[var(--ink)]"><AnimatedStat value={totalPlatforms} delay={100} /></p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <AlertTriangle size={15} className="text-amber-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Failure Signatures</p>
-              <p className="font-header text-xl text-[var(--ink)]">{totalFailureModes}</p>
+              <p className="font-header text-xl text-[var(--ink)]"><AnimatedStat value={totalFailureModes} delay={200} /></p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <Play size={15} className="text-emerald-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Sim Environments</p>
-              <p className="font-header text-xl text-[var(--ink)]">{SIM_LABS.length}</p>
+              <p className="font-header text-xl text-[var(--ink)]"><AnimatedStat value={SIM_LABS.length} delay={300} /></p>
             </div>
           </div>
           <div className="panel px-4 py-3 flex items-center gap-3">
             <Brain size={15} className="text-sky-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">AI Layers</p>
-              <p className="font-header text-xl text-[var(--ink)]">{AI_LAYER.length}</p>
+              <p className="font-header text-xl text-[var(--ink)]"><AnimatedStat value={AI_LAYER.length} delay={400} /></p>
             </div>
           </div>
         </div>
@@ -342,7 +343,7 @@ export default function KnowledgePage() {
             <p className="mb-3 font-ui text-[0.60rem] uppercase tracking-[0.26em] text-[var(--ink)]/38 font-medium">
               {CAT_LABEL[cat] ?? cat}
             </p>
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <StaggerContainer className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {list.map((platform) => (
                 <div key={platform.id} className="panel-elevated flex flex-col gap-3 p-5">
                   {/* Header */}
@@ -432,7 +433,7 @@ export default function KnowledgePage() {
                   </div>
                 </div>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         ))}
       </section>
@@ -463,7 +464,7 @@ export default function KnowledgePage() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <StaggerContainer className="grid gap-4 md:grid-cols-2">
           {COMPONENTS.map((comp) => {
             const CompIcon = comp.icon;
             return (
@@ -499,7 +500,7 @@ export default function KnowledgePage() {
             </div>
             );
           })}
-        </div>
+        </StaggerContainer>
       </section>
 
       {/* ── Simulation Labs ──────────────────────────────────────────────────── */}
@@ -514,7 +515,7 @@ export default function KnowledgePage() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <StaggerContainer className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {SIM_LABS.map((sim) => (
             <div key={sim.id} className="panel-elevated flex flex-col gap-3 p-5">
               <div className="flex items-start justify-between gap-2">
@@ -565,7 +566,7 @@ export default function KnowledgePage() {
               </div>
             </div>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
       {/* ── AI Intelligence Layer ────────────────────────────────────────────── */}
@@ -580,7 +581,7 @@ export default function KnowledgePage() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <StaggerContainer className="grid gap-4 md:grid-cols-2">
           {AI_LAYER.map((layer) => {
             const Icon = layer.icon;
             return (
@@ -608,7 +609,7 @@ export default function KnowledgePage() {
               </div>
             );
           })}
-        </div>
+        </StaggerContainer>
       </section>
 
       {/* ── Cert CTA ─────────────────────────────────────────────────────────── */}
