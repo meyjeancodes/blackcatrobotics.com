@@ -87,6 +87,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
     }, 150);
   };
 
+  // Keyboard dismiss
   useEffect(() => {
     if (!modal) return;
     const onKey = (e: KeyboardEvent) => {
@@ -94,6 +95,22 @@ export function KnowledgeHubClient({ platforms }: Props) {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
+  }, [modal]);
+
+  // Body scroll lock while modal is open — prevents scrolled-page bleed-through
+  useEffect(() => {
+    if (modal) {
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    };
   }, [modal]);
 
   return (
