@@ -8,7 +8,7 @@ function StatusIndicator({
 }) {
   if (status === "completed") {
     return (
-      <div className="w-5 h-5 rounded-full border border-[#1db87a] bg-[#1db87a]/20 flex items-center justify-center shrink-0">
+      <div className="w-5 h-5 rounded-full border border-moss bg-moss/20 flex items-center justify-center shrink-0">
         <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
           <path
             d="M1 4L3.5 6.5L9 1"
@@ -29,7 +29,7 @@ function StatusIndicator({
     );
   }
   return (
-    <div className="w-5 h-5 rounded-full border border-white/15 bg-white/[0.03] shrink-0" />
+    <div className="w-5 h-5 rounded-full border border-theme-10 bg-theme-2 shrink-0" />
   );
 }
 
@@ -42,7 +42,7 @@ export function LessonList({
 }) {
   if (lessons.length === 0) {
     return (
-      <p className="text-white/30 text-sm py-6 text-center font-ui text-xs uppercase tracking-widest">
+      <p className="text-theme-30 text-sm py-6 text-center font-ui text-xs uppercase tracking-widest">
         No lessons in this module
       </p>
     );
@@ -54,21 +54,21 @@ export function LessonList({
         <li key={lesson.id}>
           <Link
             href={`/knowledge/modules/${moduleId}/${lesson.id}`}
-            className="flex items-center gap-4 rounded-xl px-4 py-3.5 border border-transparent hover:border-white/10 hover:bg-white/[0.03] transition-all duration-220 group"
+            className="flex items-center gap-4 rounded-xl px-4 py-3.5 border border-transparent hover:border-theme-10 hover:bg-theme-2 transition-all duration-220 group"
           >
             <StatusIndicator status={lesson.progress_status} />
 
             <div className="flex-1 min-w-0">
               <div className="flex items-baseline gap-2">
-                <span className="font-ui text-[0.6rem] text-white/25 tabular-nums w-4 shrink-0">
+                <span className="font-ui text-[0.6rem] text-theme-25 tabular-nums w-4 shrink-0">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
                 <span
                   className={[
                     "text-sm font-medium leading-tight truncate transition-colors",
                     lesson.progress_status === "completed"
-                      ? "text-white/60 group-hover:text-white/80"
-                      : "text-white/80 group-hover:text-white",
+                      ? "text-theme-60 group-hover:text-theme-80"
+                      : "text-theme-80 group-hover:text-theme-primary",
                   ].join(" ")}
                 >
                   {lesson.title}
@@ -77,7 +77,7 @@ export function LessonList({
             </div>
 
             <div className="shrink-0 flex items-center gap-3">
-              <span className="font-ui text-[0.6rem] text-white/25 uppercase tracking-widest">
+              <span className="font-ui text-[0.6rem] text-theme-25 uppercase tracking-widest">
                 {lesson.estimated_minutes}m
               </span>
               <svg
@@ -85,7 +85,7 @@ export function LessonList({
                 height="14"
                 viewBox="0 0 14 14"
                 fill="none"
-                className="text-white/20 group-hover:text-white/50 transition-colors"
+                className="text-theme-20 group-hover:text-theme-50 transition-colors"
               >
                 <path
                   d="M5 3L9 7L5 11"

@@ -1,0 +1,449 @@
+/* ============================================================ */
+/* Transitions.dev — Essential UI transitions                   */
+/* Adapted for TechMedix dashboard                              */
+/* ============================================================ */
+
+:root {
+  /* -- P1 — Notification badge -- */
+  --badge-slide-dur: 260ms;
+  --badge-pop-dur: 500ms;
+  --badge-pop-close-dur: 180ms;
+  --badge-fade-dur: 400ms;
+  --badge-fade-close-dur: 180ms;
+  --badge-blur: 2px;
+  --badge-offset-x: -8.2px;
+  --badge-offset-y: 12.4px;
+  --badge-bounce: 1.36;
+  --badge-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --badge-pop-ease: cubic-bezier(0.34, 1.36, 0.64, 1);
+  --badge-close-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* -- P2 — Menu dropdown -- */
+  --dropdown-open-dur: 250ms;
+  --dropdown-close-dur: 150ms;
+  --dropdown-pre-scale: 0.97;
+  --dropdown-closing-scale: 0.99;
+  --dropdown-origin: top center;
+  --dropdown-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* -- P3 — Panel reveal -- */
+  --panel-open-dur: 400ms;
+  --panel-close-dur: 350ms;
+  --panel-translate-y: 18px;
+  --panel-blur: 2px;
+  --panel-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* -- P4 — Card resize -- */
+  --resize-dur: 300ms;
+  --resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* -- P5 — Icon swap -- */
+  --icon-swap-dur: 200ms;
+  --icon-swap-blur: 2px;
+  --icon-swap-start-scale: 0.25;
+  --icon-swap-ease: ease-in-out;
+
+  /* -- P6 — Text enter/exit -- */
+  --text-swap-dur: 200ms;
+  --text-swap-translate-y: 8px;
+  --text-swap-blur: 2px;
+  --text-swap-ease: ease-out;
+
+  /* -- P7 — Modal open/close -- */
+  --modal-open-dur: 300ms;
+  --modal-close-dur: 150ms;
+  --modal-scale: 0.95;
+  --modal-scale-close: 0.96;
+  --modal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* -- P8 — Page slide -- */
+  --page-slide-dur: 200ms;
+  --page-fade-dur: 200ms;
+  --page-slide-distance: 8px;
+  --page-blur: 3px;
+  --page-stagger: 0ms;
+  --page-exit-enabled: 1;
+  --page-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --page-fade-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* -- P9 — Number pop-in -- */
+  --digit-dur: 500ms;
+  --digit-distance: 8px;
+  --digit-stagger: 70ms;
+  --digit-blur: 2px;
+  --digit-bounce: 1.45;
+  --digit-ease: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --digit-dir-x: 0;
+  --digit-dir-y: 1;
+}
+
+/* ============================================================ */
+/* P1 — Notification badge                                      */
+/* ============================================================ */
+
+@keyframes t-badge-slide-in {
+  from { transform: translate(var(--badge-offset-x), var(--badge-offset-y)); }
+  to   { transform: translate(0, 0); }
+}
+
+.t-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.t-badge[data-open="true"] {
+  animation: t-badge-slide-in var(--badge-slide-dur) var(--badge-slide-ease);
+}
+
+.t-badge-dot {
+  display: block;
+  transform-origin: center;
+  transform: scale(1);
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    transform var(--badge-pop-dur)  var(--badge-pop-ease),
+    opacity   var(--badge-fade-dur) var(--badge-pop-ease),
+    filter    var(--badge-pop-dur)  var(--badge-pop-ease);
+  will-change: transform, opacity, filter;
+}
+
+.t-badge[data-open="false"] .t-badge-dot {
+  transform: scale(0);
+  opacity: 0;
+  filter: blur(var(--badge-blur));
+  transition:
+    transform var(--badge-pop-close-dur)  var(--badge-close-ease),
+    opacity   var(--badge-fade-close-dur) var(--badge-close-ease),
+    filter    var(--badge-pop-close-dur)  var(--badge-close-ease);
+}
+
+/* ============================================================ */
+/* P2 — Menu dropdown                                           */
+/* ============================================================ */
+
+.t-dropdown {
+  transform-origin: top left;
+  transform: scale(var(--dropdown-pre-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--dropdown-open-dur) var(--dropdown-ease),
+    opacity   var(--dropdown-open-dur) var(--dropdown-ease);
+  will-change: transform, opacity;
+}
+
+.t-dropdown[data-origin="top-right"]     { transform-origin: top right; }
+.t-dropdown[data-origin="top-center"]    { transform-origin: top center; }
+.t-dropdown[data-origin="bottom-left"]   { transform-origin: bottom left; }
+.t-dropdown[data-origin="bottom-center"] { transform-origin: bottom center; }
+.t-dropdown[data-origin="bottom-right"]  { transform-origin: bottom right; }
+
+.t-dropdown.is-open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.t-dropdown.is-closing {
+  transform: scale(var(--dropdown-closing-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--dropdown-close-dur) var(--dropdown-ease),
+    opacity   var(--dropdown-close-dur) var(--dropdown-ease);
+}
+
+/* ============================================================ */
+/* P3 — Panel reveal                                            */
+/* ============================================================ */
+
+.t-panel-slide {
+  transform: translateY(var(--panel-translate-y));
+  opacity: 0;
+  filter: blur(var(--panel-blur));
+  pointer-events: none;
+  transition:
+    transform var(--panel-close-dur) var(--panel-ease),
+    opacity   var(--panel-close-dur) var(--panel-ease),
+    filter    var(--panel-close-dur) var(--panel-ease);
+  will-change: transform, opacity, filter;
+}
+
+.t-panel-slide[data-open="true"] {
+  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+  transition:
+    transform var(--panel-open-dur) var(--panel-ease),
+    opacity   var(--panel-open-dur) var(--panel-ease),
+    filter    var(--panel-open-dur) var(--panel-ease);
+}
+
+/* ============================================================ */
+/* P4 — Card resize                                             */
+/* ============================================================ */
+
+.t-resize {
+  transition:
+    width  var(--resize-dur) var(--resize-ease),
+    height var(--resize-dur) var(--resize-ease);
+  will-change: width, height;
+}
+
+/* ============================================================ */
+/* P5 — Icon swap                                               */
+/* ============================================================ */
+
+.t-icon-swap {
+  position: relative;
+  display: inline-grid;
+}
+
+.t-icon-swap .t-icon {
+  grid-area: 1 / 1;
+  transition:
+    opacity   var(--icon-swap-dur) var(--icon-swap-ease),
+    filter    var(--icon-swap-dur) var(--icon-swap-ease),
+    transform var(--icon-swap-dur) var(--icon-swap-ease);
+  will-change: opacity, filter, transform;
+}
+
+.t-icon-swap[data-state="a"] .t-icon[data-icon="a"],
+.t-icon-swap[data-state="b"] .t-icon[data-icon="b"] {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+
+.t-icon-swap[data-state="a"] .t-icon[data-icon="b"],
+.t-icon-swap[data-state="b"] .t-icon[data-icon="a"] {
+  opacity: 0;
+  filter: blur(var(--icon-swap-blur));
+  transform: scale(var(--icon-swap-start-scale));
+}
+
+/* ============================================================ */
+/* P6 — Text enter/exit                                         */
+/* ============================================================ */
+
+.t-text-swap {
+  display: inline-block;
+  transform: translateY(0);
+  filter: blur(0);
+  opacity: 1;
+  transition:
+    transform var(--text-swap-dur) var(--text-swap-ease),
+    filter    var(--text-swap-dur) var(--text-swap-ease),
+    opacity   var(--text-swap-dur) var(--text-swap-ease);
+  will-change: transform, filter, opacity;
+}
+
+.t-text-swap.is-exit {
+  transform: translateY(calc(var(--text-swap-translate-y) * -1));
+  filter: blur(var(--text-swap-blur));
+  opacity: 0;
+}
+
+.t-text-swap.is-enter-start {
+  transform: translateY(var(--text-swap-translate-y));
+  filter: blur(var(--text-swap-blur));
+  opacity: 0;
+  transition: none;
+}
+
+/* ============================================================ */
+/* P7 — Modal open/close                                        */
+/* ============================================================ */
+
+.t-modal {
+  transform-origin: center;
+  transform: scale(var(--modal-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--modal-open-dur) var(--modal-ease),
+    opacity   var(--modal-open-dur) var(--modal-ease);
+  will-change: transform, opacity;
+}
+
+.t-modal.is-open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.t-modal.is-closing {
+  transform: scale(var(--modal-scale-close));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--modal-close-dur) var(--modal-ease),
+    opacity   var(--modal-close-dur) var(--modal-ease);
+}
+
+/* Modal backdrop companion */
+.t-modal-backdrop {
+  opacity: 0;
+  transition: opacity var(--modal-open-dur) var(--modal-ease);
+}
+
+.t-modal-backdrop.is-open {
+  opacity: 1;
+}
+
+.t-modal-backdrop.is-closing {
+  opacity: 0;
+  transition: opacity var(--modal-close-dur) var(--modal-ease);
+}
+
+/* ============================================================ */
+/* P8 — Page slide                                              */
+/* ============================================================ */
+
+.t-page-slide {
+  position: relative;
+}
+
+.t-page-slide .t-page[data-page-id="1"] {
+  --t-page-from-x: calc(var(--page-slide-distance) * -1);
+}
+
+.t-page-slide .t-page[data-page-id="2"] {
+  --t-page-from-x: var(--page-slide-distance);
+}
+
+.t-page-slide .t-page {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(calc(var(--t-page-from-x, 0px) * var(--page-exit-enabled)));
+  filter: blur(calc(var(--page-blur) * var(--page-exit-enabled)));
+  transition:
+    opacity   var(--page-fade-dur)  var(--page-fade-ease),
+    transform var(--page-slide-dur) var(--page-slide-ease),
+    filter    var(--page-slide-dur) var(--page-slide-ease);
+  will-change: opacity, transform, filter;
+}
+
+.t-page-slide[data-page="1"] .t-page[data-page-id="1"],
+.t-page-slide[data-page="2"] .t-page[data-page-id="2"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+  filter: blur(0);
+  transition-delay: var(--page-stagger);
+}
+
+/* ============================================================ */
+/* P9 — Number pop-in                                           */
+/* ============================================================ */
+
+@keyframes t-digit-pop-in {
+  0% {
+    transform: translate(
+      calc(var(--digit-distance) * var(--digit-dir-x)),
+      calc(var(--digit-distance) * var(--digit-dir-y))
+    );
+    opacity: 0;
+    filter: blur(var(--digit-blur));
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.t-digit-group {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.t-digit {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+.t-digit-group.is-animating .t-digit {
+  animation: t-digit-pop-in var(--digit-dur) var(--digit-ease) both;
+}
+
+.t-digit-group.is-animating .t-digit[data-stagger="1"] {
+  animation-delay: calc(var(--digit-stagger) * 1);
+}
+
+.t-digit-group.is-animating .t-digit[data-stagger="2"] {
+  animation-delay: calc(var(--digit-stagger) * 2);
+}
+
+.t-digit-group.is-animating .t-digit[data-stagger="3"] {
+  animation-delay: calc(var(--digit-stagger) * 3);
+}
+
+.t-digit-group.is-animating .t-digit[data-stagger="4"] {
+  animation-delay: calc(var(--digit-stagger) * 4);
+}
+
+.t-digit-group.is-animating .t-digit[data-stagger="5"] {
+  animation-delay: calc(var(--digit-stagger) * 5);
+}
+
+.t-digit-group.is-animating .t-digit[data-stagger="6"] {
+  animation-delay: calc(var(--digit-stagger) * 6);
+}
+
+/* ============================================================ */
+/* Stagger utilities for lists / grids                          */
+/* ============================================================ */
+
+.t-stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(2px);
+  transition:
+    opacity   350ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter    350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.t-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.t-stagger > *:nth-child(1) { transition-delay: 0ms; }
+.t-stagger > *:nth-child(2) { transition-delay: 40ms; }
+.t-stagger > *:nth-child(3) { transition-delay: 80ms; }
+.t-stagger > *:nth-child(4) { transition-delay: 120ms; }
+.t-stagger > *:nth-child(5) { transition-delay: 160ms; }
+.t-stagger > *:nth-child(6) { transition-delay: 200ms; }
+.t-stagger > *:nth-child(7) { transition-delay: 240ms; }
+.t-stagger > *:nth-child(8) { transition-delay: 280ms; }
+.t-stagger > *:nth-child(9) { transition-delay: 320ms; }
+.t-stagger > *:nth-child(10) { transition-delay: 360ms; }
+.t-stagger > *:nth-child(11) { transition-delay: 400ms; }
+.t-stagger > *:nth-child(12) { transition-delay: 440ms; }
+
+/* ============================================================ */
+/* Reduced motion                                               */
+/* ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .t-badge, .t-badge-dot { animation: none !important; transition: none !important; }
+  .t-dropdown { transition: none !important; }
+  .t-panel-slide { transition: none !important; }
+  .t-resize { transition: none !important; }
+  .t-icon-swap .t-icon { transition: none !important; }
+  .t-text-swap { transition: none !important; }
+  .t-modal, .t-modal-backdrop { transition: none !important; }
+  .t-page-slide .t-page { transition: none !important; }
+  .t-digit-group .t-digit { animation: none !important; }
+  .t-stagger > * { transition: none !important; }
+}

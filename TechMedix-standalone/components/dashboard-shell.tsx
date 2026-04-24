@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { Sidebar } from "./sidebar";
+import { MobileNav } from "./mobile-nav";
 
 export interface SessionUser {
   email?: string;
@@ -23,6 +24,7 @@ export function DashboardShell({
 
   return (
     <div className="mx-auto flex min-h-screen max-w-[1600px]">
+      <MobileNav />
       <div className="hidden shrink-0 lg:flex">
         <Sidebar user={user} />
       </div>

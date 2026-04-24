@@ -145,13 +145,13 @@ export default function DronesPage() {
       )}
 
       {/* Filter bar */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <Filter size={13} className="text-theme-30" />
+      <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
+        <Filter size={13} className="shrink-0 text-theme-30" />
         {(Object.keys(FILTER_LABELS) as FilterMode[]).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`rounded-full border px-4 py-1.5 font-ui text-[0.62rem] uppercase tracking-[0.14em] transition-all duration-150 ${
+            className={`shrink-0 rounded-full border px-4 py-1.5 font-ui text-[0.62rem] uppercase tracking-[0.14em] transition-all duration-150 ${
               filter === f
                 ? "bg-[#17181d] text-white border-[#17181d]/80"
                 : "border-theme-10 text-theme-50 hover:border-theme-10 hover:text-theme-primary/70"
@@ -160,7 +160,7 @@ export default function DronesPage() {
             {FILTER_LABELS[f]}
           </button>
         ))}
-        <span className="ml-auto font-ui text-[0.58rem] text-theme-30 uppercase tracking-[0.14em]">
+        <span className="shrink-0 ml-auto font-ui text-[0.58rem] text-theme-30 uppercase tracking-[0.14em]">
           {filtered.length} drone{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>

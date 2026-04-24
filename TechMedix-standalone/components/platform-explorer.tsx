@@ -119,8 +119,14 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
               }`}
               title="Toggle exploded view"
             >
-              {exploded ? <Shrink size={10} /> : <Maximize2 size={10} />}
-              {exploded ? "Collapse" : "Explode"}
+              <span className="t-icon-swap" data-state={exploded ? "b" : "a"}>
+                <span className="t-icon" data-icon="a"><Maximize2 size={10} /></span>
+                <span className="t-icon" data-icon="b"><Shrink size={10} /></span>
+              </span>
+              <span className="t-icon-swap" data-state={exploded ? "b" : "a"}>
+                <span className="t-icon" data-icon="a">Explode</span>
+                <span className="t-icon" data-icon="b">Collapse</span>
+              </span>
             </button>
             <button
               type="button"
@@ -134,7 +140,10 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
               title="Isolate the selected part"
             >
               <Minimize2 size={10} />
-              {isolated ? "Isolated" : "Isolate"}
+              <span className="t-icon-swap" data-state={isolated ? "b" : "a"}>
+                <span className="t-icon" data-icon="a">Isolate</span>
+                <span className="t-icon" data-icon="b">Isolated</span>
+              </span>
             </button>
             <button
               type="button"
@@ -147,7 +156,10 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
               title="Toggle wireframe render"
             >
               <Layers size={10} />
-              {wireframe ? "Wireframe" : "Solid"}
+              <span className="t-icon-swap" data-state={wireframe ? "b" : "a"}>
+                <span className="t-icon" data-icon="a">Solid</span>
+                <span className="t-icon" data-icon="b">Wireframe</span>
+              </span>
             </button>
           </div>
         </div>
@@ -290,7 +302,7 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
       </div>
 
       {/* ── Detail panel ────────────────────────────────────────────────────── */}
-      <div className="flex w-full shrink-0 flex-col overflow-hidden rounded-r-[18px] border-white/[0.07] bg-[#15161b] lg:w-[380px] lg:border-l">
+      <div className={`flex w-full shrink-0 flex-col overflow-hidden rounded-r-[18px] border-white/[0.07] bg-[#15161b] lg:w-[380px] lg:border-l t-panel-slide ${selected ? "" : ""}`} data-open={selected ? "true" : "false"}>
         {selected ? (
           <PartDetail
             part={selected}

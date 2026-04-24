@@ -281,7 +281,10 @@ export function SimLab({ initialPlatformId = "unitree-g1" }: Props) {
                   : "border-white/[0.14] text-white/55 hover:bg-white/[0.06]"
               }`}
             >
-              {autoOrbit ? <Pause size={10} /> : <Play size={10} />}
+              <span className="t-icon-swap" data-state={autoOrbit ? "b" : "a"}>
+                <span className="t-icon" data-icon="a"><Play size={10} /></span>
+                <span className="t-icon" data-icon="b"><Pause size={10} /></span>
+              </span>
               Orbit
             </button>
           </div>
@@ -444,7 +447,7 @@ export function SimLab({ initialPlatformId = "unitree-g1" }: Props) {
 
         {/* Running overlay (fault telemetry) */}
         {running && scenario.type === "fault-injection" && faultPart && (
-          <div className="pointer-events-none absolute right-4 top-20 z-10 max-w-[220px] rounded-2xl border border-amber-500/30 bg-amber-950/60 px-3.5 py-2.5 backdrop-blur">
+          <div className="pointer-events-none absolute right-4 top-20 z-10 max-w-[220px] rounded-2xl border border-amber-500/30 bg-amber-950/60 px-3.5 py-2.5 backdrop-blur t-panel-slide" data-open="true">
             <p className="flex items-center gap-1.5 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-amber-300">
               <AlertTriangle size={10} /> Fault Telemetry
             </p>
@@ -463,8 +466,8 @@ export function SimLab({ initialPlatformId = "unitree-g1" }: Props) {
         )}
 
         {solved && (
-          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-            <div className="rounded-3xl border border-emerald-400/40 bg-emerald-950/60 px-6 py-5 text-center">
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-sm t-modal-backdrop is-open">
+            <div className="rounded-3xl border border-emerald-400/40 bg-emerald-950/60 px-6 py-5 text-center t-modal is-open">
               <CheckCircle2 className="mx-auto mb-2 h-8 w-8 text-emerald-300" />
               <p className="font-header text-lg text-emerald-200">Scenario Passed</p>
               <p className="mt-1 text-xs text-emerald-300/70">

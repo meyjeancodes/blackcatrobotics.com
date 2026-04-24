@@ -382,12 +382,12 @@ export default function ARModePage() {
         </div>
 
         {/* Toolbar */}
-        <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] bg-black/20 px-4 py-2">
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none border-b border-white/[0.06] bg-black/20 px-4 py-2">
           <div className="flex items-center gap-1.5">
             <button
               type="button"
               onClick={() => setExploded((v) => !v)}
-              className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold transition ${
+              className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold transition ${
                 exploded
                   ? "border-ember/60 bg-ember/[0.14] text-ember"
                   : "border-white/[0.14] text-white/55 hover:bg-white/[0.06]"
@@ -399,7 +399,7 @@ export default function ARModePage() {
             <button
               type="button"
               onClick={startWalkthrough}
-              className="flex items-center gap-1.5 rounded-full border border-white/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-white/55 transition hover:bg-white/[0.06]"
+              className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-white/55 transition hover:bg-white/[0.06]"
             >
               <Orbit size={10} /> Walkthrough
             </button>
@@ -407,23 +407,24 @@ export default function ARModePage() {
               <button
                 type="button"
                 onClick={nextWalkthroughStep}
-                className="flex items-center gap-1.5 rounded-full border border-sky-400/60 bg-sky-500/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-sky-300 transition"
+                className="flex shrink-0 items-center gap-1.5 rounded-full border border-sky-400/60 bg-sky-500/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-sky-300 transition"
               >
                 <ChevronRight size={10} />
                 Next ({walkthroughIdx + 1}/{chassis.parts.length})
               </button>
             )}
           </div>
+          <div className="mx-2 h-4 w-px bg-white/[0.08] shrink-0" />
           <div className="flex items-center gap-1.5">
             <a
               href="#pair"
-              className="flex items-center gap-1.5 rounded-full border border-white/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-white/55 transition hover:bg-white/[0.06]"
+              className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-white/55 transition hover:bg-white/[0.06]"
             >
               <PhoneIncoming size={10} /> Pair Device
             </a>
             <Link
               href="/knowledge"
-              className="flex items-center gap-1.5 rounded-full border border-white/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-white/55 transition hover:bg-white/[0.06]"
+              className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-white/55 transition hover:bg-white/[0.06]"
             >
               <Layers size={10} /> Knowledge
             </Link>

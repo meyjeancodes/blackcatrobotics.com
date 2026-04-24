@@ -501,15 +501,15 @@ export default function NetworkPage() {
         <TopologyMap nodes={TOPOLOGY} />
 
         {/* Arrow legend */}
-        <div className="mt-4 flex items-center gap-2 text-white/22">
-          <span className="font-mono text-[0.58rem]">LEO</span>
-          <ArrowRight size={10} />
-          <span className="font-mono text-[0.58rem]">Comms Truck</span>
-          <ArrowRight size={10} />
-          <span className="font-mono text-[0.58rem]">Drone Relay</span>
-          <ArrowRight size={10} />
-          <span className="font-mono text-[0.58rem]">Bot Mesh</span>
-          <span className="ml-auto flex items-center gap-1.5 font-mono text-[0.55rem]">
+        <div className="mt-4 flex items-center gap-2 overflow-x-auto scrollbar-none text-white/22">
+          <span className="shrink-0 font-mono text-[0.58rem]">LEO</span>
+          <ArrowRight size={10} className="shrink-0" />
+          <span className="shrink-0 font-mono text-[0.58rem]">Comms Truck</span>
+          <ArrowRight size={10} className="shrink-0" />
+          <span className="shrink-0 font-mono text-[0.58rem]">Drone Relay</span>
+          <ArrowRight size={10} className="shrink-0" />
+          <span className="shrink-0 font-mono text-[0.58rem]">Bot Mesh</span>
+          <span className="shrink-0 ml-auto flex items-center gap-1.5 font-mono text-[0.55rem]">
             <span className="inline-block h-1.5 w-4 rounded-full bg-green-400 opacity-50" />
             Online
             <span className="ml-2 inline-block h-1.5 w-4 rounded-full bg-amber-400 opacity-50" />
