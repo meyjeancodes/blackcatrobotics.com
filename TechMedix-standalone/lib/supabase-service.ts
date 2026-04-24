@@ -1,5 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
 
+
+import { isSupabaseServerConfigured } from './supabase-server';
+
+// Alias for compatibility — routes that use supabase-service also need server check
+export { isSupabaseServerConfigured };
 /**
  * Service-role Supabase client — bypasses Row Level Security.
  * SERVER-SIDE ONLY. Never import in client components.

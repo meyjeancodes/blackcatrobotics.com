@@ -29,7 +29,7 @@ import {
   insertPredictiveSignal,
   logResearch,
 } from "@/lib/blackcat/knowledge/db";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 
 function isAuthorized(req: NextRequest): boolean {
   const secret = req.headers.get("x-blackcat-secret");
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
   const platforms = (body.platforms as unknown[]) ?? [];
   const results: Record<string, unknown>[] = [];
 
-  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+  if (!isSupabaseServerConfigured() || !createServiceClient()) {
     return NextResponse.json(
       { agent_run_id: agentRunId, results: [], error: "Supabase not configured — research ingest disabled" },
       { status: 503 }

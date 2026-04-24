@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 import type { TaskType, TaskStatus } from "@/types/blackcat";
 
 function isAuthorized(req: NextRequest): boolean {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!isSupabaseServiceConfigured()) {
+  if (!isSupabaseServerConfigured()) {
     return NextResponse.json(
       { task: { id: `mock-${Date.now()}`, robot_id, type, priority, status }, mock: true },
       { status: 201 }

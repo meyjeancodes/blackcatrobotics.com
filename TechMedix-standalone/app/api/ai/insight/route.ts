@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 import { generateFleetInsight, generateEnergyInsight } from "@/lib/blackcat/ai/insights";
 import type { BlackCatRobot, BlackCatAlert, EnergyTransaction } from "@/types/blackcat";
 
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+  if (!isSupabaseServerConfigured() || !createServiceClient()) {
     return NextResponse.json(
       { insight: "AI insights are temporarily unavailable — database is offline." },
       { status: 503 }

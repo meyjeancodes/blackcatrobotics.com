@@ -10,7 +10,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient, isSupabaseServerConfigured } from "@/lib/supabase-server";
-import { searchHumans, bookHuman } from "@/lib/blackcat/dispatch/rentahuman-client";
+import { searchFieldVerifiers, bookFieldVerifier } from "@/lib/blackcat/dispatch/field-verifier-client";
 
 export const runtime = "nodejs";
 
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const results = await searchHumans(lat, lng, radius, skills);
+    const results = await searchFieldVerifiers({ lat, lng, radiusKm: radius, skills });
     return NextResponse.json({ results });
   } catch (err) {
     console.error("[field-verifier/GET]", err);
@@ -57,7 +57,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "All fields are required" }, { status: 400 });
   }
 
-  // Record the booking in Supabase (best-effort — do not block Ack to RentAHuman)
+  // Book the field verifier via provider
+  let bookingResult;
+  try {
+    bookingResult = await bookFieldVerifier({
+      verifierId: humanId,
+      jobId,
+      notes: taskInstructions,
+    });
+  } catch (err) {
+    console.error("[field-verifier/POST] booking failed:", err);
+    return NextResponse.json({ error: "Booking failed" }, { status: 502 });
+  }
+
+  // Record the booking in Supabase (best-effort — even if DB is down, we return success to caller)
   if (isSupabaseServerConfigured()) {
     try {
       const supabase = await createSupabaseServerClient();
@@ -73,9 +86,9 @@ export async function POST(req: NextRequest) {
       }
     } catch (err) {
       console.error("[field-verifier/POST] db log failed:", err);
-      // Non-fatal — we still return success to the caller
+      // Non-fatal
     }
   }
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true, booking: bookingResult });
 }

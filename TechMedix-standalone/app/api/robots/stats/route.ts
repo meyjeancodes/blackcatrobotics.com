@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 
 export async function GET() {
-  if (!isSupabaseServiceConfigured()) {
+  if (!isSupabaseServerConfigured()) {
     return NextResponse.json({ status_counts: {}, fleet_health_avg: 0, total: 0, mock: true });
   }
 
