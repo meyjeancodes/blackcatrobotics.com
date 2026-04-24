@@ -14,6 +14,7 @@ import {
 import { PlatformExplorer } from "./platform-explorer";
 import { SimLab } from "./sim-lab";
 import { BlueprintExplorer } from "./blueprint-explorer";
+import { StaggerContainer } from "./animated-stat";
 import type { PlatformProfile } from "../lib/platforms/index";
 
 type Modal =
@@ -52,6 +53,7 @@ const SEV_COLOR: Record<string, string> = {
 
 export function KnowledgeHubClient({ platforms }: Props) {
   const [modal, setModal] = useState<Modal>(null);
+  const [closing, setClosing] = useState(false);
 
   const byCategory = useMemo(() => {
     return platforms.reduce<Record<string, PlatformProfile[]>>((acc, p) => {
@@ -61,10 +63,23 @@ export function KnowledgeHubClient({ platforms }: Props) {
     }, {});
   }, [platforms]);
 
+  const openModal = (m: Modal) => {
+    setClosing(false);
+    setModal(m);
+  };
+
+  const closeModal = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setModal(null);
+      setClosing(false);
+    }, 150);
+  };
+
   useEffect(() => {
     if (!modal) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setModal(null);
+      if (e.key === "Escape") closeModal();
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -78,7 +93,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
           <p className="mb-3 font-ui text-[0.60rem] uppercase tracking-[0.26em] text-[var(--ink)]/38 font-medium">
             {CAT_LABEL[cat] ?? cat}
           </p>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <StaggerContainer className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {list.map((platform) => (
               <div
                 key={platform.id}
@@ -138,7 +153,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
                     platformId={platform.id}
                     compact
                     onOpen={() =>
-                      setModal({ kind: "explorer", platformId: platform.id })
+                      openModal({ kind: "explorer", platformId: platform.id })
                     }
                   />
                 </div>
@@ -189,7 +204,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
                     <button
                       type="button"
                       onClick={() =>
-                        setModal({
+                        openModal({
                           kind: "blueprint",
                           platformId: platform.id,
                         })
@@ -202,7 +217,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
                     <button
                       type="button"
                       onClick={() =>
-                        setModal({ kind: "sim", platformId: platform.id })
+                        openModal({ kind: "sim", platformId: platform.id })
                       }
                       className="flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
                     >
@@ -218,7 +233,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
                 </div>
               </div>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       ))}
 
@@ -256,7 +271,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
           <button
             type="button"
             onClick={() =>
-              setModal({ kind: "sim", platformId: "unitree-g1" })
+              openModal({ kind: "sim", platformId: "unitree-g1" })
             }
             className="inline-flex items-center gap-2 rounded-full bg-ember px-5 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:opacity-90"
           >
@@ -268,17 +283,17 @@ export function KnowledgeHubClient({ platforms }: Props) {
       {/* ── Modal ──────────────────────────────────────────────────────────── */}
       {modal && (
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+          className={`t-modal-backdrop fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm ${closing ? "is-closing" : "is-open"}`}
           onClick={(e) => {
-            if (e.target === e.currentTarget) setModal(null);
+            if (e.target === e.currentTarget) closeModal();
           }}
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative h-full max-h-[92vh] w-full max-w-[1400px] overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#0b0b10]">
+          <div className={`t-modal relative h-full max-h-[92vh] w-full max-w-[1400px] overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#0b0b10] ${closing ? "is-closing" : "is-open"}`}>
             <button
               type="button"
-              onClick={() => setModal(null)}
+              onClick={() => closeModal()}
               className="absolute right-3 top-3 z-[210] rounded-full border border-white/[0.12] bg-black/50 p-2 text-white/70 backdrop-blur transition hover:bg-black/70 hover:text-white"
               aria-label="Close"
             >
@@ -290,7 +305,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
               ) : modal.kind === "blueprint" ? (
                 <BlueprintExplorer
                   platformId={modal.platformId}
-                  onClose={() => setModal(null)}
+                  onClose={() => closeModal()}
                 />
               ) : (
                 <SimLab initialPlatformId={modal.platformId} />
