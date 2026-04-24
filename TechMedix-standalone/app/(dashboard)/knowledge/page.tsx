@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAllPlatforms } from "@/lib/platforms/index";
-import { KnowledgeHubClient } from "@/components/knowledge-hub-client";
+import { PlatformCatalogClient } from "@/components/platform-catalog-client";
 import {
   AlertTriangle,
   Battery,
@@ -272,12 +272,6 @@ const SEV_COLOR: Record<string, string> = {
 export default function KnowledgePage() {
   const platforms = getAllPlatforms().filter((p) => p.category !== "datacenter");
 
-  const byCategory = platforms.reduce<Record<string, typeof platforms>>((acc, p) => {
-    if (!acc[p.category]) acc[p.category] = [];
-    acc[p.category].push(p);
-    return acc;
-  }, {});
-
   const totalPlatforms = platforms.length;
   const totalFailureModes = platforms.reduce((sum, p) => sum + p.failureSignatures.length, 0);
 
@@ -327,129 +321,18 @@ export default function KnowledgePage() {
         </div>
       </div>
 
-      {/* ── Platform Catalog ─────────────────────────────────────────────────── */}
+      {/* ── Platform Catalog (with inline interactive diagrams) ──────────────── */}
       <section>
         <div className="mb-6">
           <p className="kicker">Layer 1 — Physical</p>
           <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Robot Platform Catalog</h2>
           <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
             Each platform entry includes known failure signatures, severity, and maintenance
-            context. Expand any platform to study its repair profile before your exam.
+            context. Click any diagram to dissect the platform part by part.
           </p>
         </div>
 
-        {Object.entries(byCategory).map(([cat, list]) => (
-          <div key={cat} className="mb-8">
-            <p className="mb-3 font-ui text-[0.60rem] uppercase tracking-[0.26em] text-[var(--ink)]/38 font-medium">
-              {CAT_LABEL[cat] ?? cat}
-            </p>
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {list.map((platform) => (
-                <div key={platform.id} className="panel-elevated flex flex-col gap-3 p-5">
-                  {/* Header */}
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold ${CAT_COLOR[platform.category] ?? "bg-[var(--ink)]/[0.05] text-[var(--ink)]/50"}`}>
-                        {CAT_LABEL[platform.category] ?? platform.category}
-                      </span>
-                      {platform.badge && (
-                        <span className="ml-1.5 inline-flex items-center rounded-full bg-amber-400/[0.14] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-amber-700">
-                          {platform.badge}
-                        </span>
-                      )}
-                      <h3 className="mt-2 font-header text-base leading-tight text-[var(--ink)]">{platform.name}</h3>
-                      <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">{platform.manufacturer}</p>
-                    </div>
-                    <Wrench size={13} className="shrink-0 text-[var(--ink)]/20 mt-1" />
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-xs leading-relaxed text-[var(--ink)]/55">{platform.description}</p>
-
-                  {/* Key specs */}
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {platform.specs.slice(0, 4).map((s) => (
-                      <div key={s.label} className="rounded-[10px] bg-[var(--ink)]/[0.025] px-2.5 py-1.5">
-                        <p className="font-ui text-[0.50rem] uppercase tracking-[0.12em] text-[var(--ink)]/35">{s.label}</p>
-                        <p className="font-mono text-[0.65rem] font-semibold text-[var(--ink)]/75">{s.value}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Failure signatures */}
-                  {platform.failureSignatures.length > 0 && (
-                    <div className="space-y-1.5 border-t border-[var(--ink)]/[0.05] pt-3">
-                      <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-[var(--ink)]/35 flex items-center gap-1.5">
-                        <AlertTriangle size={10} />
-                        Known Failure Signatures
-                      </p>
-                      {platform.failureSignatures.slice(0, 3).map((sig) => (
-                        <div key={sig.id} className="flex items-start gap-2">
-                          <span className={`mt-0.5 font-ui text-[0.52rem] uppercase tracking-[0.10em] font-semibold shrink-0 ${SEV_COLOR[sig.severity] ?? "text-[var(--ink)]/40"}`}>
-                            {sig.severity === "critical" ? "●" : "○"}
-                          </span>
-                          <div className="min-w-0">
-                            <p className="text-[0.65rem] font-semibold text-[var(--ink)]/75 leading-snug">{sig.name}</p>
-                            <p className="text-[0.60rem] text-[var(--ink)]/42 leading-snug">{sig.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* CTA */}
-                  <div className="mt-auto pt-2 flex items-center justify-between border-t border-[var(--ink)]/[0.05]">
-                    <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/30">
-                      {platform.failureSignatures.length} signatures
-                    </p>
-                    <div className="flex items-center gap-2">
-                      {platform.manualUrl && (
-                        <a
-                          href={platform.manualUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
-                        >
-                          <BookOpen size={10} /> Manual
-                        </a>
-                      )}
-                      {platform.diagramUrl && (
-                        <a
-                          href={platform.diagramUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
-                        >
-                          <Layers size={10} /> Diagram
-                        </a>
-                      )}
-                      <Link
-                        href="/technicians/certifications"
-                        className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-ember transition hover:opacity-70"
-                      >
-                        Certify <ChevronRight size={10} />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* ── Interactive Diagrams ─────────────────────────────────────────────── */}
-      <section>
-        <div className="mb-6">
-          <p className="kicker">Layer 1 — Physical</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Interactive Diagrams</h2>
-          <p className="mt-2 max-w-xl text-sm text-[var(--ink)]/50">
-            Dissect any platform part by part. Click a component to inspect its failure signature,
-            diagnostic cue, and replacement protocol. Launch the full sim lab for orbit, exploded
-            view, and fault-injection drills.
-          </p>
-        </div>
-        <KnowledgeHubClient platforms={platforms} />
+        <PlatformCatalogClient platforms={platforms} />
       </section>
 
       {/* ── Blueprint Explorer CTA ────────────────────────────────────────────── */}
