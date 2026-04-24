@@ -21,7 +21,7 @@ const PROTECTED_PREFIXES = [
 
 const AUTH_ROUTES = ["/login", "/signup"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   try {
     const host = request.headers.get("host") || "";
     const { pathname } = request.nextUrl;
@@ -35,14 +35,12 @@ export async function middleware(request: NextRequest) {
 
     // Serve static marketing site on blackcatrobotics.com
     if (host === "blackcatrobotics.com" || host === "blackcatrobotics.com:443") {
-      // Root → static index.html
       if (pathname === "/") {
         const url = request.nextUrl.clone();
         url.pathname = "/index.html";
         return NextResponse.rewrite(url);
       }
 
-      // Clean URLs for static pages
       const cleanRoutes = ["/about", "/certifications", "/habitat-landing", "/blackcat-grid"];
       if (cleanRoutes.includes(pathname) && !pathname.endsWith(".html")) {
         const url = request.nextUrl.clone();
@@ -54,7 +52,6 @@ export async function middleware(request: NextRequest) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    // If env vars are missing, let the request through
     if (!supabaseUrl || !supabaseKey) {
       return NextResponse.next({ request });
     }
@@ -101,7 +98,6 @@ export async function middleware(request: NextRequest) {
 
     return supabaseResponse;
   } catch {
-    // If anything goes wrong, let the request through rather than 500-ing
     return NextResponse.next({ request });
   }
 }
