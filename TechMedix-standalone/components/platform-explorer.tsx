@@ -82,7 +82,7 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
             {chassis.parts.length} parts
           </p>
           <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-sky-600 transition group-hover:opacity-70">
-            <Expand size={10} /> Blueprint
+            <Expand size={10} /> Diagram
           </span>
         </div>
       </button>
