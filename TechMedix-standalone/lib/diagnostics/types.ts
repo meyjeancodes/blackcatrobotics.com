@@ -66,7 +66,7 @@ export interface RepairRecommendation {
   preventive: string;
 }
 
-export interface ClaudeAnalysisResult {
+export interface AIAnalysisResult {
   severity: "info" | "warning" | "critical" | "emergency";
   title: string;
   summary: string;
@@ -85,7 +85,7 @@ export interface ClaudeAnalysisResult {
   };
 }
 
-export interface ClaudeAnalysisInput {
+export interface AIAnalysisInput {
   platform: PlatformProfile;
   frame: TelemetryFrame;
   ruleResults: RuleResult[];
@@ -95,7 +95,7 @@ export interface ClaudeAnalysisInput {
 
 // ─── Pipeline orchestrator ────────────────────────────────────────────────────
 
-export type LayerName = "rule-engine" | "vla-comparator" | "claude-analyzer";
+export type LayerName = "rule-engine" | "vla-comparator" | "ai-analyzer";
 
 export interface CostEstimate {
   layer1: 0;
@@ -112,7 +112,7 @@ export interface DiagnosticReport {
   overallSeverity: "nominal" | "info" | "warning" | "critical" | "emergency";
   ruleResults: RuleResult[];
   vlaComparison?: VLAComparisonResult;
-  claudeAnalysis?: ClaudeAnalysisResult;
+  aiAnalysis?: AIAnalysisResult;
   costEstimate: CostEstimate;
   isMock: boolean;
 }

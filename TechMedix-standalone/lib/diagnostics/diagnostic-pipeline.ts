@@ -148,9 +148,9 @@ export async function runDiagnosticPipeline(
     };
   }
 
-  layersFired.push("claude-analyzer");
+  layersFired.push("ai-analyzer");
 
-  const claudeAnalysis = await analyzeWithClaude({
+  const aiAnalysis = await analyzeWithClaude({
     platform,
     frame,
     ruleResults,
@@ -158,23 +158,23 @@ export async function runDiagnosticPipeline(
     recentHistory: history.slice(-10),
   });
 
-  if (!mockMode && claudeAnalysis._meta.tokensUsed > 0) {
-    trackLayer3Call(claudeAnalysis._meta.tokensUsed);
-    costEstimate.layer3 = calcLayer3Cost(claudeAnalysis._meta.tokensUsed);
+  if (!mockMode && aiAnalysis._meta.tokensUsed > 0) {
+    trackLayer3Call(aiAnalysis._meta.tokensUsed);
+    costEstimate.layer3 = calcLayer3Cost(aiAnalysis._meta.tokensUsed);
   }
   costEstimate.total = costEstimate.layer2 + costEstimate.layer3;
 
   const overallSeverity =
-    (claudeAnalysis.severity === "emergency" ? "emergency" :
-     claudeAnalysis.severity === "critical"  ? "critical"  :
-     claudeAnalysis.severity === "warning"   ? "warning"   :
+    (aiAnalysis.severity === "emergency" ? "emergency" :
+     aiAnalysis.severity === "critical"  ? "critical"  :
+     aiAnalysis.severity === "warning"   ? "warning"   :
      mapSeverity(ruleResults));
 
   console.log(
     `[diagnostic-pipeline] ${reportId}: Layer 3 — severity: ${overallSeverity}, ` +
-    `confidence: ${claudeAnalysis.confidence}, ` +
-    `tokens: ${claudeAnalysis._meta.tokensUsed}, ` +
-    `latency: ${claudeAnalysis._meta.latencyMs}ms, ` +
+    `confidence: ${aiAnalysis.confidence}, ` +
+    `tokens: ${aiAnalysis._meta.tokensUsed}, ` +
+    `latency: ${aiAnalysis._meta.latencyMs}ms, ` +
     `total cost: $${costEstimate.total.toFixed(5)}`
   );
 
@@ -186,7 +186,7 @@ export async function runDiagnosticPipeline(
     overallSeverity,
     ruleResults,
     vlaComparison,
-    claudeAnalysis,
+    aiAnalysis,
     costEstimate,
     isMock: mockMode,
   };

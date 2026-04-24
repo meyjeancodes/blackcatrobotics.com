@@ -6,7 +6,7 @@ import { MessageSquare, X, Send, Bot, User, Loader2 } from "lucide-react";
 interface Message {
   role: "user" | "assistant";
   content: string;
-  source?: "ollama" | "claude" | "fallback";
+  source?: "ollama" | "ai" | "fallback";
 }
 
 export function ChatPanel() {
@@ -70,7 +70,7 @@ export function ChatPanel() {
   function sourceLabel(source?: string) {
     switch (source) {
       case "ollama": return "Local LLM";
-      case "claude": return "Claude";
+      case "ai": return "AI Assistant";
       default: return "";
     }
   }

@@ -20,7 +20,7 @@ const SEVERITY_CONFIG = {
 const LAYER_LABELS: Record<LayerName, string> = {
   "rule-engine":    "Rule Engine",
   "vla-comparator": "VLA Behavioral",
-  "claude-analyzer": "AI Analysis",
+  "ai-analyzer": "AI Analysis",
 };
 
 function LayerPipeline({
@@ -32,7 +32,7 @@ function LayerPipeline({
   loading: boolean;
   loadingLayer: LayerName | null;
 }) {
-  const layers: LayerName[] = ["rule-engine", "vla-comparator", "claude-analyzer"];
+  const layers: LayerName[] = ["rule-engine", "vla-comparator", "ai-analyzer"];
 
   return (
     <div className="flex items-center gap-1.5 flex-wrap">
@@ -109,7 +109,7 @@ function RuleList({ results }: { results: DiagnosticReport["ruleResults"] }) {
 
 // ─── AI recommendation card ───────────────────────────────────────────────
 
-function RecommendationCard({ analysis }: { analysis: NonNullable<DiagnosticReport["claudeAnalysis"]> }) {
+function RecommendationCard({ analysis }: { analysis: NonNullable<DiagnosticReport["aiAnalysis"]> }) {
   return (
     <div className="mt-4 rounded-[20px] border border-theme-6 bg-white/60 p-5 space-y-4">
       <div className="flex items-start justify-between gap-3 flex-wrap">
@@ -229,7 +229,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
     }, 400);
     const l2Timer = setTimeout(() => {
       setFiredSoFar(["rule-engine", "vla-comparator"]);
-      setLoadingLayer("claude-analyzer");
+      setLoadingLayer("ai-analyzer");
     }, 900);
 
     try {
@@ -377,8 +377,8 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
           )}
 
           {/* AI recommendation */}
-          {report.claudeAnalysis && (
-            <RecommendationCard analysis={report.claudeAnalysis} />
+          {report.aiAnalysis && (
+            <RecommendationCard analysis={report.aiAnalysis} />
           )}
 
           {/* Nominal result */}
@@ -389,7 +389,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
           )}
 
           {/* Schedule button */}
-          {report.claudeAnalysis?.technicianRequired && (
+          {report.aiAnalysis?.technicianRequired && (
             <Link
               href="/dispatch"
               className="inline-flex items-center gap-2 rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-ember/90"

@@ -9,7 +9,7 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
-import type { ClaudeAnalysisInput, ClaudeAnalysisResult, ARGuidanceResponse } from "./types";
+import type { AIAnalysisInput, AIAnalysisResult, ARGuidanceResponse } from "./types";
 
 function isMockData() { return process.env.NEXT_PUBLIC_MOCK_DATA === "true"; }
 
@@ -37,7 +37,7 @@ Be specific about components, procedures, and urgency.
 Never guess — if data is insufficient, say so explicitly in the recommendation fields.
 Calibrate confidence: 0.9+ means you are highly certain, 0.5 means moderate uncertainty.`;
 
-function buildTelemetrySummary(frames: ClaudeAnalysisInput["recentHistory"]): string {
+function buildTelemetrySummary(frames: AIAnalysisInput["recentHistory"]): string {
   if (frames.length === 0) return "No recent history available.";
   const temps = frames.flatMap((f) => Object.values(f.joints).map((j) => j.temp));
   const torques = frames.flatMap((f) => Object.values(f.joints).map((j) => j.torque));
@@ -56,7 +56,7 @@ function buildTelemetrySummary(frames: ClaudeAnalysisInput["recentHistory"]): st
   ].join(" | ");
 }
 
-function buildUserPrompt(input: ClaudeAnalysisInput): string {
+function buildUserPrompt(input: AIAnalysisInput): string {
   const { platform, frame, ruleResults, vlaComparison, recentHistory } = input;
 
   const rulesSummary = ruleResults.map(
@@ -106,7 +106,7 @@ Respond with this exact JSON schema (no other text):
 
 // ─── Fallback result ──────────────────────────────────────────────────────────
 
-function fallbackResult(reason: string, latencyMs: number): ClaudeAnalysisResult {
+function fallbackResult(reason: string, latencyMs: number): AIAnalysisResult {
   return {
     severity: "warning",
     title: "Diagnostic analysis unavailable",
@@ -128,7 +128,7 @@ function fallbackResult(reason: string, latencyMs: number): ClaudeAnalysisResult
 
 // ─── Mock result ──────────────────────────────────────────────────────────────
 
-function mockAnalysis(input: ClaudeAnalysisInput): ClaudeAnalysisResult {
+function mockAnalysis(input: AIAnalysisInput): AIAnalysisResult {
   const hasCritical = input.ruleResults.some((r) => r.severity === "critical");
   const allAffected = [...new Set(input.ruleResults.flatMap((r) => r.affectedComponents))];
 
@@ -229,13 +229,13 @@ export async function analyzeWithVision(params: {
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 export async function analyzeWithClaude(
-  input: ClaudeAnalysisInput
-): Promise<ClaudeAnalysisResult> {
+  input: AIAnalysisInput
+): Promise<AIAnalysisResult> {
   // Always use mock in demo mode or when API key is absent
   if (isMockData() || !process.env.ANTHROPIC_API_KEY) {
     const result = mockAnalysis(input);
     console.log(
-      `[Layer 3 — claude-analyzer] mock fired — severity: ${result.severity}, ` +
+      `[Layer 3 — ai-analyzer] mock fired — severity: ${result.severity}, ` +
       `confidence: ${result.confidence}, tokens: 0`
     );
     return result;
@@ -261,30 +261,30 @@ export async function analyzeWithClaude(
     const tokensUsed =
       (message.usage.input_tokens ?? 0) + (message.usage.output_tokens ?? 0);
 
-    let parsed: Omit<ClaudeAnalysisResult, "_meta">;
+    let parsed: Omit<AIAnalysisResult, "_meta">;
     try {
       // Strip any accidental markdown fences before parsing
       const clean = rawText.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
       parsed = JSON.parse(clean);
     } catch {
-      console.error("[Layer 3 — claude-analyzer] JSON parse failed:", rawText.slice(0, 200));
+      console.error("[Layer 3 — ai-analyzer] JSON parse failed:", rawText.slice(0, 200));
       return fallbackResult("JSON parse failure", latencyMs);
     }
 
-    const result: ClaudeAnalysisResult = {
+    const result: AIAnalysisResult = {
       ...parsed,
       _meta: { tokensUsed, latencyMs, isMock: false },
     };
 
     console.log(
-      `[Layer 3 — claude-analyzer] severity: ${result.severity}, ` +
+      `[Layer 3 — ai-analyzer] severity: ${result.severity}, ` +
       `confidence: ${result.confidence}, tokens: ${tokensUsed}, latency: ${latencyMs}ms`
     );
 
     return result;
   } catch (err) {
     const latencyMs = Date.now() - t0;
-    console.error("[Layer 3 — claude-analyzer] API error:", err);
+    console.error("[Layer 3 — ai-analyzer] API error:", err);
     return fallbackResult(
       err instanceof Error ? err.message : "Unknown error",
       latencyMs
