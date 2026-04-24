@@ -224,39 +224,39 @@ export function KnowledgeHubClient({ platforms }: Props) {
                   <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/30">
                     {platform.failureSignatures.length} signatures
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5">
                     {platform.manualUrl && (
                       <a
                         href={platform.manualUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
+                        className="inline-flex items-center gap-1 rounded-full border border-[var(--ink)]/[0.10] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-[var(--ink)]/40 transition hover:text-[var(--ink)]"
                       >
-                        <BookOpen size={10} /> Manual
+                        <BookOpen size={9} /> Manual
                       </a>
                     )}
                     <button
                       type="button"
                       onClick={() => openBlueprint(platform.id)}
-                      className="flex items-center gap-1.5 rounded-full border border-sky-500/[0.18] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-sky-600 transition hover:bg-sky-500/[0.06] hover:text-sky-700"
+                      className="flex items-center gap-1 rounded-full border border-sky-500/[0.18] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-sky-600 transition hover:bg-sky-500/[0.06] hover:text-sky-700"
                       title="Interactive technical blueprint — part-by-part reveal, explode view"
                     >
-                      <Crosshair size={10} /> Blueprint
+                      <Crosshair size={9} /> Blueprint
                     </button>
                     <button
                       type="button"
                       onClick={() =>
                         openModal({ kind: "sim", platformId: platform.id })
                       }
-                      className="flex items-center gap-1.5 rounded-full border border-[var(--ink)]/[0.14] px-2.5 py-1 font-ui text-[0.55rem] uppercase tracking-[0.14em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
+                      className="flex items-center gap-1 rounded-full border border-[var(--ink)]/[0.14] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
                     >
-                      <Play size={10} /> Sim
+                      <Play size={9} /> Sim
                     </button>
                     <Link
-                      href="/technicians/certifications"
-                      className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-ember transition hover:opacity-70"
+                      href="/knowledge/certifications"
+                      className="inline-flex items-center gap-1 rounded-full border border-ember/[0.18] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-ember transition hover:opacity-70"
                     >
-                      Certify <ChevronRight size={10} />
+                      Certify <ChevronRight size={9} />
                     </Link>
                   </div>
                 </div>
