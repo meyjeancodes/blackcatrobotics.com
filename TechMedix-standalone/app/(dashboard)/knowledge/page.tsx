@@ -308,43 +308,6 @@ export default function KnowledgePage() {
         <KnowledgeHubClient platforms={platforms} />
       </section>
 
-      {/* ── Blueprint Explorer CTA ────────────────────────────────────────────── */}
-      <section>
-        <div className="rounded-[20px] border border-[var(--ink)]/[0.08] bg-gradient-to-br from-[var(--ink)]/[0.03] to-transparent p-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="min-w-0">
-              <p className="kicker">Knowledge Hub · Layer 1 — Physical</p>
-              <h3 className="mt-1 font-header text-xl leading-tight text-[var(--ink)]">
-                Blueprint Explorer
-              </h3>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--ink)]/55">
-                Full technical diagrams with exploded view, wireframe, dimension callouts, and
-                failure-mode highlighting. Rotate and dissect any platform component by component.
-              </p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {["Exploded View", "Wireframe", "Dimensions", "Failure Highlighting", "Rotate / Orbit"].map(
-                  (cap) => (
-                    <span
-                      key={cap}
-                      className="rounded-full border border-[var(--ink)]/[0.10] px-2.5 py-0.5 font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/55"
-                    >
-                      {cap}
-                    </span>
-                  ),
-                )}
-              </div>
-            </div>
-            <Link
-              href="/knowledge/blueprint"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--ink)] px-5 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:opacity-90 shrink-0"
-            >
-              <Crosshair size={12} />
-              Open Blueprint Explorer
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ── Component Anatomy ───────────────────────────────────────────────── */}
       <section>
         <div className="mb-6">
