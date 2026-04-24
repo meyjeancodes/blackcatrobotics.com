@@ -12,7 +12,7 @@ export function GridStatusBar({ gridStatus, onToggleAutoTrade }: Props) {
 
   return (
     <div
-      className="sticky top-0 z-10 flex items-center w-full px-6 gap-0"
+      className="sticky top-0 z-10 flex items-center w-full px-6 gap-0 overflow-x-auto scrollbar-none"
       style={{
         height: 44,
         background: "#060608",
@@ -35,7 +35,7 @@ export function GridStatusBar({ gridStatus, onToggleAutoTrade }: Props) {
       <Divider />
 
       {/* Auto-trade toggle */}
-      <div className="flex items-center gap-3 px-5">
+      <div className="flex shrink-0 items-center gap-3 px-5">
         <span
           className="font-ui uppercase tracking-[0.18em] text-white/40"
           style={{ fontSize: "0.55rem" }}
@@ -108,7 +108,7 @@ function StatusItem({
   valueClass: string;
 }) {
   return (
-    <div className="flex flex-col gap-0.5 px-5">
+    <div className="flex shrink-0 flex-col gap-0.5 px-5">
       <span
         className="font-ui uppercase tracking-[0.18em] text-white/40"
         style={{ fontSize: "0.55rem" }}
