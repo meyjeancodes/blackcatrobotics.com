@@ -70,14 +70,14 @@ export default async function RepairProtocolPage({ params }: PageProps) {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-theme-40 font-ui uppercase tracking-[0.14em]">
-        <Link href="/dispatch" className="hover:text-theme-primary/70 transition-colors">
+      <nav className="flex items-center gap-2 overflow-x-auto scrollbar-none text-xs text-theme-40 font-ui uppercase tracking-[0.14em]">
+        <Link href="/dispatch" className="shrink-0 hover:text-theme-primary/70 transition-colors">
           Dispatch
         </Link>
-        <span>/</span>
-        <span>{platformName}</span>
-        <span>/</span>
-        <span className="text-theme-60">Repair Protocol</span>
+        <span className="shrink-0">/</span>
+        <span className="shrink-0">{platformName}</span>
+        <span className="shrink-0">/</span>
+        <span className="shrink-0 text-theme-60">Repair Protocol</span>
       </nav>
 
       {/* Platform label */}

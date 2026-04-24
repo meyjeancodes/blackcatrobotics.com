@@ -33,12 +33,12 @@ export default async function ModulePage({
   return (
     <div className="space-y-6 max-w-2xl">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 font-ui text-[0.62rem] uppercase tracking-widest text-white/25">
-        <Link href="/knowledge" className="hover:text-white/50 transition-colors">
+      <nav className="flex items-center gap-2 overflow-x-auto scrollbar-none font-ui text-[0.62rem] uppercase tracking-widest text-white/25">
+        <Link href="/knowledge" className="shrink-0 hover:text-white/50 transition-colors">
           Learning
         </Link>
-        <span>/</span>
-        <span className="text-white/50">{module.title}</span>
+        <span className="shrink-0">/</span>
+        <span className="shrink-0 text-white/50">{module.title}</span>
       </nav>
 
       {/* Header */}
@@ -47,10 +47,10 @@ export default async function ModulePage({
         {module.description && (
           <p className="text-white/45 text-sm leading-relaxed">{module.description}</p>
         )}
-        <div className="flex items-center gap-4 mt-4 text-white/30 font-ui text-[0.62rem] uppercase tracking-widest">
-          <span>{lessons.length} lessons</span>
-          <span>·</span>
-          <span>{totalMinutes} min total</span>
+        <div className="flex items-center gap-4 mt-4 overflow-x-auto scrollbar-none text-white/30 font-ui text-[0.62rem] uppercase tracking-widest">
+          <span className="shrink-0">{lessons.length} lessons</span>
+          <span className="shrink-0">·</span>
+          <span className="shrink-0">{totalMinutes} min total</span>
         </div>
       </div>
 
