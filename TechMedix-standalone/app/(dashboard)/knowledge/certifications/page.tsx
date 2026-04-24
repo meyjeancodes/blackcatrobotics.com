@@ -34,11 +34,11 @@ export default async function DashboardCertificationsPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <p className="font-ui text-[0.62rem] uppercase tracking-[0.38em] text-white/30 mb-1">
-          TechMedix Training
-        </p>
-        <h1 className="font-header text-2xl text-white">BCR Field Tech Certifications</h1>
-        <p className="text-white/40 text-sm mt-1 max-w-xl">
+        <p className="kicker">TechMedix Training</p>
+        <h1 className="mt-2 font-header text-3xl leading-tight text-theme-primary">
+          BCR Field Tech Certifications
+        </h1>
+        <p className="mt-2 text-sm text-theme-55 max-w-xl">
           Five levels from entry Operator to Autonomous Systems Architect.
           Each certification unlocks higher-value dispatch jobs and greater platform eligibility
           in the BCR technician network.
@@ -52,7 +52,7 @@ export default async function DashboardCertificationsPage() {
           return (
             <div
               key={level.id}
-              className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5"
+              className="panel-elevated p-5"
             >
               <div className="flex items-start gap-4 flex-wrap">
                 {/* Badge */}
@@ -63,11 +63,11 @@ export default async function DashboardCertificationsPage() {
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 flex-wrap mb-1">
-                    <h2 className="font-header text-lg text-white leading-tight">
+                    <h2 className="font-header text-lg text-theme-primary leading-tight">
                       {level.id} — {level.title}
                     </h2>
                     {isEarned && (
-                      <span className="px-2 py-0.5 rounded-full bg-green-500/15 border border-green-500/30 text-green-400 font-ui text-[0.55rem] uppercase tracking-[0.14em]">
+                      <span className="inline-flex items-center rounded-full bg-moss/10 border border-moss/20 text-moss font-ui text-[0.55rem] uppercase tracking-[0.14em] px-2 py-0.5">
                         Earned
                       </span>
                     )}
@@ -75,14 +75,14 @@ export default async function DashboardCertificationsPage() {
                   <p className={`font-mono text-sm font-semibold mb-1 ${level.color}`}>
                     {level.jobValueRange}
                   </p>
-                  <p className="text-white/30 text-xs mb-3">{level.prerequisites}</p>
+                  <p className="text-theme-40 text-xs mb-3">{level.prerequisites}</p>
 
                   {/* Competencies */}
                   <div className="grid sm:grid-cols-2 gap-1.5 mb-4">
                     {level.competencies.map((c) => (
                       <div key={c} className="flex items-start gap-2">
-                        <span className="mt-1 w-1 h-1 rounded-full bg-white/20 shrink-0" />
-                        <p className="text-white/50 text-xs leading-relaxed">{c}</p>
+                        <span className="mt-1 w-1 h-1 rounded-full bg-theme-25 shrink-0" />
+                        <p className="text-theme-50 text-xs leading-relaxed">{c}</p>
                       </div>
                     ))}
                   </div>
@@ -91,13 +91,13 @@ export default async function DashboardCertificationsPage() {
                   <div className="flex flex-wrap gap-3">
                     <Link
                       href={`/knowledge/study-guides?level=${level.id}`}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.12] px-4 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-white/50 hover:text-white hover:border-white/25 transition-colors"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-theme-10 px-4 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-theme-50 hover:text-theme-primary hover:border-theme-20 transition-colors"
                     >
                       Study Guide
                     </Link>
                     <Link
                       href={`/knowledge/modules`}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.12] px-4 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-white/50 hover:text-white hover:border-white/25 transition-colors"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-theme-10 px-4 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-theme-50 hover:text-theme-primary hover:border-theme-20 transition-colors"
                     >
                       Training Modules
                     </Link>
@@ -111,7 +111,7 @@ export default async function DashboardCertificationsPage() {
                       </Link>
                     )}
                     {isEarned && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-green-500/10 border border-green-500/20 px-4 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-green-400">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-moss/10 border border-moss/20 px-4 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] text-moss">
                         Certified
                       </span>
                     )}
@@ -120,8 +120,8 @@ export default async function DashboardCertificationsPage() {
 
                 {/* Price */}
                 <div className="text-right shrink-0">
-                  <p className="font-header text-xl text-white">{level.price}</p>
-                  <p className="font-ui text-[0.55rem] uppercase tracking-widest text-white/25">one-time</p>
+                  <p className="font-header text-xl text-theme-primary">{level.price}</p>
+                  <p className="font-ui text-[0.55rem] uppercase tracking-widest text-theme-30">one-time</p>
                 </div>
               </div>
             </div>
@@ -130,8 +130,8 @@ export default async function DashboardCertificationsPage() {
       </div>
 
       {/* Note about exams */}
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-5 py-4">
-        <p className="text-white/30 text-xs leading-relaxed">
+      <div className="panel px-5 py-4">
+        <p className="text-theme-40 text-xs leading-relaxed">
           Exams are proctored and scored automatically. Passing score is 80% or above.
           Study guides and training modules are available above before you attempt any exam.
           Certification is issued immediately upon passing and recorded to your technician profile.

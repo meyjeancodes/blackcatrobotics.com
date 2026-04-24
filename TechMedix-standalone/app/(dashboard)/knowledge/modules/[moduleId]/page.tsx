@@ -33,21 +33,21 @@ export default async function ModulePage({
   return (
     <div className="space-y-6 max-w-2xl">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 overflow-x-auto scrollbar-none font-ui text-[0.62rem] uppercase tracking-widest text-white/25">
-        <Link href="/knowledge" className="shrink-0 hover:text-white/50 transition-colors">
+      <nav className="flex items-center gap-2 overflow-x-auto scrollbar-none font-ui text-[0.62rem] uppercase tracking-widest text-theme-25">
+        <Link href="/knowledge" className="shrink-0 hover:text-theme-55 transition-colors">
           Learning
         </Link>
         <span className="shrink-0">/</span>
-        <span className="shrink-0 text-white/50">{module.title}</span>
+        <span className="shrink-0 text-theme-50">{module.title}</span>
       </nav>
 
       {/* Header */}
       <div>
-        <h1 className="font-header text-2xl text-white mb-2">{module.title}</h1>
+        <h1 className="font-header text-2xl text-theme-primary mb-2">{module.title}</h1>
         {module.description && (
-          <p className="text-white/45 text-sm leading-relaxed">{module.description}</p>
+          <p className="text-theme-50 text-sm leading-relaxed">{module.description}</p>
         )}
-        <div className="flex items-center gap-4 mt-4 overflow-x-auto scrollbar-none text-white/30 font-ui text-[0.62rem] uppercase tracking-widest">
+        <div className="flex items-center gap-4 mt-4 overflow-x-auto scrollbar-none text-theme-35 font-ui text-[0.62rem] uppercase tracking-widest">
           <span className="shrink-0">{lessons.length} lessons</span>
           <span className="shrink-0">·</span>
           <span className="shrink-0">{totalMinutes} min total</span>
@@ -55,12 +55,12 @@ export default async function ModulePage({
       </div>
 
       {/* Progress */}
-      <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-5">
+      <div className="panel p-5">
         <div className="flex items-center justify-between mb-3">
-          <span className="font-ui text-[0.62rem] uppercase tracking-widest text-white/30">
+          <span className="font-ui text-[0.62rem] uppercase tracking-widest text-theme-35">
             Module Progress
           </span>
-          <span className="font-ui text-[0.62rem] text-white/40">
+          <span className="font-ui text-[0.62rem] text-theme-45">
             {completed} / {lessons.length} complete
           </span>
         </div>
@@ -68,9 +68,9 @@ export default async function ModulePage({
       </div>
 
       {/* Lesson list */}
-      <div className="rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden">
-        <div className="px-5 py-4 border-b border-white/[0.06]">
-          <h2 className="font-ui text-[0.62rem] uppercase tracking-widest text-white/35">
+      <div className="panel overflow-hidden">
+        <div className="px-5 py-4 border-b border-theme-5">
+          <h2 className="font-ui text-[0.62rem] uppercase tracking-widest text-theme-35">
             Lessons
           </h2>
         </div>

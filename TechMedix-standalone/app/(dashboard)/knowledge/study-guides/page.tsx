@@ -87,8 +87,8 @@ const STUDY_GUIDES: Record<string, {
 };
 
 const TYPE_STYLES: Record<string, string> = {
-  module: "bg-sky-500/10 border-sky-500/25 text-sky-400",
-  article: "bg-white/[0.05] border-white/[0.12] text-white/40",
+  module: "bg-sky-500/10 border-sky-500/25 text-sky-600",
+  article: "bg-theme-2 border-theme-10 text-theme-50",
   quiz:    "bg-ember/10 border-ember/25 text-ember",
 };
 
@@ -106,11 +106,9 @@ export default async function StudyGuidesPage({
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <p className="font-ui text-[0.62rem] uppercase tracking-[0.38em] text-white/30 mb-1">
-          TechMedix Training
-        </p>
-        <h1 className="font-header text-2xl text-white">Study Guides</h1>
-        <p className="text-white/40 text-sm mt-1">
+        <p className="kicker">TechMedix Training</p>
+        <h1 className="mt-2 font-header text-3xl leading-tight text-theme-primary">Study Guides</h1>
+        <p className="mt-2 text-sm text-theme-55">
           Self-hosted study material for each certification level. No external redirects.
         </p>
       </div>
@@ -125,7 +123,7 @@ export default async function StudyGuidesPage({
               "inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] border transition-colors",
               activeLevel === level.id
                 ? `${level.badgeColor} text-white border-transparent`
-                : "border-white/[0.10] text-white/40 hover:text-white/60 hover:border-white/20",
+                : "border-theme-10 text-theme-45 hover:text-theme-65 hover:border-theme-20",
             ].join(" ")}
           >
             {level.id} — {level.title}
@@ -136,42 +134,42 @@ export default async function StudyGuidesPage({
       {guide && levelMeta && (
         <>
           {/* Guide overview */}
-          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6">
+          <div className="panel-elevated p-6">
             <div className="flex items-start gap-4">
               <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl font-header text-lg font-bold text-white ${levelMeta.badgeColor}`}>
                 {levelMeta.id}
               </div>
               <div>
-                <h2 className="font-header text-xl text-white mb-1">
+                <h2 className="font-header text-xl text-theme-primary mb-1">
                   {levelMeta.id} — {levelMeta.title} Study Guide
                 </h2>
-                <p className="text-white/45 text-sm leading-relaxed">{guide.overview}</p>
+                <p className="text-theme-55 text-sm leading-relaxed">{guide.overview}</p>
               </div>
             </div>
           </div>
 
           {/* Topics */}
           <div>
-            <p className="font-ui text-[0.60rem] uppercase tracking-[0.30em] text-white/25 mb-4">
+            <p className="font-ui text-[0.60rem] uppercase tracking-[0.30em] text-theme-30 mb-4">
               Topics Covered
             </p>
             <div className="space-y-3">
               {guide.topics.map((topic, i) => (
                 <div
                   key={topic.title}
-                  className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4"
+                  className="panel p-4"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-start gap-3">
-                      <span className="font-ui text-[0.55rem] uppercase tracking-widest text-white/20 mt-0.5 w-4 shrink-0">
+                      <span className="font-ui text-[0.55rem] uppercase tracking-widest text-theme-25 mt-0.5 w-4 shrink-0">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <div>
-                        <p className="text-white/80 text-sm font-medium mb-1">{topic.title}</p>
-                        <p className="text-white/40 text-xs leading-relaxed">{topic.description}</p>
+                        <p className="text-theme-primary text-sm font-medium mb-1">{topic.title}</p>
+                        <p className="text-theme-50 text-xs leading-relaxed">{topic.description}</p>
                       </div>
                     </div>
-                    <span className="shrink-0 font-ui text-[0.55rem] uppercase tracking-widest text-white/20">
+                    <span className="shrink-0 font-ui text-[0.55rem] uppercase tracking-widest text-theme-25">
                       {topic.estimatedMinutes}m
                     </span>
                   </div>
@@ -182,7 +180,7 @@ export default async function StudyGuidesPage({
 
           {/* Resources */}
           <div>
-            <p className="font-ui text-[0.60rem] uppercase tracking-[0.30em] text-white/25 mb-4">
+            <p className="font-ui text-[0.60rem] uppercase tracking-[0.30em] text-theme-30 mb-4">
               Resources
             </p>
             <div className="flex flex-wrap gap-3">
