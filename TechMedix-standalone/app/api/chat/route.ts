@@ -12,9 +12,9 @@
  */
 
 import { NextResponse } from "next/server";
-import { createServiceClient } from "../../../lib/supabase-service";
-import { ollamaGenerate } from "../../../lib/blackcat/ollama";
-import type { BlackCatRobot, BlackCatAlert } from "../../../types/blackcat";
+import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { ollamaGenerate } from "@/lib/blackcat/ollama";
+import type { BlackCatRobot, BlackCatAlert } from "@/types/blackcat";
 
 const SYSTEM_PROMPT = `You are TechMedix, an AI diagnostic assistant for BlackCat Robotics.
 You have access to live fleet telemetry and can answer questions about robot health,
@@ -32,6 +32,17 @@ interface ChatMessage {
   content: string;
 }
 
+function buildEmptyFleetContext(): string {
+  return [
+    "=== Current Fleet State ===",
+    "No robots loaded — database is currently unavailable.",
+    "",
+    "=== Active Alerts ===",
+    "No active alerts — system offline.",
+    "",
+  ].join("\n");
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -42,14 +53,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No messages provided" }, { status: 400 });
     }
 
-    // Build fleet context from Supabase
-    const context = await buildFleetContext(robotId);
+    const context = isSupabaseServiceConfigured() && createServiceClient()
+      ? await buildFleetContext(robotId)
+      : buildEmptyFleetContext();
 
     // Build the prompt with context
     const userMessage = messages[messages.length - 1];
     const conversationHistory = messages
       .slice(0, -1)
-      .slice(-6) // last 6 messages for context
+      .slice(-6)
       .map((m) => `${m.role === "user" ? "Operator" : "TechMedix"}: ${m.content}`)
       .join("\n");
 
@@ -110,15 +122,14 @@ export async function POST(req: Request) {
 async function buildFleetContext(robotId?: string): Promise<string> {
   try {
     const supabase = createServiceClient();
+    if (!supabase) throw new Error("Supabase client not available");
 
-    // Fetch robots
     let robotQuery = supabase.from("robots").select("*");
     if (robotId) {
       robotQuery = robotQuery.eq("id", robotId);
     }
     const { data: robots } = await robotQuery.limit(robotId ? 1 : 10);
 
-    // Fetch active alerts
     const { data: alerts } = await supabase
       .from("alerts")
       .select("*")

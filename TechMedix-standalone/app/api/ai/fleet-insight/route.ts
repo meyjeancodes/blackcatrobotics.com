@@ -7,21 +7,30 @@
  */
 
 import { NextResponse } from "next/server";
-import { createServiceClient, isSupabaseConfigured } from "../../../../lib/supabase-service";
-import { generateFleetInsight } from "../../../../lib/blackcat/ai/insights";
-import type { BlackCatRobot, BlackCatAlert } from "../../../../types/blackcat";
+import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { generateFleetInsight } from "@/lib/blackcat/ai/insights";
+import type { BlackCatRobot, BlackCatAlert } from "@/types/blackcat";
 
 export async function GET() {
   console.log("[/api/ai/fleet-insight] route called");
   console.log("[/api/ai/fleet-insight] ANTHROPIC_API_KEY present:", !!process.env.ANTHROPIC_API_KEY);
 
-  if (!isSupabaseConfigured()) {
-    return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
+  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+    return NextResponse.json(
+      { insight: "Fleet insight is temporarily unavailable — database is offline." },
+      { status: 503 }
+    );
+  }
+
+  const supabase = createServiceClient();
+  if (!supabase) {
+    return NextResponse.json(
+      { insight: "Fleet insight is temporarily unavailable — Supabase client not initialized." },
+      { status: 503 }
+    );
   }
 
   try {
-    const supabase = createServiceClient();
-
     // Clear any stale cache lock so a fresh insight can be generated
     const { error: deleteErr } = await supabase
       .from("ai_insights_cache")

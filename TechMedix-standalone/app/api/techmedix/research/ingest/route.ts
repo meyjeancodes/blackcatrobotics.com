@@ -29,7 +29,7 @@ import {
   insertPredictiveSignal,
   logResearch,
 } from "@/lib/blackcat/knowledge/db";
-import { createServiceClient, isSupabaseConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
 
 function isAuthorized(req: NextRequest): boolean {
   const secret = req.headers.get("x-blackcat-secret");
@@ -52,15 +52,16 @@ export async function POST(req: NextRequest) {
   const platforms = (body.platforms as unknown[]) ?? [];
   const results: Record<string, unknown>[] = [];
 
-  for (const raw of platforms) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const p = raw as any;
-    if (!isSupabaseConfigured()) {
-      return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
-    }
+  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+    return NextResponse.json(
+      { agent_run_id: agentRunId, results: [], error: "Supabase not configured — research ingest disabled" },
+      { status: 503 }
+    );
+  }
 
+  for (const raw of platforms) {
+    const p = raw as any;
     try {
-      // 1. Upsert platform
       const platformId = await upsertPlatform({
         slug: p.slug,
         name: p.name,
@@ -75,7 +76,6 @@ export async function POST(req: NextRequest) {
 
       const failureModeIds: string[] = [];
 
-      // 2. Upsert failure modes
       for (const fm of p.failure_modes ?? []) {
         const fmId = await upsertFailureMode({
           platform_id: platformId,
@@ -90,22 +90,18 @@ export async function POST(req: NextRequest) {
         });
         failureModeIds.push(fmId);
 
-        // 3. Insert repair protocol
         if (fm.repair_protocol) {
           const proto = fm.repair_protocol;
           await insertRepairProtocol({
             failure_mode_id: fmId,
             title: proto.title,
-            steps_json: (proto.steps ?? []).map(
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (s: any, i: number) => ({
-                step: s.step ?? i + 1,
-                action: s.action,
-                tool: s.tool ?? null,
-                warning: s.warning ?? null,
-                image_hint: s.image_hint ?? null,
-              })
-            ),
+            steps_json: (proto.steps ?? []).map((s: any, i: number) => ({
+              step: s.step ?? i + 1,
+              action: s.action,
+              tool: s.tool ?? null,
+              warning: s.warning ?? null,
+              image_hint: s.image_hint ?? null,
+            })),
             tools_required: proto.tools_required ?? [],
             parts_json: proto.parts ?? [],
             labor_minutes: proto.labor_minutes ?? null,
@@ -116,7 +112,6 @@ export async function POST(req: NextRequest) {
           });
         }
 
-        // 4. Insert predictive signals
         for (const sig of fm.predictive_signals ?? []) {
           await insertPredictiveSignal({
             failure_mode_id: fmId,
@@ -132,7 +127,6 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      // 5. Upsert suppliers
       const supabase = createServiceClient();
       for (const s of p.suppliers ?? []) {
         await supabase.from("suppliers").upsert(
@@ -152,7 +146,6 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // 6. Log research sources
       for (const url of p.research_sources ?? []) {
         await logResearch({
           platform_id: platformId,
@@ -171,7 +164,7 @@ export async function POST(req: NextRequest) {
       });
     } catch (err) {
       results.push({
-        slug: p.slug,
+        slug: (p as any).slug,
         status: "error",
         error: err instanceof Error ? err.message : String(err),
       });
