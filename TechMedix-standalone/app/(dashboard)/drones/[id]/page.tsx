@@ -182,7 +182,7 @@ export default function DroneDetailPage({ params }: { params: Promise<{ id: stri
           <button
             key={tabId}
             onClick={() => setActiveTab(tabId)}
-            className={`flex items-center gap-2 rounded-t-xl px-4 py-2.5 font-ui text-[0.62rem] uppercase tracking-[0.14em] whitespace-nowrap transition-all duration-150 ${
+            className={`flex shrink-0 items-center gap-2 rounded-t-xl px-4 py-2.5 font-ui text-[0.62rem] uppercase tracking-[0.14em] whitespace-nowrap transition-all duration-150 ${
               activeTab === tabId
                 ? "bg-white/95 text-theme-primary shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-theme-6 border-b-white -mb-px"
                 : "text-theme-40 hover:text-theme-primary/65 hover:bg-theme-3"
