@@ -1,11 +1,11 @@
--- Field Verifier tier + RentAHuman booking columns
+-- Field Verifier tier + external booking columns
 -- Adds L0 Field Verifier support to technicians and dispatch_jobs tables.
 
 -- ── technicians: new columns for external sourcing ────────────────────────────
 ALTER TABLE technicians
   ADD COLUMN IF NOT EXISTS cert_level       text DEFAULT 'L2',
   ADD COLUMN IF NOT EXISTS source           text DEFAULT 'internal'
-    CHECK (source IN ('internal','rentahuman')),
+    CHECK (source IN ('internal','external')),
   ADD COLUMN IF NOT EXISTS technician_type  text DEFAULT 'certified_tech'
     CHECK (technician_type IN ('certified_tech','field_verifier')),
   ADD COLUMN IF NOT EXISTS external_id      text UNIQUE;
@@ -15,7 +15,7 @@ COMMENT ON COLUMN technicians.cert_level IS
   'L0=Field Verifier, L1=Junior, L2=Certified, L3=Senior, L4=Lead, L5=Principal';
 
 COMMENT ON COLUMN technicians.source IS
-  'internal = BCR-employed tech; rentahuman = on-demand via RentAHuman marketplace';
+  'internal = BCR-employed tech; external = on-demand via third-party marketplace';
 
 -- ── dispatch_jobs: booking metadata ──────────────────────────────────────────
 ALTER TABLE dispatch_jobs

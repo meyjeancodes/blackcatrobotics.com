@@ -81,7 +81,7 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
           <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">
             {chassis.parts.length} parts
           </p>
-          <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-ember transition group-hover:opacity-70">
+          <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-sky-600 transition group-hover:opacity-70">
             <Expand size={10} /> Blueprint
           </span>
         </div>

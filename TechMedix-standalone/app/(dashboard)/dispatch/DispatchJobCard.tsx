@@ -1,11 +1,25 @@
 "use client";
 
+interface FieldVerifierResult {
+  id: string;
+  name: string;
+  displayName: string;
+  rating: number;
+  reviewCount: number;
+  jobsCompleted: number;
+  distanceKm: number;
+  distanceMiles: number;
+  etaMin: number;
+  skills: string[];
+  hourlyRateUsd: number;
+  avatar?: string;
+}
+
 import { useState, useEffect } from "react";
 import { StatusPill } from "../../../components/status-pill";
 import { RepairProtocolViewer } from "../../../components/repair-protocol-viewer";
 import { Zap, CheckCircle2, BookOpen, X, UserCheck, Loader2 } from "lucide-react";
 import type { FailureMode, RepairProtocol } from "../../../lib/blackcat/knowledge/db";
-import type { RentAHumanResult } from "../../../lib/blackcat/dispatch/rentahuman-client";
 
 interface Job {
   id: string;
@@ -33,8 +47,8 @@ type ProtocolState = { failureMode: FailureMode; protocol: RepairProtocol | null
 
 type VerifierModal =
   | { phase: "searching" }
-  | { phase: "results"; humans: RentAHumanResult[] }
-  | { phase: "confirming"; human: RentAHumanResult }
+  | { phase: "results"; humans: FieldVerifierResult[] }
+  | { phase: "confirming"; human: FieldVerifierResult }
   | { phase: "booking" }
   | { phase: "booked"; bookingId: string }
   | { phase: "error"; message: string };
@@ -77,7 +91,7 @@ function buildVerifierInstructions(
   lines.push(
     ``,
     `Take clear photos of: (1) overall robot, (2) fault area, (3) any visible damage or error codes.`,
-    `Upload all photos through the RentAHuman app when the job is complete.`,
+    `Upload all photos through the field verifier portal when the job is complete.`,
     `Do NOT attempt repairs — this is a visual verification and documentation task only.`
   );
 
@@ -188,11 +202,11 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
       setVerifierModal({ phase: "results", humans: data.results ?? [] });
     } catch (err) {
       console.error("[DispatchJobCard] verifier search error:", err);
-      setVerifierModal({ phase: "error", message: "Search failed — check RentAHuman API config." });
+      setVerifierModal({ phase: "error", message: "Search failed — no field verifier provider configured." });
     }
   }
 
-  async function confirmBooking(human: RentAHumanResult) {
+  async function confirmBooking(human: FieldVerifierResult) {
     setVerifierModal({ phase: "booking" });
 
     const instructions = buildVerifierInstructions(job, robotName, protocol);
@@ -339,8 +353,8 @@ export function DispatchJobCard({ job, robotName, techName }: DispatchJobCardPro
 
 interface VerifierModalProps {
   modal: VerifierModal;
-  onSelect: (human: RentAHumanResult) => void;
-  onConfirm: (human: RentAHumanResult) => void;
+  onSelect: (human: FieldVerifierResult) => void;
+  onConfirm: (human: FieldVerifierResult) => void;
   onClose: () => void;
 }
 
@@ -355,7 +369,7 @@ function VerifierModal({ modal, onSelect, onConfirm, onClose }: VerifierModalPro
           <X size={16} />
         </button>
 
-        <p className="text-xs uppercase tracking-[0.22em] text-theme-40 mb-1">RentAHuman</p>
+        <p className="text-xs uppercase tracking-[0.22em] text-theme-40 mb-1">Field Verifier</p>
         <h2 className="text-lg font-semibold text-theme-primary mb-4">Book Field Verifier</h2>
 
         {modal.phase === "searching" && (
@@ -422,7 +436,7 @@ function VerifierModal({ modal, onSelect, onConfirm, onClose }: VerifierModalPro
         {modal.phase === "booking" && (
           <div className="flex items-center gap-2 text-sm text-theme-55">
             <Loader2 size={14} className="animate-spin" />
-            Confirming booking with RentAHuman...
+            Confirming booking with field verifier...
           </div>
         )}
 
