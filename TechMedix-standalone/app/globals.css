@@ -153,8 +153,12 @@
 .bg-theme-45     { background: color-mix(in srgb, var(--ink) 4.5%, transparent); }
 .border-theme-15 { border-color: color-mix(in srgb, var(--ink) 15%, transparent); }
 
+html {
+  height: 100%;
+}
+
 body {
-  min-height: 100vh;
+  height: 100%;
   background:
     radial-gradient(circle at top right, var(--ember-glow), transparent 28%),
     linear-gradient(180deg, var(--body-gradient-top), var(--body-gradient-bot));
@@ -359,6 +363,31 @@ code, pre, table, th, td {
   letter-spacing: 0.18em;
   color: #e8601e;
 }
+/* ── Scrollbar utilities ─────────────────────────────────────────────────── */
+
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Nav active accent bar ────────────────────────────────────────────────── */
+
+.nav-active-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 1rem;
+  border-radius: 0 2px 2px 0;
+  background: var(--ember);
+  opacity: 0.9;
+}
+
 /* ============================================================ */
 /* Transitions.dev — Essential UI transitions                   */
 /* Adapted for TechMedix dashboard                              */
