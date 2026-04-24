@@ -8,7 +8,7 @@ function TextBlock({ content }: { content: Record<string, unknown> }) {
   return (
     <div className="space-y-4">
       {paragraphs.map((para, i) => (
-        <p key={i} className="text-white/75 text-sm leading-7">
+        <p key={i} className="text-theme-75 text-sm leading-7">
           {para}
         </p>
       ))}
@@ -21,18 +21,18 @@ function CodeBlock({ content }: { content: Record<string, unknown> }) {
   const label = content.label ? String(content.label) : null;
 
   return (
-    <div className="rounded-xl overflow-hidden border border-white/10">
+    <div className="rounded-xl overflow-hidden border border-theme-10">
       {label && (
-        <div className="px-4 py-2 bg-white/[0.03] border-b border-white/10">
-          <span className="font-ui text-[0.62rem] uppercase tracking-widest text-white/35">
+        <div className="px-4 py-2 bg-theme-2 border-b border-theme-10">
+          <span className="font-ui text-[0.62rem] uppercase tracking-widest text-theme-35">
             {label}
           </span>
         </div>
       )}
       <pre
-        className="px-5 py-4 overflow-x-auto text-xs leading-6 text-white/70"
+        className="px-5 py-4 overflow-x-auto text-xs leading-6 text-theme-70"
         style={{
-          background: "#0c0d11",
+          background: "var(--surface)",
           fontFamily: "'Chakra Petch', monospace",
         }}
       >
@@ -55,10 +55,10 @@ function ImageBlock({ content }: { content: Record<string, unknown> }) {
       <img
         src={url}
         alt={alt}
-        className="w-full rounded-xl border border-white/10 object-cover"
+        className="w-full rounded-xl border border-theme-10 object-cover"
       />
       {caption && (
-        <figcaption className="text-center text-xs text-white/35 font-ui uppercase tracking-widest">
+        <figcaption className="text-center text-xs text-theme-35 font-ui uppercase tracking-widest">
           {caption}
         </figcaption>
       )}
@@ -77,7 +77,7 @@ function VideoBlock({ content }: { content: Record<string, unknown> }) {
 
   if (isEmbed) {
     return (
-      <div className="aspect-video rounded-xl overflow-hidden border border-white/10">
+      <div className="aspect-video rounded-xl overflow-hidden border border-theme-10">
         <iframe
           src={url}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -90,12 +90,12 @@ function VideoBlock({ content }: { content: Record<string, unknown> }) {
   }
 
   return (
-    <div className="rounded-xl overflow-hidden border border-white/10">
+    <div className="rounded-xl overflow-hidden border border-theme-10">
       <video
         src={url}
         controls
         className="w-full"
-        style={{ background: "#0c0d11" }}
+        style={{ background: "var(--surface)" }}
       />
     </div>
   );
@@ -131,7 +131,7 @@ export function LessonViewer({
       </div>
 
       {/* Completion action */}
-      <div className="pt-6 border-t border-white/[0.07]">
+      <div className="pt-6 border-t border-theme-5">
         <MarkCompleteButton
           lessonId={lesson.id}
           moduleId={lesson.module_id}

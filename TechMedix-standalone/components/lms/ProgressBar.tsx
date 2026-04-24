@@ -18,7 +18,7 @@ export function ProgressBar({
 
   return (
     <div className="w-full">
-      <div className={`w-full ${h} rounded-full bg-white/[0.07] overflow-hidden`}>
+      <div className={`w-full ${h} rounded-full bg-theme-5 overflow-hidden`}>
         <div
           className="h-full rounded-full transition-all duration-500"
           style={{
@@ -31,7 +31,7 @@ export function ProgressBar({
         />
       </div>
       {showLabel && (
-        <div className="mt-1.5 flex justify-between font-ui text-[0.6rem] uppercase tracking-widest text-white/30">
+        <div className="mt-1.5 flex justify-between font-ui text-[0.6rem] uppercase tracking-widest text-theme-30">
           <span>
             {total !== undefined && max !== undefined
               ? `${total} / ${max}`

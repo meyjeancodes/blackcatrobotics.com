@@ -62,7 +62,10 @@ const NAV: NavGroup[] = [
     icon: BookOpen,
     children: [
       { href: "/knowledge",                  label: "Knowledge Hub" },
-      { href: "/technicians/certifications", label: "Certifications" },
+      { href: "/knowledge/certifications",   label: "Certifications" },
+      { href: "/knowledge/simulations",      label: "Simulations" },
+      { href: "/knowledge/study-guides",     label: "Study Guides" },
+      { href: "/technicians/certifications", label: "Technician Certs" },
     ],
   },
   {
