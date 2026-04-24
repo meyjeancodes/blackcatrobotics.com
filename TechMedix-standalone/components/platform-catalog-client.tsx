@@ -176,7 +176,7 @@ export function PlatformCatalogClient({ platforms }: Props) {
                       <Play size={10} /> Sim
                     </button>
                     <Link
-                      href="/technicians/certifications"
+                      href="/knowledge/certifications"
                       className="inline-flex items-center gap-1 font-ui text-[0.56rem] uppercase tracking-[0.14em] font-semibold text-ember transition hover:opacity-70"
                     >
                       Certify <ChevronRight size={10} />

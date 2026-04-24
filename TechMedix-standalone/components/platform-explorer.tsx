@@ -82,7 +82,7 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
             {chassis.parts.length} parts
           </p>
           <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-ember transition group-hover:opacity-70">
-            <Expand size={10} /> Dissect
+            <Expand size={10} /> Blueprint
           </span>
         </div>
       </button>
@@ -327,7 +327,7 @@ function EmptyState({ parts, onPick }: { parts: Part[]; onPick: (id: string) => 
         Click a part
       </p>
       <h4 className="mt-1 font-header text-lg leading-tight text-white">
-        Dissect by component
+        Blueprint by component
       </h4>
       <p className="mt-2 text-xs leading-relaxed text-white/50">
         Select any highlighted region on the diagram to inspect specs, failure signatures,
