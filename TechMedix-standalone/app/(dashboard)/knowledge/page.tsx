@@ -7,8 +7,6 @@ import {
   BookOpen,
   Bot,
   Brain,
-  ChevronRight,
-  Crosshair,
   Cpu,
   GraduationCap,
   Hand,
@@ -241,32 +239,6 @@ const AI_LAYER = [
   },
 ];
 
-// ─── Category labels ──────────────────────────────────────────────────────────
-
-const CAT_LABEL: Record<string, string> = {
-  humanoid: "Humanoid",
-  drone: "Drone",
-  industrial: "Industrial",
-  delivery: "Delivery",
-  micromobility: "Micromobility",
-  datacenter: "Data Center",
-};
-
-const CAT_COLOR: Record<string, string> = {
-  humanoid: "bg-violet-500/[0.10] text-violet-700",
-  drone: "bg-sky-500/[0.10] text-sky-700",
-  industrial: "bg-amber-500/[0.10] text-amber-700",
-  delivery: "bg-emerald-500/[0.10] text-emerald-700",
-  micromobility: "bg-rose-500/[0.10] text-rose-700",
-  datacenter: "bg-slate-500/[0.10] text-slate-700",
-};
-
-const SEV_COLOR: Record<string, string> = {
-  critical: "text-red-600",
-  warning: "text-amber-600",
-  info: "text-sky-600",
-};
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function KnowledgePage() {
@@ -327,49 +299,12 @@ export default function KnowledgePage() {
           <p className="kicker">Layer 1 — Physical</p>
           <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Robot Platform Catalog</h2>
           <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
-            Each platform entry includes known failure signatures, severity, and maintenance
-            context. Click any diagram to dissect the platform part by part.
+            Each platform entry includes specs, known failure signatures, severity, and an
+            interactive diagram. Click a component to inspect its failure signature and
+            diagnostic cue — or launch the full sim lab without leaving the page.
           </p>
         </div>
-
         <PlatformCatalogClient platforms={platforms} />
-      </section>
-
-      {/* ── Blueprint Explorer CTA ────────────────────────────────────────────── */}
-      <section>
-        <div className="rounded-[20px] border border-[var(--ink)]/[0.08] bg-gradient-to-br from-[var(--ink)]/[0.03] to-transparent p-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="min-w-0">
-              <p className="kicker">Knowledge Hub · Layer 1 — Physical</p>
-              <h3 className="mt-1 font-header text-xl leading-tight text-[var(--ink)]">
-                Blueprint Explorer
-              </h3>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--ink)]/55">
-                Full technical diagrams with exploded view, wireframe, dimension callouts, and
-                failure-mode highlighting. Rotate and dissect any platform component by component.
-              </p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {["Exploded View", "Wireframe", "Dimensions", "Failure Highlighting", "Rotate / Orbit"].map(
-                  (cap) => (
-                    <span
-                      key={cap}
-                      className="rounded-full border border-[var(--ink)]/[0.10] px-2.5 py-0.5 font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/55"
-                    >
-                      {cap}
-                    </span>
-                  ),
-                )}
-              </div>
-            </div>
-            <Link
-              href="/knowledge/blueprint"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--ink)] px-5 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:opacity-90 shrink-0"
-            >
-              <Crosshair size={12} />
-              Open Blueprint Explorer
-            </Link>
-          </div>
-        </div>
       </section>
 
       {/* ── Component Anatomy ───────────────────────────────────────────────── */}
