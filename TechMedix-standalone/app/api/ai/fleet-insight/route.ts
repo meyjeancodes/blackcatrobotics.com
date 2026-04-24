@@ -7,7 +7,7 @@
  */
 
 import { NextResponse } from "next/server";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 import { generateFleetInsight } from "@/lib/blackcat/ai/insights";
 import type { BlackCatRobot, BlackCatAlert } from "@/types/blackcat";
 
@@ -15,7 +15,7 @@ export async function GET() {
   console.log("[/api/ai/fleet-insight] route called");
   console.log("[/api/ai/fleet-insight] ANTHROPIC_API_KEY present:", !!process.env.ANTHROPIC_API_KEY);
 
-  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+  if (!isSupabaseServerConfigured() || !createServiceClient()) {
     return NextResponse.json(
       { insight: "Fleet insight is temporarily unavailable — database is offline." },
       { status: 503 }

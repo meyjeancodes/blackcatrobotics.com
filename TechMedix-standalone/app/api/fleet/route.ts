@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../lib/supabase-server";
+import { createSupabaseServerClient as createClient, isSupabaseServerConfigured } from "../../../lib/supabase-server";
 import { robots as MOCK_ROBOTS, alerts as MOCK_ALERTS, jobs as MOCK_JOBS } from "../../../lib/shared/mock-data";
 
 export const runtime = "nodejs";
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseServerConfigured()) {
     const robots = MOCK_ROBOTS.map((r) => ({
       ...r,
       latestAlert: MOCK_ALERTS.find((a) => a.robotId === r.id && a.status === "active") ?? null,

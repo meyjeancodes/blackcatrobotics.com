@@ -12,7 +12,7 @@
  */
 
 import { NextResponse } from "next/server";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 import { ollamaGenerate } from "@/lib/blackcat/ollama";
 import type { BlackCatRobot, BlackCatAlert } from "@/types/blackcat";
 
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No messages provided" }, { status: 400 });
     }
 
-    const context = isSupabaseServiceConfigured() && createServiceClient()
+    const context = isSupabaseServerConfigured() && createServiceClient()
       ? await buildFleetContext(robotId)
       : buildEmptyFleetContext();
 

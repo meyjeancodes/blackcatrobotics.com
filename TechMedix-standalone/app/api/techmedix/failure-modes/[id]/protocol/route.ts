@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRepairProtocol, getPredictiveSignals } from "@/lib/blackcat/knowledge/db";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +10,7 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+  if (!isSupabaseServerConfigured() || !createServiceClient()) {
     return NextResponse.json(
       { error: "Database unavailable — repair protocol cannot be loaded" },
       { status: 503 }

@@ -1,4 +1,4 @@
-import { createSupabaseServerClient, isSupabaseConfigured } from "../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseServerConfigured } from "../../../lib/supabase-server";
 import type { Certification } from "../../../types/atlas";
 import { CheckCircle2, Circle, Award } from "lucide-react";
 import { BcrCertSection } from "./BcrCertSection";
@@ -35,7 +35,7 @@ export default async function TechniciansPage() {
   let certList: Certification[] = [];
   let techCerts: Array<{ certification_id: string; ai_score: number | null; earned_at: string }> = [];
 
-  if (isSupabaseConfigured()) {
+  if (isSupabaseServerConfigured()) {
     try {
       const supabase = await createSupabaseServerClient();
       if (supabase) {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 import { sendAlert } from "@/lib/alerts";
 
 /**
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "customer_id is required" }, { status: 400 });
   }
 
-  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+  if (!isSupabaseServerConfigured() || !createServiceClient()) {
     // Mock mode — return simulated success
     return NextResponse.json({
       success: true,

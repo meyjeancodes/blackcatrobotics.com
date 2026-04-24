@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { isSupabaseServiceConfigured, createServiceClient } from "@/lib/supabase-service";
+import { isSupabaseServerConfigured, createServiceClient } from "@/lib/supabase-service";
 
 export async function POST(req: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session;
     const { customer_email, plan, robot_count } = session.metadata ?? {};
 
-    if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+    if (!isSupabaseServerConfigured() || !createServiceClient()) {
       // Supabase down — log and ack; customer update will need manual reconciliation
       console.warn(
         "[stripe/webhook] Supabase not configured — customer upgrade not persisted. " +

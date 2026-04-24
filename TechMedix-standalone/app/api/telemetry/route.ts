@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 import { runDiagnostics } from "@/lib/diagnostics";
 import { sendAlert } from "@/lib/alerts";
 
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 
   const apiKey = authHeader.replace("Bearer ", "").trim();
 
-  if (!isSupabaseServiceConfigured() || !createServiceClient()) {
+  if (!isSupabaseServerConfigured() || !createServiceClient()) {
     return NextResponse.json(
       { error: "Supabase unavailable — telemetry cannot be accepted" },
       { status: 503 }

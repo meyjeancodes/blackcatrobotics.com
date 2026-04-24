@@ -1,4 +1,4 @@
-import { createSupabaseServerClient, isSupabaseConfigured } from "../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseServerConfigured } from "../../../lib/supabase-server";
 import { JobList } from "./JobList";
 import type { Job } from "../../../types/atlas";
 
@@ -7,7 +7,7 @@ export const revalidate = 30;
 export default async function MaintenancePage() {
   let jobList: Job[] = [];
 
-  if (isSupabaseConfigured()) {
+  if (isSupabaseServerConfigured()) {
     try {
       const supabase = await createSupabaseServerClient();
       if (supabase) {

@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../../lib/supabase-server";
+import { createSupabaseServerClient as createClient, isSupabaseServerConfigured } from "../../../../lib/supabase-server";
 import { getRobotDetails } from "../../../../lib/shared/mock-data";
 
 export const runtime = "nodejs";
@@ -16,7 +16,7 @@ export async function GET(
 ) {
   const { robotId } = await params;
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseServerConfigured()) {
     const details = getRobotDetails(robotId);
     if (!details) {
       return NextResponse.json({ error: "Robot not found" }, { status: 404 });

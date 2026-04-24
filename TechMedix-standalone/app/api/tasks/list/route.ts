@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { createServiceClient, isSupabaseServiceConfigured } from "@/lib/supabase-service";
+import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 
 export async function GET() {
-  if (!isSupabaseServiceConfigured()) {
+  if (!isSupabaseServerConfigured()) {
     return NextResponse.json({ tasks: [], mock: true });
   }
 

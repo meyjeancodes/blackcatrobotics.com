@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient } from "../../../lib/supabase-server";
+import { createSupabaseServerClient, isSupabaseServerConfigured } from "../../../lib/supabase-server";
 import { getExpiryWarning } from "../../../lib/dji-care-coverage";
 import type { RegisterDroneBody, CareRefreshPlan } from "../../../types/dji-drone";
 

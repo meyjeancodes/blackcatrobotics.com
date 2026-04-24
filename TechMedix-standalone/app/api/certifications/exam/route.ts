@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createSupabaseServerClient as createClient, isSupabaseConfigured } from "../../../../lib/supabase-server";
+import { createSupabaseServerClient as createClient, isSupabaseServerConfigured } from "../../../../lib/supabase-server";
 
 export const runtime = "nodejs";
 
@@ -34,7 +34,7 @@ interface ExamRequest {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseServerConfigured()) {
     return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
   }
 
