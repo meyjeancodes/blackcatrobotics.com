@@ -223,6 +223,91 @@ const HUMANOID: ChassisDefinition = {
         "30 min per foot. L3 cert. Re-zero both ankle sensors together.",
       labelAnchor: [77, 290],
     },
+    {
+      id: "ankle-actuators",
+      name: "Ankle Actuators",
+      category: "actuator",
+      d: "M67,255 L93,255 L92,265 L66,265 Z M107,255 L133,255 L134,265 L108,265 Z",
+      explodeOffset: [0, 16],
+      summary: "Pitch/roll ankle joint, high impact load",
+      details:
+        "Ankle actuators manage foot orientation during ground contact and absorb impact loads during walking and jumping. Often the first mechanical component to show wear in high-mileage units.",
+      failureSignature:
+        "Foot slap on ground contact, reduced ground clearance during swing phase, audible clunk at heel strike.",
+      diagnosticCue:
+        "Slow-walk test on flat surface. Listen for asymmetric heel-strike sounds. Compare left/right ankle position telemetry at mid-stance — delta > 3° = wear.",
+      replacement:
+        "55 min per ankle. L3 cert. Re-calibrate foot F/T sensor after install.",
+      labelAnchor: [80, 260],
+    },
+    {
+      id: "hands",
+      name: "End Effector / Hands",
+      category: "end-effector",
+      d: "M35,171 L53,171 L52,185 L34,185 Z M147,171 L165,171 L166,185 L148,185 Z",
+      explodeOffset: [16, 8],
+      summary: "Gripper or multi-finger manipulator",
+      details:
+        "Final output for manipulation tasks. Designs range from 1-DOF parallel grippers to 11-DOF humanoid hands with tactile sensing on each phalanx. Cable-driven tendons are the dominant failure point.",
+      failureSignature:
+        "Dropped objects below rated payload, finger stall mid-close, tactile pad dead zones, tendon fraying.",
+      diagnosticCue:
+        "Grasp a known-weight object (50% rated load). Hold for 10 s. If slip detected or motor current climbs = tendon wear or pad failure.",
+      replacement:
+        "20–60 min depending on DOF count. L3 cert. Re-tension tendons; re-map tactile calibration grid.",
+      labelAnchor: [44, 178],
+    },
+    {
+      id: "torso-frame",
+      name: "Torso Frame / Spine",
+      category: "frame",
+      d: "M65,72 L72,72 L70,165 L65,165 Z M128,72 L135,72 L135,165 L130,165 Z",
+      explodeOffset: [0, 0],
+      summary: "Structural spine connecting upper and lower body",
+      details:
+        "Carbon fiber or cast aluminum torso spine. Routes power and data from the battery/compute bay down to the hip actuators. Must remain rigid under dynamic loads — any flex directly impacts gait stability.",
+      failureSignature:
+        "Gait oscillation that worsens with speed, visible flex under load, stress whitening in composite sections.",
+      diagnosticCue:
+        "Visual inspection for cracks or delamination. Twist-test (power-off): grasp shoulders and hips, rotate gently. Any perceptible twist = structural compromise.",
+      replacement:
+        "120 min. L4 cert. Full disassembly required. Re-run structural calibration post-install.",
+      labelAnchor: [68, 118],
+    },
+    {
+      id: "cooling-loop",
+      name: "Thermal Management",
+      category: "cooling",
+      d: "M88,55 L112,55 L110,65 L90,65 Z",
+      explodeOffset: [0, -18],
+      summary: "Liquid cooling loop or high-flow fan pack",
+      details:
+        "Humanoid compute and actuators generate substantial heat. High-end units use a micro-liquid cooling loop (pump, radiator, coolant lines); others use high-static-pressure blowers ducted across hot components.",
+      failureSignature:
+        "Compute thermal throttling at ambient < 25°C, actuator over-temp on routine walking, coolant leak (wet spots near torso joints).",
+      diagnosticCue:
+        "IR camera scan during a 5-minute walk cycle. Torso hotspots > 65°C or asymmetric joint temps = coolant blockage or pump failure.",
+      replacement:
+        "Pump: 25 min, L2 cert. Radiator: 45 min, L3 cert. Refill and bleed loop after any open-line work.",
+      labelAnchor: [100, 60],
+    },
+    {
+      id: "comms-antenna",
+      name: "Comms Array",
+      category: "comms",
+      d: "M84,14 L88,14 L88,24 L84,24 Z M112,14 L116,14 L116,24 L112,24 Z",
+      explodeOffset: [0, -14],
+      summary: "WiFi / 5G / BLE antenna cluster",
+      details:
+        "Dual redundant antenna arrays — typically one for fleet WiFi/5G backhaul and one for BLE local debugging. Placement near the head maximizes line-of-sight to base stations.",
+      failureSignature:
+        "Intermittent fleet connectivity, high packet loss at > 15 m from AP, BLE pairing failures.",
+      diagnosticCue:
+        "RSSI check in diagnostics panel. Move robot 10 m from AP. RSSI should stay > -65 dBm. If it collapses, inspect antenna connectors at the base of each stalk.",
+      replacement:
+        "10 min per antenna. L1 cert. No calibration required.",
+      labelAnchor: [100, 19],
+    },
   ],
 };
 
@@ -237,20 +322,37 @@ const QUADRUPED: ChassisDefinition = {
   parts: [
     {
       id: "body-compute",
-      name: "Body — Compute + Battery",
+      name: "Body — Compute + IMU",
       category: "compute",
-      d: "M90,80 L310,80 L320,140 L310,170 L90,170 L80,140 Z",
+      d: "M90,80 L310,80 L320,140 L310,150 L90,150 L80,140 Z",
       explodeOffset: [0, -6],
-      summary: "Main chassis — compute, IMU, and hot-swap battery bay",
+      summary: "Main chassis — compute, IMU, and payload rails",
       details:
-        "Central body houses the primary compute (typically Intel NUC or Jetson), IMU, and a hot-swappable battery. Payload rails on top expose power + Ethernet for accessories.",
+        "Central body houses the primary compute (typically Intel NUC or Jetson), IMU, and payload rails on top. Power distribution board feeds all joints, compute, and sensors.",
       failureSignature:
-        "Random resets = power brown-out; unit won't boot = battery BMS lockout (often a cell delta issue).",
+        "Random resets = power brown-out; unit won't boot = compute fault.",
+      diagnosticCue:
+        "Try external power supply. If it boots on bench power, suspect BMS or battery.",
+      replacement:
+        "Compute: 45 min, L3 cert.",
+      labelAnchor: [200, 115],
+    },
+    {
+      id: "battery-quad",
+      name: "Battery Bay",
+      category: "battery",
+      d: "M90,150 L310,150 L310,170 L90,170 Z",
+      explodeOffset: [0, 12],
+      summary: "Hot-swap battery pack + BMS",
+      details:
+        "Hot-swappable battery bay beneath the compute deck. Capacities vary by platform. BMS monitors cell delta, pack temp, and charge state.",
+      failureSignature:
+        "Cell delta > ±50 mV (imbalance), pack temperature > 45°C at rest, runtime drop below rated hours.",
       diagnosticCue:
         "Remove battery. Meter it direct — should be > 42 V (Spot) or > 58 V (B2). If battery is good, try external power supply.",
       replacement:
-        "Battery: 2 min hot-swap. Compute: 45 min, L3 cert.",
-      labelAnchor: [200, 125],
+        "Battery: 2 min hot-swap. L1 cert.",
+      labelAnchor: [200, 160],
     },
     {
       id: "front-legs",
@@ -319,6 +421,74 @@ const QUADRUPED: ChassisDefinition = {
       replacement:
         "15 min. L2 cert.",
       labelAnchor: [325, 117],
+    },
+    {
+      id: "front-feet",
+      name: "Front Feet / Contact Pads",
+      category: "sensor",
+      d: "M118,240 L128,240 L126,252 L120,252 Z M278,230 L288,230 L286,242 L280,242 Z",
+      explodeOffset: [0, 18],
+      summary: "Rubber contact pads with force sensing",
+      details:
+        "Each front foot terminates in a rubberized contact pad with embedded force-sensitive resistors or discrete load cells. Critical for terrain adaptation and slip detection.",
+      failureSignature:
+        "Worn pad exposing hard sub-frame, false slip detection on carpet/gravel, asymmetric ground contact force.",
+      diagnosticCue:
+        "Visual: check pad thickness. Tactile: press each pad by hand — should feel compliant. If rock-hard, pad is worn through.",
+      replacement:
+        "10 min per foot. L1 cert. Peel-and-stick replacement pad.",
+      labelAnchor: [124, 246],
+    },
+    {
+      id: "rear-feet",
+      name: "Rear Feet / Contact Pads",
+      category: "sensor",
+      d: "M148,240 L158,240 L156,252 L150,252 Z M248,230 L258,230 L256,242 L250,242 Z",
+      explodeOffset: [0, 18],
+      summary: "Rubber contact pads with force sensing",
+      details:
+        "Rear feet carry the propulsive load during push-off. Pad wear here is often asymmetric due to turning bias.",
+      failureSignature:
+        "Same as front feet, but often with inside-edge wear from pivoting.",
+      diagnosticCue:
+        "Same as front feet. Pay attention to inside edge wear pattern.",
+      replacement:
+        "10 min per foot. L1 cert.",
+      labelAnchor: [154, 246],
+    },
+    {
+      id: "cooling-vent",
+      name: "Thermal Vents",
+      category: "cooling",
+      d: "M78,115 L88,115 L88,135 L78,135 Z M312,115 L322,115 L322,135 L312,135 Z",
+      explodeOffset: [0, 0],
+      summary: "Body side vents + internal fan",
+      details:
+        "Quadruped bodies are sealed against dust/water, so thermal management relies on internal ducting and side vents. Fan failure leads to rapid actuator thermal shutdown in summer conditions.",
+      failureSignature:
+        "Actuator thermal cutoff on routine walking, elevated internal temp, no airflow audible at vents.",
+      diagnosticCue:
+        "Hold hand near vent during walk cycle. Should feel warm exhaust. If still air, fan is seized or duct is blocked.",
+      replacement:
+        "Fan: 20 min, L2 cert. Duct cleaning: 10 min, L1 cert.",
+      labelAnchor: [83, 125],
+    },
+    {
+      id: "payload-rail",
+      name: "Payload Rails",
+      category: "frame",
+      d: "M100,76 L300,76 L300,80 L100,80 Z",
+      explodeOffset: [0, -14],
+      summary: "Top-mount accessory rails",
+      details:
+        "Standardized rail system on the dorsal surface for payloads — LiDAR domes, camera masts, gas sensors, or manipulator arms. Must remain straight; any bend causes mounting misalignment.",
+      failureSignature:
+        "Accessory wobble, rail bow visible to eye, mounting bolt holes elongated.",
+      diagnosticCue:
+        "Lay a straight edge across the rails. Any gap > 1 mm = bend. Check bolt torque on all accessory mounts.",
+      replacement:
+        "Rail section: 25 min, L2 cert. Full rail: 60 min, L3 cert.",
+      labelAnchor: [200, 78],
     },
   ],
 };
@@ -438,6 +608,74 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       replacement:
         "30 min. L2 cert.",
       labelAnchor: [200, 100],
+    },
+    {
+      id: "propellers",
+      name: "Propeller Set (4×)",
+      category: "drivetrain",
+      d: "M65,60 L105,60 L105,68 L65,68 Z M295,60 L335,60 L335,68 L295,68 Z M65,170 L105,170 L105,178 L65,178 Z M295,170 L335,170 L335,178 L295,178 Z",
+      explodeOffset: [0, -14],
+      summary: "Carbon-fiber or reinforced polymer propellers",
+      details:
+        "Consumable wear item. Even minor nicks at the tip create imbalance that propagates vibration to the motor bearings and airframe. Agricultural spray drones see accelerated erosion from chemical exposure.",
+      failureSignature:
+        "Vibration > 0.4g at hover, tip erosion or cracks visible, thrust asymmetry causing yaw drift.",
+      diagnosticCue:
+        "Visual inspection before every flight. Spin by hand — any wobble = bend or imbalance. Replace in matched sets only.",
+      replacement:
+        "5 min per prop. L1 cert. Always replace in diagonal pairs to maintain balance.",
+      labelAnchor: [85, 64],
+    },
+    {
+      id: "gps-module",
+      name: "GPS / GNSS Module",
+      category: "sensor",
+      d: "M190,100 L210,100 L210,108 L190,108 Z",
+      explodeOffset: [0, -18],
+      summary: "Multi-band GNSS receiver + compass",
+      details:
+        "Typically mounted on a mast above the flight controller to minimize RF interference. Provides position, velocity, and heading reference for autopilot. Compass is highly sensitive to nearby ferrous objects.",
+      failureSignature:
+        "Position jump > 5 m while static, compass variance errors on arming, poor satellite count (< 8 SVs).",
+      diagnosticCue:
+        "Power on outdoors with clear sky. Check satellite count and HDOP. If < 8 SVs or HDOP > 2.0, inspect antenna connection and compass calibration.",
+      replacement:
+        "15 min. L2 cert. Re-calibrate compass and re-set home point after install.",
+      labelAnchor: [200, 104],
+    },
+    {
+      id: "telemetry-radio",
+      name: "Telemetry Radio",
+      category: "comms",
+      d: "M242,130 L258,130 L258,145 L242,145 Z",
+      explodeOffset: [14, 0],
+      summary: "900 MHz / 2.4 GHz datalink",
+      details:
+        "Long-range telemetry radio for command-and-control beyond visual line of sight. Often paired with a ground-station antenna. Frequency depends on regional regulations.",
+      failureSignature:
+        "Link dropout at < 500 m, command latency > 200 ms, RSSI oscillation.",
+      diagnosticCue:
+        "Ground test: walk away with the GCS while monitoring RSSI. Should hold solid to rated range. If it drops early, check antenna orientation and coax connections.",
+      replacement:
+        "10 min. L1 cert. Pair new radio to GCS before flight.",
+      labelAnchor: [250, 137],
+    },
+    {
+      id: "landing-gear",
+      name: "Landing Gear",
+      category: "frame",
+      d: "M170,255 L185,255 L185,285 L170,285 Z M215,255 L230,255 L230,285 L215,285 Z",
+      explodeOffset: [0, 16],
+      summary: "Skids or legs + dampers",
+      details:
+        "Absorbs touchdown energy and keeps the airframe clear of debris/water. Skids are simpler; legged gear with dampers is common on heavier agricultural drones. Bent gear causes ground resonance and takeoff drift.",
+      failureSignature:
+        "Bent strut (visible), cracked damper seal (oil leak), ground resonance on spool-up.",
+      diagnosticCue:
+        "Place on level surface. Measure height at four corners. Any delta > 3 mm = bent gear. Replace before next flight.",
+      replacement:
+        "20 min per strut. L2 cert.",
+      labelAnchor: [177, 270],
     },
   ],
 };
