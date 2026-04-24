@@ -51,7 +51,7 @@ describe("runDiagnosticPipeline — nominal frame", () => {
     expect(report.layersFired).toEqual(["rule-engine"]);
     expect(report.ruleResults).toHaveLength(0);
     expect(report.vlaComparison).toBeUndefined();
-    expect(report.claudeAnalysis).toBeUndefined();
+    expect(report.aiAnalysis).toBeUndefined();
   });
 
   it("does NOT fire Layer 2 when Layer 1 has no escalations", async () => {
@@ -69,7 +69,7 @@ describe("runDiagnosticPipeline — critical frame", () => {
     // Layer 2 fires because Layer 1 has escalated rules
     expect(report.layersFired).toContain("vla-comparator");
     // Layer 3 fires because mock always exceeds threshold when critical rules fire
-    expect(report.layersFired).toContain("claude-analyzer");
+    expect(report.layersFired).toContain("ai-analyzer");
   });
 
   it("includes ruleResults when rules fire", async () => {
@@ -78,9 +78,9 @@ describe("runDiagnosticPipeline — critical frame", () => {
     expect(report.ruleResults.some((r) => r.ruleId === "joint-overheat")).toBe(true);
   });
 
-  it("includes claudeAnalysis with required fields", async () => {
+  it("includes aiAnalysis with required fields", async () => {
     const report = await runDiagnosticPipeline(criticalFrame(), [], "unitree-g1");
-    if (report.claudeAnalysis) {
+    if (report.aiAnalysis) {
       expect(report.claudeAnalysis.severity).toBeDefined();
       expect(report.claudeAnalysis.title).toBeDefined();
       expect(report.claudeAnalysis.recommendation.immediate).toBeDefined();
@@ -142,6 +142,6 @@ describe("Layer 3 only fires when Layer 2 exceeds threshold", () => {
     // battery-critical fires but does NOT escalate → Layer 2 should not fire
     expect(report.layersFired).toContain("rule-engine");
     expect(report.layersFired).not.toContain("vla-comparator");
-    expect(report.layersFired).not.toContain("claude-analyzer");
+    expect(report.layersFired).not.toContain("ai-analyzer");
   });
 });

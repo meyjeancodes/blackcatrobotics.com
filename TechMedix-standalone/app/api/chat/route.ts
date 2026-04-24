@@ -8,7 +8,7 @@
  *   { messages: [{ role: "user" | "assistant", content: string }], robotId?: string }
  *
  * Response:
- *   { reply: string, source: "ollama" | "claude" | "fallback" }
+ *   { reply: string, source: "ollama" | "ai" | "fallback" }
  */
 
 import { NextResponse } from "next/server";
@@ -87,7 +87,7 @@ export async function POST(req: Request) {
           messages: [{ role: "user", content: prompt }],
         });
         const text = response.content[0].type === "text" ? response.content[0].text : "";
-        return NextResponse.json({ reply: text.trim(), source: "claude" });
+        return NextResponse.json({ reply: text.trim(), source: "ai" });
       } catch {
         console.log("[chat] Claude unavailable");
       }
