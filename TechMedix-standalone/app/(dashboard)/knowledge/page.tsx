@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAllPlatforms } from "@/lib/platforms/index";
-import { PlatformCatalogClient } from "@/components/platform-catalog-client";
+import { KnowledgeHubClient } from "@/components/knowledge-hub-client";
 import {
   AlertTriangle,
   Battery,
@@ -217,7 +217,7 @@ export default function KnowledgePage() {
             diagnostic cue — or launch the full sim lab without leaving the page.
           </p>
         </div>
-        <PlatformCatalogClient platforms={platforms} />
+        <KnowledgeHubClient platforms={platforms} />
       </section>
 
       {/* ── Component Anatomy ───────────────────────────────────────────────── */}
