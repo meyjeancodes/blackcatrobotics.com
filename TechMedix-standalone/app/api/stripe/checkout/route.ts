@@ -7,10 +7,25 @@ const PLAN_PRICES: Record<string, number> = {
   command: 0, // Custom — requires manual setup
 };
 
+function getStripe(): Stripe | null {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key || key.startsWith("***") || !key.startsWith("sk_")) {
+    console.error("[stripe/checkout] Invalid STRIPE_SECRET_KEY format or missing");
+    return null;
+  }
+  try {
+    return new Stripe(key, { apiVersion: "2026-03-25.dahlia" });
+  } catch (err) {
+    console.error("[stripe/checkout] Stripe init failed:", err);
+    return null;
+  }
+}
+
 export async function POST(req: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2026-03-25.dahlia",
-  });
+  const stripe = getStripe();
+  if (!stripe) {
+    return NextResponse.json({ error: "Payment system configuration error" }, { status: 503 });
+  }
 
   try {
     const { plan, robot_count, customer_email } = await req.json();
@@ -51,3 +66,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Checkout session creation failed" }, { status: 500 });
   }
 }
+
