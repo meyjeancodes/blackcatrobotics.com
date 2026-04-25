@@ -368,26 +368,36 @@ export default function KnowledgePage() {
 
         {/* Simulation environments */}
         <div className="mb-8">
-          <p className="mb-3 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-[var(--ink)]/35 font-medium flex items-center gap-2">
-            <Play size={10} className="text-emerald-600" /> Simulation Environments
-          </p>
+          {/* Integrated Simulation Environment — now a dedicated page */}
+          <div className="mb-3 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-[var(--ink)]/35 font-medium flex items-center gap-2">
+            <Play size={10} className="text-ember" /> Simulation Environment
+          </div>
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {SIM_ENVS.map((env) => (
-              <a
-                key={env.name}
-                href={env.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="panel group flex flex-col gap-2 p-4 transition hover:ring-1 hover:ring-[var(--ink)]/[0.10]"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <p className="font-header text-[0.90rem] leading-tight text-[var(--ink)] group-hover:text-sky-600 transition">{env.name}</p>
-                  <ExternalLink size={11} className="shrink-0 mt-0.5 text-[var(--ink)]/25 group-hover:text-sky-600 transition" />
-                </div>
-                <span className="inline-flex w-fit items-center rounded-full bg-emerald-500/[0.08] px-2 py-0.5 font-ui text-[0.48rem] uppercase tracking-[0.12em] text-emerald-700">{env.tag}</span>
-                <p className="text-xs leading-relaxed text-[var(--ink)]/50">{env.desc}</p>
-              </a>
-            ))}
+            <Link
+              href="/knowledge/simulations"
+              className="panel group flex flex-col gap-2 p-4 transition hover:ring-1 hover:ring-[var(--ink)]/[0.10] hover:bg-ember/[0.06]"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <p className="font-header text-[0.90rem] leading-tight text-[var(--ink)] group-hover:text-ember transition">
+                  Integrated Sim Environment
+                </p>
+                <ExternalLink size={11} className="shrink-0 mt-0.5 text-[var(--ink)]/25 group-hover:text-ember transition" />
+              </div>
+              <span className="inline-flex w-fit items-center rounded-full bg-ember/[0.10] px-2 py-0.5 font-ui text-[0.48rem] uppercase tracking-[0.12em] text-ember">
+                Interactive 3D Sandbox
+              </span>
+              <p className="text-xs leading-relaxed text-[var(--ink)]/50">
+                Full-page interactive simulation with 16 robot platforms. Practice fault
+                injection, teardown sequences, and telemetry diagnosis in the browser.
+              </p>
+              <div className="mt-1 flex items-center gap-3 text-[0.52rem] text-[var(--ink)]/40">
+                <span>16 platforms</span>
+                <span>·</span>
+                <span>4 scenarios</span>
+                <span>·</span>
+                <span>3D interactive</span>
+              </div>
+            </Link>
           </div>
         </div>
 
