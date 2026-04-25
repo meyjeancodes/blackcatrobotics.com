@@ -5,6 +5,7 @@ import { useState } from "react";
 import { X, Zap } from "lucide-react";
 import { Sidebar } from "./sidebar";
 import { MobileNav } from "./mobile-nav";
+import { ChatPanel } from "./chat-panel";
 
 export interface SessionUser {
   email?: string;
@@ -36,7 +37,7 @@ export function DashboardShell({
 
         {/* Demo mode banner */}
         {!dismissed && (
-          <div className="shrink-0 flex items-center justify-between gap-4 border-b border-white/[0.06] bg-[#0d0e13] px-5 py-2.5">
+          <div className="shrink-0 flex items-center justify-between gap-4 border-b border-white/[0.06] bg-[#15161e] px-5 py-2.5">
             <div className="flex items-center gap-2.5 min-w-0">
               <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-500/[0.14] ring-1 ring-amber-500/[0.22]">
                 <Zap size={10} className="text-amber-400" />
@@ -63,6 +64,9 @@ export function DashboardShell({
           {children}
         </main>
       </div>
+
+      {/* Floating AI chat — available on every dashboard page */}
+      <ChatPanel />
     </div>
   );
 }

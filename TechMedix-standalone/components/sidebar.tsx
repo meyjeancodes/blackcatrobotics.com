@@ -116,7 +116,7 @@ export function Sidebar({ user }: { user?: SessionUser }) {
         collapsed ? "w-[60px]" : "w-[260px]"
       )}
       style={{
-        background: "linear-gradient(180deg, #0d0e13 0%, #0b0c11 100%)",
+        background: "linear-gradient(180deg, #15161e 0%, #12131a 100%)",
       }}
     >
       {/* Ember ambient glow — top left */}
@@ -173,8 +173,8 @@ export function Sidebar({ user }: { user?: SessionUser }) {
                     "relative flex items-center rounded-[11px] px-3 py-2 font-mono text-[0.58rem] uppercase tracking-[0.12em] font-medium transition-all duration-200",
                     collapsed && "justify-center px-0 w-[44px] mx-auto",
                     groupActive
-                      ? "bg-ember/[0.10] text-white ring-1 ring-ember/[0.18]"
-                      : "text-white/42 hover:bg-white/[0.055] hover:text-white/80"
+                      ? "bg-ember/[0.12] text-white ring-1 ring-ember/[0.22]"
+                      : "text-white/55 hover:bg-white/[0.07] hover:text-white/90"
                   )}
                 >
                   {groupActive && (
@@ -186,12 +186,12 @@ export function Sidebar({ user }: { user?: SessionUser }) {
               ) : (
                 <div
                   className={clsx(
-                    "flex items-center px-3 py-1.5 font-mono text-[0.50rem] uppercase tracking-[0.18em] font-medium text-white/22",
+                    "flex items-center px-3 py-1.5 font-mono text-[0.50rem] uppercase tracking-[0.18em] font-medium text-white/40",
                     collapsed && "justify-center px-0"
                   )}
                 >
                   {collapsed ? (
-                    <Icon size={14} className="text-white/22" />
+                    <Icon size={14} className="text-white/40" />
                   ) : (
                     <span>{group.label}</span>
                   )}
@@ -211,8 +211,8 @@ export function Sidebar({ user }: { user?: SessionUser }) {
                         className={clsx(
                           "relative flex items-center rounded-[9px] py-1.5 pl-4 pr-3 font-mono text-[0.56rem] uppercase tracking-[0.10em] font-medium transition-all duration-200",
                           childActive
-                            ? "bg-white/[0.07] text-white/92"
-                            : "text-white/32 hover:bg-white/[0.04] hover:text-white/68"
+                            ? "bg-white/[0.09] text-white"
+                            : "text-white/48 hover:bg-white/[0.05] hover:text-white/80"
                         )}
                       >
                         <span

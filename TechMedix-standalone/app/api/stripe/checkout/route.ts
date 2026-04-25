@@ -15,8 +15,8 @@ export async function POST(req: NextRequest) {
   try {
     const { plan, robot_count, customer_email } = await req.json();
 
-    if (!plan || !customer_email) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    if (!plan) {
+      return NextResponse.json({ error: "Missing plan" }, { status: 400 });
     }
 
     const pricePerRobot = PLAN_PRICES[plan.toLowerCase()] ?? PLAN_PRICES.operator;
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
-      customer_email,
+      ...(customer_email ? { customer_email } : {}),
       line_items: [
         {
           price_data: {
