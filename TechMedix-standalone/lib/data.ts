@@ -32,7 +32,8 @@ function mapCustomer(r: Row): Customer {
     status: r.status,
     fleetSize: r.fleet_size ?? r.fleetSize,
     monthlySpend: r.monthly_spend ?? r.monthlySpend,
-    createdAt: r.created_at ?? r.createdAt
+    createdAt: r.created_at ?? r.createdAt,
+    trialEndsAt: r.trial_ends_at ?? r.trialEndsAt ?? null,
   };
 }
 

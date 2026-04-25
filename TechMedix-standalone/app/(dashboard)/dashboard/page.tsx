@@ -24,8 +24,10 @@ import { ServiceNetworkPanel } from "../../../components/service-network-panel";
 import { PerformanceKpis } from "../../../components/performance-kpis";
 import { FleetHealthCategories } from "../../../components/fleet-health-categories";
 import { ChatPanel } from "../../../components/chat-panel";
+import { CheckoutBanner } from "../../../components/checkout-banner";
 import { formatDateTime } from "../../../lib/format";
 import { getDashboardData } from "../../../lib/data";
+import { Suspense } from "react";
 
 export default async function DashboardPage() {
   const { snapshot, stats } = await getDashboardData();
@@ -48,6 +50,9 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-8">
+      <Suspense fallback={null}>
+        <CheckoutBanner />
+      </Suspense>
       {/* ─── Page header ─────────────────────────────────────── */}
       <header className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
