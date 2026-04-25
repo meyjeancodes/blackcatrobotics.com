@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const PLAN_PRICES: Record<string, number> = {
-  operator: 29900, // $299/robot/mo * robot_count — we use per-seat pricing
-  fleet: 19900,
-  command: 0, // Custom — requires manual setup
+  starter: 29900,  // $299/robot/mo
+  operator: 29900, // $299/robot/mo
+  fleet: 22900,    // $229/robot/mo
+  command: 0,      // Custom — requires manual setup
 };
 
 function getStripe(): Stripe | null {
@@ -28,14 +29,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { plan, robot_count, customer_email } = await req.json();
+    const { plan, robot_count, customer_email, free_trial } = await req.json();
 
     if (!plan) {
       return NextResponse.json({ error: "Missing plan" }, { status: 400 });
     }
 
-    const pricePerRobot = PLAN_PRICES[plan.toLowerCase()] ?? PLAN_PRICES.operator;
+    const pricePerRobot = PLAN_PRICES[plan.toLowerCase()] ?? PLAN_PRICES.starter;
     const quantity = Math.max(1, parseInt(robot_count ?? "1", 10));
+    const isFreeTrial = free_trial === true;
 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -49,15 +51,20 @@ export async function POST(req: NextRequest) {
             recurring: { interval: "month" },
             product_data: {
               name: `TechMedix ${plan.charAt(0).toUpperCase() + plan.slice(1)} Plan`,
-              description: `Per-robot monthly subscription — ${quantity} robot${quantity > 1 ? "s" : ""}`,
+              description: isFreeTrial
+                ? `14-day free trial — ${quantity} robot${quantity > 1 ? "s" : ""}, then $${pricePerRobot / 100}/robot/mo`
+                : `Per-robot monthly subscription — ${quantity} robot${quantity > 1 ? "s" : ""}`,
             },
           },
           quantity,
         },
       ],
-      success_url: "https://dashboard.blackcatrobotics.com/dashboard?checkout=success",
-      cancel_url: "https://blackcatrobotics.com/#pricing",
-      metadata: { plan, robot_count: String(quantity), customer_email },
+      ...(isFreeTrial ? { subscription_data: { trial_period_days: 14 } } : {}),
+      success_url: isFreeTrial
+        ? "https://dashboard.blackcatrobotics.com/dashboard?checkout=trial"
+        : "https://dashboard.blackcatrobotics.com/dashboard?checkout=success",
+      cancel_url: "https://dashboard.blackcatrobotics.com/billing",
+      metadata: { plan, robot_count: String(quantity), customer_email, free_trial: String(isFreeTrial) },
     });
 
     return NextResponse.json({ url: session.url });

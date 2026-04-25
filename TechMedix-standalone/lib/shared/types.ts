@@ -1,4 +1,4 @@
-export type CustomerPlan = "operator" | "fleet" | "command";
+export type CustomerPlan = "starter" | "operator" | "fleet" | "command";
 export type CustomerStatus = "active" | "trial" | "inactive";
 export type AppRole =
   | "customer_admin"
@@ -24,6 +24,7 @@ export interface Customer {
   fleetSize: number;
   monthlySpend: number;
   createdAt: string;
+  trialEndsAt?: string | null;
 }
 
 export interface TelemetryPoint {

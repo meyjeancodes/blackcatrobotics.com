@@ -10,6 +10,7 @@ interface Props {
   label?: string;
   highlight?: boolean;
   disabled?: boolean;
+  freeTrial?: boolean;
 }
 
 export function BillingCheckoutButton({
@@ -19,6 +20,7 @@ export function BillingCheckoutButton({
   label = "Get Started",
   highlight = false,
   disabled = false,
+  freeTrial = false,
 }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +38,7 @@ export function BillingCheckoutButton({
           plan,
           robot_count: robotCount,
           customer_email: customerEmail ?? "",
+          free_trial: freeTrial,
         }),
       });
 

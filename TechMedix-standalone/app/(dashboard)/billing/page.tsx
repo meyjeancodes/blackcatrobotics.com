@@ -56,8 +56,69 @@ export default async function BillingPage() {
   const { snapshot } = await getDashboardData();
   const { customer } = snapshot;
 
+  const isOnTrial = customer.status === "trial";
+  const trialDaysLeft = isOnTrial && customer.trialEndsAt
+    ? Math.max(0, Math.ceil((new Date(customer.trialEndsAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+    : null;
+
   return (
     <div className="space-y-8">
+
+      {/* Free trial hero — shown only when not yet subscribed */}
+      {customer.status === "inactive" && (
+        <div
+          className="rounded-[24px] p-6 sm:p-8"
+          style={{ background: "linear-gradient(135deg, rgba(232,96,30,0.10) 0%, rgba(29,184,122,0.07) 100%)", border: "1px solid rgba(232,96,30,0.18)" }}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div>
+              <p className="text-[0.6rem] uppercase tracking-[0.22em] text-ember font-semibold mb-1">No credit card risk</p>
+              <h2 className="font-header text-2xl text-theme-primary">Start your 14-day free trial</h2>
+              <p className="mt-2 text-sm text-theme-55 max-w-md">
+                Get full Fleet plan access — real-time telemetry, AI diagnostics, and technician dispatch — free for 14 days. Your card is saved but not charged until the trial ends.
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
+                {["Real-time telemetry", "AI fleet insights", "Auto dispatch", "Cancel anytime"].map((f) => (
+                  <li key={f} className="flex items-center gap-1.5 text-xs text-theme-55">
+                    <span className="h-1 w-1 rounded-full bg-[#1db87a]" />{f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="shrink-0 flex flex-col gap-2 min-w-[200px]">
+              <BillingCheckoutButton
+                plan="fleet"
+                robotCount={customer.fleetSize || 1}
+                label="Start Free Trial →"
+                highlight
+                freeTrial
+              />
+              <p className="text-center text-[0.58rem] text-theme-30">14 days free · then $229/robot/mo</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Trial status banner */}
+      {isOnTrial && trialDaysLeft !== null && (
+        <div className="rounded-[20px] border border-amber-500/20 bg-amber-500/[0.06] px-5 py-4 flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold text-amber-400">
+              Free trial — {trialDaysLeft} day{trialDaysLeft !== 1 ? "s" : ""} remaining
+            </p>
+            <p className="text-xs text-theme-45 mt-0.5">
+              Your subscription will activate automatically when the trial ends. No action needed.
+            </p>
+          </div>
+          <BillingCheckoutButton
+            plan={customer.plan ?? "fleet"}
+            robotCount={customer.fleetSize || 1}
+            label="Upgrade Now →"
+            highlight
+          />
+        </div>
+      )}
+
       {/* Current subscription */}
       <SurfaceCard title="Current subscription" eyebrow="Account">
         <div className="grid gap-6 sm:grid-cols-2">
@@ -74,7 +135,9 @@ export default async function BillingPage() {
               </div>
               <div className="flex items-center justify-between text-sm text-theme-60">
                 <span>Status</span>
-                <strong className="capitalize text-theme-primary">{customer.status}</strong>
+                <strong className="capitalize text-theme-primary">
+                  {isOnTrial ? `Trial (${trialDaysLeft}d left)` : customer.status}
+                </strong>
               </div>
               <div className="flex items-center justify-between text-sm text-theme-60">
                 <span>Member since</span>
