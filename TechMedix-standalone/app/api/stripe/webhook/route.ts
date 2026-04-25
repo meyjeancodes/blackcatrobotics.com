@@ -3,9 +3,18 @@ import Stripe from "stripe";
 import { isSupabaseServerConfigured, createServiceClient } from "@/lib/supabase-service";
 
 export async function POST(req: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2026-03-25.dahlia",
-  });
+  const rawSecret = process.env.STRIPE_SECRET_KEY;
+  if (!rawSecret || rawSecret.startsWith("***") || !rawSecret.startsWith("sk_")) {
+    console.error("[stripe/webhook] Invalid STRIPE_SECRET_KEY");
+    return NextResponse.json({ error: "Payment system not configured" }, { status: 503 });
+  }
+  let stripe: Stripe;
+  try {
+    stripe = new Stripe(rawSecret, { apiVersion: "2026-03-25.dahlia" });
+  } catch (err) {
+    console.error("[stripe/webhook] Stripe init failed:", err);
+    return NextResponse.json({ error: "Invalid Stripe configuration" }, { status: 500 });
+  }
 
   const body = await req.text();
   const sig = req.headers.get("stripe-signature");
@@ -14,9 +23,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing stripe-signature header" }, { status: 400 });
   }
 
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!webhookSecret || webhookSecret.startsWith("***")) {
+    console.error("[stripe/webhook] STRIPE_WEBHOOK_SECRET not configured");
+    return NextResponse.json({ error: "Webhook secret not configured" }, { status: 503 });
+  }
+
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
+    event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err) {
     console.error("Stripe webhook signature verification failed:", err);
     return NextResponse.json({ error: "Webhook signature invalid" }, { status: 400 });
