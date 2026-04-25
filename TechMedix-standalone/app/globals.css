@@ -53,17 +53,17 @@
 /* We never use @media (prefers-color-scheme) directly in CSS.                */
 
 [data-theme="dark"] {
-  --paper:    #111316;
-  --paper-2:  #17191e;
-  --ink:      #e4e5e9;
-  --ink-soft: #8a8d99;
+  --paper:    #1a1c23;
+  --paper-2:  #21232c;
+  --ink:      #e6e7ec;
+  --ink-soft: #9296a4;
 
-  --panel-bg:          rgba(26, 27, 32, 0.92);
-  --panel-border:      rgba(255, 255, 255, 0.07);
-  --panel-elevated-bg: rgba(22, 23, 28, 0.97);
+  --panel-bg:          rgba(36, 38, 48, 0.92);
+  --panel-border:      rgba(255, 255, 255, 0.09);
+  --panel-elevated-bg: rgba(32, 34, 44, 0.97);
   --body-gradient-top: var(--paper-2);
   --body-gradient-bot: var(--paper);
-  --ember-glow:        rgba(232, 96, 30, 0.06);
+  --ember-glow:        rgba(232, 96, 30, 0.08);
 
   --shadow-panel:
     0 2px 4px rgba(0,0,0,0.30),
