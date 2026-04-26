@@ -33,6 +33,17 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(url, 301);
     }
 
+    // Serve HABITAT landing page on habitat.blackcatrobotics.com
+    if (host === "habitat.blackcatrobotics.com") {
+      if (pathname === "/" || pathname === "") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/habitat.html";
+        return NextResponse.rewrite(url);
+      }
+      // /design and all other paths pass through to Next.js routing
+      return NextResponse.next({ request });
+    }
+
     // Serve static marketing site on blackcatrobotics.com
     if (host === "blackcatrobotics.com" || host === "blackcatrobotics.com:443") {
       if (pathname === "/") {
