@@ -43,13 +43,7 @@ export default function MarketingPage() {
             href="/login"
             className="rounded-full px-4 py-2 text-sm font-medium text-white/60 transition hover:text-white"
           >
-            Sign in
-          </Link>
-          <Link
-            href="/dashboard"
-            className="rounded-full bg-ember px-4 py-2 text-sm font-semibold text-white transition hover:bg-ember/90"
-          >
-            Open dashboard
+            Operator Login
           </Link>
         </div>
       </header>

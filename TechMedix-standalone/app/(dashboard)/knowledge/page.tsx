@@ -7,6 +7,7 @@ import {
   BookOpen,
   Bot,
   Brain,
+  ChevronRight,
   Cpu,
   ExternalLink,
   GraduationCap,
@@ -247,15 +248,89 @@ export default function KnowledgePage() {
         </div>
       </div>
 
-      {/* ── Platform Catalog (with inline interactive diagrams) ──────────────── */}
+      {/* ── Blueprint — Hero Feature ─────────────────────────────────────────── */}
+      <section
+        className="rounded-[28px] overflow-hidden"
+        style={{ background: "linear-gradient(135deg, #0d0d14 0%, #0f1620 100%)", border: "1px solid rgba(255,255,255,0.07)" }}
+      >
+        <div className="flex flex-col lg:flex-row lg:items-stretch">
+          {/* Left content */}
+          <div className="flex-1 p-8 lg:p-10">
+            <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/[0.22] bg-sky-400/[0.07] px-3 py-1 mb-5">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+              <span className="font-ui text-[0.55rem] uppercase tracking-[0.22em] text-sky-400">Featured Tool</span>
+            </div>
+            <h2 className="font-header text-3xl leading-tight text-white lg:text-4xl">
+              Blueprint
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-white/50 max-w-lg">
+              The ultimate learning tool for robotics technicians. Interactive exploded-view diagrams for every platform — click any part to reveal its failure signature, diagnostic cue, severity rating, and repair protocol. Study real hardware without touching a robot.
+            </p>
+            <div className="mt-6 grid grid-cols-3 gap-4 max-w-sm">
+              {[
+                { n: `${totalPlatforms}`, label: "Platforms" },
+                { n: `${totalFailureModes}`, label: "Failure modes" },
+                { n: "L1–L5", label: "Cert aligned" },
+              ].map((s) => (
+                <div key={s.label}>
+                  <p className="font-header text-2xl text-white">{s.n}</p>
+                  <p className="mt-0.5 font-ui text-[0.52rem] uppercase tracking-[0.18em] text-white/30">{s.label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                href="/knowledge/blueprint"
+                className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:bg-sky-400"
+              >
+                Open Blueprint
+                <ChevronRight size={13} />
+              </Link>
+              <Link
+                href="/knowledge/simulations"
+                className="inline-flex items-center gap-2 rounded-full border border-white/[0.14] px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white/60 transition hover:bg-white/[0.06] hover:text-white"
+              >
+                <Play size={12} />
+                Sim Environment
+              </Link>
+            </div>
+          </div>
+          {/* Right visual */}
+          <div className="hidden lg:flex lg:w-72 xl:w-96 items-center justify-center border-l border-white/[0.05] p-8">
+            <div className="relative flex h-48 w-48 items-center justify-center">
+              {/* Rings */}
+              <div className="absolute inset-0 rounded-full border border-sky-400/[0.12]" />
+              <div className="absolute inset-4 rounded-full border border-sky-400/[0.18]" />
+              <div className="absolute inset-8 rounded-full border border-sky-400/[0.28]" />
+              {/* Center node */}
+              <div className="relative z-10 flex h-20 w-20 flex-col items-center justify-center rounded-full border border-sky-400/[0.35] bg-sky-400/[0.06]">
+                <Bot size={22} className="text-sky-400" />
+                <p className="mt-1.5 font-ui text-[0.45rem] uppercase tracking-[0.18em] text-sky-400/70">Blueprint</p>
+              </div>
+              {/* Orbit dots */}
+              {[0, 60, 120, 180, 240, 300].map((deg) => (
+                <div
+                  key={deg}
+                  className="absolute h-2.5 w-2.5 rounded-full bg-sky-400/40"
+                  style={{
+                    top: `calc(50% + ${Math.sin((deg * Math.PI) / 180) * 84}px - 5px)`,
+                    left: `calc(50% + ${Math.cos((deg * Math.PI) / 180) * 84}px - 5px)`,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Platform Catalog ─────────────────────────────────────────────────── */}
       <section>
         <div className="mb-6">
           <p className="kicker">Layer 1 — Physical</p>
           <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Robot Platform Catalog</h2>
           <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
-            Each platform entry includes specs, known failure signatures, severity, and an
-            interactive diagram. Click a component to inspect its failure signature and
-            diagnostic cue — or launch the full sim lab without leaving the page.
+            Specs, failure signatures, and interactive diagrams for every supported platform.
+            Select a platform to inspect its components or launch the full Blueprint view.
           </p>
         </div>
         <KnowledgeHubClient platforms={platforms} />

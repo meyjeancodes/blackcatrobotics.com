@@ -20,8 +20,8 @@ export const customers: Customer[] = [
   {
     id: "cus_acme_robotics",
     company: "Demo Fleet",
-    name: "Megan Foster",
-    email: "megan@blackcatrobotics.com",
+    name: "Fleet Admin",
+    email: "admin@blackcatrobotics.com",
     plan: "fleet",
     status: "active",
     fleetSize: 4,
@@ -31,8 +31,8 @@ export const customers: Customer[] = [
   {
     id: "cus_summit_logistics",
     company: "Summit Logistics",
-    name: "Daniel Kline",
-    email: "daniel@summitlogistics.com",
+    name: "Fleet Manager",
+    email: "fleet@summitlogistics.com",
     plan: "operator",
     status: "trial",
     fleetSize: 2,
@@ -399,12 +399,12 @@ export const workOrders: WorkOrder[] = [
 ];
 
 export const auditLogs: AuditLog[] = [
-  { id: "log_001", action: "work_order_created", user: "megan@blackcatrobotics.com", role: "admin", timestamp: "2026-03-19T09:05:00.000Z", resource: "wo_001", detail: "Created work order for DJI Agras T50 impeller repair" },
-  { id: "log_002", action: "technician_assigned", user: "megan@blackcatrobotics.com", role: "admin", timestamp: "2026-03-19T09:12:00.000Z", resource: "wo_001", detail: "Assigned Demo Technician to work order wo_001" },
+  { id: "log_001", action: "work_order_created", user: "admin@blackcatrobotics.com", role: "admin", timestamp: "2026-03-19T09:05:00.000Z", resource: "wo_001", detail: "Created work order for DJI Agras T50 impeller repair" },
+  { id: "log_002", action: "technician_assigned", user: "admin@blackcatrobotics.com", role: "admin", timestamp: "2026-03-19T09:12:00.000Z", resource: "wo_001", detail: "Assigned Demo Technician to work order wo_001" },
   { id: "log_003", action: "node_status_updated", user: "system", role: "admin", timestamp: "2026-03-19T08:59:00.000Z", resource: "node_dji_t50", detail: "Node status changed from online to maintenance" },
-  { id: "log_004", action: "alert_acknowledged", user: "megan@blackcatrobotics.com", role: "admin", timestamp: "2026-03-19T09:20:00.000Z", resource: "alert_002", detail: "Atlas knee actuator alert acknowledged" },
-  { id: "log_005", action: "login", user: "priya@blackcatrobotics.com", role: "technician", timestamp: "2026-03-19T09:00:00.000Z", detail: "Technician portal login" },
-  { id: "log_006", action: "work_order_updated", user: "priya@blackcatrobotics.com", role: "technician", timestamp: "2026-03-19T10:35:00.000Z", resource: "wo_001", detail: "Status updated to in_progress" },
+  { id: "log_004", action: "alert_acknowledged", user: "admin@blackcatrobotics.com", role: "admin", timestamp: "2026-03-19T09:20:00.000Z", resource: "alert_002", detail: "Atlas knee actuator alert acknowledged" },
+  { id: "log_005", action: "login", user: "tech@blackcatrobotics.com", role: "technician", timestamp: "2026-03-19T09:00:00.000Z", detail: "Technician portal login" },
+  { id: "log_006", action: "work_order_updated", user: "tech@blackcatrobotics.com", role: "technician", timestamp: "2026-03-19T10:35:00.000Z", resource: "wo_001", detail: "Status updated to in_progress" },
 ];
 
 // ── SERVICE NETWORK SIMULATION DATA ──────────────────────────────────────────
