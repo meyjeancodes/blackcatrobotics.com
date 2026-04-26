@@ -57,8 +57,8 @@ export default function EnergyPage() {
           Energy
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-theme-52">
-          EV fleet management and distributed energy node integration. Node-level data is live.
-          Full grid billing, charge scheduling, and energy trading launching 2027.
+          EV fleet management and distributed energy node integration. Monitor battery state,
+          solar output, charge scheduling, and energy trading across your BlackCat grid in real time.
         </p>
       </div>
 
@@ -239,12 +239,9 @@ export default function EnergyPage() {
 
       <div className="panel px-7 py-6">
         <p className="kicker">BlackCat Grid</p>
-        <div className="mt-2 flex items-center gap-3 flex-wrap">
-          <h2 className="font-header text-[2rem] leading-none tracking-[-0.04em] text-theme-primary">Grid Infrastructure</h2>
-          <span className="font-ui text-[0.58rem] uppercase tracking-[0.16em] px-3 py-1.5 rounded-full bg-gold/[0.10] text-gold border border-gold/[0.18]">Coming 2027</span>
-        </div>
+        <h2 className="mt-2 font-header text-[2rem] leading-none tracking-[-0.04em] text-theme-primary">Grid Infrastructure</h2>
         <p className="mt-3 text-sm leading-6 text-theme-60 max-w-2xl">
-          Node-based billing, AI charge scheduling, and energy trading across the BlackCat physical network.
+          Node-level monitoring, AI charge scheduling, and energy trading across your connected BlackCat fleet.
         </p>
       </div>
 
