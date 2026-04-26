@@ -224,7 +224,7 @@ export default function DataCenterPage() {
         </div>
       </section>
 
-      {/* Equinix CTA */}
+      {/* Connect CTA */}
       <section
         className="rounded-[28px] p-8"
         style={{ background: "linear-gradient(135deg, #0d0d14 0%, #12121e 100%)", border: "1px solid rgba(255,255,255,0.06)" }}
@@ -234,16 +234,16 @@ export default function DataCenterPage() {
             <div className="mb-3 flex items-center gap-2">
               <Wifi size={14} className="text-white/40" />
               <p className="font-ui text-[0.58rem] uppercase tracking-[0.24em] text-white/38 font-medium">
-                Infrastructure Partnership
+                Real-Time Integration
               </p>
             </div>
             <h2 className="font-header text-2xl leading-tight text-white">
-              TechMedix runs on Equinix infrastructure
+              Connect your facility to TechMedix
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-6 text-white/48">
-              BCR colocation reduces AI inference cost to{" "}
-              <span className="text-white/90 font-semibold">&lt;$0.10/robot/month</span> —
-              keeping Layer 3 diagnostics affordable at fleet scale across all data center deployments.
+              TechMedix integrates directly with your data center robots via BlackCat OS telemetry streams.
+              Layer 3 AI diagnostics run against live sensor data — real fault detection, real repair protocols,
+              real outcomes for your fleet.
             </p>
           </div>
           <a
@@ -252,7 +252,7 @@ export default function DataCenterPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.18em] font-semibold text-[#0d0d14] transition hover:bg-white/90 shrink-0"
           >
-            Learn More
+            BlackCat OS Docs
             <ExternalLink size={12} />
           </a>
         </div>
