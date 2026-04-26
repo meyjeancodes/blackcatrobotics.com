@@ -166,7 +166,7 @@ export default function DataCenterPage() {
               </div>
 
               <Link
-                href={`/nodes?facility=${facility.id}`}
+                href={`/nodes`}
                 className="mt-auto inline-flex items-center justify-center gap-2 rounded-full border border-theme-12 px-4 py-2.5 font-ui text-[0.60rem] uppercase tracking-[0.18em] font-semibold text-theme-60 transition hover:bg-theme-4 hover:text-theme-primary"
               >
                 View Fleet

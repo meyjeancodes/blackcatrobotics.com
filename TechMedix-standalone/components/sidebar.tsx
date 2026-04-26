@@ -16,6 +16,7 @@ import {
   Scan,
   Server,
   Settings2,
+  Users,
   Wrench,
   Zap,
 } from "lucide-react";
@@ -49,9 +50,16 @@ const NAV: NavGroup[] = [
   {
     label: "Knowledge", icon: BookOpen,
     children: [
-      { href: "/knowledge",               label: "Knowledge Hub" },
-      { href: "/knowledge/certifications",label: "Certifications" },
-      { href: "/knowledge/simulations",   label: "Simulations" },
+      { href: "/knowledge",             label: "Knowledge Hub" },
+      { href: "/knowledge/simulations", label: "Simulations" },
+    ],
+  },
+  {
+    label: "Technicians", icon: Users,
+    children: [
+      { href: "/technicians",              label: "Directory" },
+      { href: "/technicians/certifications", label: "Certifications" },
+      { href: "/technicians/marketplace",  label: "Marketplace" },
     ],
   },
   {
