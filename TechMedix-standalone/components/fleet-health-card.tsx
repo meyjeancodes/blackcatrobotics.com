@@ -5,76 +5,110 @@ import useSWR from "swr";
 import type { ReactNode } from "react";
 
 // TODO: wire to live fleet API
-const healthValue = 94; // demo — replace with live WebSocket or polling endpoint
+const healthValue = 81; // demo — replace with live WebSocket or polling endpoint
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
 type RobotStats = { fleet_health_avg: number };
 
-// ── Liquid wave SVG — fills from bottom based on pct ──────────────────────────
+// ── Color logic ───────────────────────────────────────────────────────────────
+function getWaveColor(value: number): string {
+  if (value > 70) return "#22c55e"; // green
+  if (value > 40) return "#f97316"; // orange
+  return "#ef4444";                  // red
+}
 
-function LiquidWave({ pct }: { pct: number }) {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const rafRef = useRef(0);
-  const tRef   = useRef(0);
-  // useId gives stable SSR-safe IDs; strip colons for valid XML attr
+// ── Liquid number SVG — wave fills inside the text characters via mask ────────
+function LiquidNumber({ pct }: { pct: number }) {
+  const wave1Ref = useRef<SVGPathElement>(null);
+  const wave2Ref = useRef<SVGPathElement>(null);
+  const phaseRef = useRef(0);
+  const rafRef   = useRef(0);
   const uid = useId().replace(/:/g, "");
 
+  const color  = getWaveColor(pct);
+  const maskId = `tmask-${uid}`;
+  const gradId = `tgrad-${uid}`;
+
   useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
+    const w1 = wave1Ref.current;
+    const w2 = wave2Ref.current;
+    if (!w1 || !w2) return;
 
-    const W    = 300;
-    const H    = 160;
-    const AMP  = 5;                         // wave amplitude (px in viewBox)
-    const FREQ = (2 * Math.PI) / 80;        // one full cycle per 80 units
-    const fillY = H * (1 - pct / 100);      // y where wave surface sits
-
-    const pathEl = svg.querySelector<SVGPathElement>("#wp-" + uid);
-
-    function buildPath(t: number): string {
-      let d = "M 0 " + H;
-      for (let x = 0; x <= W; x += 2) {
-        const y = fillY + Math.sin(x * FREQ + t) * AMP;
-        d += " L " + x + " " + y.toFixed(2);
+    function drawWave(
+      path: SVGPathElement,
+      offset: number,
+      amplitude: number,
+      frequency: number,
+    ) {
+      const W = 300;
+      const H = 150;
+      const fillLevel = H - (pct / 100) * H;
+      let d = `M 0 ${H}`;
+      for (let x = 0; x <= W; x++) {
+        const y = amplitude * Math.sin((x + phaseRef.current + offset) * frequency) + fillLevel;
+        d += ` L ${x} ${y.toFixed(2)}`;
       }
-      return d + " L " + W + " " + H + " L 0 " + H + " Z";
+      d += ` L ${W} ${H} Z`;
+      path.setAttribute("d", d);
     }
 
-    function tick() {
-      tRef.current += 0.04;
-      pathEl?.setAttribute("d", buildPath(tRef.current));
-      rafRef.current = requestAnimationFrame(tick);
+    function animate() {
+      phaseRef.current += 2;
+      drawWave(w1, 0,  8, 0.04);
+      drawWave(w2, 50, 10, 0.05);
+      rafRef.current = requestAnimationFrame(animate);
     }
 
-    rafRef.current = requestAnimationFrame(tick);
+    rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [pct, uid]); // wave physics/frequency/amplitude not changed here
-
-  const gId = "wg-" + uid;
+  }, [pct]);
 
   return (
     <svg
-      ref={svgRef}
-      viewBox="0 0 300 160"
-      preserveAspectRatio="none"
-      className="absolute inset-0 w-full h-full"
-      aria-hidden
+      viewBox="0 0 300 150"
+      width="100%"
+      height="150"
+      aria-label={`${pct}% fleet health`}
+      overflow="visible"
     >
       <defs>
-        <linearGradient id={gId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#E84E1B" stopOpacity="0.30" />
-          {/* wave gradient bottom → rgba(0,0,0,0) */}
-          <stop offset="100%" stopColor="rgba(0,0,0,0)" stopOpacity="0" />
+        {/* Gradient: health color → dark */}
+        <linearGradient id={gradId} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stopColor={color} />
+          <stop offset="100%" stopColor="rgba(0,0,0,0.55)" />
         </linearGradient>
+
+        {/* Text mask — wave only visible inside the numeral characters */}
+        <mask id={maskId}>
+          <text
+            x="50%"
+            y="55%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            style={{
+              fontSize: "110px",
+              fontWeight: 800,
+              fontFamily: "'Tanker', sans-serif",
+              fill: "white",
+            }}
+          >
+            {pct}%
+          </text>
+        </mask>
       </defs>
-      <path id={"wp-" + uid} d="" fill={"url(#" + gId + ")"} />
+
+      {/* Wave fill clipped to text shape */}
+      <g mask={`url(#${maskId})`}>
+        {/* Dark base so gradient has depth even when nearly full */}
+        <rect width="100%" height="100%" fill="rgba(0,0,0,0.35)" />
+        <path ref={wave1Ref} fill={`url(#${gradId})`} opacity="0.9" />
+        <path ref={wave2Ref} fill={`url(#${gradId})`} opacity="0.6" />
+      </g>
     </svg>
   );
 }
 
 // ── Main card ─────────────────────────────────────────────────────────────────
-
 export function FleetHealthCard({
   initialValue,
   detail,
@@ -90,26 +124,25 @@ export function FleetHealthCard({
   });
 
   const health   = data?.fleet_health_avg ?? initialValue;
-  const isBloom  = health > 90;   // glow bloom state
-  const isDanger = health < 30;   // critical warning state
+  const isBloom  = health > 90;
+  const isDanger = health < 30;
 
   return (
     <>
-      {/* ── State keyframes ───────────────────────────────────────────────── */}
       <style>{`
         @keyframes bloom-pulse {
-          0%, 100% { filter: drop-shadow(0 0 0px #E84E1B); }
-          50%       { filter: drop-shadow(0 0 18px #E84E1B)
-                              drop-shadow(0 0 32px rgba(232,78,27,0.38)); }
+          0%, 100% { filter: drop-shadow(0 0 0px #22c55e); }
+          50%       { filter: drop-shadow(0 0 16px #22c55e)
+                              drop-shadow(0 0 28px rgba(34,197,94,0.35)); }
         }
         @keyframes danger-pulse {
           0%, 100% {
             border-color: var(--panel-border);
-            box-shadow: 0 0 0 0 rgba(220,38,38,0);
+            box-shadow: 0 0 0 0 rgba(239,68,68,0);
           }
           50% {
-            border-color: rgba(220,38,38,0.55);
-            box-shadow: 0 0 0 3px rgba(220,38,38,0.22);
+            border-color: rgba(239,68,68,0.55);
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.20);
           }
         }
         .state-bloom  { animation: bloom-pulse  2.8s ease-in-out infinite; }
@@ -121,28 +154,43 @@ export function FleetHealthCard({
           isBloom ? " state-bloom" : isDanger ? " state-danger" : ""
         }`}
       >
-        {/* ── Header ─────────────────────────────────────────────────────── */}
+        {/* ── Header row ─────────────────────────────────────────── */}
         <div className="flex items-start justify-between gap-2">
-          {/* FLEET HEALTH label — Chakra Petch, letter-spacing 4px */}
-          <p
-            style={{
-              fontFamily: "var(--font-ui)",
-              fontSize: "0.60rem",
-              letterSpacing: "4px",
-              textTransform: "uppercase",
-              color: "var(--ink-soft)",
-              fontWeight: 500,
-              lineHeight: 1,
-            }}
-          >
-            Fleet Health
-          </p>
+          <div>
+            <p
+              style={{
+                fontFamily: "var(--font-ui)",
+                fontSize: "0.60rem",
+                letterSpacing: "4px",
+                textTransform: "uppercase",
+                color: "var(--ink-soft)",
+                fontWeight: 500,
+                lineHeight: 1,
+              }}
+            >
+              Fleet Health
+            </p>
+            {/* Live value in small type next to the label */}
+            <p
+              style={{
+                fontFamily: "var(--font-ui)",
+                fontSize: "0.55rem",
+                letterSpacing: "2px",
+                color: getWaveColor(health),
+                fontWeight: 600,
+                marginTop: "4px",
+                lineHeight: 1,
+              }}
+            >
+              {health}%
+            </p>
+          </div>
           <div className="shrink-0 rounded-2xl bg-theme-4 p-3 text-ember ring-1 ring-black/[0.04]">
             {icon}
           </div>
         </div>
 
-        {/* ── Thin 1px divider ───────────────────────────────────────────── */}
+        {/* ── Thin divider ──────────────────────────────────────── */}
         <hr
           style={{
             border: "none",
@@ -151,42 +199,15 @@ export function FleetHealthCard({
           }}
         />
 
-        {/* ── Liquid wave hero ───────────────────────────────────────────── */}
-        <div
-          className="relative overflow-hidden rounded-[18px] bg-theme-3"
-          style={{ height: 160 }}
-        >
-          {/* Wave fill layer */}
-          <LiquidWave pct={health} />
+        {/* ── Liquid number ─────────────────────────────────────── */}
+        <div className="relative">
+          <LiquidNumber pct={health} />
 
-          {/* Percentage number — SVG text with dominant-baseline: middle */}
-          <svg
-            viewBox="0 0 300 160"
-            preserveAspectRatio="xMidYMid slice"
-            className="absolute inset-0 w-full h-full"
-            aria-label={`${health}% fleet health`}
-          >
-            <text
-              x="150"
-              y="80"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              style={{
-                fontFamily: "'Tanker', sans-serif",
-                fontSize: "54px",
-                letterSpacing: "-2px",
-                fill: "var(--ink)",
-              }}
-            >
-              {health}%
-            </text>
-          </svg>
-
-          {/* CRITICAL warning banner — Chakra Petch */}
+          {/* CRITICAL warning — shown below wave when danger */}
           {isDanger && (
             <div
-              className="absolute inset-x-0 bottom-0 flex items-center justify-center py-2"
-              style={{ background: "rgba(220,38,38,0.88)" }}
+              className="mt-1 flex items-center justify-center rounded-[10px] py-1.5"
+              style={{ background: "rgba(239,68,68,0.10)", border: "1px solid rgba(239,68,68,0.25)" }}
             >
               <p
                 style={{
@@ -194,7 +215,7 @@ export function FleetHealthCard({
                   fontSize: "0.46rem",
                   letterSpacing: "2px",
                   textTransform: "uppercase",
-                  color: "white",
+                  color: "#ef4444",
                   fontWeight: 700,
                   lineHeight: 1,
                 }}
@@ -205,7 +226,7 @@ export function FleetHealthCard({
           )}
         </div>
 
-        {/* ── Detail text ────────────────────────────────────────────────── */}
+        {/* ── Detail text ───────────────────────────────────────── */}
         <p className="text-sm leading-6 text-theme-55">{detail}</p>
       </div>
     </>
