@@ -14,35 +14,47 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=tanker@400&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ─── DESIGN SYSTEM ─── */
+/* ─── DESIGN SYSTEM — Green HUD ─── */
 :root {
-  --ink:     #0a0a0f;
-  --ink-2:   #3a3a45;
-  --ink-3:   #8888a0;
-  --paper:   #f0efe8;
-  --paper-2: #fafaf4;
-  --white:   #ffffff;
-  --fire:    #e84e1b;
-  --fire-2:  #ff6535;
-  --gold:    #c8a96e;
-  --green:   #1db954;
-  --border:  rgba(10,10,15,0.08);
-  --border-d:rgba(255,255,255,0.07);
-  --r:       12px;
-  --r-lg:    20px;
-  --r-pill:  999px;
-  --nav-h:   68px;
-  --shadow:  0 2px 16px rgba(10,10,15,0.07);
-  --shadow-xl:0 20px 60px rgba(10,10,15,0.15);
-  --serif:   'Tanker', sans-serif;
-  --display: 'Satoshi', 'Helvetica Neue', sans-serif;
-  --mono:    'Chakra Petch', monospace;
+  /* Primary palette */
+  --bg:        #0e1f1a;
+  --bg-card:   #142b22;
+  --bg-dark:   #060809;
+  --signal:    #7ae0a9;
+  --fire:      #e84e1b;
+  --fire-2:    #ff6a3a;
+  --gold:      #c8a96e;
+  --hud:       rgba(255,240,210,0.85);
+  --hud-dim:   rgba(255,240,210,0.55);
+  --hud-off:   rgba(255,240,210,0.35);
+  --hair:      rgba(255,240,210,0.07);
+  /* Legacy aliases — keep original HTML working */
+  --ink:       rgba(255,240,210,0.82);
+  --ink-2:     rgba(255,240,210,0.55);
+  --ink-3:     rgba(255,240,210,0.35);
+  --paper:     #0e1f1a;
+  --paper-2:   #0f1e18;
+  --paper-3:   #142b22;
+  --white:     #142b22;
+  --green:     #7ae0a9;
+  --border:    rgba(255,240,210,0.08);
+  --border-d:  rgba(255,240,210,0.05);
+  /* Layout */
+  --r:         12px;
+  --r-lg:      20px;
+  --r-pill:    999px;
+  --nav-h:     72px;
+  --shadow:    0 2px 16px rgba(0,0,0,0.28);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.55);
+  --serif:     'Tanker', sans-serif;
+  --display:   'Satoshi', 'Helvetica Neue', sans-serif;
+  --mono:      'JetBrains Mono', 'Chakra Petch', monospace;
 }
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: var(--display); background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { font-family: var(--display); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { display: block; max-width: 100%; }
 a, button { cursor: pointer; }
 ul { list-style: none; }
@@ -535,6 +547,175 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 .unitree-stat-value { font-family: var(--mono); font-size: 17px; font-weight: 700; color: #fff; line-height: 1; }
 .unitree-banner-btns { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
 @media(max-width:768px) { .unitree-banner { padding: 24px 20px; } .unitree-banner-top { grid-template-columns: 1fr; gap: 20px; } .unitree-stats { flex-wrap: wrap; } }
+
+/* ── GREEN HUD OVERRIDES ── */
+
+/* Sections that used background:var(--ink) for dark BG — now explicitly dark */
+.hiw-sec, .hiw-cell,
+.tm-sec,
+.lead-sec,
+footer,
+.news-ticker,
+.ticker-wrap,
+.signal-sub-bar,
+#spotlight { background: var(--bg-dark) !important; }
+
+/* Nav — green world */
+#nav { background: rgba(14,31,26,0.92) !important; border-color: rgba(255,240,210,0.05) !important; }
+#nav.scrolled { border-color: rgba(255,240,210,0.1) !important; box-shadow: 0 1px 24px rgba(0,0,0,0.4) !important; }
+.nav-logo { color: var(--hud) !important; }
+.nav-links a { color: var(--hud-dim) !important; }
+.nav-links a:hover { color: var(--hud) !important; background: rgba(255,240,210,0.05) !important; }
+.nav-cta { background: var(--fire) !important; color: #fff !important; }
+.nav-cta:hover { background: var(--fire-2) !important; }
+.nav-burger span { background: var(--hud) !important; }
+@media(max-width:768px) { .nav-links { background: #0d1f19 !important; border-color: rgba(255,240,210,0.07) !important; } }
+
+/* Dropdown */
+.nav-dropdown-menu { background: #112219 !important; border-color: rgba(255,240,210,0.1) !important; box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important; }
+.nav-dropdown-menu::before { background: #112219 !important; border-color: rgba(255,240,210,0.1) !important; }
+.nav-dropdown-menu li a { color: var(--hud-dim) !important; }
+.nav-dropdown-menu li a:hover { background: rgba(255,240,210,0.05) !important; }
+.dropdown-name { color: var(--hud) !important; }
+.dropdown-desc { color: var(--hud-off) !important; }
+
+/* Pulse anim — signal green */
+.pulse { background: var(--signal) !important; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(122,224,169,0.25);}50%{box-shadow:0 0 0 7px rgba(122,224,169,0.07);} }
+
+/* Hero overlay — green-tinted dark */
+.hero-bg::after { background: linear-gradient(to top, rgba(6,8,9,0.94) 0%, rgba(14,31,26,0.62) 50%, rgba(14,31,26,0.28) 100%) !important; }
+
+/* Tab active — fire instead of white */
+.tab-btn.active { background: var(--fire) !important; color: #fff !important; box-shadow: none !important; }
+.tab-btn { color: var(--hud-off) !important; }
+
+/* Cards — bg-card */
+.rcard { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+.rcard:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.55) !important; }
+.spec { background: rgba(255,240,210,0.04) !important; }
+
+/* Badges */
+.badge-green { background: rgba(122,224,169,0.1) !important; color: var(--signal) !important; border-color: rgba(122,224,169,0.2) !important; }
+.badge-indigo { background: rgba(165,180,252,0.1) !important; color: #a5b4fc !important; border-color: rgba(165,180,252,0.2) !important; }
+.badge-gold { background: rgba(200,169,110,0.1) !important; color: var(--gold) !important; border-color: rgba(200,169,110,0.2) !important; }
+
+/* Plan cards */
+.plan { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+.plan.hot { background: var(--bg-dark) !important; border-color: rgba(232,78,27,0.2) !important; }
+.plan-btn-dark { background: rgba(255,240,210,0.08) !important; color: var(--hud) !important; }
+.plan-btn-dark:hover { background: var(--fire) !important; color: #fff !important; }
+.plan-btn-outline { color: var(--hud-dim) !important; border-color: rgba(255,240,210,0.12) !important; }
+.plan-btn-outline:hover { border-color: var(--hud-dim) !important; background: rgba(255,240,210,0.04) !important; }
+
+/* Addon cards */
+.addon { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+
+/* ROI calc */
+.calc-box { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+.calc-out { background: rgba(255,240,210,0.04) !important; }
+input[type=range] { background: rgba(255,240,210,0.1) !important; }
+
+/* Acquire / shop cards */
+.scard { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+.scard.hot { border-color: var(--fire) !important; }
+.scard-btn { background: rgba(255,240,210,0.08) !important; color: var(--hud) !important; }
+.scard-btn:hover { background: var(--fire) !important; color: #fff !important; }
+.scard-spec { background: rgba(255,240,210,0.04) !important; }
+
+/* Compare table */
+.acquire-sec div[style*="overflow-x:auto"] { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.08) !important; }
+#compare-table { background: var(--bg-card) !important; }
+#compare-table th { color: var(--hud-off) !important; }
+#compare-table td { color: var(--hud-dim) !important; }
+#compare-table td:first-child { color: var(--hud) !important; }
+#compare-table thead tr { border-color: rgba(255,240,210,0.07) !important; }
+#compare-table tbody tr { border-color: rgba(255,240,210,0.05) !important; }
+
+/* Supplier mini cards */
+.acquire-sec div[style*="background:#fff"] { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+
+/* KPI boxes */
+.kpi { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+.notice { border-color: rgba(255,240,210,0.07) !important; }
+
+/* Social proof */
+.quote-card { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+.metrics-row { border-color: rgba(255,240,210,0.07) !important; }
+.metric-cell { border-color: rgba(255,240,210,0.07) !important; }
+
+/* Partners grid */
+.partners-sec { background: var(--bg-dark) !important; border-color: rgba(255,240,210,0.05) !important; }
+.partners-grid { border-color: rgba(255,240,210,0.06) !important; }
+.pcell { border-color: rgba(255,240,210,0.06) !important; }
+.pcell:hover { background: rgba(255,240,210,0.04) !important; }
+.p-logo { color: rgba(255,240,210,0.4) !important; }
+.partners-label { color: var(--hud-off) !important; }
+
+/* Signal cards */
+.signal-card { background: rgba(255,240,210,0.03) !important; border-color: rgba(255,240,210,0.07) !important; }
+.signal-card:hover { border-color: var(--fire) !important; }
+.signal-card-title { color: var(--hud) !important; }
+.signal-card-desc { color: var(--hud-off) !important; }
+.signal-card-foot { color: var(--hud-off) !important; }
+
+/* Modals */
+.modal { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+.modal-dark { background: var(--bg-dark) !important; }
+.modal-x { background: rgba(255,240,210,0.06) !important; border-color: rgba(255,240,210,0.1) !important; }
+.modal-x svg { stroke: var(--hud) !important; }
+.modal-title { color: var(--hud) !important; }
+.modal-dark .modal-title { color: #fff !important; }
+.modal-prose h3 { color: var(--hud) !important; }
+.modal-dark .modal-prose h3 { color: rgba(255,240,210,0.85) !important; }
+.fgroup input, .fgroup select, .fgroup textarea { background: rgba(255,240,210,0.05) !important; border-color: rgba(255,240,210,0.1) !important; color: var(--hud) !important; }
+.fgroup label { color: var(--hud-off) !important; }
+.fgroup input::placeholder, .fgroup textarea::placeholder { color: var(--hud-off) !important; }
+
+/* Terminal */
+.terminal { background: #050608 !important; border-color: rgba(255,240,210,0.07) !important; }
+.term-bar { background: #0a0c0d !important; border-color: rgba(255,240,210,0.04) !important; }
+.tok { color: var(--signal) !important; }
+.term-label { color: rgba(255,240,210,0.2) !important; }
+.tk { color: rgba(255,240,210,0.25) !important; }
+
+/* Unitree banner */
+.unitree-banner { background: #0d1f19 !important; border: 1px solid rgba(122,224,169,0.08) !important; border-radius: var(--r-lg); }
+.unitree-stat { border-color: rgba(255,240,210,0.08) !important; }
+.unitree-stat-label { color: var(--hud-off) !important; }
+
+/* Privacy cards */
+.privacy-sec { background: var(--bg) !important; border-color: rgba(255,240,210,0.06) !important; }
+.privacy-card { background: var(--bg-card) !important; border-color: rgba(255,240,210,0.07) !important; }
+.privacy-card:hover { border-color: rgba(122,224,169,0.25) !important; box-shadow: 0 4px 20px rgba(122,224,169,0.07) !important; }
+.privacy-badge-txt { color: var(--signal) !important; }
+.privacy-badge { background: rgba(122,224,169,0.08) !important; border-color: rgba(122,224,169,0.18) !important; }
+
+/* Form ok state */
+.form-ok-title { color: var(--hud) !important; }
+.modal-dark .form-ok-title { color: #fff !important; }
+
+/* ── TOPSTRIP ── */
+.topstrip { background: var(--bg-dark); border-bottom: 1px solid rgba(122,224,169,0.07); height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hud-off); position: relative; z-index: 100; }
+.topstrip-l, .topstrip-r { display: flex; align-items: center; gap: 20px; }
+.ts-live { color: var(--signal); display: flex; align-items: center; gap: 6px; }
+.ts-live::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--signal); animation: ts-pulse 2s ease infinite; flex-shrink: 0; }
+@keyframes ts-pulse { 0%,100%{opacity:1;}50%{opacity:0.4;} }
+@media(max-width:768px) { .topstrip { padding: 0 16px; } .topstrip-r { display: none; } }
+
+/* ── HUD HERO ELEMENTS ── */
+.hud-grid { position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(122,224,169,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(122,224,169,0.035) 1px, transparent 1px); background-size: 72px 72px; }
+.hud-xhair { position: absolute; top: 44%; left: 55%; transform: translate(-50%,-50%); z-index: 1; pointer-events: none; opacity: 0.5; }
+.hud-panel { position: absolute; bottom: 88px; right: 48px; z-index: 2; background: rgba(6,8,9,0.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(122,224,169,0.14); border-radius: 10px; padding: 14px 18px; min-width: 196px; }
+.hud-row { display: flex; justify-content: space-between; gap: 20px; font-family: var(--mono); font-size: 9.5px; padding: 3px 0; border-bottom: 1px solid rgba(122,224,169,0.05); }
+.hud-row:last-child { border-bottom: none; }
+.hud-k { color: rgba(255,240,210,0.28); letter-spacing: 0.1em; }
+.hud-v { color: rgba(255,240,210,0.65); }
+.hero-stats { position: absolute; bottom: 88px; left: 48px; z-index: 2; display: flex; gap: 36px; }
+.hstat { display: flex; flex-direction: column; gap: 5px; }
+.hstat-n { font-family: var(--serif); font-size: 38px; color: var(--signal); letter-spacing: -0.04em; line-height: 1; }
+.hstat-l { font-family: var(--mono); font-size: 8.5px; color: rgba(255,240,210,0.32); letter-spacing: 0.09em; text-transform: uppercase; }
+@media(max-width:768px) { .hud-panel { display: none; } .hero-stats { display: none; } .hud-xhair { display: none; } }
 </style>
 </head>
 <body>
@@ -576,6 +757,20 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<!-- TOPSTRIP -->
+<div class="topstrip">
+  <div class="topstrip-l">
+    <span class="ts-live">Fleet Operational</span>
+    <span>247 nodes online</span>
+    <span>Signal nominal</span>
+  </div>
+  <div class="topstrip-r">
+    <span id="ts-clock">--:-- UTC</span>
+    <span>v4.2.1</span>
+    <span>Austin · TX</span>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="news-ticker">
@@ -633,6 +828,19 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 </div>
 
 <section id="hero">
+  <!-- HUD grid overlay -->
+  <div class="hud-grid" aria-hidden="true"></div>
+  <!-- Crosshair -->
+  <div class="hud-xhair" aria-hidden="true">
+    <svg viewBox="0 0 80 80" width="80" height="80">
+      <circle cx="40" cy="40" r="28" fill="none" stroke="rgba(122,224,169,0.22)" stroke-width="1"/>
+      <circle cx="40" cy="40" r="7" fill="none" stroke="rgba(122,224,169,0.55)" stroke-width="1"/>
+      <line x1="40" y1="2" x2="40" y2="31" stroke="rgba(122,224,169,0.4)" stroke-width="1"/>
+      <line x1="40" y1="49" x2="40" y2="78" stroke="rgba(122,224,169,0.4)" stroke-width="1"/>
+      <line x1="2" y1="40" x2="31" y2="40" stroke="rgba(122,224,169,0.4)" stroke-width="1"/>
+      <line x1="49" y1="40" x2="78" y2="40" stroke="rgba(122,224,169,0.4)" stroke-width="1"/>
+    </svg>
+  </div>
   <div class="hero-bg">
     <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=1800&auto=format&fit=crop&q=85" alt="Autonomous drone fleet" loading="eager">
   </div>
@@ -647,6 +855,21 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Start TechMedix — $299/mo</a>
       <a href="#agents" class="btn btn-outline-white">Explore Autonomous Systems &rarr;</a>
     </div>
+  </div>
+  <!-- HUD telemetry panel -->
+  <div class="hud-panel">
+    <div class="hud-row"><span class="hud-k">STATUS</span><span class="hud-v tok">OPERATIONAL</span></div>
+    <div class="hud-row"><span class="hud-k">NODES</span><span class="hud-v">247 online</span></div>
+    <div class="hud-row"><span class="hud-k">SIGNAL</span><span class="hud-v tok">NOMINAL</span></div>
+    <div class="hud-row"><span class="hud-k">UTC</span><span class="hud-v" id="hero-clock">--:--</span></div>
+    <div class="hud-row"><span class="hud-k">VER</span><span class="hud-v">v4.2.1</span></div>
+  </div>
+  <!-- Stat counters -->
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n" data-target="48" data-suffix="h">48h</div><div class="hstat-l">Failure prediction</div></div>
+    <div class="hstat"><div class="hstat-n" data-target="99" data-suffix="%">99%</div><div class="hstat-l">Uptime target</div></div>
+    <div class="hstat"><div class="hstat-n" data-target="247" data-suffix="">247</div><div class="hstat-l">Active nodes</div></div>
+    <div class="hstat"><div class="hstat-n" data-target="14" data-suffix="+">14+</div><div class="hstat-l">Platforms</div></div>
   </div>
   <div class="hero-scroll">
     <div class="hero-scroll-line"></div>
@@ -1721,7 +1944,7 @@ document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e
 document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.overlay.open').forEach(m => closeModal(m.id)); });
 
 // Agent tabs
-const AGENT_TABS = ['humanoids','drones','delivery','industrial','cleaning'];
+const AGENT_TABS = ['humanoids','drones','delivery','industrial','ebikes','cleaning'];
 function switchTab(name, btn) {
   AGENT_TABS.forEach(t => {
     const el = document.getElementById('tab-'+t);
@@ -1737,7 +1960,7 @@ function jumpTab(name) {
 }
 
 // Acquire tabs
-const ACQ_TABS = ['humanoids','quadrupeds','drones','ebikes','suppliers','cleaning'];
+const ACQ_TABS = ['humanoids','quadrupeds','drones','ebikes','arms','suppliers','cleaning'];
 function switchAcq(name, btn) {
   ACQ_TABS.forEach(t => {
     const el = document.getElementById('acq-'+t);
@@ -1890,11 +2113,7 @@ async function loadSignalFeed() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-<<<<<<< Updated upstream:index.html
-        model: "claude-sonnet-4-20250514" /* internal API call — not user-facing */,
-=======
-        model: "claude-opus-4-7",
->>>>>>> Stashed changes:BCR.HMTL Domain/index.html
+        model: "claude-sonnet-4-6",
         max_tokens: 1000,
         messages: [{
           role: "user",
@@ -1943,3 +2162,59 @@ function handleSignal() {
   const email = document.getElementById('signal-email').value;
   if (!email || !email.includes('@')) return;
   fetch('https://formspree.io/f/xreyrndq', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({email, interest_type:'signal_subscribe', source:'blackcat_website', _subject:'Signal Subscribe — '+email})
+  }).then(r => {
+    if(r.ok) { document.getElementById('signal-ok').style.display='block'; }
+  }).catch(()=>{});
+}
+
+function observeReveal() {
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => obs.observe(el));
+}
+
+loadSignalFeed();
+
+// ── Live clock ──
+function updateClock() {
+  const now = new Date();
+  const hh = String(now.getUTCHours()).padStart(2,'0');
+  const mm = String(now.getUTCMinutes()).padStart(2,'0');
+  const time = hh+':'+mm;
+  const hc = document.getElementById('hero-clock');
+  const tc = document.getElementById('ts-clock');
+  if(hc) hc.textContent = time;
+  if(tc) tc.textContent = time+' UTC';
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+// ── Hero stat counters ──
+function animateCounter(el) {
+  const target = +el.dataset.target;
+  const suffix = el.dataset.suffix || '';
+  const duration = 1400;
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * ease) + suffix;
+    if(p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if(en.isIntersecting) {
+      animateCounter(en.target);
+      counterObs.unobserve(en.target);
+    }
+  });
+}, {threshold: 0.5});
+
+document.querySelectorAll('.hstat-n[data-target]').forEach(el => counterObs.observe(el));
+</script>
+</body>
+</html>
