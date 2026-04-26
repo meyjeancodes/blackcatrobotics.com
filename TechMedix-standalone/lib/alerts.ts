@@ -98,7 +98,7 @@ export async function sendAlert(
     const { data, error } = await resend.emails.send({
       from: "TechMedix AI <alerts@blackcatrobotics.com>",
       to: [customer.email],
-      cc: ["blackcatrobotics.ai@gmail.com"],
+      ...(process.env.ALERTS_CC_EMAIL ? { cc: [process.env.ALERTS_CC_EMAIL] } : {}),
       subject: `TechMedix Alert — ${severityLabel}: ${diagnosticResult.robot_id}`,
       html: htmlBody,
     });
