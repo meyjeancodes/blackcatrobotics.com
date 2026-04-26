@@ -42,33 +42,24 @@ export default function OperationsPage() {
 
       {/* Construct.bot panel */}
       <div className="panel px-6 py-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p className="kicker">Coming Soon</p>
-            <h2 className="mt-2 text-xl font-header text-theme-primary">Construct.bot</h2>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-theme-55">
-              AI-assisted build and infrastructure planning system. Integrates with HABITAT Construct.Bot fleets to execute project planning, permit generation, and autonomous build sequencing.
-            </p>
-          </div>
-          <div className="rounded-[18px] border border-theme-5 bg-theme-3 px-4 py-3 min-w-[220px]">
-            <p className="font-ui text-[0.6rem] uppercase tracking-[0.18em] text-theme-35 mb-2">Request access</p>
-            <input
-              disabled
-              placeholder="your@email.com"
-              className="w-full rounded-[10px] border border-theme-10 bg-theme-2 px-3 py-2 font-ui text-xs text-theme-40 placeholder:text-theme-25 cursor-not-allowed"
-            />
-            <p className="mt-2 font-ui text-[0.58rem] uppercase tracking-[0.12em] text-theme-25">Notify on launch</p>
-          </div>
+        <div className="mb-5">
+          <p className="kicker">BlackCat Roadmap</p>
+          <h2 className="mt-2 text-xl font-header text-theme-primary">Construct.bot</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-theme-55">
+            AI-assisted build and infrastructure planning system. Integrates with HABITAT Construct.Bot
+            fleets to execute project planning, permit generation, and autonomous build sequencing.
+            Active development — available to enterprise customers on request.
+          </p>
         </div>
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-3">
           {[
-            { label: "Blueprint generation", desc: "AI produces permit-ready CAD from site parameters and code constraints." },
-            { label: "Fleet sequencing", desc: "Construct.Bot autonomous build order optimized for parallel execution." },
-            { label: "Material procurement", desc: "Automated sourcing and sequencing — no manual procurement process." },
+            { label: "Blueprint generation", desc: "AI produces permit-ready CAD from site parameters and local code constraints." },
+            { label: "Fleet sequencing", desc: "Construct.Bot autonomous build order optimized for parallel robot execution." },
+            { label: "Material procurement", desc: "Automated sourcing and delivery sequencing integrated with your supply chain." },
           ].map((item) => (
             <div key={item.label} className="rounded-[16px] border border-theme-5 bg-theme-2 p-4">
-              <p className="text-sm font-semibold text-theme-50">{item.label}</p>
-              <p className="mt-1.5 text-xs leading-relaxed text-theme-35">{item.desc}</p>
+              <p className="text-sm font-semibold text-theme-primary">{item.label}</p>
+              <p className="mt-1.5 text-xs leading-relaxed text-theme-45">{item.desc}</p>
             </div>
           ))}
         </div>
