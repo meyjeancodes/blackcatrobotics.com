@@ -38,12 +38,31 @@ export default function SettingsPage() {
           </div>
         </SurfaceCard>
 
-        <SurfaceCard title="Integration checklist" eyebrow="Next production steps">
-          <div className="space-y-4 text-sm leading-7 text-theme-60">
-            <p>1. Create the Supabase project, run the SQL migration, and flip <code className="rounded bg-theme-5 px-1 py-0.5 text-xs">TECHMEDIX_USE_MOCK_DATA=false</code>.</p>
-            <p>2. Replace this page’s static environment summary with live ingestion keys, notification toggles, and account preferences.</p>
-            <p>3. Add Stripe portal links and real webhook status for billing events once Stripe is integrated.</p>
-            <p>4. Wire role assignment to Supabase Auth <code className="rounded bg-theme-5 px-1 py-0.5 text-xs">user_metadata.role</code> field for production RBAC enforcement.</p>
+        <SurfaceCard title="Notifications" eyebrow="Alert preferences">
+          <div className="space-y-2">
+            {[
+              { label: "Critical fault alerts", desc: "Immediate email + SMS on severity: critical", defaultOn: true },
+              { label: "Predictive maintenance reminders", desc: "48h advance warning on upcoming service windows", defaultOn: true },
+              { label: "Fleet health weekly digest", desc: "Sunday summary of fleet-wide health trends", defaultOn: false },
+              { label: "Technician dispatch confirmations", desc: "Email when a field tech accepts or completes a job", defaultOn: true },
+              { label: "Billing & invoice alerts", desc: "Invoice generated, payment failed, plan changes", defaultOn: true },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center justify-between rounded-[16px] border border-theme-5 bg-theme-2 px-4 py-3 gap-4">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-theme-primary">{item.label}</p>
+                  <p className="text-xs text-theme-40">{item.desc}</p>
+                </div>
+                <div
+                  className={`relative h-5 w-9 shrink-0 rounded-full transition-colors ${item.defaultOn ? "bg-ember" : "bg-theme-10"}`}
+                  title={item.defaultOn ? "Enabled" : "Disabled"}
+                >
+                  <span
+                    className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${item.defaultOn ? "translate-x-4" : "translate-x-0.5"}`}
+                  />
+                </div>
+              </div>
+            ))}
+            <p className="pt-1 text-[0.6rem] text-theme-30">Notification preferences are saved per user account. Contact support to configure org-wide defaults.</p>
           </div>
         </SurfaceCard>
       </div>

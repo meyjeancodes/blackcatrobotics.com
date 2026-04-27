@@ -107,8 +107,8 @@ const COMPONENTS: ComponentEntry[] = [
     name: "Safety Standards",
     icon: Shield,
     bottleneck: false,
-    summary: "ISO 25785-1 (bipedal robots) is in working draft -- expected 2026-2027. ISO 10218 covers industrial robots. ISO 13482 covers service robots. EU Machinery Regulation applies Jan 2027.",
-    keyFact: "Only Agility Robotics Digit has achieved NRTL field certification. AI Act applies to high-risk autonomous systems from August 2026.",
+    summary: "ISO 25785-1 (bipedal robots) is in working draft — final publication expected 2027. ISO 10218 covers industrial robots. ISO 13482 covers service robots. EU Machinery Regulation applies Jan 2027.",
+    keyFact: "Only Agility Robotics Digit has achieved NRTL field certification. EU AI Act high-risk classification applies to autonomous systems from August 2026.",
     humanBridge: "LOTO (Lock Out Tag Out) and zero-energy verification before any physical work. Know which standard covers the robot you're servicing -- it determines your liability and documentation requirements.",
   },
 ];
@@ -133,7 +133,7 @@ const AI_LAYER = [
     color: "text-sky-600",
     bg: "bg-sky-500/[0.08]",
     description: "Vision-Language-Action models unify perception, language grounding, and control policies. They are the generalist reasoning layer — the robot's 'common sense' for embodied tasks.",
-    examples: "π0 (Physical Intelligence), OpenVLA, RoboFlamingo, Helix (Figure), UnifoLM-VLA (Unitree)",
+    examples: "π0 (Physical Intelligence), OpenVLA, RoboFlamingo, Helix (Figure), UnifoLM-VLA (Unitree), Asimov Locomotion Policy (in development)",
     techBridge: "VLA inference stall = motor overheat or perception dropout feeding corrupted state. Check camera feeds and motor temps before blaming the model.",
   },
   {
@@ -160,7 +160,8 @@ const AI_LAYER = [
 
 const SIM_ENVS = [
   { name: "NVIDIA Isaac Sim", tag: "GPU-native", desc: "Photo-realistic simulation for AMRs and manipulators. Deep ROS2 integration, domain randomization built-in, Isaac Lab RL framework.", url: "https://developer.nvidia.com/isaac/sim" },
-  { name: "MuJoCo", tag: "Physics", desc: "DeepMind's high-fidelity physics engine. Industry standard for RL research and whole-body control. Free since 2022.", url: "https://mujoco.org" },
+  { name: "MuJoCo", tag: "Physics", desc: "DeepMind's high-fidelity physics engine. Industry standard for RL research and whole-body control. Free since 2022. Official sim model for Asimov V1.", url: "https://mujoco.org" },
+  { name: "Asimov V1 Sim Model", tag: "Open Source", desc: "Official MuJoCo simulation model for the Asimov V1 open-source humanoid. Mechanical CAD (7 subassemblies), full BOM, and CERN-OHL-S-2.0 hardware license. Build, train, and customize.", url: "https://github.com/asimovinc/asimov-v1" },
   { name: "Gazebo / Gz Sim", tag: "ROS2", desc: "The canonical open-source simulator for ROS/ROS2. Large community, sensor plugins, multi-robot support.", url: "https://gazebosim.org" },
   { name: "Webots", tag: "Open Source", desc: "Cross-platform, MIT-licensed. Supports Python, C++, Java, MATLAB. Good for teaching and rapid prototyping.", url: "https://cyberbotics.com" },
   { name: "Genesis", tag: "Research", desc: "Ultra-fast, GPU-parallel physics. Built for large-scale sim-to-real RL training. Python-native, 430 000x faster than real-time.", url: "https://genesis-world.readthedocs.io" },
@@ -174,6 +175,7 @@ const TOOLS = [
   { name: "PythonRobotics", desc: "Clean Python implementations of 100+ robotics algorithms — SLAM, path planning, localization. Great for study.", tag: "Algorithms" },
   { name: "ONNX Runtime", desc: "Cross-platform inference for vision and policy models. Deploy PyTorch/TF models to Jetson/x86 at production latency.", tag: "Inference" },
   { name: "ROS 2 Control", desc: "Hardware abstraction layer for actuators and sensors. Standardizes controllers across robot platforms.", tag: "Hardware" },
+  { name: "Asimov V1 SDK", desc: "Open-source onboard software stack for the Asimov V1 humanoid. Raspberry Pi 5 + Radxa CM5 dual-compute, CAN Bus 1Mbps, CERN-OHL-S-2.0 licensed. Pre-order DIY kit or self-source from the BOM.", tag: "Open Source" },
 ];
 
 const COURSES = [
@@ -466,7 +468,7 @@ export default function KnowledgePage() {
                 injection, teardown sequences, and telemetry diagnosis in the browser.
               </p>
               <div className="mt-1 flex items-center gap-3 text-[0.52rem] text-[var(--ink)]/40">
-                <span>16 platforms</span>
+                <span>{totalPlatforms} platforms</span>
                 <span>·</span>
                 <span>4 scenarios</span>
                 <span>·</span>

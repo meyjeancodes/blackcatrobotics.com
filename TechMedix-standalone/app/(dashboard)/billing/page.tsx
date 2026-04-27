@@ -25,10 +25,10 @@ const techmedixPlans = [
   {
     id: "operator",
     name: "Operator",
-    range: "Single operator coverage",
-    price: "$299",
-    unit: "per robot / month",
-    features: ["Single-robot coverage", "Diagnostic alerts", "Email support", "On-demand dispatch"],
+    range: "Individual technician",
+    price: "$49",
+    unit: "per seat / month",
+    features: ["Knowledge Hub access", "Blueprint & Sim Lab", "Certification exams (L1–L5)", "Repair protocol library", "Read-only fleet view"],
   },
   {
     id: "command",
@@ -159,7 +159,7 @@ export default async function BillingPage() {
               highlight
             />
             <a
-              href="mailto:support@blackcatrobotics.com"
+              href="mailto:blackcatrobotics.ai@gmail.com"
               className="text-center text-[0.60rem] font-ui uppercase tracking-[0.14em] text-theme-40 hover:text-theme-primary transition"
             >
               Contact for enterprise pricing
