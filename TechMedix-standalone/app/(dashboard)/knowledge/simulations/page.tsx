@@ -7,16 +7,17 @@ import { useEffect, useState } from "react";
 import { ChevronRight, Cpu, Layers, Play, Zap } from "lucide-react";
 
 const PLATFORM_OPTIONS = [
-  { id: "unitree-g1",        label: "Unitree G1" },
-  { id: "unitree-h1",        label: "Unitree H1" },
-  { id: "boston-dynamics-spot", label: "Spot" },
-  { id: "agility-digit",    label: "Digit" },
-  { id: "figure-01",         label: "Figure 01" },
-  { id: "tesla-optimus",     label: "Optimus" },
+  { id: "unitree-g1",    label: "G1" },
+  { id: "unitree-h1-2",  label: "H1-2" },
+  { id: "asimov-v1",     label: "Asimov V1" },
+  { id: "spot",          label: "Spot" },
+  { id: "digit-v5",      label: "Digit V5" },
+  { id: "figure-02",     label: "Figure 02" },
+  { id: "optimus-gen3",  label: "Optimus" },
 ];
 
 const STAT_PILLS = [
-  { icon: Cpu,    label: "16 platforms" },
+  { icon: Cpu,    label: "18+ platforms" },
   { icon: Layers, label: "4 scenarios" },
   { icon: Zap,    label: "Fault injection" },
   { icon: Play,   label: "3D interactive" },

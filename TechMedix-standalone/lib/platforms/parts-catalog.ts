@@ -118,6 +118,7 @@ const HUMANOID: ChassisDefinition = {
     "optimus-gen3",
     "digit-v5",
     "phantom-mk1",
+    "asimov-v1",
   ],
   accents: [
     { cx: 100, cy: 60, r: 0 }, // placeholder
