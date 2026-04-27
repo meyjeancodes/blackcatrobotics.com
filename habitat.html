@@ -489,9 +489,60 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
   animation: counterPulse 0.6s ease;
 }
 
+/* ── SCROLL PROGRESS BAR ── */
+#scroll-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:var(--fire);z-index:9999;transition:width 0.08s linear;will-change:width;pointer-events:none;}
+
+/* ── MOBILE HAMBURGER ── */
+.nav-ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:1px solid var(--border);border-radius:var(--r);cursor:pointer;padding:8px;transition:border-color 0.2s;flex-shrink:0;}
+.nav-ham span{display:block;width:18px;height:1.5px;background:var(--cream);border-radius:2px;transition:all 0.25s ease;}
+.nav-ham.open{border-color:var(--border-fire);}
+.nav-ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-ham.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.nav-ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.nav-mobile{position:fixed;top:66px;left:0;right:0;z-index:199;background:rgba(250,248,245,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:0;transform:translateY(-8px);opacity:0;pointer-events:none;transition:transform 0.25s ease,opacity 0.25s ease;}
+.nav-mobile.open{opacity:1;transform:translateY(0);pointer-events:auto;}
+.nav-mobile a{font-family:var(--chakra);font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream-dim);padding:15px 24px;border-bottom:1px solid rgba(10,10,10,0.05);transition:color 0.2s,background 0.2s;}
+.nav-mobile a:hover{color:var(--fire);background:rgba(224,90,30,0.03);}
+.nav-mobile a.nav-mobile-cta{color:var(--fire);font-weight:700;border-bottom:none;}
+@media(max-width:768px){.nav-ham{display:flex;}}
+
+/* ── HUD CYCLING ── */
+.hud-val{display:block;transition:opacity 0.3s ease,transform 0.3s ease;}
+.hud-val.exiting{opacity:0;transform:translateY(-5px);}
+.hud-sub{display:block;transition:opacity 0.25s ease;}
+.hud-sub.exiting{opacity:0;}
+
+/* ── OPEN PLATFORM ECOSYSTEM SECTION ── */
+.ecosystem-sec{background:#0d0d0e;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:100px 0;}
+.ecosystem-sec .eyebrow{color:var(--fire);}
+.ecosystem-sec .eyebrow::before{background:var(--fire);}
+.ecosystem-sec .t-h2{color:#f2efe8;}
+.ecosystem-sec .t-h2 em{color:var(--fire);}
+.ecosystem-sec .t-body{color:rgba(242,239,232,0.55);}
+.eco-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:56px;}
+.eco-col-head{font-family:var(--chakra);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--fire);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.eco-col-head::before{content:'';width:18px;height:1px;background:var(--fire);flex-shrink:0;}
+.eco-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r-lg);padding:22px 24px;transition:border-color 0.2s,background 0.2s;margin-bottom:12px;}
+.eco-card:hover{border-color:rgba(224,90,30,0.3);background:rgba(224,90,30,0.04);}
+.eco-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;}
+.eco-card-name{font-family:var(--satoshi);font-size:15px;font-weight:700;color:#f2efe8;line-height:1.2;}
+.eco-card-badge{font-family:var(--chakra);font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--fire);background:rgba(224,90,30,0.12);border:1px solid rgba(224,90,30,0.25);border-radius:var(--pill);padding:3px 10px;white-space:nowrap;flex-shrink:0;}
+.eco-card-desc{font-family:var(--satoshi);font-size:13px;line-height:1.65;color:rgba(242,239,232,0.5);}
+.eco-card-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.eco-card-link{font-family:var(--chakra);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--fire);background:rgba(224,90,30,0.08);border:1px solid rgba(224,90,30,0.2);border-radius:var(--pill);padding:4px 12px;transition:background 0.18s;}
+.eco-card-link:hover{background:rgba(224,90,30,0.16);}
+@media(max-width:768px){.eco-grid{grid-template-columns:1fr;}}
+
+/* ── PERFORMANCE / WILL-CHANGE ── */
+.marquee-track,.hero-ticker-inner{will-change:transform;}
+.fade-in{will-change:opacity,transform;}
+.hero-bot-badge-dot,.bot-hud-dot{will-change:opacity,transform;}
+.type-card,.market-card,.build-card{will-change:transform;}
+
 </style>
 </head>
 <body>
+<div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav id="main-nav">
@@ -509,12 +560,28 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
     <li><a href="#homes">What We Build</a></li>
     <li><a href="#tech">Technology</a></li>
     <li><a href="#markets">Markets</a></li>
+    <li><a href="#ecosystem">Ecosystem</a></li>
     <li><a href="#partners">Partners</a></li>
+  </ul>
   <a href="#waitlist" class="btn btn-fire" style="font-size:11px;padding:11px 22px;">
     Join Waitlist
     <svg class="arr" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
+  <button class="nav-ham" id="nav-ham" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<!-- Mobile slide-down nav -->
+<div class="nav-mobile" id="nav-mobile" aria-hidden="true">
+  <a href="#tiers">Systems</a>
+  <a href="#construct-bot">Construct.Bot</a>
+  <a href="#how">How It Works</a>
+  <a href="#homes">What We Build</a>
+  <a href="#tech">Technology</a>
+  <a href="#markets">Markets</a>
+  <a href="#partners">Partners</a>
+  <a href="#waitlist" class="nav-mobile-cta">Join Waitlist →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -588,25 +655,25 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
         <div class="hero-bot-hud-row" style="margin-bottom:10px;">
           <div class="hero-bot-hud-panel">
             <div class="hero-bot-hud-panel-label">Status</div>
-            <div class="hero-bot-hud-panel-val hero-counter">ACTIVE</div>
-            <div class="hero-bot-hud-panel-sub">Layer 14 of 62</div>
+            <div class="hero-bot-hud-panel-val hud-val" id="hud-status">ACTIVE</div>
+            <div class="hero-bot-hud-panel-sub hud-sub" id="hud-status-sub">Layer 14 of 62</div>
           </div>
           <div class="hero-bot-hud-panel">
             <div class="hero-bot-hud-panel-label">Operation</div>
-            <div class="hero-bot-hud-panel-val">24/7</div>
-            <div class="hero-bot-hud-panel-sub">No crew required</div>
+            <div class="hero-bot-hud-panel-val hud-val" id="hud-op">24/7</div>
+            <div class="hero-bot-hud-panel-sub hud-sub" id="hud-op-sub">No crew required</div>
           </div>
         </div>
         <div class="hero-bot-hud-row">
           <div class="hero-bot-hud-panel">
             <div class="hero-bot-hud-panel-label">Navigation</div>
-            <div class="hero-bot-hud-panel-val">SLAM</div>
-            <div class="hero-bot-hud-panel-sub">Obstacle-free path</div>
+            <div class="hero-bot-hud-panel-val hud-val" id="hud-nav">SLAM</div>
+            <div class="hero-bot-hud-panel-sub hud-sub" id="hud-nav-sub">Obstacle-free path</div>
           </div>
           <div class="hero-bot-hud-panel">
             <div class="hero-bot-hud-panel-label">Build ETA</div>
-            <div class="hero-bot-hud-panel-val">68h</div>
-            <div class="hero-bot-hud-panel-sub">Tiny home target</div>
+            <div class="hero-bot-hud-panel-val hud-val" id="hud-eta">68h</div>
+            <div class="hero-bot-hud-panel-sub hud-sub" id="hud-eta-sub">Tiny home target</div>
           </div>
         </div>
       </div>
@@ -646,6 +713,8 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
     <span class="m-item"><span class="m-dot"></span>Net-Zero From Day One</span>
     <span class="m-item"><span class="m-dot"></span>Digital Assets Accepted</span>
     <span class="m-item"><span class="m-dot"></span>NVIDIA Powered</span>
+    <span class="m-item"><span class="m-dot"></span>Asimov V1</span>
+    <span class="m-item"><span class="m-dot"></span>Open-Source Robotics</span>
     <span class="m-item"><span class="m-dot"></span>Construct.Bot Fleet</span>
     <span class="m-item"><span class="m-dot"></span>AI Design Agent</span>
     <span class="m-item"><span class="m-dot"></span>3D Printed Structure</span>
@@ -656,6 +725,8 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
     <span class="m-item"><span class="m-dot"></span>Net-Zero From Day One</span>
     <span class="m-item"><span class="m-dot"></span>Digital Assets Accepted</span>
     <span class="m-item"><span class="m-dot"></span>NVIDIA Powered</span>
+    <span class="m-item"><span class="m-dot"></span>Asimov V1</span>
+    <span class="m-item"><span class="m-dot"></span>Open-Source Robotics</span>
   </div>
 </div>
 <!-- ============================================
@@ -1487,6 +1558,11 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
             <svg style="width:16px;height:16px;fill:rgba(10,10,10,0.65);flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             <span class="tech-partner-name">AI Diagnostics</span>
           </a>
+          <!-- Asimov Inc. -->
+          <a href="https://asimov.inc" target="_blank" rel="noopener" class="tech-partner" title="Asimov Inc. — Open-Source Humanoid Robotics">
+            <svg style="width:16px;height:16px;fill:rgba(10,10,10,0.65);flex-shrink:0;" viewBox="0 0 24 24"><path d="M12 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 10c5 0 8 2.24 8 4v2H4v-2c0-1.76 3-4 8-4z"/></svg>
+            <span class="tech-partner-name">Asimov V1 (Open Source)</span>
+          </a>
         </div>
 
         <div class="tech-tags">
@@ -1521,6 +1597,102 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
             <div class="tech-mod-label">Edge</div>
             <div class="tech-mod-name">Jetson Deployment</div>
             <div class="tech-mod-desc">NVIDIA Jetson on every Construct.Bot. Vision, ROS2, and cloud sync in one unit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     OPEN PLATFORM ECOSYSTEM
+     ============================================ -->
+<section class="ecosystem-sec" id="ecosystem">
+  <div class="wrap">
+    <div class="sec-head fade-in">
+      <div class="eyebrow">Open Platform Ecosystem</div>
+      <h2 class="t-h2">Built on open robots.<br><em>Trained in sim.</em></h2>
+      <p class="t-body" style="max-width:560px;">HABITAT integrates directly with the emerging open-source robotics ecosystem — leveraging community-driven hardware and simulation tools to move faster and build better.</p>
+    </div>
+
+    <div class="eco-grid">
+      <!-- Partner Platforms column -->
+      <div>
+        <div class="eco-col-head">Partner Platforms</div>
+
+        <div class="eco-card fade-in">
+          <div class="eco-card-head">
+            <div class="eco-card-name">Asimov V1</div>
+            <span class="eco-card-badge">Open Source</span>
+          </div>
+          <p class="eco-card-desc">1.2 m biped, 25 DOF, 35 kg. Full mechanical CAD (7 subassemblies), MuJoCo sim model, and wiring harness released under CERN-OHL-S-2.0. Hardware + GPL-2.0 software. DIY kit targeting $15 K — ships summer 2026.</p>
+          <div class="eco-card-links">
+            <a href="https://github.com/asimovinc/asimov-v1" target="_blank" rel="noopener" class="eco-card-link">GitHub</a>
+            <a href="https://manual.asimov.inc/v1" target="_blank" rel="noopener" class="eco-card-link">Manual</a>
+            <a href="https://asimov.inc/diy-kit" target="_blank" rel="noopener" class="eco-card-link">DIY Kit</a>
+          </div>
+        </div>
+
+        <div class="eco-card fade-in" style="transition-delay:0.08s">
+          <div class="eco-card-head">
+            <div class="eco-card-name">Seeed reBot-DevArm</div>
+            <span class="eco-card-badge">Dev Platform</span>
+          </div>
+          <p class="eco-card-desc">6-DOF robotic arm platform with ROS2 support and open SDK. Targeted at developer teams building manipulation and assembly prototypes — bridges lab to field in HABITAT's interior fit-out stages.</p>
+          <div class="eco-card-links">
+            <a href="https://www.seeedstudio.com" target="_blank" rel="noopener" class="eco-card-link">Seeed Studio</a>
+          </div>
+        </div>
+
+        <div class="eco-card fade-in" style="transition-delay:0.16s">
+          <div class="eco-card-head">
+            <div class="eco-card-name">Aigen Element gen2</div>
+            <span class="eco-card-badge">Agri-Robotics</span>
+          </div>
+          <p class="eco-card-desc">Solar-powered field robot with edge AI — originally designed for precision agriculture but its autonomous outdoor nav and lightweight frame make it a natural complement for HABITAT's site survey and ground-prep workflows.</p>
+          <div class="eco-card-links">
+            <a href="https://www.aigen.io" target="_blank" rel="noopener" class="eco-card-link">Aigen</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulation Stack column -->
+      <div>
+        <div class="eco-col-head">Simulation Stack</div>
+
+        <div class="eco-card fade-in" style="transition-delay:0.04s">
+          <div class="eco-card-head">
+            <div class="eco-card-name">MuJoCo</div>
+            <span class="eco-card-badge">Physics Sim</span>
+          </div>
+          <p class="eco-card-desc">DeepMind's open-source physics engine is the official sim environment for the Asimov V1. HABITAT uses MuJoCo models to pre-train manipulation policies before deploying to field hardware — zero real-world iterations wasted.</p>
+          <div class="eco-card-links">
+            <a href="https://mujoco.org" target="_blank" rel="noopener" class="eco-card-link">mujoco.org</a>
+            <a href="https://github.com/google-deepmind/mujoco" target="_blank" rel="noopener" class="eco-card-link">GitHub</a>
+          </div>
+        </div>
+
+        <div class="eco-card fade-in" style="transition-delay:0.12s">
+          <div class="eco-card-head">
+            <div class="eco-card-name">NVIDIA Isaac Sim</div>
+            <span class="eco-card-badge">Digital Twin</span>
+          </div>
+          <p class="eco-card-desc">Photo-realistic robot sim on Omniverse. HABITAT trains Construct.Bot navigation, obstacle avoidance, and extrusion paths in full-fidelity digital twins of real build sites before a single concrete layer is poured.</p>
+          <div class="eco-card-links">
+            <a href="https://developer.nvidia.com/isaac-sim" target="_blank" rel="noopener" class="eco-card-link">Isaac Sim</a>
+            <a href="https://www.nvidia.com/en-us/omniverse/" target="_blank" rel="noopener" class="eco-card-link">Omniverse</a>
+          </div>
+        </div>
+
+        <div class="eco-card fade-in" style="transition-delay:0.20s">
+          <div class="eco-card-head">
+            <div class="eco-card-name">Gazebo + ROS2</div>
+            <span class="eco-card-badge">Open Robotics</span>
+          </div>
+          <p class="eco-card-desc">The Gazebo simulator pairs with ROS2 for rapid multi-robot scenario testing — fleet coordination, collision models, and sensor stacks all validated in sim. Open-source and community-supported for fast iteration.</p>
+          <div class="eco-card-links">
+            <a href="https://gazebosim.org" target="_blank" rel="noopener" class="eco-card-link">Gazebo</a>
+            <a href="https://ros.org" target="_blank" rel="noopener" class="eco-card-link">ROS2</a>
           </div>
         </div>
       </div>
@@ -1762,6 +1934,8 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
     <ul class="foot-links">
       <li><a href="https://blackcatrobotics.com">BlackCat Robotics</a></li>
       <li><a href="https://dashboard.blackcatrobotics.com">TechMedix</a></li>
+      <li><a href="#ecosystem">Ecosystem</a></li>
+      <li><a href="https://github.com/asimovinc/asimov-v1" target="_blank" rel="noopener">Asimov GitHub</a></li>
       <li><a href="mailto:blackcatrobotics.ai@gmail.com">Contact</a></li>
     </ul>
     <div class="foot-copy">&copy; 2026 BlackCat Robotics. All rights reserved.</div>
@@ -1769,68 +1943,131 @@ footer{background:var(--bg-3);border-top:1px solid var(--border);padding:44px 56
 </footer>
 
 <script>
-// Smooth scroll
+document.addEventListener('DOMContentLoaded', function() {
+
+// ── SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const t=document.querySelector(a.getAttribute('href'));
     if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+    // Close mobile nav if open
+    const mob=document.getElementById('nav-mobile');
+    const ham=document.getElementById('nav-ham');
+    if(mob&&mob.classList.contains('open')){
+      mob.classList.remove('open');mob.setAttribute('aria-hidden','true');
+      ham.classList.remove('open');ham.setAttribute('aria-expanded','false');
+    }
   });
 });
 
-// Waitlist form
-function handleWL(e){
-  e.preventDefault();
-  const btn = e.target.querySelector('button');
-  const inp = e.target.querySelector('input');
-  const suc = document.getElementById('wl-success');
-  
-  // Validate email (browser does this via required+pattern, but double-check)
-  if (!inp.checkValidity()) {
-    inp.focus();
-    return;
-  }
-  
-  btn.setAttribute('data-submitting', '');
-  btn.disabled = true;
-  
-  // Simulate API call
-  setTimeout(()=>{
-    inp.value = '';
-    btn.removeAttribute('data-submitting');
-    
-    // Increment builder counter with animation
-    const counter = document.getElementById('builder-counter');
-    if (counter) {
-      const current = parseInt(counter.textContent.trim(), 10);
-      if (!isNaN(current)) {
-        counter.textContent = current + 1;
-        counter.classList.add('counter-pulse');
-        setTimeout(()=>counter.classList.remove('counter-pulse'), 600);
-      }
-    }
-    
-    btn.textContent = 'Joined!';
-    suc.style.display = 'block';
-  }, 1200);
+// ── SCROLL PROGRESS BAR ──
+const progressBar = document.getElementById('scroll-progress');
+function updateProgress(){
+  const h = document.documentElement;
+  const pct = (h.scrollTop||document.body.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  if(progressBar) progressBar.style.width = Math.min(pct,100) + '%';
+}
+window.addEventListener('scroll', updateProgress, {passive:true});
+
+// ── NAV SCROLL TINT ──
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('main-nav');
+  if(nav) nav.style.borderBottomColor=window.scrollY>60?'rgba(224,90,30,0.2)':'rgba(10,10,10,0.15)';
+},{passive:true});
+
+// ── MOBILE HAMBURGER ──
+const ham = document.getElementById('nav-ham');
+const mob = document.getElementById('nav-mobile');
+if(ham && mob){
+  ham.addEventListener('click', ()=>{
+    const open = mob.classList.toggle('open');
+    ham.classList.toggle('open', open);
+    ham.setAttribute('aria-expanded', open);
+    mob.setAttribute('aria-hidden', !open);
+  });
 }
 
-// Fade-in on scroll
-const obs=new IntersectionObserver((entries)=>{
+// ── FADE-IN ON SCROLL ──
+const obs = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target);}
   });
 },{threshold:0.1});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 
-// Nav scroll tint
-window.addEventListener('scroll',()=>{
-  const nav=document.getElementById('main-nav');
-  if(nav) nav.style.borderBottomColor=window.scrollY>60?'rgba(224,90,30,0.2)':'rgba(10,10,10,0.15)';
-});
+// ── HERO STAT COUNTER ANIMATION ──
+(function(){
+  const statNums = document.querySelectorAll('.stat-num');
+  const statObs = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('counter-pulse');
+        setTimeout(()=>entry.target.classList.remove('counter-pulse'),600);
+        statObs.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.8});
+  statNums.forEach(el=>statObs.observe(el));
+})();
 
-// =============================================
-// ANIMATED VERTICAL STEPPER
-// =============================================
+// ── ANIMATED HUD TELEMETRY ──
+(function(){
+  const frames = [
+    {status:'ACTIVE',   statusSub:'Layer 14 of 62',     op:'24/7',   opSub:'No crew required',  nav:'SLAM',   navSub:'Obstacle-free path',  eta:'68h',  etaSub:'Tiny home target'},
+    {status:'PRINTING', statusSub:'Layer 28 of 62',     op:'99.8%',  opSub:'Uptime this week',   nav:'NAV2',   navSub:'Multi-bot coordinated',eta:'51h',  etaSub:'Revised estimate'},
+    {status:'ON-SITE',  statusSub:'Solar install phase', op:'7 bots', opSub:'Fleet deployed',    nav:'GPS+RTK', navSub:'1 cm accuracy',       eta:'24h',  etaSub:'Interior remaining'},
+    {status:'COMPLETE', statusSub:'Ready for move-in',  op:'NET-0',   opSub:'Solar live',         nav:'IDLE',   navSub:'Build verified',       eta:'0h',   etaSub:'Keys handed over'},
+  ];
+  let fi = 0;
+  const ids = {
+    status:'hud-status', statusSub:'hud-status-sub',
+    op:'hud-op',         opSub:'hud-op-sub',
+    nav:'hud-nav',       navSub:'hud-nav-sub',
+    eta:'hud-eta',       etaSub:'hud-eta-sub',
+  };
+  function cycleHUD(){
+    fi = (fi + 1) % frames.length;
+    const f = frames[fi];
+    Object.keys(ids).forEach(k=>{
+      const el = document.getElementById(ids[k]);
+      if(!el) return;
+      el.classList.add('exiting');
+      setTimeout(()=>{
+        el.textContent = f[k];
+        el.classList.remove('exiting');
+      }, 300);
+    });
+  }
+  setInterval(cycleHUD, 2500);
+})();
+
+// ── WAITLIST FORM ──
+window.handleWL = function(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  const inp = e.target.querySelector('input');
+  const suc = document.getElementById('wl-success');
+  if(!inp.checkValidity()){inp.focus();return;}
+  btn.setAttribute('data-submitting','');
+  btn.disabled = true;
+  setTimeout(()=>{
+    inp.value = '';
+    btn.removeAttribute('data-submitting');
+    const counter = document.getElementById('builder-counter');
+    if(counter){
+      const cur = parseInt(counter.textContent.trim(),10);
+      if(!isNaN(cur)){
+        counter.textContent = cur + 1;
+        counter.classList.add('counter-pulse');
+        setTimeout(()=>counter.classList.remove('counter-pulse'),600);
+      }
+    }
+    btn.textContent = 'Joined!';
+    if(suc) suc.style.display = 'block';
+  }, 1200);
+};
+
+// ── ANIMATED VERTICAL STEPPER ──
 (function(){
   const steps = document.querySelectorAll('.step-row');
   const label = document.getElementById('active-step-label');
@@ -1867,33 +2104,30 @@ window.addEventListener('scroll',()=>{
 
   function startAuto(){
     clearInterval(autoTimer);
-    autoTimer = setInterval(() => activate((current + 1) % steps.length), 3200);
+    autoTimer = setInterval(()=>activate((current+1)%steps.length), 3200);
   }
 
-  // Click to jump + restart auto
   steps.forEach((row, i) => {
     row.style.cursor = 'pointer';
-    row.addEventListener('click', () => {
+    row.addEventListener('click', ()=>{
       clearInterval(autoTimer);
       activate(i);
       setTimeout(startAuto, 5000);
     });
   });
 
-  // Scroll-into-view activates current step
-  const stepObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+  // Fire at 20% visibility so steps activate before fully scrolled into view
+  const stepObs = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
       if(entry.isIntersecting){
         const idx = Array.from(steps).indexOf(entry.target);
         if(idx > -1) activate(idx);
       }
     });
-  },{threshold:0.6, rootMargin:'0px 0px -80px 0px'});
-  steps.forEach(s => stepObs.observe(s));
+  },{threshold:0.2, rootMargin:'0px 0px -40px 0px'});
+  steps.forEach(s=>stepObs.observe(s));
 
-  // Auto-cycle only when section is visible
-  // Auto-cycle only when section is visible
-  const secObs = new IntersectionObserver(([e]) => {
+  const secObs = new IntersectionObserver(([e])=>{
     if(e.isIntersecting){ startAuto(); }
     else { clearInterval(autoTimer); }
   },{threshold:0.1});
@@ -1902,6 +2136,8 @@ window.addEventListener('scroll',()=>{
 
   activate(0);
 })();
+
+}); // end DOMContentLoaded
 </script>
 
 </body>
