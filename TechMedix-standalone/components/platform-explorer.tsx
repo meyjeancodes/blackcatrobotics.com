@@ -64,36 +64,36 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
         className="group relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] text-left transition hover:border-[var(--ink)]/[0.16] hover:bg-[var(--ink)]/[0.04]"
       >
         {imgSrc ? (
-          <div className="relative h-36 w-full overflow-hidden rounded-t-[13px]">
+          <div className="relative h-48 w-full overflow-hidden rounded-t-[13px] bg-[#07070a]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imgSrc}
               alt={platform?.name ?? chassis.label}
-              className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-[1.03]"
+              className="h-full w-full object-contain p-4 transition duration-500 group-hover:scale-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)]/60 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 rounded-t-[13px] ring-1 ring-inset ring-white/[0.04]" />
           </div>
         ) : (
-          <div className="flex h-36 items-center justify-center p-3">
-            <svg viewBox={chassis.viewBox} className="h-full w-auto opacity-80">
+          <div className="flex h-48 items-center justify-center bg-[#07070a] rounded-t-[13px] p-4">
+            <svg viewBox={chassis.viewBox} className="h-full w-auto opacity-60">
               {chassis.parts.map((p) => (
                 <path
                   key={p.id}
                   d={p.d}
-                  fill={CATEGORY_COLOR[p.category].bg + "33"}
-                  stroke={CATEGORY_COLOR[p.category].stroke}
-                  strokeWidth={1}
+                  fill="transparent"
+                  stroke={CATEGORY_COLOR[p.category].bg + "88"}
+                  strokeWidth={0.8}
                   strokeLinejoin="round"
                 />
               ))}
             </svg>
           </div>
         )}
-        <div className="flex items-center justify-between px-3 py-2">
-          <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">
+        <div className="flex items-center justify-between px-3 py-2.5">
+          <p className="font-ui text-[0.54rem] uppercase tracking-[0.14em] text-[var(--ink)]/35">
             {chassis.parts.length} parts
           </p>
-          <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-sky-600 transition group-hover:opacity-70">
+          <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-sky-500 transition group-hover:text-sky-400">
             <Expand size={10} /> Explore
           </span>
         </div>
@@ -210,15 +210,17 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
           </div>
         </div>
 
-        {/* Official product photo — dimmed backdrop behind the parts overlay */}
+        {/* Product photo — primary visual backdrop */}
         {PLATFORM_IMAGE_MAP[platformId] && (
           <div className="pointer-events-none absolute inset-0 z-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={PLATFORM_IMAGE_MAP[platformId]}
               alt=""
-              className="h-full w-full object-contain object-center opacity-[0.07]"
+              className="h-full w-full object-contain object-center p-16 opacity-[0.52]"
             />
+            {/* dark vignette so edges stay legible */}
+            <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, transparent 30%, #0b0b10 100%)" }} />
           </div>
         )}
 
@@ -239,20 +241,20 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
 
             <rect x="-500" y="-500" width="2000" height="2000" fill="url(#techGrid)" />
 
-            {/* Ghost silhouette — full robot body outline */}
-            {chassis.silhouette && (
+            {/* Silhouette — only shown when no product photo exists */}
+            {!PLATFORM_IMAGE_MAP[platformId] && chassis.silhouette && (
               <path
                 d={chassis.silhouette}
-                fill="rgba(255,255,255,0.025)"
-                stroke="rgba(255,255,255,0.10)"
+                fill="rgba(255,255,255,0.02)"
+                stroke="rgba(255,255,255,0.12)"
                 strokeWidth={0.7}
                 strokeLinejoin="round"
                 strokeLinecap="round"
               />
             )}
 
-            {/* Joint accent circles */}
-            {chassis.accents?.map((a, i) => (
+            {/* Joint accent circles — only when no product photo */}
+            {!PLATFORM_IMAGE_MAP[platformId] && chassis.accents?.map((a, i) => (
               <g key={i}>
                 {a.d && (
                   <path
@@ -309,21 +311,19 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
                       dim
                         ? "transparent"
                         : isSel
-                        ? color.bg + "cc"
-                        : wireframe
-                        ? "transparent"
-                        : "rgba(255,255,255,0.025)"
+                        ? color.bg + "55"
+                        : "transparent"
                     }
                     stroke={
                       dim
-                        ? "rgba(255,255,255,0.05)"
+                        ? "rgba(255,255,255,0.04)"
                         : isSel
                         ? color.bg
-                        : color.bg + "60"
+                        : color.bg + "80"
                     }
-                    strokeWidth={isSel ? 1.6 : dim ? 0.4 : 1.0}
+                    strokeWidth={isSel ? 1.8 : dim ? 0.3 : 0.9}
                     strokeLinejoin="round"
-                    opacity={dim ? 0.2 : 1}
+                    opacity={dim ? 0.15 : 1}
                     style={{
                       cursor: dim ? "default" : "pointer",
                       transition: "fill 0.2s, stroke 0.2s, opacity 0.2s",
