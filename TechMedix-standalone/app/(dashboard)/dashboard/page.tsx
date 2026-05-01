@@ -4,14 +4,11 @@ import {
   AlertTriangle,
   ArrowRight,
   ArrowUpRight,
-  Award,
   BatteryCharging,
   BriefcaseBusiness,
   Cpu,
   Radar,
-  ShieldCheck,
   Signal,
-  Wind,
 } from "lucide-react";
 import { MetricCard } from "../../../components/metric-card";
 import { FleetHealthCard } from "../../../components/fleet-health-card";
@@ -26,7 +23,7 @@ import { FleetHealthCategories } from "../../../components/fleet-health-categori
 import { ChatPanel } from "../../../components/chat-panel";
 import { CheckoutBanner } from "../../../components/checkout-banner";
 import { AiInsightCard } from "../../../components/ai-insight-card";
-import { formatDateTime } from "../../../lib/format";
+import { AlertList } from "../../../components/alert-list";
 import { getDashboardData } from "../../../lib/data";
 import { Suspense } from "react";
 
@@ -203,41 +200,7 @@ export default async function DashboardPage() {
       {/* ─── Priority alerts + dispatch queue ────────────────── */}
       <section className="grid gap-6 xl:grid-cols-2">
         <SurfaceCard title="Priority alerts" eyebrow="Needs action">
-          <div className="space-y-3">
-            {snapshot.alerts.map((alert) => {
-              const alertAccent =
-                alert.severity === "critical" ? "#ef4444"
-                : alert.severity === "warning" ? "#f59e0b"
-                : "#38bdf8";
-              return (
-                <div
-                  key={alert.id}
-                  className="relative overflow-hidden rounded-[14px] border border-theme-5 bg-theme-18 p-4 pl-5 transition-colors duration-220 hover:border-theme-10 hover:bg-theme-25"
-                  style={{ borderLeftColor: alertAccent, borderLeftWidth: "3px" }}
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1">
-                      <h3 className="text-base font-semibold leading-snug text-theme-primary">
-                        {alert.title}
-                      </h3>
-                      <p className="mt-1 text-sm leading-6 text-theme-52">{alert.message}</p>
-                    </div>
-                    <StatusPill label={alert.severity} />
-                  </div>
-                  <div className="mt-3 flex items-center justify-between font-ui text-[0.62rem] uppercase tracking-[0.22em] text-theme-36">
-                    <span>{formatDateTime(alert.createdAt)}</span>
-                    <Link
-                      href={`/fleet/${alert.robotId}`}
-                      className="inline-flex items-center gap-1 font-semibold text-ember transition-opacity duration-200 hover:opacity-70"
-                    >
-                      Open robot
-                      <ArrowRight size={11} />
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <AlertList alerts={snapshot.alerts} />
         </SurfaceCard>
 
         <SurfaceCard title="Dispatch queue" eyebrow="In progress">
@@ -285,170 +248,6 @@ export default async function DashboardPage() {
             })}
           </div>
         </SurfaceCard>
-      </section>
-
-      {/* ─── Privacy-First Infrastructure ────────────────────── */}
-      <section className="panel relative overflow-hidden px-8 py-8 lg:px-12 lg:py-10">
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 100% 0%, rgba(29,184,122,0.08), transparent 55%)",
-          }}
-        />
-        <div className="relative flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
-          <div className="shrink-0 lg:max-w-[320px]">
-            <div className="mb-4 flex items-center gap-2.5">
-              <div className="rounded-xl bg-moss/10 p-2 text-moss">
-                <ShieldCheck size={16} />
-              </div>
-              <p className="kicker">Infrastructure</p>
-            </div>
-            <h2 className="font-header text-2xl leading-tight tracking-[-0.02em] text-theme-primary lg:text-3xl">
-              Privacy-First Infrastructure
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-theme-52">
-              TechMedix is designed around data sovereignty and operator control. No background
-              surveillance, no opaque data flows.
-            </p>
-          </div>
-          <div className="grid flex-1 gap-3 sm:grid-cols-2">
-            {[
-              {
-                title: "No always-on surveillance architecture",
-                detail:
-                  "The platform activates data collection on explicit operator instruction. Idle nodes do not stream telemetry continuously.",
-              },
-              {
-                title: "User-owned data and system control",
-                detail:
-                  "Your fleet data remains under your organization's control. Exports, deletions, and access revocations are always available.",
-              },
-              {
-                title: "Local-first processing where possible",
-                detail:
-                  "Diagnostic inference and threshold evaluation run at the node level when hardware supports it, minimizing cloud exposure.",
-              },
-              {
-                title: "Transparent system logs and auditability",
-                detail:
-                  "Every platform action — alerts, dispatches, status changes — is recorded in an append-only audit log visible to account admins.",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-[20px] border border-theme-5 bg-theme-18 p-4 transition-colors duration-220 hover:border-theme-10 hover:bg-theme-25"
-              >
-                <div className="mb-2 flex items-start gap-2.5">
-                  <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-moss" />
-                  <p className="text-sm font-semibold leading-snug text-theme-primary">
-                    {item.title}
-                  </p>
-                </div>
-                <p className="pl-4 text-xs leading-relaxed text-theme-52">{item.detail}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Drone Fleet + Certification Progress ────────────── */}
-      <section className="grid gap-6 xl:grid-cols-[1fr_1fr]">
-        {/* Drone Fleet Card */}
-        <div className="panel flex flex-col px-7 py-6">
-          <div className="mb-4 flex items-start justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <div className="rounded-xl bg-ember/10 p-2 text-ember">
-                <Wind size={16} />
-              </div>
-              <p className="kicker">Drone Fleet</p>
-            </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-moss/10 px-2 py-0.5 font-ui text-[0.56rem] uppercase tracking-[0.18em] font-semibold text-moss">
-              <span className="h-1 w-1 rounded-full bg-moss" />
-              Operational
-            </span>
-          </div>
-          <h3 className="font-header text-xl leading-tight tracking-[-0.01em] text-theme-primary">
-            DJI Fleet Management
-          </h3>
-          <p className="mt-2 text-sm leading-relaxed text-theme-52">
-            AI-powered drone diagnostics, DJI Care Refresh coverage tracking, and claim management
-            for your entire fleet.
-          </p>
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            {[
-              { label: "AI Diagnostics", detail: "Motor, battery, gimbal, signal health" },
-              { label: "Care Refresh", detail: "Coverage status and claim filing" },
-              { label: "Flight Logs", detail: "DJI CSV import and parsing" },
-              { label: "Fleet Analytics", detail: "Health trends and coverage maps" },
-            ].map((item) => (
-              <div key={item.label} className="rounded-[18px] border border-theme-5 bg-theme-18 p-3">
-                <div className="mb-1 flex items-start gap-1.5">
-                  <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
-                  <p className="text-xs font-semibold text-theme-70">{item.label}</p>
-                </div>
-                <p className="pl-3 text-[0.65rem] leading-snug text-theme-42">{item.detail}</p>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/drones"
-            className="mt-5 inline-flex items-center gap-2 self-start rounded-full bg-ember px-5 py-2.5 font-ui text-[0.66rem] uppercase tracking-[0.18em] font-semibold text-white transition hover:bg-ember/90"
-          >
-            Open Drone Fleet
-            <ArrowRight size={12} />
-          </Link>
-        </div>
-
-        {/* Certification Progress Card */}
-        <div className="panel flex flex-col px-7 py-6">
-          <div className="mb-4 flex items-start justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <div className="rounded-xl bg-moss/10 p-2 text-moss">
-                <Award size={16} />
-              </div>
-              <p className="kicker">Certifications</p>
-            </div>
-            <span className="font-ui text-[0.56rem] uppercase tracking-[0.18em] font-semibold text-theme-35">
-              5 levels
-            </span>
-          </div>
-          <h3 className="font-header text-xl leading-tight tracking-[-0.01em] text-theme-primary">
-            BlackCat OS Certifications
-          </h3>
-          <p className="mt-2 text-sm leading-relaxed text-theme-52">
-            Five certification levels from Operator to Autonomous Systems Architect. Study free.
-            Get certified through TechMedix. Earn on every dispatch.
-          </p>
-          <div className="mt-4 space-y-1.5">
-            {[
-              { level: "L1", title: "Operator",     salary: "$280–350",       dot: "bg-blue-500" },
-              { level: "L2", title: "Technician",   salary: "$450–550",       dot: "bg-sky-500" },
-              { level: "L3", title: "Specialist",   salary: "$650–800",       dot: "bg-gold" },
-              { level: "L4", title: "Systems Eng.", salary: "$1,000–1,500",   dot: "bg-orange-500" },
-              { level: "L5", title: "Architect",    salary: "$2,500+",        dot: "bg-ember" },
-            ].map((l) => (
-              <div
-                key={l.level}
-                className="flex items-center gap-3 rounded-[14px] border border-theme-5 bg-theme-18 px-3 py-2 transition-colors hover:border-theme-10 hover:bg-theme-25"
-              >
-                <span className={`h-2 w-2 shrink-0 rounded-full ${l.dot}`} />
-                <span className="font-ui text-[0.60rem] uppercase tracking-[0.14em] font-semibold text-theme-55 w-6">
-                  {l.level}
-                </span>
-                <span className="flex-1 text-xs text-theme-70">{l.title}</span>
-                <span className="font-ui text-[0.60rem] text-theme-42">{l.salary}/job</span>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/technicians/certifications"
-            className="mt-5 inline-flex items-center gap-2 self-start rounded-full border border-theme-10 px-5 py-2.5 font-ui text-[0.66rem] uppercase tracking-[0.18em] font-medium text-theme-65 transition hover:border-moss hover:text-moss"
-          >
-            View Certification Path
-            <ArrowRight size={12} />
-          </Link>
-        </div>
       </section>
 
       {/* ─── Footer accent strip ─────────────────────────────── */}
