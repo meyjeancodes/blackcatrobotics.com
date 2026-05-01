@@ -25,6 +25,7 @@ import { PerformanceKpis } from "../../../components/performance-kpis";
 import { FleetHealthCategories } from "../../../components/fleet-health-categories";
 import { ChatPanel } from "../../../components/chat-panel";
 import { CheckoutBanner } from "../../../components/checkout-banner";
+import { AiInsightCard } from "../../../components/ai-insight-card";
 import { formatDateTime } from "../../../lib/format";
 import { getDashboardData } from "../../../lib/data";
 import { Suspense } from "react";
@@ -101,20 +102,26 @@ export default async function DashboardPage() {
           value={`${stats.criticalAlerts}`}
           detail="Issues that need immediate technician or operator attention."
           icon={<AlertTriangle size={18} />}
+          accent="critical"
         />
         <MetricCard
           label="Open Jobs"
           value={`${stats.openJobs}`}
           detail="Dispatch jobs still open, assigned, en route, or onsite."
           icon={<BriefcaseBusiness size={18} />}
+          accent="warning"
         />
         <MetricCard
           label="Active Robots"
           value={`${stats.activeRobots}`}
           detail="Robots online, degraded, or in service across the current account."
           icon={<BatteryCharging size={18} />}
+          accent="success"
         />
       </section>
+
+      {/* ─── AI Fleet Insight ────────────────────────────────── */}
+      <AiInsightCard />
 
       {/* ─── Live system panels ──────────────────────────────── */}
       <LiveSystemPanel />
@@ -196,45 +203,57 @@ export default async function DashboardPage() {
       {/* ─── Priority alerts + dispatch queue ────────────────── */}
       <section className="grid gap-6 xl:grid-cols-2">
         <SurfaceCard title="Priority alerts" eyebrow="Needs action">
-          <div className="space-y-4">
-            {snapshot.alerts.map((alert) => (
-              <div
-                key={alert.id}
-                className="rounded-[22px] border border-theme-5 bg-theme-18 p-4 transition-colors duration-220 hover:border-theme-10 hover:bg-theme-25"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-base font-semibold leading-snug text-theme-primary">
-                      {alert.title}
-                    </h3>
-                    <p className="mt-1 text-sm leading-6 text-theme-52">{alert.message}</p>
+          <div className="space-y-3">
+            {snapshot.alerts.map((alert) => {
+              const alertAccent =
+                alert.severity === "critical" ? "#ef4444"
+                : alert.severity === "warning" ? "#f59e0b"
+                : "#38bdf8";
+              return (
+                <div
+                  key={alert.id}
+                  className="relative overflow-hidden rounded-[14px] border border-theme-5 bg-theme-18 p-4 pl-5 transition-colors duration-220 hover:border-theme-10 hover:bg-theme-25"
+                  style={{ borderLeftColor: alertAccent, borderLeftWidth: "3px" }}
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-base font-semibold leading-snug text-theme-primary">
+                        {alert.title}
+                      </h3>
+                      <p className="mt-1 text-sm leading-6 text-theme-52">{alert.message}</p>
+                    </div>
+                    <StatusPill label={alert.severity} />
                   </div>
-                  <StatusPill label={alert.severity} />
+                  <div className="mt-3 flex items-center justify-between font-ui text-[0.62rem] uppercase tracking-[0.22em] text-theme-36">
+                    <span>{formatDateTime(alert.createdAt)}</span>
+                    <Link
+                      href={`/fleet/${alert.robotId}`}
+                      className="inline-flex items-center gap-1 font-semibold text-ember transition-opacity duration-200 hover:opacity-70"
+                    >
+                      Open robot
+                      <ArrowRight size={11} />
+                    </Link>
+                  </div>
                 </div>
-                <div className="mt-3 flex items-center justify-between font-ui text-[0.62rem] uppercase tracking-[0.22em] text-theme-36">
-                  <span>{formatDateTime(alert.createdAt)}</span>
-                  <Link
-                    href={`/fleet/${alert.robotId}`}
-                    className="inline-flex items-center gap-1 font-semibold text-ember transition-opacity duration-200 hover:opacity-70"
-                  >
-                    Open robot
-                    <ArrowRight size={11} />
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </SurfaceCard>
 
         <SurfaceCard title="Dispatch queue" eyebrow="In progress">
-          <div className="space-y-4">
+          <div className="space-y-3">
             {snapshot.jobs.map((job) => {
               const robot = snapshot.robots.find((r) => r.id === job.robotId);
               const tech = snapshot.technicians.find((t) => t.id === job.technicianId);
+              const jobAccent =
+                job.status === "en_route" || job.status === "onsite" ? "#1db87a"
+                : job.status === "assigned" ? "#f59e0b"
+                : "#38bdf8";
               return (
                 <div
                   key={job.id}
-                  className="rounded-[22px] border border-theme-5 bg-theme-18 p-4 transition-colors duration-220 hover:border-theme-10 hover:bg-theme-25"
+                  className="relative overflow-hidden rounded-[14px] border border-theme-5 bg-theme-18 p-4 pl-5 transition-colors duration-220 hover:border-theme-10 hover:bg-theme-25"
+                  style={{ borderLeftColor: jobAccent, borderLeftWidth: "3px" }}
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
