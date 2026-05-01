@@ -24,6 +24,7 @@ import { ChatPanel } from "../../../components/chat-panel";
 import { CheckoutBanner } from "../../../components/checkout-banner";
 import { AiInsightCard } from "../../../components/ai-insight-card";
 import { AlertList } from "../../../components/alert-list";
+import { ActivityFeed } from "../../../components/activity-feed";
 import { getDashboardData } from "../../../lib/data";
 import { Suspense } from "react";
 
@@ -249,6 +250,14 @@ export default async function DashboardPage() {
           </div>
         </SurfaceCard>
       </section>
+
+      {/* ─── Activity feed ───────────────────────────────────── */}
+      <ActivityFeed
+        alerts={snapshot.alerts}
+        jobs={snapshot.jobs}
+        robots={snapshot.robots}
+        technicians={snapshot.technicians}
+      />
 
       {/* ─── Footer accent strip ─────────────────────────────── */}
       <section className="panel-dark relative overflow-hidden px-8 py-6 lg:px-10 lg:py-7">
