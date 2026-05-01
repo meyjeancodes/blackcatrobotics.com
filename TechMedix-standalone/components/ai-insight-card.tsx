@@ -32,14 +32,25 @@ export function AiInsightCard() {
   if (!loading && !insight) return null;
 
   return (
-    <div className="rounded-[22px] border border-theme-7 bg-white/60 p-6 shadow-[0_2px_16px_rgba(12,13,17,0.07)]">
-      <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+    <div
+      className="panel-elevated relative overflow-hidden p-6"
+      style={{ background: "linear-gradient(135deg, var(--panel-elevated-bg) 0%, color-mix(in srgb, var(--panel-elevated-bg) 93%, rgba(232,96,30,0.15)) 100%)" }}
+    >
+      {/* Ember accent bar */}
+      <div className="absolute left-0 top-5 bottom-5 w-[3px] rounded-r-full bg-ember" />
+      {/* Subtle radial glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(ellipse at 0% 50%, rgba(232,96,30,0.06), transparent 60%)" }}
+      />
+
+      <div className="relative flex flex-wrap items-start justify-between gap-3 mb-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center rounded-full border border-theme-12 bg-transparent px-2.5 py-0.5 font-ui text-[0.57rem] uppercase tracking-[0.18em] text-theme-50">
-            Featured
+            AI Insight
           </span>
           <span className="inline-flex items-center rounded-full px-2.5 py-0.5 font-ui text-[0.58rem] uppercase tracking-[0.18em] font-semibold bg-ember/[0.10] text-ember border border-ember/[0.18]">
-            Robotics
+            Fleet Intelligence
           </span>
           <span className="font-ui text-[0.57rem] uppercase tracking-[0.16em] text-theme-28">
             BlackCat OS
@@ -50,11 +61,11 @@ export function AiInsightCard() {
         </span>
       </div>
 
-      <h3 className="text-lg font-bold tracking-[-0.025em] leading-snug text-theme-primary">
+      <h3 className="relative text-lg font-bold tracking-[-0.025em] leading-snug text-theme-primary">
         AI ANALYSIS · BLACKCAT OS
       </h3>
 
-      <p className="mt-2.5 text-sm leading-relaxed text-theme-52">
+      <p className="relative mt-2.5 text-sm leading-relaxed text-theme-52">
         {loading ? "Analyzing fleet data…" : insight}
       </p>
     </div>
