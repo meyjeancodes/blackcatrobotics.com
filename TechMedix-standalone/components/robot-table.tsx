@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import type { Robot } from "@/lib/shared";
 import { StatusPill } from "./status-pill";
