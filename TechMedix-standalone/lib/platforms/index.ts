@@ -582,3 +582,24 @@ export function getAllPlatforms(): PlatformProfile[] {
 }
 
 export default ALL_PLATFORMS;
+
+/** Maps platform IDs to locally-hosted official product images. */
+export const PLATFORM_IMAGE_MAP: Record<string, string> = {
+  "unitree-g1":        "/images/platforms/unitree_g1.jpg",
+  "unitree-h1-2":      "/images/platforms/unitree_h1_2.png",
+  "unitree-b2":        "/images/platforms/unitree_b2.png",
+  "figure-02":         "/images/platforms/figure_02.jpg",
+  "optimus-gen3":      "/images/platforms/tesla_optimus.jpg",
+  "digit-v5":          "/images/platforms/agility_digit.jpg",
+  "phantom-mk1":       "/images/platforms/foundation_phantom.webp",
+  "dji-agras-t50":     "/images/platforms/dji_agras_t50.jpg",
+  "skydio-x10":        "/images/platforms/skydio_x10.png",
+  "zipline-p2":        "/images/platforms/zipline_p2.png",
+  "serve-rs2":         "/images/platforms/serve_rs2.jpg",
+  "starship-gen3":     "/images/platforms/starship_gen3.jpg",
+  "spot":              "/images/platforms/bostondynamics_spot.jpg",
+  "proteus-amr":       "/images/platforms/amazon_proteus.jpg",
+  "lime-gen4":         "/images/platforms/lime_ebike.jpg",
+  "bird-three":        "/images/platforms/bird_three.jpg",
+  "radcommercial":     "/images/platforms/rad_power.png",
+};
