@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { BookOpen, Expand, Layers, Maximize2, Minimize2, Shrink, X } from "lucide-react";
 import { getChassisForPlatform, type Part, type PartCategory } from "../lib/platforms/parts-catalog";
-import { getPlatformById } from "../lib/platforms/index";
+import { getPlatformById, PLATFORM_IMAGE_MAP } from "../lib/platforms/index";
 
 const CATEGORY_COLOR: Record<PartCategory, { bg: string; stroke: string; text: string; pill: string }> = {
   actuator:       { bg: "#FF6B35", stroke: "#FF6B35", text: "text-[#FF6B35]",    pill: "bg-[#FF6B35]/[0.12] text-[#FF6B35]" },
@@ -56,38 +56,42 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
 
   // ── Compact tile ────────────────────────────────────────────────────────────
   if (compact) {
+    const imgSrc = PLATFORM_IMAGE_MAP[platformId];
     return (
       <button
         type="button"
         onClick={onOpen}
-        className="group relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] p-3 text-left transition hover:border-[var(--ink)]/[0.14] hover:bg-[var(--ink)]/[0.04]"
+        className="group relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] text-left transition hover:border-[var(--ink)]/[0.16] hover:bg-[var(--ink)]/[0.04]"
       >
-        <div className="flex h-28 items-start justify-center pt-1">
-          <svg viewBox={chassis.viewBox} className="h-full w-auto">
-            {chassis.silhouette && (
-              <path
-                d={chassis.silhouette}
-                fill="none"
-                stroke="rgba(148,163,184,0.18)"
-                strokeWidth={0.7}
-                strokeLinejoin="round"
-              />
-            )}
-            {chassis.parts.map((p) => (
-              <path
-                key={p.id}
-                d={p.d}
-                fill="none"
-                stroke={CATEGORY_COLOR[p.category].bg + "55"}
-                strokeWidth={0.7}
-                strokeLinejoin="round"
-              />
-            ))}
-          </svg>
-        </div>
-        <div className="mt-2 flex items-center justify-between">
-          <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/38">
-            {chassis.parts.length} parts · Interactive
+        {imgSrc ? (
+          <div className="relative h-36 w-full overflow-hidden rounded-t-[13px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imgSrc}
+              alt={platform?.name ?? chassis.label}
+              className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)]/60 via-transparent to-transparent" />
+          </div>
+        ) : (
+          <div className="flex h-36 items-center justify-center p-3">
+            <svg viewBox={chassis.viewBox} className="h-full w-auto opacity-80">
+              {chassis.parts.map((p) => (
+                <path
+                  key={p.id}
+                  d={p.d}
+                  fill={CATEGORY_COLOR[p.category].bg + "33"}
+                  stroke={CATEGORY_COLOR[p.category].stroke}
+                  strokeWidth={1}
+                  strokeLinejoin="round"
+                />
+              ))}
+            </svg>
+          </div>
+        )}
+        <div className="flex items-center justify-between px-3 py-2">
+          <p className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">
+            {chassis.parts.length} parts
           </p>
           <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-sky-600 transition group-hover:opacity-70">
             <Expand size={10} /> Explore
@@ -206,8 +210,20 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
           </div>
         </div>
 
-        {/* SVG canvas — top-aligned, fills from header down */}
-        <div className="flex h-full items-start justify-center px-8 pt-24 pb-14">
+        {/* Official product photo — dimmed backdrop behind the parts overlay */}
+        {PLATFORM_IMAGE_MAP[platformId] && (
+          <div className="pointer-events-none absolute inset-0 z-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={PLATFORM_IMAGE_MAP[platformId]}
+              alt=""
+              className="h-full w-full object-contain object-center opacity-[0.07]"
+            />
+          </div>
+        )}
+
+        {/* SVG canvas — grid floor + diagram */}
+        <div className="relative z-10 flex h-full items-center justify-center p-12 pt-28 pb-24">
           <svg
             viewBox={chassis.viewBox}
             xmlns="http://www.w3.org/2000/svg"
@@ -223,19 +239,43 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
 
             <rect x="-500" y="-500" width="2000" height="2000" fill="url(#techGrid)" />
 
-            {/* Background body silhouette — thin outline of full robot form */}
+            {/* Ghost silhouette — full robot body outline */}
             {chassis.silhouette && (
               <path
                 d={chassis.silhouette}
-                fill="none"
-                stroke="rgba(255,255,255,0.08)"
-                strokeWidth={0.6}
+                fill="rgba(255,255,255,0.025)"
+                stroke="rgba(255,255,255,0.10)"
+                strokeWidth={0.7}
                 strokeLinejoin="round"
-                style={{ pointerEvents: "none" }}
+                strokeLinecap="round"
               />
             )}
 
-            {/* Interactive parts — wireframe by default, highlighted on selection */}
+            {/* Joint accent circles */}
+            {chassis.accents?.map((a, i) => (
+              <g key={i}>
+                {a.d && (
+                  <path
+                    d={a.d}
+                    fill="none"
+                    stroke={a.stroke ?? "rgba(255,255,255,0.14)"}
+                    strokeWidth={0.7}
+                  />
+                )}
+                {a.cx !== undefined && a.cy !== undefined && (a.r ?? 0) > 0 && (
+                  <circle
+                    cx={a.cx}
+                    cy={a.cy}
+                    r={a.r}
+                    fill="rgba(255,255,255,0.04)"
+                    stroke={a.stroke ?? "rgba(255,255,255,0.22)"}
+                    strokeWidth={0.8}
+                  />
+                )}
+              </g>
+            ))}
+
+            {/* Parts */}
             {chassis.parts.map((part) => {
               const isSel = selectedPartId === part.id;
               const isFiltered = filterCategory !== "all" && part.category !== filterCategory;

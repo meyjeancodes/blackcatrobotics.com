@@ -74,43 +74,23 @@ const HUMANOID: ChassisDefinition = {
   id: "humanoid",
   label: "Humanoid",
   viewBox: "0 0 200 360",
-  // Full-body outline – each sub-path traces one body section as a thin background stroke
-  silhouette: [
-    // Head
-    "M88,2 Q88,0 100,0 Q112,0 112,2 L114,44 Q114,52 100,52 Q86,52 86,44 Z",
-    // Neck connector
-    "M91,52 L91,68 L109,68 L109,52 Z",
-    // Torso
-    "M70,68 L130,68 L132,170 L68,170 Z",
-    // Left shoulder pad
-    "M46,68 L72,68 L70,98 L44,98 Z",
-    // Right shoulder pad
-    "M128,68 L154,68 L156,98 L130,98 Z",
-    // Left upper arm
-    "M40,98 L70,98 L68,135 L38,135 Z",
-    // Right upper arm
-    "M130,98 L160,98 L162,135 L132,135 Z",
-    // Left forearm
-    "M36,135 L68,135 L66,172 L34,172 Z",
-    // Right forearm
-    "M132,135 L164,135 L166,172 L134,172 Z",
-    // Left hand
-    "M32,172 L66,172 L65,192 L31,192 Z",
-    // Right hand
-    "M134,172 L168,172 L169,192 L135,192 Z",
-    // Left thigh
-    "M68,170 L98,170 L95,220 L65,220 Z",
-    // Right thigh
-    "M102,170 L132,170 L135,220 L105,220 Z",
-    // Left shin
-    "M63,220 L95,220 L92,268 L60,268 Z",
-    // Right shin
-    "M105,220 L135,220 L138,268 L108,268 Z",
-    // Left foot
-    "M54,268 L92,268 L90,308 L46,308 Z",
-    // Right foot
-    "M108,268 L146,268 L150,308 L110,308 Z",
-  ].join(" "),
+  // Multi-part silhouette: head · neck · torso · L-arm · R-arm · legs · feet
+  silhouette:
+    "M 80,10 Q 80,2 100,2 Q 120,2 120,10 L 120,44 Q 120,52 100,52 Q 80,52 80,44 Z " +
+    "M 90,52 L 110,52 L 112,64 L 88,64 Z " +
+    "M 64,64 Q 54,68 52,80 L 56,118 L 62,154 L 66,164 L 134,164 L 138,154 L 144,118 L 148,80 Q 146,68 136,64 Z " +
+    "M 26,76 L 56,68 L 54,134 L 24,140 Z " +
+    "M 22,138 L 56,132 L 54,188 L 20,192 Z " +
+    "M 18,188 L 56,186 L 58,208 L 18,212 Q 14,210 14,200 Z " +
+    "M 144,68 L 174,76 L 176,140 L 146,134 Z " +
+    "M 144,132 L 178,138 L 180,192 L 146,188 Z " +
+    "M 142,186 L 182,188 L 186,200 Q 186,210 182,212 L 142,208 Z " +
+    "M 66,164 L 94,164 L 92,268 L 64,268 Z " +
+    "M 106,164 L 134,164 L 136,268 L 108,268 Z " +
+    "M 64,268 L 92,268 L 90,332 L 64,332 Z " +
+    "M 108,268 L 136,268 L 136,332 L 110,332 Z " +
+    "M 42,332 L 98,332 L 98,350 L 42,350 Z " +
+    "M 102,332 L 158,332 L 158,350 L 102,350 Z",
   platformIds: [
     "unitree-g1",
     "unitree-h1-2",
@@ -120,14 +100,26 @@ const HUMANOID: ChassisDefinition = {
     "phantom-mk1",
   ],
   accents: [
-    { cx: 100, cy: 60, r: 0 }, // placeholder
+    { cx: 100, cy: 64, r: 5 },
+    { cx: 43, cy: 74, r: 9 },
+    { cx: 157, cy: 74, r: 9 },
+    { cx: 38, cy: 134, r: 7 },
+    { cx: 162, cy: 134, r: 7 },
+    { cx: 36, cy: 188, r: 5 },
+    { cx: 164, cy: 188, r: 5 },
+    { cx: 79, cy: 164, r: 9 },
+    { cx: 121, cy: 164, r: 9 },
+    { cx: 78, cy: 268, r: 8 },
+    { cx: 122, cy: 268, r: 8 },
+    { cx: 77, cy: 328, r: 5 },
+    { cx: 123, cy: 328, r: 5 },
   ],
   parts: [
     {
       id: "head-compute",
       name: "Head / Compute Bay",
       category: "compute",
-      d: "M88,6 Q88,0 100,0 Q112,0 112,6 L114,12 L114,44 Q114,52 100,52 Q86,52 86,44 L86,12 Z",
+      d: "M 80,10 Q 80,2 100,2 Q 120,2 120,10 L 120,44 Q 120,52 100,52 Q 80,52 80,44 Z",
       explodeOffset: [0, -30],
       summary: "Jetson-class compute, stereo cameras, IMU cluster",
       details:
@@ -141,197 +133,10 @@ const HUMANOID: ChassisDefinition = {
       labelAnchor: [100, 27],
     },
     {
-      id: "shoulder-actuators",
-      name: "Shoulder Actuators",
-      category: "actuator",
-      d: "M50,72 L72,68 L70,96 L48,98 Z M128,68 L150,72 L152,98 L130,96 Z",
-      explodeOffset: [-12, -6],
-      summary: "3-DOF rotary BLDC + harmonic reducer per side",
-      details:
-        "Each shoulder packs 3 rotary joints (pitch / roll / yaw) with a BLDC motor, harmonic reducer (~36% of actuator cost), absolute encoder, and integrated torque sensor. Peak torque 80–140 Nm.",
-      failureSignature:
-        "Over-temperature on high-duty tasks; harmonic reducer backlash increasing → EEF tracking error > 15 mm.",
-      diagnosticCue:
-        "Rotate the arm in hand power-off. Feel for detents or grinding. Check the torque sensor baseline — it should read ~0 Nm at rest.",
-      replacement:
-        "45 min per shoulder. L3 cert. Torque-spec every bolt. Re-run arm calibration macro.",
-      labelAnchor: [60, 83],
-    },
-    {
-      id: "elbow-actuators",
-      name: "Elbow Actuators",
-      category: "actuator",
-      d: "M42,98 L50,98 Q50,116 48,133 L40,133 Q38,116 42,98 Z M150,98 L158,98 Q162,116 160,133 L152,133 Q150,116 150,98 Z",
-      explodeOffset: [-18, 2],
-      summary: "Rotary BLDC, ~55 Nm peak, highest wear joint",
-      details:
-        "Elbow joints see the most duty cycles in manipulation tasks. Typically lower torque than shoulders but higher cycle count. Gear wear here is the #1 cause of EEF precision loss.",
-      failureSignature:
-        "Backlash at EEF (slop), position error growing with cycle count, faint grinding at end-of-travel.",
-      diagnosticCue:
-        "Command arm to a fixed target 10 times; measure EEF drift. >2 mm drift = reducer wear.",
-      replacement:
-        "40 min. L3 cert. New reducer lubricant + re-zero the joint encoder.",
-      labelAnchor: [45, 116],
-    },
-    {
-      id: "torso-battery",
-      name: "Torso — Battery + BMS",
-      category: "battery",
-      d: "M72,68 L128,68 L131,115 L128,170 L72,170 L69,115 Z",
-      explodeOffset: [0, 12],
-      summary: "2–5 kWh Li-ion / LiPo pack + BMS + power distribution",
-      details:
-        "Main energy store. Capacities span 0.84–5 kWh across humanoids. BMS monitors cell delta (target < ±20 mV), pack temp, and charge state. Power distribution board feeds all joints, compute, and sensors.",
-      failureSignature:
-        "Cell delta > ±50 mV (imbalance), pack temperature > 45°C at rest, swelling (thermal event risk).",
-      diagnosticCue:
-        "Visual + physical: inspect for swelling. Then read cell deltas from the BMS. Never charge a swollen pack.",
-      replacement:
-        "60 min. L2 cert with L3 sign-off. LOTO + zero-energy verification mandatory.",
-      labelAnchor: [100, 118],
-    },
-    {
-      id: "wrist-ft",
-      name: "Wrist F/T Sensors",
-      category: "sensor",
-      d: "M37,165 L51,165 L51,171 L37,171 Z M149,165 L163,165 L163,171 L149,171 Z",
-      explodeOffset: [20, 0],
-      summary: "6-axis force/torque sensor per wrist",
-      details:
-        "Measures force and torque at the end-of-arm. Critical for contact-rich tasks and collision detection. Baseline drift is the primary aging mode.",
-      failureSignature:
-        "Static reading > ±2 N / ±0.5 Nm with no contact. False-positive contact events.",
-      diagnosticCue:
-        "Hold arm still; record F/T for 10 s. Drift > ±2 N = recalibration needed. Persistent drift = sensor replacement.",
-      replacement:
-        "25 min. L2 cert. Re-tare sensor after install; check wrist cable strain relief.",
-      labelAnchor: [44, 168],
-    },
-    {
-      id: "hip-actuators",
-      name: "Hip Actuators",
-      category: "actuator",
-      d: "M70,170 L98,170 L96,218 L67,218 Z M102,170 L130,170 L133,218 L104,218 Z",
-      explodeOffset: [0, 8],
-      summary: "High-torque 3-DOF rotary, 150–250 Nm",
-      details:
-        "Hips carry the full robot weight during locomotion. Highest torque joints on the body. Typically use larger harmonic reducers or cycloidal-pin gears.",
-      failureSignature:
-        "Gait asymmetry, elevated motor current at mid-stance, audible whine at peak load.",
-      diagnosticCue:
-        "Listen during walking. Compare left/right motor current. Delta > 15% → worn hip on the louder side.",
-      replacement:
-        "90 min. L4 cert. Full leg re-calibration after swap.",
-      labelAnchor: [82, 194],
-    },
-    {
-      id: "knee-actuators",
-      name: "Knee Actuators",
-      category: "actuator",
-      d: "M66,218 L95,218 L93,265 L64,265 Z M105,218 L132,218 L134,265 L107,265 Z",
-      explodeOffset: [0, 14],
-      summary: "High-duty rotary, highest thermal load",
-      details:
-        "Knees run the highest thermal load of any joint during stair-climbing or inclines. Direct-drive or low-ratio reducer to handle impact loads.",
-      failureSignature:
-        "Thermal cutoff on sustained incline, coolant loop failure (if liquid-cooled), encoder drift post-impact.",
-      diagnosticCue:
-        "IR camera during a 60s stair-climb trial. Knee > 80°C after 30s = cooling system issue.",
-      replacement:
-        "75 min. L3 cert. Thermal paste refresh on heatsink contact.",
-      labelAnchor: [79, 241],
-    },
-    {
-      id: "feet-imu",
-      name: "Feet + Ankle F/T",
-      category: "sensor",
-      d: "M65,265 L91,265 L90,312 L63,312 Z M108,265 L133,265 L136,312 L110,312 Z",
-      explodeOffset: [0, 22],
-      summary: "Ankle F/T + contact-detection sole",
-      details:
-        "Each ankle has a 6-axis F/T sensor providing ground contact estimation. Soles often include discrete contact pads for redundancy.",
-      failureSignature:
-        "False contact detection (robot thinks it's standing when it isn't), phantom slips.",
-      diagnosticCue:
-        "Lift foot off ground, watch F/T reading. Should zero within ±0.5 N. If not, baseline calibration is required.",
-      replacement:
-        "30 min per foot. L3 cert. Re-zero both ankle sensors together.",
-      labelAnchor: [77, 290],
-    },
-    {
-      id: "ankle-actuators",
-      name: "Ankle Actuators",
-      category: "actuator",
-      d: "M67,255 L93,255 L92,265 L66,265 Z M107,255 L133,255 L134,265 L108,265 Z",
-      explodeOffset: [0, 16],
-      summary: "Pitch/roll ankle joint, high impact load",
-      details:
-        "Ankle actuators manage foot orientation during ground contact and absorb impact loads during walking and jumping. Often the first mechanical component to show wear in high-mileage units.",
-      failureSignature:
-        "Foot slap on ground contact, reduced ground clearance during swing phase, audible clunk at heel strike.",
-      diagnosticCue:
-        "Slow-walk test on flat surface. Listen for asymmetric heel-strike sounds. Compare left/right ankle position telemetry at mid-stance — delta > 3° = wear.",
-      replacement:
-        "55 min per ankle. L3 cert. Re-calibrate foot F/T sensor after install.",
-      labelAnchor: [80, 260],
-    },
-    {
-      id: "hands",
-      name: "End Effector / Hands",
-      category: "end-effector",
-      d: "M35,171 L53,171 L52,185 L34,185 Z M147,171 L165,171 L166,185 L148,185 Z",
-      explodeOffset: [16, 8],
-      summary: "Gripper or multi-finger manipulator",
-      details:
-        "Final output for manipulation tasks. Designs range from 1-DOF parallel grippers to 11-DOF humanoid hands with tactile sensing on each phalanx. Cable-driven tendons are the dominant failure point.",
-      failureSignature:
-        "Dropped objects below rated payload, finger stall mid-close, tactile pad dead zones, tendon fraying.",
-      diagnosticCue:
-        "Grasp a known-weight object (50% rated load). Hold for 10 s. If slip detected or motor current climbs = tendon wear or pad failure.",
-      replacement:
-        "20–60 min depending on DOF count. L3 cert. Re-tension tendons; re-map tactile calibration grid.",
-      labelAnchor: [44, 178],
-    },
-    {
-      id: "torso-frame",
-      name: "Torso Frame / Spine",
-      category: "frame",
-      d: "M65,72 L72,72 L70,165 L65,165 Z M128,72 L135,72 L135,165 L130,165 Z",
-      explodeOffset: [0, 0],
-      summary: "Structural spine connecting upper and lower body",
-      details:
-        "Carbon fiber or cast aluminum torso spine. Routes power and data from the battery/compute bay down to the hip actuators. Must remain rigid under dynamic loads — any flex directly impacts gait stability.",
-      failureSignature:
-        "Gait oscillation that worsens with speed, visible flex under load, stress whitening in composite sections.",
-      diagnosticCue:
-        "Visual inspection for cracks or delamination. Twist-test (power-off): grasp shoulders and hips, rotate gently. Any perceptible twist = structural compromise.",
-      replacement:
-        "120 min. L4 cert. Full disassembly required. Re-run structural calibration post-install.",
-      labelAnchor: [68, 118],
-    },
-    {
-      id: "cooling-loop",
-      name: "Thermal Management",
-      category: "cooling",
-      d: "M88,55 L112,55 L110,65 L90,65 Z",
-      explodeOffset: [0, -18],
-      summary: "Liquid cooling loop or high-flow fan pack",
-      details:
-        "Humanoid compute and actuators generate substantial heat. High-end units use a micro-liquid cooling loop (pump, radiator, coolant lines); others use high-static-pressure blowers ducted across hot components.",
-      failureSignature:
-        "Compute thermal throttling at ambient < 25°C, actuator over-temp on routine walking, coolant leak (wet spots near torso joints).",
-      diagnosticCue:
-        "IR camera scan during a 5-minute walk cycle. Torso hotspots > 65°C or asymmetric joint temps = coolant blockage or pump failure.",
-      replacement:
-        "Pump: 25 min, L2 cert. Radiator: 45 min, L3 cert. Refill and bleed loop after any open-line work.",
-      labelAnchor: [100, 60],
-    },
-    {
       id: "comms-antenna",
       name: "Comms Array",
       category: "comms",
-      d: "M84,14 L88,14 L88,24 L84,24 Z M112,14 L116,14 L116,24 L112,24 Z",
+      d: "M 83,2 L 91,2 L 91,12 L 83,12 Z M 109,2 L 117,2 L 117,12 L 109,12 Z",
       explodeOffset: [0, -14],
       summary: "WiFi / 5G / BLE antenna cluster",
       details:
@@ -342,7 +147,194 @@ const HUMANOID: ChassisDefinition = {
         "RSSI check in diagnostics panel. Move robot 10 m from AP. RSSI should stay > -65 dBm. If it collapses, inspect antenna connectors at the base of each stalk.",
       replacement:
         "10 min per antenna. L1 cert. No calibration required.",
-      labelAnchor: [100, 19],
+      labelAnchor: [100, 7],
+    },
+    {
+      id: "cooling-loop",
+      name: "Thermal Management",
+      category: "cooling",
+      d: "M 88,52 L 112,52 L 112,64 L 88,64 Z",
+      explodeOffset: [0, -18],
+      summary: "Liquid cooling loop or high-flow fan pack",
+      details:
+        "Humanoid compute and actuators generate substantial heat. High-end units use a micro-liquid cooling loop (pump, radiator, coolant lines); others use high-static-pressure blowers ducted across hot components.",
+      failureSignature:
+        "Compute thermal throttling at ambient < 25°C, actuator over-temp on routine walking, coolant leak (wet spots near torso joints).",
+      diagnosticCue:
+        "IR camera scan during a 5-minute walk cycle. Torso hotspots > 65°C or asymmetric joint temps = coolant blockage or pump failure.",
+      replacement:
+        "Pump: 25 min, L2 cert. Radiator: 45 min, L3 cert. Refill and bleed loop after any open-line work.",
+      labelAnchor: [100, 58],
+    },
+    {
+      id: "shoulder-actuators",
+      name: "Shoulder Actuators",
+      category: "actuator",
+      d: "M 26,76 L 56,68 L 54,134 L 24,140 Z M 144,68 L 174,76 L 176,140 L 146,134 Z",
+      explodeOffset: [-14, -4],
+      summary: "3-DOF rotary BLDC + harmonic reducer per side",
+      details:
+        "Each shoulder packs 3 rotary joints (pitch / roll / yaw) with a BLDC motor, harmonic reducer (~36% of actuator cost), absolute encoder, and integrated torque sensor. Peak torque 80–140 Nm.",
+      failureSignature:
+        "Over-temperature on high-duty tasks; harmonic reducer backlash increasing → EEF tracking error > 15 mm.",
+      diagnosticCue:
+        "Rotate the arm in hand power-off. Feel for detents or grinding. Check the torque sensor baseline — it should read ~0 Nm at rest.",
+      replacement:
+        "45 min per shoulder. L3 cert. Torque-spec every bolt. Re-run arm calibration macro.",
+      labelAnchor: [42, 104],
+    },
+    {
+      id: "elbow-actuators",
+      name: "Elbow Actuators",
+      category: "actuator",
+      d: "M 22,130 L 56,124 L 54,158 L 20,162 Z M 144,124 L 178,130 L 180,162 L 146,158 Z",
+      explodeOffset: [-20, 4],
+      summary: "Rotary BLDC, ~55 Nm peak, highest wear joint",
+      details:
+        "Elbow joints see the most duty cycles in manipulation tasks. Typically lower torque than shoulders but higher cycle count. Gear wear here is the #1 cause of EEF precision loss.",
+      failureSignature:
+        "Backlash at EEF (slop), position error growing with cycle count, faint grinding at end-of-travel.",
+      diagnosticCue:
+        "Command arm to a fixed target 10 times; measure EEF drift. >2 mm drift = reducer wear.",
+      replacement:
+        "40 min. L3 cert. New reducer lubricant + re-zero the joint encoder.",
+      labelAnchor: [40, 143],
+    },
+    {
+      id: "wrist-ft",
+      name: "Wrist F/T Sensors",
+      category: "sensor",
+      d: "M 18,158 L 56,154 L 54,188 L 16,192 Z M 144,154 L 182,158 L 184,192 L 146,188 Z",
+      explodeOffset: [22, 2],
+      summary: "6-axis force/torque sensor per wrist",
+      details:
+        "Measures force and torque at the end-of-arm. Critical for contact-rich tasks and collision detection. Baseline drift is the primary aging mode.",
+      failureSignature:
+        "Static reading > ±2 N / ±0.5 Nm with no contact. False-positive contact events.",
+      diagnosticCue:
+        "Hold arm still; record F/T for 10 s. Drift > ±2 N = recalibration needed. Persistent drift = sensor replacement.",
+      replacement:
+        "25 min. L2 cert. Re-tare sensor after install; check wrist cable strain relief.",
+      labelAnchor: [36, 174],
+    },
+    {
+      id: "hands",
+      name: "End Effector / Hands",
+      category: "end-effector",
+      d: "M 14,188 L 56,186 L 58,210 L 14,214 Q 10,212 10,201 Z M 142,186 L 186,188 L 190,201 Q 190,212 186,214 L 142,210 Z",
+      explodeOffset: [18, 10],
+      summary: "Gripper or multi-finger manipulator",
+      details:
+        "Final output for manipulation tasks. Designs range from 1-DOF parallel grippers to 11-DOF humanoid hands with tactile sensing on each phalanx. Cable-driven tendons are the dominant failure point.",
+      failureSignature:
+        "Dropped objects below rated payload, finger stall mid-close, tactile pad dead zones, tendon fraying.",
+      diagnosticCue:
+        "Grasp a known-weight object (50% rated load). Hold for 10 s. If slip detected or motor current climbs = tendon wear or pad failure.",
+      replacement:
+        "20–60 min depending on DOF count. L3 cert. Re-tension tendons; re-map tactile calibration grid.",
+      labelAnchor: [34, 200],
+    },
+    {
+      id: "torso-battery",
+      name: "Torso — Battery + BMS",
+      category: "battery",
+      d: "M 70,68 L 130,68 L 133,116 L 130,164 L 70,164 L 67,116 Z",
+      explodeOffset: [0, 12],
+      summary: "2–5 kWh Li-ion / LiPo pack + BMS + power distribution",
+      details:
+        "Main energy store. Capacities span 0.84–5 kWh across humanoids. BMS monitors cell delta (target < ±20 mV), pack temp, and charge state. Power distribution board feeds all joints, compute, and sensors.",
+      failureSignature:
+        "Cell delta > ±50 mV (imbalance), pack temperature > 45°C at rest, swelling (thermal event risk).",
+      diagnosticCue:
+        "Visual + physical: inspect for swelling. Then read cell deltas from the BMS. Never charge a swollen pack.",
+      replacement:
+        "60 min. L2 cert with L3 sign-off. LOTO + zero-energy verification mandatory.",
+      labelAnchor: [100, 116],
+    },
+    {
+      id: "torso-frame",
+      name: "Torso Frame / Spine",
+      category: "frame",
+      d: "M 62,64 L 70,64 L 70,164 L 62,164 Z M 130,64 L 138,64 L 138,164 L 130,164 Z",
+      explodeOffset: [0, 0],
+      summary: "Structural spine connecting upper and lower body",
+      details:
+        "Carbon fiber or cast aluminum torso spine. Routes power and data from the battery/compute bay down to the hip actuators. Must remain rigid under dynamic loads — any flex directly impacts gait stability.",
+      failureSignature:
+        "Gait oscillation that worsens with speed, visible flex under load, stress whitening in composite sections.",
+      diagnosticCue:
+        "Visual inspection for cracks or delamination. Twist-test (power-off): grasp shoulders and hips, rotate gently. Any perceptible twist = structural compromise.",
+      replacement:
+        "120 min. L4 cert. Full disassembly required. Re-run structural calibration post-install.",
+      labelAnchor: [66, 114],
+    },
+    {
+      id: "hip-actuators",
+      name: "Hip Actuators",
+      category: "actuator",
+      d: "M 66,164 L 94,164 L 92,222 L 66,222 Z M 106,164 L 134,164 L 134,222 L 108,222 Z",
+      explodeOffset: [0, 8],
+      summary: "High-torque 3-DOF rotary, 150–250 Nm",
+      details:
+        "Hips carry the full robot weight during locomotion. Highest torque joints on the body. Typically use larger harmonic reducers or cycloidal-pin gears.",
+      failureSignature:
+        "Gait asymmetry, elevated motor current at mid-stance, audible whine at peak load.",
+      diagnosticCue:
+        "Listen during walking. Compare left/right motor current. Delta > 15% → worn hip on the louder side.",
+      replacement:
+        "90 min. L4 cert. Full leg re-calibration after swap.",
+      labelAnchor: [80, 193],
+    },
+    {
+      id: "knee-actuators",
+      name: "Knee Actuators",
+      category: "actuator",
+      d: "M 64,220 L 94,220 L 92,276 L 64,276 Z M 106,220 L 136,220 L 136,276 L 108,276 Z",
+      explodeOffset: [0, 14],
+      summary: "High-duty rotary, highest thermal load",
+      details:
+        "Knees run the highest thermal load of any joint during stair-climbing or inclines. Direct-drive or low-ratio reducer to handle impact loads.",
+      failureSignature:
+        "Thermal cutoff on sustained incline, coolant loop failure (if liquid-cooled), encoder drift post-impact.",
+      diagnosticCue:
+        "IR camera during a 60s stair-climb trial. Knee > 80°C after 30s = cooling system issue.",
+      replacement:
+        "75 min. L3 cert. Thermal paste refresh on heatsink contact.",
+      labelAnchor: [79, 248],
+    },
+    {
+      id: "ankle-actuators",
+      name: "Ankle Actuators",
+      category: "actuator",
+      d: "M 64,316 L 92,316 L 90,332 L 64,332 Z M 108,316 L 136,316 L 136,332 L 110,332 Z",
+      explodeOffset: [0, 18],
+      summary: "Pitch/roll ankle joint, high impact load",
+      details:
+        "Ankle actuators manage foot orientation during ground contact and absorb impact loads during walking and jumping. Often the first mechanical component to show wear in high-mileage units.",
+      failureSignature:
+        "Foot slap on ground contact, reduced ground clearance during swing phase, audible clunk at heel strike.",
+      diagnosticCue:
+        "Slow-walk test on flat surface. Listen for asymmetric heel-strike sounds. Compare left/right ankle position telemetry at mid-stance — delta > 3° = wear.",
+      replacement:
+        "55 min per ankle. L3 cert. Re-calibrate foot F/T sensor after install.",
+      labelAnchor: [79, 324],
+    },
+    {
+      id: "feet-imu",
+      name: "Feet + Ankle F/T",
+      category: "sensor",
+      d: "M 42,332 L 98,332 L 98,350 L 42,350 Z M 102,332 L 158,332 L 158,350 L 102,350 Z",
+      explodeOffset: [0, 24],
+      summary: "Ankle F/T + contact-detection sole",
+      details:
+        "Each ankle has a 6-axis F/T sensor providing ground contact estimation. Soles often include discrete contact pads for redundancy.",
+      failureSignature:
+        "False contact detection (robot thinks it's standing when it isn't), phantom slips.",
+      diagnosticCue:
+        "Lift foot off ground, watch F/T reading. Should zero within ±0.5 N. If not, baseline calibration is required.",
+      replacement:
+        "30 min per foot. L3 cert. Re-zero both ankle sensors together.",
+      labelAnchor: [73, 341],
     },
   ],
 };
@@ -352,15 +344,42 @@ const HUMANOID: ChassisDefinition = {
 const QUADRUPED: ChassisDefinition = {
   id: "quadruped",
   label: "Quadruped",
-  viewBox: "0 0 400 260",
-  silhouette: "",
+  viewBox: "0 0 400 280",
+  // Silhouette: body · front sensor head · rear IO bay · 4 legs (upper+lower+foot each)
+  silhouette:
+    "M 88,68 Q 80,68 80,76 L 80,162 Q 80,170 88,170 L 312,170 Q 320,170 320,162 L 320,76 Q 320,68 312,68 Z " +
+    "M 52,80 Q 44,80 44,88 L 44,156 Q 44,164 52,164 L 82,164 L 82,80 Z " +
+    "M 318,80 L 318,164 L 348,164 Q 356,164 356,156 L 356,88 Q 356,80 348,80 Z " +
+    "M 100,76 L 300,76 L 300,68 L 100,68 Z " +
+    "M 108,170 L 128,170 L 130,220 L 108,220 Z " +
+    "M 108,220 L 130,220 L 128,256 L 108,256 Z " +
+    "M 104,256 L 134,256 L 134,264 L 104,264 Z " +
+    "M 158,170 L 178,170 L 180,220 L 158,220 Z " +
+    "M 158,220 L 180,220 L 178,256 L 158,256 Z " +
+    "M 154,256 L 184,256 L 184,264 L 154,264 Z " +
+    "M 222,170 L 242,170 L 244,220 L 222,220 Z " +
+    "M 222,220 L 244,220 L 242,256 L 222,256 Z " +
+    "M 218,256 L 248,256 L 248,264 L 218,264 Z " +
+    "M 272,170 L 292,170 L 294,220 L 272,220 Z " +
+    "M 272,220 L 294,220 L 292,256 L 272,256 Z " +
+    "M 268,256 L 298,256 L 298,264 L 268,264 Z",
   platformIds: ["spot", "unitree-b2"],
+  accents: [
+    { cx: 118, cy: 170, r: 8 },
+    { cx: 168, cy: 170, r: 8 },
+    { cx: 232, cy: 170, r: 8 },
+    { cx: 282, cy: 170, r: 8 },
+    { cx: 118, cy: 220, r: 7 },
+    { cx: 168, cy: 220, r: 7 },
+    { cx: 232, cy: 220, r: 7 },
+    { cx: 282, cy: 220, r: 7 },
+  ],
   parts: [
     {
       id: "body-compute",
       name: "Body — Compute + IMU",
       category: "compute",
-      d: "M90,80 L310,80 L320,140 L310,150 L90,150 L80,140 Z",
+      d: "M 88,76 L 312,76 L 320,114 L 312,162 L 88,162 L 80,114 Z",
       explodeOffset: [0, -6],
       summary: "Main chassis — compute, IMU, and payload rails",
       details:
@@ -371,13 +390,13 @@ const QUADRUPED: ChassisDefinition = {
         "Try external power supply. If it boots on bench power, suspect BMS or battery.",
       replacement:
         "Compute: 45 min, L3 cert.",
-      labelAnchor: [200, 115],
+      labelAnchor: [200, 118],
     },
     {
       id: "battery-quad",
       name: "Battery Bay",
       category: "battery",
-      d: "M90,150 L310,150 L310,170 L90,170 Z",
+      d: "M 100,162 L 300,162 L 300,170 L 100,170 Z",
       explodeOffset: [0, 12],
       summary: "Hot-swap battery pack + BMS",
       details:
@@ -388,47 +407,13 @@ const QUADRUPED: ChassisDefinition = {
         "Remove battery. Meter it direct — should be > 42 V (Spot) or > 58 V (B2). If battery is good, try external power supply.",
       replacement:
         "Battery: 2 min hot-swap. L1 cert.",
-      labelAnchor: [200, 160],
-    },
-    {
-      id: "front-legs",
-      name: "Front Legs (2×)",
-      category: "actuator",
-      d: "M110,170 L130,170 L140,230 L120,240 Z M270,170 L290,170 L300,240 L280,230 Z",
-      explodeOffset: [-4, 14],
-      summary: "Hip + knee + ankle rotary actuators",
-      details:
-        "Each leg has 3 actuators (hip abduction, hip flexion, knee). Front legs take the highest impact load when descending stairs or jumping down.",
-      failureSignature:
-        "Gait hitch, elevated motor current on impact, knee position drift.",
-      diagnosticCue:
-        "Command a slow walk forward on a hard surface. Listen. Compare motor temperature by leg in telemetry — outlier leg has the worn joint.",
-      replacement:
-        "50 min per leg. L3 cert.",
-      labelAnchor: [130, 205],
-    },
-    {
-      id: "rear-legs",
-      name: "Rear Legs (2×)",
-      category: "actuator",
-      d: "M240,170 L260,170 L270,240 L250,230 Z M140,170 L160,170 L170,230 L150,240 Z",
-      explodeOffset: [4, 14],
-      summary: "Hip + knee + ankle rotary actuators",
-      details:
-        "Rear legs primarily generate forward propulsion. Highest thermal load during uphill traverse.",
-      failureSignature:
-        "Reduced climbing capability, rear-drop during acceleration, thermal cutoff on inclines.",
-      diagnosticCue:
-        "Ramp test at 15°. Rear actuator temp rise rate should track front. Delta > 20°C after 60s = cooling issue.",
-      replacement:
-        "50 min per leg. L3 cert.",
-      labelAnchor: [270, 205],
+      labelAnchor: [200, 166],
     },
     {
       id: "head-sensor",
       name: "Sensor Head (Front)",
       category: "sensor",
-      d: "M60,95 L95,95 L95,140 L60,140 Z",
+      d: "M 44,80 Q 44,72 52,72 L 82,72 L 82,164 L 52,164 Q 44,164 44,156 Z",
       explodeOffset: [-18, 0],
       summary: "Stereo cameras, depth, optional LiDAR",
       details:
@@ -439,13 +424,13 @@ const QUADRUPED: ChassisDefinition = {
         "Open the live camera feed. If one camera is black or noisy — replace that module. If both are fine but autonomy is broken, suspect calibration or compute.",
       replacement:
         "20 min. L2 cert. Re-run sensor extrinsic calibration.",
-      labelAnchor: [77, 117],
+      labelAnchor: [63, 118],
     },
     {
       id: "tail-compute",
       name: "Rear Bay — IO + WiFi",
       category: "comms",
-      d: "M310,95 L340,95 L340,140 L310,140 Z",
+      d: "M 318,72 L 348,72 Q 356,72 356,80 L 356,164 Q 356,172 348,172 L 318,172 Z",
       explodeOffset: [18, 0],
       summary: "Ethernet, USB, radio",
       details:
@@ -456,64 +441,13 @@ const QUADRUPED: ChassisDefinition = {
         "Ping from base station. If lost in open field but OK at 5 m, antenna is loose or fouled.",
       replacement:
         "15 min. L2 cert.",
-      labelAnchor: [325, 117],
-    },
-    {
-      id: "front-feet",
-      name: "Front Feet / Contact Pads",
-      category: "sensor",
-      d: "M118,240 L128,240 L126,252 L120,252 Z M278,230 L288,230 L286,242 L280,242 Z",
-      explodeOffset: [0, 18],
-      summary: "Rubber contact pads with force sensing",
-      details:
-        "Each front foot terminates in a rubberized contact pad with embedded force-sensitive resistors or discrete load cells. Critical for terrain adaptation and slip detection.",
-      failureSignature:
-        "Worn pad exposing hard sub-frame, false slip detection on carpet/gravel, asymmetric ground contact force.",
-      diagnosticCue:
-        "Visual: check pad thickness. Tactile: press each pad by hand — should feel compliant. If rock-hard, pad is worn through.",
-      replacement:
-        "10 min per foot. L1 cert. Peel-and-stick replacement pad.",
-      labelAnchor: [124, 246],
-    },
-    {
-      id: "rear-feet",
-      name: "Rear Feet / Contact Pads",
-      category: "sensor",
-      d: "M148,240 L158,240 L156,252 L150,252 Z M248,230 L258,230 L256,242 L250,242 Z",
-      explodeOffset: [0, 18],
-      summary: "Rubber contact pads with force sensing",
-      details:
-        "Rear feet carry the propulsive load during push-off. Pad wear here is often asymmetric due to turning bias.",
-      failureSignature:
-        "Same as front feet, but often with inside-edge wear from pivoting.",
-      diagnosticCue:
-        "Same as front feet. Pay attention to inside edge wear pattern.",
-      replacement:
-        "10 min per foot. L1 cert.",
-      labelAnchor: [154, 246],
-    },
-    {
-      id: "cooling-vent",
-      name: "Thermal Vents",
-      category: "cooling",
-      d: "M78,115 L88,115 L88,135 L78,135 Z M312,115 L322,115 L322,135 L312,135 Z",
-      explodeOffset: [0, 0],
-      summary: "Body side vents + internal fan",
-      details:
-        "Quadruped bodies are sealed against dust/water, so thermal management relies on internal ducting and side vents. Fan failure leads to rapid actuator thermal shutdown in summer conditions.",
-      failureSignature:
-        "Actuator thermal cutoff on routine walking, elevated internal temp, no airflow audible at vents.",
-      diagnosticCue:
-        "Hold hand near vent during walk cycle. Should feel warm exhaust. If still air, fan is seized or duct is blocked.",
-      replacement:
-        "Fan: 20 min, L2 cert. Duct cleaning: 10 min, L1 cert.",
-      labelAnchor: [83, 125],
+      labelAnchor: [337, 122],
     },
     {
       id: "payload-rail",
       name: "Payload Rails",
       category: "frame",
-      d: "M100,76 L300,76 L300,80 L100,80 Z",
+      d: "M 100,64 L 300,64 L 300,76 L 100,76 Z",
       explodeOffset: [0, -14],
       summary: "Top-mount accessory rails",
       details:
@@ -524,7 +458,92 @@ const QUADRUPED: ChassisDefinition = {
         "Lay a straight edge across the rails. Any gap > 1 mm = bend. Check bolt torque on all accessory mounts.",
       replacement:
         "Rail section: 25 min, L2 cert. Full rail: 60 min, L3 cert.",
-      labelAnchor: [200, 78],
+      labelAnchor: [200, 70],
+    },
+    {
+      id: "front-legs",
+      name: "Front Legs (2×)",
+      category: "actuator",
+      d: "M 106,170 L 130,170 L 132,224 L 106,224 Z M 156,170 L 180,170 L 182,224 L 156,224 Z",
+      explodeOffset: [-4, 14],
+      summary: "Hip + knee + ankle rotary actuators",
+      details:
+        "Each leg has 3 actuators (hip abduction, hip flexion, knee). Front legs take the highest impact load when descending stairs or jumping down.",
+      failureSignature:
+        "Gait hitch, elevated motor current on impact, knee position drift.",
+      diagnosticCue:
+        "Command a slow walk forward on a hard surface. Listen. Compare motor temperature by leg in telemetry — outlier leg has the worn joint.",
+      replacement:
+        "50 min per leg. L3 cert.",
+      labelAnchor: [144, 197],
+    },
+    {
+      id: "rear-legs",
+      name: "Rear Legs (2×)",
+      category: "actuator",
+      d: "M 220,170 L 244,170 L 246,224 L 220,224 Z M 270,170 L 294,170 L 296,224 L 270,224 Z",
+      explodeOffset: [4, 14],
+      summary: "Hip + knee + ankle rotary actuators",
+      details:
+        "Rear legs primarily generate forward propulsion. Highest thermal load during uphill traverse.",
+      failureSignature:
+        "Reduced climbing capability, rear-drop during acceleration, thermal cutoff on inclines.",
+      diagnosticCue:
+        "Ramp test at 15°. Rear actuator temp rise rate should track front. Delta > 20°C after 60s = cooling issue.",
+      replacement:
+        "50 min per leg. L3 cert.",
+      labelAnchor: [257, 197],
+    },
+    {
+      id: "front-feet",
+      name: "Front Feet / Contact Pads",
+      category: "sensor",
+      d: "M 104,252 L 134,252 L 134,264 L 104,264 Z M 154,252 L 184,252 L 184,264 L 154,264 Z",
+      explodeOffset: [0, 18],
+      summary: "Rubber contact pads with force sensing",
+      details:
+        "Each front foot terminates in a rubberized contact pad with embedded force-sensitive resistors or discrete load cells. Critical for terrain adaptation and slip detection.",
+      failureSignature:
+        "Worn pad exposing hard sub-frame, false slip detection on carpet/gravel, asymmetric ground contact force.",
+      diagnosticCue:
+        "Visual: check pad thickness. Tactile: press each pad by hand — should feel compliant. If rock-hard, pad is worn through.",
+      replacement:
+        "10 min per foot. L1 cert. Peel-and-stick replacement pad.",
+      labelAnchor: [144, 258],
+    },
+    {
+      id: "rear-feet",
+      name: "Rear Feet / Contact Pads",
+      category: "sensor",
+      d: "M 218,252 L 248,252 L 248,264 L 218,264 Z M 268,252 L 298,252 L 298,264 L 268,264 Z",
+      explodeOffset: [0, 18],
+      summary: "Rubber contact pads with force sensing",
+      details:
+        "Rear feet carry the propulsive load during push-off. Pad wear here is often asymmetric due to turning bias.",
+      failureSignature:
+        "Same as front feet, but often with inside-edge wear from pivoting.",
+      diagnosticCue:
+        "Same as front feet. Pay attention to inside edge wear pattern.",
+      replacement:
+        "10 min per foot. L1 cert.",
+      labelAnchor: [258, 258],
+    },
+    {
+      id: "cooling-vent",
+      name: "Thermal Vents",
+      category: "cooling",
+      d: "M 80,104 L 90,104 L 90,138 L 80,138 Z M 310,104 L 320,104 L 320,138 L 310,138 Z",
+      explodeOffset: [0, 0],
+      summary: "Body side vents + internal fan",
+      details:
+        "Quadruped bodies are sealed against dust/water, so thermal management relies on internal ducting and side vents. Fan failure leads to rapid actuator thermal shutdown in summer conditions.",
+      failureSignature:
+        "Actuator thermal cutoff on routine walking, elevated internal temp, no airflow audible at vents.",
+      diagnosticCue:
+        "Hold hand near vent during walk cycle. Should feel warm exhaust. If still air, fan is seized or duct is blocked.",
+      replacement:
+        "Fan: 20 min, L2 cert. Duct cleaning: 10 min, L1 cert.",
+      labelAnchor: [85, 121],
     },
   ],
 };
@@ -535,7 +554,20 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
   id: "drone-multirotor",
   label: "Multi-rotor Drone",
   viewBox: "0 0 400 300",
-  silhouette: "",
+  // Silhouette: octagonal center hub · 4 X-frame arms · motor nacelles · prop discs · landing skids
+  silhouette:
+    "M 172,122 L 228,122 L 240,134 L 240,166 L 228,178 L 172,178 L 160,166 L 160,134 Z " +
+    "M 178,136 L 80,58 L 72,68 L 170,146 Z " +
+    "M 222,136 L 320,58 L 328,68 L 230,146 Z " +
+    "M 170,164 L 72,242 L 80,252 L 178,174 Z " +
+    "M 230,164 L 328,242 L 320,252 L 222,174 Z " +
+    "M 62,38 A 36,36 0 0 1 62,110 A 36,36 0 0 1 62,38 Z " +
+    "M 338,38 A 36,36 0 0 1 338,110 A 36,36 0 0 1 338,38 Z " +
+    "M 62,190 A 36,36 0 0 1 62,262 A 36,36 0 0 1 62,190 Z " +
+    "M 338,190 A 36,36 0 0 1 338,262 A 36,36 0 0 1 338,190 Z " +
+    "M 170,180 L 183,180 L 183,218 L 170,218 Z " +
+    "M 217,180 L 230,180 L 230,218 L 217,218 Z " +
+    "M 150,218 L 250,218 L 250,228 L 150,228 Z",
   platformIds: ["dji-agras-t50", "skydio-x10"],
   parts: [
     {
