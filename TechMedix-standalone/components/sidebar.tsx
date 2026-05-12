@@ -51,7 +51,6 @@ const NAV: NavGroup[] = [
     label: "Knowledge", icon: BookOpen,
     children: [
       { href: "/knowledge",             label: "Knowledge Hub" },
-      { href: "/knowledge/simulations", label: "Simulations" },
     ],
   },
   {

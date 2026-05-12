@@ -70,8 +70,17 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
         onClick={onOpen}
         className="group relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] text-left transition hover:border-[var(--ink)]/[0.16] hover:bg-[var(--ink)]/[0.04]"
       >
-        {/* Animated p5.js sketch replaces static image/SVG */}
+        {/* Product photo stays visible — p5 sketch overlays on top as HUD */}
         <div className="relative h-48 w-full overflow-hidden rounded-t-[13px] bg-[#07070a]">
+          {imgSrc && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={imgSrc}
+              alt={platform?.name ?? chassis.label}
+              className="absolute inset-0 h-full w-full object-contain p-4 transition duration-500 group-hover:scale-[1.05]"
+            />
+          )}
+          {/* p5 HUD overlay — wireframe parts drawn on top of the photo */}
           <PlatformCardSketch platformId={platformId} />
           <div className="pointer-events-none absolute inset-0 rounded-t-[13px] ring-1 ring-inset ring-white/[0.04]" />
         </div>

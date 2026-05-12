@@ -32,10 +32,7 @@ const NAV: NavGroup[] = [
     label: "Knowledge",
     children: [
       { href: "/knowledge", label: "Knowledge Hub" },
-      { href: "/knowledge/certifications", label: "Certifications" },
-      { href: "/knowledge/simulations", label: "Simulations" },
-      { href: "/knowledge/study-guides", label: "Study Guides" },
-      { href: "/technicians/certifications", label: "Technician Certs" },
+      { href: "/technicians/certifications", label: "Certifications" },
     ],
   },
   {
