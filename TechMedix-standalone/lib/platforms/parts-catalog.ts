@@ -92,11 +92,11 @@ const HUMANOID: ChassisDefinition = {
     "M 42,332 L 98,332 L 98,350 L 42,350 Z " +
     "M 102,332 L 158,332 L 158,350 L 102,350 Z",
   platformIds: [
-    "unitree-g1",
+    // "unitree-g1",  ← moved to G1_CHASSIS (CAD-derived)
     "unitree-h1-2",
     "figure-02",
     "optimus-gen3",
-    "digit-v5",
+    "asimov-1",
     "phantom-mk1",
   ],
   accents: [
