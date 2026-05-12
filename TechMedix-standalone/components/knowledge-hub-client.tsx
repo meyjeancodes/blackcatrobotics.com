@@ -1,17 +1,28 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
   AlertTriangle,
   BookOpen,
+  ChevronRight,
   Crosshair,
   Play,
   Wrench,
+  X,
 } from "lucide-react";
 import { PlatformExplorer } from "./platform-explorer";
+import { SimLab } from "./sim-lab";
+import { BlueprintExplorer } from "./blueprint-explorer";
 import { StaggerContainer } from "./animated-stat";
 import type { PlatformProfile } from "../lib/platforms/index";
+
+type Modal =
+  | { kind: "explorer"; platformId: string }
+  | { kind: "blueprint"; platformId: string }
+  | { kind: "sim"; platformId: string }
+  | null;
 
 interface Props {
   platforms: PlatformProfile[];
@@ -42,6 +53,13 @@ const SEV_COLOR: Record<string, string> = {
 };
 
 export function KnowledgeHubClient({ platforms }: Props) {
+  const [modal, setModal] = useState<Modal>(null);
+  const [closing, setClosing] = useState(false);
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
   const byCategory = useMemo(() => {
     return platforms.reduce<Record<string, PlatformProfile[]>>((acc, p) => {
       if (!acc[p.category]) acc[p.category] = [];
@@ -49,6 +67,51 @@ export function KnowledgeHubClient({ platforms }: Props) {
       return acc;
     }, {});
   }, [platforms]);
+
+  const openModal = (m: Modal) => {
+    setClosing(false);
+    setModal(m);
+  };
+
+  const openBlueprint = (platformId: string) => {
+    setHighlightedId(platformId);
+    setTimeout(() => setHighlightedId(null), 500);
+    openModal({ kind: "blueprint", platformId });
+  };
+
+  const closeModal = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setModal(null);
+      setClosing(false);
+    }, 150);
+  };
+
+  // Keyboard dismiss
+  useEffect(() => {
+    if (!modal) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [modal]);
+
+  // Body scroll lock while modal is open — prevents scrolled-page bleed-through
+  useEffect(() => {
+    if (modal) {
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    };
+  }, [modal]);
 
   return (
     <>
@@ -62,7 +125,13 @@ export function KnowledgeHubClient({ platforms }: Props) {
             {list.map((platform) => (
               <div
                 key={platform.id}
-                className="panel-elevated flex flex-col gap-3 p-5 transition hover:border-[var(--ink)]/16"
+                className="panel-elevated flex flex-col gap-3 p-5 transition-all duration-300"
+                style={{
+                  boxShadow: highlightedId === platform.id
+                    ? "0 0 0 2px rgba(56,189,248,0.35), 0 0 40px rgba(56,189,248,0.12)"
+                    : "",
+                  transform: highlightedId === platform.id ? "scale(1.012)" : "scale(1)",
+                }}
               >
                 {/* Header */}
                 <div className="flex items-start justify-between gap-2">
@@ -112,14 +181,14 @@ export function KnowledgeHubClient({ platforms }: Props) {
                   ))}
                 </div>
 
-                {/* Interactive diagram preview → links to Blueprint page */}
+                {/* Interactive diagram preview */}
                 <div className="mt-1">
                   <PlatformExplorer
                     platformId={platform.id}
                     compact
-                    onOpen={() => {
-                      window.location.href = `/knowledge/blueprint/${platform.id}`;
-                    }}
+                    onOpen={() =>
+                      openModal({ kind: "explorer", platformId: platform.id })
+                    }
                   />
                 </div>
 
@@ -166,18 +235,23 @@ export function KnowledgeHubClient({ platforms }: Props) {
                         <BookOpen size={9} /> Manual
                       </a>
                     )}
-                    <Link
-                      href={`/knowledge/blueprint/${platform.id}`}
-                      className="inline-flex items-center gap-1 rounded-full border border-sky-500/[0.18] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-sky-600 transition hover:bg-sky-500/[0.06] hover:text-sky-700"
+                    <button
+                      type="button"
+                      onClick={() => openBlueprint(platform.id)}
+                      className="flex items-center gap-1 rounded-full border border-sky-500/[0.18] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-sky-600 transition hover:bg-sky-500/[0.06] hover:text-sky-700"
+                      title="Interactive technical blueprint — part-by-part reveal, explode view"
                     >
                       <Crosshair size={9} /> Blueprint
-                    </Link>
-                    <Link
-                      href={`/knowledge/simulations?platform=${platform.id}`}
-                      className="inline-flex items-center gap-1 rounded-full border border-[var(--ink)]/[0.14] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        openModal({ kind: "sim", platformId: platform.id })
+                      }
+                      className="flex items-center gap-1 rounded-full border border-[var(--ink)]/[0.14] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
                     >
                       <Play size={9} /> Sim
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -217,14 +291,53 @@ export function KnowledgeHubClient({ platforms }: Props) {
               ))}
             </div>
           </div>
-          <Link
-            href="/knowledge/simulations"
+          <button
+            type="button"
+            onClick={() =>
+              openModal({ kind: "sim", platformId: "unitree-g1" })
+            }
             className="inline-flex items-center gap-2 rounded-full bg-ember px-5 py-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:opacity-90"
           >
             <Play size={12} /> Launch Sim Lab
-          </Link>
+          </button>
         </div>
       </div>
+
+      {/* ── Modal (portal to document.body so fixed positioning is viewport-relative) */}
+      {mounted && modal && createPortal(
+        <div
+          className={`t-modal-backdrop fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm ${closing ? "is-closing" : "is-open"}`}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeModal();
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className={`t-modal relative h-full max-h-[92vh] w-full max-w-[1400px] overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#0b0b10] ${closing ? "is-closing" : "is-open"}`}>
+            <button
+              type="button"
+              onClick={() => closeModal()}
+              className="absolute right-3 top-3 z-[210] rounded-full border border-white/[0.12] bg-black/50 p-2 text-white/70 backdrop-blur transition hover:bg-black/70 hover:text-white"
+              aria-label="Close"
+            >
+              <X size={14} />
+            </button>
+            <div className="h-full">
+              {modal.kind === "explorer" ? (
+                <PlatformExplorer platformId={modal.platformId} />
+              ) : modal.kind === "blueprint" ? (
+                <BlueprintExplorer
+                  platformId={modal.platformId}
+                  onClose={() => closeModal()}
+                />
+              ) : (
+                <SimLab initialPlatformId={modal.platformId} />
+              )}
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </>
   );
 }
