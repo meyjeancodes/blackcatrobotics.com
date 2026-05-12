@@ -46,9 +46,9 @@ function dot(s: p5, x: number, y: number, z: number, r: number, c: number[], a: 
 }
 
 // ─── Unitree G1 (detailed humanoid) ─────────────────────────────────────
-function g1(s: p5, t: number, ho: number) {
-  const a = 160 + ho * 95;
-  const g = s.map(s.width, 0, 36, 6, 20);
+function g1(s: p5) {
+  const g = s.map(Math.max(s.width, 10), 10, 40, 6, 16);
+  const a = 200;
 
   // Head
   box(s, 0, 0, 190, g * 2.2, g * 1.8, g * 1.5, sensor, a);
@@ -109,9 +109,9 @@ function g1(s: p5, t: number, ho: number) {
 }
 
 // ─── Quadruped (Spot, B2) ───────────────────────────────────────
-function quad(s: p5, t: number, ho: number) {
-  const a = 160 + ho * 95;
-  const g = s.map(s.width, 0, 36, 6, 20);
+function quad(s: p5) {
+  const a = 200;
+  const g = s.map(Math.max(s.width, 10), 10, 40, 6, 16);
 
   // Body
   box(s, 0, 0, 55, g * 5, g * 2.5, g * 2.8, frame, a);
@@ -135,9 +135,9 @@ function quad(s: p5, t: number, ho: number) {
 }
 
 // ─── Drone (DJI Agras, Skydio, Zipline) ─────────────────────────
-function drone(s: p5, t: number, ho: number) {
-  const a = 160 + ho * 95;
-  const g = s.map(s.width, 0, 36, 6, 20);
+function drone(s: p5) {
+  const a = 200;
+  const g = s.map(Math.max(s.width, 10), 10, 40, 6, 16);
 
   // Center body
   box(s, 0, 0, 60, g * 2.5, g * 1.5, g * 1.5, frame, a);
@@ -160,9 +160,9 @@ function drone(s: p5, t: number, ho: number) {
 }
 
 // ─── ARMs / Robotic Arms (Rebot Devarm) ────────────────────────
-function arm(s: p5, t: number, ho: number) {
-  const a = 160 + ho * 95;
-  const g = s.map(s.width, 0, 36, 6, 20);
+function arm(s: p5) {
+  const a = 200;
+  const g = s.map(Math.max(s.width, 10), 10, 40, 6, 16);
 
   // Base
   box(s, 0, 0, 50, g * 3, g * 0.8, g * 2, frame, a);
@@ -187,9 +187,9 @@ function arm(s: p5, t: number, ho: number) {
 }
 
 // ─── Micromobility ──────────────────────────────────────
-function bike(s: p5, t: number, ho: number) {
-  const a = 160 + ho * 95;
-  const g = s.map(s.width, 0, 36, 6, 20);
+function bike(s: p5) {
+  const a = 200;
+  const g = s.map(Math.max(s.width, 10), 10, 40, 6, 16);
 
   // Wheels
   tor(s, -g * 2.5, 0, 48, g * 2, g * 0.15, drivetrain, a * 0.8);
@@ -213,9 +213,9 @@ function bike(s: p5, t: number, ho: number) {
 }
 
 // ─── AMR ─────────────────────────────────────────────
-function amr(s: p5, t: number, ho: number) {
-  const a = 160 + ho * 95;
-  const g = s.map(s.width, 0, 36, 6, 20);
+function amr(s: p5) {
+  const a = 200;
+  const g = s.map(Math.max(s.width, 10), 10, 40, 6, 16);
 
   // Chassis
   box(s, 0, 0, 50, g * 4.5, g * 1, g * 3, frame, a);
@@ -234,22 +234,22 @@ function amr(s: p5, t: number, ho: number) {
 }
 
 // ─── Model dispatcher ─────────────────────────────────────────────
-const MODELS: Record<string, (s: p5, t: number, h: number) => void> = {
+const MODELS: Record<string, (s: p5) => void> = {
   // Humanoids
   'unitree-g1':   g1,
-  'unitree-h1-2': (s, t, h) => { s.scale(1.3); g1(s, t * 0.8, h); },
-  'figure-02':    (s, t, h) => { s.scale(0.95); g1(s, t * 1.1, h); },
-  'optimus-gen3': (s, t, h) => { s.scale(1.15); g1(s, t * 0.9, h); },
-  'digit-v5':     (s, t, h) => { s.scale(1.1); g1(s, t * 1.0, h); },
-  'phantom-mk1':  (s, t, h) => { s.scale(1); g1(s, t * 0.95, h); },
-  'asimov-1':     (s, t, h) => { s.scale(0.75); g1(s, t * 1.2, h); },
+  'unitree-h1-2': (s) => { s.scale(1.3); g1(s); },
+  'figure-02':    (s) => { s.scale(0.95); g1(s); },
+  'optimus-gen3': (s) => { s.scale(1.15); g1(s); },
+  'digit-v5':     (s) => { s.scale(1.1); g1(s); },
+  'phantom-mk1':  (s) => { s.scale(1); g1(s); },
+  'asimov-1':     (s) => { s.scale(0.75); g1(s); },
   // Quadrupeds
   'spot':         quad,
   'unitree-b2':   quad,
   // Drones
   'dji-agras-t50': drone,
   'skydio-x10':    drone,
-  'zipline-p2':    (s, t, h) => { s.scale(0.8); drone(s, t, h); },
+  'zipline-p2':    (s) => { s.scale(0.8); drone(s); },
   // AMRs
   'proteus-amr':   amr,
   // Arms
@@ -257,7 +257,7 @@ const MODELS: Record<string, (s: p5, t: number, h: number) => void> = {
   // Micromobility
   'lime-gen4':     bike,
   'bird-three':    bike,
-  'radcommercial': (s, t, h) => { s.scale(1.3); bike(s, t, h); },
+  'radcommercial': (s) => { s.scale(1.3); bike(s); },
 };
 
 // ─── Build 3D sketch ───────────────────────────────────────────────
@@ -273,11 +273,20 @@ function buildSketch(el: HTMLDivElement, id: string, hov: { current: boolean }):
       pw = w; ph = h;
       const c = sk.createCanvas(w, h, sk.WEBGL);
       c.parent(el);
+      // Make canvas transparent overlay
+      c.elt.style.background = 'transparent';
+      // Position absolutely on top of the image
+      c.elt.style.position = 'absolute';
+      c.elt.style.top = '0';
+      c.elt.style.left = '0';
+      c.elt.style.width = '100%';
+      c.elt.style.height = '100%';
       sk.frameRate(30);
       sk.noStroke();
     };
 
     sk.draw = () => {
+      // Clear to transparent
       sk.clear();
       const ho = hov.current ? 1 : 0;
 
@@ -286,12 +295,12 @@ function buildSketch(el: HTMLDivElement, id: string, hov: { current: boolean }):
       sk.directionalLight(180, 160, 140, 0.3, -1, -0.5);
       sk.pointLight(120, 180, 255, -80, -80, 180);
 
-      // Camera + orbit
-      sk.orbitControl(0.5, 0.5, 0);
-      // Center the model
+      // Camera controls removed for auto-rotate (cards are small)
+      // Center and auto-rotate the model
       sk.translate(0, -20, 0);
+      sk.rotateY(sk.frameCount * 0.015);
 
-      fn(sk, sk.frameCount * 0.012, ho);
+      fn(sk);
     };
 
     sk.windowResized = () => {
