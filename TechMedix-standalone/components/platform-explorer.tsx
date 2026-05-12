@@ -4,6 +4,13 @@ import { useMemo, useState } from "react";
 import { BookOpen, Expand, Layers, Maximize2, Minimize2, Shrink, X } from "lucide-react";
 import { getChassisForPlatform, type Part, type PartCategory } from "../lib/platforms/parts-catalog";
 import { getPlatformById, PLATFORM_IMAGE_MAP } from "../lib/platforms/index";
+import dynamic from "next/dynamic";
+
+// Must be dynamically imported — p5.js requires browser APIs (window, document)
+const PlatformCardSketch = dynamic(
+  () => import("./platform-card-sketch").then((m) => m.PlatformCardSketch),
+  { ssr: false, loading: () => <div className="h-48 w-full bg-[#07070a] rounded-t-[13px]" /> }
+);
 
 const CATEGORY_COLOR: Record<PartCategory, { bg: string; stroke: string; text: string; pill: string }> = {
   actuator:       { bg: "#FF6B35", stroke: "#FF6B35", text: "text-[#FF6B35]",    pill: "bg-[#FF6B35]/[0.12] text-[#FF6B35]" },
@@ -63,32 +70,11 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
         onClick={onOpen}
         className="group relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] text-left transition hover:border-[var(--ink)]/[0.16] hover:bg-[var(--ink)]/[0.04]"
       >
-        {imgSrc ? (
-          <div className="relative h-48 w-full overflow-hidden rounded-t-[13px] bg-[#07070a]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={imgSrc}
-              alt={platform?.name ?? chassis.label}
-              className="h-full w-full object-contain p-4 transition duration-500 group-hover:scale-[1.05]"
-            />
-            <div className="pointer-events-none absolute inset-0 rounded-t-[13px] ring-1 ring-inset ring-white/[0.04]" />
-          </div>
-        ) : (
-          <div className="flex h-48 items-center justify-center bg-[#07070a] rounded-t-[13px] p-4">
-            <svg viewBox={chassis.viewBox} className="h-full w-auto opacity-60">
-              {chassis.parts.map((p) => (
-                <path
-                  key={p.id}
-                  d={p.d}
-                  fill="transparent"
-                  stroke={CATEGORY_COLOR[p.category].bg + "88"}
-                  strokeWidth={0.8}
-                  strokeLinejoin="round"
-                />
-              ))}
-            </svg>
-          </div>
-        )}
+        {/* Animated p5.js sketch replaces static image/SVG */}
+        <div className="relative h-48 w-full overflow-hidden rounded-t-[13px] bg-[#07070a]">
+          <PlatformCardSketch platformId={platformId} />
+          <div className="pointer-events-none absolute inset-0 rounded-t-[13px] ring-1 ring-inset ring-white/[0.04]" />
+        </div>
         <div className="flex items-center justify-between px-3 py-2.5">
           <p className="font-ui text-[0.54rem] uppercase tracking-[0.14em] text-[var(--ink)]/35">
             {chassis.parts.length} parts
