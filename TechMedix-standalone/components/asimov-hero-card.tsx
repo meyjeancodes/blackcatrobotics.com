@@ -35,7 +35,7 @@ export function AsimovHeroCard() {
               {[
                 { n: "25+2", label: "DOF" },
                 { n: "35 kg", label: "Weight" },
-                { n: "~$22k", label: "BOM Cost" },
+                { n: "~$16k", label: "BOM Cost" },
               ].map((s) => (
                 <div key={s.label}>
                   <p className="font-header text-2xl text-white">{s.n}</p>
