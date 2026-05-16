@@ -1,0 +1,104 @@
+/* ── CAD-style 3D card animations ────────────────────────────────────────────
+ * These animations make static product photos feel like rotating 3D CAD models.
+ * No JavaScript overhead — pure CSS keyframes applied in the compact card.
+ */
+
+/* Gentle 3D orbit rotation (Y-axis) to simulate a CAD model slowly turning */
+@keyframes cadOrbit {
+  0%   { transform: perspective(800px) rotateY(-6deg) rotateX(2deg); }
+  25%  { transform: perspective(800px) rotateY(-3deg) rotateX(1deg); }
+  50%  { transform: perspective(800px) rotateY(0deg)  rotateX(0deg); }
+  75%  { transform: perspective(800px) rotateY(3deg)  rotateX(-1deg); }
+  100% { transform: perspective(800px) rotateY(6deg)  rotateX(-2deg); }
+}
+
+/* Reverse orbit for cards in the same row so they don't all rotate identical */
+@keyframes cadOrbitReverse {
+  0%   { transform: perspective(800px) rotateY(6deg)  rotateX(-2deg); }
+  25%  { transform: perspective(800px) rotateY(3deg)  rotateX(-1deg); }
+  50%  { transform: perspective(800px) rotateY(0deg)  rotateX(0deg); }
+  75%  { transform: perspective(800px) rotateY(-3deg) rotateX(1deg); }
+  100% { transform: perspective(800px) rotateY(-6deg) rotateX(2deg); }
+}
+
+.container-animate:hover .cad-3d-container {
+  animation-play-state: paused;
+}
+
+.cad-3d-container {
+  transform-style: preserve-3d;
+  animation: cadOrbit 12s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.cad-3d-container:nth-child(2n) {
+  animation-name: cadOrbitReverse;
+}
+
+/* Scanning laser line — sweeps top-to-bottom like a 3D scanner */
+@keyframes scanLine {
+  0%   { top: -2%; opacity: 0; }
+  5%   { opacity: 1; }
+  45%  { opacity: 1; }
+  50%  { top: 98%; opacity: 0; }
+  55%  { top: -2%; opacity: 0; }
+  60%  { opacity: 0; }
+  100% { top: -2%; opacity: 0; }
+}
+
+.cad-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 20;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(56, 189, 248, 0) 10%,
+    rgba(56, 189, 248, 0.5) 30%,
+    rgba(56, 189, 248, 0.8) 50%,
+    rgba(56, 189, 248, 0.5) 70%,
+    rgba(56, 189, 248, 0) 90%,
+    transparent 100%
+  );
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4), 0 0 30px rgba(56, 189, 248, 0.15);
+  animation: scanLine 6s ease-in-out infinite;
+}
+
+/* Slow glow pulse on the corner brackets */
+@keyframes cornerGlow {
+  0%, 100% { opacity: 0.12; }
+  50%      { opacity: 0.35; }
+}
+
+.cad-corner-brackets {
+  animation: cornerGlow 4s ease-in-out infinite;
+}
+
+/* Slow rotation of the crosshair reticle */
+@keyframes crosshairSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.cad-crosshair {
+  animation: crosshairSpin 30s linear infinite;
+}
+
+/* Subtle breathing scale on the image container */
+@keyframes cadBreathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.01); }
+}
+
+/* Scan-line grid overlay — subtle movement */
+@keyframes gridShift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 20px; }
+}
+
+.cad-grid-overlay {
+  animation: gridShift 8s linear infinite;
+}
