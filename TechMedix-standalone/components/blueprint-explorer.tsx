@@ -9,9 +9,10 @@ import {
   Grid3X3,
   Maximize2,
   Minimize2,
+  Pause,
   Play,
+  RotateCcw,
   Ruler,
-  StopCircle,
   Wrench,
   X,
 } from "lucide-react";
@@ -115,10 +116,14 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
   const [wireframe, setWireframe] = useState(false);
   const [showDimensions, setShowDimensions] = useState(false);
   const [touring, setTouring] = useState(false);
+  const [rotating, setRotating] = useState(true);
   const [revealCount, setRevealCount] = useState(0);
 
   const tourRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const tourIdxRef = useRef(0);
+  const rotRef = useRef(0);
+  const svgRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
 
   // Stagger-reveal parts on mount / platform change
   useEffect(() => {
@@ -132,7 +137,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
     return () => timers.forEach(clearTimeout);
   }, [platformId, chassis.parts]);
 
-  // Tour mode — cycles through every part at a comfortable reading pace
+  // Tour mode
   useEffect(() => {
     if (!touring) {
       if (tourRef.current) clearInterval(tourRef.current);
@@ -149,6 +154,25 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
       if (tourRef.current) clearInterval(tourRef.current);
     };
   }, [touring, chassis.parts]);
+
+  // ── 3D rotation animation (uavs.fyi-style auto-rotate) ──
+  useEffect(() => {
+    if (!rotating) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      return;
+    }
+    const animate = () => {
+      rotRef.current += 0.4;
+      if (svgRef.current) {
+        svgRef.current.style.transform = `perspective(1200px) rotateY(${rotRef.current}deg)`;
+      }
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [rotating]);
 
   const stopTour = useCallback(() => setTouring(false), []);
 
@@ -179,10 +203,18 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
             Blueprint
           </span>
           <span className="rounded-full border border-white/[0.08] bg-white/[0.03] px-2 py-0.5 font-mono text-[0.53rem] uppercase tracking-[0.10em] text-white/28 truncate">
-            {platform.manufacturer} · {platform.name}
+            {platform?.manufacturer ?? "—"} · {platform?.name ?? chassis.label}
           </span>
         </div>
         <div className="flex items-center gap-1 shrink-0 ml-3">
+          {/* ★ ROTATION TOGGLE — uavs.fyi-style */}
+          <ToolbarBtn
+            icon={rotating ? <Pause size={11} /> : <RotateCcw size={11} />}
+            label={rotating ? "Stop Rotation" : "Auto-Rotate"}
+            active={rotating}
+            onClick={() => setRotating((v) => !v)}
+          />
+          <div className="mx-1.5 h-4 w-px bg-white/[0.08]" />
           <ToolbarBtn icon={<Grid3X3 size={11} />} label="Wireframe" active={wireframe} onClick={() => setWireframe((v) => !v)} />
           <ToolbarBtn icon={<Ruler size={11} />} label="Dims" active={showDimensions} onClick={() => setShowDimensions((v) => !v)} />
           <div className="mx-1.5 h-4 w-px bg-white/[0.08]" />
@@ -193,7 +225,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
             onClick={() => setExploded((v) => !v)}
           />
           <ToolbarBtn
-            icon={touring ? <StopCircle size={11} /> : <Play size={11} />}
+            icon={touring ? <Pause size={11} /> : <Play size={11} />}
             label={touring ? "Stop" : "Tour"}
             active={touring}
             onClick={() => setTouring((v) => !v)}
@@ -263,7 +295,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
           ))}
         </div>
 
-        {/* Center canvas */}
+        {/* Center canvas — rotating 3D viewport */}
         <div
           className="relative flex-1 min-h-0 overflow-hidden"
           style={{
@@ -283,161 +315,195 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
             }}
           />
 
+          {/* Point-cloud dot grid overlay — uavs.fyi-style */}
+          <div className="pointer-events-none absolute inset-0 opacity-[0.025]">
+            <svg width="100%" height="100%" className="h-full w-full">
+              <defs>
+                <pattern id="dotGrid" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r="0.5" fill="#5090FF" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#dotGrid)" />
+            </svg>
+          </div>
+
           {/* Subtle centerline cross */}
           <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
             <div className="absolute top-0 bottom-0 left-1/2 w-px bg-sky-400" />
             <div className="absolute left-0 right-0 top-1/2 h-px bg-sky-400" />
           </div>
 
-          <svg
-            viewBox={chassis.viewBox}
-            preserveAspectRatio="xMidYMid meet"
+          {/* Rotating SVG container */}
+          <div
+            ref={svgRef}
             className="absolute inset-0 h-full w-full"
-            onClick={() => {
-              if (touring) stopTour();
-              setSelectedPartId(null);
+            style={{
+              transformStyle: "preserve-3d",
+              transform: "perspective(1200px) rotateY(0deg)",
+              transition: rotating ? "none" : "transform 0.3s ease",
             }}
           >
-            {/* Background silhouette */}
-            {chassis.silhouette && (
-              <path
-                d={chassis.silhouette}
-                fill="rgba(255,255,255,0.008)"
-                stroke="rgba(255,255,255,0.048)"
-                strokeWidth={1.2}
-              />
-            )}
+            <svg
+              viewBox={chassis.viewBox}
+              preserveAspectRatio="xMidYMid meet"
+              className="h-full w-full"
+              onClick={() => {
+                if (touring) stopTour();
+                setSelectedPartId(null);
+              }}
+              style={{ pointerEvents: "auto" }}
+            >
+              {/* Background silhouette */}
+              {chassis.silhouette && (
+                <path
+                  d={chassis.silhouette}
+                  fill="rgba(255,255,255,0.008)"
+                  stroke="rgba(255,255,255,0.048)"
+                  strokeWidth={1.2}
+                />
+              )}
 
-            {/* Accent strokes (joint circles, edge guides) */}
-            {chassis.accents?.map((a, i) => {
-              if (a.cx !== undefined && a.cy !== undefined && a.r !== undefined) {
-                return (
-                  <circle
-                    key={i}
-                    cx={a.cx} cy={a.cy} r={a.r}
-                    fill="none"
-                    stroke={a.stroke ?? "rgba(255,255,255,0.036)"}
-                    strokeWidth={0.9}
-                    strokeDasharray="2 3"
-                  />
-                );
-              }
-              if (a.d) {
-                return (
-                  <path
-                    key={i}
-                    d={a.d}
-                    fill="none"
-                    stroke={a.stroke ?? "rgba(255,255,255,0.036)"}
-                    strokeWidth={0.8}
-                  />
-                );
-              }
-              return null;
-            })}
-
-            {/* Interactive parts */}
-            {chassis.parts.map((part, index) => {
-              const isSelected = selectedPartId === part.id;
-              const isHovered = hoveredPartId === part.id;
-              const color = CATEGORY_COLOR[part.category];
-              const [ex, ey] = exploded ? part.explodeOffset : [0, 0];
-              const d = transformPath(part.d, ex, ey);
-              const isVisible = index < revealCount;
-
-              const fillOpacity = wireframe ? 0 : isSelected ? 0.30 : isHovered ? 0.18 : 0.09;
-              const strokeOpacity = isSelected ? 1 : isHovered ? 0.92 : 0.58;
-              const strokeWidth = isSelected ? 2.5 : isHovered ? 2 : 1.4;
-
-              const failureSig = platform.failureSignatures?.find(
-                (f) => f.id.toLowerCase().includes(part.id.toLowerCase())
-              );
-
-              return (
-                <g
-                  key={part.id}
-                  style={{
-                    cursor: "pointer",
-                    opacity: isVisible ? 1 : 0,
-                    transition: "opacity 0.45s ease",
-                    transitionDelay: isVisible ? `${index * 28}ms` : "0ms",
-                    filter: isSelected
-                      ? `drop-shadow(0 0 9px ${color.glow})`
-                      : isHovered
-                      ? `drop-shadow(0 0 5px ${color.glow})`
-                      : "none",
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (touring) stopTour();
-                    setSelectedPartId(isSelected ? null : part.id);
-                  }}
-                  onMouseEnter={() => setHoveredPartId(part.id)}
-                  onMouseLeave={() => setHoveredPartId(null)}
-                >
-                  <path
-                    d={d}
-                    fill={color.fill}
-                    fillOpacity={fillOpacity}
-                    stroke={color.stroke}
-                    strokeOpacity={strokeOpacity}
-                    strokeWidth={strokeWidth}
-                    strokeLinejoin="round"
-                    className="transition-all duration-300"
-                  />
-
-                  {/* Failure severity indicator */}
-                  {failureSig && !wireframe && (
+              {/* Accent strokes */}
+              {chassis.accents?.map((a, i) => {
+                if (a.cx !== undefined && a.cy !== undefined && a.r !== undefined) {
+                  return (
                     <circle
-                      cx={part.labelAnchor[0] + ex}
-                      cy={part.labelAnchor[1] + ey - 10}
-                      r={isSelected ? 4.5 : 3}
-                      fill={failureSig.severity === "critical" ? "#ef4444" : "#f59e0b"}
+                      key={i}
+                      cx={a.cx} cy={a.cy} r={a.r}
+                      fill="none"
+                      stroke={a.stroke ?? "rgba(255,255,255,0.036)"}
+                      strokeWidth={0.9}
+                      strokeDasharray="2 3"
+                    />
+                  );
+                }
+                if (a.d) {
+                  return (
+                    <path
+                      key={i}
+                      d={a.d}
+                      fill="none"
+                      stroke={a.stroke ?? "rgba(255,255,255,0.036)"}
+                      strokeWidth={0.8}
+                    />
+                  );
+                }
+                return null;
+              })}
+
+              {/* Interactive parts */}
+              {chassis.parts.map((part, index) => {
+                const isSelected = selectedPartId === part.id;
+                const isHovered = hoveredPartId === part.id;
+                const color = CATEGORY_COLOR[part.category];
+                const [ex, ey] = exploded ? part.explodeOffset : [0, 0];
+                const d = transformPath(part.d, ex, ey);
+                const isVisible = index < revealCount;
+
+                const fillOpacity = wireframe ? 0 : isSelected ? 0.30 : isHovered ? 0.18 : 0.09;
+                const strokeOpacity = isSelected ? 1 : isHovered ? 0.92 : 0.58;
+                const strokeWidth = isSelected ? 2.5 : isHovered ? 2 : 1.4;
+
+                const failureSig = platform?.failureSignatures?.find(
+                  (f) => f.id.toLowerCase().includes(part.id.toLowerCase())
+                );
+
+                return (
+                  <g
+                    key={part.id}
+                    style={{
+                      cursor: "pointer",
+                      opacity: isVisible ? 1 : 0,
+                      transition: "opacity 0.45s ease",
+                      transitionDelay: isVisible ? `${index * 28}ms` : "0ms",
+                      filter: isSelected
+                        ? `drop-shadow(0 0 9px ${color.glow})`
+                        : isHovered
+                        ? `drop-shadow(0 0 5px ${color.glow})`
+                        : "none",
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (touring) stopTour();
+                      setSelectedPartId(isSelected ? null : part.id);
+                    }}
+                    onMouseEnter={() => setHoveredPartId(part.id)}
+                    onMouseLeave={() => setHoveredPartId(null)}
+                  >
+                    <path
+                      d={d}
+                      fill={color.fill}
+                      fillOpacity={fillOpacity}
+                      stroke={color.stroke}
+                      strokeOpacity={strokeOpacity}
+                      strokeWidth={strokeWidth}
+                      strokeLinejoin="round"
                       className="transition-all duration-300"
                     />
-                  )}
 
-                  {/* Part label */}
-                  {!wireframe && (
-                    <text
-                      x={part.labelAnchor[0] + ex}
-                      y={part.labelAnchor[1] + ey - 18}
-                      textAnchor="middle"
-                      fill={isSelected || isHovered ? color.fill : "rgba(255,255,255,0.38)"}
-                      fontSize={isSelected ? 7.5 : 6.5}
-                      fontFamily="'Chakra Petch', monospace"
-                      letterSpacing="0.06em"
-                      style={{ pointerEvents: "none", userSelect: "none" }}
-                    >
-                      {part.name.split(" ")[0]}
-                    </text>
-                  )}
+                    {/* Failure severity indicator */}
+                    {failureSig && !wireframe && (
+                      <circle
+                        cx={part.labelAnchor[0] + ex}
+                        cy={part.labelAnchor[1] + ey - 10}
+                        r={isSelected ? 4.5 : 3}
+                        fill={failureSig.severity === "critical" ? "#ef4444" : "#f59e0b"}
+                        className="transition-all duration-300"
+                      />
+                    )}
 
-                  {/* Dimension callout */}
-                  {showDimensions && isSelected && (
-                    <g opacity="0.6">
-                      <line
-                        x1={part.labelAnchor[0] + ex + 14}
-                        y1={part.labelAnchor[1] + ey - 28}
-                        x2={part.labelAnchor[0] + ex + 14}
-                        y2={part.labelAnchor[1] + ey + 28}
-                        stroke="rgba(96,200,255,0.65)"
-                        strokeWidth="0.7"
-                      />
-                      <line
-                        x1={part.labelAnchor[0] + ex - 32}
-                        y1={part.labelAnchor[1] + ey + 38}
-                        x2={part.labelAnchor[0] + ex + 32}
-                        y2={part.labelAnchor[1] + ey + 38}
-                        stroke="rgba(96,200,255,0.65)"
-                        strokeWidth="0.7"
-                      />
-                    </g>
-                  )}
-                </g>
-              );
-            })}
-          </svg>
+                    {/* Part label */}
+                    {!wireframe && (
+                      <text
+                        x={part.labelAnchor[0] + ex}
+                        y={part.labelAnchor[1] + ey - 18}
+                        textAnchor="middle"
+                        fill={isSelected || isHovered ? color.fill : "rgba(255,255,255,0.38)"}
+                        fontSize={isSelected ? 7.5 : 6.5}
+                        fontFamily="'Chakra Petch', monospace"
+                        letterSpacing="0.06em"
+                        style={{ pointerEvents: "none", userSelect: "none" }}
+                      >
+                        {part.name.split(" ")[0]}
+                      </text>
+                    )}
+
+                    {/* Dimension callout */}
+                    {showDimensions && isSelected && (
+                      <g opacity="0.6">
+                        <line
+                          x1={part.labelAnchor[0] + ex + 14}
+                          y1={part.labelAnchor[1] + ey - 28}
+                          x2={part.labelAnchor[0] + ex + 14}
+                          y2={part.labelAnchor[1] + ey + 28}
+                          stroke="rgba(96,200,255,0.65)"
+                          strokeWidth="0.7"
+                        />
+                        <line
+                          x1={part.labelAnchor[0] + ex - 32}
+                          y1={part.labelAnchor[1] + ey + 38}
+                          x2={part.labelAnchor[0] + ex + 32}
+                          y2={part.labelAnchor[1] + ey + 38}
+                          stroke="rgba(96,200,255,0.65)"
+                          strokeWidth="0.7"
+                        />
+                      </g>
+                    )}
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+
+          {/* Rotation indicator pill */}
+          {rotating && (
+            <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-black/60 px-2.5 py-1 backdrop-blur">
+              <RotateCcw size={9} className="text-white/35 animate-spin-slow" />
+              <span className="font-mono text-[0.48rem] uppercase tracking-[0.10em] text-white/35">
+                Auto-Rotate
+              </span>
+            </div>
+          )}
 
           {/* Tour progress pill */}
           {touring && selectedPart && (
@@ -478,7 +544,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <p className="font-mono text-[0.44rem] uppercase tracking-[0.14em] text-white/28 truncate">
-                    {platform.manufacturer} · {platform.name}
+                    {platform?.manufacturer ?? "—"} · {platform?.name ?? chassis.label}
                   </p>
                   <h3 className="mt-0.5 font-header text-[1.05rem] leading-tight text-white">
                     {selectedPart.name}
@@ -506,7 +572,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
               </p>
 
               {/* Known failure mode */}
-              {platform.failureSignatures?.find((f) =>
+              {platform?.failureSignatures?.find((f) =>
                 selectedPart.id.toLowerCase().includes(f.id.toLowerCase())
               ) && (
                 <div className="rounded-lg border border-red-500/20 bg-red-500/[0.05] p-3">
@@ -515,7 +581,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                     Known Failure Mode
                   </p>
                   <p className="text-[0.62rem] leading-relaxed text-red-400/72">
-                    {platform.failureSignatures.find(
+                    {platform?.failureSignatures.find(
                       (f) => selectedPart.id.toLowerCase().includes(f.id.toLowerCase())
                     )?.description}
                   </p>
@@ -545,13 +611,14 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
       <div className="shrink-0 border-t border-white/[0.06] bg-black/40 px-4 py-1.5 font-mono text-[0.54rem] text-white/22 backdrop-blur flex items-center justify-between gap-4">
         <span>
           <span className="uppercase tracking-wider text-white/16">View:</span>{" "}
-          {exploded ? "Exploded" : "Assembled"}
+          {rotating ? "Rotating" : "Static"}
+          {exploded ? " · Exploded" : " · Assembled"}
           {wireframe && " · Wireframe"}
           {showDimensions && " · Dims"}
           {touring && " · Touring"}
           {selectedPart && ` · ${selectedPart.name}`}
         </span>
-        <span className="text-white/16">{chassis.parts.length} parts · click to inspect</span>
+        <span className="text-white/16">{chassis.parts.length} parts · drag to orbit</span>
       </div>
 
     </div>
