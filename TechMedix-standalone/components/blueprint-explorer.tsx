@@ -121,9 +121,42 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
 
   const tourRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const tourIdxRef = useRef(0);
-  const rotRef = useRef(0);
-  const svgRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>(0);
+
+  // ── Orbit state (user drag + auto-rotate) ──
+  const [rotY, setRotY] = useState(-18);
+  const [rotX, setRotX] = useState(12);
+  const [zoom, setZoom] = useState(1);
+  const draggingRef = useRef(false);
+  const lastPosRef = useRef<{ x: number; y: number } | null>(null);
+
+  // Auto-rotate — sets a state value so user drag can override
+  useEffect(() => {
+    if (!rotating) return;
+    const id = setInterval(() => setRotY((y) => (y + 0.3) % 360), 33);
+    return () => clearInterval(id);
+  }, [rotating]);
+
+  // Pointer handlers for drag-to-orbit
+  function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    draggingRef.current = true;
+    lastPosRef.current = { x: e.clientX, y: e.clientY };
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+  }
+  function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (!draggingRef.current || !lastPosRef.current) return;
+    const dx = e.clientX - lastPosRef.current.x;
+    const dy = e.clientY - lastPosRef.current.y;
+    setRotY((y) => y + dx * 0.3);
+    setRotX((x) => Math.max(-45, Math.min(60, x + dy * 0.3)));
+    lastPosRef.current = { x: e.clientX, y: e.clientY };
+  }
+  function handlePointerUp() {
+    draggingRef.current = false;
+  }
+  function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
+    const delta = e.deltaY > 0 ? -0.05 : 0.05;
+    setZoom((z) => Math.max(0.5, Math.min(2.5, z + delta)));
+  }
 
   // Stagger-reveal parts on mount / platform change
   useEffect(() => {
@@ -154,25 +187,6 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
       if (tourRef.current) clearInterval(tourRef.current);
     };
   }, [touring, chassis.parts]);
-
-  // ── 3D rotation animation (uavs.fyi-style auto-rotate) ──
-  useEffect(() => {
-    if (!rotating) {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      return;
-    }
-    const animate = () => {
-      rotRef.current += 0.4;
-      if (svgRef.current) {
-        svgRef.current.style.transform = `perspective(1200px) rotateY(${rotRef.current}deg)`;
-      }
-      rafRef.current = requestAnimationFrame(animate);
-    };
-    rafRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [rotating]);
 
   const stopTour = useCallback(() => setTouring(false), []);
 
@@ -333,15 +347,19 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
             <div className="absolute left-0 right-0 top-1/2 h-px bg-sky-400" />
           </div>
 
-          {/* Rotating SVG container */}
+          {/* Rotating SVG container — drag-to-orbit enabled */}
           <div
-            ref={svgRef}
-            className="absolute inset-0 h-full w-full"
+            className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
             style={{
               transformStyle: "preserve-3d",
-              transform: "perspective(1200px) rotateY(0deg)",
-              transition: rotating ? "none" : "transform 0.3s ease",
+              transform: `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${zoom})`,
+              transition: draggingRef.current ? "none" : "transform 0.08s linear",
             }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            onWheel={handleWheel}
           >
             <svg
               viewBox={chassis.viewBox}
@@ -618,7 +636,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
           {touring && " · Touring"}
           {selectedPart && ` · ${selectedPart.name}`}
         </span>
-        <span className="text-white/16">{chassis.parts.length} parts · drag to orbit</span>
+        <span className="text-white/16">{chassis.parts.length} parts · drag to orbit · scroll to zoom</span>
       </div>
 
     </div>
