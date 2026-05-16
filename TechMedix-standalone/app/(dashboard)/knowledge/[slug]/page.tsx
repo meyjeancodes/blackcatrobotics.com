@@ -17,9 +17,10 @@ const severityColors: Record<string, string> = {
 export default async function PlatformKnowledgePage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const platform = await getPlatformBySlug(params.slug).catch(() => null);
+  const { slug } = await params;
+  const platform = await getPlatformBySlug(slug).catch(() => null);
   if (!platform) notFound();
 
   const failureModes = await getFailureModesByPlatform(platform.id).catch(() => []);
@@ -80,53 +81,37 @@ export default async function PlatformKnowledgePage({
               {failureModes.map((fm) => (
                 <div
                   key={fm.id}
-                  className="panel p-4"
+                  className={`rounded-[22px] border p-4 bg-theme-2 ${severityColors[fm.severity]?.split(" ")[0] ?? "border-theme-5"}`}
                 >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span
-                        className={`px-2 py-0.5 rounded border text-xs uppercase ${
-                          severityColors[fm.severity] ?? "border-theme-10 text-theme-40"
-                        }`}
-                      >
-                        {fm.severity}
-                      </span>
-                      {(fm.confidence === "low" || fm.confidence === "unverified") && (
-                        <span className="px-2 py-0.5 rounded border border-amber-600/20 bg-amber-500/10 text-amber-700 text-xs">
-                          ⚠ low-confidence
-                        </span>
-                      )}
-                    </div>
-                    {fm.mtbf_hours && (
-                      <span className="text-theme-30 text-xs shrink-0">
-                        MTBF {fm.mtbf_hours.toLocaleString()}h
-                      </span>
-                    )}
-                  </div>
-
-                  <p className="text-theme-70 text-sm font-medium">{fm.component}</p>
-                  <p className="text-theme-50 text-xs mt-0.5">{fm.symptom}</p>
-                  <p className="text-theme-40 text-xs mt-1">{fm.root_cause}</p>
-
-                  {fm.predictive_signals && fm.predictive_signals.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {fm.predictive_signals.map((sig) => (
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <div className="flex items-center gap-2">
                         <span
-                          key={sig.id}
-                          className="px-1.5 py-0.5 bg-moss/10 border border-moss/20 rounded text-moss text-xs font-mono"
+                          className={`px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider ${
+                            severityColors[fm.severity]?.split(" ").slice(1).join(" ") ?? "bg-theme-5 text-theme-40"
+                          }`}
                         >
-                          {sig.signal_name}
+                          {fm.severity}
                         </span>
-                      ))}
+                        <span className="text-xs text-theme-40 uppercase tracking-wider">
+                          {fm.component || fm.failure_type}
+                        </span>
+                      </div>
+                      <h3 className="mt-2 text-base font-semibold text-theme-primary">
+                        {fm.symptom}
+                      </h3>
                     </div>
-                  )}
-
-                  {fm.repair_protocols && fm.repair_protocols.length > 0 && (
-                    <div className="mt-2 text-xs text-theme-30">
-                      {fm.repair_protocols.length} repair protocol
-                      {fm.repair_protocols.length !== 1 ? "s" : ""} · ~
-                      {fm.repair_protocols[0].labor_minutes}m labor
-                    </div>
+                  </div>
+                  <p className="mt-3 text-xs leading-relaxed text-theme-55 whitespace-pre-line">
+                    {fm.summary}
+                  </p>
+                  {fm.repair_protocol_id && (
+                    <a
+                      href={`/repair/${fm.id}`}
+                      className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-ember hover:opacity-80 transition-colors"
+                    >
+                      View Repair Protocol →
+                    </a>
                   )}
                 </div>
               ))}
@@ -134,39 +119,17 @@ export default async function PlatformKnowledgePage({
           )}
         </SurfaceCard>
 
-        {/* Repair protocol preview */}
-        {firstCritical && (
-          <div>
-            <p className="text-theme-35 text-xs uppercase tracking-widest mb-3">
-              Protocol preview · {firstCritical.severity === "critical" ? "Most critical" : "Top failure mode"}
+        {/* Right sidebar — protocol preview */}
+        {protocol ? (
+          <RepairProtocolViewer failureMode={firstCritical!} protocol={protocol} />
+        ) : (
+          <SurfaceCard title="Repair Protocol" eyebrow="Preview">
+            <p className="text-theme-35 text-sm py-4 text-center">
+              Select a failure mode to preview its repair protocol.
             </p>
-            <RepairProtocolViewer
-              failureMode={firstCritical}
-              protocol={protocol}
-            />
-          </div>
+          </SurfaceCard>
         )}
       </div>
-
-      {/* Source attribution */}
-      <SurfaceCard title="Research Sources" eyebrow="Citations + data provenance">
-        <div className="space-y-1">
-          {failureModes.flatMap((fm) => fm.source_urls).slice(0, 15).map((url, i) => (
-            <a
-              key={i}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-xs text-theme-35 hover:text-ember transition-colors font-mono truncate"
-            >
-              {url}
-            </a>
-          ))}
-          {failureModes.flatMap((fm) => fm.source_urls).length === 0 && (
-            <p className="text-theme-30 text-xs">No source URLs recorded yet.</p>
-          )}
-        </div>
-      </SurfaceCard>
     </div>
   );
 }
