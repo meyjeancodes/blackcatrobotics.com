@@ -52,9 +52,10 @@ const PLATFORMS: PlatformProfile[] = [
       { label: "F/T Sensors", value: "13" },
       { label: "Control Freq", value: "20 Hz" },
       { label: "VLA Chunk", value: "25 steps" },
-      { label: "Cameras", value: "Overhead + 2× Wrist" },
+      { label: "Sensors", value: "Depth Camera + 3D LiDAR" },
       { label: "Battery", value: "~2h operation" },
-      { label: "Height", value: "127 cm" },
+      { label: "Height", value: "132 cm" },
+      { label: "Weight", value: "~35 kg" },
     ],
     tlmRanges: { healthScoreMin: 72, healthScoreMax: 97, batteryPctMin: 18, batteryPctMax: 94, motorTempMin: 38, motorTempMax: 71 },
     failureSignatures: [
@@ -343,11 +344,12 @@ const PLATFORMS: PlatformProfile[] = [
     category: "industrial",
     description: "Industry-standard inspection quadruped. Arm-optional, API-first, payload-extensible. Deployed in 50+ industries.",
     specs: [
-      { label: "Payload", value: "14 kg" },
+      { label: "Payload", value: "20 kg" },
       { label: "Battery", value: "~90 min" },
       { label: "Protection", value: "IP54" },
       { label: "Speed", value: "1.6 m/s" },
       { label: "Arm", value: "Optional 6-DOF" },
+      { label: "Weight", value: "33.8 kg" },
     ],
     tlmRanges: { healthScoreMin: 80, healthScoreMax: 99, batteryPctMin: 15, batteryPctMax: 100, motorTempMin: 32, motorTempMax: 62 },
     failureSignatures: [
