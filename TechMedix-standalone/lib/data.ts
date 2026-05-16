@@ -16,7 +16,9 @@ import {
 import { createClient } from "@/lib/supabase";
 
 const useMockData =
-  process.env.TECHMEDIX_USE_MOCK_DATA === "true" || !process.env.NEXT_PUBLIC_SUPABASE_URL;
+  process.env.TECHMEDIX_USE_MOCK_DATA === "true" ||
+  process.env.NEXT_PUBLIC_MOCK_DATA === "true" ||
+  !process.env.NEXT_PUBLIC_SUPABASE_URL;
 const customerId = process.env.TECHMEDIX_DEFAULT_CUSTOMER_ID ?? defaultCustomerId;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
