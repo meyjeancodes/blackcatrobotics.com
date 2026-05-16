@@ -273,13 +273,18 @@ ul { list-style: none; }
 @media(max-width:900px) { .plans { grid-template-columns: 1fr; } }
 
 /* ADD-ONS */
-.addons { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 48px; }
+.addons { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 16px; }
 .addon { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 26px; }
 
 .addon-name { font-family: var(--display); font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
 .addon-desc { font-size: 12px; line-height: 1.65; color: var(--ink-2); margin-bottom: 16px; }
 .addon-price { font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--fire); letter-spacing: -0.02em; }
 .addon-price span { font-family: var(--display); font-size: 12px; color: var(--ink-3); }
+.addon-intel { border-color: rgba(56,189,248,0.25); background: rgba(56,189,248,0.03); }
+.addon-intel .addon-name { color: #0369a1; }
+.addon-intel .addon-price { color: #0284c7; }
+.addon-badge { display: inline-block; font-family: var(--mono); font-size: 8px; letter-spacing: 0.07em; text-transform: uppercase; padding: 2px 8px; border-radius: var(--r-pill); margin-bottom: 8px; }
+.addon-badge-sky { background: rgba(56,189,248,0.1); color: #0369a1; }
 @media(max-width:768px) { .addons { grid-template-columns: 1fr; } }
 
 /* ROI CALC */
@@ -1343,6 +1348,15 @@ input[type=range] { background: rgba(255,240,210,0.1) !important; }
     <div class="eyebrow" style="margin-bottom:16px;">Add-Ons</div>
     <h3 class="h3" style="margin-bottom:8px;">Expand your coverage.</h3>
   </div>
+
+  <div class="reveal" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#0369a1;margin-top:32px;margin-bottom:8px;">Intelligence</div>
+  <div class="addons reveal">
+    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">Self-Serve</div><div class="addon-name">Sim-to-Real SDK</div><div class="addon-desc">API + CLI for self-serve policy training. 1 concurrent sim slot, policy hosting, and TechMedix monitoring integration.</div><div class="addon-price">$999 <span>/ mo · flat</span></div></div>
+    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">Most Popular</div><div class="addon-name">Managed Pipeline</div><div class="addon-desc">We design, train, deploy, and monitor your policy. Monthly retrain from field telemetry. 1 environment setup included.</div><div class="addon-price">$2,499 <span>/ mo · flat</span></div></div>
+    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">One-Time</div><div class="addon-name">Custom Policy</div><div class="addon-desc">Bespoke behavior for niche platforms. Custom sim environment, validated sim-to-real report, deployed via Managed tier.</div><div class="addon-price">$5,000 <span>one-time</span></div></div>
+  </div>
+
+  <div class="reveal" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);margin-top:28px;margin-bottom:8px;">Maintenance</div>
   <div class="addons reveal">
     <div class="addon"><div class="addon-name">Platform Onboarding</div><div class="addon-desc">Full integration setup, technician network activation, and first diagnostic baseline run for your fleet.</div><div class="addon-price">$499 <span>one-time</span></div></div>
     <div class="addon"><div class="addon-name">Compliance Reporting</div><div class="addon-desc">Monthly AI-generated compliance reports for FAA, OSHA, ISO 10218, and industry-specific standards.</div><div class="addon-price">$49 <span>/mo</span></div></div>
