@@ -4,13 +4,6 @@ import { useMemo, useState } from "react";
 import { BookOpen, Expand, Layers, Maximize2, Minimize2, Shrink, X } from "lucide-react";
 import { getChassisForPlatform, type Part, type PartCategory } from "../lib/platforms/parts-catalog";
 import { getPlatformById, PLATFORM_IMAGE_MAP } from "../lib/platforms/index";
-import dynamic from "next/dynamic";
-
-// Must be dynamically imported — p5.js requires browser APIs (window, document)
-const PlatformCardSketch = dynamic(
-  () => import("./platform-card-sketch").then((m) => m.PlatformCardSketch),
-  { ssr: false, loading: () => <div className="h-48 w-full bg-[#07070a] rounded-t-[13px]" /> }
-);
 
 const CATEGORY_COLOR: Record<PartCategory, { bg: string; stroke: string; text: string; pill: string }> = {
   actuator:       { bg: "#FF6B35", stroke: "#FF6B35", text: "text-[#FF6B35]",    pill: "bg-[#FF6B35]/[0.12] text-[#FF6B35]" },
@@ -70,18 +63,46 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
         onClick={onOpen}
         className="group relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] text-left transition hover:border-[var(--ink)]/[0.16] hover:bg-[var(--ink)]/[0.04]"
       >
-        {/* Product photo stays visible — p5 sketch overlays on top as HUD */}
+        {/* Product photo with subtle technical overlay */}
         <div className="relative h-48 w-full overflow-hidden rounded-t-[13px] bg-[#07070a]">
           {imgSrc && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={imgSrc}
               alt={platform?.name ?? chassis.label}
-              className="absolute inset-0 h-full w-full object-contain p-4 transition duration-500 group-hover:scale-[1.05]"
+              className="absolute inset-0 h-full w-full object-contain p-4 transition duration-700 group-hover:scale-105"
             />
           )}
-          {/* p5 HUD overlay — wireframe parts drawn on top of the photo */}
-          <PlatformCardSketch platformId={platformId} />
+          {/* Technical scan-line overlay — subtle blueprint grid */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-screen"
+            style={{
+              backgroundImage:
+                "linear-gradient(0deg, transparent 48%, rgba(56,189,248,0.3) 50%, transparent 52%)",
+              backgroundSize: "100% 4px",
+            }}
+          />
+          {/* Four corner bracket accents — technical CAD feel */}
+          <div className="pointer-events-none absolute inset-0">
+            <svg viewBox="0 0 100 100" className="h-full w-full opacity-[0.15]">
+              <path d="M 8,12 L 8,8 L 12,8" fill="none" stroke="rgba(56,189,248,0.6)" strokeWidth="0.5" />
+              <path d="M 92,8 L 88,8 L 88,12" fill="none" stroke="rgba(56,189,248,0.6)" strokeWidth="0.5" />
+              <path d="M 92,88 L 92,92 L 88,92" fill="none" stroke="rgba(56,189,248,0.6)" strokeWidth="0.5" />
+              <path d="M 12,92 L 8,92 L 8,88" fill="none" stroke="rgba(56,189,248,0.6)" strokeWidth="0.5" />
+            </svg>
+          </div>
+          {/* Center crosshair — subtle targeting reticle */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.06]">
+            <svg width="40" height="40" viewBox="0 0 40 40">
+              <circle cx="20" cy="20" r="18" fill="none" stroke="rgba(56,189,248,0.5)" strokeWidth="0.3" />
+              <line x1="20" y1="2" x2="20" y2="12" stroke="rgba(56,189,248,0.4)" strokeWidth="0.3" />
+              <line x1="20" y1="28" x2="20" y2="38" stroke="rgba(56,189,248,0.4)" strokeWidth="0.3" />
+              <line x1="2" y1="20" x2="12" y2="20" stroke="rgba(56,189,248,0.4)" strokeWidth="0.3" />
+              <line x1="28" y1="20" x2="38" y2="20" stroke="rgba(56,189,248,0.4)" strokeWidth="0.3" />
+            </svg>
+          </div>
+          {/* Bottom gradient edge */}
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#07070a] to-transparent" />
           <div className="pointer-events-none absolute inset-0 rounded-t-[13px] ring-1 ring-inset ring-white/[0.04]" />
         </div>
         <div className="flex items-center justify-between px-3 py-2.5">

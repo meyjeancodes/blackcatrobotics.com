@@ -9,6 +9,9 @@ import { MaintenanceSchedule } from "../../../../components/maintenance-schedule
 import { getPlatformById } from "../../../../lib/platforms";
 import type { TelemetryPoint } from "../../../../lib/shared/types";
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 // ─── Mock 30-day diagnostic chart data ────────────────────────────────────────
 
 function generate30DayTelemetry(
