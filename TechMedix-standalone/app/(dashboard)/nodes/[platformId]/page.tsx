@@ -69,12 +69,13 @@ const SEVERITY_DOT: Record<string, string> = {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default function PlatformPage({
+export default async function PlatformPage({
   params,
 }: {
-  params: { platformId: string };
+  params: Promise<{ platformId: string }>;
 }) {
-  const platform = getPlatformById(params.platformId);
+  const { platformId } = await params;
+  const platform = getPlatformById(platformId);
   if (!platform) notFound();
 
   const telemetry = generate30DayTelemetry(
@@ -245,7 +246,7 @@ export default function PlatformPage({
       <MaintenanceSchedule platform={platform} />
 
       {/* Diagnostic Pipeline */}
-      <DiagnosticsPanel platformId={params.platformId} />
+      <DiagnosticsPanel platformId={platformId} />
 
       {/* Maintenance CTA panel */}
       <section className="panel-elevated p-6">

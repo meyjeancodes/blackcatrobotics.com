@@ -5,8 +5,13 @@ import { TelemetryChart } from "../../../../components/telemetry-chart";
 import { formatDateTime } from "../../../../lib/format";
 import { getRobotPageData } from "../../../../lib/data";
 
-export default async function RobotDetailPage({ params }: { params: { robotId: string } }) {
-  const data = await getRobotPageData(params.robotId);
+export default async function RobotDetailPage({
+  params,
+}: {
+  params: Promise<{ robotId: string }>;
+}) {
+  const { robotId } = await params;
+  const data = await getRobotPageData(robotId);
 
   if (!data) {
     notFound();
