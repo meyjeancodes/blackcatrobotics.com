@@ -17,18 +17,10 @@ const techmedixPlans = [
     id: "fleet",
     name: "Fleet",
     range: "5–19 robots",
-    price: "$229",
+    price: "$199",
     unit: "per robot / month",
     highlight: true,
     features: ["Everything in Starter", "Unlimited platform integrations", "2 included service hours per robot/month", "Auto technician dispatch", "Priority Slack + phone — 4h response", "Monthly performance report"],
-  },
-  {
-    id: "operator",
-    name: "Operator",
-    range: "Single operator coverage",
-    price: "$299",
-    unit: "per robot / month",
-    features: ["Single-robot coverage", "Diagnostic alerts", "Email support", "On-demand dispatch"],
   },
   {
     id: "command",
@@ -93,7 +85,7 @@ export default async function BillingPage() {
                 highlight
                 freeTrial
               />
-              <p className="text-center text-[0.58rem] text-theme-30">14 days free · then $229/robot/mo</p>
+              <p className="text-center text-[0.58rem] text-theme-30">14 days free · then $199/robot/mo</p>
             </div>
           </div>
         </div>
@@ -205,6 +197,125 @@ export default async function BillingPage() {
               />
             </div>
           ))}
+        </div>
+      </SurfaceCard>
+
+      {/* Sim-to-Real Pipeline */}
+      <SurfaceCard title="Sim-to-Real Pipeline" eyebrow="Layer 2 — Intelligence">
+        <p className="text-sm leading-6 text-theme-55 mb-6 max-w-2xl">
+          Train robot policies in NVIDIA Isaac Sim, deploy zero-shot to your fleet,
+          and improve continuously from real-world telemetry. Uses the open-source
+          GR00T framework by NVIDIA Research. Add to any Fleet or Command plan &mdash;
+          flat rate per fleet, not per robot.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {[
+            {
+              id: "sim-sdk",
+              name: "SDK Access",
+              price: "$999",
+              unit: "/ month &middot; flat",
+              highlight: false,
+              features: [
+                "API + CLI training interface",
+                "1 concurrent simulation slot",
+                "Self-serve policy training",
+                "Policy hosting + versioning",
+                "TechMedix monitoring integration",
+                "Fleet telemetry ingest for retrain",
+              ],
+            },
+            {
+              id: "sim-managed",
+              name: "Managed Pipeline",
+              price: "$2,499",
+              unit: "/ month &middot; flat",
+              highlight: true,
+              features: [
+                "We design, train, deploy, and monitor",
+                "1 active policy per fleet",
+                "Monthly retrain from field telemetry",
+                "1 environment setup included",
+                "Sim-to-real fidelity scoring",
+                "Performance dashboard per policy",
+                "One-click rollback to previous version",
+              ],
+            },
+            {
+              id: "sim-custom",
+              name: "Custom Policy",
+              price: "$5,000",
+              unit: "one-time",
+              highlight: false,
+              features: [
+                "Bespoke task for niche platform",
+                "Custom sim environment build",
+                "Validated sim-to-real report",
+                "Standard deployment via Managed tier",
+              ],
+            },
+            {
+              id: "sim-accelerated",
+              name: "Accelerated Training",
+              price: "$2,500",
+              unit: "per run",
+              highlight: false,
+              features: [
+                "Same-day turnaround",
+                "48h &rarr; same day",
+                "Priority GPU allocation",
+                "Detailed training metrics report",
+              ],
+            },
+          ].map((plan) => (
+            <div
+              key={plan.id}
+              className={`rounded-[22px] border p-5 ${
+                plan.highlight
+                  ? "border-sky-400/20 bg-sky-400/[0.04]"
+                  : "border-theme-5 bg-theme-2"
+              }`}
+            >
+              {plan.highlight && (
+                <span className="mb-2 inline-block text-[0.6rem] uppercase tracking-[0.2em] text-sky-400 font-semibold">
+                  Most Popular
+                </span>
+              )}
+              <p className="kicker">{plan.name}</p>
+              <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-theme-primary">{plan.price}</p>
+              <p className="text-xs text-theme-45 mb-4">{plan.unit}</p>
+              <ul className="space-y-1.5">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-xs text-theme-55">
+                    <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-theme-25" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        {/* Bundle recommendation */}
+        <div
+          className="mt-6 rounded-[22px] p-5"
+          style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.07) 0%, rgba(232,96,30,0.06) 100%)", border: "1px solid rgba(56,189,248,0.12)" }}
+        >
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-[0.6rem] uppercase tracking-[0.22em] text-sky-400 font-semibold mb-1">Recommended Bundle</p>
+              <h3 className="font-header text-xl text-theme-primary">TechMedix Fleet + Sim-to-Real Managed</h3>
+              <p className="mt-2 text-sm text-theme-55 max-w-md">
+                Full-stack fleet operations: predictive maintenance + trained robot behaviors.
+                One dashboard for both. From <strong>$4,489/mo</strong> for a 10-robot fleet.
+              </p>
+            </div>
+            <a
+              href="mailto:support@blackcatrobotics.com"
+              className="shrink-0 inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-400 transition-colors"
+            >
+              Contact Sales &rarr;
+            </a>
+          </div>
         </div>
       </SurfaceCard>
 
