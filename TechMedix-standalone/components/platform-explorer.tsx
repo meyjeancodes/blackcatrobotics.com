@@ -65,7 +65,7 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
         className="group container-animate relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] text-left transition hover:border-[var(--ink)]/[0.16] hover:bg-[var(--ink)]/[0.04]"
       >
         {/* Product photo with 3D CAD orbit animation */}
-        <div className="cad-3d-container relative h-48 w-full overflow-hidden rounded-t-[13px] bg-[#07070a]">
+        <div className="cad-3d-container cad-edge-glow relative h-48 w-full overflow-hidden rounded-t-[13px] bg-[#07070a]">
           {imgSrc && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -74,6 +74,8 @@ export function PlatformExplorer({ platformId, compact, onOpen }: Props) {
               className="absolute inset-0 h-full w-full object-contain p-4 transition duration-700 group-hover:scale-105"
             />
           )}
+          {/* Rotating spotlight sweep — dramatic CAD lighting effect */}
+          <div className="cad-spotlight" />
           {/* Animated scanning laser line — CAD scanner effect */}
           <div className="cad-scan-line" />
           {/* Technical scan-line overlay with subtle scroll animation */}
