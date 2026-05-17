@@ -125,7 +125,7 @@ export function KnowledgeHubClient({ platforms }: Props) {
             {list.map((platform) => (
               <div
                 key={platform.id}
-                className="panel-elevated flex flex-col gap-3 p-5 transition-all duration-300"
+                className="cad-card-float panel-elevated flex flex-col gap-3 p-5 transition-all duration-300"
                 style={{
                   boxShadow: highlightedId === platform.id
                     ? "0 0 0 2px rgba(56,189,248,0.35), 0 0 40px rgba(56,189,248,0.12)"
