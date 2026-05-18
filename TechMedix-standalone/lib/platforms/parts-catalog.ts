@@ -18,6 +18,28 @@ export type PartCategory =
   | "end-effector"
   | "safety";
 
+/** Generate a rounded-corner SVG rect path. r defaults to 4 for subtle CAD chamfer. */
+function rrect(x: number, y: number, w: number, h: number, r = 4): string {
+  const rr = Math.min(r, w / 2, h / 2);
+  return [
+    `M ${x+rr},${y}`,
+    `L ${x+w-rr},${y}`,
+    `Q ${x+w},${y} ${x+w},${y+rr}`,
+    `L ${x+w},${y+h-rr}`,
+    `Q ${x+w},${y+h} ${x+w-rr},${y+h}`,
+    `L ${x+rr},${y+h}`,
+    `Q ${x},${y+h} ${x},${y+h-rr}`,
+    `L ${x},${y+rr}`,
+    `Q ${x},${y} ${x+rr},${y}`,
+    `Z`,
+  ].join(" ");
+}
+
+/** Generate a rounded-corner SVG rect that combines two symmetric rects (for paired parts). */
+function rrect2(x1: number, y1: number, w1: number, h1: number, x2: number, y2: number, w2: number, h2: number, r = 4): string {
+  return rrect(x1, y1, w1, h1, r) + " " + rrect(x2, y2, w2, h2, r);
+}
+
 export type ChassisType =
   | "humanoid"
   | "quadruped"
@@ -76,21 +98,21 @@ const HUMANOID: ChassisDefinition = {
   viewBox: "0 0 200 360",
   // Multi-part silhouette: head · neck · torso · L-arm · R-arm · legs · feet
   silhouette:
-    "M 80,10 Q 80,2 100,2 Q 120,2 120,10 L 120,44 Q 120,52 100,52 Q 80,52 80,44 Z " +
-    "M 90,52 L 110,52 L 112,64 L 88,64 Z " +
-    "M 64,64 Q 54,68 52,80 L 56,118 L 62,154 L 66,164 L 134,164 L 138,154 L 144,118 L 148,80 Q 146,68 136,64 Z " +
-    "M 26,76 L 56,68 L 54,134 L 24,140 Z " +
-    "M 22,138 L 56,132 L 54,188 L 20,192 Z " +
-    "M 18,188 L 56,186 L 58,208 L 18,212 Q 14,210 14,200 Z " +
-    "M 144,68 L 174,76 L 176,140 L 146,134 Z " +
-    "M 144,132 L 178,138 L 180,192 L 146,188 Z " +
-    "M 142,186 L 182,188 L 186,200 Q 186,210 182,212 L 142,208 Z " +
-    "M 66,164 L 94,164 L 92,268 L 64,268 Z " +
-    "M 106,164 L 134,164 L 136,268 L 108,268 Z " +
-    "M 64,268 L 92,268 L 90,332 L 64,332 Z " +
-    "M 108,268 L 136,268 L 136,332 L 110,332 Z " +
-    "M 42,332 L 98,332 L 98,350 L 42,350 Z " +
-    "M 102,332 L 158,332 L 158,350 L 102,350 Z",
+    "M 76,10 Q 72,4 100,4 Q 128,4 124,10 Q 132,14 130,22 L 132,46 Q 134,56 128,56 L 120,58 L 116,64 L 110,62 " +
+    "Q 106,68 100,68 Q 94,68 90,62 L 84,64 L 80,58 L 72,56 Q 66,56 68,46 L 70,22 Q 68,14 76,10 Z " +
+    "M 60,66 Q 50,70 46,82 L 50,116 L 56,148 L 60,160 L 86,160 L 86,92 Q 88,86 92,84 L 108,84 Q 112,86 114,92 L 114,160 L 140,160 " +
+    "L 144,148 L 150,116 L 154,82 Q 150,70 140,66 Z " +
+    "M 22,78 L 48,72 L 46,128 L 20,134 Z " +
+    "M 20,130 L 48,126 L 46,182 L 16,186 Z " +
+    "M 14,184 L 48,180 L 50,202 L 14,206 Q 10,204 10,194 Z " +
+    "M 152,126 L 182,132 L 184,186 L 154,182 Z " +
+    "M 150,180 L 186,184 L 190,194 Q 190,204 186,206 L 150,202 Z " +
+    "M 62,162 L 88,162 L 86,262 L 60,262 Z " +
+    "M 112,162 L 138,162 L 140,262 L 114,262 Z " +
+    "M 60,262 L 86,262 L 84,326 L 60,326 Z " +
+    "M 114,262 L 140,262 L 140,326 L 116,326 Z " +
+    "M 38,326 L 96,326 L 96,346 L 38,346 Z " +
+    "M 104,326 L 162,326 L 162,346 L 104,346 Z",
   platformIds: [
     // "unitree-g1" — uses generic HUMANOID chassis (see getChassisForPlatform fallback)
     "unitree-h1-2",
@@ -136,7 +158,7 @@ const HUMANOID: ChassisDefinition = {
       id: "comms-antenna",
       name: "Comms Array",
       category: "comms",
-      d: "M 83,2 L 91,2 L 91,12 L 83,12 Z M 109,2 L 117,2 L 117,12 L 109,12 Z",
+      d: rrect2(83, 2, 8, 10, 109, 2, 8, 10),
       explodeOffset: [0, -14],
       summary: "WiFi / 5G / BLE antenna cluster",
       details:
@@ -153,7 +175,7 @@ const HUMANOID: ChassisDefinition = {
       id: "cooling-loop",
       name: "Thermal Management",
       category: "cooling",
-      d: "M 88,52 L 112,52 L 112,64 L 88,64 Z",
+      d: rrect(88, 52, 24, 12),
       explodeOffset: [0, -18],
       summary: "Liquid cooling loop or high-flow fan pack",
       details:
@@ -255,7 +277,7 @@ const HUMANOID: ChassisDefinition = {
       id: "torso-frame",
       name: "Torso Frame / Spine",
       category: "frame",
-      d: "M 62,64 L 70,64 L 70,164 L 62,164 Z M 130,64 L 138,64 L 138,164 L 130,164 Z",
+      d: rrect2(62, 64, 8, 100, 130, 64, 8, 100, 2),
       explodeOffset: [0, 0],
       summary: "Structural spine connecting upper and lower body",
       details:
@@ -272,7 +294,7 @@ const HUMANOID: ChassisDefinition = {
       id: "hip-actuators",
       name: "Hip Actuators",
       category: "actuator",
-      d: "M 66,164 L 94,164 L 92,222 L 66,222 Z M 106,164 L 134,164 L 134,222 L 108,222 Z",
+      d: rrect2(66, 164, 28, 58, 106, 164, 28, 58),
       explodeOffset: [0, 8],
       summary: "High-torque 3-DOF rotary, 150–250 Nm",
       details:
@@ -289,7 +311,7 @@ const HUMANOID: ChassisDefinition = {
       id: "knee-actuators",
       name: "Knee Actuators",
       category: "actuator",
-      d: "M 64,220 L 94,220 L 92,276 L 64,276 Z M 106,220 L 136,220 L 136,276 L 108,276 Z",
+      d: rrect2(64, 220, 30, 56, 106, 220, 30, 56),
       explodeOffset: [0, 14],
       summary: "High-duty rotary, highest thermal load",
       details:
@@ -306,7 +328,7 @@ const HUMANOID: ChassisDefinition = {
       id: "ankle-actuators",
       name: "Ankle Actuators",
       category: "actuator",
-      d: "M 64,316 L 92,316 L 90,332 L 64,332 Z M 108,316 L 136,316 L 136,332 L 110,332 Z",
+      d: rrect2(64, 316, 28, 16, 108, 316, 28, 16),
       explodeOffset: [0, 18],
       summary: "Pitch/roll ankle joint, high impact load",
       details:
@@ -323,7 +345,7 @@ const HUMANOID: ChassisDefinition = {
       id: "feet-imu",
       name: "Feet + Ankle F/T",
       category: "sensor",
-      d: "M 42,332 L 98,332 L 98,350 L 42,350 Z M 102,332 L 158,332 L 158,350 L 102,350 Z",
+      d: rrect2(42, 332, 56, 18, 102, 332, 56, 18),
       explodeOffset: [0, 24],
       summary: "Ankle F/T + contact-detection sole",
       details:
@@ -379,7 +401,7 @@ const QUADRUPED: ChassisDefinition = {
       id: "body-compute",
       name: "Body — Compute + IMU",
       category: "compute",
-      d: "M 88,76 L 312,76 L 320,114 L 312,162 L 88,162 L 80,114 Z",
+      d: rrect(88, 76, 224, 86),
       explodeOffset: [0, -6],
       summary: "Main chassis — compute, IMU, and payload rails",
       details:
@@ -396,7 +418,7 @@ const QUADRUPED: ChassisDefinition = {
       id: "battery-quad",
       name: "Battery Bay",
       category: "battery",
-      d: "M 100,162 L 300,162 L 300,170 L 100,170 Z",
+      d: rrect(100, 162, 200, 8),
       explodeOffset: [0, 12],
       summary: "Hot-swap battery pack + BMS",
       details:
@@ -447,7 +469,7 @@ const QUADRUPED: ChassisDefinition = {
       id: "payload-rail",
       name: "Payload Rails",
       category: "frame",
-      d: "M 100,64 L 300,64 L 300,76 L 100,76 Z",
+      d: rrect(100, 64, 200, 12),
       explodeOffset: [0, -14],
       summary: "Top-mount accessory rails",
       details:
@@ -464,7 +486,7 @@ const QUADRUPED: ChassisDefinition = {
       id: "front-legs",
       name: "Front Legs (2×)",
       category: "actuator",
-      d: "M 106,170 L 130,170 L 132,224 L 106,224 Z M 156,170 L 180,170 L 182,224 L 156,224 Z",
+      d: rrect2(106, 170, 26, 54, 156, 170, 26, 54),
       explodeOffset: [-4, 14],
       summary: "Hip + knee + ankle rotary actuators",
       details:
@@ -481,7 +503,7 @@ const QUADRUPED: ChassisDefinition = {
       id: "rear-legs",
       name: "Rear Legs (2×)",
       category: "actuator",
-      d: "M 220,170 L 244,170 L 246,224 L 220,224 Z M 270,170 L 294,170 L 296,224 L 270,224 Z",
+      d: rrect2(220, 170, 26, 54, 270, 170, 26, 54),
       explodeOffset: [4, 14],
       summary: "Hip + knee + ankle rotary actuators",
       details:
@@ -498,7 +520,7 @@ const QUADRUPED: ChassisDefinition = {
       id: "front-feet",
       name: "Front Feet / Contact Pads",
       category: "sensor",
-      d: "M 104,252 L 134,252 L 134,264 L 104,264 Z M 154,252 L 184,252 L 184,264 L 154,264 Z",
+      d: rrect2(104, 252, 30, 12, 154, 252, 30, 12),
       explodeOffset: [0, 18],
       summary: "Rubber contact pads with force sensing",
       details:
@@ -515,7 +537,7 @@ const QUADRUPED: ChassisDefinition = {
       id: "rear-feet",
       name: "Rear Feet / Contact Pads",
       category: "sensor",
-      d: "M 218,252 L 248,252 L 248,264 L 218,264 Z M 268,252 L 298,252 L 298,264 L 268,264 Z",
+      d: rrect2(218, 252, 30, 12, 268, 252, 30, 12),
       explodeOffset: [0, 18],
       summary: "Rubber contact pads with force sensing",
       details:
@@ -532,7 +554,7 @@ const QUADRUPED: ChassisDefinition = {
       id: "cooling-vent",
       name: "Thermal Vents",
       category: "cooling",
-      d: "M 80,104 L 90,104 L 90,138 L 80,138 Z M 310,104 L 320,104 L 320,138 L 310,138 Z",
+      d: rrect2(80, 104, 10, 34, 310, 104, 10, 34),
       explodeOffset: [0, 0],
       summary: "Body side vents + internal fan",
       details:
@@ -574,7 +596,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "core-avionics",
       name: "Core — Flight Controller + ESCs",
       category: "compute",
-      d: "M160,110 L240,110 L240,190 L160,190 Z",
+      d: rrect(160, 110, 80, 80),
       explodeOffset: [0, 0],
       summary: "Flight controller, IMU, barometer, ESCs",
       details:
@@ -591,7 +613,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "motor-1",
       name: "Motor 1 (Front-L)",
       category: "actuator",
-      d: "M60,70 L110,70 L110,120 L60,120 Z",
+      d: rrect(60, 70, 50, 50),
       explodeOffset: [-12, -12],
       summary: "BLDC propeller motor + ESC",
       details:
@@ -608,7 +630,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "motor-2",
       name: "Motor 2 (Front-R)",
       category: "actuator",
-      d: "M290,70 L340,70 L340,120 L290,120 Z",
+      d: rrect(290, 70, 50, 50),
       explodeOffset: [12, -12],
       summary: "BLDC propeller motor + ESC",
       details: "Mirror of Motor 1. See M1 entry.",
@@ -621,7 +643,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "motor-3",
       name: "Motor 3 (Rear-L)",
       category: "actuator",
-      d: "M60,180 L110,180 L110,230 L60,230 Z",
+      d: rrect(60, 180, 50, 50),
       explodeOffset: [-12, 12],
       summary: "BLDC propeller motor + ESC",
       details: "Mirror of M1, opposite rotation direction.",
@@ -634,7 +656,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "motor-4",
       name: "Motor 4 (Rear-R)",
       category: "actuator",
-      d: "M290,180 L340,180 L340,230 L290,230 Z",
+      d: rrect(290, 180, 50, 50),
       explodeOffset: [12, 12],
       summary: "BLDC propeller motor + ESC",
       details: "Mirror of M3, opposite rotation direction.",
@@ -647,7 +669,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "battery-drone",
       name: "Battery Pack",
       category: "battery",
-      d: "M160,210 L240,210 L240,255 L160,255 Z",
+      d: rrect(160, 210, 80, 45),
       explodeOffset: [0, 18],
       summary: "High-discharge Li-ion / LiPo",
       details:
@@ -664,7 +686,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "camera-gimbal",
       name: "Camera / Gimbal",
       category: "sensor",
-      d: "M180,90 L220,90 L220,110 L180,110 Z",
+      d: rrect(180, 90, 40, 20),
       explodeOffset: [0, -22],
       summary: "3-axis gimbal, RGB + thermal",
       details:
@@ -681,7 +703,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "propellers",
       name: "Propeller Set (4×)",
       category: "drivetrain",
-      d: "M65,60 L105,60 L105,68 L65,68 Z M295,60 L335,60 L335,68 L295,68 Z M65,170 L105,170 L105,178 L65,178 Z M295,170 L335,170 L335,178 L295,178 Z",
+      d: rrect(65, 60, 40, 8) + " " + rrect(295, 60, 40, 8) + " " + rrect(65, 170, 40, 8) + " " + rrect(295, 170, 40, 8),
       explodeOffset: [0, -14],
       summary: "Carbon-fiber or reinforced polymer propellers",
       details:
@@ -698,7 +720,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "gps-module",
       name: "GPS / GNSS Module",
       category: "sensor",
-      d: "M190,100 L210,100 L210,108 L190,108 Z",
+      d: rrect(190, 100, 20, 8),
       explodeOffset: [0, -18],
       summary: "Multi-band GNSS receiver + compass",
       details:
@@ -715,7 +737,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "telemetry-radio",
       name: "Telemetry Radio",
       category: "comms",
-      d: "M242,130 L258,130 L258,145 L242,145 Z",
+      d: rrect(242, 130, 16, 15),
       explodeOffset: [14, 0],
       summary: "900 MHz / 2.4 GHz datalink",
       details:
@@ -732,7 +754,7 @@ const DRONE_MULTIROTOR: ChassisDefinition = {
       id: "landing-gear",
       name: "Landing Gear",
       category: "frame",
-      d: "M170,255 L185,255 L185,285 L170,285 Z M215,255 L230,255 L230,285 L215,285 Z",
+      d: rrect2(170, 255, 15, 30, 215, 255, 15, 30),
       explodeOffset: [0, 16],
       summary: "Skids or legs + dampers",
       details:
@@ -761,7 +783,7 @@ const DRONE_VTOL: ChassisDefinition = {
       id: "fuselage",
       name: "Fuselage — Payload + Avionics",
       category: "compute",
-      d: "M200,80 L300,80 L320,120 L300,150 L200,150 L180,120 Z",
+      d: rrect(200, 80, 100, 70, 4),
       explodeOffset: [0, 0],
       summary: "Flight computer, payload bay, battery",
       details:
@@ -778,7 +800,7 @@ const DRONE_VTOL: ChassisDefinition = {
       id: "wing-left",
       name: "Left Wing",
       category: "frame",
-      d: "M40,90 L200,90 L200,115 L40,115 Z",
+      d: rrect(40, 90, 160, 25),
       explodeOffset: [-20, 0],
       summary: "Carbon composite, fixed leading edge",
       details:
@@ -795,7 +817,7 @@ const DRONE_VTOL: ChassisDefinition = {
       id: "wing-right",
       name: "Right Wing",
       category: "frame",
-      d: "M300,90 L460,90 L460,115 L300,115 Z",
+      d: rrect(300, 90, 160, 25),
       explodeOffset: [20, 0],
       summary: "Carbon composite, fixed leading edge",
       details: "Mirror of left wing.",
@@ -808,7 +830,7 @@ const DRONE_VTOL: ChassisDefinition = {
       id: "tilt-rotor-left",
       name: "Tilt Rotor (Left)",
       category: "actuator",
-      d: "M55,60 L90,60 L90,100 L55,100 Z",
+      d: rrect(55, 60, 35, 40),
       explodeOffset: [-6, -14],
       summary: "VTOL-to-cruise tilt mechanism",
       details:
@@ -825,7 +847,7 @@ const DRONE_VTOL: ChassisDefinition = {
       id: "tilt-rotor-right",
       name: "Tilt Rotor (Right)",
       category: "actuator",
-      d: "M410,60 L445,60 L445,100 L410,100 Z",
+      d: rrect(410, 60, 35, 40),
       explodeOffset: [6, -14],
       summary: "VTOL-to-cruise tilt mechanism",
       details: "Mirror of left.",
@@ -838,7 +860,7 @@ const DRONE_VTOL: ChassisDefinition = {
       id: "tail",
       name: "Tail / Vertical Stab",
       category: "frame",
-      d: "M230,40 L270,40 L270,80 L230,80 Z",
+      d: rrect(230, 40, 40, 40),
       explodeOffset: [0, -16],
       summary: "Yaw stability + cruise trim",
       details:
@@ -867,7 +889,7 @@ const AMR: ChassisDefinition = {
       id: "top-deck",
       name: "Top Deck — Pod Interface",
       category: "frame",
-      d: "M60,50 L340,50 L340,90 L60,90 Z",
+      d: rrect(60, 50, 280, 40),
       explodeOffset: [0, -18],
       summary: "Pod lift + sensor dome",
       details:
@@ -884,7 +906,7 @@ const AMR: ChassisDefinition = {
       id: "body-core",
       name: "Core — Compute + LiDAR",
       category: "compute",
-      d: "M80,100 L320,100 L320,180 L80,180 Z",
+      d: rrect(80, 100, 240, 80),
       explodeOffset: [0, 0],
       summary: "Safety PLC, 2× LiDAR, IMU",
       details:
@@ -901,7 +923,7 @@ const AMR: ChassisDefinition = {
       id: "wheels-front",
       name: "Front Drive Wheels",
       category: "drivetrain",
-      d: "M60,190 L110,190 L110,230 L60,230 Z M290,190 L340,190 L340,230 L290,230 Z",
+      d: rrect2(60, 190, 50, 40, 290, 190, 50, 40),
       explodeOffset: [0, 16],
       summary: "In-wheel motors, bearing-heavy",
       details:
@@ -918,7 +940,7 @@ const AMR: ChassisDefinition = {
       id: "battery-amr",
       name: "Battery — Hot-Swap",
       category: "battery",
-      d: "M130,100 L180,100 L180,180 L130,180 Z",
+      d: rrect(130, 100, 50, 80),
       explodeOffset: [-14, 0],
       summary: "~8h runtime, hot-swappable",
       details:
@@ -935,7 +957,7 @@ const AMR: ChassisDefinition = {
       id: "safety-strip",
       name: "Safety Bumper / E-Stop",
       category: "safety",
-      d: "M60,232 L340,232 L340,250 L60,250 Z",
+      d: rrect(60, 232, 280, 18),
       explodeOffset: [0, 12],
       summary: "Compliant bumper + E-stop",
       details:
@@ -964,7 +986,7 @@ const DELIVERY_ROVER: ChassisDefinition = {
       id: "cargo-bin",
       name: "Cargo Bin (Insulated)",
       category: "frame",
-      d: "M100,50 L300,50 L300,150 L100,150 Z",
+      d: rrect(100, 50, 200, 100),
       explodeOffset: [0, -18],
       summary: "Insulated, locking cargo compartment",
       details:
@@ -981,7 +1003,7 @@ const DELIVERY_ROVER: ChassisDefinition = {
       id: "sensor-ring",
       name: "Sensor Ring (LiDAR + Cameras)",
       category: "sensor",
-      d: "M80,150 L320,150 L320,175 L80,175 Z",
+      d: rrect(80, 150, 240, 25),
       explodeOffset: [0, -6],
       summary: "LiDAR + 8–12 wide-angle cameras",
       details:
@@ -998,7 +1020,7 @@ const DELIVERY_ROVER: ChassisDefinition = {
       id: "drive-wheels",
       name: "Drive Wheels (4×)",
       category: "drivetrain",
-      d: "M60,195 L120,195 L120,250 L60,250 Z M280,195 L340,195 L340,250 L280,250 Z",
+      d: rrect2(60, 195, 60, 55, 280, 195, 60, 55),
       explodeOffset: [0, 12],
       summary: "In-hub BLDC motors + suspension",
       details:
@@ -1015,7 +1037,7 @@ const DELIVERY_ROVER: ChassisDefinition = {
       id: "battery-rover",
       name: "Battery Bay",
       category: "battery",
-      d: "M140,195 L260,195 L260,250 L140,250 Z",
+      d: rrect(140, 195, 120, 55),
       explodeOffset: [0, 16],
       summary: "Swappable or fixed 48V pack",
       details:
@@ -1032,7 +1054,7 @@ const DELIVERY_ROVER: ChassisDefinition = {
       id: "antenna-mod",
       name: "Antenna / Cellular",
       category: "comms",
-      d: "M185,30 L215,30 L215,55 L185,55 Z",
+      d: rrect(185, 30, 30, 25),
       explodeOffset: [0, -14],
       summary: "LTE + GPS + BLE",
       details:
@@ -1078,7 +1100,7 @@ const EBIKE: ChassisDefinition = {
       id: "hub-motor",
       name: "Hub Motor (Rear)",
       category: "drivetrain",
-      d: "M350,200 L410,200 L410,255 L350,255 Z",
+      d: rrect(350, 200, 60, 55),
       explodeOffset: [20, 10],
       summary: "250–750 W rear hub BLDC",
       details:
@@ -1095,7 +1117,7 @@ const EBIKE: ChassisDefinition = {
       id: "battery",
       name: "Battery (Down Tube)",
       category: "battery",
-      d: "M170,100 L240,100 L240,190 L170,190 Z",
+      d: rrect(170, 100, 70, 90),
       explodeOffset: [-14, 0],
       summary: "36V–48V Li-ion, swappable or integrated",
       details:
@@ -1112,7 +1134,7 @@ const EBIKE: ChassisDefinition = {
       id: "stem",
       name: "Stem / Fold Joint",
       category: "safety",
-      d: "M200,40 L260,40 L260,85 L200,85 Z",
+      d: rrect(200, 40, 60, 45),
       explodeOffset: [0, -14],
       summary: "Handlebar mount / fold mechanism",
       details:
@@ -1129,7 +1151,7 @@ const EBIKE: ChassisDefinition = {
       id: "brakes",
       name: "Brakes (F/R)",
       category: "safety",
-      d: "M90,200 L140,200 L140,255 L90,255 Z M380,200 L440,200 L440,255 L380,255 Z",
+      d: rrect2(90, 200, 50, 55, 380, 200, 60, 55),
       explodeOffset: [-12, 12],
       summary: "Mechanical or hydraulic disc",
       details:
@@ -1146,7 +1168,7 @@ const EBIKE: ChassisDefinition = {
       id: "iot-head",
       name: "IoT Head Unit",
       category: "comms",
-      d: "M250,30 L330,30 L330,75 L250,75 Z",
+      d: rrect(250, 30, 80, 45),
       explodeOffset: [10, -16],
       summary: "Cellular modem, GPS, BLE, firmware",
       details:
@@ -1175,7 +1197,7 @@ const ESCOOTER: ChassisDefinition = {
       id: "deck",
       name: "Deck / Frame",
       category: "frame",
-      d: "M100,190 L300,190 L300,220 L100,220 Z",
+      d: rrect(100, 190, 200, 30),
       explodeOffset: [0, 0],
       summary: "Cast aluminum riding deck",
       details:
@@ -1192,7 +1214,7 @@ const ESCOOTER: ChassisDefinition = {
       id: "battery-s",
       name: "Battery (Under Deck)",
       category: "battery",
-      d: "M110,220 L290,220 L290,255 L110,255 Z",
+      d: rrect(110, 220, 180, 35),
       explodeOffset: [0, 16],
       summary: "36V Li-ion, integrated non-swappable",
       details:
@@ -1209,7 +1231,7 @@ const ESCOOTER: ChassisDefinition = {
       id: "hub-motor-s",
       name: "Hub Motor (Rear)",
       category: "drivetrain",
-      d: "M290,195 L360,195 L360,255 L290,255 Z",
+      d: rrect(290, 195, 70, 60),
       explodeOffset: [18, 8],
       summary: "350W BLDC hub motor",
       details:
@@ -1226,7 +1248,7 @@ const ESCOOTER: ChassisDefinition = {
       id: "stem-s",
       name: "Stem + Fold Hinge",
       category: "safety",
-      d: "M180,40 L240,40 L240,160 L180,160 Z",
+      d: rrect(180, 40, 60, 120),
       explodeOffset: [0, -14],
       summary: "Safety-critical fold mechanism",
       details:
@@ -1243,7 +1265,7 @@ const ESCOOTER: ChassisDefinition = {
       id: "handlebars",
       name: "Handlebars + Grips",
       category: "frame",
-      d: "M120,30 L300,30 L300,55 L120,55 Z",
+      d: rrect(120, 30, 180, 25),
       explodeOffset: [0, -18],
       summary: "Throttle + brake lever + display",
       details:
@@ -1260,7 +1282,7 @@ const ESCOOTER: ChassisDefinition = {
       id: "front-wheel-s",
       name: "Front Wheel + Fork",
       category: "drivetrain",
-      d: "M50,200 L115,200 L115,255 L50,255 Z",
+      d: rrect(50, 200, 65, 55),
       explodeOffset: [-18, 8],
       summary: "Non-powered front wheel + fork",
       details:
@@ -1289,7 +1311,7 @@ const ARM: ChassisDefinition = {
       id: "base",
       name: "Base — Joint 1 (Yaw)",
       category: "actuator",
-      d: "M60,290 L160,290 L160,340 L60,340 Z",
+      d: rrect(60, 290, 100, 50),
       explodeOffset: [0, 20],
       summary: "Base yaw actuator + mount plate",
       details:
@@ -1306,7 +1328,7 @@ const ARM: ChassisDefinition = {
       id: "shoulder-arm",
       name: "Shoulder — Joint 2 (Pitch)",
       category: "actuator",
-      d: "M70,230 L150,230 L150,290 L70,290 Z",
+      d: rrect(70, 230, 80, 60),
       explodeOffset: [-8, 10],
       summary: "Primary reach pitch actuator",
       details:
@@ -1323,7 +1345,7 @@ const ARM: ChassisDefinition = {
       id: "elbow-arm",
       name: "Elbow — Joint 3 (Pitch)",
       category: "actuator",
-      d: "M75,170 L145,170 L145,230 L75,230 Z",
+      d: rrect(75, 170, 70, 60),
       explodeOffset: [8, 4],
       summary: "Elbow pitch actuator",
       details:
@@ -1340,7 +1362,7 @@ const ARM: ChassisDefinition = {
       id: "wrist-1",
       name: "Wrist Joints 4–5–6",
       category: "actuator",
-      d: "M80,110 L140,110 L140,170 L80,170 Z",
+      d: rrect(80, 110, 60, 60),
       explodeOffset: [0, -10],
       summary: "Roll / pitch / yaw wrist triplet",
       details:
@@ -1357,7 +1379,7 @@ const ARM: ChassisDefinition = {
       id: "end-effector",
       name: "End Effector / Tool",
       category: "end-effector",
-      d: "M85,50 L135,50 L135,110 L85,110 Z",
+      d: rrect(85, 50, 50, 60),
       explodeOffset: [0, -24],
       summary: "Gripper or custom tooling + F/T",
       details:
@@ -1386,7 +1408,7 @@ const AG_ROVER: ChassisDefinition = {
       id: "solar",
       name: "Solar Panel Array",
       category: "battery",
-      d: "M40,30 L360,30 L360,100 L40,100 Z",
+      d: rrect(40, 30, 320, 70),
       explodeOffset: [0, -20],
       summary: "350W photovoltaic panel",
       details:
@@ -1403,7 +1425,7 @@ const AG_ROVER: ChassisDefinition = {
       id: "body-ag",
       name: "Body — Compute + Battery",
       category: "compute",
-      d: "M80,110 L320,110 L320,180 L80,180 Z",
+      d: rrect(80, 110, 240, 70),
       explodeOffset: [0, 0],
       summary: "Jetson compute + buffer battery",
       details:
@@ -1420,7 +1442,7 @@ const AG_ROVER: ChassisDefinition = {
       id: "wheels-ag",
       name: "All-Wheel Drive (4×)",
       category: "drivetrain",
-      d: "M50,190 L110,190 L110,250 L50,250 Z M290,190 L350,190 L350,250 L290,250 Z",
+      d: rrect2(50, 190, 60, 60, 290, 190, 60, 60),
       explodeOffset: [0, 14],
       summary: "BLDC AWD with terrain control",
       details:
@@ -1437,7 +1459,7 @@ const AG_ROVER: ChassisDefinition = {
       id: "camera-ag",
       name: "Stereo Depth Camera",
       category: "sensor",
-      d: "M170,195 L230,195 L230,235 L170,235 Z",
+      d: rrect(170, 195, 60, 40),
       explodeOffset: [0, 14],
       summary: "Stereo vision for weed detection",
       details:
@@ -1454,7 +1476,7 @@ const AG_ROVER: ChassisDefinition = {
       id: "striker",
       name: "Mechanical Weed Striker",
       category: "end-effector",
-      d: "M185,240 L215,240 L215,270 L185,270 Z",
+      d: rrect(185, 240, 30, 30),
       explodeOffset: [0, 18],
       summary: "Wear-point mechanical striker",
       details:
@@ -1483,7 +1505,7 @@ const COMPUTE: ChassisDefinition = {
       id: "soc",
       name: "Blackwell SoC",
       category: "compute",
-      d: "M150,120 L250,120 L250,200 L150,200 Z",
+      d: rrect(150, 120, 100, 80),
       explodeOffset: [0, 0],
       summary: "2,070 TFLOPS FP4 Blackwell GPU",
       details:
@@ -1500,7 +1522,7 @@ const COMPUTE: ChassisDefinition = {
       id: "memory",
       name: "128 GB LPDDR5X",
       category: "compute",
-      d: "M60,130 L130,130 L130,190 L60,190 Z M270,130 L340,130 L340,190 L270,190 Z",
+      d: rrect2(60, 130, 70, 60, 270, 130, 70, 60),
       explodeOffset: [-12, 0],
       summary: "Unified memory pool",
       details:
@@ -1517,7 +1539,7 @@ const COMPUTE: ChassisDefinition = {
       id: "thermal",
       name: "Thermal Solution",
       category: "cooling",
-      d: "M60,60 L340,60 L340,110 L60,110 Z",
+      d: rrect(60, 60, 280, 50),
       explodeOffset: [0, -16],
       summary: "Vapor chamber + blower",
       details:
@@ -1534,7 +1556,7 @@ const COMPUTE: ChassisDefinition = {
       id: "io",
       name: "I/O Carrier Board",
       category: "comms",
-      d: "M60,210 L340,210 L340,270 L60,270 Z",
+      d: rrect(60, 210, 280, 60),
       explodeOffset: [0, 16],
       summary: "PCIe / USB / Ethernet / CAN",
       details:
