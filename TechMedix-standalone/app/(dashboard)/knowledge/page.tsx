@@ -11,6 +11,7 @@ import {
   Battery,
   Bot,
   Brain,
+  ChevronRight,
   GraduationCap,
   Layers,
   Play,
@@ -20,10 +21,11 @@ import {
   Settings2,
   Shield,
   User,
-  Wrench,
   Zap,
   Cpu,
   Hand,
+  BookOpen,
+  Globe,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -127,6 +129,41 @@ const SIM_SCENARIOS = [
   { type: "teardown" as const, label: "Guided Teardown" },
 ];
 
+// ─── Courses & Tools Data ────────────────────────────────────────────────────
+
+const COURSES = [
+  { title: "MIT 6.4210: Robotic Manipulation", org: "MIT · Russ Tedrake", href: "https://manipulation.csail.mit.edu/" },
+  { title: "Stanford CS 237B: Principles of Robot Autonomy", org: "Stanford · M. Pavone", href: "https://stanford.edu/class/cs237b/" },
+  { title: "ETH Zurich: Robotic Systems and Agile Legged Locomotion", org: "ETH Zurich · M. Hutter", href: "https://rsl.ethz.ch/education-students/lectures/robotic-systems.html" },
+  { title: "Berkeley CS 287: Advanced Robotics", org: "UC Berkeley · J. Malik / K. Goldberg", href: "https://github.com/berkeleyopenarml" },
+  { title: "UPenn: Computational Motion Planning and Grasping", org: "UPenn GRASP Lab", href: "https://www.coursera.org/specializations/robotics" },
+  { title: "DeepLearning.AI: Robot Learning with NVIDIA Isaac Lab", org: "DeepLearning.AI + NVIDIA", href: "https://www.deeplearning.ai/courses/" },
+  { title: "TU Darmstadt: Robot Learning", org: "TU Darmstadt · J. Peters", href: "https://www.ias.informatik.tu-darmstadt.de/Teaching" },
+  { title: "MIT 2.74: Bio-Inspired Robotics", org: "MIT · S. Kim", href: "https://biomimetics.mit.edu/" },
+];
+
+const TOOLS_AND_COMMUNITIES = [
+  { name: "MuJoCo", tag: "Simulator", tagColor: "text-sky-600 bg-sky-500/[0.10]" },
+  { name: "NVIDIA Isaac Sim", tag: "Simulator", tagColor: "text-sky-600 bg-sky-500/[0.10]" },
+  { name: "Genesis", tag: "Simulator", tagColor: "text-sky-600 bg-sky-500/[0.10]" },
+  { name: "ROS 2", tag: "Middleware", tagColor: "text-amber-600 bg-amber-500/[0.10]" },
+  { name: "Foxglove", tag: "Visualizer", tagColor: "text-violet-600 bg-violet-500/[0.10]" },
+  { name: "RobotLocomotion", tag: "Community", tagColor: "text-emerald-600 bg-emerald-500/[0.10]" },
+  { name: "r/robotics", tag: "Community", tagColor: "text-emerald-600 bg-emerald-500/[0.10]" },
+  { name: "ROS Discourse", tag: "Community", tagColor: "text-emerald-600 bg-emerald-500/[0.10]" },
+];
+
+// ─── Explore by Category data ────────────────────────────────────────────────
+
+const CATEGORIES = [
+  { title: "Humanoids", icon: Bot, href: "/knowledge/blueprint", platforms: 14, failures: 47, accent: "#8b5cf6", desc: "Unitree, Tesla Optimus, Figure, Agility, and more." },
+  { title: "Drones & AMRs", icon: Radio, href: "/knowledge/blueprint", platforms: 20, failures: 33, accent: "#0ea5e9", desc: "Quadcopters, warehouse robots, and autonomous mobile platforms." },
+  { title: "Delivery / Micromobility", icon: Globe, href: "/knowledge/blueprint", platforms: 9, failures: 21, accent: "#1db87a", desc: "Sidewalk couriers, e-scooters, and last-mile bots." },
+  { title: "Edge AI & Controllers", icon: Cpu, href: "/knowledge/blueprint", platforms: 6, failures: 12, accent: "#f59e0b", desc: "Jetson, RPi compute, and custom SoC platforms." },
+];
+
+const VISIBLE_COMPONENTS = COMPONENTS.filter((c) => !["hands", "safety"].includes(c.id));
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function KnowledgePage() {
@@ -149,7 +186,7 @@ export default function KnowledgePage() {
   }, [platforms, query]);
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-20">
 
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div>
@@ -208,6 +245,66 @@ export default function KnowledgePage() {
       {/* ── Asimov V1 — Featured Platform ───────────────────────────────────── */}
       <AsimovHeroCard />
 
+      {/* ── Explore by Category ─────────────────────────────────────────────── */}
+      <section>
+        <div className="mb-8">
+          <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">Explore by Category</h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
+            Dive into platform specs, failure signatures, and interactive blueprints organized by robot category.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {CATEGORIES.map((cat) => {
+            const CatIcon = cat.icon;
+            return (
+              <Link
+                key={cat.title}
+                href={cat.href}
+                className="panel-elevated group flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
+                style={{
+                  borderTop: `2px solid ${cat.accent}38`,
+                  background: `linear-gradient(135deg, ${cat.accent}0d 0%, transparent 60%)`,
+                }}
+              >
+                <div
+                  className="shrink-0 rounded-xl p-2.5 w-fit"
+                  style={{ background: `${cat.accent}14`, color: cat.accent, boxShadow: `0 0 16px ${cat.accent}1a` }}
+                >
+                  <CatIcon size={16} />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-header text-base leading-tight text-[var(--ink)] group-hover:text-[var(--accent)] transition">
+                    {cat.title}
+                  </h3>
+                  <p className="mt-1 text-xs leading-relaxed text-[var(--ink)]/45">{cat.desc}</p>
+                </div>
+                <div className="flex items-center gap-3 mt-auto pt-2">
+                  <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">
+                    {cat.platforms} platforms
+                  </span>
+                  <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/25">
+                    ·
+                  </span>
+                  <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">
+                    {cat.failures} failure signatures
+                  </span>
+                </div>
+                <ChevronRight size={12} className="absolute top-5 right-5 text-[var(--ink)]/20 group-hover:text-[var(--ink)]/40 transition" />
+              </Link>
+            );
+          })}
+        </div>
+        <div className="mt-5 text-center">
+          <Link
+            href="/knowledge/blueprint"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--ink)]/[0.10] px-5 py-2.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-[var(--ink)]/50 transition hover:bg-ember/[0.06] hover:border-ember/30 hover:text-ember"
+          >
+            View All Platforms
+            <ChevronRight size={12} />
+          </Link>
+        </div>
+      </section>
+
       {/* ── Platform Catalog (with search filtering) ────────────────────────── */}
       <section>
         <div className="mb-6">
@@ -222,16 +319,25 @@ export default function KnowledgePage() {
 
       {/* ── Component Anatomy ───────────────────────────────────────────────── */}
       <section>
-        <div className="mb-6">
-          <p className="kicker">Layer 1 — Physical</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Component Anatomy</h2>
-          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
-            What is physically inside a robot — and how each part fails. Every entry
-            includes a "human bridge" for on-site diagnosis.
-          </p>
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">Component Anatomy</h2>
+            <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
+              What is physically inside a robot — and how each part fails. Every entry
+              includes a &ldquo;human bridge&rdquo; — how to feel, see, or measure the failure before
+              you ever open a diagnostic tool.
+            </p>
+          </div>
+          <Link
+            href="/knowledge/blueprint?tab=components"
+            className="shrink-0 inline-flex items-center gap-2 rounded-full border border-[var(--ink)]/[0.10] px-4 py-2 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-[var(--ink)]/50 transition hover:bg-ember/[0.06] hover:border-ember/30 hover:text-ember"
+          >
+            View All 8 Components
+            <ChevronRight size={12} />
+          </Link>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
-          {COMPONENTS.map((comp) => {
+          {VISIBLE_COMPONENTS.map((comp) => {
             const CompIcon = comp.icon;
             return (
               <div key={comp.id} className="panel-elevated flex flex-col gap-3 p-5">
@@ -269,34 +375,27 @@ export default function KnowledgePage() {
 
       {/* ── AI Intelligence Layer (Layer 2) ─────────────────────────────────── */}
       <section>
-        <div className="mb-6">
-          <p className="kicker">Layer 2 — Intelligence</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">AI Intelligence Layer</h2>
+        <div className="mb-8">
+          <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">AI Intelligence Layer</h2>
           <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
             How robots think, learn, and generalize — and what it means for diagnostics.
           </p>
         </div>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2">
           {AI_LAYER.map((layer) => {
             const Icon = layer.icon;
             return (
-              <div key={layer.layer} className="panel-elevated flex flex-col gap-3 p-5">
-                <div className="flex items-center gap-3">
-                  <div className={`rounded-xl p-2.5 ${layer.bg} shrink-0`}>
-                    <Icon size={16} className={layer.color} />
+              <div key={layer.layer} className={`panel-elevated flex flex-col gap-2 p-4 ${layer.bg}`}>
+                <div className="flex items-center gap-2.5">
+                  <div className={`shrink-0 rounded-lg p-2 ${layer.bg}`}>
+                    <Icon size={14} className={layer.color} />
                   </div>
-                  <h3 className="font-header text-base leading-tight text-[var(--ink)]">{layer.layer}</h3>
+                  <h3 className="font-header text-sm leading-tight text-[var(--ink)]">{layer.layer}</h3>
                 </div>
-                <p className="text-xs leading-relaxed text-[var(--ink)]/55">{layer.description}</p>
-                <div className="rounded-[12px] bg-[var(--ink)]/[0.025] px-3.5 py-2.5">
-                  <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-[var(--ink)]/35 mb-1">Examples</p>
-                  <p className="text-xs text-[var(--ink)]/55">{layer.examples}</p>
-                </div>
-                <div className="rounded-[12px] border border-sky-400/[0.20] bg-sky-400/[0.05] px-3.5 py-2.5">
-                  <p className="font-ui text-[0.52rem] uppercase tracking-[0.14em] text-sky-700 mb-1 flex items-center gap-1.5">
-                    <Wrench size={10} /> Tech-to-Field Bridge
-                  </p>
-                  <p className="text-xs leading-relaxed text-[var(--ink)]/60">{layer.techBridge}</p>
+                <p className="text-[0.78rem] leading-relaxed text-[var(--ink)]/50">{layer.description}</p>
+                <div className="mt-auto pt-1">
+                  <p className="font-ui text-[0.48rem] uppercase tracking-[0.12em] text-[var(--ink)]/30">Examples</p>
+                  <p className="text-xs leading-snug text-[var(--ink)]/45">{layer.examples}</p>
                 </div>
               </div>
             );
@@ -304,7 +403,7 @@ export default function KnowledgePage() {
         </div>
       </section>
 
-      {/* ── Integrated Sim Environment (inline, not a separate page) ────────── */}
+      {/* ── Integrated Sim Environment ──────────────────────────────────────── */}
       <section>
         <div className="mb-6">
           <p className="kicker">Layer 2 — Practice</p>
@@ -317,9 +416,60 @@ export default function KnowledgePage() {
         <div className="h-[calc(100vh-200px)] min-h-[500px] rounded-[20px] border border-white/[0.06] overflow-hidden bg-[var(--surface-ink)]/2">
           <SimLab initialPlatformId="unitree-g1" />
         </div>
-        <p className="mt-2 font-ui text-[0.52rem] text-[var(--ink)]/28">
-          Drag to orbit · Scroll to zoom · Click a part to inspect · Use the control panel to switch scenarios
-        </p>
+      </section>
+
+      {/* ── Open Learning Resources ─────────────────────────────────────────── */}
+      <section>
+        <div className="mb-8">
+          <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">Open Learning Resources</h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
+            Curated courses from MIT, Stanford, ETH Zurich, UC Berkeley, and more — all free and open access.
+          </p>
+        </div>
+        <Link
+          href="/knowledge/study-guides"
+          className="panel-elevated group flex items-center gap-5 p-5 sm:p-6 transition hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
+        >
+          <div className="shrink-0 rounded-2xl bg-violet-500/[0.09] p-4" style={{ boxShadow: "0 0 20px #8b5cf614" }}>
+            <BookOpen size={24} className="text-violet-600" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-header text-lg leading-tight text-[var(--ink)] group-hover:text-violet-600 transition">
+              📚 Open Learning Resources
+            </h3>
+            <p className="mt-1 text-sm leading-relaxed text-[var(--ink)]/50">
+              {COURSES.length} courses from {
+                [...new Set(COURSES.map((c) => c.org.replace(/ ·.*$/, "")))]
+                  .sort()
+                  .join(", ")
+              } — covering manipulation, kinematics, state estimation, perception, and reinforcement learning.
+            </p>
+          </div>
+          <ChevronRight size={18} className="shrink-0 text-[var(--ink)]/20 group-hover:text-violet-600 transition" />
+        </Link>
+      </section>
+
+      {/* ── Essentials & Communities ────────────────────────────────────────── */}
+      <section>
+        <div className="mb-8">
+          <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">Essentials & Communities</h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
+            The 5 tools and communities every robotics practitioner should know.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2.5">
+          {TOOLS_AND_COMMUNITIES.slice(0, 5).map((item) => (
+            <div
+              key={item.name}
+              className="inline-flex items-center gap-2.5 rounded-full border border-[var(--ink)]/[0.06] bg-[var(--ink)]/[0.02] px-4 py-2"
+            >
+              <span className="text-sm font-medium text-[var(--ink)]/70">{item.name}</span>
+              <span className={`rounded-full px-2 py-0.5 font-ui text-[0.46rem] uppercase tracking-[0.12em] font-semibold ${item.tagColor}`}>
+                {item.tag}
+              </span>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* ── Cert CTA ────────────────────────────────────────────────────────── */}
