@@ -4,20 +4,17 @@ import { useEffect, useState, useMemo } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
-  AlertTriangle,
-  BookOpen,
-  ChevronRight,
-  Crosshair,
-  Expand,
-  Play,
-  Wrench,
-  X,
+ AlertTriangle,
+ BookOpen,
+ ChevronRight,
+ Crosshair,
+ Expand,
+ Play,
+ Wrench,
+ X,
 } from "lucide-react";
-import { PlatformExplorer } from "./platform-explorer";
 import { RobotModelViewer } from "./robot-model-viewer";
-import { hasUrdf } from "../lib/platforms/urdf-config";
 import { SimLab } from "./sim-lab";
-import { BlueprintExplorer } from "./blueprint-explorer";
 import { StaggerContainer } from "./animated-stat";
 import type { PlatformProfile } from "../lib/platforms/index";
 
@@ -184,37 +181,15 @@ export function KnowledgeHubClient({ platforms }: Props) {
                   ))}
                 </div>
 
-                {/* Interactive 3D model preview — real URDF model or product photo */}
-                <div className="mt-1">
-                  {hasUrdf(platform.id) ? (
-                    <button
-                      type="button"
-                      onClick={() => openModal({ kind: "explorer", platformId: platform.id })}
-                      className="group container-animate relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] text-left transition hover:border-[var(--ink)]/[0.16] hover:bg-[var(--ink)]/[0.04] cursor-pointer"
-                    >
-                      <RobotModelViewer
-                        platformId={platform.id}
-                        className="h-48 w-full"
-                      />
-                      <div className="flex items-center justify-between px-3 py-2.5">
-                        <p className="font-ui text-[0.54rem] uppercase tracking-[0.14em] text-[var(--ink)]/35">
-                          Real 3D Model
-                        </p>
-                        <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-sky-500 transition group-hover:text-sky-400">
-                          <Expand size={10} /> Explore
-                        </span>
-                      </div>
-                    </button>
-                  ) : (
-                    <PlatformExplorer
-                      platformId={platform.id}
-                      compact
-                      onOpen={() =>
-                        openModal({ kind: "explorer", platformId: platform.id })
-                      }
-                    />
-                  )}
-                </div>
+ {/* Interactive 3D model preview — real URDF model or product photo */}
+ <div className="mt-1">
+ <RobotModelViewer
+ platformId={platform.id}
+ mode="preview"
+ className="h-48 w-full cursor-pointer"
+ onClick={() => openModal({ kind: "explorer", platformId: platform.id })}
+ />
+ </div>
 
                 {/* Failure signatures */}
                 {platform.failureSignatures.length > 0 && (
@@ -346,18 +321,15 @@ export function KnowledgeHubClient({ platforms }: Props) {
             >
               <X size={14} />
             </button>
-            <div className="h-full">
-              {modal.kind === "explorer" ? (
-                <PlatformExplorer platformId={modal.platformId} />
-              ) : modal.kind === "blueprint" ? (
-                <BlueprintExplorer
-                  platformId={modal.platformId}
-                  onClose={() => closeModal()}
-                />
-              ) : (
-                <SimLab initialPlatformId={modal.platformId} />
-              )}
-            </div>
+ <div className="h-full">
+ {modal.kind === "explorer" ? (
+ <RobotModelViewer platformId={modal.platformId} mode="explore" showAnnotations />
+ ) : modal.kind === "blueprint" ? (
+ <RobotModelViewer platformId={modal.platformId} mode="blueprint" />
+ ) : (
+ <SimLab initialPlatformId={modal.platformId} />
+ )}
+ </div>
           </div>
         </div>,
         document.body
