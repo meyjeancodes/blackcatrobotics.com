@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { getAllPlatforms } from "@/lib/platforms/index";
 import { KnowledgeHubClient } from "@/components/knowledge-hub-client";
@@ -28,6 +28,15 @@ import {
   Globe,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+
+// ─── Category accent colors (shared) ──────────────────────────────────────────
+const CAT_ACCENT: Record<string, string> = {
+  humanoid: "#8b5cf6",
+  drone: "#0ea5e9",
+  industrial: "#f59e0b",
+  delivery: "#10b981",
+  micromobility: "#f43f5e",
+};
 
 // ─── Component data ───────────────────────────────────────────────────────────
 
@@ -156,10 +165,10 @@ const TOOLS_AND_COMMUNITIES = [
 // ─── Explore by Category data ────────────────────────────────────────────────
 
 const CATEGORIES = [
-  { title: "Humanoids", icon: Bot, href: "/knowledge/blueprint", platforms: 14, failures: 47, accent: "#8b5cf6", desc: "Unitree, Tesla Optimus, Figure, Agility, and more." },
-  { title: "Drones & AMRs", icon: Radio, href: "/knowledge/blueprint", platforms: 20, failures: 33, accent: "#0ea5e9", desc: "Quadcopters, warehouse robots, and autonomous mobile platforms." },
-  { title: "Delivery / Micromobility", icon: Globe, href: "/knowledge/blueprint", platforms: 9, failures: 21, accent: "#1db87a", desc: "Sidewalk couriers, e-scooters, and last-mile bots." },
-  { title: "Edge AI & Controllers", icon: Cpu, href: "/knowledge/blueprint", platforms: 6, failures: 12, accent: "#f59e0b", desc: "Jetson, RPi compute, and custom SoC platforms." },
+  { id: "humanoid" as const, title: "Humanoids", icon: Bot, href: "/knowledge/blueprint?category=humanoid", platforms: 14, failures: 47, accent: "#8b5cf6", desc: "Unitree, Tesla Optimus, Figure, Agility, and more." },
+  { id: "drone" as const, title: "Drones & AMRs", icon: Radio, href: "/knowledge/blueprint?category=drone", platforms: 20, failures: 33, accent: "#0ea5e9", desc: "Quadcopters, warehouse robots, and autonomous mobile platforms." },
+  { id: "delivery" as const, title: "Delivery / Micromobility", icon: Globe, href: "/knowledge/blueprint?category=delivery", platforms: 9, failures: 21, accent: "#1db87a", desc: "Sidewalk couriers, e-scooters, and last-mile bots." },
+  { id: "micromobility" as const, title: "Edge AI & Controllers", icon: Cpu, href: "/knowledge/blueprint?category=micromobility", platforms: 6, failures: 12, accent: "#f59e0b", desc: "Jetson, RPi compute, and custom SoC platforms." },
 ];
 
 const VISIBLE_COMPONENTS = COMPONENTS.filter((c) => !["hands", "safety"].includes(c.id));
@@ -172,18 +181,45 @@ export default function KnowledgePage() {
   const totalFailureModes = platforms.reduce((sum, p) => sum + p.failureSignatures.length, 0);
 
   const [query, setQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const scrollToSection = useCallback((id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   const filteredPlatforms = useMemo(() => {
-    if (!query.trim()) return platforms;
-    const q = query.toLowerCase();
-    return platforms.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.manufacturer.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q)
-    );
-  }, [platforms, query]);
+    let list = platforms;
+    if (query.trim()) {
+      const q = query.toLowerCase();
+      list = list.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          p.manufacturer.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q)
+      );
+    }
+    if (selectedCategory) {
+      list = list.filter((p) => p.category === selectedCategory);
+    }
+    return list;
+  }, [platforms, query, selectedCategory]);
+
+  const visibleCategories = useMemo(() => {
+    const seen = new Set<string>();
+    platforms.forEach((p) => seen.add(p.category));
+    return Object.entries(CAT_ACCENT).filter(([cat]) => seen.has(cat));
+  }, [platforms]);
+
+  const handleCategoryClick = (cat: string) => {
+    if (selectedCategory === cat) {
+      setSelectedCategory(null); // toggle off
+    } else {
+      setSelectedCategory(cat);
+      scrollToSection("platform-catalog");
+    }
+  };
 
   return (
     <div className="space-y-20">
@@ -216,97 +252,46 @@ export default function KnowledgePage() {
           )}
         </div>
 
-        {/* Stats */}
+        {/* Stats — Interactive */}
         <div className="mt-5 flex flex-wrap gap-4">
-          <div className="panel px-4 py-3 flex items-center gap-3">
+          <button
+            onClick={() => scrollToSection("platform-catalog")}
+            className="panel px-4 py-3 flex items-center gap-3 cursor-pointer transition hover:-translate-y-0.5 hover:shadow-sm text-left"
+          >
             <Bot size={15} className="text-violet-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Platforms</p>
               <p className="font-header text-xl text-[var(--ink)]">{totalPlatforms}</p>
             </div>
-          </div>
-          <div className="panel px-4 py-3 flex items-center gap-3">
+          </button>
+          <button
+            onClick={() => { setSelectedCategory(null); scrollToSection("platform-catalog"); }}
+            className="panel px-4 py-3 flex items-center gap-3 cursor-pointer transition hover:-translate-y-0.5 hover:shadow-sm text-left"
+          >
             <AlertTriangle size={15} className="text-amber-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">Failure Signatures</p>
               <p className="font-header text-xl text-[var(--ink)]">{totalFailureModes}</p>
             </div>
-          </div>
-          <div className="panel px-4 py-3 flex items-center gap-3">
+          </button>
+          <button
+            onClick={() => scrollToSection("ai-intelligence-layer")}
+            className="panel px-4 py-3 flex items-center gap-3 cursor-pointer transition hover:-translate-y-0.5 hover:shadow-sm text-left"
+          >
             <Brain size={15} className="text-sky-600 shrink-0" />
             <div>
               <p className="font-ui text-[0.56rem] uppercase tracking-[0.18em] text-[var(--ink)]/40">AI Layers</p>
               <p className="font-header text-xl text-[var(--ink)]">{AI_LAYER.length}</p>
             </div>
-          </div>
+          </button>
         </div>
       </div>
 
       {/* ── Asimov V1 — Featured Platform ───────────────────────────────────── */}
       <AsimovHeroCard />
 
-      {/* ── Explore by Category ─────────────────────────────────────────────── */}
-      <section>
-        <div className="mb-8">
-          <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">Explore by Category</h2>
-          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
-            Dive into platform specs, failure signatures, and interactive blueprints organized by robot category.
-          </p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {CATEGORIES.map((cat) => {
-            const CatIcon = cat.icon;
-            return (
-              <Link
-                key={cat.title}
-                href={cat.href}
-                className="panel-elevated group flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
-                style={{
-                  borderTop: `2px solid ${cat.accent}38`,
-                  background: `linear-gradient(135deg, ${cat.accent}0d 0%, transparent 60%)`,
-                }}
-              >
-                <div
-                  className="shrink-0 rounded-xl p-2.5 w-fit"
-                  style={{ background: `${cat.accent}14`, color: cat.accent, boxShadow: `0 0 16px ${cat.accent}1a` }}
-                >
-                  <CatIcon size={16} />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="font-header text-base leading-tight text-[var(--ink)] group-hover:text-[var(--accent)] transition">
-                    {cat.title}
-                  </h3>
-                  <p className="mt-1 text-xs leading-relaxed text-[var(--ink)]/45">{cat.desc}</p>
-                </div>
-                <div className="flex items-center gap-3 mt-auto pt-2">
-                  <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">
-                    {cat.platforms} platforms
-                  </span>
-                  <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/25">
-                    ·
-                  </span>
-                  <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">
-                    {cat.failures} failure signatures
-                  </span>
-                </div>
-                <ChevronRight size={12} className="absolute top-5 right-5 text-[var(--ink)]/20 group-hover:text-[var(--ink)]/40 transition" />
-              </Link>
-            );
-          })}
-        </div>
-        <div className="mt-5 text-center">
-          <Link
-            href="/knowledge/blueprint"
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--ink)]/[0.10] px-5 py-2.5 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-[var(--ink)]/50 transition hover:bg-ember/[0.06] hover:border-ember/30 hover:text-ember"
-          >
-            View All Platforms
-            <ChevronRight size={12} />
-          </Link>
-        </div>
-      </section>
-
-      {/* ── Platform Catalog (with search filtering) ────────────────────────── */}
-      <section>
+      {/* ── Platform Catalog (with search + category filtering) ─────────────── */}
+      <section id="platform-catalog">
         <div className="mb-6">
           <p className="kicker">Layer 1 — Physical</p>
           <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Robot Platform Catalog</h2>
@@ -314,6 +299,39 @@ export default function KnowledgePage() {
             Specs, failure signatures, and interactive diagrams for every supported platform.
           </p>
         </div>
+
+        {/* Category filter chips */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-ui text-[0.54rem] uppercase tracking-[0.14em] transition ${
+              !selectedCategory
+                ? "border-ember/50 bg-ember/[0.08] text-ember"
+                : "border-[var(--ink)]/[0.08] text-[var(--ink)]/50 hover:border-[var(--ink)]/20"
+            }`}
+          >
+            All Platforms
+          </button>
+          {visibleCategories.map(([cat, accent]) => {
+            const count = platforms.filter((p) => p.category === cat).length;
+            return (
+              <button
+                key={cat}
+                onClick={() => handleCategoryClick(cat)}
+                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-ui text-[0.54rem] uppercase tracking-[0.14em] capitalize transition ${
+                  selectedCategory === cat
+                    ? "border-ember/50 bg-ember/[0.08] text-ember"
+                    : "border-[var(--ink)]/[0.08] text-[var(--ink)]/50 hover:border-[var(--ink)]/20"
+                }`}
+              >
+                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: accent }} />
+                {cat}
+                <span className="font-mono text-[0.48rem] opacity-60">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+
         <KnowledgeHubClient platforms={filteredPlatforms.length > 0 ? filteredPlatforms : platforms} />
       </section>
 
@@ -374,7 +392,7 @@ export default function KnowledgePage() {
       </section>
 
       {/* ── AI Intelligence Layer (Layer 2) ─────────────────────────────────── */}
-      <section>
+      <section id="ai-intelligence-layer">
         <div className="mb-8">
           <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">AI Intelligence Layer</h2>
           <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
