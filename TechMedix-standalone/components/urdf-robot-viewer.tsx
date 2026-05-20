@@ -29,24 +29,30 @@ function UrdfLoadingShell() {
 // ─── Wrapper that dynamically switches between URDF and fallback ──────────────
 
 interface Props {
-  urdfPath: string;
-  label?: string;
-  height?: string;
+ urdfPath: string;
+ label?: string;
+ height?: string;
+ selectedPartId?: string | null;
+ wireframe?: boolean;
+ onPartClick?: (partName: string) => void;
 }
 
-export function UrdfRobotViewer({ urdfPath, label, height }: Props) {
-  const [error, setError] = useState<string | null>(null);
+export function UrdfRobotViewer({ urdfPath, label, height, selectedPartId, wireframe, onPartClick }: Props) {
+ const [error, setError] = useState<string | null>(null);
 
-  return (
-    <div className={height ?? 'h-[420px]'}>
-      <UrdfViewerInner
-        key={urdfPath}
-        urdfPath={urdfPath}
-        label={label}
-        height="h-full"
-      />
-    </div>
-  );
+ return (
+ <div className={height ?? 'h-[420px]'}>
+ <UrdfViewerInner
+ key={urdfPath}
+ urdfPath={urdfPath}
+ label={label}
+ height="h-full"
+ selectedPartId={selectedPartId}
+ wireframe={wireframe}
+ onPartClick={onPartClick}
+ />
+ </div>
+ );
 }
 
 // ─── URDF platform registry ├── maps platform slugs to their URDF paths ─────────

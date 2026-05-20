@@ -147,6 +147,12 @@ export function RobotModelViewer({
  urdfPath={urdfConfig.urdfPath}
  label={urdfConfig.name}
  height="h-full"
+ selectedPartId={selectedPartId}
+ wireframe={wireframe}
+ onPartClick={(partName) => {
+ setSelectedPartId(partName);
+ onPartSelect?.(chassis.parts.find(p => p.id === partName) || null);
+ }}
  />
  
  {/* Subtle technical overlay */}
@@ -243,6 +249,12 @@ export function RobotModelViewer({
  urdfPath={urdfConfig.urdfPath}
  label={urdfConfig.name}
  height="h-full"
+ selectedPartId={selectedPartId}
+ wireframe={wireframe}
+ onPartClick={(partName) => {
+ setSelectedPartId(partName);
+ onPartSelect?.(chassis.parts.find(p => p.id === partName) || null);
+ }}
  />
  ) : (
  <div className="flex h-full items-center justify-center text-white/20">
