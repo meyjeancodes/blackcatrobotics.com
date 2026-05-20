@@ -23,3 +23,13 @@ Legal/
 bcr-live/
 .vercel
 .hermes/
+
+# Claude workspace clutter
+.claude/
+
+# Domain research folders
+BCR.HMTL Domain/
+
+# Misc assets
+*.png
+RESEARCH_CAD_SOURCES.md

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { getAllPlatforms, type PlatformProfile } from "@/lib/platforms/index";
-import { Crosshair } from "lucide-react";
+import { Crosshair, ChevronRight } from "lucide-react";
 import type { PlatformCategory } from "@/components/platform-art-canvas";
 import { BlueprintCanvasWrapper } from "./blueprint-canvas-wrapper";
 
@@ -17,11 +18,29 @@ const CAT_ACCENT: Record<string, { accent: string; category: PlatformCategory }>
   micromobility: { accent: "#f43f5e", category: "micromobility" },
 };
 
-export default function BlueprintIndexPage() {
-  const platforms = getAllPlatforms().filter((p) => p.category !== "datacenter");
+export default async function BlueprintIndexPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const { category } = await searchParams;
+  const allPlatforms = getAllPlatforms().filter((p) => p.category !== "datacenter");
+
+  const platforms = category && CAT_ACCENT[category]
+    ? allPlatforms.filter((p) => p.category === category)
+    : allPlatforms;
+
+  const selectedCat = category && CAT_ACCENT[category] ? category : null;
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10 lg:px-10">
+      {/* Breadcrumb */}
+      <nav className="mb-6 flex items-center gap-1.5 font-ui text-[0.55rem] uppercase tracking-[0.16em] text-[var(--ink)]/40">
+        <Link href="/knowledge" className="hover:text-ember transition">Knowledge Hub</Link>
+        <ChevronRight size={10} />
+        <span className="text-[var(--ink)]/70">Blueprint Explorer</span>
+      </nav>
+
       {/* Header */}
       <div className="mb-10">
         <p className="kicker">Knowledge Hub · Layer 1 — Physical</p>
@@ -34,25 +53,39 @@ export default function BlueprintIndexPage() {
         </p>
       </div>
 
-      {/* Category quick filters */}
+      {/* Category quick filters (clickable) */}
       <div className="flex flex-wrap gap-2 mb-8">
+        <Link
+          href="/knowledge/blueprint"
+          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-ui text-[0.55rem] uppercase tracking-[0.14em] capitalize transition ${
+            !selectedCat
+              ? "border-ember/50 bg-ember/[0.08] text-ember"
+              : "border-[var(--ink)]/[0.08] text-[var(--ink)]/50 hover:border-[var(--ink)]/20"
+          }`}
+        >
+          All
+        </Link>
         {Object.keys(CAT_ACCENT).map((cat) => {
-          const count = platforms.filter((p) => p.category === cat).length;
+          const count = allPlatforms.filter((p) => p.category === cat).length;
           if (count === 0) return null;
+          const isActive = selectedCat === cat;
           return (
-            <span
+            <Link
               key={cat}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.03] px-3 py-1.5"
+              href={isActive ? "/knowledge/blueprint" : `/knowledge/blueprint?category=${cat}`}
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-ui text-[0.55rem] uppercase tracking-[0.14em] capitalize transition ${
+                isActive
+                  ? "border-ember/50 bg-ember/[0.08] text-ember"
+                  : "border-[var(--ink)]/[0.08] text-[var(--ink)]/50 hover:border-[var(--ink)]/20"
+              }`}
             >
               <span
                 className="h-2 w-2 rounded-full"
                 style={{ backgroundColor: CAT_ACCENT[cat].accent }}
               />
-              <span className="font-ui text-[0.55rem] uppercase tracking-[0.14em] text-[var(--ink)]/50 capitalize">
-                {cat}
-              </span>
+              {cat}
               <span className="font-mono text-[0.50rem] text-[var(--ink)]/30">{count}</span>
-            </span>
+            </Link>
           );
         })}
       </div>
@@ -130,6 +163,12 @@ export default function BlueprintIndexPage() {
           );
         })}
       </div>
+
+      {platforms.length === 0 && (
+        <p className="text-center py-20 text-sm text-[var(--ink)]/40">
+          No platforms found for this category.
+        </p>
+      )}
     </div>
   );
 }
