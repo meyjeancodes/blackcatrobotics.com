@@ -21,6 +21,16 @@ function UrdfRobot({ urdfUrl, onLoad, onError }: {
     mountedRef.current = true;
     const loader = new URDFLoaderClass();
 
+    // Resolve package:// URIs to relative paths
+    // Extract base directory from URDF URL and map package names to it
+    const urdfDir = urdfUrl.substring(0, urdfUrl.lastIndexOf('/') + 1);
+    loader.packages = {
+      'h1_description': urdfDir,
+      'g1_description': urdfDir,
+      'go2_description': urdfDir,
+      'h2_description': urdfDir,
+    };
+
     loader.load(
       urdfUrl,
       (result: any) => {
