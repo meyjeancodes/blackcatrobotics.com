@@ -32,6 +32,18 @@ export const PLATFORM_URDFS: PlatformUrdf[] = [
     badge: 'Official URDF',
   },
   {
+    id: 'unitree-h1',
+    name: 'Unitree H1',
+    urdfPath: '/robots/unitree-h1/h1.urdf',
+    badge: 'Official URDF',
+  },
+  {
+    id: 'unitree-h1-2',
+    name: 'Unitree H1-2',
+    urdfPath: '/robots/unitree-h1/h1.urdf',
+    badge: 'Official URDF',
+  },
+  {
     id: 'unitree-h2',
     name: 'Unitree H2',
     urdfPath: '/robots/unitree-h2/H2_dae.urdf',
@@ -41,12 +53,6 @@ export const PLATFORM_URDFS: PlatformUrdf[] = [
     id: 'unitree-go2',
     name: 'Unitree Go2',
     urdfPath: '/robots/unitree-go2/go2_description.urdf',
-    badge: 'Official URDF',
-  },
-  {
-    id: 'unitree-h1',
-    name: 'Unitree H1',
-    urdfPath: '/robots/unitree-h1/h1.urdf',
     badge: 'Official URDF',
   },
 ];
