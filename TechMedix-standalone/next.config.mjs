@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  serverExternalPackages: ["three"],
+  outputFileTracingExcludes: {
+    "/*": ["**/node_modules/three/**", "**/node_modules/@react-three/**"],
+  },
   turbopack: {
     root: import.meta.dirname,
   },

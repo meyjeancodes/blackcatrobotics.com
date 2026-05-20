@@ -4,7 +4,6 @@
   "outputDirectory": ".next",
   "installCommand": "npm install",
   "regions": ["iad1"],
-  "env": {},
   "crons": [
     {
       "path": "/api/simulation/run",
