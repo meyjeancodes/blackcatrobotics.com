@@ -8,11 +8,14 @@ import {
   BookOpen,
   ChevronRight,
   Crosshair,
+  Expand,
   Play,
   Wrench,
   X,
 } from "lucide-react";
 import { PlatformExplorer } from "./platform-explorer";
+import { RobotModelViewer } from "./robot-model-viewer";
+import { hasUrdf } from "../lib/platforms/urdf-config";
 import { SimLab } from "./sim-lab";
 import { BlueprintExplorer } from "./blueprint-explorer";
 import { StaggerContainer } from "./animated-stat";
@@ -181,15 +184,36 @@ export function KnowledgeHubClient({ platforms }: Props) {
                   ))}
                 </div>
 
-                {/* Interactive diagram preview */}
+                {/* Interactive 3D model preview — real URDF model or product photo */}
                 <div className="mt-1">
-                  <PlatformExplorer
-                    platformId={platform.id}
-                    compact
-                    onOpen={() =>
-                      openModal({ kind: "explorer", platformId: platform.id })
-                    }
-                  />
+                  {hasUrdf(platform.id) ? (
+                    <button
+                      type="button"
+                      onClick={() => openModal({ kind: "explorer", platformId: platform.id })}
+                      className="group container-animate relative w-full overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] bg-[var(--ink)]/[0.02] text-left transition hover:border-[var(--ink)]/[0.16] hover:bg-[var(--ink)]/[0.04] cursor-pointer"
+                    >
+                      <RobotModelViewer
+                        platformId={platform.id}
+                        className="h-48 w-full"
+                      />
+                      <div className="flex items-center justify-between px-3 py-2.5">
+                        <p className="font-ui text-[0.54rem] uppercase tracking-[0.14em] text-[var(--ink)]/35">
+                          Real 3D Model
+                        </p>
+                        <span className="inline-flex items-center gap-1 font-ui text-[0.58rem] uppercase tracking-[0.14em] font-semibold text-sky-500 transition group-hover:text-sky-400">
+                          <Expand size={10} /> Explore
+                        </span>
+                      </div>
+                    </button>
+                  ) : (
+                    <PlatformExplorer
+                      platformId={platform.id}
+                      compact
+                      onOpen={() =>
+                        openModal({ kind: "explorer", platformId: platform.id })
+                      }
+                    />
+                  )}
                 </div>
 
                 {/* Failure signatures */}
