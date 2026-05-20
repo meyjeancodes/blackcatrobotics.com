@@ -1,8 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ["three"],
+  serverExternalPackages: ["three", "@react-three/fiber", "@react-three/drei", "three-stdlib", "zod"],
   outputFileTracingExcludes: {
-    "/*": ["**/node_modules/three/**", "**/node_modules/@react-three/**"],
+    "/*": [
+      "**/node_modules/three/**",
+      "**/node_modules/@react-three/**",
+      "**/node_modules/three-stdlib/**",
+      "**/public/robots/**",
+      "**/public/robots*/**",
+    ],
   },
   turbopack: {
     root: import.meta.dirname,
