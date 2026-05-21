@@ -103,10 +103,10 @@ ul { list-style: none; }
 .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--r-pill); padding: 6px 14px 6px 8px; margin-bottom: 32px; }
 .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(29,185,84,0.2); animation: pulse 2.2s ease infinite; }
 @keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(29,185,84,0.2);}50%{box-shadow:0 0 0 7px rgba(29,185,84,0.06);} }
-.badge-txt { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.6); letter-spacing: 0.08em; }
+.badge-txt { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.8); letter-spacing: 0.08em; }
 .hero-title { font-family: var(--serif); font-size: clamp(52px,7.5vw,110px); line-height: 0.92; letter-spacing: -0.04em; color: #fff; margin-bottom: 28px; }
 .hero-title em { font-style: italic; color: var(--fire-2); }
-.hero-sub { font-family: var(--display); font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.5); max-width: 520px; margin-bottom: 40px; font-weight: 400; }
+.hero-sub { font-family: var(--display); font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.8); max-width: 520px; margin-bottom: 40px; font-weight: 400; }
 .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .hero-scroll { position: absolute; bottom: 36px; right: 48px; z-index: 1; display: flex; align-items: center; gap: 10px; }
 .hero-scroll-line { width: 48px; height: 1px; background: rgba(255,255,255,0.2); }
@@ -547,7 +547,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <nav id="nav">
   <a href="#" class="nav-logo">BlackCat<span>.</span></a>
   <ul class="nav-links" id="nav-links">
-    <li><a href="#agents">Autonomous Systems</a></li>
+    <li><a href="#acquire">Platforms</a></li>
     <li><a href="#techmedix">TechMedix</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#acquire">Acquire</a></li>
@@ -641,7 +641,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <p class="hero-sub">Maintenance and intelligence platform for autonomous drones, humanoid robots, EV fleets, and aerospace ground support.</p>
     <div class="hero-actions">
       <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Start TechMedix — $299/mo</a>
-      <a href="#agents" class="btn btn-outline-white">Explore Autonomous Systems &rarr;</a>
+      <a href="#acquire" class="btn btn-outline-white">Browse Platforms &rarr;</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -705,450 +705,6 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   <div class="stat-cell"><div class="stat-num">Target: &lt;2h</div><div class="stat-label">Technician<br>dispatch target</div></div>
   <div class="stat-cell"><div class="stat-num">14+</div><div class="stat-label">Robot platforms<br>supported</div></div>
 </div>
-
-<!-- AI AGENTS -->
-<section class="sec agents-sec" id="agents">
-  <div class="sec-head reveal">
-    <div class="eyebrow">AI Agent Database</div>
-    <h2 class="h2" style="margin-top:14px;max-width:540px;">Every robot.<br>Every platform.</h2>
-    <p class="body" style="margin-top:16px;max-width:500px;">Comprehensive maintenance intelligence for autonomous systems, continuously monitored by TechMedix AI agents.</p>
-    <p class="body" style="margin-top:10px;max-width:500px;color:var(--fire);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">Unitree Robotics — TechMedix Compatible</p>
-  </div>
-  <div class="reveal" style="margin-bottom:28px;">
-    <div class="tabs-bar">
-      <button class="tab-btn active" onclick="switchTab('humanoids',this)">Humanoids</button>
-      <button class="tab-btn" onclick="switchTab('drones',this)">Drones</button>
-      <button class="tab-btn" onclick="switchTab('delivery',this)">Delivery</button>
-      <button class="tab-btn" onclick="switchTab('industrial',this)">Industrial</button>
-      <button class="tab-btn" onclick="switchTab('ebikes',this)">eBikes &amp; Scooters</button>
-      <button class="tab-btn" onclick="switchTab('cleaning',this)">Cleaning &amp; Service</button>
-    </div>
-  </div>
-
-  <!-- HUMANOIDS -->
-  <div id="tab-humanoids" class="reveal">
-    <!-- Unitree Partner Spotlight -->
-    <div class="unitree-banner reveal">
-      <div class="unitree-banner-top">
-        <div>
-          <div class="unitree-eyebrow">Unitree Robotics</div>
-          <div class="unitree-headline">The world's most deployed humanoid platform.</div>
-          <div class="unitree-desc">5,500+ units deployed. $610M IPO filed. G1, H1-2, and B2 platforms — all TechMedix certified.</div>
-        </div>
-        <div class="unitree-stats">
-          <div class="unitree-stat">
-            <div class="unitree-stat-label">Units</div>
-            <div class="unitree-stat-value">5,500+</div>
-          </div>
-          <div class="unitree-stat">
-            <div class="unitree-stat-label">IPO Filed</div>
-            <div class="unitree-stat-value">$610M</div>
-          </div>
-          <div class="unitree-stat">
-            <div class="unitree-stat-label">From</div>
-            <div class="unitree-stat-value">$16K</div>
-          </div>
-        </div>
-      </div>
-      <div class="unitree-banner-btns">
-        <a href="#acquire" class="btn btn-fire">View All Unitree Models &rarr;</a>
-        <a href="https://unitree.com" target="_blank" rel="noopener" class="btn btn-outline-white">unitree.com ↗</a>
-      </div>
-    </div>
-    <div class="cards-track">
-<div class="rcard"><div class="rcard-img"><img src="/images/platforms/unitree_g1.jpg" alt="Unitree G1 humanoid robot" loading="lazy"><span class="rcard-badge badge-fire">TechMedix Compatible</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://unitree.com" target="_blank" rel="noopener">Unitree Robotics</a></div><div class="rcard-name">G1 Humanoid</div><div class="rcard-desc">Leading accessible commercial humanoid at scale. 43 DOF, 13 force-torque sensors, 360° depth perception — 5,500+ units deployed globally. $610M IPO filed 2026.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">DOF</div><div class="spec-v">43 joints</div></div><div class="spec"><div class="spec-k">Sensors</div><div class="spec-v">13 F/T</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">360° depth</div></div><div class="spec"><div class="spec-k">Price</div><div class="spec-v">from $16K</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://unitree.com" target="_blank" rel="noopener">unitree.com &rarr;</a></div></div>
-      <div class="rcard hot"><div class="rcard-ribbon">Developer Pick</div><div class="rcard-img"><img src="/images/platforms/rotaku_domo.jpg" alt="Rotaku Domo humanoid robot" loading="lazy"><span class="rcard-badge badge-fire">TechMedix Compatible</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://www.rotaku.ai" target="_blank" rel="noopener">Rotaku</a></div><div class="rcard-name">Domo Humanoid</div><div class="rcard-desc">Developer-ready humanoid with whole-body control, VR teleoperation, and policy training pipelines. Modular design with swappable end-effectors. 23–25 DOF, up to 2h runtime, fully untethered. From $2,999.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">DOF</div><div class="spec-v">23–25</div></div><div class="spec"><div class="spec-k">Height</div><div class="spec-v">90–130 cm</div></div><div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">2 hours</div></div><div class="spec"><div class="spec-k">From</div><div class="spec-v">$2,999</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://www.rotaku.ai" target="_blank" rel="noopener">rotaku.ai &rarr;</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/figure_02.jpg" alt="Figure 02" loading="lazy"><span class="rcard-badge badge-green">Production</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://figure.ai" target="_blank" rel="noopener">Figure AI</a></div><div class="rcard-name">Figure 02</div><div class="rcard-desc">Manufactured at BotQ — robots building robots at 12,000 units/year. BMW and Mercedes-Benz deployments confirmed. OpenAI neural integration for dexterous manipulation.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Production</div><div class="spec-v">12K/year</div></div><div class="spec"><div class="spec-k">AI</div><div class="spec-v">OpenAI</div></div><div class="spec"><div class="spec-k">Customers</div><div class="spec-v">BMW, MB</div></div><div class="spec"><div class="spec-k">Plant</div><div class="spec-v">BotQ</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://figure.ai" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/tesla_optimus.jpg" alt="Tesla Optimus" loading="lazy"><span class="rcard-badge badge-fire">Watch 2026</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://tesla.com/optimus" target="_blank" rel="noopener">Tesla</a></div><div class="rcard-name">Optimus Gen 3</div><div class="rcard-desc">Tesla converting Fremont lines to Optimus production Q2 2026. 50,000-unit target. FSD neural network adapted for bipedal locomotion. Target price under $20K.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Target</div><div class="spec-v">&lt;$20K</div></div><div class="spec"><div class="spec-k">Units</div><div class="spec-v">50K target</div></div><div class="spec"><div class="spec-k">AI</div><div class="spec-v">FSD Neural</div></div><div class="spec"><div class="spec-k">Launch</div><div class="spec-v">Q2 2026</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Ready</span><a class="rcard-link" href="https://tesla.com/optimus" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/foundation_phantom.webp" alt="Phantom MK-1" loading="lazy"><span class="rcard-badge badge-indigo">Defense</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://foundation.bot" target="_blank" rel="noopener">Foundation</a></div><div class="rcard-name">Phantom MK-1</div><div class="rcard-desc">Two units deployed to Ukraine for battlefield evaluation. Pilots underway in factories and shipyards. Cycloidal actuators, camera-first LLM vision stack. MK-2 in development 2026.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Height</div><div class="spec-v">175 cm</div></div><div class="spec"><div class="spec-k">Actuators</div><div class="spec-v">~20 cycloidal</div></div><div class="spec"><div class="spec-k">Vision</div><div class="spec-v">Camera-first</div></div><div class="spec"><div class="spec-k">MK-2</div><div class="spec-v">2026</div></div></div></div><div class="rcard-foot"><span class="rcard-status">Defense Grade</span><a class="rcard-link" href="https://foundation.bot" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/agility_digit.jpg" alt="Digit V5" loading="lazy"><span class="rcard-badge badge-gold">Amazon</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://agilityrobotics.com" target="_blank" rel="noopener">Agility Robotics</a></div><div class="rcard-name">Digit V5</div><div class="rcard-desc">500+ units at Amazon fulfillment centers and GXO Logistics. Bipedal design built for existing human environments — no infrastructure changes required.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Deployed</div><div class="spec-v">500+ units</div></div><div class="spec"><div class="spec-k">Partner</div><div class="spec-v">Amazon</div></div><div class="spec"><div class="spec-k">Payload</div><div class="spec-v">16 kg</div></div><div class="spec"><div class="spec-k">Infra</div><div class="spec-v">No changes</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://agilityrobotics.com" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-    </div>
-  </div>
-
-  <!-- DRONES -->
-  <div id="tab-drones" style="display:none;" class="reveal">
-    <div class="cards-track">
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/dji_agras_t50.jpg" alt="DJI Agras T50 agricultural spray drone field operation" loading="lazy"><span class="rcard-badge badge-green">Active Fleet</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://ag.dji.com" target="_blank" rel="noopener">DJI Agriculture</a></div><div class="rcard-name">Agras T50</div><div class="rcard-desc">Professional agricultural drone. 40 kg payload, 40L spray tank, radar + vision obstacle avoidance, AI route planning. Dominant in precision farming globally.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Payload</div><div class="spec-v">40 kg</div></div><div class="spec"><div class="spec-k">Tank</div><div class="spec-v">40L spray</div></div><div class="spec"><div class="spec-k">Avoidance</div><div class="spec-v">Radar+Vision</div></div><div class="spec"><div class="spec-k">Nav</div><div class="spec-v">AI Route</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://ag.dji.com/agras-t50" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard">
-  <div class="rcard-img">
-    <img src="/images/platforms/dji_agras_t50.jpg" alt="DJI Agras T60 agricultural drone" loading="lazy">
-    <span class="rcard-badge badge-green">FAA Certified</span>
-  </div>
-  <div class="rcard-body">
-    <div class="rcard-maker"><a href="https://ag.dji.com/agras-t60" target="_blank" rel="noopener">DJI Agriculture</a></div>
-    <div class="rcard-name">Agras T60</div>
-    <div class="rcard-desc">Next-generation agricultural drone. 60 kg payload, 60L spray tank, omnidirectional radar obstacle avoidance. FAA Part 137 certified for autonomous BVLOS operation in 14 US states.</div>
-    <div class="rcard-specs">
-      <div class="spec"><div class="spec-k">Payload</div><div class="spec-v">60 kg</div></div>
-      <div class="spec"><div class="spec-k">Tank</div><div class="spec-v">60L spray</div></div>
-      <div class="spec"><div class="spec-k">Cert</div><div class="spec-v">Part 137</div></div>
-      <div class="spec"><div class="spec-k">BVLOS</div><div class="spec-v">14 states</div></div>
-    </div>
-  </div>
-  <div class="rcard-foot">
-    <span class="rcard-status">TechMedix Compatible</span>
-    <a class="rcard-link" href="https://ag.dji.com/agras-t60" target="_blank" rel="noopener">Learn more &rarr;</a>
-  </div>
-</div>
-      <div class="rcard">
-  <div class="rcard-img">
-    <img src="/images/platforms/dji_matrice350.jpg"
-         alt="DJI Matrice 350 RTK enterprise inspection drone" loading="lazy">
-    <span class="rcard-badge badge-green">Enterprise</span>
-  </div>
-  <div class="rcard-body">
-    <div class="rcard-maker"><a href="https://enterprise.dji.com/matrice-350-rtk" target="_blank" rel="noopener">DJI Enterprise</a></div>
-    <div class="rcard-name">Matrice 350 RTK</div>
-    <div class="rcard-desc">Enterprise flagship inspection drone. 55-minute flight time, IP55 weatherproofing, RTK precision positioning. Used in infrastructure inspection, public safety, and energy grid survey.</div>
-    <div class="rcard-specs">
-      <div class="spec"><div class="spec-k">Flight</div><div class="spec-v">55 min</div></div>
-      <div class="spec"><div class="spec-k">IP Rating</div><div class="spec-v">IP55</div></div>
-      <div class="spec"><div class="spec-k">Nav</div><div class="spec-v">RTK</div></div>
-      <div class="spec"><div class="spec-k">Use</div><div class="spec-v">Inspection</div></div>
-    </div>
-  </div>
-  <div class="rcard-foot">
-    <span class="rcard-status">TechMedix Compatible</span>
-    <a class="rcard-link" href="https://enterprise.dji.com/matrice-350-rtk" target="_blank" rel="noopener">Learn more &rarr;</a>
-  </div>
-</div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/skydio_x10.png" alt="Skydio X10" loading="lazy"><span class="rcard-badge badge-green">Inspection Fleet</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://skydio.com" target="_blank" rel="noopener">Skydio</a></div><div class="rcard-name">Skydio X10</div><div class="rcard-desc">Enterprise inspection drone with best-in-class AI obstacle avoidance. Used by utilities, infrastructure, and emergency services. 50MP + thermal. 10 km range.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Camera</div><div class="spec-v">50MP+Thermal</div></div><div class="spec"><div class="spec-k">Range</div><div class="spec-v">10 km</div></div><div class="spec"><div class="spec-k">Avoidance</div><div class="spec-v">AI best-in-class</div></div><div class="spec"><div class="spec-k">Use</div><div class="spec-v">Enterprise</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://skydio.com" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-    </div>
-  </div>
-
-  <!-- DELIVERY -->
-  <div id="tab-delivery" style="display:none;" class="reveal">
-    <div class="cards-track">
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/zipline_p2.png" alt="Zipline P2" loading="lazy"><span class="rcard-badge badge-green">Active — DFW</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://flyzipline.com" target="_blank" rel="noopener">Zipline</a></div><div class="rcard-name">P2 Zip + Droid</div><div class="rcard-desc">VTOL delivery: P2 transport carries Droid container. 110 km/h cruise, 1-metre lowering precision. 2M+ deliveries. DFW is the #1 US drone delivery hub.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Speed</div><div class="spec-v">110 km/h</div></div><div class="spec"><div class="spec-k">Precision</div><div class="spec-v">1-metre</div></div><div class="spec"><div class="spec-k">Deliveries</div><div class="spec-v">2M+</div></div><div class="spec"><div class="spec-k">Hub</div><div class="spec-v">DFW #1 US</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://flyzipline.com" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/serve_rs2.jpg" alt="Serve RS2 sidewalk delivery robot" loading="lazy"><span class="rcard-badge badge-green">Active — Dallas</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://serverobotics.com" target="_blank" rel="noopener">Serve Robotics</a></div><div class="rcard-name">Serve RS2</div><div class="rcard-desc">Autonomous sidewalk delivery for 22,000+ households in Dallas Uptown. Uber Eats 2,000-unit US expansion underway. Level 4 autonomy, Avride partnership.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Households</div><div class="spec-v">22,000+</div></div><div class="spec"><div class="spec-k">Autonomy</div><div class="spec-v">Level 4</div></div><div class="spec"><div class="spec-k">Expansion</div><div class="spec-v">2K US units</div></div><div class="spec"><div class="spec-k">Partner</div><div class="spec-v">Uber Eats</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://serverobotics.com" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/starship_gen3.jpg" alt="Starship Gen 3" loading="lazy"><span class="rcard-badge badge-green">100+ Campuses</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://starship.xyz" target="_blank" rel="noopener">Starship Technologies</a></div><div class="rcard-name">Starship Gen 3</div><div class="rcard-desc">Six-wheeled campus delivery. 7M+ deliveries, 100+ college campuses. 99.99% autonomous. Operates in all weather. Part 135 BVLOS expansion underway.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Deliveries</div><div class="spec-v">7M+</div></div><div class="spec"><div class="spec-k">Campuses</div><div class="spec-v">100+</div></div><div class="spec"><div class="spec-k">Autonomy</div><div class="spec-v">99.99%</div></div><div class="spec"><div class="spec-k">Cert</div><div class="spec-v">Part 135</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://starship.xyz" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-    </div>
-  </div>
-
-  <!-- INDUSTRIAL -->
-  <div id="tab-industrial" style="display:none;" class="reveal">
-    <div class="cards-track">
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/bostondynamics_spot.jpg" alt="Boston Dynamics Spot quadruped robot industrial inspection" loading="lazy"><span class="rcard-badge badge-green">Active Fleet</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://bostondynamics.com/products/spot" target="_blank" rel="noopener">Boston Dynamics</a></div><div class="rcard-name">Spot</div><div class="rcard-desc">The industrial inspection standard. Oil and gas, construction, utilities, military. Modular payload for sensors, cameras, robotic arm. 90-minute runtime. Proven at global scale.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">90 min</div></div><div class="spec"><div class="spec-k">Payload</div><div class="spec-v">14 kg</div></div><div class="spec"><div class="spec-k">IP Rating</div><div class="spec-v">IP54</div></div><div class="spec"><div class="spec-k">System</div><div class="spec-v">Modular</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://bostondynamics.com/products/spot" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard">
-  <div class="rcard-img">
-    <img src="/images/platforms/unitree_b2.png"
-         alt="Unitree B2 quadruped industrial robot" loading="lazy">
-    <span class="rcard-badge badge-green">Certified</span>
-  </div>
-  <div class="rcard-body">
-    <div class="rcard-maker"><a href="https://unitree.com/b2" target="_blank" rel="noopener">Unitree Robotics</a></div>
-    <div class="rcard-name">Unitree B2</div>
-    <div class="rcard-desc">Industrial-grade quadruped for harsh environments. 23 kg payload, IP67 weatherproofing, 5-hour runtime. Deployed for inspection, security, and logistics in industrial facilities.</div>
-    <div class="rcard-specs">
-      <div class="spec"><div class="spec-k">Payload</div><div class="spec-v">23 kg</div></div>
-      <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">5 hours</div></div>
-      <div class="spec"><div class="spec-k">IP Rating</div><div class="spec-v">IP67</div></div>
-      <div class="spec"><div class="spec-k">Speed</div><div class="spec-v">6 m/s</div></div>
-    </div>
-  </div>
-  <div class="rcard-foot">
-    <span class="rcard-status">TechMedix Compatible</span>
-    <a class="rcard-link" href="https://unitree.com/b2" target="_blank" rel="noopener">Learn more &rarr;</a>
-  </div>
-</div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/amazon_proteus.jpg" alt="Amazon Proteus" loading="lazy"><span class="rcard-badge badge-gold">Amazon</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://amazon.com/robotics" target="_blank" rel="noopener">Amazon Robotics</a></div><div class="rcard-name">Proteus AMR</div><div class="rcard-desc">Amazon's first fully autonomous warehouse robot. Works alongside humans without safety cages. 750,000+ units deployed across Amazon's global fulfillment network.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Deployed</div><div class="spec-v">750K+ units</div></div><div class="spec"><div class="spec-k">Safety</div><div class="spec-v">No cages</div></div><div class="spec"><div class="spec-k">Type</div><div class="spec-v">Warehouse AMR</div></div><div class="spec"><div class="spec-k">Scale</div><div class="spec-v">Global</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://amazon.com/robotics" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard">
-        <div class="rcard-img">
-          <img src="/images/platforms/robo_inc.png" alt="ROBO-1 robot arm industrial automation" loading="lazy">
-          <span class="rcard-badge badge-green">TechMedix Certified</span>
-        </div>
-        <div class="rcard-body">
-          <div class="rcard-maker"><a href="https://robo.inc" target="_blank" rel="noopener">ROBO Robotics</a></div>
-          <div class="rcard-name">ROBO-1</div>
-          <div class="rcard-desc">6-DOF robot arm built for teachable automation. Standardized hardware means every unit behaves identically — train a policy once, deploy it to any ROBO-1. Native Hugging Face LeRobot support and OCPP-compliant Agent API.</div>
-          <div class="rcard-specs">
-            <div class="spec"><div class="spec-k">DOF</div><div class="spec-v">6 + gripper (7 axes)</div></div>
-            <div class="spec"><div class="spec-k">Reach</div><div class="spec-v">700 mm</div></div>
-            <div class="spec"><div class="spec-k">Payload</div><div class="spec-v">1 kg</div></div>
-            <div class="spec"><div class="spec-k">Interface</div><div class="spec-v">USB-C / Linux, macOS, Windows</div></div>
-            <div class="spec"><div class="spec-k">Weight</div><div class="spec-v">&lt;3 kg</div></div>
-            <div class="spec"><div class="spec-k">Price</div><div class="spec-v">From $2,499</div></div>
-          </div>
-        </div>
-        <div class="rcard-foot">
-          <span class="rcard-status">TechMedix Compatible</span>
-          <a class="rcard-link" href="https://robo.inc" target="_blank" rel="noopener">robo.inc &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- eBIKES & SCOOTERS TAB -->
-  <div id="tab-ebikes" style="display:none;" class="slider-wrap reveal">
-    <div class="card-slider" id="slider-ebikes">
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/lime_ebike.jpg" alt="Lime eBike fleet" loading="lazy"><span class="rcard-badge badge-green">Active Fleet</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://li.me" target="_blank" rel="noopener">Lime</a></div><div class="rcard-name">Lime Gen 4 eBike</div><div class="rcard-desc">Lime operates 250,000+ vehicles globally across 280+ cities. Gen 4 features swappable batteries, IoT diagnostics, and geofencing. Largest shared micromobility fleet in the world.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Fleet</div><div class="spec-v">250K+ units</div></div><div class="spec"><div class="spec-k">Cities</div><div class="spec-v">280+</div></div><div class="spec"><div class="spec-k">Battery</div><div class="spec-v">Swappable</div></div><div class="spec"><div class="spec-k">Diag</div><div class="spec-v">IoT real-time</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://li.me" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/bird_three.jpg" alt="Bird scooter" loading="lazy"><span class="rcard-badge badge-green">Active Fleet</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://bird.co" target="_blank" rel="noopener">Bird</a></div><div class="rcard-name">Bird Three Scooter</div><div class="rcard-desc">Bird Three is purpose-built for fleet durability. Triple the lifespan of consumer scooters. Swappable battery, integrated alarm, cellular connectivity for remote diagnostics.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Lifespan</div><div class="spec-v">3x consumer</div></div><div class="spec"><div class="spec-k">Battery</div><div class="spec-v">Swappable</div></div><div class="spec"><div class="spec-k">Connectivity</div><div class="spec-v">Cellular</div></div><div class="spec"><div class="spec-k">Alarm</div><div class="spec-v">Integrated</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://bird.co" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-      <div class="rcard"><div class="rcard-img"><img src="/images/platforms/rad_power.png" alt="Rad Power eBike" loading="lazy"><span class="rcard-badge badge-amber">Commercial Fleet</span></div><div class="rcard-body"><div class="rcard-maker"><a href="https://radpowerbikes.com" target="_blank" rel="noopener">Rad Power Bikes</a></div><div class="rcard-name">RadCommercial</div><div class="rcard-desc">Purpose-built commercial eBike for last-mile delivery fleets. Used by FedEx, DHL, Amazon delivery contractors. 750W motor, 45+ mile range, 120 lb payload capacity.</div><div class="rcard-specs"><div class="spec"><div class="spec-k">Motor</div><div class="spec-v">750W</div></div><div class="spec"><div class="spec-k">Range</div><div class="spec-v">45+ miles</div></div><div class="spec"><div class="spec-k">Payload</div><div class="spec-v">120 lbs</div></div><div class="spec"><div class="spec-k">Use</div><div class="spec-v">Last-mile</div></div></div></div><div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://radpowerbikes.com/commercial" target="_blank" rel="noopener">Learn more &rarr;</a></div></div>
-    </div>
-    <div class="dots" id="dots-ebikes"></div>
-  </div>
-
-  <!-- CLEANING & SERVICE -->
-  <div id="tab-cleaning" style="display:none;" class="reveal">
-    <div class="cards-track">
-
-      <div class="rcard">
-        <div class="rcard-img"><img src="/images/platforms/avidbots_neo2.png" alt="Avidbots Neo 2 commercial floor scrubbing AMR" loading="lazy"><span class="rcard-badge badge-green">Active Fleet</span></div>
-        <div class="rcard-body">
-          <div class="rcard-maker"><a href="https://avidbots.com" target="_blank" rel="noopener">Avidbots</a></div>
-          <div class="rcard-name">Neo 2</div>
-          <div class="rcard-desc">Commercial floor scrubbing AMR. Fully autonomous path planning, real-time obstacle avoidance, and cloud-based fleet management. Deployed in airports, warehouses, and retail at scale.</div>
-          <div class="rcard-specs">
-            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">3,500 m²/hr</div></div>
-            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">4.5 hrs</div></div>
-            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi / 4G</div></div>
-            <div class="spec"><div class="spec-k">Type</div><div class="spec-v">Floor Scrubber</div></div>
-          </div>
-        </div>
-        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://avidbots.com" target="_blank" rel="noopener">Learn more &rarr;</a></div>
-      </div>
-      <div class="rcard">
-        <div class="rcard-img"><img src="/images/platforms/gaussian_phantas.jpg" alt="Gaussian Robotics Phantas autonomous scrubber retail logistics" loading="lazy"><span class="rcard-badge badge-green">Retail / Logistics</span></div>
-        <div class="rcard-body">
-          <div class="rcard-maker"><a href="https://gaussian-robotics.com" target="_blank" rel="noopener">Gaussian Robotics</a></div>
-          <div class="rcard-name">Phantas</div>
-          <div class="rcard-desc">Multi-function autonomous scrubber and sweeper for high-traffic retail and logistics environments. AI-driven map learning, multi-machine coordination, and remote fleet oversight via cloud dashboard.</div>
-          <div class="rcard-specs">
-            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">3,200 m²/hr</div></div>
-            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">4 hrs</div></div>
-            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi</div></div>
-            <div class="spec"><div class="spec-k">Use</div><div class="spec-v">Retail / 3PL</div></div>
-          </div>
-        </div>
-        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://gaussian-robotics.com" target="_blank" rel="noopener">Learn more &rarr;</a></div>
-      </div>
-      <div class="rcard">
-        <div class="rcard-img"><img src="/images/platforms/karcher_kira_b50.jpg" alt="Karcher KIRA B 50 commercial cleaning robot B2B" loading="lazy"><span class="rcard-badge badge-indigo">B2B Fleet</span></div>
-        <div class="rcard-body">
-          <div class="rcard-maker"><a href="https://karcher.com" target="_blank" rel="noopener">Kärcher</a></div>
-          <div class="rcard-name">KIRA B 50</div>
-          <div class="rcard-desc">Professional B2B autonomous floor cleaning robot from Kärcher. Laser-SLAM navigation, integrated IoT telemetry, and intelligent water management for large indoor commercial surfaces.</div>
-          <div class="rcard-specs">
-            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">1,500 m²/hr</div></div>
-            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">3 hrs</div></div>
-            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi</div></div>
-            <div class="spec"><div class="spec-k">Type</div><div class="spec-v">Scrubber AMR</div></div>
-          </div>
-        </div>
-        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://karcher.com/b2b/cleaning-robots" target="_blank" rel="noopener">Learn more &rarr;</a></div>
-      </div>
-      <div class="rcard">
-        <div class="rcard-img"><img src="/images/platforms/taski_swingobot.jpg" alt="Taski Intellibot Swingobot cleaning AMR Diversey JohnsonControls" loading="lazy"><span class="rcard-badge badge-gold">Diversey / JCI</span></div>
-        <div class="rcard-body">
-          <div class="rcard-maker"><a href="https://diversey.com" target="_blank" rel="noopener">Diversey / JohnsonControls</a></div>
-          <div class="rcard-name">Intellibot Swingobot</div>
-          <div class="rcard-desc">Enterprise cleaning AMR from the Diversey Taski line, deployed by JohnsonControls facility management teams. Autonomous scrubbing and sweeping with remote monitoring for large commercial campuses.</div>
-          <div class="rcard-specs">
-            <div class="spec"><div class="spec-k">Coverage</div><div class="spec-v">2,000 m²/hr</div></div>
-            <div class="spec"><div class="spec-k">Runtime</div><div class="spec-v">3.5 hrs</div></div>
-            <div class="spec"><div class="spec-k">Connect</div><div class="spec-v">WiFi / 4G</div></div>
-            <div class="spec"><div class="spec-k">Operator</div><div class="spec-v">JCI / FM</div></div>
-          </div>
-        </div>
-        <div class="rcard-foot"><span class="rcard-status">TechMedix Compatible</span><a class="rcard-link" href="https://diversey.com/en/taski" target="_blank" rel="noopener">Learn more &rarr;</a></div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="sec hiw-sec" id="techmedix-how">
-  <div class="reveal">
-    <div class="eyebrow" style="color:rgba(255,255,255,0.3);">The Process</div>
-    <h2 class="h2 h2-white" style="margin-top:14px;max-width:480px;">Up and running<br>in 24 hours.</h2>
-  </div>
-  <div class="hiw-grid reveal">
-    <div class="hiw-cell">
-      <div class="hiw-n">01</div>
-      <div class="hiw-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-      <div class="hiw-title">Connect Fleet</div>
-      <div class="hiw-desc">Submit your robot inventory. We set up telemetry integration for your platforms in under 4 hours.</div>
-    </div>
-    <div class="hiw-cell">
-      <div class="hiw-n">02</div>
-      <div class="hiw-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-      <div class="hiw-title">AI Baseline</div>
-      <div class="hiw-desc">TechMedix runs a 24-hour diagnostic baseline. Wear patterns, anomalies, and risk scores calculated.</div>
-    </div>
-    <div class="hiw-cell">
-      <div class="hiw-n">03</div>
-      <div class="hiw-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-      <div class="hiw-title">Live Monitoring</div>
-      <div class="hiw-desc">24/7 telemetry analysis. Alerts dispatched 48 hours before predicted failure. Dashboard access from day one.</div>
-    </div>
-    <div class="hiw-cell">
-      <div class="hiw-n">04</div>
-      <div class="hiw-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
-      <div class="hiw-title">Auto Dispatch</div>
-      <div class="hiw-desc">Certified technicians dispatched automatically. You approve, we execute. Average ETA under 2 hours.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TECHMEDIX -->
-<section class="sec tm-sec" id="techmedix">
-  <div class="tm-glow"></div>
-  <div class="tm-grid">
-    <div class="reveal">
-      <div class="eyebrow" style="color:rgba(255,255,255,0.3);">TechMedix AI</div>
-      <h2 class="h2 h2-white" style="margin-top:14px;">AI that predicts<br>failure before<br>it happens.</h2>
-      <div class="tm-price">$299</div>
-      <div class="tm-price-sub">per robot / month</div>
-      <ul class="tm-feats">
-        <li class="tm-feat"><span class="tm-feat-dot"></span>Real-time motor torque, joint wear, and battery health monitoring</li>
-        <li class="tm-feat"><span class="tm-feat-dot"></span>48-hour predictive failure alerts — know before it breaks</li>
-        <li class="tm-feat"><span class="tm-feat-dot"></span>Automated technician dispatch via global AI agent network</li>
-        <li class="tm-feat"><span class="tm-feat-dot"></span>Cross-platform: humanoids, drones, delivery robots, AMRs</li>
-        <li class="tm-feat"><span class="tm-feat-dot"></span>AI-assisted diagnostics powered by machine learning models <!-- TODO: replace proprietary claim with specific attribution once IP position is established --></li>
-      </ul>
-      <button class="btn btn-fire" onclick="openModal('tm-modal')">Start TechMedix</button>
-    </div>
-    <div class="reveal d2">
-      <div class="terminal">
-        <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="term-label">techmedix · fleet-node-247 · live</span></div>
-        <div class="term-body">
-          <div class="tl"><span class="tk">unit:</span>Atlas-7F4A · Boston Dynamics</div>
-          <div class="tl"><span class="tk">location:</span>BMW Plant Spartanburg, SC</div>
-          <div class="tsep"></div>
-          <div class="tl"><span class="tk">status:</span><span class="tok">diagnostics running</span></div>
-          <div class="tl"><span class="tk">knee_L:</span><span class="tok">12% wear &#10003;</span></div>
-          <div class="tl"><span class="tk">shoulder_R:</span><span class="twarn">73% — service in 6d [!]</span></div>
-          <div class="tl"><span class="tk">battery:</span><span class="tok">204 / 800 cycles &#10003;</span></div>
-          <div class="tl"><span class="tk">hand_L:</span><span class="tok">calibrated &#10003;</span></div>
-          <div class="tl"><span class="tk">firmware:</span><span class="tok">v4.2.1 current &#10003;</span></div>
-          <div class="tsep"></div>
-          <div class="tl"><span class="twarn">ACTION REQUIRED</span></div>
-
-          <div class="tl"><span class="tk">downtime avoided:</span>18 hours</div>
-          <div class="tl"><span class="tk">tech ETA:</span><span class="tok">2h 14m · certified</span><span class="tcursor"></span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="sec pricing-sec" id="pricing">
-  <div class="sec-head reveal">
-    <div class="eyebrow">Pricing</div>
-    <h2 class="h2" style="margin-top:14px;">Three tracks.<br>One ecosystem.</h2>
-  </div>
-
-  <!-- TRACK 1: For Fleet Operators -->
-  <div class="reveal" style="margin-bottom:56px;">
-    <h3 class="h3" style="margin-bottom:8px;font-size:22px;letter-spacing:-0.02em;">For Fleet Operators</h3>
-    <p style="font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;">Per robot, per month subscription</p>
-    <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:28px;max-width:540px;">TechMedix monitors, predicts, and dispatches — one flat fee per robot. No hardware markup, no hidden per-alert costs. Cancel anytime.</p>
-    <div class="plans">
-      <div class="plan">
-        <div class="plan-name">Operator</div>
-        <div class="plan-range">1–4 robots</div>
-        <div class="plan-price">$299</div>
-        <div class="plan-per">per robot / month</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--ink-3);margin-bottom:16px;letter-spacing:.03em;">Best for pilots and early deployments</div>
-        <div class="plan-div"></div>
-        <ul class="plan-feats">
-          <li class="plan-feat">TechMedix dashboard</li>
-          <li class="plan-feat">Predictive alerts</li>
-          <li class="plan-feat">2 platform integrations</li>
-          <li class="plan-feat">On-demand dispatch</li>
-          <li class="plan-feat">Email support — 24h response</li>
-        </ul>
-        <button class="plan-btn plan-btn-dark" onclick="openModal('tm-modal')">Get Started</button>
-      </div>
-      <div class="plan hot">
-        <div class="plan-chip">Most Popular</div>
-        <div class="plan-name">Fleet</div>
-        <div class="plan-range">5–19 robots</div>
-        <div class="plan-price">$199</div>
-        <div class="plan-per">per robot / month</div>
-        <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.4);margin-bottom:16px;letter-spacing:.03em;">Save $100/robot/month vs Operator</div>
-        <div class="plan-div"></div>
-        <ul class="plan-feats">
-          <li class="plan-feat">Everything in Operator</li>
-          <li class="plan-feat">Unlimited integrations</li>
-          <li class="plan-feat">2 included service hours/robot/mo</li>
-          <li class="plan-feat">Auto dispatch</li>
-          <li class="plan-feat">Slack + phone — 4h response</li>
-          <li class="plan-feat">Monthly report</li>
-        </ul>
-        <button class="plan-btn plan-btn-fire" onclick="openModal('tm-modal')">Start Fleet Plan</button>
-      </div>
-      <div class="plan">
-        <div class="plan-name">Command</div>
-        <div class="plan-range">20+ robots</div>
-        <div class="plan-price" style="font-size:36px;padding-top:8px;">Custom</div>
-        <div class="plan-per">enterprise pricing</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--ink-3);margin-bottom:16px;letter-spacing:.03em;">Negotiate your rate at scale</div>
-        <div class="plan-div"></div>
-        <ul class="plan-feats">
-          <li class="plan-feat">Everything in Fleet</li>
-          <li class="plan-feat">Dedicated AI ops manager</li>
-          <li class="plan-feat">Custom API + ERP integration</li>
-          <li class="plan-feat">SLA guarantee</li>
-          <li class="plan-feat">Unlimited service hours</li>
-        </ul>
-        <button class="plan-btn plan-btn-outline" onclick="openModal('contact-modal')">Contact Sales</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TRACK 3: Parts and Marketplace -->
-  <div class="reveal" style="margin-bottom:56px;">
-    <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:32px 36px;max-width:640px;">
-      <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fire);margin-bottom:12px;">Track 3</div>
-      <h3 style="font-family:var(--serif);font-size:24px;color:var(--ink);margin-bottom:12px;letter-spacing:-0.02em;">Parts and Marketplace</h3>
-      <p style="font-size:14px;color:var(--ink-2);line-height:1.75;">Browse the Acquire catalog free. BlackCat earns a facilitation fee of 8-12% on fulfilled quotes only. No subscription required.</p>
-    </div>
-  </div>
-
-  <!-- ADD-ONS -->
-  <div style="margin-top:64px;" class="reveal">
-    <div class="eyebrow" style="margin-bottom:16px;">Add-Ons</div>
-    <h3 class="h3" style="margin-bottom:8px;">Expand your coverage.</h3>
-    <p style="font-size:14px;color:var(--ink-2);line-height:1.7;max-width:480px;">Plug into sim-to-real training pipelines, priority dispatch, and compliance reporting. Pick what fits your ops level.</p>
-  </div>
-
-  <div class="reveal" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#0369a1;margin-top:32px;margin-bottom:8px;">Intelligence</div>
-  <div class="addons reveal">
-    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">Self-Serve</div><div class="addon-name">Sim-to-Real SDK</div><div class="addon-desc">API + CLI for self-serve policy training. 1 concurrent sim slot, policy hosting, and TechMedix monitoring integration.</div><div class="addon-price">$999 <span>/ mo · flat</span></div></div>
-    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">Most Popular</div><div class="addon-name">Managed Pipeline</div><div class="addon-desc">We design, train, deploy, and monitor your policy. Monthly retrain from field telemetry. 1 environment setup included.</div><div class="addon-price">$2,499 <span>/ mo · flat</span></div></div>
-    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">One-Time</div><div class="addon-name">Custom Policy</div><div class="addon-desc">Bespoke behavior for niche platforms. Custom sim environment, validated sim-to-real report, deployed via Managed tier.</div><div class="addon-price">$5,000 <span>one-time</span></div></div>
-  </div>
-
-  <div class="reveal" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);margin-top:28px;margin-bottom:8px;">Maintenance</div>
-  <div class="addons reveal">
-    <div class="addon"><div class="addon-name">Platform Onboarding</div><div class="addon-desc">Full integration setup, technician network activation, and first diagnostic baseline run for your fleet.</div><div class="addon-price">$499 <span>one-time</span></div></div>
-    <div class="addon"><div class="addon-name">Compliance Reporting</div><div class="addon-desc">Monthly AI-generated compliance reports for FAA, OSHA, ISO 10218, and industry-specific standards.</div><div class="addon-price">$49 <span>/mo</span></div></div>
-    <div class="addon"><div class="addon-name">Priority Dispatch</div><div class="addon-desc">Guaranteed technician on-site within 4 hours, 24/7, anywhere in our global coverage network.</div><div class="addon-price">$199 <span>/mo</span></div></div>
-    <div class="addon"><div class="addon-name">Installation Service</div><div class="addon-desc">Certified specialist deploys, configures, and activates your robot fleet on-site. Includes 30-day post-install monitoring.</div><div class="addon-price">$799 <span>per unit</span></div></div>
-    <div class="addon"><div class="addon-name">Repair Services</div><div class="addon-desc">On-demand field repair by certified robotics technicians. Parts sourced, labor covered, unit back online fast.</div><div class="addon-price">$249 <span>/ visit</span></div></div>
-  </div>
-
-  <!-- ROI CALCULATOR -->
-  <div class="calc-box reveal" style="margin-top:64px;">
-    <div style="margin-bottom:28px;">
-      <div class="eyebrow" style="margin-bottom:12px;">ROI Calculator</div>
-      <h3 class="h3">See your savings.</h3>
-    </div>
-    <div class="calc-sliders">
-      <div class="calc-group"><label><span class="calc-label">Robots in fleet</span><span class="calc-val" id="v-robots">5</span></label><input type="range" id="s-robots" class="calc-slider" min="1" max="50" value="5"></div>
-      <div class="calc-group"><label><span class="calc-label">Downtime hours / incident</span><span class="calc-val" id="v-hours">8</span></label><input type="range" id="s-hours" class="calc-slider" min="1" max="72" value="8"></div>
-      <div class="calc-group"><label><span class="calc-label">Cost per downtime hour</span><span class="calc-val" id="v-cost">$2,000</span></label><input type="range" id="s-cost" class="calc-slider" min="500" max="20000" step="500" value="2000"></div>
-      <div class="calc-group"><label><span class="calc-label">Incidents per robot / year</span><span class="calc-val" id="v-events">4</span></label><input type="range" id="s-events" class="calc-slider" min="1" max="24" value="4"></div>
-    </div>
-    <div class="calc-outputs">
-      <div class="calc-out"><div class="calc-out-n" id="c-savings">$320K</div><div class="calc-out-l">Annual downtime avoided</div></div>
-      <div class="calc-out"><div class="calc-out-n" id="c-cost">$18K</div><div class="calc-out-l">TechMedix annual cost</div></div>
-      <div class="calc-out"><div class="calc-out-n pos" id="c-net">$302K</div><div class="calc-out-l">Net annual savings</div></div>
-    </div>
-  </div>
-</section>
 
 <!-- ACQUIRE -->
 <section class="sec acquire-sec" id="acquire">
@@ -1460,6 +1016,201 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 
 </section>
 
+<!-- HOW IT WORKS -->
+<section class="sec hiw-sec" id="techmedix-how">
+  <div class="reveal">
+    <div class="eyebrow" style="color:rgba(255,255,255,0.3);">The Process</div>
+    <h2 class="h2 h2-white" style="margin-top:14px;max-width:480px;">Up and running<br>in 24 hours.</h2>
+  </div>
+  <div class="hiw-grid reveal">
+    <div class="hiw-cell">
+      <div class="hiw-n">01</div>
+      <div class="hiw-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <div class="hiw-title">Connect Fleet</div>
+      <div class="hiw-desc">Submit your robot inventory. We set up telemetry integration for your platforms in under 4 hours.</div>
+    </div>
+    <div class="hiw-cell">
+      <div class="hiw-n">02</div>
+      <div class="hiw-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <div class="hiw-title">AI Baseline</div>
+      <div class="hiw-desc">TechMedix runs a 24-hour diagnostic baseline. Wear patterns, anomalies, and risk scores calculated.</div>
+    </div>
+    <div class="hiw-cell">
+      <div class="hiw-n">03</div>
+      <div class="hiw-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="hiw-title">Live Monitoring</div>
+      <div class="hiw-desc">24/7 telemetry analysis. Alerts dispatched 48 hours before predicted failure. Dashboard access from day one.</div>
+    </div>
+    <div class="hiw-cell">
+      <div class="hiw-n">04</div>
+      <div class="hiw-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+      <div class="hiw-title">Auto Dispatch</div>
+      <div class="hiw-desc">Certified technicians dispatched automatically. You approve, we execute. Average ETA under 2 hours.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHMEDIX -->
+<section class="sec tm-sec" id="techmedix">
+  <div class="tm-glow"></div>
+  <div class="tm-grid">
+    <div class="reveal">
+      <div class="eyebrow" style="color:rgba(255,255,255,0.3);">TechMedix AI</div>
+      <h2 class="h2 h2-white" style="margin-top:14px;">AI that predicts<br>failure before<br>it happens.</h2>
+      <div class="tm-price">$299</div>
+      <div class="tm-price-sub">per robot / month</div>
+      <ul class="tm-feats">
+        <li class="tm-feat"><span class="tm-feat-dot"></span>Real-time motor torque, joint wear, and battery health monitoring</li>
+        <li class="tm-feat"><span class="tm-feat-dot"></span>48-hour predictive failure alerts — know before it breaks</li>
+        <li class="tm-feat"><span class="tm-feat-dot"></span>Automated technician dispatch via global AI agent network</li>
+        <li class="tm-feat"><span class="tm-feat-dot"></span>Cross-platform: humanoids, drones, delivery robots, AMRs</li>
+        <li class="tm-feat"><span class="tm-feat-dot"></span>AI-assisted diagnostics powered by machine learning models <!-- TODO: replace proprietary claim with specific attribution once IP position is established --></li>
+      </ul>
+      <button class="btn btn-fire" onclick="openModal('tm-modal')">Start TechMedix</button>
+    </div>
+    <div class="reveal d2">
+      <div class="terminal">
+        <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="term-label">techmedix · fleet-node-247 · live</span></div>
+        <div class="term-body">
+          <div class="tl"><span class="tk">unit:</span>Atlas-7F4A · Boston Dynamics</div>
+          <div class="tl"><span class="tk">location:</span>BMW Plant Spartanburg, SC</div>
+          <div class="tsep"></div>
+          <div class="tl"><span class="tk">status:</span><span class="tok">diagnostics running</span></div>
+          <div class="tl"><span class="tk">knee_L:</span><span class="tok">12% wear &#10003;</span></div>
+          <div class="tl"><span class="tk">shoulder_R:</span><span class="twarn">73% — service in 6d [!]</span></div>
+          <div class="tl"><span class="tk">battery:</span><span class="tok">204 / 800 cycles &#10003;</span></div>
+          <div class="tl"><span class="tk">hand_L:</span><span class="tok">calibrated &#10003;</span></div>
+          <div class="tl"><span class="tk">firmware:</span><span class="tok">v4.2.1 current &#10003;</span></div>
+          <div class="tsep"></div>
+          <div class="tl"><span class="twarn">ACTION REQUIRED</span></div>
+
+          <div class="tl"><span class="tk">downtime avoided:</span>18 hours</div>
+          <div class="tl"><span class="tk">tech ETA:</span><span class="tok">2h 14m · certified</span><span class="tcursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec pricing-sec" id="pricing">
+  <div class="sec-head reveal">
+    <div class="eyebrow">Pricing</div>
+    <h2 class="h2" style="margin-top:14px;">Three tracks.<br>One ecosystem.</h2>
+  </div>
+
+  <!-- TRACK 1: For Fleet Operators -->
+  <div class="reveal" style="margin-bottom:56px;">
+    <h3 class="h3" style="margin-bottom:8px;font-size:22px;letter-spacing:-0.02em;">For Fleet Operators</h3>
+    <p style="font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;">Per robot, per month subscription</p>
+    <p style="font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:28px;max-width:540px;">TechMedix monitors, predicts, and dispatches — one flat fee per robot. No hardware markup, no hidden per-alert costs. Cancel anytime.</p>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-name">Operator</div>
+        <div class="plan-range">1–4 robots</div>
+        <div class="plan-price">$299</div>
+        <div class="plan-per">per robot / month</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink-3);margin-bottom:16px;letter-spacing:.03em;">Best for pilots and early deployments</div>
+        <div class="plan-div"></div>
+        <ul class="plan-feats">
+          <li class="plan-feat">TechMedix dashboard</li>
+          <li class="plan-feat">Predictive alerts</li>
+          <li class="plan-feat">2 platform integrations</li>
+          <li class="plan-feat">On-demand dispatch</li>
+          <li class="plan-feat">Email support — 24h response</li>
+        </ul>
+        <button class="plan-btn plan-btn-dark" onclick="openModal('tm-modal')">Get Started</button>
+      </div>
+      <div class="plan hot">
+        <div class="plan-chip">Most Popular</div>
+        <div class="plan-name">Fleet</div>
+        <div class="plan-range">5–19 robots</div>
+        <div class="plan-price">$199</div>
+        <div class="plan-per">per robot / month</div>
+        <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.4);margin-bottom:16px;letter-spacing:.03em;">Save $100/robot/month vs Operator</div>
+        <div class="plan-div"></div>
+        <ul class="plan-feats">
+          <li class="plan-feat">Everything in Operator</li>
+          <li class="plan-feat">Unlimited integrations</li>
+          <li class="plan-feat">2 included service hours/robot/mo</li>
+          <li class="plan-feat">Auto dispatch</li>
+          <li class="plan-feat">Slack + phone — 4h response</li>
+          <li class="plan-feat">Monthly report</li>
+        </ul>
+        <button class="plan-btn plan-btn-fire" onclick="openModal('tm-modal')">Start Fleet Plan</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Command</div>
+        <div class="plan-range">20+ robots</div>
+        <div class="plan-price" style="font-size:36px;padding-top:8px;">Custom</div>
+        <div class="plan-per">enterprise pricing</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink-3);margin-bottom:16px;letter-spacing:.03em;">Negotiate your rate at scale</div>
+        <div class="plan-div"></div>
+        <ul class="plan-feats">
+          <li class="plan-feat">Everything in Fleet</li>
+          <li class="plan-feat">Dedicated AI ops manager</li>
+          <li class="plan-feat">Custom API + ERP integration</li>
+          <li class="plan-feat">SLA guarantee</li>
+          <li class="plan-feat">Unlimited service hours</li>
+        </ul>
+        <button class="plan-btn plan-btn-outline" onclick="openModal('contact-modal')">Contact Sales</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACK 3: Parts and Marketplace -->
+  <div class="reveal" style="margin-bottom:56px;">
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:32px 36px;max-width:640px;">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fire);margin-bottom:12px;">Track 3</div>
+      <h3 style="font-family:var(--serif);font-size:24px;color:var(--ink);margin-bottom:12px;letter-spacing:-0.02em;">Parts and Marketplace</h3>
+      <p style="font-size:14px;color:var(--ink-2);line-height:1.75;">Browse the Acquire catalog free. BlackCat earns a facilitation fee of 8-12% on fulfilled quotes only. No subscription required.</p>
+    </div>
+  </div>
+
+  <!-- ADD-ONS -->
+  <div style="margin-top:64px;" class="reveal">
+    <div class="eyebrow" style="margin-bottom:16px;">Add-Ons</div>
+    <h3 class="h3" style="margin-bottom:8px;">Expand your coverage.</h3>
+    <p style="font-size:14px;color:var(--ink-2);line-height:1.7;max-width:480px;">Plug into sim-to-real training pipelines, priority dispatch, and compliance reporting. Pick what fits your ops level.</p>
+  </div>
+
+  <div class="reveal" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#0369a1;margin-top:32px;margin-bottom:8px;">Intelligence</div>
+  <div class="addons reveal">
+    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">Self-Serve</div><div class="addon-name">Sim-to-Real SDK</div><div class="addon-desc">API + CLI for self-serve policy training. 1 concurrent sim slot, policy hosting, and TechMedix monitoring integration.</div><div class="addon-price">$999 <span>/ mo · flat</span></div></div>
+    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">Most Popular</div><div class="addon-name">Managed Pipeline</div><div class="addon-desc">We design, train, deploy, and monitor your policy. Monthly retrain from field telemetry. 1 environment setup included.</div><div class="addon-price">$2,499 <span>/ mo · flat</span></div></div>
+    <div class="addon addon-intel"><div class="addon-badge addon-badge-sky">One-Time</div><div class="addon-name">Custom Policy</div><div class="addon-desc">Bespoke behavior for niche platforms. Custom sim environment, validated sim-to-real report, deployed via Managed tier.</div><div class="addon-price">$5,000 <span>one-time</span></div></div>
+  </div>
+
+  <div class="reveal" style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);margin-top:28px;margin-bottom:8px;">Maintenance</div>
+  <div class="addons reveal">
+    <div class="addon"><div class="addon-name">Platform Onboarding</div><div class="addon-desc">Full integration setup, technician network activation, and first diagnostic baseline run for your fleet.</div><div class="addon-price">$499 <span>one-time</span></div></div>
+    <div class="addon"><div class="addon-name">Compliance Reporting</div><div class="addon-desc">Monthly AI-generated compliance reports for FAA, OSHA, ISO 10218, and industry-specific standards.</div><div class="addon-price">$49 <span>/mo</span></div></div>
+    <div class="addon"><div class="addon-name">Priority Dispatch</div><div class="addon-desc">Guaranteed technician on-site within 4 hours, 24/7, anywhere in our global coverage network.</div><div class="addon-price">$199 <span>/mo</span></div></div>
+    <div class="addon"><div class="addon-name">Installation Service</div><div class="addon-desc">Certified specialist deploys, configures, and activates your robot fleet on-site. Includes 30-day post-install monitoring.</div><div class="addon-price">$799 <span>per unit</span></div></div>
+    <div class="addon"><div class="addon-name">Repair Services</div><div class="addon-desc">On-demand field repair by certified robotics technicians. Parts sourced, labor covered, unit back online fast.</div><div class="addon-price">$249 <span>/ visit</span></div></div>
+  </div>
+
+  <!-- ROI CALCULATOR -->
+  <div class="calc-box reveal" style="margin-top:64px;">
+    <div style="margin-bottom:28px;">
+      <div class="eyebrow" style="margin-bottom:12px;">ROI Calculator</div>
+      <h3 class="h3">See your savings.</h3>
+    </div>
+    <div class="calc-sliders">
+      <div class="calc-group"><label><span class="calc-label">Robots in fleet</span><span class="calc-val" id="v-robots">5</span></label><input type="range" id="s-robots" class="calc-slider" min="1" max="50" value="5"></div>
+      <div class="calc-group"><label><span class="calc-label">Downtime hours / incident</span><span class="calc-val" id="v-hours">8</span></label><input type="range" id="s-hours" class="calc-slider" min="1" max="72" value="8"></div>
+      <div class="calc-group"><label><span class="calc-label">Cost per downtime hour</span><span class="calc-val" id="v-cost">$2,000</span></label><input type="range" id="s-cost" class="calc-slider" min="500" max="20000" step="500" value="2000"></div>
+      <div class="calc-group"><label><span class="calc-label">Incidents per robot / year</span><span class="calc-val" id="v-events">4</span></label><input type="range" id="s-events" class="calc-slider" min="1" max="24" value="4"></div>
+    </div>
+    <div class="calc-outputs">
+      <div class="calc-out"><div class="calc-out-n" id="c-savings">$320K</div><div class="calc-out-l">Annual downtime avoided</div></div>
+      <div class="calc-out"><div class="calc-out-n" id="c-cost">$18K</div><div class="calc-out-l">TechMedix annual cost</div></div>
+      <div class="calc-out"><div class="calc-out-n pos" id="c-net">$302K</div><div class="calc-out-l">Net annual savings</div></div>
+    </div>
+  </div>
+</section>
+
+
 <!-- SOCIAL PROOF -->
 <section class="sec proof-sec">
   <div class="sec-head reveal">
@@ -1654,7 +1405,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
         <li><a href="#techmedix">TechMedix</a></li>
         <li><a href="https://habitat.blackcatrobotics.com" target="_blank" rel="noopener">HABITAT</a></li>
         <li><a href="/blackcat-grid.html">BlackCat Grid</a></li>
-        <li><a href="#agents">Autonomous Systems</a></li>
+        <li><a href="#acquire">Platforms</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#acquire">Acquire</a></li>
       </ul>
@@ -1743,7 +1494,7 @@ function switchTab(name, btn) {
 }
 function jumpTab(name) {
   const btn = document.querySelector('.agents-sec .tab-btn[onclick*="'+name+'"]');
-  switchTab(name, btn);
+  document.querySelector('.tabs-bar .tab-btn').classList.add('active');
   document.getElementById('agents').scrollIntoView({behavior:'smooth'});
 }
 
