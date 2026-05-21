@@ -14,6 +14,7 @@ import {
  X,
 } from "lucide-react";
 import { RobotModelViewer } from "./robot-model-viewer";
+import { BlueprintExplorer } from "./blueprint-explorer";
 import { SimLab } from "./sim-lab";
 import { StaggerContainer } from "./animated-stat";
 import type { PlatformProfile } from "../lib/platforms/index";
@@ -321,15 +322,16 @@ export function KnowledgeHubClient({ platforms }: Props) {
             >
               <X size={14} />
             </button>
- <div className="h-full">
- {modal.kind === "explorer" ? (
- <RobotModelViewer platformId={modal.platformId} mode="explore" showAnnotations />
- ) : modal.kind === "blueprint" ? (
- <RobotModelViewer platformId={modal.platformId} mode="blueprint" />
- ) : (
- <SimLab initialPlatformId={modal.platformId} />
- )}
- </div>
+            <div className="h-full">
+              {modal.kind === "explorer" || modal.kind === "blueprint" ? (
+                <BlueprintExplorer
+                  platformId={modal.platformId}
+                  onClose={closeModal}
+                />
+              ) : (
+                <SimLab initialPlatformId={modal.platformId} />
+              )}
+            </div>
           </div>
         </div>,
         document.body

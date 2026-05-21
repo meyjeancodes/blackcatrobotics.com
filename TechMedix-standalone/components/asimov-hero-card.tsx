@@ -89,16 +89,18 @@ export function AsimovHeroCard() {
               <p className="mt-1.5 font-ui text-[0.45rem] uppercase tracking-[0.18em] text-amber-400/70">Open-Source</p>
             </div>
             {/* Orbit dots */}
-            {[0, 60, 120, 180, 240, 300].map((deg) => (
-              <div
-                key={deg}
-                className="absolute h-2.5 w-2.5 rounded-full bg-amber-400/40"
-                style={{
-                  top: `calc(50% + ${Math.sin((deg * Math.PI) / 180) * 84}px - 5px)`,
-                  left: `calc(50% + ${Math.cos((deg * Math.PI) / 180) * 84}px - 5px)`,
-                }}
-              />
-            ))}
+            {[0, 60, 120, 180, 240, 300].map((deg) => {
+              const rad = (deg * Math.PI) / 180;
+              const top = 50 + Math.sin(rad) * 84;
+              const left = 50 + Math.cos(rad) * 84;
+              return (
+                <div
+                  key={deg}
+                  className="absolute h-2.5 w-2.5 rounded-full bg-amber-400/40"
+                  style={{ top: `calc(${top}% - 5px)`, left: `calc(${left}% - 5px)` }}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
