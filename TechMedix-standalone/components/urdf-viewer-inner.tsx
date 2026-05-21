@@ -116,44 +116,10 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPart
  mat.emissiveIntensity = 0;
  }
  }
- });
- }, [selectedPartId]);
+});
+}, [selectedPartId]);
 
- // Add raycaster for click selection
- useEffect(() => {
- if (!onPartClick || !groupRef.current) return;
- 
- const raycaster = new THREE.Raycaster();
- const mouse = new THREE.Vector2();
- 
- const handleClick = (event: MouseEvent) => {
- const canvas = groupRef.current?.parent;
- if (!canvas) return;
- 
- const rect = canvas.getBoundingClientRect();
- mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
- mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
- 
- raycaster.setFromCamera(mouse, undefined as any);
- const intersects = raycaster.intersectObjects(groupRef.current.children, true);
- 
- if (intersects.length > 0) {
- const clicked = intersects[0].object;
- if (clicked.userData.onClick) {
- clicked.userData.onClick();
- }
- }
- };
- 
- const canvas = groupRef.current.parent;
- canvas?.addEventListener('click', handleClick);
- 
- return () => {
- canvas?.removeEventListener('click', handleClick);
- };
- }, [onPartClick]);
-
- useFrame(({ clock }) => {
+useFrame(({ clock }) => {
  if (groupRef.current && isLoaded && !selectedPartId) {
  groupRef.current.rotation.y = Math.sin(clock.elapsedTime * 0.3) * 0.5;
  }
