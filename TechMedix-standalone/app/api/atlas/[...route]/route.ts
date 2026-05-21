@@ -14,7 +14,7 @@ export const runtime = "nodejs";
 //   GET /api/atlas/supply-chain/:id
 //   GET /api/atlas/query?q=...
 
-const BASE_URL = process.env.ATLAS_BASE_URL ?? "https://api.humanoidatlas.com";
+const BASE_URL = process.env.ATLAS_BASE_URL ?? "https://humanoids.fyi";
 const API_KEY = process.env.ATLAS_API_KEY ?? "";
 
 const ALLOWED_PREFIXES = [
