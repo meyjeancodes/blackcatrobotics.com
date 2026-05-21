@@ -563,10 +563,6 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
           <span class="dropdown-name">TechMedix</span>
           <span class="dropdown-desc">Robot fleet maintenance</span>
         </a></li>
-        <li><a href="#" onclick="openModal('about-modal');return false;">
-          <span class="dropdown-name">About</span>
-          <span class="dropdown-desc">Our story, team, and investor deck</span>
-        </a></li>
         <li><a href="/blackcat-grid.html" rel="noopener">
           <span class="dropdown-name">BlackCat Grid</span>
           <span class="dropdown-desc">Infrastructure intelligence — data centers, energy and network</span>
@@ -683,7 +679,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
         <div style="margin-top:24px;background:rgba(232,92,26,.06);border:1px solid rgba(232,92,26,.16);border-radius:12px;padding:18px 20px;">
           <div style="font-family:var(--ff-mono);font-size:10px;color:var(--fire);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;">Join the Network</div>
           <p style="font-size:13px;color:var(--ink-2);line-height:1.65;margin-bottom:12px;">Are you a robotics technician, mechatronics engineer, or eBike fleet specialist? We're building the world's first AI-dispatched human tech network.</p>
-          <button onclick="openModal('techs-modal')" style="background:var(--fire);color:#fff;border:none;border-radius:999px;padding:10px 20px;font-family:var(--ff-ui);font-size:12px;font-weight:600;cursor:pointer;">Apply to Join &rarr;</button>
+          <button onclick="openModal('techs-modal')" style="background:var(--fire);color:#fff;border:none;border-radius:999px;padding:10px 20px;font-family:var(--display);font-size:12px;font-weight:600;cursor:pointer;">Apply to Join &rarr;</button>
         </div>
       </div>
     </div>
@@ -1462,7 +1458,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 
 <div class="overlay" id="about-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">About</span><button class="modal-x" onclick="closeModal('about-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">BlackCat Robotics</div><div class="modal-prose"><p>BlackCat Robotics is a AI maintenance intelligence company built for the autonomous systems economy. We exist because the robot economy is arriving faster than the infrastructure to support it.</p><h3>Our Mission</h3><p>To keep every autonomous system in the world running — before it breaks. TechMedix AI monitors your fleet 24/7, predicts failures 48 hours in advance, and dispatches certified technicians automatically.</p><h3>Technology</h3><p>Our diagnostic models are developed and refined per robot platform as we onboard them.</p><h3>Coverage</h3><p>14+ robot platforms across humanoids, drones, delivery robots, industrial AMRs, and aerospace ground support. Technician network. <!-- TODO: replace with verified SLA once platform is in production -->Target: 99.2% diagnostic uptime.</p></div></div></div></div>
 
-<div class="overlay" id="techs-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Technicians</span><button class="modal-x" onclick="closeModal('techs-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Join the Network</div><div class="modal-prose"><p>BlackCat Robotics maintains a network of certified robotics technicians. If you're a robotics engineer or mechatronics specialist, we want to work with you.</p><h3>What We Offer</h3><ul><li>On-demand work dispatched via AI — you choose when to accept jobs</li><li>Competitive per-job compensation</li><li>Priority access to service calls in your region</li><li>Certification programs for new robot platforms</li></ul><h3>Requirements</h3><ul><li>Proven experience with autonomous robotic systems</li><li>Ability to respond within 2 hours in your coverage area</li></ul><p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01636d60626a62607541636d60626a626075736e636e756862722f626e6c">[email&#160;protected]</a> — Subject: Technician Application</p></div></div></div></div>
+<div class="overlay" id="techs-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Technicians</span><button class="modal-x" onclick="closeModal('techs-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Join the Network</div><p class="modal-sub" style="font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:20px;">Apply to become a BlackCat-certified robotics technician. We'll review your background and reach out within 48 hours.</p><div id="tech-form"><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="tech-name" name="full_name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="tech-email" name="email" placeholder="jane@company.com"></div><div class="fgroup"><label>Specialty</label><select id="tech-specialty" name="specialty"><option value="">Select your specialty...</option><option>Robotics Engineer</option><option>Mechatronics Specialist</option><option>eBike Fleet Technician</option><option>Drone Operator / Repair</option><option>Industrial Automation</option><option>Other</option></select></div><div class="fgroup"><label>Years of experience</label><select id="tech-experience" name="experience"><option value="">Select...</option><option>0–2 years</option><option>3–5 years</option><option>6–10 years</option><option>10+ years</option></select></div><div class="fgroup"><label>Coverage area (city/region)</label><input type="text" id="tech-area" name="area" placeholder="Dallas, TX"></div><div class="fgroup"><label>Message (optional)</label><textarea id="tech-msg" name="message" rows="3" placeholder="Tell us about your experience with autonomous systems..."></textarea></div><button class="fsub-btn" onclick="submitTech()">Submit Application</button></div></div><div id="tech-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Application received.</div><p class="form-ok-sub" style="font-size:14px;color:var(--ink-2);margin-top:8px;">We'll review your application and reach out within 48 hours.</p></div></div></div></div>
 
 <div class="overlay" id="privacy-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Legal</span><button class="modal-x" onclick="closeModal('privacy-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Privacy Policy</div><div class="modal-prose"><p><strong>Effective:</strong> January 1, 2026</p><h3>Data We Collect</h3><p>We collect information you provide in forms (name, email, company), robot fleet telemetry data under service agreements, and standard web analytics via Plausible (privacy-first, no cookies).</p><h3>How We Use It</h3><p>Fleet data is used exclusively to provide TechMedix diagnostics. Contact information is used to respond to inquiries and deliver service updates. We do not sell personal data.</p><h3>Contact</h3><p>Privacy inquiries: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9bf9f7faf8f0f8faefdbf9f7faf8f0f8faefe9f4f9f4eff2f8e8b5f8f4f6">[email&#160;protected]</a></p></div></div></div></div>
 
@@ -1508,7 +1504,7 @@ function jumpTab(name) {
 }
 
 // Acquire tabs
-const ACQ_TABS = ['humanoids','quadrupeds','drones','ebikes','suppliers','cleaning'];
+const ACQ_TABS = ['humanoids','quadrupeds','drones','arms','ebikes','suppliers','cleaning'];
 function switchAcq(name, btn) {
   ACQ_TABS.forEach(t => {
     const el = document.getElementById('acq-'+t);
@@ -1599,6 +1595,14 @@ function submitContact() {
   const btn=document.querySelector('#contact-form .fsub-btn');
   const interest=document.getElementById('c-interest').value;
   postForm({name:n,email:e,company:document.getElementById('c-company').value,interest_type:interest||'general',message:document.getElementById('c-msg').value,source:'blackcat_website',product:'core_platform',_subject:'New BlackCat Inquiry — '+n},btn,'Send Message','contact-ok','contact-form');
+}
+
+function submitTech() {
+  const n=document.getElementById('tech-name').value.trim();
+  const e=document.getElementById('tech-email').value.trim();
+  if(!n||!e){alert('Please fill in your name and email.');return;}
+  const btn=document.querySelector('#tech-form .fsub-btn');
+  postForm({name:n,email:e,specialty:document.getElementById('tech-specialty').value,experience:document.getElementById('tech-experience').value,area:document.getElementById('tech-area').value,message:document.getElementById('tech-msg').value,source:'blackcat_website',product:'technician_network',_subject:'Technician Application — '+n},btn,'Submit Application','tech-ok','tech-form');
 }
 
 function handleLead() {
