@@ -11,7 +11,7 @@ const FACILITIES = [
     robotCount: 8,
     avgHealth: 96,
     activeAlerts: 0,
-    uptimeSla: 99.8,
+    uptimeSla: 99.8, // demo data
     platforms: ["knightscope-k5", "avidbots-neo"],
     throughput: "2.4 TB/day",
     temp: "21°C",
@@ -23,7 +23,7 @@ const FACILITIES = [
     robotCount: 12,
     avgHealth: 91,
     activeAlerts: 1,
-    uptimeSla: 99.4,
+    uptimeSla: 99.4, // demo data
     platforms: ["knightscope-k5", "locus-origin-amr"],
     throughput: "3.8 TB/day",
     temp: "23°C",
@@ -35,7 +35,7 @@ const FACILITIES = [
     robotCount: 6,
     avgHealth: 94,
     activeAlerts: 0,
-    uptimeSla: 99.1,
+    uptimeSla: 99.1, // demo data
     platforms: ["avidbots-neo", "locus-origin-amr"],
     throughput: "1.9 TB/day",
     temp: "22°C",

@@ -24,7 +24,7 @@ export function PerformanceKpis() {
     const id = setInterval(() => { // Fix 4
       setKpis((prev) => ({
         downtimePrevented: Math.max(800, Math.round(jitter(prev.downtimePrevented, 2))),
-        systemEfficiency: Math.min(99.9, Math.max(86, +jitter(prev.systemEfficiency, 0.3).toFixed(1))),
+        systemEfficiency: Math.min(99.9, Math.max(86, +jitter(prev.systemEfficiency, 0.3).toFixed(1))), // demo data
         risksMitigated: Math.max(1, Math.round(jitter(prev.risksMitigated, 0.4))),
       }));
     }, 30000);
