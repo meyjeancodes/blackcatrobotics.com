@@ -24,8 +24,8 @@
   --paper:   #f0efe8;
   --paper-2: #fafaf4;
   --white:   #ffffff;
-  --fire:    #e84e1b;
-  --fire-2:  #ff6535;
+  --fire:    #cc3d17;
+  --fire-2:  #d4401a;
   --gold:    #c8a96e;
   --green:   #1db954;
   --border:  rgba(10,10,15,0.08);
@@ -563,7 +563,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
           <span class="dropdown-name">TechMedix</span>
           <span class="dropdown-desc">Robot fleet maintenance</span>
         </a></li>
-        <li><a href="/about.html" rel="noopener">
+        <li><a href="#" onclick="openModal('about-modal');return false;">
           <span class="dropdown-name">About</span>
           <span class="dropdown-desc">Our story, team, and investor deck</span>
         </a></li>
@@ -573,7 +573,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
         </a></li>
       </ul>
     </li>
-    <li><a href="about.html">About</a></li>
+    <li><a href="#" onclick="openModal('about-modal');return false;">About</a></li>
     <li><a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="nav-cta">Start TechMedix</a></li>
   </ul>
   <button class="nav-burger" id="burger" onclick="toggleNav()" aria-label="Menu">
@@ -602,11 +602,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <span>•</span>
       <span>BlackCat OS open source certification curriculum now live on GitHub</span>
       <span>•</span>
-      <span>DJI Care Refresh integration: manage drone claims inside TechMedix</span>
-      <span>•</span>
       <span>DJI Agras T50 and T60 now fully supported with AI diagnostics</span>
-      <span>•</span>
-      <span>AR smart glasses support: RealWear, Vuzix, Google Glass EE2</span>
       <span>•</span>
     </div>
     <div class="ticker-inner" aria-hidden="true">
@@ -626,11 +622,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <span>•</span>
       <span>BlackCat OS open source certification curriculum now live on GitHub</span>
       <span>•</span>
-      <span>DJI Care Refresh integration: manage drone claims inside TechMedix</span>
-      <span>•</span>
       <span>DJI Agras T50 and T60 now fully supported with AI diagnostics</span>
-      <span>•</span>
-      <span>AR smart glasses support: RealWear, Vuzix, Google Glass EE2</span>
       <span>•</span>
     </div>
   </div>
@@ -1678,7 +1670,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <div>
       <div class="foot-col-head">Company</div>
       <ul class="foot-links">
-        <li><a href="about.html">About</a></li>
+        <li><a href="#" onclick="openModal('about-modal');return false;">About</a></li>
         <li><button onclick="openModal('techs-modal')">Technicians</button></li>
         <li><button onclick="openModal('contact-modal')">Contact</button></li>
         <li><button onclick="openModal('privacy-modal')">Privacy</button></li>
