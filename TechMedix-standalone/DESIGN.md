@@ -9,8 +9,8 @@ colors:
   paper: "#F0EFE8"
   paper-2: "#FAFAF4"
   white: "#FFFFFF"
-  fire: "#E84E1B"
-  fire-2: "#FF6535"
+  fire: "#CC3D17"
+  fire-2: "#D4401A"
   gold: "#C8A96E"
   green: "#1DB954"
 typography:
@@ -120,8 +120,8 @@ BlackCat Robotics speaks in warm industrial minimalism. The palette is grounded 
 - **Primary (#0A0A0F):** Near-black for body text, nav, footers, and dark section backgrounds.
 - **Paper (#F0EFE8):** Primary page background — warm off-white, never pure white.
 - **Paper-2 (#FAFAF4):** Slightly lighter surface for card and alternate sections.
-- **Fire (#E84E1B):** The sole interaction driver. Buttons, links, badges, accent marks.
-- **Fire-2 (#FF6535):** Hover state for fire elements.
+- **Fire (#CC3D17):** The sole interaction driver. Buttons, links, badges, accent marks.
+- **Fire-2 (#D4401A):** Hover state for fire elements.
 - **Ink-2 (#3A3A45):** Secondary body text, descriptions.
 - **Ink-3 (#8888A0):** Lowest-emphasis text — labels, captions, metadata.
 - **Gold (#C8A96E):** Reserved for special callouts and premium badges.

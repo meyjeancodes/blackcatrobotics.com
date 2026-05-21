@@ -23,8 +23,8 @@
   --bg-card:   #142b22;
   --bg-dark:   #060809;
   --signal:    #7ae0a9;
-  --fire:      #e84e1b;
-  --fire-2:    #ff6a3a;
+  --fire:    #cc3d17;
+  --fire-2:  #d4401a;
   --gold:      #c8a96e;
   --hud:       rgba(255,240,210,0.85);
   --hud-dim:   rgba(255,240,210,0.55);
@@ -750,7 +750,7 @@ input[type=range] { background: rgba(255,240,210,0.1) !important; }
           <span class="dropdown-name">TechMedix</span>
           <span class="dropdown-desc">Robot fleet maintenance</span>
         </a></li>
-        <li><a href="/about.html" rel="noopener">
+        <li><a href="#" onclick="openModal('about-modal');return false;">
           <span class="dropdown-name">About</span>
           <span class="dropdown-desc">Our story, team, and investor deck</span>
         </a></li>
@@ -760,7 +760,7 @@ input[type=range] { background: rgba(255,240,210,0.1) !important; }
         </a></li>
       </ul>
     </li>
-    <li><a href="about.html">About</a></li>
+    <li><a href="#" onclick="openModal('about-modal');return false;">About</a></li>
     <li><a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="nav-cta">Start TechMedix</a></li>
   </ul>
   <button class="nav-burger" id="burger" onclick="toggleNav()" aria-label="Menu">
@@ -803,11 +803,7 @@ input[type=range] { background: rgba(255,240,210,0.1) !important; }
       <span>•</span>
       <span>BlackCat OS open source certification curriculum now live on GitHub</span>
       <span>•</span>
-      <span>DJI Care Refresh integration: manage drone claims inside TechMedix</span>
-      <span>•</span>
       <span>DJI Agras T50 and T60 now fully supported with AI diagnostics</span>
-      <span>•</span>
-      <span>AR smart glasses support: RealWear, Vuzix, Google Glass EE2</span>
       <span>•</span>
     </div>
     <div class="ticker-inner" aria-hidden="true">
@@ -827,11 +823,7 @@ input[type=range] { background: rgba(255,240,210,0.1) !important; }
       <span>•</span>
       <span>BlackCat OS open source certification curriculum now live on GitHub</span>
       <span>•</span>
-      <span>DJI Care Refresh integration: manage drone claims inside TechMedix</span>
-      <span>•</span>
       <span>DJI Agras T50 and T60 now fully supported with AI diagnostics</span>
-      <span>•</span>
-      <span>AR smart glasses support: RealWear, Vuzix, Google Glass EE2</span>
       <span>•</span>
     </div>
   </div>
@@ -872,7 +864,7 @@ input[type=range] { background: rgba(255,240,210,0.1) !important; }
     <div class="hud-row"><span class="hud-k">NODES</span><span class="hud-v">247 online</span></div>
     <div class="hud-row"><span class="hud-k">SIGNAL</span><span class="hud-v tok">NOMINAL</span></div>
     <div class="hud-row"><span class="hud-k">UTC</span><span class="hud-v" id="hero-clock">--:--</span></div>
-    <div class="hud-row"><span class="hud-k">VER</span><span class="hud-v">v4.2.1</span></div>
+    <div class="hud-row"><span class="hud-k">VER</span><span class="hud-v">v4.2.1 <span style="font-size:7px;color:rgba(255,255,255,0.2);">(demo)</span></span></div>
   </div>
   <!-- Stat counters -->
   <div class="hero-stats">
@@ -1907,7 +1899,7 @@ input[type=range] { background: rgba(255,240,210,0.1) !important; }
     <div>
       <div class="foot-col-head">Company</div>
       <ul class="foot-links">
-        <li><a href="about.html">About</a></li>
+        <li><a href="#" onclick="openModal('about-modal');return false;">About</a></li>
         <li><button onclick="openModal('techs-modal')">Technicians</button></li>
         <li><button onclick="openModal('contact-modal')">Contact</button></li>
         <li><button onclick="openModal('privacy-modal')">Privacy</button></li>
