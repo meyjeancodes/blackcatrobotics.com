@@ -10,7 +10,7 @@ import type {
   AtlasQueryResult,
 } from "../types/atlas";
 
-const BASE_URL = process.env.ATLAS_BASE_URL ?? "https://api.humanoidatlas.com";
+const BASE_URL = process.env.ATLAS_BASE_URL ?? "https://humanoids.fyi";
 const API_KEY = process.env.ATLAS_API_KEY ?? "";
 
 async function atlasGet<T>(path: string): Promise<T> {
