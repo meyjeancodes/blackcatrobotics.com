@@ -21,7 +21,7 @@ const pillars = [
 
 const stats = [
   { n: "4 200+", label: "robots monitored" },
-  { n: "99.1%", label: "dispatch accuracy" },
+  { n: "99.1%", label: "dispatch accuracy (target)" },
   { n: "< 4 h", label: "avg response time" },
 ];
 
