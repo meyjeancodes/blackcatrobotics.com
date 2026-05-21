@@ -33,3 +33,6 @@ BCR.HMTL Domain/
 # Misc assets
 *.png
 RESEARCH_CAD_SOURCES.md
+
+# Allow platform images for TechMedix cards
+!TechMedix-standalone/public/images/platforms/*.png

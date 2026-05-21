@@ -5,7 +5,6 @@ import Link from "next/link";
 import { getAllPlatforms } from "@/lib/platforms/index";
 import { KnowledgeHubClient } from "@/components/knowledge-hub-client";
 import { AsimovHeroCard } from "@/components/asimov-hero-card";
-import { SimLab } from "@/components/sim-lab";
 import {
   AlertTriangle,
   Battery,
@@ -418,21 +417,6 @@ export default function KnowledgePage() {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* ── Integrated Sim Environment ──────────────────────────────────────── */}
-      <section>
-        <div className="mb-6">
-          <p className="kicker">Layer 2 — Practice</p>
-          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">Integrated Sim Environment</h2>
-          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
-            Interactive 3D sandbox for robot telemetry, fault injection, and teardown training.
-            Practiced simulation directly in the browser.
-          </p>
-        </div>
-        <div className="h-[calc(100vh-200px)] min-h-[500px] rounded-[20px] border border-white/[0.06] overflow-hidden bg-[var(--surface-ink)]/2">
-          <SimLab initialPlatformId="unitree-g1" />
         </div>
       </section>
 

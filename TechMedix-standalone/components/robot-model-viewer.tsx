@@ -7,7 +7,7 @@ import type { BodyZone } from "../types/atlas";
 import type { RobotCanvasProps } from "./robot-canvas";
 import { getUrdfForPlatform } from "../lib/platforms/urdf-config";
 import { UrdfRobotViewer } from "./urdf-robot-viewer";
-import { getPlatformById } from "../lib/platforms/index";
+import { getPlatformById, PLATFORM_IMAGE_MAP } from "../lib/platforms/index";
 import { getChassisForPlatform, type Part, type PartCategory } from "../lib/platforms/parts-catalog";
 
 // Three.js Canvas — browser only, skip SSR
@@ -137,63 +137,29 @@ export function RobotModelViewer({
 
  const config = modeConfig[mode];
 
- // ── Preview Mode (Card) ─────────────────────────────────────────────────────
- if (mode === 'preview') {
- if (urdfConfig) {
- return (
- <div className={`relative overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] ${config.background} ${className}`} onClick={onClick}>
- {/* URDF Model */}
- <UrdfRobotViewer
- urdfPath={urdfConfig.urdfPath}
- label={urdfConfig.name}
- height="h-full"
- selectedPartId={selectedPartId}
- wireframe={wireframe}
- onPartClick={(partName) => {
- setSelectedPartId(partName);
- onPartSelect?.(chassis.parts.find(p => p.id === partName) || null);
- }}
- />
- 
- {/* Subtle technical overlay */}
- <div className="pointer-events-none absolute inset-0 rounded-[14px]" style={{
- backgroundImage: 'linear-gradient(0deg, transparent 48%, rgba(56,189,248,0.03) 50%, transparent 52%)',
- backgroundSize: '100% 4px',
- }} />
- 
- {/* Corner brackets */}
- <div className="pointer-events-none absolute inset-0 rounded-[14px]">
- <svg viewBox="0 0 100 100" className="h-full w-full opacity-40">
- <path d="M 8,12 L 8,8 L 12,8" fill="none" stroke="rgba(56,189,248,0.6)" strokeWidth="0.5" />
- <path d="M 92,8 L 88,8 L 88,12" fill="none" stroke="rgba(56,189,248,0.6)" strokeWidth="0.5" />
- <path d="M 92,88 L 92,92 L 88,92" fill="none" stroke="rgba(56,189,248,0.6)" strokeWidth="0.5" />
- <path d="M 12,92 L 8,92 L 8,88" fill="none" stroke="rgba(56,189,248,0.6)" strokeWidth="0.5" />
- </svg>
- </div>
- </div>
- );
- }
-
- // Fallback: Product photo with CSS effects
- const imgSrc = `/images/platforms/${platformId}.png`;
- return (
- <div className={`relative overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] ${config.background} ${className}`}>
- {/* eslint-disable-next-line @next/next/no-img-element */}
- <img
- src={imgSrc}
- alt={platform?.name || chassis.label}
- className="absolute inset-0 h-full w-full object-contain p-4 transition duration-700 hover:scale-105"
- />
- {/* CSS effects overlay */}
- <div className="cad-spotlight" />
- <div className="cad-scan-line" />
- <div className="pointer-events-none absolute inset-0" style={{
- backgroundImage: 'linear-gradient(0deg, transparent 48%, rgba(56,189,248,0.06) 50%, transparent 52%)',
- backgroundSize: '100% 4px',
- }} />
- </div>
- );
- }
+  // ── Preview Mode (Card) — always use product photos, never URDF ─────────
+  // URDF models are reserved for dedicated blueprint routes where they can
+  // load properly without competing for resources on card grids.
+  if (mode === 'preview') {
+    const imgSrc = PLATFORM_IMAGE_MAP[platformId] ?? `/images/platforms/${platformId}.png`;
+    return (
+      <div className={`relative overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] ${config.background} ${className}`} onClick={onClick}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imgSrc}
+          alt={platform?.name || chassis.label}
+          className="absolute inset-0 h-full w-full object-contain p-4 transition duration-700 hover:scale-105"
+        />
+        {/* CSS effects overlay */}
+        <div className="cad-spotlight" />
+        <div className="cad-scan-line" />
+        <div className="pointer-events-none absolute inset-0" style={{
+          backgroundImage: 'linear-gradient(0deg, transparent 48%, rgba(56,189,248,0.06) 50%, transparent 52%)',
+          backgroundSize: '100% 4px',
+        }} />
+      </div>
+    );
+  }
 
  // ── Explore / Blueprint / Sim Modes (Modal) ─────────────────────────────────
  
