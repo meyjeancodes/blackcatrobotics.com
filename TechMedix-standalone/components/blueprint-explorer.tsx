@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getChassisForPlatform, type PartCategory } from "@/lib/platforms/parts-catalog";
 import { getPlatformById } from "@/lib/platforms/index";
 import { getUrdfForPlatform } from "@/lib/platforms/urdf-config";
-import { mapUrdfPart } from "@/lib/platforms/urdf-part-mapping";
+import { mapUrdfPart, URDF_PART_MAPPINGS } from "@/lib/platforms/urdf-part-mapping";
 import { UrdfRobotViewer } from "./urdf-robot-viewer";
 import {
   CircleDot,
@@ -346,6 +346,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                     setSelectedPartId((prev) => prev === componentId ? null : componentId);
                   }
                 }}
+                meshToComponentMap={URDF_PART_MAPPINGS[platformId]}
               />
             </div>
           ) : (
