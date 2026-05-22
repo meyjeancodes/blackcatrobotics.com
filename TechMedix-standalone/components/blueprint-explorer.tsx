@@ -3,6 +3,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getChassisForPlatform, type PartCategory } from "@/lib/platforms/parts-catalog";
 import { getPlatformById } from "@/lib/platforms/index";
+import { getUrdfForPlatform } from "@/lib/platforms/urdf-config";
+import { mapUrdfPart } from "@/lib/platforms/urdf-part-mapping";
+import { UrdfRobotViewer } from "./urdf-robot-viewer";
 import {
   CircleDot,
   Crosshair,
@@ -118,6 +121,8 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
   const [touring, setTouring] = useState(false);
   const [rotating, setRotating] = useState(true);
   const [revealCount, setRevealCount] = useState(0);
+  const [show3d, setShow3d] = useState(() => !!getUrdfForPlatform(platformId));
+  const hasUrdf = !!getUrdfForPlatform(platformId);
 
   const tourRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const tourIdxRef = useRef(0);
@@ -232,6 +237,15 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
           <ToolbarBtn icon={<Grid3X3 size={11} />} label="Wireframe" active={wireframe} onClick={() => setWireframe((v) => !v)} />
           <ToolbarBtn icon={<Ruler size={11} />} label="Dims" active={showDimensions} onClick={() => setShowDimensions((v) => !v)} />
           <div className="mx-1.5 h-4 w-px bg-white/[0.08]" />
+          {hasUrdf && (
+            <ToolbarBtn
+              icon={<Grid3X3 size={11} />}
+              label={show3d ? "Blueprint" : "3D Model"}
+              active={show3d}
+              onClick={() => setShow3d((v) => !v)}
+            />
+          )}
+          <div className="mx-1.5 h-4 w-px bg-white/[0.08]" />
           <ToolbarBtn
             icon={exploded ? <Minimize2 size={11} /> : <Maximize2 size={11} />}
             label={exploded ? "Assembled" : "Explode"}
@@ -309,58 +323,78 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
           ))}
         </div>
 
-        {/* Center canvas — rotating 3D viewport */}
+        {/* Center canvas — SVG blueprint or URDF 3D model */}
         <div
           className="relative flex-1 min-h-0 overflow-hidden"
           style={{
-            filter: activeGlow ? `drop-shadow(0 0 36px ${activeGlow})` : "none",
+            filter: !show3d && activeGlow ? `drop-shadow(0 0 36px ${activeGlow})` : "none",
             transition: "filter 0.35s ease",
           }}
         >
-          {/* Blueprint grid */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(80,120,220,0.065) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(80,120,220,0.065) 1px, transparent 1px)
-              `,
-              backgroundSize: "20px 20px",
-            }}
-          />
+          {show3d && hasUrdf ? (
+            /* ── URDF 3D Model ── */
+            <div className="h-full w-full">
+              <UrdfRobotViewer
+                urdfPath={getUrdfForPlatform(platformId)!.urdfPath}
+                label={platform?.name}
+                height="h-full"
+                selectedPartId={selectedPartId}
+                wireframe={wireframe}
+                onPartClick={(meshName) => {
+                  const componentId = mapUrdfPart(platformId, meshName);
+                  if (componentId) {
+                    setSelectedPartId((prev) => prev === componentId ? null : componentId);
+                  }
+                }}
+              />
+            </div>
+          ) : (
+            /* ── SVG Blueprint Viewport ── */
+            <>
+              {/* Blueprint grid */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(80,120,220,0.065) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(80,120,220,0.065) 1px, transparent 1px)
+                  `,
+                  backgroundSize: "20px 20px",
+                }}
+              />
 
-          {/* Point-cloud dot grid overlay — uavs.fyi-style */}
-          <div className="pointer-events-none absolute inset-0 opacity-[0.025]">
-            <svg width="100%" height="100%" className="h-full w-full">
-              <defs>
-                <pattern id="dotGrid" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-                  <circle cx="1" cy="1" r="0.5" fill="#5090FF" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#dotGrid)" />
-            </svg>
-          </div>
+              {/* Point-cloud dot grid overlay — uavs.fyi-style */}
+              <div className="pointer-events-none absolute inset-0 opacity-[0.025]">
+                <svg width="100%" height="100%" className="h-full w-full">
+                  <defs>
+                    <pattern id="dotGrid" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                      <circle cx="1" cy="1" r="0.5" fill="#5090FF" />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#dotGrid)" />
+                </svg>
+              </div>
 
-          {/* Subtle centerline cross */}
-          <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
-            <div className="absolute top-0 bottom-0 left-1/2 w-px bg-sky-400" />
-            <div className="absolute left-0 right-0 top-1/2 h-px bg-sky-400" />
-          </div>
+              {/* Subtle centerline cross */}
+              <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
+                <div className="absolute top-0 bottom-0 left-1/2 w-px bg-sky-400" />
+                <div className="absolute left-0 right-0 top-1/2 h-px bg-sky-400" />
+              </div>
 
-          {/* Rotating SVG container — drag-to-orbit enabled */}
-          <div
-            className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
-            style={{
-              transformStyle: "preserve-3d",
-              transform: `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${zoom})`,
-              transition: draggingRef.current ? "none" : "transform 0.08s linear",
-            }}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerCancel={handlePointerUp}
-            onWheel={handleWheel}
-          >
+              {/* Rotating SVG container — drag-to-orbit enabled */}
+              <div
+                className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
+                style={{
+                  transformStyle: "preserve-3d",
+                  transform: `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${zoom})`,
+                  transition: draggingRef.current ? "none" : "transform 0.08s linear",
+                }}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerCancel={handlePointerUp}
+                onWheel={handleWheel}
+              >
             <svg
               viewBox={chassis.viewBox}
               preserveAspectRatio="xMidYMid meet"
@@ -511,35 +545,8 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                 );
               })}
             </svg>
-          </div>
-
-          {/* Rotation indicator pill */}
-          {rotating && (
-            <div className="absolute top-3 right-3 flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-black/60 px-2.5 py-1 backdrop-blur">
-              <RotateCcw size={9} className="text-white/35 animate-spin-slow" />
-              <span className="font-mono text-[0.48rem] uppercase tracking-[0.10em] text-white/35">
-                Auto-Rotate
-              </span>
             </div>
-          )}
-
-          {/* Tour progress pill */}
-          {touring && selectedPart && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2.5 rounded-full border border-white/[0.14] bg-black/75 px-4 py-1.5 backdrop-blur">
-              <span
-                className="h-1.5 w-1.5 rounded-full animate-pulse"
-                style={{ background: CATEGORY_COLOR[selectedPart.category].fill }}
-              />
-              <span className="font-mono text-[0.52rem] uppercase tracking-[0.12em] text-white/50">Tour</span>
-              <span className="font-mono text-[0.60rem] text-white/85">{selectedPart.name}</span>
-              <button
-                type="button"
-                onClick={stopTour}
-                className="ml-0.5 text-white/35 hover:text-white/65 transition"
-              >
-                <X size={10} />
-              </button>
-            </div>
+            </>
           )}
         </div>
 
@@ -636,7 +643,10 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
           {touring && " · Touring"}
           {selectedPart && ` · ${selectedPart.name}`}
         </span>
-        <span className="text-white/16">{chassis.parts.length} parts · drag to orbit · scroll to zoom</span>
+        <span className="text-white/16">
+          {show3d ? "3D Model · " : "Blueprint · "}
+          {chassis.parts.length} parts · drag to orbit · scroll to zoom
+        </span>
       </div>
 
     </div>
