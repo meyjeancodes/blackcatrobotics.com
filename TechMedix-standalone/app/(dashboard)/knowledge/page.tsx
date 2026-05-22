@@ -170,7 +170,7 @@ const CATEGORIES = [
   { id: "micromobility" as const, title: "Edge AI & Controllers", icon: Cpu, href: "/knowledge/blueprint?category=micromobility", platforms: 6, failures: 12, accent: "#f59e0b", desc: "Jetson, RPi compute, and custom SoC platforms." },
 ];
 
-const VISIBLE_COMPONENTS = COMPONENTS.filter((c) => !["hands", "safety"].includes(c.id));
+const VISIBLE_COMPONENTS = COMPONENTS;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -349,7 +349,7 @@ export default function KnowledgePage() {
             href="/knowledge/blueprint?tab=components"
             className="shrink-0 inline-flex items-center gap-2 rounded-full border border-[var(--ink)]/[0.10] px-4 py-2 font-ui text-[0.58rem] uppercase tracking-[0.16em] text-[var(--ink)]/50 transition hover:bg-ember/[0.06] hover:border-ember/30 hover:text-ember"
           >
-            View All 8 Components
+            View All Components
             <ChevronRight size={12} />
           </Link>
         </div>
