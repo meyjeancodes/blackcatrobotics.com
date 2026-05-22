@@ -184,12 +184,11 @@ export function KnowledgeHubClient({ platforms }: Props) {
 
  {/* Interactive 3D model preview — real URDF model or product photo */}
  <div className="mt-1">
- <RobotModelViewer
- platformId={platform.id}
- mode="preview"
- className="h-48 w-full cursor-pointer"
- onClick={() => openModal({ kind: "explorer", platformId: platform.id })}
- />
+                  <RobotModelViewer
+                    platformId={platform.id}
+                    mode="preview"
+                    className="h-48 w-full cursor-pointer"
+                  />
  </div>
 
                 {/* Failure signatures */}
