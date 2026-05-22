@@ -35,9 +35,11 @@ interface Props {
  selectedPartId?: string | null;
  wireframe?: boolean;
  onPartClick?: (partName: string) => void;
+ /** Maps URDF mesh names → parts-catalog component IDs */
+ meshToComponentMap?: Record<string, string>;
 }
 
-export function UrdfRobotViewer({ urdfPath, label, height, selectedPartId, wireframe, onPartClick }: Props) {
+export function UrdfRobotViewer({ urdfPath, label, height, selectedPartId, wireframe, onPartClick, meshToComponentMap }: Props) {
  const [error, setError] = useState<string | null>(null);
 
  return (
@@ -50,6 +52,7 @@ export function UrdfRobotViewer({ urdfPath, label, height, selectedPartId, wiref
  selectedPartId={selectedPartId}
  wireframe={wireframe}
  onPartClick={onPartClick}
+ meshToComponentMap={meshToComponentMap}
  />
  </div>
  );

@@ -15,9 +15,11 @@ interface UrdfRobotProps {
  selectedPartId?: string | null;
  wireframe?: boolean;
  onPartClick?: (partName: string) => void;
+ /** Maps URDF mesh names → parts-catalog component IDs */
+ meshToComponentMap?: Record<string, string>;
 }
 
-function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPartClick }: UrdfRobotProps) {
+function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPartClick, meshToComponentMap }: UrdfRobotProps) {
  const groupRef = useRef<THREE.Group>(null!);
  const [isLoaded, setIsLoaded] = useState(false);
  const mountedRef = useRef(true);
@@ -97,11 +99,16 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPart
  });
  }, [wireframe]);
 
- // Update selected part highlighting
- useEffect(() => {
+// Update selected part highlighting — uses mesh-to-component mapping
+// so clicking a URDF part (e.g. "left_shoulder_pitch_link") maps to the
+// correct BlueprintExplorer component (e.g. "shoulder-actuators").
+useEffect(() => {
  groupRef.current?.traverse((child: any) => {
  if (child instanceof THREE.Mesh) {
- const isSelected = selectedPartId && child.name === selectedPartId;
+ const isSelected = selectedPartId && (
+ child.name === selectedPartId ||
+ meshToComponentMap?.[child.name] === selectedPartId
+ );
  const mat = child.material as THREE.MeshStandardMaterial;
  
  if (isSelected) {
@@ -144,12 +151,13 @@ useFrame(({ clock }) => {
 
 // ─── Full canvas with lights, controls, grounding ────────────────────────────
 
-function UrdfScene({ urdfUrl, onError, selectedPartId, wireframe, onPartClick }: {
+function UrdfScene({ urdfUrl, onError, selectedPartId, wireframe, onPartClick, meshToComponentMap }: {
  urdfUrl: string;
  onError: (msg: string) => void;
  selectedPartId?: string | null;
  wireframe?: boolean;
  onPartClick?: (partName: string) => void;
+ meshToComponentMap?: Record<string, string>;
 }) {
  const [loaded, setLoaded] = useState(false);
 
@@ -180,6 +188,7 @@ function UrdfScene({ urdfUrl, onError, selectedPartId, wireframe, onPartClick }:
  selectedPartId={selectedPartId}
  wireframe={wireframe}
  onPartClick={onPartClick}
+ meshToComponentMap={meshToComponentMap}
  />
  </Suspense>
 
@@ -215,9 +224,11 @@ interface Props {
  selectedPartId?: string | null;
  wireframe?: boolean;
  onPartClick?: (partName: string) => void;
+ /** Maps URDF mesh names → parts-catalog component IDs */
+ meshToComponentMap?: Record<string, string>;
 }
 
-export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]', selectedPartId, wireframe, onPartClick }: Props) {
+export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]', selectedPartId, wireframe, onPartClick, meshToComponentMap }: Props) {
  const [error, setError] = useState<string | null>(null);
 
  if (error) {
@@ -257,7 +268,7 @@ export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]',
  )}
 
  <div className="h-full w-full">
- <UrdfScene urdfUrl={urdfPath} onError={setError} selectedPartId={selectedPartId} wireframe={wireframe} onPartClick={onPartClick} />
+ <UrdfScene urdfUrl={urdfPath} onError={setError} selectedPartId={selectedPartId} wireframe={wireframe} onPartClick={onPartClick} meshToComponentMap={meshToComponentMap} />
  </div>
  </div>
  );
