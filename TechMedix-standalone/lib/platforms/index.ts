@@ -645,4 +645,6 @@ export const PLATFORM_IMAGE_MAP: Record<string, string> = {
   "lime-gen4":         "/images/platforms/lime_ebike.jpg",
   "bird-three":        "/images/platforms/bird_three.jpg",
   "radcommercial":     "/images/platforms/rad_power.svg",
+  "nvidia-jetson-agx-thor": "/images/platforms/nvidia_jetson_agx_thor.jpg",
+  "aigen-element-gen2":     "/images/platforms/aigen_element_gen2.jpg",
 };
