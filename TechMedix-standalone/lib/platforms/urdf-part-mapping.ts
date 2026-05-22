@@ -87,12 +87,70 @@ const G1_MAPPING: UrdfPartMapping = {
 };
 
 /**
+ * Unitree H1 URDF → parts-catalog ID mapping.
+ * H1 has a simpler arm design (no wrists/hands) and fewer sensors.
+ */
+const H1_MAPPING: UrdfPartMapping = {
+  // ── Head / Compute Bay ──
+  "imu_link":              "head-compute",
+  "d435_left_imager_link": "head-compute",
+  "d435_rgb_module_link":  "head-compute",
+  "mid360_link":           "head-compute",
+
+  // ── Comms Array ──
+  "logo_link":             "comms-antenna",
+
+  // ── Shoulder Actuators ──
+  "left_shoulder_pitch_link":  "shoulder-actuators",
+  "left_shoulder_roll_link":   "shoulder-actuators",
+  "left_shoulder_yaw_link":    "shoulder-actuators",
+  "right_shoulder_pitch_link": "shoulder-actuators",
+  "right_shoulder_roll_link":  "shoulder-actuators",
+  "right_shoulder_yaw_link":   "shoulder-actuators",
+
+  // ── Elbow Actuators — H1 has no wrist joints, arms end at elbow ──
+  "left_elbow_link":   "elbow-actuators",
+  "right_elbow_link":  "elbow-actuators",
+
+  // ── End Effector / Hands — H1 has no end effectors ──
+  // (no hand/end-effector links in URDF)
+
+  // ── Torso — Battery + BMS ──
+  "torso_link":        "torso-battery",
+  "pelvis":            "torso-battery",
+
+  // ── Torso Frame / Spine ──
+  // No dedicated waist/spine links (pelvis → torso direct)
+
+  // ── Hip Actuators ──
+  "left_hip_yaw_link":   "hip-actuators",
+  "left_hip_roll_link":  "hip-actuators",
+  "left_hip_pitch_link": "hip-actuators",
+  "right_hip_yaw_link":  "hip-actuators",
+  "right_hip_roll_link": "hip-actuators",
+  "right_hip_pitch_link":"hip-actuators",
+
+  // ── Knee Actuators ──
+  "left_knee_link":   "knee-actuators",
+  "right_knee_link":  "knee-actuators",
+
+  // ── Ankle Actuators — H1 has pitch only, no roll ──
+  "left_ankle_link":   "ankle-actuators",
+  "right_ankle_link":  "ankle-actuators",
+
+  // ── Feet + Ankle F/T ──
+  // No dedicated foot/IMU links
+};
+
+/**
  * Per-platform URDF mappings.
  * Keyed by platform ID (matching lib/platforms/index.ts).
  * Only platforms with URDF files should have entries here.
  */
 export const URDF_PART_MAPPINGS: Record<string, UrdfPartMapping> = {
   "unitree-g1": G1_MAPPING,
+  "unitree-h1": H1_MAPPING,
+  "unitree-h1-2": H1_MAPPING,
 };
 
 /**
