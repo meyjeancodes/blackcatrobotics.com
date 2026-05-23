@@ -98,31 +98,42 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPart
     });
   }, [wireframe]);
 
-  // ─── Raycaster-based part click ─────────────────────────────────────────
-  const handlePartClick = useCallback((e: React.PointerEvent<Element>) => {
-    if (!onPartClick || !partsRef.current.size) return;
-
-    // Compute NDC from the canvas element
-    const rect = gl.domElement.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
-
-    const meshes = Array.from(partsRef.current.values()).filter(
-      (obj): obj is THREE.Mesh => obj instanceof THREE.Mesh
-    );
-
-    const hits = raycaster.intersectObjects(meshes, false);
-    if (hits.length > 0) {
-      const hitMesh = hits[0].object as THREE.Mesh;
-      if (hitMesh.name) {
-        onPartClick(hitMesh.name);
-        e.stopPropagation();
-      }
+  // ─── Stable pointer NDC — tracked each frame from R3F's event state ─────────
+  // gl.pointer is injected by R3F's event layer (not native WebGLRenderer)
+  const pointerNdcRef = useRef<THREE.Vector2 | null>(null);
+  const { gl: glRef } = useThree();
+  useFrame(() => {
+    const r3fGl = glRef as any;
+    const ptr = r3fGl.pointer as { x: number; y: number } | null;
+    if (ptr) {
+      pointerNdcRef.current = new THREE.Vector2(ptr.x, ptr.y);
     }
-  }, [onPartClick, camera, gl]);
+  });
+
+  // ─── Raycaster-based part click ─────────────────────────────────────────
+  // onClick on the group fires only when a mesh inside the group is intersected
+  // by the raycaster — empty canvas clicks never reach this handler.
+  const handlePartClick = useCallback(
+    (event: THREE.Event & { pointer?: { x: number; y: number } }) => {
+      if (!onPartClick || !partsRef.current.size || !pointerNdcRef.current) return;
+
+      const raycaster = new THREE.Raycaster();
+      raycaster.setFromCamera(pointerNdcRef.current, camera);
+
+      const meshes = Array.from(partsRef.current.values()).filter(
+        (obj): obj is THREE.Mesh => obj instanceof THREE.Mesh
+      );
+
+      const hits = raycaster.intersectObjects(meshes, false);
+      if (hits.length > 0) {
+        const hitMesh = hits[0].object as THREE.Mesh;
+        if (hitMesh.name) {
+          onPartClick(hitMesh.name);
+        }
+      }
+    },
+    [onPartClick, camera, gl]
+  );
 
 // Update selected part highlighting — uses mesh-to-component mapping
 // so clicking a URDF part (e.g. "left_shoulder_pitch_link") maps to the
@@ -151,12 +162,7 @@ useEffect(() => {
 });
 }, [selectedPartId]);
 
-useFrame(({ clock }) => {
- if (groupRef.current && isLoaded && !selectedPartId) {
- groupRef.current.rotation.y = Math.sin(clock.elapsedTime * 0.3) * 0.5;
- }
- });
-
+  // ─── Render ───────────────────────────────────────────────────────────────
   return (
 <group ref={groupRef} onClick={handlePartClick}>
       {!isLoaded && (
