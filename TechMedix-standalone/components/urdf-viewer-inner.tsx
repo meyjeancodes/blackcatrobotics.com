@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useEffect, useState, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useRef, useEffect, useState, Suspense, useCallback } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Environment, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import URDFLoaderClass from 'urdf-loader';
@@ -20,10 +20,13 @@ interface UrdfRobotProps {
 }
 
 function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPartClick, meshToComponentMap }: UrdfRobotProps) {
- const groupRef = useRef<THREE.Group>(null!);
- const [isLoaded, setIsLoaded] = useState(false);
- const mountedRef = useRef(true);
- const partsRef = useRef<Map<string, THREE.Object3D>>(new Map());
+  const groupRef = useRef<THREE.Group>(null!);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const mountedRef = useRef(true);
+  const partsRef = useRef<Map<string, THREE.Object3D>>(new Map());
+
+  // Access R3F scene state for raycasting
+  const { gl, camera } = useThree();
 
  useEffect(() => {
  mountedRef.current = true;
@@ -58,13 +61,9 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPart
  mat.roughness = 0.35;
  }
  mat.wireframe = wireframe || false;
- child.castShadow = true;
- child.receiveShadow = true;
- 
- // Add click handler
- if (onPartClick && child.name) {
- child.userData.onClick = () => onPartClick(child.name);
- }
+        child.castShadow = true;
+        child.receiveShadow = true;
+        
  }
  });
 
@@ -90,14 +89,40 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPart
  return () => { mountedRef.current = false; };
  }, [urdfUrl, onLoad, onError, wireframe, onPartClick]);
 
- // Update wireframe mode
- useEffect(() => {
- groupRef.current?.traverse((child: any) => {
- if (child instanceof THREE.Mesh) {
- child.material.wireframe = wireframe || false;
- }
- });
- }, [wireframe]);
+  // Update wireframe mode
+  useEffect(() => {
+    groupRef.current?.traverse((child: any) => {
+      if (child instanceof THREE.Mesh) {
+        child.material.wireframe = wireframe || false;
+      }
+    });
+  }, [wireframe]);
+
+  // ─── Raycaster-based part click ─────────────────────────────────────────
+  const handlePartClick = useCallback((e: React.PointerEvent<Element>) => {
+    if (!onPartClick || !partsRef.current.size) return;
+
+    // Compute NDC from the canvas element
+    const rect = gl.domElement.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
+
+    const meshes = Array.from(partsRef.current.values()).filter(
+      (obj): obj is THREE.Mesh => obj instanceof THREE.Mesh
+    );
+
+    const hits = raycaster.intersectObjects(meshes, false);
+    if (hits.length > 0) {
+      const hitMesh = hits[0].object as THREE.Mesh;
+      if (hitMesh.name) {
+        onPartClick(hitMesh.name);
+        e.stopPropagation();
+      }
+    }
+  }, [onPartClick, camera, gl]);
 
 // Update selected part highlighting — uses mesh-to-component mapping
 // so clicking a URDF part (e.g. "left_shoulder_pitch_link") maps to the
@@ -132,21 +157,21 @@ useFrame(({ clock }) => {
  }
  });
 
- return (
- <group ref={groupRef}>
- {!isLoaded && (
- <Html center>
- <div className="flex items-center gap-2 text-xs text-white/40">
- <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
- <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
- <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
- </svg>
- Loading model…
- </div>
- </Html>
- )}
- </group>
- );
+  return (
+<group ref={groupRef} onClick={handlePartClick}>
+      {!isLoaded && (
+        <Html center>
+          <div className="flex items-center gap-2 text-xs text-white/40">
+            <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            Loading model…
+          </div>
+        </Html>
+      )}
+    </group>
+  );
 }
 
 // ─── Full canvas with lights, controls, grounding ────────────────────────────
