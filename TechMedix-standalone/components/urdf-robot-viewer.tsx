@@ -80,7 +80,7 @@ export const URDF_ROBOTS: Record<string, UrdfPlatformEntry> = {
   },
   'unitree-go2': {
     name: 'Unitree Go2',
-    urdfPath: '/robots/unitree-go2/go2_description',
+    urdfPath: '/robots/unitree-go2/go2_description.urdf',
     badge: 'Official URDF',
   },
   'unitree-h2': {
