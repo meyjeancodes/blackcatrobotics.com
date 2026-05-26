@@ -8,7 +8,7 @@
  * Search backend: SERPER_API_KEY (Google Search via serper.dev), falls back to demo mode.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+import { generate, generateJSON } from "@/lib/llm";
 import {
   upsertPlatform,
   upsertFailureMode,
@@ -146,7 +146,6 @@ function buildSearchQueries(platform: ResearchTarget): string[] {
 // ── Structured extraction via Claude ─────────────────────────────────────────
 
 async function extractStructuredData(
-  client: Anthropic,
   platform: ResearchTarget,
   searchResults: Array<{ title: string; snippet: string; link: string }>
 ): Promise<ExtractedFailureMode[]> {
@@ -217,23 +216,16 @@ If no reliable failure modes can be extracted, return an empty array [].
 Respond with ONLY the JSON array, no other text.`;
 
   try {
-    const message = await client.messages.create({
+    const parsed = await generateJSON<ExtractedFailureMode[]>({
       model: "claude-sonnet-4-6",
-      max_tokens: 4096,
+      maxTokens: 4096,
+      temperature: 0,
       system: systemPrompt,
-      messages: [{ role: "user", content: userPrompt }],
+      prompt: userPrompt,
     });
 
-    const text = message.content
-      .filter((b): b is Anthropic.TextBlock => b.type === "text")
-      .map((b) => b.text)
-      .join("");
-
-    // Strip markdown code fences if present
-    const cleaned = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/i, "").trim();
-    const parsed = JSON.parse(cleaned);
     if (!Array.isArray(parsed)) return [];
-    return parsed as ExtractedFailureMode[];
+    return parsed;
   } catch (err) {
     console.error("[web-researcher] extractStructuredData failed:", err);
     return [];
@@ -342,7 +334,6 @@ export async function researchPlatform(
   platform: ResearchTarget,
   agentRunId: string
 ): Promise<ResearchSummary> {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
   const startedAt = new Date().toISOString();
 
   console.log(`[web-researcher] Starting research for: ${platform.name}`);
@@ -364,7 +355,7 @@ export async function researchPlatform(
     console.log(`[web-researcher] ${platform.name}: ${uniqueResults.length} unique sources found`);
 
     // 2. Extract structured data via Claude
-    const failures = await extractStructuredData(client, platform, uniqueResults);
+    const failures = await extractStructuredData(platform, uniqueResults);
     console.log(`[web-researcher] ${platform.name}: ${failures.length} failure modes extracted`);
 
     // 3. Upsert platform

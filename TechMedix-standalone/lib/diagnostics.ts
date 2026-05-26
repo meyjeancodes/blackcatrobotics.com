@@ -1,4 +1,4 @@
-import { getAnthropicClient } from "./anthropic";
+import { generate, generateJSON } from "@/lib/llm";
 import { createServiceClient } from "./supabase-service";
 
 export interface JointHealth {
@@ -196,8 +196,6 @@ export async function runLayer3(
   if (layer1Violations.length === 0 && layer2Anomalies.length === 0) return null;
 
   try {
-    const client = getAnthropicClient();
-
     const systemPrompt = `You are TechMedix, an expert AI diagnostic system for humanoid robots.
 You analyze telemetry data and provide structured diagnostic assessments.
 Always respond with valid JSON only — no markdown, no explanation.`;
@@ -229,15 +227,15 @@ Return ONLY this JSON structure:
   "dispatch_required": true or false
 }`;
 
-    const response = await client.messages.create({
+    const parsed = await generateJSON<ClaudeDiagnosticResponse>({
       model: "claude-sonnet-4-6",
-      max_tokens: 800,
+      maxTokens: 800,
+      temperature: 0,
       system: systemPrompt,
-      messages: [{ role: "user", content: userPrompt }],
+      prompt: userPrompt,
     });
 
-    const text = response.content[0].type === "text" ? response.content[0].text : "";
-    return JSON.parse(text) as ClaudeDiagnosticResponse;
+    return parsed;
   } catch (err) {
     console.error("Layer 3 Claude diagnostic error:", err);
     return null;

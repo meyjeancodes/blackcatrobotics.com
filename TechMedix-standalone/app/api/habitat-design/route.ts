@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAnthropicClient } from "../../../lib/anthropic";
+import { generate } from "../../../lib/llm";
 
 const SYSTEM_PROMPT = `You are HABITAT AI Design Assistant. Extract structured home design parameters from user input.
 
@@ -93,18 +93,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const anthropic = getAnthropicClient();
-    const response = await anthropic.messages.create({
-      model: "claude-opus-4-5",
-      max_tokens: 1024,
+    const result = await generate({
       system: SYSTEM_PROMPT,
       messages: filtered,
+      maxTokens: 1024,
     });
 
-    const raw =
-      response.content[0]?.type === "text"
-        ? response.content[0].text
-        : "I was unable to generate a response. Please try again.";
+    const raw = result.text;
 
     const { reply, params } = extractJsonBlock(raw);
     return NextResponse.json({ reply, params });

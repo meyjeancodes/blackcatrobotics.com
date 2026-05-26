@@ -8,21 +8,10 @@
  * Uses claude-sonnet-4-6 at temperature=0 for deterministic repair protocols.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+import { generate, generateJSON } from "@/lib/llm";
 import type { AIAnalysisInput, AIAnalysisResult, ARGuidanceResponse } from "./types";
 
 function isMockData() { return process.env.NEXT_PUBLIC_MOCK_DATA === "true"; }
-
-// ─── Anthropic client (lazy init — only created server-side) ──────────────────
-
-let _client: Anthropic | null = null;
-
-function getClient(): Anthropic {
-  if (!_client) {
-    _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  }
-  return _client;
-}
 
 // ─── Prompt builders ──────────────────────────────────────────────────────────
 
@@ -181,7 +170,6 @@ export async function analyzeWithVision(params: {
     return AR_SAFE_FALLBACK;
   }
 
-  const client = getClient();
   const faultContext = activeFault ?? "routine inspection";
   const fmeaSummary =
     fmeaContext && fmeaContext.length > 0
@@ -189,9 +177,10 @@ export async function analyzeWithVision(params: {
       : "";
 
   try {
-    const message = await client.messages.create({
+    const result = await generate({
       model: "claude-sonnet-4-6",
-      max_tokens: 500,
+      maxTokens: 500,
+      temperature: 0,
       system:
         "You are an AR diagnostic assistant for robot maintenance technicians. Analyze the camera frame and provide specific, actionable guidance. Respond ONLY with valid JSON matching the schema below. No markdown, no preamble.",
       messages: [
@@ -211,7 +200,7 @@ export async function analyzeWithVision(params: {
       ],
     });
 
-    const rawText = message.content[0]?.type === "text" ? message.content[0].text : "";
+    const rawText = result.text ?? "";
 
     try {
       const clean = rawText.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
@@ -244,22 +233,20 @@ export async function analyzeWithClaude(
   const t0 = Date.now();
 
   try {
-    const client = getClient();
     const userPrompt = buildUserPrompt(input);
 
-    const message = await client.messages.create({
+    const result = await generate({
       model: "claude-sonnet-4-6",
-      max_tokens: 1000,
+      maxTokens: 1000,
       temperature: 0,
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userPrompt }],
+      prompt: userPrompt,
     });
 
-    const latencyMs = Date.now() - t0;
-    const rawText =
-      message.content[0].type === "text" ? message.content[0].text : "";
+    const latencyMs = result.latencyMs ?? Date.now() - t0;
+    const rawText = result.text ?? "";
     const tokensUsed =
-      (message.usage.input_tokens ?? 0) + (message.usage.output_tokens ?? 0);
+      (result.usage?.inputTokens ?? 0) + (result.usage?.outputTokens ?? 0);
 
     let parsed: Omit<AIAnalysisResult, "_meta">;
     try {
@@ -271,17 +258,17 @@ export async function analyzeWithClaude(
       return fallbackResult("JSON parse failure", latencyMs);
     }
 
-    const result: AIAnalysisResult = {
+    const resultData: AIAnalysisResult = {
       ...parsed,
       _meta: { tokensUsed, latencyMs, isMock: false },
     };
 
     console.log(
-      `[Layer 3 — ai-analyzer] severity: ${result.severity}, ` +
-      `confidence: ${result.confidence}, tokens: ${tokensUsed}, latency: ${latencyMs}ms`
+      `[Layer 3 — ai-analyzer] severity: ${resultData.severity}, ` +
+      `confidence: ${resultData.confidence}, tokens: ${tokensUsed}, latency: ${latencyMs}ms`
     );
 
-    return result;
+    return resultData;
   } catch (err) {
     const latencyMs = Date.now() - t0;
     console.error("[Layer 3 — ai-analyzer] API error:", err);
