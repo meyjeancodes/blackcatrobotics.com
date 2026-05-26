@@ -12,6 +12,7 @@
  */
 
 import { NextResponse } from "next/server";
+import { generate } from "@/lib/llm";
 import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 import { ollamaGenerate } from "@/lib/blackcat/ollama";
 import type { BlackCatRobot, BlackCatAlert } from "@/types/blackcat";
@@ -87,22 +88,17 @@ export async function POST(req: Request) {
       console.log("[chat] Ollama unavailable, trying Claude...");
     }
 
-    // Fall back to Claude
-    if (process.env.ANTHROPIC_API_KEY) {
-      try {
-        const Anthropic = (await import("@anthropic-ai/sdk")).default;
-        const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-        const response = await client.messages.create({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 512,
-          system: SYSTEM_PROMPT,
-          messages: [{ role: "user", content: prompt }],
-        });
-        const text = response.content[0].type === "text" ? response.content[0].text : "";
-        return NextResponse.json({ reply: text.trim(), source: "ai" });
-      } catch {
-        console.log("[chat] Claude unavailable");
-      }
+    // Fall back to Claude via LLM adapter
+    try {
+      const result = await generate({
+        system: SYSTEM_PROMPT,
+        messages: [{ role: "user", content: prompt }],
+        maxTokens: 512,
+        model: "claude-sonnet-4-20250514",
+      });
+      return NextResponse.json({ reply: result.text.trim(), source: "ai" });
+    } catch {
+      console.log("[chat] Claude unavailable");
     }
 
     // Hard fallback

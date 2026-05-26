@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAnthropicClient } from "../../../lib/anthropic";
+import { generate } from "../../../lib/llm";
 
 const SYSTEM_PROMPT = `You are HABITAT AI, the intelligent home and robotics assistant for BlackCat Robotics' HABITAT platform. You have full awareness of the following systems in the user's HABITAT home environment:
 
@@ -36,18 +36,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const anthropic = getAnthropicClient();
-    const response = await anthropic.messages.create({
-      model: "claude-opus-4-5",
-      max_tokens: 512,
+    const result = await generate({
       system: SYSTEM_PROMPT,
       messages: filtered,
+      maxTokens: 512,
     });
 
-    const reply =
-      response.content[0]?.type === "text"
-        ? response.content[0].text
-        : "I was unable to generate a response. Please try again.";
+    const reply = result.text;
 
     return NextResponse.json({ reply });
   } catch (err) {

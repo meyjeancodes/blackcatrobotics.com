@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import { generate, generateJSON } from "@/lib/llm";
 import { createSupabaseServerClient, isSupabaseServerConfigured } from "@/lib/supabase-server";
 
 export const runtime = "nodejs";
@@ -42,10 +42,7 @@ export async function POST(
     const body = await req.json();
     const telemetry = body.telemetry ?? {};
 
-    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? "" });
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1024,
+    const result = await generate({
       system: `You are a diagnostics engine for DJI drones. Given telemetry JSON, output JSON: { severity: "info"|"warning"|"critical", issues: [{component, finding, recommendation}], overall_health_score: 0-100 }`,
       messages: [
         {
@@ -53,9 +50,10 @@ export async function POST(
           content: `Diagnose drone ${drone.serial_number || id}. Telemetry: ${JSON.stringify(telemetry)}`,
         },
       ],
+      maxTokens: 1024,
     });
 
-    const text = response.content[0].type === "text" ? response.content[0].text : "{}";
+    const text = result.text;
     let diagnosis: any = {};
     try { diagnosis = JSON.parse(text); } catch { /* keep raw */ }
 

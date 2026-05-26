@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAnthropicClient } from "../../../lib/anthropic";
+import { generate, generateJSON } from "../../../lib/llm";
 import { createSupabaseServerClient as createClient, isSupabaseServerConfigured } from "../../../lib/supabase-server";
 
 export const runtime = "nodejs";
@@ -38,8 +38,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const client = getAnthropicClient();
-
   // ── Vision path (camera frame analysis) ───────────────────────────────────
   if (isVisionRequest(body)) {
     const { frame, robotId, activeFault } = body;
@@ -74,9 +72,7 @@ export async function POST(req: NextRequest) {
     const faultContext = activeFault ?? "routine inspection";
 
     try {
-      const message = await client.messages.create({
-        model: "claude-sonnet-4-6",
-        max_tokens: 500,
+      const result = await generate({
         system:
           "You are an AR diagnostic assistant for robot maintenance technicians. Analyze the camera frame and provide specific, actionable guidance. Respond ONLY with valid JSON matching the schema below. No markdown, no preamble.",
         messages: [
@@ -98,10 +94,10 @@ export async function POST(req: NextRequest) {
             ],
           },
         ],
+        maxTokens: 500,
       });
 
-      const rawText =
-        message.content[0]?.type === "text" ? message.content[0].text : "";
+      const rawText = result.text;
 
       let parsed: typeof SAFE_FALLBACK;
       try {
@@ -159,16 +155,14 @@ ${step_instruction}${warningText}
 Please provide clear, concise AR guidance for this step.`;
 
   try {
-    const message = await client.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 512,
+    const result = await generate({
       system:
         "You are an expert robotics technician assistant for humanoid robots. Be precise, safety-first, and concise. When warnings are present, always acknowledge them first. Format your response in 2-3 sentences maximum — this is displayed as AR overlay text.",
       messages: [{ role: "user", content: userMessage }],
+      maxTokens: 512,
     });
 
-    const text =
-      message.content[0]?.type === "text" ? message.content[0].text : "";
+    const text = result.text;
 
     return NextResponse.json({ guidance: text });
   } catch (err) {

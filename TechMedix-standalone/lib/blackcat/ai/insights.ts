@@ -7,20 +7,11 @@
  * SERVER-SIDE ONLY.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+import { generate } from "../../llm";
 import { createServiceClient } from "../../supabase-service";
 import type { BlackCatRobot, BlackCatAlert, EnergyTransaction } from "../../../types/blackcat";
 
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
-
-let _anthropic: Anthropic | null = null;
-
-function getClient(): Anthropic {
-  if (!_anthropic) {
-    _anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  }
-  return _anthropic;
-}
 
 const SYSTEM_PROMPT =
   "You are BlackCat OS, an AI operations system for robotic fleets. " +
@@ -76,15 +67,16 @@ export async function generateEnergyInsight(input: {
 
 async function callClaude(userPrompt: string): Promise<string> {
   try {
-    const message = await getClient().messages.create({
+    const result = await generate({
       model: "claude-sonnet-4-6",
-      max_tokens: 150,
+      maxTokens: 150,
+      temperature: 0,
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userPrompt }],
+      prompt: userPrompt,
     });
 
-    if (message.content[0].type === "text") {
-      return message.content[0].text.trim();
+    if (result.text) {
+      return result.text.trim();
     }
     return "Unable to generate insight at this time.";
   } catch (err) {

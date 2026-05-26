@@ -1,43 +1,39 @@
-import Anthropic from "@anthropic-ai/sdk";
+/**
+ * DEPRECATED — Replaced by lib/llm.ts
+ *
+ * This file delegates to the universal LLM adapter (lib/llm.ts) for
+ * backward compatibility. All new code should import from lib/llm.ts directly.
+ *
+ * The @anthropic-ai/sdk is no longer used — Anthropic is called via raw HTTP.
+ */
 
-// ─── Anthropic client (singleton) ────────────────────────────────────────────
+import { generate, generateJSON } from "./llm";
+export { generate, generateJSON };
 
-let _client: Anthropic | null = null;
-
-export function getAnthropicClient(): Anthropic {
-  if (!_client) {
-    _client = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY!,
-    });
-  }
-  return _client;
+// Runtime check: fail early if provider doesn't match (for legacy callers)
+export function getAnthropicClient(): never {
+  throw new Error(
+    "getAnthropicClient() is deprecated. Use llm.generate() from lib/llm.ts instead."
+  );
 }
 
-// ─── Stubbed Bedrock client ──────────────────────────────────────────────────
-
-export function getBedrockClient(): any | null {
+export function getBedrockClient(): null {
   return null;
 }
 
-// ─── Unified Claude interface ────────────────────────────────────────────────
-
-export interface CallClaudeOptions {
-  system?: string;
-  maxTokens?: number;
-  temperature?: number;
-  model?: string;
-}
-
-export interface RouteResult {
-  provider: string;
-  model: string;
-  reason: string;
-}
-
+/** @deprecated Use llm.generateJSON() from lib/llm.ts */
 export async function callClaude(
   _prompt: string,
-  _taskType: string = "general",
-  _options: CallClaudeOptions = {}
-): Promise<RouteResult> {
-  return { provider: "anthropic", model: "claude-sonnet-4", reason: "default" };
+  _taskType?: string,
+  _options?: Record<string, any>
+): Promise<{ provider: string; model: string; reason: string }> {
+  return { provider: getProviderName(), model: getModelName(), reason: "deprecated-shim" };
+}
+
+function getProviderName(): string {
+  return process.env.LLM_PROVIDER || "ollama";
+}
+
+function getModelName(): string {
+  return process.env.OLLAMA_MODEL || process.env.ANTHROPIC_MODEL || "llama3.2";
 }
