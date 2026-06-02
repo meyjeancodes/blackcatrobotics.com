@@ -4,7 +4,8 @@
  * repair videos, patents, and forum threads — then extracts structured data
  * and persists it to Supabase.
  *
- * Uses: Anthropic claude-sonnet-4-6 with tool-use pattern for structured extraction.
+ * Uses: env-selected LLM via lib/llm adapter (Ollama default, OpenAI-compatible, or Anthropic).
+ * Provider override per-call is allowed but defaults to LLM_PROVIDER env var.
  * Search backend: SERPER_API_KEY (Google Search via serper.dev), falls back to demo mode.
  */
 
@@ -217,7 +218,6 @@ Respond with ONLY the JSON array, no other text.`;
 
   try {
     const parsed = await generateJSON<ExtractedFailureMode[]>({
-      model: "claude-sonnet-4-6",
       maxTokens: 4096,
       temperature: 0,
       system: systemPrompt,

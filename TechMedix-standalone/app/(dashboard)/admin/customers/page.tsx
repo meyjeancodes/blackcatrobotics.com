@@ -2,6 +2,8 @@ import { SurfaceCard } from "../../../../components/surface-card";
 import { formatCurrency, formatDateTime } from "../../../../lib/format";
 import { getAdminCustomers } from "../../../../lib/data";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminCustomersPage() {
   const customers = await getAdminCustomers();
 
