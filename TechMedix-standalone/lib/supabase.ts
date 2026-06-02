@@ -1,8 +1,13 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
 export function createClient() {
-  return createSupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!url || !key) {
+    console.warn("[techmedix] Missing supabase envs");
+    return null;
+  }
+
+  return createSupabaseClient(url, key);
 }
