@@ -14,12 +14,50 @@ import {
   type TelemetryPoint
 } from "@/lib/shared";
 import { createClient } from "@/lib/supabase";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
 
 const useMockData =
   process.env.TECHMEDIX_USE_MOCK_DATA === "true" ||
   process.env.NEXT_PUBLIC_MOCK_DATA === "true" ||
   !process.env.NEXT_PUBLIC_SUPABASE_URL;
 const customerId = process.env.TECHMEDIX_DEFAULT_CUSTOMER_ID ?? defaultCustomerId;
+
+async function resolveCustomerId(): Promise<string> {
+  const envFallback = customerId;
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return envFallback;
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+    if (!supabase) {
+      return envFallback;
+    }
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user?.id) {
+      return envFallback;
+    }
+
+    const { data: profile, error } = await supabase
+      .from("user_profiles")
+      .select("customer_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (error || !profile?.customer_id) {
+      return envFallback;
+    }
+
+    return profile.customer_id;
+  } catch (err) {
+    console.warn("[techmedix] failed to resolve customer from auth:", err);
+    return envFallback;
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Row = Record<string, any>;
@@ -165,9 +203,28 @@ export async function getDashboardData() {
     if (techniciansRes.error) throw new Error(techniciansRes.error.message);
 
     if (!customerRes.data) {
-      console.warn(`[techmedix] customer "${customerId}" not found in Supabase — falling back to mock data`);
-      const snapshot = buildDashboardSnapshot(defaultCustomerId);
-      return { snapshot, stats: buildDashboardStats(snapshot) };
+      console.warn(`[techmedix] customer "${customerId}" not found in Supabase — returning empty dashboard`);
+
+      return {
+        snapshot: {
+          customer: null,
+          robots: [],
+          alerts: [],
+          jobs: [],
+          technicians: (techniciansRes.data ?? []).map(mapTechnician),
+          diagnostics: [],
+          telemetryHistory: {}
+        },
+        stats: buildDashboardStats({
+          customer: null,
+          robots: [],
+          alerts: [],
+          jobs: [],
+          technicians: [],
+          diagnostics: [],
+          telemetryHistory: {}
+        })
+      };
     }
 
     const robots = (robotsRes.data ?? []).map(mapRobot);
