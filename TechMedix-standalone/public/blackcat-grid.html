@@ -1505,9 +1505,11 @@ footer {
     <form id="grid-waitlist" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">
       <input type="email" id="wl-email" required placeholder="you@company.com" autocomplete="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address"
         style="padding:14px 24px;border-radius:999px;border:none;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;min-width:280px;background:rgba(255,255,255,0.95);color:var(--ink);">
+      <input type="text" name="_gotcha" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none;" tabindex="-1" aria-hidden="true" autocomplete="off">
       <button type="submit" class="btn btn-white" id="wl-submit">Join the Waitlist &rarr;</button>
     </form>
     <p id="wl-success" style="display:none;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;color:rgba(255,255,255,0.85);">You're on the list. We'll be in touch with early access details.</p>
+    <p style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.25);margin-top:8px;letter-spacing:0.06em;text-align:center;">By submitting, you agree to our <a href="/index.html" onclick="openModal('privacy-modal'); return false;" style="color:rgba(255,255,255,0.25); text-decoration:underline;">Privacy Policy</a>.</p>
     <div class="cta-btns" style="margin-top:8px;">
       <a href="https://dashboard.blackcatrobotics.com" class="btn btn-ghost-white">Explore TechMedix</a>
     </div>
@@ -1586,6 +1588,7 @@ const progObs = new IntersectionObserver(
 document.querySelectorAll('.card, .net-panel, .batt-wrap').forEach((el) => progObs.observe(el));
 
 // ─── WAITLIST FORM ────────────────────────────────────────────────────────────
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xreyrndq';
 document.getElementById('grid-waitlist').addEventListener('submit', function(e) {
   e.preventDefault();
   const btn = document.getElementById('wl-submit');
@@ -1595,10 +1598,10 @@ document.getElementById('grid-waitlist').addEventListener('submit', function(e) 
   btn.disabled = true;
   btn.textContent = 'Joining...';
 
-  fetch('https://formspree.io/f/xreyrndq', {
+  fetch(FORMSPREE_ENDPOINT, {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email, page: 'blackcat-grid', source: 'waitlist-form' })
+    body: JSON.stringify({ email: email, _replyto: email, _gotcha: '', page: 'blackcat-grid', source: 'waitlist-form' })
   }).then(function(response) {
     if (response.ok) {
       form.style.display = 'none';
