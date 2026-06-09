@@ -543,6 +543,100 @@ const PLATFORMS: PlatformProfile[] = [
       fullBenchTest:    { interval: "Annual",                    signal: null                  },
     },
   },
+  {
+    id: "unitree-r1",
+    name: "Unitree R1",
+    manufacturer: "Unitree Robotics",
+    category: "humanoid",
+    description: "Ultra-lightweight humanoid at $4,900. 20 DOF, PMSM motors, 2-DOF head. Entry-level platform for education, research, and entertainment.",
+    specs: [
+      { label: "Weight", value: "27 kg" },
+      { label: "Total DOF", value: "20" },
+      { label: "Arm DOF", value: "4 per arm" },
+      { label: "Leg DOF", value: "6 per leg" },
+      { label: "Waist DOF", value: "2" },
+      { label: "Head DOF", value: "2" },
+      { label: "Max Arm Torque", value: "2 kg" },
+      { label: "Actuator Type", value: "PMSM" },
+      { label: "Cooling", value: "Local air cooling" },
+      { label: "Price", value: "$4,900" },
+    ],
+    tlmRanges: { healthScoreMin: 70, healthScoreMax: 95, batteryPctMin: 15, batteryPctMax: 92, motorTempMin: 35, motorTempMax: 68 },
+    failureSignatures: [
+      { id: "actuator-overheat", name: "Actuator Overheat", severity: "critical", description: "Joint temp > 70°C sustained" },
+      { id: "joint-backlash", name: "Joint Backlash", severity: "warning", description: "Position error > 3mm" },
+      { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 15% during operation" },
+    ],
+    maintenanceCta: "Schedule R1 service",
+    manualUrl: "https://support.unitree.com/home/en/R1_developer",
+    diagramUrl: "https://github.com/unitreerobotics/unitree_ros/tree/master/robots/r1_description",
+  },
+  {
+    id: "asimov-here-be-dragons",
+    name: "Asimov Here Be Dragons",
+    manufacturer: "Asimov",
+    category: "humanoid",
+    description: "Stealth-mode startup humanoid. Minimal public documentation. Research confidence: low.",
+    specs: [
+      { label: "Status", value: "Roadmap / Stealth" },
+    ],
+    tlmRanges: { healthScoreMin: 50, healthScoreMax: 80, batteryPctMin: 10, batteryPctMax: 90, motorTempMin: 30, motorTempMax: 70 },
+    failureSignatures: [
+      { id: "unknown", name: "Unknown — Awaiting Documentation", severity: "info", description: "Platform in pre-release. No failure data available." },
+    ],
+    maintenanceCta: "Monitor for updates",
+    manualUrl: "https://asimov.ai",
+    diagramUrl: "https://asimov.ai",
+    badge: "Roadmap",
+  },
+  {
+    id: "dji-agras-t60",
+    name: "DJI Agras T60",
+    manufacturer: "DJI",
+    category: "drone",
+    description: "Larger-capacity variant of T50. 60L tank, extended tank increases center-of-gravity shift failure risk.",
+    specs: [
+      { label: "Weight", value: "52 kg" },
+      { label: "Max Payload", value: "60 kg" },
+      { label: "Tank Capacity", value: "60 L" },
+      { label: "Flight Time", value: "15 min" },
+      { label: "Spread Width", value: "11 m" },
+      { label: "Motors", value: "8" },
+    ],
+    tlmRanges: { healthScoreMin: 78, healthScoreMax: 98, batteryPctMin: 10, batteryPctMax: 100, motorTempMin: 28, motorTempMax: 58 },
+    failureSignatures: [
+      { id: "actuator-overheat", name: "Motor Overheat", severity: "critical", description: "Prop motor > 85°C (full payload)" },
+      { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 15% mid-mission" },
+      { id: "cog-shift", name: "Center-of-Gravity Shift", severity: "warning", description: "Tank level < 20% alters flight dynamics" },
+    ],
+    maintenanceCta: "Schedule drone maintenance",
+    manualUrl: "https://dl.djicdn.com/downloads/agras_t60/",
+    diagramUrl: "https://dl.djicdn.com/downloads/agras_t60/",
+  },
+  {
+    id: "dji-matrice-350",
+    name: "DJI Matrice 350 RTK",
+    manufacturer: "DJI",
+    category: "drone",
+    description: "Enterprise inspection platform. RTK positioning. Modular payload system. High IP rating for outdoor ops.",
+    specs: [
+      { label: "Weight", value: "6.47 kg" },
+      { label: "Max Payload", value: "2.7 kg" },
+      { label: "Flight Time", value: "55 min" },
+      { label: "IP Rating", value: "IP55" },
+      { label: "Wind Resistance", value: "15 m/s" },
+      { label: "RTK", value: "Yes" },
+    ],
+    tlmRanges: { healthScoreMin: 82, healthScoreMax: 99, batteryPctMin: 15, batteryPctMax: 100, motorTempMin: 25, motorTempMax: 55 },
+    failureSignatures: [
+      { id: "actuator-overheat", name: "Motor Overheat", severity: "critical", description: "Motor > 80°C sustained" },
+      { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 15% during mission" },
+      { id: "rtk-loss", name: "RTK Signal Loss", severity: "warning", description: "RTK fix lost > 30s in open sky" },
+    ],
+    maintenanceCta: "Schedule inspection",
+    manualUrl: "https://www.dji.com/matrice-350",
+    diagramUrl: "https://www.dji.com/matrice-350",
+  },
 ];
 
 // ── AI + Edge Compute Platforms ─────────────────────────────────────────────
@@ -626,25 +720,40 @@ export default ALL_PLATFORMS;
 
 /** Maps platform IDs to locally-hosted official product images. */
 export const PLATFORM_IMAGE_MAP: Record<string, string> = {
-  "unitree-g1":        "/images/platforms/unitree_g1.jpg",
-  "unitree-h1-2":      "/images/platforms/unitree_h1_2.png",
-  "unitree-b2":        "/images/platforms/unitree_b2.png",
-  "figure-02":         "/images/platforms/figure_02.jpg",
-  "optimus-gen3":      "/images/platforms/tesla_optimus.jpg",
-  "digit-v5":          "/images/platforms/agility_digit.jpg",
-  "asimov-1":          "https://docs.menlo.ai/_next/static/media/opnosurce%20asimov-v1.239758c4.jpeg",
-  "phantom-mk1":       "/images/platforms/foundation_phantom.webp",
-  "dji-agras-t50":     "/images/platforms/dji_agras_t50.jpg",
-  "skydio-x10":        "/images/platforms/skydio_x10.jpg",
-  "zipline-p2":        "/images/platforms/zipline_p2.svg",
-  "serve-rs2":         "/images/platforms/serve_rs2.jpg",
-  "starship-gen3":     "/images/platforms/starship_gen3.jpg",
-  "spot":              "/images/platforms/bostondynamics_spot.jpg",
-  "proteus-amr":       "/images/platforms/amazon_proteus.jpg",
-  "rebot-devarm":      "/images/platforms/robo_inc.png",
-  "lime-gen4":         "/images/platforms/lime_ebike.jpg",
-  "bird-three":        "/images/platforms/bird_three.jpg",
-  "radcommercial":     "/images/platforms/rad_power.svg",
+  // Humanoids
+  "unitree-g1":            "/images/platforms/unitree_g1.jpg",
+  "unitree-h1-2":          "/images/platforms/unitree_h1_2.png",
+  "unitree-b2":            "/images/platforms/unitree_b2.png",
+  "figure-02":             "/images/platforms/figure_02.jpg",
+  "optimus-gen3":          "/images/platforms/tesla_optimus.jpg",
+  "digit-v5":              "/images/platforms/agility_digit.jpg",
+  "asimov-1":              "https://docs.menlo.ai/_next/static/media/opnosurce%20asimov-v1.239758c4.jpeg",
+  "phantom-mk1":           "/images/platforms/foundation_phantom.webp",
+  "unitree-r1":            "/images/platforms/unitree_r1.jpg",  // Need to add this image
+
+  // Drones
+  "dji-agras-t50":         "/images/platforms/dji_agras_t50.jpg",
+  "skydio-x10":            "/images/platforms/skydio_x10.jpg",
+  "zipline-p2":            "/images/platforms/zipline_p2.png",
+  "dji-agras-t60":         "/images/platforms/dji_agras_t60.jpg",  // Need to add
+  "dji-matrice-350":       "/images/platforms/dji_matrice350.jpg",
+
+  // Delivery
+  "serve-rs2":             "/images/platforms/serve_rs2.jpg",
+  "starship-gen3":         "/images/platforms/starship_gen3.jpg",
+
+  // Industrial
+  "spot":                  "/images/platforms/bostondynamics_spot.jpg",
+  "proteus-amr":           "/images/platforms/amazon_proteus.jpg",
+  "rebot-devarm":          "/images/platforms/robo_inc.png",
+  "amazon-proteus":        "/images/platforms/amazon_proteus.jpg",
+
+  // Micromobility
+  "lime-gen4":             "/images/platforms/lime_ebike.jpg",
+  "bird-three":            "/images/platforms/bird_three.jpg",
+  "radcommercial":         "/images/platforms/rad_power.png",
+
+  // Compute / Edge AI
   "nvidia-jetson-agx-thor": "/images/platforms/nvidia_jetson_agx_thor.png",
-  "aigen-element-gen2":     "/images/platforms/aigen_element_gen2.jpg",
+  "aigen-element-gen2":    "/images/platforms/aigen_element_gen2.jpg",
 };

@@ -148,7 +148,7 @@ export function RobotModelViewer({
         <img
           src={imgSrc}
           alt={platform?.name || chassis.label}
-          className="absolute inset-0 h-full w-full object-contain p-4 transition duration-700 hover:scale-105"
+          className="absolute inset-0 h-full w-full object-contain p-4 transition duration-700 hover:scale-105 brightness-[0.85]"
         />
         {/* CSS effects overlay */}
         <div className="cad-spotlight" />
@@ -156,6 +156,29 @@ export function RobotModelViewer({
         <div className="pointer-events-none absolute inset-0" style={{
           backgroundImage: 'linear-gradient(0deg, transparent 48%, rgba(56,189,248,0.06) 50%, transparent 52%)',
           backgroundSize: '100% 4px',
+        }} />
+        {/* Corner bracket overlay (top-left, top-right, bottom-left, bottom-right) */}
+        <div className="pointer-events-none absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(56,189,248,0.25) 2px, transparent 2px),
+            linear-gradient(to bottom, rgba(56,189,248,0.25) 2px, transparent 2px),
+            linear-gradient(to left, rgba(56,189,248,0.25) 2px, transparent 2px),
+            linear-gradient(to top, rgba(56,189,248,0.25) 2px, transparent 2px)
+          `,
+          backgroundSize: '16px 16px',
+          backgroundPosition: '0 0, 0 0, 100% 0, 0 100%',
+          backgroundRepeat: 'no-repeat',
+        }} />
+        {/* Crosshair reticle center */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{
+          backgroundImage: `
+            radial-gradient(circle at center, transparent 12px, rgba(56,189,248,0.08) 12px, rgba(56,189,248,0.08) 13px, transparent 13px),
+            linear-gradient(to right, transparent calc(50% - 0.5px), rgba(56,189,248,0.15) calc(50% - 0.5px), rgba(56,189,248,0.15) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+            linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(56,189,248,0.15) calc(50% - 0.5px), rgba(56,189,248,0.15) calc(50% + 0.5px), transparent calc(50% + 0.5px))
+          `,
+          backgroundSize: '24px 24px, 100% 1px, 1px 100%',
+          backgroundPosition: 'center, center, center',
+          backgroundRepeat: 'no-repeat',
         }} />
       </div>
     );
