@@ -81,11 +81,11 @@ describe("runDiagnosticPipeline — critical frame", () => {
   it("includes aiAnalysis with required fields", async () => {
     const report = await runDiagnosticPipeline(criticalFrame(), [], "unitree-g1");
     if (report.aiAnalysis) {
-      expect(report.claudeAnalysis.severity).toBeDefined();
-      expect(report.claudeAnalysis.title).toBeDefined();
-      expect(report.claudeAnalysis.recommendation.immediate).toBeDefined();
-      expect(report.claudeAnalysis.recommendation.shortTerm).toBeDefined();
-      expect(report.claudeAnalysis.recommendation.preventive).toBeDefined();
+      expect(report.aiAnalysis.severity).toBeDefined();
+      expect(report.aiAnalysis.title).toBeDefined();
+      expect(report.aiAnalysis.recommendation.immediate).toBeDefined();
+      expect(report.aiAnalysis.recommendation.shortTerm).toBeDefined();
+      expect(report.aiAnalysis.recommendation.preventive).toBeDefined();
     }
   });
 });
