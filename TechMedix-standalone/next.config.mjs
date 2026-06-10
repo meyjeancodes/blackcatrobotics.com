@@ -8,6 +8,7 @@ const nextConfig = {
       "**/node_modules/three-stdlib/**",
       "**/public/robots/**",
       "**/public/robots*/**",
+      "**/.atlas/**",
     ],
   },
   turbopack: {

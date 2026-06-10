@@ -26,10 +26,15 @@ const ALLOWED_PREFIXES = [
 ];
 
 // Map of path prefix to local .atlas/ file
+// Using a function to avoid Turbopack tracing the entire project via process.cwd()
+function getLocalFilePath(filename: string): string {
+  return path.join(/*turbopackIgnore: true*/ process.cwd(), ".atlas", filename);
+}
+
 const LOCAL_FILES: Record<string, string> = {
-  companies: path.join(process.cwd(), ".atlas", "companies.json"),
-  components: path.join(process.cwd(), ".atlas", "components.json"),
-  relationships: path.join(process.cwd(), ".atlas", "relationships.json"),
+  companies: getLocalFilePath("companies.json"),
+  components: getLocalFilePath("components.json"),
+  relationships: getLocalFilePath("relationships.json"),
 };
 
 function serveLocalFallback(pathSegments: string[]): NextResponse | null {
@@ -38,7 +43,7 @@ function serveLocalFallback(pathSegments: string[]): NextResponse | null {
   if (!filePath) return null;
 
   try {
-    const raw = fs.readFileSync(filePath, "utf8");
+    const raw = fs.readFileSync(/*turbopackIgnore: true*/ filePath, "utf8");
     const data = JSON.parse(raw);
 
     // If requesting a specific company by ID
