@@ -98,6 +98,13 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPart
     });
   }, [wireframe]);
 
+  // Apply model rotation to fix orientation (URDF faces X-forward, we need Z-forward)
+  useEffect(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.set(0, -Math.PI / 2, 0);
+    }
+  }, []);
+
   // ─── Stable pointer NDC — tracked each frame from R3F's event state ─────────
   // gl.pointer is injected by R3F's event layer (not native WebGLRenderer)
   const pointerNdcRef = useRef<THREE.Vector2 | null>(null);
