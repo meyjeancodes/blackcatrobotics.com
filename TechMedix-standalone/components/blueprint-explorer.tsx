@@ -18,7 +18,22 @@ import {
   Ruler,
   Wrench,
   X,
+  BookOpen,
+  AlertTriangle,
+  Clock,
+  Tag,
+  Zap,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+  Settings,
+  Cpu,
+  Bot,
+  Brain,
+  Layers,
 } from "lucide-react";
+
+import type { PlatformProfile } from "@/lib/platforms/index";
 
 const CATEGORY_COLOR: Record<PartCategory, { fill: string; stroke: string; badge: string; glow: string }> = {
   actuator:       { fill: "#FF6B35", stroke: "#FF6B35", badge: "bg-orange-500/[0.12] text-orange-300",   glow: "rgba(255,107,53,0.55)"  },
@@ -99,6 +114,245 @@ function DetailRow({ label, value, icon }: DetailRowProps) {
       <div>
         <p className="font-mono text-[0.46rem] uppercase tracking-[0.10em] text-white/32 mb-0.5">{label}</p>
         <p className="text-[0.60rem] text-white/62">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Failure Signature Drill-Down Component ─────────────────────────────────────
+interface FailureSignatureProps {
+  failure: PlatformProfile["failureSignatures"][0];
+  repairProtocols?: { id: string; title: string; steps_json: unknown[]; tools_required: string[]; parts_json: unknown[]; labor_minutes: number | null; skill_level: string }[];
+  onOpenProtocol?: (protocolId: string) => void;
+}
+
+function FailureSignatureDrillDown({ failure, repairProtocols = [], onOpenProtocol }: FailureSignatureProps) {
+  const [expanded, setExpanded] = useState(true);
+
+  const severityColor = failure.severity === "critical" ? "text-red-400" : failure.severity === "warning" ? "text-amber-400" : "text-sky-400";
+  const severityBg = failure.severity === "critical" ? "bg-red-500/[0.05] border-red-500/20" : failure.severity === "warning" ? "bg-amber-500/[0.05] border-amber-500/20" : "bg-sky-500/[0.05] border-sky-500/20";
+  const severityBorder = failure.severity === "critical" ? "border-red-500/20" : failure.severity === "warning" ? "border-amber-500/20" : "border-sky-500/20";
+
+  return (
+    <div className={`rounded-lg border ${severityBorder} ${severityBg} p-3`}>
+      <button
+        type="button"
+        onClick={() => setExpanded(!expanded)}
+        className="w-full flex items-center justify-between gap-2"
+      >
+        <div className="flex items-center gap-1.5">
+          <span className={`inline-flex items-center rounded-full px-2 py-0.5 font-mono text-[0.48rem] uppercase tracking-[0.12em] font-semibold ${severityColor} bg-current/[0.15]`}>
+            {failure.severity === "critical" ? "●" : "○"} {failure.severity.toUpperCase()}
+          </span>
+          <h4 className="font-mono text-[0.58rem] uppercase tracking-[0.10em] text-white">{failure.name}</h4>
+        </div>
+        <ChevronDown size={12} className={`text-white/40 transition-transform ${expanded ? "rotate-180" : ""}`} />
+      </button>
+
+      {expanded && (
+        <div className="mt-3 space-y-3 animate-in slide-in-from-top-2">
+          {/* Root cause & description */}
+          <div className="rounded bg-white/[0.02] p-3">
+            <p className="font-mono text-[0.44rem] uppercase tracking-[0.10em] text-white/30 mb-1">Root Cause</p>
+            <p className="text-[0.62rem] leading-relaxed text-white/70">{failure.description}</p>
+          </div>
+
+          {/* Meta info row */}
+          <div className="flex flex-wrap items-center gap-3 text-[0.55rem]">
+            {failure.mtbfHours && (
+              <span className="inline-flex items-center gap-1 text-white/50">
+                <Clock size={10} /> MTBF: ~{Math.round(failure.mtbfHours).toLocaleString()} hrs
+              </span>
+            )}
+            {(failure as any).sourceCount !== undefined && (
+              <span className="inline-flex items-center gap-1 text-white/50">
+                <Tag size={10} /> Sources: {(failure as any).sourceCount}
+              </span>
+            )}
+            {(failure as any).confidence && (
+              <span className="inline-flex items-center gap-1 text-white/50">
+                <BookOpen size={10} /> Confidence: {(failure as any).confidence}
+              </span>
+            )}
+          </div>
+
+          {/* Tags */}
+          {(failure as any).tags?.length && (
+            <div className="flex flex-wrap gap-1.5">
+              {(failure as any).tags.slice(0, 5).map((tag: string) => (
+                <span key={tag} className="rounded-full border border-white/[0.10] bg-white/[0.03] px-2 py-0.5 font-mono text-[0.46rem] uppercase tracking-[0.08em] text-white/50">
+                  {tag}
+                </span>
+              ))}
+              {(failure as any).tags.length > 5 && (
+                <span className="text-white/30">+{(failure as any).tags.length - 5} more</span>
+              )}
+            </div>
+          )}
+
+          {/* Repair Protocols */}
+          {repairProtocols.length > 0 && (
+            <div className="space-y-2 border-t border-white/[0.08] pt-3">
+              <p className="font-mono text-[0.48rem] uppercase tracking-[0.12em] text-white/40 flex items-center gap-1.5">
+                <Settings size={10} /> Repair Protocols ({repairProtocols.length})
+              </p>
+              <div className="space-y-1.5">
+                {repairProtocols.map((protocol) => (
+                  <button
+                    key={protocol.id}
+                    type="button"
+                    onClick={() => onOpenProtocol?.(protocol.id)}
+                    className="w-full text-left rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 transition hover:border-sky-500/30 hover:bg-sky-500/[0.03]"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-mono text-[0.55rem] text-white/80">{protocol.title}</p>
+                        <div className="flex flex-wrap gap-2 mt-1 text-[0.48rem] text-white/45">
+                          {protocol.labor_minutes && (
+                            <span className="inline-flex items-center gap-1">
+                              <Clock size={9} /> {protocol.labor_minutes} min
+                            </span>
+                          )}
+                          <span className="inline-flex items-center gap-1">
+                            <AlertTriangle size={9} /> {protocol.skill_level}
+                          </span>
+                          {protocol.tools_required?.length && (
+                            <span className="inline-flex items-center gap-1">
+                              <Wrench size={9} /> {protocol.tools_required.length} tools
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <ExternalLink size={12} className="text-white/30 hover:text-sky-400" />
+                    </div>
+                    {protocol.steps_json && protocol.steps_json.length > 0 && (
+                      <ol className="mt-2 space-y-1 text-[0.52rem] text-white/55" start={1}>
+                        {protocol.steps_json.slice(0, 3).map((step, i) => (
+                          <li key={i} className="flex gap-1">
+                            <span className="font-mono text-white/30">{i + 1}.</span>
+                            <span>{String(step).slice(0, 80)}{String(step).length > 80 ? "…" : ""}</span>
+                          </li>
+                        ))}
+                        {protocol.steps_json.length > 3 && (
+                          <li className="text-white/30">+{protocol.steps_json.length - 3} more steps</li>
+                        )}
+                      </ol>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Parts needed */}
+          {repairProtocols.flatMap((p) => p.parts_json || []).length > 0 && (
+            <div className="border-t border-white/[0.08] pt-3">
+              <p className="font-mono text-[0.48rem] uppercase tracking-[0.12em] text-white/40 mb-2">
+                Parts Required
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {repairProtocols.flatMap((p) => p.parts_json || []).slice(0, 6).map((part, i) => (
+                  <span key={i} className="rounded-full border border-white/[0.10] bg-white/[0.03] px-2 py-0.5 font-mono text-[0.48rem] uppercase tracking-[0.08em] text-white/55">
+                    {String(part)}
+                  </span>
+                ))}
+                {repairProtocols.flatMap((p) => p.parts_json || []).length > 6 && (
+                  <span className="text-white/30">+{repairProtocols.flatMap((p) => p.parts_json || []).length - 6} more</span>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Action buttons */}
+          <div className="flex flex-wrap gap-2 border-t border-white/[0.08] pt-3">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 px-3 py-1.5 font-mono text-[0.5rem] uppercase tracking-[0.1em] text-sky-400 transition hover:bg-sky-500/[0.06]"
+            >
+              <BookOpen size={10} /> Dispatch Job
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.10] px-3 py-1.5 font-mono text-[0.5rem] uppercase tracking-[0.1em] text-white/50 transition hover:bg-white/[0.04]"
+            >
+              <ExternalLink size={10} /> View Protocol
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── AI Layer Compatibility Matrix ──────────────────────────────────────────────
+interface AILayerMatrixProps {
+  platform: PlatformProfile | null;
+}
+
+function AILayerMatrix({ platform }: AILayerMatrixProps) {
+  const layers = [
+    { id: "world-model", name: "World Models", icon: Brain, color: "text-violet-400", bg: "bg-violet-500/[0.10]", desc: "Predictive physics & dynamics", examples: "NVIDIA Cosmos, Wayve GAIA, Dreamer v3" },
+    { id: "vla", name: "VLA Models", icon: Bot, color: "text-sky-400", bg: "bg-sky-500/[0.10]", desc: "Vision-Language-Action control", examples: "π0, OpenVLA, Helix, UnifoLM-VLA" },
+    { id: "reward", name: "Reward Models", icon: Zap, color: "text-amber-400", bg: "bg-amber-500/[0.10]", desc: "Trajectory scoring & RL rewards", examples: "Value-Order Correlation, Preference models" },
+    { id: "sim2real", name: "Sim → Reality", icon: Layers, color: "text-emerald-400", bg: "bg-emerald-500/[0.10]", desc: "Domain randomization transfer", examples: "Isaac Lab DR, MuJoCo DR, Genesis" },
+  ];
+
+  // Determine which layers apply to this platform based on category and specs
+  const getLayerSupport = (layerId: string) => {
+    if (!platform) return "unknown";
+    const cat = platform.category;
+    const specs = platform.specs.map(s => s.label.toLowerCase()).join(" ");
+    
+    switch (layerId) {
+      case "world-model":
+        return cat === "humanoid" || cat === "industrial" ? "supported" : cat === "drone" ? "partial" : "unsupported";
+      case "vla":
+        return specs.includes("vla") || cat === "humanoid" ? "supported" : "partial";
+      case "reward":
+        return cat === "humanoid" ? "partial" : "unsupported";
+      case "sim2real":
+        return cat === "humanoid" || cat === "industrial" || cat === "drone" ? "supported" : "partial";
+      default:
+        return "unknown";
+    }
+  };
+
+  const statusConfig = {
+    supported: { label: "Supported", color: "text-emerald-400", bg: "bg-emerald-500/[0.10]", dot: "●" },
+    partial: { label: "Partial", color: "text-amber-400", bg: "bg-amber-500/[0.10]", dot: "◑" },
+    unsupported: { label: "Not Supported", color: "text-slate-400", bg: "bg-slate-500/[0.10]", dot: "○" },
+    unknown: { label: "Unknown", color: "text-white/30", bg: "bg-white/[0.03]", dot: "?" },
+  };
+
+  return (
+    <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-4">
+      <p className="font-mono text-[0.48rem] uppercase tracking-[0.12em] text-white/40 mb-3 flex items-center gap-1.5">
+        <Bot size={10} /> AI Layer Compatibility
+      </p>
+      <div className="space-y-2">
+        {layers.map((layer) => {
+          const support = getLayerSupport(layer.id);
+          const config = statusConfig[support];
+          return (
+            <div key={layer.id} className="rounded-lg p-3 bg-white/[0.015] border border-white/[0.04]">
+              <div className="flex items-start gap-3">
+                <div className={`shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${layer.bg}`}>
+                  <layer.icon size={14} className={layer.color} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-mono text-[0.62rem] text-white">{layer.name}</h4>
+                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 font-mono text-[0.44rem] uppercase tracking-[0.1em] ${config.bg} ${config.color}`}>
+                      {config.dot} {config.label}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-[0.55rem] leading-relaxed text-white/50">{layer.desc}</p>
+                  <p className="mt-1.5 text-[0.5rem] leading-snug text-white/35">{layer.examples}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -597,21 +851,17 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                 {selectedPart.summary}
               </p>
 
-              {/* Known failure mode */}
+              {/* Known failure mode - Enhanced Drill-Down */}
               {platform?.failureSignatures?.find((f) =>
                 selectedPart.id.toLowerCase().includes(f.id.toLowerCase())
               ) && (
-                <div className="rounded-lg border border-red-500/20 bg-red-500/[0.05] p-3">
-                  <p className="font-mono text-[0.48rem] uppercase tracking-[0.12em] text-red-400 mb-1.5 flex items-center gap-1.5">
-                    <CircleDot size={9} fill="currentColor" />
-                    Known Failure Mode
-                  </p>
-                  <p className="text-[0.62rem] leading-relaxed text-red-400/72">
-                    {platform?.failureSignatures.find(
-                      (f) => selectedPart.id.toLowerCase().includes(f.id.toLowerCase())
-                    )?.description}
-                  </p>
-                </div>
+                <FailureSignatureDrillDown
+                  failure={platform?.failureSignatures.find((f) =>
+                    selectedPart.id.toLowerCase().includes(f.id.toLowerCase())
+                  )!}
+                  repairProtocols={[]} // TODO: Fetch from Supabase when protocol ID matches
+                  onOpenProtocol={(protocolId) => console.log("Open protocol:", protocolId)}
+                />
               )}
 
               {/* Technical details */}
@@ -628,6 +878,9 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                   icon={<Wrench size={10} />}
                 />
               </div>
+
+              {/* AI Layer Compatibility Matrix */}
+              <AILayerMatrix platform={platform} />
             </div>
           </div>
         )}

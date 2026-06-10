@@ -1,6 +1,7 @@
 import { createServiceClient } from "@/lib/supabase-service";
 import { KnowledgeHubClient } from "@/components/knowledge-hub-client";
 import { AsimovHeroCard } from "@/components/asimov-hero-card";
+import { ComponentCrossReference } from "@/components/component-cross-reference";
 import { getAllPlatforms } from "@/lib/platforms/index";
 import Link from "next/link";
 import {
@@ -460,6 +461,11 @@ export default async function KnowledgePage() {
         </div>
       </section>
 
+      {/* ── Component Cross-Reference ─────────────────────────────────────────── */}
+      <section>
+        <ComponentCrossReference />
+      </section>
+
       {/* ── Cert CTA ────────────────────────────────────────────────────────── */}
       <section
         className="rounded-[28px] p-8"
@@ -479,6 +485,7 @@ export default async function KnowledgePage() {
             <p className="mt-2 text-sm leading-6 text-white/45 max-w-lg">
               Five certification levels from Operator to Autonomous Systems Architect.
               Study the components and platforms above, then take the exam.
+              <span className="text-white/30 ml-2">Platform-specific tracks available via URL params (e.g., ?platform=unitree-g1).</span>
             </p>
           </div>
           <div className="flex flex-col gap-2 shrink-0">
