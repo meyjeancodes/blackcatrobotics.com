@@ -26,6 +26,24 @@ export interface PlatformProfile {
     name: string;
     severity: "critical" | "warning" | "info";
     description: string;
+    /** Mean Time Between Failures in hours */
+    mtbfHours?: number;
+    /** Number of source citations */
+    sourceCount?: number;
+    /** Confidence level: high, medium, low, unverified */
+    confidence?: "high" | "medium" | "low" | "unverified";
+    /** Tags for filtering/categorization */
+    tags?: string[];
+    /** Linked repair protocols */
+    repairProtocols?: {
+      id: string;
+      title: string;
+      steps_json: unknown[];
+      tools_required: string[];
+      parts_json: unknown[];
+      labor_minutes: number | null;
+      skill_level: "basic" | "intermediate" | "advanced" | "specialist";
+    }[];
   }[];
   maintenanceCta: string;
   badge?: string;

@@ -39,6 +39,11 @@ export function transformPlatform(supabase: any): PlatformProfile {
       name: fs.name,
       severity: fs.severity,
       description: fs.description,
+      mtbfHours: fs.mtbfHours,
+      sourceCount: fs.sourceCount,
+      confidence: fs.confidence,
+      tags: fs.tags,
+      repairProtocols: fs.repairProtocols,
     })),
     maintenanceCta: "Schedule service",
     badge:
