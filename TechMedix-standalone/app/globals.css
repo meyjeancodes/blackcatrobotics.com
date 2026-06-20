@@ -1,3 +1,4 @@
+@import "./cad-card-fix.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
