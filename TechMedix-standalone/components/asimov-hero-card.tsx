@@ -16,7 +16,7 @@ export function AsimovHeroCard() {
 
       <div className="relative flex flex-col lg:flex-row lg:items-stretch">
         {/* Left content */}
-        <div className="flex-1 p-8 lg:p-10">
+        <div className="flex-1 min-w-0 p-8 lg:p-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/[0.22] bg-amber-400/[0.07] px-3 py-1 mb-5">
             <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
             <span className="font-ui text-[0.55rem] uppercase tracking-[0.22em] text-amber-400">Featured Platform — Open Source</span>
@@ -77,7 +77,7 @@ export function AsimovHeroCard() {
         </div>
 
         {/* Right visual — placeholder for Asimov photo */}
-        <div className="hidden lg:flex lg:w-72 xl:w-96 items-center justify-center border-l border-white/[0.05] p-8 bg-[#0a0a10]">
+        <div className="hidden lg:flex lg:w-72 xl:w-96 min-w-0 items-center justify-center border-l border-white/[0.05] p-8 bg-[#0a0a10]">
           <div className="relative flex h-48 w-48 items-center justify-center">
             {/* Rings */}
             <div className="absolute inset-0 rounded-full border border-amber-400/[0.10]" />

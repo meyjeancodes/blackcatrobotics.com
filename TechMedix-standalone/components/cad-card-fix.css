@@ -1,0 +1,20 @@
+/* ============================================================ */
+/* CAD Card Layout Fix — prevent width collapse in grid cells   */
+/* ============================================================ */
+
+.cad-card-float {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex-shrink: 0 !important;
+}
+
+/* Ensure any nested w-full or flex-1 children don't escape */
+.cad-card-float > div {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.cad-card-float .panel-elevated {
+  width: 100%;
+  max-width: 100%;
+}
