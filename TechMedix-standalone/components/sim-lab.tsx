@@ -572,6 +572,7 @@ const PLATFORM_OPTIONS = [
       { id: "optimus-gen3",  name: "Tesla Optimus Gen 3" },
       { id: "digit-v5",      name: "Agility Digit V5" },
       { id: "phantom-mk1",   name: "Physical Intel. Phantom" },
+      { id: "asimov-v1",     name: "Asimov V1 (Open Source)" },
     ],
   },
   {
