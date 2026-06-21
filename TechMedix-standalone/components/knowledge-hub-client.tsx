@@ -805,7 +805,7 @@ flexGrow: 1,
                   {CAT_LABEL[cat] ?? cat} <span className="font-mono text-[var(--ink)]/30">{filteredList.length}</span>
                 </p>
                 {viewMode === "grid" ? (
-                  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  <div className="flex flex-col gap-4">
                     {filteredList.map(renderPlatformCard)}
                   </div>
                 ) : (
