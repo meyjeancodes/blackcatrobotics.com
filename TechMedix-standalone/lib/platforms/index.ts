@@ -411,6 +411,45 @@ const PLATFORMS: PlatformProfile[] = [
     diagramUrl: "https://www.aboutamazon.com/news/operations/amazon-introduces-new-robotics-solutions",
   },
 
+  // ── Open-Source Humanoids ───────────────────────────────────────────────────
+  {
+    id: "asimov-v1",
+    name: "Asimov V1",
+    manufacturer: "Asimov Inc.",
+    category: "humanoid",
+    description: "1.2 m open-source biped. CERN-OHL-S-2.0 hardware, GPL-2.0 software. 25 actuated DOF, MuJoCo sim model, full mechanical CAD (7 subassemblies), electrical wiring harness. DIY kit $15K — ships summer 2026.",
+    badge: "Open Source",
+    specs: [
+      { label: "Height",    value: "1.2 m" },
+      { label: "Weight",    value: "35 kg" },
+      { label: "DOF",       value: "25 actuated + 2 passive" },
+      { label: "Arms",      value: "5 DOF × 2" },
+      { label: "Legs",      value: "6 DOF × 2 + toe" },
+      { label: "Compute",   value: "RPi 5 + Radxa CM5" },
+      { label: "Structure", value: "7075 aluminium + MJF PA12" },
+      { label: "Kit Price", value: "$15,000 target" },
+    ],
+    tlmRanges: { healthScoreMin: 62, healthScoreMax: 93, batteryPctMin: 20, batteryPctMax: 95, motorTempMin: 30, motorTempMax: 70 },
+    failureSignatures: [
+      { id: "joint-backlash",    name: "Wrist Backlash",         severity: "warning",  description: "5-DOF arm wrist yaw shows > 1.5° deadband — check cable tension on wrist actuator" },
+      { id: "actuator-overheat", name: "Leg Actuator Overheat",  severity: "critical", description: "6-DOF leg joint > 70°C sustained > 30s during squat cycles — hip/knee cycloidal drive wear" },
+      { id: "ft-sensor-drift",   name: "IMU Drift",              severity: "warning",  description: "6-DOF torso IMU yaw drift > 1.2°/min at rest — recalibrate or replace IMU" },
+      { id: "camera-offline",    name: "Head Camera Drop",       severity: "critical", description: "2MP monocular feed loss > 200ms — check USB cable routing through neck 2-DOF joint" },
+      { id: "comms-fault",       name: "CAN Bus Fault",          severity: "warning",  description: "CAN bus saturation (> 80% @ 1Mbps) causes joint command dropout — isolate segment" },
+    ],
+    maintenanceCta: "Open Asimov GitHub Issue",
+    manualUrl: "https://manual.asimov.inc/v1",
+    diagramUrl: "https://static.asimov.inc/asimov/v1/asimov-v1-20260420.html",
+    maintenanceIntervals: {
+      jointCalibration: { interval: "90 days",         signal: "joint-backlash"    },
+      imuRecalibration: { interval: "60 days",          signal: "ft-sensor-drift"   },
+      canBusAudit:      { interval: "30 days",          signal: "comms-fault"       },
+      cableDress:       { interval: "6 months",         signal: "camera-offline"    },
+      actuatorInspect:  { interval: "200 squat-cycles", signal: "actuator-overheat" },
+      fullBenchTest:    { interval: "Annual",           signal: null                },
+    },
+  },
+
   // ── Watch List — Pre-Integration ────────────────────────────────────────────
   {
     id: "rebot-devarm",

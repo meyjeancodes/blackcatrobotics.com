@@ -5,10 +5,33 @@ import { useEffect, useState } from "react";
 import { createClient } from "../../../lib/supabase-browser";
 
 const PLATFORMS = [
+  // Humanoids
   "Unitree G1",
   "Unitree H1-2",
+  "Figure 02",
+  "Tesla Optimus Gen 3",
+  "Agility Digit V5",
+  "Physical Intelligence Phantom Mk1",
+  "Asimov V1",
+  // Quadrupeds
   "Boston Dynamics Spot",
+  "Unitree B2",
+  // Drones
   "DJI Agras T50",
+  "Skydio X10",
+  "Zipline Platform 2",
+  // Ground / Delivery
+  "Serve RS2",
+  "Starship Gen 3",
+  "Amazon Proteus AMR",
+  // Micromobility
+  "Lime Gen 4 E-Bike",
+  "Bird Three E-Scooter",
+  "Rad Power RadCommercial",
+  // Arms & Ag
+  "Seeed reBot-DevArm",
+  "Aigen Element gen2",
+  // Other
   "Other",
 ];
 
