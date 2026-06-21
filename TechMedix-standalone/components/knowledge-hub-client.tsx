@@ -367,7 +367,7 @@ export function KnowledgeHubClient({ initialPlatforms = [] }: Props) {
       <div
         key={platform.id}
         className={`
-          cad-card-float panel-elevated flex flex-col gap-3 p-5 transition-all duration-300
+          cad-card-float panel-elevated flex flex-col gap-4 p-6 transition-all duration-300
           ${viewMode === "list" ? "flex-row items-start" : ""}
           border border-[var(--ink)]/[0.06]
         `}
@@ -387,7 +387,7 @@ flexGrow: 1,
           <RobotModelViewer
             platformId={platform.id}
             mode="preview"
-            className={viewMode === "list" ? "h-full w-full" : "h-48 w-full cursor-pointer"}
+            className={viewMode === "list" ? "h-full w-full" : "h-72 w-full cursor-pointer"}
             onClick={() => openBlueprint(platform.id)}
           />
         </div>
