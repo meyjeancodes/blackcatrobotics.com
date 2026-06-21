@@ -791,7 +791,7 @@ flexGrow: 1,
 
         {/* Category Section Headers + Grid */}
         <StaggerContainer
-          className={viewMode === "grid" ? "grid gap-4 sm:grid-cols-2 xl:grid-cols-3" : "space-y-3"}
+          className={viewMode === "grid" ? "space-y-10" : "space-y-3"}
         >
           {Object.entries(byCategory).map(([cat, list]) => {
             const filteredList = list.filter((p) =>
@@ -805,7 +805,7 @@ flexGrow: 1,
                   {CAT_LABEL[cat] ?? cat} <span className="font-mono text-[var(--ink)]/30">{filteredList.length}</span>
                 </p>
                 {viewMode === "grid" ? (
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-5">
                     {filteredList.map(renderPlatformCard)}
                   </div>
                 ) : (
