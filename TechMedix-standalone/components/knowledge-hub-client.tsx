@@ -372,6 +372,9 @@ export function KnowledgeHubClient({ initialPlatforms = [] }: Props) {
           border border-[var(--ink)]/[0.06]
         `}
         style={{
+          width: '100%',
+          maxWidth: '100%',
+          flexShrink: 0,
           boxShadow: highlightedId === platform.id
             ? "0 0 0 2px rgba(56,189,248,0.35), 0 0 40px rgba(56,189,248,0.12)"
             : "",
