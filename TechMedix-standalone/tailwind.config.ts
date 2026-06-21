@@ -6,6 +6,11 @@ const config: Config = {
     "./components/**/*.{ts,tsx}",
     "./lib/**/*.{ts,tsx}"
   ],
+  safelist: [
+    {
+      pattern: /cad-card-float/,
+    },
+  ],
   theme: {
     extend: {
       colors: {
