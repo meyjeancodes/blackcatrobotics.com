@@ -791,7 +791,7 @@ flexGrow: 1,
 
         {/* Category Section Headers + Grid */}
         <StaggerContainer
-          className={viewMode === "grid" ? "space-y-10" : "space-y-3"}
+          className={viewMode === "grid" ? "space-y-6" : "space-y-3"}
         >
           {Object.entries(byCategory).map(([cat, list]) => {
             const filteredList = list.filter((p) =>
@@ -800,8 +800,8 @@ flexGrow: 1,
             if (filteredList.length === 0) return null;
 
             return (
-              <div key={cat} className={viewMode === "grid" ? "mb-8" : ""}>
-                <p className="mb-3 font-ui text-[0.6rem] uppercase tracking-[0.26em] text-[var(--ink)]/38 font-medium">
+              <div key={cat} className={viewMode === "grid" ? "mb-4" : ""}>
+                <p className="mb-2 font-ui text-[0.6rem] uppercase tracking-[0.26em] text-[var(--ink)]/38 font-medium">
                   {CAT_LABEL[cat] ?? cat} <span className="font-mono text-[var(--ink)]/30">{filteredList.length}</span>
                 </p>
                 {viewMode === "grid" ? (
@@ -818,7 +818,7 @@ flexGrow: 1,
       </div>
 
       {/* TechMedix Sandbox launcher */}
-      <div className="mt-10 rounded-[20px] border border-ember/[0.18] bg-gradient-to-br from-ember/[0.06] to-transparent p-6">
+      <div className="mt-6 rounded-[20px] border border-ember/[0.18] bg-gradient-to-br from-ember/[0.06] to-transparent p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="kicker">TechMedix Sandbox</p>
