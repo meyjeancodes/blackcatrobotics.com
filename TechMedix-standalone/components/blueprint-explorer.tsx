@@ -593,6 +593,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                 label={platform?.name}
                 height="h-full"
                 selectedPartId={selectedPartId}
+                exploded={exploded}
                 wireframe={wireframe}
                 onPartClick={(meshName) => {
                   const componentId = mapUrdfPart(platformId, meshName);

@@ -13,13 +13,14 @@ interface UrdfRobotProps {
  onLoad: () => void;
  onError: (msg: string) => void;
  selectedPartId?: string | null;
+ exploded?: boolean;
  wireframe?: boolean;
  onPartClick?: (partName: string) => void;
  /** Maps URDF mesh names → parts-catalog component IDs */
  meshToComponentMap?: Record<string, string>;
 }
 
-function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, wireframe, onPartClick, meshToComponentMap }: UrdfRobotProps) {
+function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false, wireframe, onPartClick, meshToComponentMap }: UrdfRobotProps) {
   const groupRef = useRef<THREE.Group>(null!);
   const [isLoaded, setIsLoaded] = useState(false);
   const mountedRef = useRef(true);
@@ -169,6 +170,81 @@ useEffect(() => {
 });
 }, [selectedPartId]);
 
+  // ─── Exploded view: separate meshes by body region ──────────────────────────────────
+  const originalPositionsRef = useRef<Map<string, THREE.Vector3>>(new Map());
+  const [explodedApplied, setExplodedApplied] = useState(false);
+
+  // Map mesh names to explode offset directions
+  function getExplodeOffset(name: string): THREE.Vector3 | null {
+    const n = name.toLowerCase();
+    // Head & accessories — lift up
+    if (n.startsWith('head_') || n === 'd455_link' || n === 'logo_link' || n === 'd435_link')
+      return new THREE.Vector3(0, 0.35, 0);
+    // Left arm — push left and slightly up
+    if (n.startsWith('left_shoulder') || n.startsWith('left_elbow') || n.startsWith('left_wrist'))
+      return new THREE.Vector3(-0.25, 0.1, 0);
+    // Right arm — push right and slightly up
+    if (n.startsWith('right_shoulder') || n.startsWith('right_elbow') || n.startsWith('right_wrist'))
+      return new THREE.Vector3(0.25, 0.1, 0);
+    // Left hand / end effector — push further left
+    if (n.startsWith('left_hand') || n.startsWith('l_hand') || n.includes('left_rubber_hand'))
+      return new THREE.Vector3(-0.35, -0.05, 0.08);
+    // Right hand / end effector — push further right
+    if (n.startsWith('right_hand') || n.startsWith('r_hand') || n.includes('right_rubber_hand'))
+      return new THREE.Vector3(0.35, -0.05, 0.08);
+    // Left leg — push left and down
+    if (n.startsWith('left_hip') || n.startsWith('left_knee') || n.startsWith('left_ankle') || n.startsWith('left_base'))
+      return new THREE.Vector3(-0.12, -0.3, 0);
+    // Right leg — push right and down
+    if (n.startsWith('right_hip') || n.startsWith('right_knee') || n.startsWith('right_ankle') || n.startsWith('right_base'))
+      return new THREE.Vector3(0.12, -0.3, 0);
+    // Torso / waist / pelvis — slight lift
+    if (n.startsWith('torso_') || n.startsWith('pelvis') || n.startsWith('waist_') || n.startsWith('xl330'))
+      return new THREE.Vector3(0, 0.08, 0);
+    // Dex1 hand internals — treat as hand
+    if (n.startsWith('dex1') || n.includes('dex1'))
+      return new THREE.Vector3(0, 0.15, 0.12);
+    // Finger / force sensor internals — group with hand
+    if (n.includes('finger') || n.includes('force_sensor') || n.includes('thumb') || n.includes('index_') || n.includes('middle_') || n.includes('ring_') || n.includes('little_') || n.includes('palm_'))
+      return new THREE.Vector3(0, 0.1, 0.05);
+    // Link* parts (small connectors) — slight scatter
+    if (n.startsWith('link'))
+      return new THREE.Vector3(0, 0.05, 0);
+    return null;
+  }
+
+  // Store original positions once meshes are loaded
+  useEffect(() => {
+    if (!isLoaded || !groupRef.current) return;
+    const map = originalPositionsRef.current;
+    map.clear();
+    groupRef.current.traverse((child: any) => {
+      if (child instanceof THREE.Mesh) {
+        map.set(child.uuid, child.position.clone());
+      }
+    });
+  }, [isLoaded]);
+
+  // Apply explode translation when exploded changes
+  useEffect(() => {
+    if (!isLoaded || !groupRef.current) return;
+    groupRef.current.traverse((child: any) => {
+      if (child instanceof THREE.Mesh) {
+        const orig = originalPositionsRef.current.get(child.uuid);
+        if (!orig) return;
+        if (exploded) {
+          const offset = getExplodeOffset(child.name);
+          if (offset) {
+            child.position.copy(orig).add(offset);
+          }
+        } else {
+          child.position.copy(orig);
+        }
+      }
+    });
+    setExplodedApplied(exploded);
+  }, [exploded, isLoaded]);
+
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
 <group ref={groupRef} onClick={handlePartClick}>
@@ -189,10 +265,11 @@ useEffect(() => {
 
 // ─── Full canvas with lights, controls, grounding ────────────────────────────
 
-function UrdfScene({ urdfUrl, onError, selectedPartId, wireframe, onPartClick, meshToComponentMap }: {
+function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, onPartClick, meshToComponentMap }: {
  urdfUrl: string;
  onError: (msg: string) => void;
  selectedPartId?: string | null;
+ exploded?: boolean;
  wireframe?: boolean;
  onPartClick?: (partName: string) => void;
  meshToComponentMap?: Record<string, string>;
@@ -224,6 +301,7 @@ function UrdfScene({ urdfUrl, onError, selectedPartId, wireframe, onPartClick, m
  onLoad={() => setLoaded(true)}
  onError={onError}
  selectedPartId={selectedPartId}
+ exploded={exploded}
  wireframe={wireframe}
  onPartClick={onPartClick}
  meshToComponentMap={meshToComponentMap}
@@ -260,13 +338,14 @@ interface Props {
  label?: string;
  height?: string;
  selectedPartId?: string | null;
+ exploded?: boolean;
  wireframe?: boolean;
  onPartClick?: (partName: string) => void;
  /** Maps URDF mesh names → parts-catalog component IDs */
  meshToComponentMap?: Record<string, string>;
 }
 
-export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]', selectedPartId, wireframe, onPartClick, meshToComponentMap }: Props) {
+export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]', selectedPartId, exploded = false, wireframe, onPartClick, meshToComponentMap }: Props) {
  const [error, setError] = useState<string | null>(null);
 
  if (error) {
@@ -306,7 +385,7 @@ export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]',
  )}
 
  <div className="h-full w-full">
- <UrdfScene urdfUrl={urdfPath} onError={setError} selectedPartId={selectedPartId} wireframe={wireframe} onPartClick={onPartClick} meshToComponentMap={meshToComponentMap} />
+ <UrdfScene urdfUrl={urdfPath} onError={setError} selectedPartId={selectedPartId} exploded={exploded} wireframe={wireframe} onPartClick={onPartClick} meshToComponentMap={meshToComponentMap} />
  </div>
  </div>
  );
