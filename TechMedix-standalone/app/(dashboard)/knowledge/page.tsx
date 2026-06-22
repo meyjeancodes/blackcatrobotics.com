@@ -271,7 +271,7 @@ export default async function KnowledgePage() {
   );
 
   return (
-    <div className="space-y-20">
+    <div className="space-y-12">
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div>
         <p className="kicker">Repair Intelligence</p>
