@@ -818,7 +818,7 @@ flexGrow: 1,
       </div>
 
       {/* TechMedix Sandbox launcher */}
-      <div className="mt-6 rounded-[20px] border border-ember/[0.18] bg-gradient-to-br from-ember/[0.06] to-transparent p-6">
+      <div className="mt-3 rounded-[20px] border border-ember/[0.18] bg-gradient-to-br from-ember/[0.06] to-transparent p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="kicker">TechMedix Sandbox</p>
