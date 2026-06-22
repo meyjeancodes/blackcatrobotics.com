@@ -271,7 +271,7 @@ export default async function KnowledgePage() {
   );
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-6">
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div>
         <p className="kicker">Repair Intelligence</p>
@@ -292,7 +292,7 @@ export default async function KnowledgePage() {
 
       {/* ── Component Anatomy ───────────────────────────────────────────────── */}
       <section>
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">
               Component Anatomy
@@ -360,7 +360,7 @@ export default async function KnowledgePage() {
 
       {/* ── AI Intelligence Layer (Layer 2) ─────────────────────────────────── */}
       <section id="ai-intelligence-layer">
-        <div className="mb-8">
+        <div className="mb-4">
           <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">
             AI Intelligence Layer
           </h2>
@@ -400,7 +400,7 @@ export default async function KnowledgePage() {
 
       {/* ── Open Learning Resources ─────────────────────────────────────────── */}
       <section>
-        <div className="mb-8">
+        <div className="mb-4">
           <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">
             Open Learning Resources
           </h2>
@@ -436,7 +436,7 @@ export default async function KnowledgePage() {
 
       {/* ── Essentials & Communities ────────────────────────────────────────── */}
       <section>
-        <div className="mb-8">
+        <div className="mb-4">
           <h2 className="font-header text-2xl leading-tight text-[var(--ink)]">
             Essentials & Communities
           </h2>
