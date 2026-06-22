@@ -6,6 +6,26 @@ import { getPlatformById } from "@/lib/platforms/index";
 import { getUrdfForPlatform } from "@/lib/platforms/urdf-config";
 import { mapUrdfPart, URDF_PART_MAPPINGS } from "@/lib/platforms/urdf-part-mapping";
 import { UrdfRobotViewer } from "./urdf-robot-viewer";
+
+// ─── Guided Teardown Sequence ──────────────────────────────────────────────────
+interface TearDownStep {
+  partIds: string[];
+  label: string;
+  instruction: string;
+  icon?: string;
+}
+
+const TEARDOWN_SEQUENCE: TearDownStep[] = [
+  { partIds: ["head-compute"],              label: "Head / Compute Bay",        instruction: "Disconnect compute harness and lift the head assembly off the torso mounting plate. 4× M4 screws under the rubber seal." },
+  { partIds: ["comms-antenna"],             label: "Comms Array",               instruction: "Unscrew the antenna stalks from the baseplate. Disconnect the SMA coax connectors — twist gently, don't pull the wire." },
+  { partIds: ["cooling-loop"],              label: "Thermal Management",        instruction: "Drain the coolant loop at the lowest point (left hip fitting). Disconnect pump power. Remove the radiator and fan pack from the torso back." },
+  { partIds: ["shoulder-actuators","elbow-actuators"], label: "Arm Actuators",  instruction: "Remove the shoulder fairing. Disconnect the actuator power/signal cables at the torso bulkhead. Unbolt the shoulder joint — 6× M5, torque to 12 Nm on reinstall." },
+  { partIds: ["wrist-ft","hands"],          label: "End Effectors",             instruction: "Disconnect the hand cable bundle at the wrist. Remove the 4× M3 screws securing the F/T sensor. The hand assembly slides off the wrist spline." },
+  { partIds: ["torso-battery"],             label: "Battery + BMS",             instruction: "LOTO + zero-energy verify. Disconnect the main power bus bars. Remove the 8× M4 battery retention screws. Lift the pack straight up — it's ~3 kg." },
+  { partIds: ["torso-frame"],               label: "Torso Frame / Spine",       instruction: "Unbolt the spine from the pelvis (4× M8) and the shoulder yoke (4× M8). Route cables out of the spine channel before removal." },
+  { partIds: ["hip-actuators","knee-actuators","ankle-actuators"], label: "Leg Actuators", instruction: "Disconnect leg actuator cables at the pelvis junction box. Remove the hip assembly (6× M8 per side). The knee and ankle come as a sub-assembly." },
+  { partIds: ["feet-imu"],                  label: "Feet + Sensors",            instruction: "Remove the sole plate. Disconnect the F/T sensor cable. Unbolt the ankle-to-foot mount — 4× M6, check thread locker on reinstall." },
+];
 import {
   CircleDot,
   Crosshair,
@@ -373,6 +393,8 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
   const [wireframe, setWireframe] = useState(false);
   const [showDimensions, setShowDimensions] = useState(false);
   const [touring, setTouring] = useState(false);
+  const [teardownActive, setTeardownActive] = useState(false);
+  const [teardownStep, setTeardownStep] = useState(0);
   const [rotating, setRotating] = useState(true);
   const [revealCount, setRevealCount] = useState(0);
   const [show3d, setShow3d] = useState(() => !!getUrdfForPlatform(platformId));
@@ -451,6 +473,22 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
 
   const selectedPart = chassis.parts.find((p) => p.id === selectedPartId) ?? null;
 
+  // ─── Teardown: hidden part IDs from completed steps ─────────────────────────────
+  const hiddenPartIds = useMemo(() => {
+    if (!teardownActive) return new Set<string>();
+    const ids = new Set<string>();
+    for (let i = 0; i < teardownStep; i++) {
+      for (const pid of TEARDOWN_SEQUENCE[i].partIds) {
+        ids.add(pid);
+      }
+    }
+    return ids;
+  }, [teardownActive, teardownStep]);
+
+  const currentTdStep = teardownActive && teardownStep < TEARDOWN_SEQUENCE.length
+    ? TEARDOWN_SEQUENCE[teardownStep]
+    : null;
+
   const grouped = useMemo(() => {
     return chassis.parts.reduce<Record<string, typeof chassis.parts>>((acc, part) => {
       if (!acc[part.category]) acc[part.category] = [];
@@ -511,6 +549,24 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
             label={touring ? "Stop" : "Tour"}
             active={touring}
             onClick={() => setTouring((v) => !v)}
+          />
+          <div className="mx-1.5 h-4 w-px bg-white/[0.08]" />
+          <ToolbarBtn
+            icon={<Wrench size={11} />}
+            label={teardownActive ? `Teardown ${teardownStep}/${TEARDOWN_SEQUENCE.length}` : "Teardown"}
+            active={teardownActive}
+            onClick={() => {
+              if (teardownActive) {
+                setTeardownActive(false);
+                setTeardownStep(0);
+              } else {
+                if (touring) setTouring(false);
+                setExploded(false);
+                setTeardownActive(true);
+                setTeardownStep(0);
+                setSelectedPartId(null);
+              }
+            }}
           />
           {onClose && (
             <button
@@ -602,6 +658,7 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                   }
                 }}
                 meshToComponentMap={URDF_PART_MAPPINGS[platformId]}
+                hiddenPartIds={Array.from(hiddenPartIds)}
               />
             </div>
           ) : (
@@ -706,7 +763,8 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
                 const color = CATEGORY_COLOR[part.category];
                 const [ex, ey] = exploded ? part.explodeOffset : [0, 0];
                 const d = transformPath(part.d, ex, ey);
-                const isVisible = index < revealCount;
+                const teardownHidden = hiddenPartIds.has(part.id);
+                const isVisible = !teardownHidden && (teardownActive ? true : index < revealCount);
 
                 const fillOpacity = wireframe ? 0 : isSelected ? 0.30 : isHovered ? 0.18 : 0.09;
                 const strokeOpacity = isSelected ? 1 : isHovered ? 0.92 : 0.58;
@@ -805,6 +863,56 @@ export function BlueprintExplorer({ platformId, onClose }: Props) {
             </>
           )}
         </div>
+
+        {/* ─── Teardown Step Overlay ───────────────────────────────────── */}
+        {teardownActive && currentTdStep && (
+          <div className="absolute bottom-0 left-0 right-0 z-20 border-t border-white/[0.10] bg-[#030306]/95 backdrop-blur-md">
+            <div className="flex items-start gap-4 p-4">
+              {/* Step indicator */}
+              <div className="shrink-0 flex items-center justify-center h-14 w-14 rounded-lg border border-amber-500/30 bg-amber-500/[0.08]">
+                <span className="font-mono text-lg font-bold text-amber-400">{teardownStep + 1}</span>
+              </div>
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[0.46rem] uppercase tracking-[0.14em] text-white/25">Step {teardownStep + 1} of {TEARDOWN_SEQUENCE.length}</span>
+                  <span className="rounded-full bg-amber-500/[0.12] px-2 py-0.5 font-mono text-[0.44rem] uppercase tracking-[0.08em] text-amber-300/80">Remove</span>
+                </div>
+                <h4 className="mt-0.5 font-header text-sm leading-snug text-white">{currentTdStep.label}</h4>
+                <p className="mt-1.5 text-[0.63rem] leading-relaxed text-white/55 max-w-[620px]">{currentTdStep.instruction}</p>
+              </div>
+              {/* Navigation */}
+              <div className="shrink-0 flex items-center gap-2 self-center">
+                <button
+                  type="button"
+                  disabled={teardownStep === 0}
+                  onClick={() => setTeardownStep((s) => Math.max(0, s - 1))}
+                  className="flex items-center gap-1 rounded-lg border border-white/[0.12] px-3 py-1.5 font-mono text-[0.50rem] uppercase tracking-[0.10em] text-white/40 transition hover:border-white/20 hover:text-white/70 disabled:opacity-20 disabled:cursor-not-allowed"
+                >
+                  <ChevronDown size={11} style={{ transform: 'rotate(90deg)' }} />
+                  Prev
+                </button>
+                <button
+                  type="button"
+                  disabled={teardownStep >= TEARDOWN_SEQUENCE.length - 1}
+                  onClick={() => setTeardownStep((s) => Math.min(TEARDOWN_SEQUENCE.length - 1, s + 1))}
+                  className="flex items-center gap-1 rounded-lg border border-white/[0.12] px-3 py-1.5 font-mono text-[0.50rem] uppercase tracking-[0.10em] text-white/40 transition hover:border-white/20 hover:text-white/70 disabled:opacity-20 disabled:cursor-not-allowed"
+                >
+                  Next
+                  <ChevronDown size={11} style={{ transform: 'rotate(-90deg)' }} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setTeardownActive(false); setTeardownStep(0); }}
+                  className="flex items-center gap-1 rounded-lg border border-emerald-500/30 bg-emerald-500/[0.08] px-3 py-1.5 font-mono text-[0.50rem] uppercase tracking-[0.10em] text-emerald-300 transition hover:bg-emerald-500/[0.14]"
+                >
+                  <X size={11} />
+                  Reassemble
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Right detail panel */}
         {selectedPart && (

@@ -15,12 +15,13 @@ interface UrdfRobotProps {
  selectedPartId?: string | null;
  exploded?: boolean;
  wireframe?: boolean;
+ hiddenPartIds?: string[];
  onPartClick?: (partName: string) => void;
  /** Maps URDF mesh names → parts-catalog component IDs */
  meshToComponentMap?: Record<string, string>;
 }
 
-function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false, wireframe, onPartClick, meshToComponentMap }: UrdfRobotProps) {
+function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap }: UrdfRobotProps) {
   const groupRef = useRef<THREE.Group>(null!);
   const [isLoaded, setIsLoaded] = useState(false);
   const mountedRef = useRef(true);
@@ -245,6 +246,18 @@ useEffect(() => {
     setExplodedApplied(exploded);
   }, [exploded, isLoaded]);
 
+  // ─── Teardown: hide meshes whose component ID is in hiddenPartIds ─────────────
+  useEffect(() => {
+    if (!isLoaded || !groupRef.current) return;
+    const hiddenSet = new Set(hiddenPartIds);
+    groupRef.current.traverse((child: any) => {
+      if (child instanceof THREE.Mesh) {
+        const componentId = meshToComponentMap?.[child.name];
+        child.visible = componentId ? !hiddenSet.has(componentId) : true;
+      }
+    });
+  }, [hiddenPartIds, isLoaded, meshToComponentMap]);
+
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
 <group ref={groupRef} onClick={handlePartClick}>
@@ -265,12 +278,13 @@ useEffect(() => {
 
 // ─── Full canvas with lights, controls, grounding ────────────────────────────
 
-function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, onPartClick, meshToComponentMap }: {
+function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap }: {
  urdfUrl: string;
  onError: (msg: string) => void;
  selectedPartId?: string | null;
  exploded?: boolean;
  wireframe?: boolean;
+ hiddenPartIds?: string[];
  onPartClick?: (partName: string) => void;
  meshToComponentMap?: Record<string, string>;
 }) {
@@ -301,9 +315,10 @@ function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, onPa
  onLoad={() => setLoaded(true)}
  onError={onError}
  selectedPartId={selectedPartId}
- exploded={exploded}
- wireframe={wireframe}
- onPartClick={onPartClick}
+                 exploded={exploded}
+                 wireframe={wireframe}
+                 hiddenPartIds={hiddenPartIds}
+                 onPartClick={onPartClick}
  meshToComponentMap={meshToComponentMap}
  />
  </Suspense>
@@ -340,12 +355,13 @@ interface Props {
  selectedPartId?: string | null;
  exploded?: boolean;
  wireframe?: boolean;
+ hiddenPartIds?: string[];
  onPartClick?: (partName: string) => void;
  /** Maps URDF mesh names → parts-catalog component IDs */
  meshToComponentMap?: Record<string, string>;
 }
 
-export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]', selectedPartId, exploded = false, wireframe, onPartClick, meshToComponentMap }: Props) {
+export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]', selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap }: Props) {
  const [error, setError] = useState<string | null>(null);
 
  if (error) {
@@ -385,7 +401,7 @@ export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]',
  )}
 
  <div className="h-full w-full">
- <UrdfScene urdfUrl={urdfPath} onError={setError} selectedPartId={selectedPartId} exploded={exploded} wireframe={wireframe} onPartClick={onPartClick} meshToComponentMap={meshToComponentMap} />
+ <UrdfScene urdfUrl={urdfPath} onError={setError} selectedPartId={selectedPartId} exploded={exploded} wireframe={wireframe} hiddenPartIds={hiddenPartIds} onPartClick={onPartClick} meshToComponentMap={meshToComponentMap} />
  </div>
  </div>
  );
