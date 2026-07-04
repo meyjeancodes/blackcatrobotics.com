@@ -26,7 +26,6 @@
     "@swc/helpers": "^0.5.15",
     "@types/three": "^0.184.0",
     "ai": "^6.0.168",
-    "better-sqlite3": "^12.10.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.474.0",
     "marked": "^18.0.2",
