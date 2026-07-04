@@ -16,7 +16,6 @@ const nextConfig = {
   },
   async rewrites() {
     return [
-      { source: '/about', destination: '/about.html' },
       { source: '/blackcat-grid', destination: '/blackcat-grid.html' },
       { source: '/habitat-landing', destination: '/habitat.html' },
       { source: '/certifications-landing', destination: '/certifications.html' },

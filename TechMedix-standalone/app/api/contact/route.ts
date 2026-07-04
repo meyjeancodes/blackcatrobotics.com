@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createServiceClient } from '@/lib/supabase-service';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
@@ -51,6 +49,10 @@ export async function POST(req: NextRequest) {
   // 2️⃣ Auto-reply to prospect (branded, professional)
   let autoReplyError: string | null = null;
   try {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not configured');
+    }
+    const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
       from: 'BlackCat Robotics <hello@blackcatrobotics.com>',
       to: email,
