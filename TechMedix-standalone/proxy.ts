@@ -44,15 +44,19 @@ export async function proxy(request: NextRequest) {
       return NextResponse.next({ request });
     }
 
-    // NOTE: blackcatrobotics.com "/" used to be force-rewritten to the legacy
-    // static public/index.html here, which meant real visitors never saw the
-    // React homepage even after it was updated. That rewrite is removed —
-    // "/" now falls through to app/(marketing)/page.tsx like every other
-    // route. /about has no live target (about.html doesn't exist) and is
-    // left to 404 until it's rebuilt; /habitat-landing and /blackcat-grid
-    // still serve their legacy static pages for now pending the HABITAT /
-    // BlackCat Grid content decisions.
+    // Serve the rich marketing homepage on blackcatrobotics.com.
+    // CORRECTION: public/index.html is the real, fully-designed homepage
+    // that's been actively maintained (nav, hero, TechMedix/Pricing/Acquire/
+    // Signal sections). app/(marketing)/page.tsx is a separate, unfinished
+    // placeholder — it is NOT the intended production homepage. Restoring
+    // the rewrite here after briefly removing it in error.
     if (host === "blackcatrobotics.com" || host === "blackcatrobotics.com:443") {
+      if (pathname === "/") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/index.html";
+        return NextResponse.rewrite(url);
+      }
+
       const cleanRoutes = ["/habitat-landing", "/blackcat-grid"];
       if (cleanRoutes.includes(pathname) && !pathname.endsWith(".html")) {
         const url = request.nextUrl.clone();
