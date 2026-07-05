@@ -247,8 +247,7 @@ function QuoteModal({
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3">
             <p className="text-sm text-white/45">
-              We&apos;ll source, configure, and deliver the <strong className="text-white/70">{product.name}</strong>{" "}
-              with TechMedix pre-activated.
+              We&apos;ll source, configure, and deliver the <strong className="text-white/70">{product.name}</strong>.
             </p>
             <div>
               <label className="mb-1 block font-ui text-[0.65rem] uppercase tracking-[0.15em] text-white/40">
@@ -340,8 +339,8 @@ export function AcquireSection() {
           Browse the catalog. We handle sourcing.
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-white/45">
-          Every platform below ships with TechMedix onboarding — request a quote and we source,
-          configure, and deliver with fleet monitoring pre-activated.
+          Buy parts, order services, or purchase a robot outright. We source, configure,
+          and ship the platform you need.
         </p>
 
         {/* Category tabs */}
