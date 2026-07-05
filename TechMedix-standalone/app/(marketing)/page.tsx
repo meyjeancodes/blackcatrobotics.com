@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Waypoints, Wrench, Activity } from "lucide-react";
+import { AcquireSection } from "@/components/acquire/AcquireSection";
 
 const pillars = [
   {
@@ -116,6 +117,10 @@ export default function MarketingPage() {
           ))}
         </div>
       </section>
+
+      <div className="mx-auto h-px w-full max-w-6xl bg-white/[0.06]" />
+
+      <AcquireSection />
     </div>
   );
 }
