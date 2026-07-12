@@ -12,17 +12,6 @@ export interface RobotState {
   location: { x: number; y: number; zone: string };
   current_task: string | null;
   last_seen: string; // ISO 8601
-
-  // ── Fleet observability KPIs (DALE proof point) ──────────────────────────────
-  // Optional so legacy adapters keep working; populated when the vendor reports it.
-  task_count?: number; // cumulative tasks completed (e.g. holes drilled)
-  task_accuracy_pct?: number; // 0–100, QA pass rate
-  cycle_state?: string; // drilling | charging | dumping | idle
-  schedule_impact_hours?: number; // net hours saved vs manual baseline
-
-  // ── Outcome-linked metrics (Lely proof point) ───────────────────────────────
-  // Vendor-specific business KPIs the robot is meant to move (e.g. milk_yield_delta).
-  outcome_metrics_json?: Record<string, number>;
 }
 
 export interface VendorConnection {
