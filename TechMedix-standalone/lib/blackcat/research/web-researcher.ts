@@ -6,7 +6,8 @@
  *
  * Uses: env-selected LLM via lib/llm adapter (Ollama default, OpenAI-compatible, or Anthropic).
  * Provider override per-call is allowed but defaults to LLM_PROVIDER env var.
- * Search backend: SERPER_API_KEY (Google Search via serper.dev), falls back to demo mode.
+ * Search backend: SearXNG (SEARXNG_URL, self-hosted, preferred) with Serper.dev
+ * (SERPER_API_KEY) as a fallback. Falls back to empty (no live search) if neither.
  */
 
 import { generate, generateJSON } from "@/lib/llm";
@@ -75,10 +76,13 @@ export type ResearchSummary = {
   repair_protocols_found: number;
   signals_found: number;
   sources_cited: number;
+  extracted: number;
   low_confidence_count: number;
   confidence_avg: number;
   completed_at: string;
   status: "completed" | "partial" | "failed";
+  persist_errors?: string[];
+  debug_llm_raw?: string;
   error?: string;
 };
 
@@ -102,11 +106,43 @@ export const RESEARCH_PLATFORMS: ResearchTarget[] = [
 ];
 
 // ── Search utilities ─────────────────────────────────────────────────────────
+//
+// Search backend is configurable and open-source friendly:
+//   1. SearXNG (preferred, self-hosted, AGPL) when SEARXNG_URL is set.
+//      Calls the JSON API: `${SEARXNG_URL}/search?q=...&format=json`
+//   2. Serper.dev (Google) as a fallback if SERPER_API_KEY is set.
+//   3. Empty result (graceful) if neither is configured.
 
 async function webSearch(query: string): Promise<Array<{ title: string; snippet: string; link: string }>> {
+  const searxngUrl = process.env.SEARXNG_URL;
+  if (searxngUrl) {
+    try {
+      const res = await fetch(
+        `${searxngUrl.replace(/\/$/, "")}/search?q=${encodeURIComponent(query)}&format=json`,
+        { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(15000) }
+      );
+      if (!res.ok) {
+        console.warn(`[web-researcher] SearXNG search failed: ${res.status}`);
+        return [];
+      }
+      const data = await res.json();
+      return (data.results ?? []).map(
+        (r: { title: string; content: string; url: string }) => ({
+          title: r.title,
+          snippet: r.content,
+          link: r.url,
+        })
+      );
+    } catch (err) {
+      console.warn(`[web-researcher] SearXNG request error: ${String(err)}`);
+      return [];
+    }
+  }
+
+  // Fallback: Serper.dev (Google Search)
   const apiKey = process.env.SERPER_API_KEY;
   if (!apiKey) {
-    console.warn("[web-researcher] SERPER_API_KEY not set — skipping live search");
+    console.warn("[web-researcher] No SEARXNG_URL or SERPER_API_KEY set — skipping live search");
     return [];
   }
 
@@ -134,13 +170,16 @@ async function webSearch(query: string): Promise<Array<{ title: string; snippet:
 
 function buildSearchQueries(platform: ResearchTarget): string[] {
   const n = platform.name;
+  const m = platform.manufacturer;
   return [
-    `"${n}" teardown repair disassembly maintenance`,
-    `"${n}" failure modes common problems breakdown`,
-    `"${n}" service manual technical documentation`,
-    `"${n}" repair forum Reddit iFixit community fix`,
-    `"${n}" predictive maintenance telemetry signals`,
-    `"${n}" replacement parts actuator motor battery supplier`,
+    `"${n}" common failure modes problems issue`,
+    `"${n}" won't turn on falls over error code fault`,
+    `"${n}" repair fix troubleshoot reddit`,
+    `"${n}" site:reddit.com failure broke warranty RMA`,
+    `"${n}" actuator motor overheating battery not charging`,
+    `"${n}" teardown disassembly maintenance worn part`,
+    `"${m}" "${n}" service bulletin recall defect`,
+    `"${n}" forum community "my" broke stopped working`,
   ];
 }
 
@@ -149,23 +188,37 @@ function buildSearchQueries(platform: ResearchTarget): string[] {
 async function extractStructuredData(
   platform: ResearchTarget,
   searchResults: Array<{ title: string; snippet: string; link: string }>
-): Promise<ExtractedFailureMode[]> {
-  if (searchResults.length === 0) return [];
+): Promise<{ failures: ExtractedFailureMode[]; raw: string }> {
+  if (searchResults.length === 0) return { failures: [], raw: "" };
 
-  const context = searchResults
-    .slice(0, 12)
+  // Prioritize results whose title/snippet mention failure-related terms,
+  // but always fall back to sending a broad window so Groq sees real content.
+  const FAILURE_KW = /fail|broken|broke|error|fault|issue|problem|overheat|warranty|rma|repair|not charging|won't|wont|stuck|dead|crash|defect|recall|spasm|falls?|down/i;
+  const ranked = [...searchResults].sort((a, b) => {
+    const ascore = FAILURE_KW.test(`${a.title} ${a.snippet}`) ? 1 : 0;
+    const bscore = FAILURE_KW.test(`${b.title} ${b.snippet}`) ? 1 : 0;
+    return bscore - ascore;
+  });
+  const context = ranked
+    .slice(0, 30)
     .map((r, i) => `[${i + 1}] ${r.title}\n${r.snippet}\nURL: ${r.link}`)
     .join("\n\n");
 
   const systemPrompt = `You are a robotics field-service intelligence analyst for TechMedix, a maintenance platform for autonomous robots and micromobility.
 
-Your task: Extract REAL, SOURCED failure mode data from web search results about the ${platform.name} (${platform.type}, by ${platform.manufacturer}).
+Your task: Extract failure-mode intelligence about the ${platform.name} (${platform.type}, by ${platform.manufacturer}) from the web search results provided.
+
+What counts as a failure mode (extract ALL of these when present):
+- Explicit failures: "X broke", "X overheats", "X won't turn on", crash, fault, error code
+- Documented faults: fault tables in SDK/manuals, teardown analyses noting weak/worn components
+- Design limitations: retrofit papers, "known issue", recall, warranty/RMA patterns
+- Field reports: forum posts, videos, post-mortems describing a robot stopping/failing
 
 Rules:
-- Only extract failure modes that are clearly evidenced in the search results
+- Extract from ANY clearly-sourced signal — you do not need a verbatim "it failed" quote; teardown/fault-doc/retrofit content is valid evidence
 - Never fabricate repair steps or part numbers — use "unknown" if not stated in sources
 - Cite source URLs for every failure mode (only URLs that appear in the results)
-- Mark confidence as "low" or "unverified" if fewer than 2 results corroborate the finding
+- Mark confidence as exactly one of: "high", "medium", "low", or "unverified" (do NOT combine them)
 - severity: critical = safety risk or complete stoppage; high = major degradation; medium = reduced performance; low = cosmetic/minor
 - skill_level: basic (any tech), intermediate (certified), advanced (specialized), specialist (factory-level)
 - Keep repair steps factual and minimal — no speculation
@@ -217,18 +270,51 @@ If no reliable failure modes can be extracted, return an empty array [].
 Respond with ONLY the JSON array, no other text.`;
 
   try {
-    const parsed = await generateJSON<ExtractedFailureMode[]>({
+    const result = await generate({
       maxTokens: 4096,
       temperature: 0,
       system: systemPrompt,
       prompt: userPrompt,
     });
+    const raw = result.text;
 
-    if (!Array.isArray(parsed)) return [];
-    return parsed;
+    // Strip markdown fences and extract the first [...] or {...} block.
+    let clean = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/i, "").trim();
+    const jsonMatch = clean.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+    if (jsonMatch) clean = jsonMatch[0];
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(clean);
+    } catch {
+      console.error("[web-researcher] extractStructuredData: JSON parse failed. Raw:", raw.slice(0, 500));
+      return { failures: [], raw: raw.slice(0, 600) };
+    }
+
+    if (!Array.isArray(parsed)) {
+      console.error("[web-researcher] extractStructuredData: parsed is not an array:", typeof parsed);
+      return { failures: [], raw: raw.slice(0, 600) };
+    }
+
+    // Sanitize confidence to the DB enum (high|medium|low|unverified).
+    // Models may emit "low/unverified", "medium-high", etc. — coerce safely.
+    const CONFIDENCE_RANK: Record<string, number> = {
+      high: 3, medium: 2, low: 1, unverified: 0,
+    };
+    const failures = parsed.map((fm) => {
+      const raw_conf = String((fm as any).confidence ?? "").toLowerCase();
+      let conf: ExtractedFailureMode["confidence"] = "unverified";
+      if (raw_conf.includes("high")) conf = "high";
+      else if (raw_conf.includes("medium")) conf = "medium";
+      else if (raw_conf.includes("low")) conf = "low";
+      else if (raw_conf.includes("unverif")) conf = "unverified";
+      else if (Object.keys(CONFIDENCE_RANK).includes(raw_conf)) conf = raw_conf as ExtractedFailureMode["confidence"];
+      return { ...(fm as ExtractedFailureMode), confidence: conf };
+    });
+    return { failures, raw: raw.slice(0, 600) };
   } catch (err) {
     console.error("[web-researcher] extractStructuredData failed:", err);
-    return [];
+    return { failures: [], raw: String(err).slice(0, 600) };
   }
 }
 
@@ -256,10 +342,11 @@ async function persistExtractedData(
   platformId: string,
   failures: ExtractedFailureMode[],
   agentRunId: string
-): Promise<{ fmInserted: number; protocolsInserted: number; signalsInserted: number }> {
+): Promise<{ fmInserted: number; protocolsInserted: number; signalsInserted: number; persistErrors: string[] }> {
   let fmInserted = 0;
   let protocolsInserted = 0;
   let signalsInserted = 0;
+  const persistErrors: string[] = [];
 
   for (const fm of failures) {
     try {
@@ -321,11 +408,13 @@ async function persistExtractedData(
         signalsInserted++;
       }
     } catch (err) {
-      console.error(`[web-researcher] Failed to persist failure mode "${fm.component}/${fm.symptom}":`, err);
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error(`[web-researcher] Failed to persist failure mode "${fm.component}/${fm.symptom}":`, msg);
+      persistErrors.push(`${fm.component}/${fm.symptom}: ${msg}`);
     }
   }
 
-  return { fmInserted, protocolsInserted, signalsInserted };
+  return { fmInserted, protocolsInserted, signalsInserted, persistErrors };
 }
 
 // ── Main research function ────────────────────────────────────────────────────
@@ -355,7 +444,7 @@ export async function researchPlatform(
     console.log(`[web-researcher] ${platform.name}: ${uniqueResults.length} unique sources found`);
 
     // 2. Extract structured data via the configured LLM (lib/llm)
-    const failures = await extractStructuredData(platform, uniqueResults);
+    const { failures, raw: llmRaw } = await extractStructuredData(platform, uniqueResults);
     console.log(`[web-researcher] ${platform.name}: ${failures.length} failure modes extracted`);
 
     // 3. Upsert platform
@@ -373,7 +462,7 @@ export async function researchPlatform(
     }
 
     // 5. Persist extracted data
-    const { fmInserted, protocolsInserted, signalsInserted } = await persistExtractedData(
+    const { fmInserted, protocolsInserted, signalsInserted, persistErrors } = await persistExtractedData(
       platformId,
       failures,
       agentRunId
@@ -397,10 +486,13 @@ export async function researchPlatform(
       repair_protocols_found: protocolsInserted,
       signals_found: signalsInserted,
       sources_cited: uniqueResults.length,
+      extracted: failures.length,
       low_confidence_count: lowConfCount,
       confidence_avg: Math.round(confidenceAvg * 100) / 100,
       completed_at: new Date().toISOString(),
-      status: "completed",
+      status: persistErrors.length > 0 ? "partial" : "completed",
+      persist_errors: persistErrors,
+      debug_llm_raw: llmRaw,
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -413,6 +505,7 @@ export async function researchPlatform(
       repair_protocols_found: 0,
       signals_found: 0,
       sources_cited: 0,
+      extracted: 0,
       low_confidence_count: 0,
       confidence_avg: 0,
       completed_at: new Date().toISOString(),
