@@ -76,10 +76,12 @@ export type ResearchSummary = {
   repair_protocols_found: number;
   signals_found: number;
   sources_cited: number;
+  extracted: number;
   low_confidence_count: number;
   confidence_avg: number;
   completed_at: string;
   status: "completed" | "partial" | "failed";
+  persist_errors?: string[];
   error?: string;
 };
 
@@ -304,10 +306,11 @@ async function persistExtractedData(
   platformId: string,
   failures: ExtractedFailureMode[],
   agentRunId: string
-): Promise<{ fmInserted: number; protocolsInserted: number; signalsInserted: number }> {
+): Promise<{ fmInserted: number; protocolsInserted: number; signalsInserted: number; persistErrors: string[] }> {
   let fmInserted = 0;
   let protocolsInserted = 0;
   let signalsInserted = 0;
+  const persistErrors: string[] = [];
 
   for (const fm of failures) {
     try {
@@ -369,11 +372,13 @@ async function persistExtractedData(
         signalsInserted++;
       }
     } catch (err) {
-      console.error(`[web-researcher] Failed to persist failure mode "${fm.component}/${fm.symptom}":`, err);
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error(`[web-researcher] Failed to persist failure mode "${fm.component}/${fm.symptom}":`, msg);
+      persistErrors.push(`${fm.component}/${fm.symptom}: ${msg}`);
     }
   }
 
-  return { fmInserted, protocolsInserted, signalsInserted };
+  return { fmInserted, protocolsInserted, signalsInserted, persistErrors };
 }
 
 // ── Main research function ────────────────────────────────────────────────────
@@ -421,7 +426,7 @@ export async function researchPlatform(
     }
 
     // 5. Persist extracted data
-    const { fmInserted, protocolsInserted, signalsInserted } = await persistExtractedData(
+    const { fmInserted, protocolsInserted, signalsInserted, persistErrors } = await persistExtractedData(
       platformId,
       failures,
       agentRunId
@@ -445,10 +450,12 @@ export async function researchPlatform(
       repair_protocols_found: protocolsInserted,
       signals_found: signalsInserted,
       sources_cited: uniqueResults.length,
+      extracted: failures.length,
       low_confidence_count: lowConfCount,
       confidence_avg: Math.round(confidenceAvg * 100) / 100,
       completed_at: new Date().toISOString(),
-      status: "completed",
+      status: persistErrors.length > 0 ? "partial" : "completed",
+      persist_errors: persistErrors,
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -461,6 +468,7 @@ export async function researchPlatform(
       repair_protocols_found: 0,
       signals_found: 0,
       sources_cited: 0,
+      extracted: 0,
       low_confidence_count: 0,
       confidence_avg: 0,
       completed_at: new Date().toISOString(),
