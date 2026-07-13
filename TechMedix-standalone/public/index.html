@@ -89,7 +89,9 @@ ul { list-style: none; }
 #nav.scrolled { border-color: var(--border); box-shadow: 0 1px 24px rgba(10,10,15,0.06); }
 .nav-logo { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
 .nav-logo span { color: var(--fire); }
-.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-book { background: var(--fire); color: #fff; border: none; font-family: var(--display); font-size: 13px; font-weight: 600; padding: 9px 16px; border-radius: 8px; cursor: pointer; letter-spacing: 0.01em; transition: opacity 0.15s; }
+.nav-book:hover { opacity: 0.88; }
+.nav-links li { display: flex; align-items: center; }
 .nav-links a { font-size: 13px; font-weight: 500; color: var(--ink-2); text-decoration: none; padding: 7px 14px; border-radius: var(--r-pill); transition: color 0.15s, background 0.15s; }
 .nav-links a:hover { color: var(--ink); background: rgba(10,10,15,0.05); }
 .nav-cta { background: var(--ink) !important; color: #fff !important; padding: 8px 20px !important; }
@@ -572,6 +574,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#acquire">Acquire</a></li>
     <li><a href="#signal">Signal</a></li>
+    <li><button onclick="openModal('contact-modal')" class="nav-book">Book Onboarding</button></li>
     <li class="nav-dropdown">
       <a href="#" class="nav-dropdown-toggle">Divisions &#9662;</a>
       <ul class="nav-dropdown-menu">
@@ -606,15 +609,15 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <span>•</span>
       <span>Foundation Phantom MK-1 deployed to Ukraine frontlines for battlefield evaluation</span>
       <span>•</span>
-      <span>Asimov Here Be Dragons humanoid kit available for $15K presale</span>
+      <span>Asimov launches open-source Here Be Dragons humanoid kit</span>
       <span>•</span>
-      <span>Robot technician salary hits $68K median — 3:1 demand over supply</span>
+      <span>Robotics technician median pay near $74K as demand climbs (US BLS, 2025)</span>
       <span>•</span>
-      <span>Robot maintenance market projected to reach $10.2B by 2033</span>
+      <span>Service &amp; maintenance robotics market on a steep growth curve</span>
       <span>•</span>
       <span>NVIDIA Fleet Command reaches 50,000 edge deployments — physical layer still unmanaged</span>
       <span>•</span>
-      <span>65% of maintenance teams plan to adopt AI diagnostics by end of 2026</span>
+      <span>Predictive maintenance cuts unplanned robot downtime 25–40%</span>
       <span>•</span>
       <span>BlackCat OS open source certification curriculum now live on GitHub</span>
       <span>•</span>
@@ -626,15 +629,15 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <span>•</span>
       <span>Foundation Phantom MK-1 deployed to Ukraine frontlines for battlefield evaluation</span>
       <span>•</span>
-      <span>Asimov Here Be Dragons humanoid kit available for $15K presale</span>
+      <span>Asimov launches open-source Here Be Dragons humanoid kit</span>
       <span>•</span>
-      <span>Robot technician salary hits $68K median — 3:1 demand over supply</span>
+      <span>Robotics technician median pay near $74K as demand climbs (US BLS, 2025)</span>
       <span>•</span>
-      <span>Robot maintenance market projected to reach $10.2B by 2033</span>
+      <span>Service &amp; maintenance robotics market on a steep growth curve</span>
       <span>•</span>
       <span>NVIDIA Fleet Command reaches 50,000 edge deployments — physical layer still unmanaged</span>
       <span>•</span>
-      <span>65% of maintenance teams plan to adopt AI diagnostics by end of 2026</span>
+      <span>Predictive maintenance cuts unplanned robot downtime 25–40%</span>
       <span>•</span>
       <span>BlackCat OS open source certification curriculum now live on GitHub</span>
       <span>•</span>
@@ -658,6 +661,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <div class="hero-actions">
       <a href="https://github.com/meyjeancodes/blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Get TechMedix — Free &amp; Open Source</a>
       <a href="#acquire" class="btn btn-outline-white">Browse Platforms &rarr;</a>
+      <button onclick="openModal('contact-modal')" class="btn btn-outline-white" style="cursor:pointer;">Book Onboarding &rarr;</button>
     </div>
   </div>
   <div class="hero-scroll">
@@ -902,9 +906,9 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   <div id="acq-arms" style="display:none;" class="reveal">
     <div class="shop-track">
       <div class="scard hot"><div class="scard-ribbon">New — Arm</div><div class="scard-img"><img src="https://robo.inc/og-image.jpg" alt="ROBO-1 robot arm" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="scard-body"><div class="scard-maker"><a href="https://robo.inc" target="_blank" rel="noopener">ROBO Robotics</a></div><div class="scard-name">ROBO-1</div><div class="scard-desc">6-DOF robot arm with gripper, built for teachable, repeatable automation. Train a policy once on demonstration data, deploy to any ROBO-1 in the fleet. Native LeRobot support, MuJoCo digital twin, and Agent API for multi-arm pipeline orchestration.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">6 + gripper</div></div><div class="scard-spec"><div class="spec-k">Reach</div><div class="spec-v">700 mm</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">1 kg</div></div><div class="scard-spec"><div class="spec-k">Weight</div><div class="spec-v">&lt;3 kg</div></div><div class="scard-spec"><div class="spec-k">API</div><div class="spec-v">Agent API + LeRobot</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">TechMedix-compatible · free open-source diagnostics</div></div></div><div class="scard-foot"><div><div class="scard-price">Request Quote</div><div class="scard-sub">custom configuration</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
-      <div class="scard"><div class="scard-img"><img src="/images/platforms/ufactory_xarm6.jpg" alt="UFACTORY xArm 6" loading="lazy" onerror="this.style.display='none'"></div><div class="scard-body"><div class="scard-maker"><a href="https://www.ufactory.cc" target="_blank" rel="noopener">UFACTORY</a></div><div class="scard-name">xArm 6</div><div class="scard-desc">6-DOF collaborative robot arm with integrated controller and vision. Ideal for research, light manufacturing, and education. Supports ROS 2, MoveIt, and Python SDK.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">6</div></div><div class="scard-spec"><div class="spec-k">Reach</div><div class="spec-v">700 mm</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">5 kg</div></div><div class="scard-spec"><div class="spec-k">SDK</div><div class="spec-v">ROS 2</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">TechMedix-compatible · free open-source diagnostics</div></div></div><div class="scard-foot"><div><div class="scard-price">Request Quote</div><div class="scard-sub">custom configuration</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
-      <div class="scard"><div class="scard-img"><img src="/images/platforms/kinova_gen3.jpg" alt="Kinova Gen3" loading="lazy" onerror="this.style.display='none'"></div><div class="scard-body"><div class="scard-maker"><a href="https://www.kinovarobotics.com" target="_blank" rel="noopener">Kinova Robotics</a></div><div class="scard-name">Gen3</div><div class="scard-desc">7-DOF lightweight robotic arm for research. Carbon fiber construction, torque sensors in every joint, ROS 2 native. Field-proven in 60+ research labs worldwide.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">7</div></div><div class="scard-spec"><div class="spec-k">Reach</div><div class="spec-v">900 mm</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">4 kg</div></div><div class="scard-spec"><div class="spec-k">Weight</div><div class="spec-v">7.2 kg</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">TechMedix-compatible · free open-source diagnostics</div></div></div><div class="scard-foot"><div><div class="scard-price">Request Quote</div><div class="scard-sub">custom configuration</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
-      <div class="scard"><div class="scard-img"><img src="/images/platforms/universal_robots_ur5e.jpg" alt="UR5e" loading="lazy" onerror="this.style.display='none'"></div><div class="scard-body"><div class="scard-maker"><a href="https://www.universal-robots.com" target="_blank" rel="noopener">Universal Robots</a></div><div class="scard-name">UR5e</div><div class="scard-desc">Collaborative robot arm with built-in force sensing and intuitive teach pendant. 50,000+ installations across manufacturing, labs, and logistics worldwide.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">6</div></div><div class="scard-spec"><div class="spec-k">Reach</div><div class="spec-v">850 mm</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">5 kg</div></div><div class="scard-spec"><div class="spec-k">Weight</div><div class="spec-v">20.6 kg</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">TechMedix-compatible · free open-source diagnostics</div></div></div><div class="scard-foot"><div><div class="scard-price">Request Quote</div><div class="scard-sub">custom configuration</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+      <div class="scard"><div class="scard-img"><img src="/images/platforms/ufactory_xarm6.svg" alt="UFACTORY xArm 6" loading="lazy" onerror="this.style.display='none'"></div><div class="scard-body"><div class="scard-maker"><a href="https://www.ufactory.cc" target="_blank" rel="noopener">UFACTORY</a></div><div class="scard-name">xArm 6</div><div class="scard-desc">6-DOF collaborative robot arm with integrated controller and vision. Ideal for research, light manufacturing, and education. Supports ROS 2, MoveIt, and Python SDK.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">6</div></div><div class="scard-spec"><div class="spec-k">Reach</div><div class="spec-v">700 mm</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">5 kg</div></div><div class="scard-spec"><div class="spec-k">SDK</div><div class="spec-v">ROS 2</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">TechMedix-compatible · free open-source diagnostics</div></div></div><div class="scard-foot"><div><div class="scard-price">Request Quote</div><div class="scard-sub">custom configuration</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+      <div class="scard"><div class="scard-img"><img src="/images/platforms/kinova_gen3.svg" alt="Kinova Gen3" loading="lazy" onerror="this.style.display='none'"></div><div class="scard-body"><div class="scard-maker"><a href="https://www.kinovarobotics.com" target="_blank" rel="noopener">Kinova Robotics</a></div><div class="scard-name">Gen3</div><div class="scard-desc">7-DOF lightweight robotic arm for research. Carbon fiber construction, torque sensors in every joint, ROS 2 native. Field-proven in 60+ research labs worldwide.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">7</div></div><div class="scard-spec"><div class="spec-k">Reach</div><div class="spec-v">900 mm</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">4 kg</div></div><div class="scard-spec"><div class="spec-k">Weight</div><div class="spec-v">7.2 kg</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">TechMedix-compatible · free open-source diagnostics</div></div></div><div class="scard-foot"><div><div class="scard-price">Request Quote</div><div class="scard-sub">custom configuration</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
+      <div class="scard"><div class="scard-img"><img src="/images/platforms/universal_robots_ur5e.svg" alt="UR5e" loading="lazy" onerror="this.style.display='none'"></div><div class="scard-body"><div class="scard-maker"><a href="https://www.universal-robots.com" target="_blank" rel="noopener">Universal Robots</a></div><div class="scard-name">UR5e</div><div class="scard-desc">Collaborative robot arm with built-in force sensing and intuitive teach pendant. 50,000+ installations across manufacturing, labs, and logistics worldwide.</div><div class="scard-specs"><div class="scard-spec"><div class="spec-k">DOF</div><div class="spec-v">6</div></div><div class="scard-spec"><div class="spec-k">Reach</div><div class="spec-v">850 mm</div></div><div class="scard-spec"><div class="spec-k">Payload</div><div class="spec-v">5 kg</div></div><div class="scard-spec"><div class="spec-k">Weight</div><div class="spec-v">20.6 kg</div></div></div><div class="scard-bundle"><div class="scard-bundle-txt">TechMedix-compatible · free open-source diagnostics</div></div></div><div class="scard-foot"><div><div class="scard-price">Request Quote</div><div class="scard-sub">custom configuration</div></div><button class="scard-btn" onclick="openModal('acquire-modal')">Request Quote</button></div></div>
     </div>
   </div>
 
