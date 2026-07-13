@@ -169,13 +169,16 @@ async function webSearch(query: string): Promise<Array<{ title: string; snippet:
 
 function buildSearchQueries(platform: ResearchTarget): string[] {
   const n = platform.name;
+  const m = platform.manufacturer;
   return [
-    `"${n}" teardown repair disassembly maintenance`,
-    `"${n}" failure modes common problems breakdown`,
-    `"${n}" service manual technical documentation`,
-    `"${n}" repair forum Reddit iFixit community fix`,
-    `"${n}" predictive maintenance telemetry signals`,
-    `"${n}" replacement parts actuator motor battery supplier`,
+    `"${n}" common failure modes problems issue`,
+    `"${n}" won't turn on falls over error code fault`,
+    `"${n}" repair fix troubleshoot reddit`,
+    `"${n}" site:reddit.com failure broke warranty RMA`,
+    `"${n}" actuator motor overheating battery not charging`,
+    `"${n}" teardown disassembly maintenance worn part`,
+    `"${m}" "${n}" service bulletin recall defect`,
+    `"${n}" forum community "my" broke stopped working`,
   ];
 }
 
@@ -187,8 +190,16 @@ async function extractStructuredData(
 ): Promise<ExtractedFailureMode[]> {
   if (searchResults.length === 0) return [];
 
-  const context = searchResults
-    .slice(0, 12)
+  // Prioritize results whose title/snippet mention failure-related terms,
+  // but always fall back to sending a broad window so Groq sees real content.
+  const FAILURE_KW = /fail|broken|broke|error|fault|issue|problem|overheat|warranty|rma|repair|not charging|won't|wont|stuck|dead|crash|defect|recall|spasm|falls?|down/i;
+  const ranked = [...searchResults].sort((a, b) => {
+    const ascore = FAILURE_KW.test(`${a.title} ${a.snippet}`) ? 1 : 0;
+    const bscore = FAILURE_KW.test(`${b.title} ${b.snippet}`) ? 1 : 0;
+    return bscore - ascore;
+  });
+  const context = ranked
+    .slice(0, 25)
     .map((r, i) => `[${i + 1}] ${r.title}\n${r.snippet}\nURL: ${r.link}`)
     .join("\n\n");
 
