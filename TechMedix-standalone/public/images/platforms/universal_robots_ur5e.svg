@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Universal Robots UR5e collaborative arm">
+  <rect width="400" height="300" fill="#F0EFE8"/>
+  <g stroke="#0a0a0f" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M200 270 V216"/>
+    <path d="M200 216 L150 158"/>
+    <path d="M150 158 L250 120"/>
+    <path d="M250 120 L288 158"/>
+  </g>
+  <g fill="#E84E1B">
+    <circle cx="200" cy="216" r="15"/>
+    <circle cx="150" cy="158" r="15"/>
+    <circle cx="250" cy="120" r="15"/>
+    <circle cx="288" cy="158" r="11"/>
+  </g>
+  <circle cx="200" cy="270" r="16" fill="#0a0a0f"/>
+  <rect x="280" y="150" width="20" height="13" rx="6" fill="#0a0a0f"/>
+</svg>
