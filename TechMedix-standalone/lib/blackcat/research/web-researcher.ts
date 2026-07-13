@@ -144,7 +144,7 @@ function buildSearchQueries(platform: ResearchTarget): string[] {
   ];
 }
 
-// ── Structured extraction via Claude ─────────────────────────────────────────
+// ── Structured extraction via configurable LLM (lib/llm) ─────────────────────
 
 async function extractStructuredData(
   platform: ResearchTarget,
@@ -354,7 +354,7 @@ export async function researchPlatform(
 
     console.log(`[web-researcher] ${platform.name}: ${uniqueResults.length} unique sources found`);
 
-    // 2. Extract structured data via Claude
+    // 2. Extract structured data via the configured LLM (lib/llm)
     const failures = await extractStructuredData(platform, uniqueResults);
     console.log(`[web-researcher] ${platform.name}: ${failures.length} failure modes extracted`);
 
