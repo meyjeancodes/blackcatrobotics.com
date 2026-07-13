@@ -82,6 +82,7 @@ export type ResearchSummary = {
   completed_at: string;
   status: "completed" | "partial" | "failed";
   persist_errors?: string[];
+  debug_llm_raw?: string;
   error?: string;
 };
 
@@ -187,8 +188,8 @@ function buildSearchQueries(platform: ResearchTarget): string[] {
 async function extractStructuredData(
   platform: ResearchTarget,
   searchResults: Array<{ title: string; snippet: string; link: string }>
-): Promise<ExtractedFailureMode[]> {
-  if (searchResults.length === 0) return [];
+): Promise<{ failures: ExtractedFailureMode[]; raw: string }> {
+  if (searchResults.length === 0) return { failures: [], raw: "" };
 
   // Prioritize results whose title/snippet mention failure-related terms,
   // but always fall back to sending a broad window so Groq sees real content.
@@ -263,33 +264,51 @@ If no reliable failure modes can be extracted, return an empty array [].
 Respond with ONLY the JSON array, no other text.`;
 
   try {
-    const parsed = await generateJSON<ExtractedFailureMode[]>({
+    const result = await generate({
       maxTokens: 4096,
       temperature: 0,
       system: systemPrompt,
       prompt: userPrompt,
     });
+    const raw = result.text;
 
-    if (!Array.isArray(parsed)) return [];
+    // Strip markdown fences and extract the first [...] or {...} block.
+    let clean = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/i, "").trim();
+    const jsonMatch = clean.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+    if (jsonMatch) clean = jsonMatch[0];
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(clean);
+    } catch {
+      console.error("[web-researcher] extractStructuredData: JSON parse failed. Raw:", raw.slice(0, 500));
+      return { failures: [], raw: raw.slice(0, 600) };
+    }
+
+    if (!Array.isArray(parsed)) {
+      console.error("[web-researcher] extractStructuredData: parsed is not an array:", typeof parsed);
+      return { failures: [], raw: raw.slice(0, 600) };
+    }
 
     // Sanitize confidence to the DB enum (high|medium|low|unverified).
     // Models may emit "low/unverified", "medium-high", etc. — coerce safely.
     const CONFIDENCE_RANK: Record<string, number> = {
       high: 3, medium: 2, low: 1, unverified: 0,
     };
-    return parsed.map((fm) => {
-      const raw = String(fm.confidence ?? "").toLowerCase();
+    const failures = parsed.map((fm) => {
+      const raw_conf = String((fm as any).confidence ?? "").toLowerCase();
       let conf: ExtractedFailureMode["confidence"] = "unverified";
-      if (raw.includes("high")) conf = "high";
-      else if (raw.includes("medium")) conf = "medium";
-      else if (raw.includes("low")) conf = "low";
-      else if (raw.includes("unverif")) conf = "unverified";
-      else if (Object.keys(CONFIDENCE_RANK).includes(raw)) conf = raw as ExtractedFailureMode["confidence"];
-      return { ...fm, confidence: conf };
+      if (raw_conf.includes("high")) conf = "high";
+      else if (raw_conf.includes("medium")) conf = "medium";
+      else if (raw_conf.includes("low")) conf = "low";
+      else if (raw_conf.includes("unverif")) conf = "unverified";
+      else if (Object.keys(CONFIDENCE_RANK).includes(raw_conf)) conf = raw_conf as ExtractedFailureMode["confidence"];
+      return { ...(fm as ExtractedFailureMode), confidence: conf };
     });
+    return { failures, raw: raw.slice(0, 600) };
   } catch (err) {
     console.error("[web-researcher] extractStructuredData failed:", err);
-    return [];
+    return { failures: [], raw: String(err).slice(0, 600) };
   }
 }
 
@@ -419,7 +438,7 @@ export async function researchPlatform(
     console.log(`[web-researcher] ${platform.name}: ${uniqueResults.length} unique sources found`);
 
     // 2. Extract structured data via the configured LLM (lib/llm)
-    const failures = await extractStructuredData(platform, uniqueResults);
+    const { failures, raw: llmRaw } = await extractStructuredData(platform, uniqueResults);
     console.log(`[web-researcher] ${platform.name}: ${failures.length} failure modes extracted`);
 
     // 3. Upsert platform
@@ -467,6 +486,7 @@ export async function researchPlatform(
       completed_at: new Date().toISOString(),
       status: persistErrors.length > 0 ? "partial" : "completed",
       persist_errors: persistErrors,
+      debug_llm_raw: llmRaw,
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
