@@ -3,7 +3,8 @@
  * POST /api/techmedix/research/run  — Manual trigger (x-blackcat-secret required)
  *
  * Runs the TechMedix autonomous web research loop for all 15+ platforms.
- * Uses SERPER_API_KEY for Google Search + Claude claude-sonnet-4-6 for extraction.
+ * Uses SERPER_API_KEY for Google Search + a configurable model via lib/llm.
+ * Provider is set by LLM_PROVIDER (openai-compatible / ollama / anthropic).
  * Persists results directly to Supabase via web-researcher.ts.
  */
 import { NextRequest, NextResponse } from "next/server";
@@ -22,6 +23,27 @@ function isAuthorized(req: NextRequest): boolean {
   const cronSecret = process.env.CRON_SECRET;
   if (cronSecret && auth === `Bearer ${cronSecret}`) return true;
   return false;
+}
+
+/**
+ * Returns the names of any required env vars missing for the given provider.
+ * Keeps runResearch free of hard-coded provider requirements so the research
+ * loop works with any LLM_PROVIDER (openai-compatible, ollama, anthropic).
+ */
+function requiredEnvForProvider(provider: string): string[] {
+  switch (provider) {
+    case "openai":
+      return ["OPENAI_BASE_URL", "OPENAI_API_KEY"].filter(
+        (k) => !process.env[k]
+      );
+    case "anthropic":
+      return process.env.ANTHROPIC_API_KEY ? [] : ["ANTHROPIC_API_KEY"];
+    case "ollama":
+      // Local Ollama has no secret; only reachable host matters at runtime.
+      return [];
+    default:
+      return [`LLM_PROVIDER=${provider} (unknown)`];
+  }
 }
 
 // Additional platforms not yet in the registry
@@ -95,9 +117,16 @@ export async function POST(req: NextRequest) {
 }
 
 async function runResearch(slugFilter?: string[]) {
-  if (!process.env.ANTHROPIC_API_KEY) {
+  // Provider-agnostic guard: verify the configured LLM_PROVIDER has the env
+  // vars it needs. We no longer hard-require Claude (ANTHROPIC_API_KEY) — the
+  // research loop is model-agnostic via lib/llm (openai/ollama/openai-compatible).
+  const provider = process.env.LLM_PROVIDER || "ollama";
+  const missing = requiredEnvForProvider(provider);
+  if (missing.length > 0) {
     return NextResponse.json(
-      { error: "ANTHROPIC_API_KEY not configured" },
+      {
+        error: `LLM provider "${provider}" missing env vars: ${missing.join(", ")}`,
+      },
       { status: 500 }
     );
   }
