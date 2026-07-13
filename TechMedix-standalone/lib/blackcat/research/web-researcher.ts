@@ -6,7 +6,8 @@
  *
  * Uses: env-selected LLM via lib/llm adapter (Ollama default, OpenAI-compatible, or Anthropic).
  * Provider override per-call is allowed but defaults to LLM_PROVIDER env var.
- * Search backend: SERPER_API_KEY (Google Search via serper.dev), falls back to demo mode.
+ * Search backend: SearXNG (SEARXNG_URL, self-hosted, preferred) with Serper.dev
+ * (SERPER_API_KEY) as a fallback. Falls back to empty (no live search) if neither.
  */
 
 import { generate, generateJSON } from "@/lib/llm";
@@ -102,11 +103,43 @@ export const RESEARCH_PLATFORMS: ResearchTarget[] = [
 ];
 
 // ── Search utilities ─────────────────────────────────────────────────────────
+//
+// Search backend is configurable and open-source friendly:
+//   1. SearXNG (preferred, self-hosted, AGPL) when SEARXNG_URL is set.
+//      Calls the JSON API: `${SEARXNG_URL}/search?q=...&format=json`
+//   2. Serper.dev (Google) as a fallback if SERPER_API_KEY is set.
+//   3. Empty result (graceful) if neither is configured.
 
 async function webSearch(query: string): Promise<Array<{ title: string; snippet: string; link: string }>> {
+  const searxngUrl = process.env.SEARXNG_URL;
+  if (searxngUrl) {
+    try {
+      const res = await fetch(
+        `${searxngUrl.replace(/\/$/, "")}/search?q=${encodeURIComponent(query)}&format=json`,
+        { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(15000) }
+      );
+      if (!res.ok) {
+        console.warn(`[web-researcher] SearXNG search failed: ${res.status}`);
+        return [];
+      }
+      const data = await res.json();
+      return (data.results ?? []).map(
+        (r: { title: string; content: string; url: string }) => ({
+          title: r.title,
+          snippet: r.content,
+          link: r.url,
+        })
+      );
+    } catch (err) {
+      console.warn(`[web-researcher] SearXNG request error: ${String(err)}`);
+      return [];
+    }
+  }
+
+  // Fallback: Serper.dev (Google Search)
   const apiKey = process.env.SERPER_API_KEY;
   if (!apiKey) {
-    console.warn("[web-researcher] SERPER_API_KEY not set — skipping live search");
+    console.warn("[web-researcher] No SEARXNG_URL or SERPER_API_KEY set — skipping live search");
     return [];
   }
 

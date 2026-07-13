@@ -1,0 +1,10 @@
+# Railway deploy config for BlackCat SearXNG instance.
+# Deploy: railway login && railway link --project blackcat-searxng && railway up
+# SearXNG listens on 8080 internally; Railway detects the open port automatically.
+
+[build]
+dockerfilePath = "Dockerfile"
+
+[deploy]
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
