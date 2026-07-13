@@ -198,7 +198,7 @@ Rules:
 - Only extract failure modes that are clearly evidenced in the search results
 - Never fabricate repair steps or part numbers — use "unknown" if not stated in sources
 - Cite source URLs for every failure mode (only URLs that appear in the results)
-- Mark confidence as "low" or "unverified" if fewer than 2 results corroborate the finding
+- Mark confidence as exactly one of: "high", "medium", "low", or "unverified" (do NOT combine them, e.g. never write "low/unverified")
 - severity: critical = safety risk or complete stoppage; high = major degradation; medium = reduced performance; low = cosmetic/minor
 - skill_level: basic (any tech), intermediate (certified), advanced (specialized), specialist (factory-level)
 - Keep repair steps factual and minimal — no speculation
@@ -258,7 +258,22 @@ Respond with ONLY the JSON array, no other text.`;
     });
 
     if (!Array.isArray(parsed)) return [];
-    return parsed;
+
+    // Sanitize confidence to the DB enum (high|medium|low|unverified).
+    // Models may emit "low/unverified", "medium-high", etc. — coerce safely.
+    const CONFIDENCE_RANK: Record<string, number> = {
+      high: 3, medium: 2, low: 1, unverified: 0,
+    };
+    return parsed.map((fm) => {
+      const raw = String(fm.confidence ?? "").toLowerCase();
+      let conf: ExtractedFailureMode["confidence"] = "unverified";
+      if (raw.includes("high")) conf = "high";
+      else if (raw.includes("medium")) conf = "medium";
+      else if (raw.includes("low")) conf = "low";
+      else if (raw.includes("unverif")) conf = "unverified";
+      else if (Object.keys(CONFIDENCE_RANK).includes(raw)) conf = raw as ExtractedFailureMode["confidence"];
+      return { ...fm, confidence: conf };
+    });
   } catch (err) {
     console.error("[web-researcher] extractStructuredData failed:", err);
     return [];
