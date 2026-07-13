@@ -94,8 +94,12 @@ ul { list-style: none; }
 .nav-links a:hover { color: var(--ink); background: rgba(10,10,15,0.05); }
 .nav-cta { background: var(--ink) !important; color: #fff !important; padding: 8px 20px !important; }
 .nav-cta:hover { background: var(--fire) !important; }
-.nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 8px; cursor: pointer; }
-.nav-burger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: 0.3s; }
+.nav-burger { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 44px; height: 44px; background: none; border: 1px solid rgba(10,10,15,0.12); border-radius: 10px; padding: 0; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
+.nav-burger:hover { background: rgba(10,10,15,0.04); }
+.nav-burger span { display: block; width: 20px; height: 2px; background: var(--ink); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease; transform-origin: center; }
+.nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 @media(max-width:768px) {
   #nav { padding: 0 20px; }
   .nav-links { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--paper-2); flex-direction: column; align-items: stretch; padding: 16px; gap: 2px; border-bottom: 1px solid var(--border); box-shadow: var(--shadow-xl); }
@@ -1494,10 +1498,13 @@ window.addEventListener('scroll', () => {
 
 // Mobile nav
 function toggleNav() {
-  document.getElementById('nav-links').classList.toggle('open');
+  const links = document.getElementById('nav-links');
+  const burger = document.getElementById('burger');
+  links.classList.toggle('open');
+  burger.classList.toggle('open');
 }
 document.getElementById('nav-links').querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open'));
+  a.addEventListener('click', () => { document.getElementById('nav-links').classList.remove('open'); document.getElementById('burger').classList.remove('open'); });
 });
 
 // Modals
