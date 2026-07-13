@@ -200,19 +200,25 @@ async function extractStructuredData(
     return bscore - ascore;
   });
   const context = ranked
-    .slice(0, 25)
+    .slice(0, 30)
     .map((r, i) => `[${i + 1}] ${r.title}\n${r.snippet}\nURL: ${r.link}`)
     .join("\n\n");
 
   const systemPrompt = `You are a robotics field-service intelligence analyst for TechMedix, a maintenance platform for autonomous robots and micromobility.
 
-Your task: Extract REAL, SOURCED failure mode data from web search results about the ${platform.name} (${platform.type}, by ${platform.manufacturer}).
+Your task: Extract failure-mode intelligence about the ${platform.name} (${platform.type}, by ${platform.manufacturer}) from the web search results provided.
+
+What counts as a failure mode (extract ALL of these when present):
+- Explicit failures: "X broke", "X overheats", "X won't turn on", crash, fault, error code
+- Documented faults: fault tables in SDK/manuals, teardown analyses noting weak/worn components
+- Design limitations: retrofit papers, "known issue", recall, warranty/RMA patterns
+- Field reports: forum posts, videos, post-mortems describing a robot stopping/failing
 
 Rules:
-- Only extract failure modes that are clearly evidenced in the search results
+- Extract from ANY clearly-sourced signal — you do not need a verbatim "it failed" quote; teardown/fault-doc/retrofit content is valid evidence
 - Never fabricate repair steps or part numbers — use "unknown" if not stated in sources
 - Cite source URLs for every failure mode (only URLs that appear in the results)
-- Mark confidence as exactly one of: "high", "medium", "low", or "unverified" (do NOT combine them, e.g. never write "low/unverified")
+- Mark confidence as exactly one of: "high", "medium", "low", or "unverified" (do NOT combine them)
 - severity: critical = safety risk or complete stoppage; high = major degradation; medium = reduced performance; low = cosmetic/minor
 - skill_level: basic (any tech), intermediate (certified), advanced (specialized), specialist (factory-level)
 - Keep repair steps factual and minimal — no speculation
