@@ -94,6 +94,9 @@ ul { list-style: none; }
 .nav-logo span { color: var(--fire); }
 .nav-book { background: var(--fire); color: #fff; border: none; font-family: var(--display); font-size: 13px; font-weight: 600; padding: 9px 16px; border-radius: 8px; cursor: pointer; letter-spacing: 0.01em; transition: opacity 0.15s; }
 .nav-book:hover { opacity: 0.88; }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-actions .nav-cta { background: var(--ink); color: #fff; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 8px; text-decoration: none; transition: background 0.15s; white-space: nowrap; }
+.nav-actions .nav-cta:hover { background: var(--fire); }
 .nav-links li { display: flex; align-items: center; }
 .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
 .nav-links a { font-size: 13px; font-weight: 500; color: var(--ink-2); text-decoration: none; padding: 7px 14px; border-radius: var(--r-pill); transition: color 0.15s, background 0.15s; }
@@ -572,13 +575,16 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="nav-logo">BlackCat<span>.</span></a>
+  <div class="nav-actions">
+    <button onclick="openModal('contact-modal')" class="nav-book">Book Onboarding</button>
+    <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="nav-cta">Start TechMedix</a>
+  </div>
   <ul class="nav-links" id="nav-links">
     <li><a href="#acquire">Platforms</a></li>
     <li><a href="#techmedix" class="tm-wordmark"><span class="tm-dot"></span>Tech<span class="tm-med">Medix</span></a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#acquire">Acquire</a></li>
     <li><a href="#signal">Signal</a></li>
-    <li><button onclick="openModal('contact-modal')" class="nav-book">Book Onboarding</button></li>
     <li class="nav-dropdown">
       <a href="#" class="nav-dropdown-toggle">Divisions &#9662;</a>
       <ul class="nav-dropdown-menu">
@@ -597,7 +603,6 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       </ul>
     </li>
     <li><a href="#" onclick="openModal('about-modal');return false;">About</a></li>
-    <li><a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="nav-cta">Start TechMedix</a></li>
   </ul>
   <button class="nav-burger" id="burger" onclick="toggleNav()" aria-label="Menu">
     <span></span><span></span><span></span>
