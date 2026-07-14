@@ -58,12 +58,15 @@ export async function POST(req: NextRequest) {
 
   // Resolve the platform. Prefer the registry; otherwise build a minimal target
   // from the slug so ad-hoc platforms can be ingested without code changes.
-  const known = RESEARCH_PLATFORMS.find((p) => p.slug === slug);
+  // Normalize slug separators (_ -> -) so e.g. "unitree_g1" matches the registry
+  // slug "unitree-g1" and doesn't create a duplicate platform.
+  const normSlug = slug.replace(/_/g, "-");
+  const known = RESEARCH_PLATFORMS.find((p) => p.slug === normSlug);
   const platform: ResearchTarget =
     known ??
     {
-      slug,
-      name: slug.replace(/[_-]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+      slug: normSlug,
+      name: normSlug.replace(/[_-]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
       manufacturer: "Unknown",
       type: "other",
     };
