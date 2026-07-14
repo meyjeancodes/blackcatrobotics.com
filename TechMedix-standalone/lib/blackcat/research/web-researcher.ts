@@ -515,6 +515,123 @@ export async function researchPlatform(
   }
 }
 
+// ── Document ingestion (Phase B: curated OEM manuals + forum exports) ──────────
+//
+// Reuses the SAME extraction + persistence pipeline as researchPlatform, but the
+// source material is supplied (not web-searched). This is how we feed high-quality
+// curated sources — OEM service manuals, Reddit/forum thread exports, teardown
+// write-ups — into the Knowledge Moat, bypassing the weak public-web search layer.
+//
+// `docs` entries map directly onto the {title, snippet, link} shape the extractor
+// expects: `content` becomes the snippet, `source_url` becomes the link.
+
+export type IngestDocument = {
+  title: string;
+  content: string;
+  source_url: string;
+  source_type?: string; // 'manual' | 'forum' | 'teardown' | 'patent' | 'other'
+};
+
+export async function ingestDocuments(
+  platform: ResearchTarget,
+  docs: IngestDocument[],
+  agentRunId: string
+): Promise<ResearchSummary> {
+  const startedAt = new Date().toISOString();
+  try {
+    if (docs.length === 0) {
+      return {
+        platform_slug: platform.slug,
+        platform_name: platform.name,
+        run_id: agentRunId,
+        failure_modes_found: 0,
+        repair_protocols_found: 0,
+        signals_found: 0,
+        sources_cited: 0,
+        extracted: 0,
+        low_confidence_count: 0,
+        confidence_avg: 0,
+        completed_at: new Date().toISOString(),
+        status: "completed",
+      };
+    }
+
+    // 1. Build the searchResults shape the extractor expects
+    const searchResults = docs.map((d) => ({
+      title: d.title,
+      snippet: d.content.slice(0, 4000), // cap per-doc context; extractor samples top 30
+      link: d.source_url,
+    }));
+
+    // 2. Upsert platform (ensures it exists in DB)
+    const platformId = await persistPlatform(platform);
+
+    // 3. Log each source as research_log
+    for (const d of docs) {
+      await logResearch({
+        platform_id: platformId,
+        source_url: d.source_url,
+        source_type: d.source_type || "other",
+        content_summary: d.content.slice(0, 500),
+        agent_run_id: agentRunId,
+      });
+    }
+
+    // 4. Extract structured failure modes via the configured LLM
+    const { failures, raw: llmRaw } = await extractStructuredData(platform, searchResults);
+
+    // 5. Persist extracted data
+    const { fmInserted, protocolsInserted, signalsInserted, persistErrors } =
+      await persistExtractedData(platformId, failures, agentRunId);
+
+    // 6. Confidence stats
+    const lowConfCount = failures.filter(
+      (f) => f.confidence === "low" || f.confidence === "unverified" || f.source_urls.length < 3
+    ).length;
+    const confidenceMap = { high: 1.0, medium: 0.65, low: 0.35, unverified: 0.1 };
+    const confidenceAvg =
+      failures.length > 0
+        ? failures.reduce((acc, f) => acc + (confidenceMap[f.confidence] ?? 0.35), 0) / failures.length
+        : 0;
+
+    return {
+      platform_slug: platform.slug,
+      platform_name: platform.name,
+      run_id: agentRunId,
+      failure_modes_found: fmInserted,
+      repair_protocols_found: protocolsInserted,
+      signals_found: signalsInserted,
+      sources_cited: docs.length,
+      extracted: failures.length,
+      low_confidence_count: lowConfCount,
+      confidence_avg: Math.round(confidenceAvg * 100) / 100,
+      completed_at: new Date().toISOString(),
+      status: persistErrors.length > 0 ? "partial" : "completed",
+      persist_errors: persistErrors,
+      debug_llm_raw: llmRaw,
+    };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`[web-researcher] ingestDocuments failed for ${platform.name}:`, message);
+    return {
+      platform_slug: platform.slug,
+      platform_name: platform.name,
+      run_id: agentRunId,
+      failure_modes_found: 0,
+      repair_protocols_found: 0,
+      signals_found: 0,
+      sources_cited: docs.length,
+      extracted: 0,
+      low_confidence_count: 0,
+      confidence_avg: 0,
+      completed_at: new Date().toISOString(),
+      status: "failed",
+      error: message,
+      debug_llm_raw: String(err).slice(0, 600),
+    };
+  }
+}
+
 // ── Agent run tracking ────────────────────────────────────────────────────────
 
 export async function createAgentRun(): Promise<string> {
