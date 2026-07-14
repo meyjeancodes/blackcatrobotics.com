@@ -1,39 +1,39 @@
 /**
- * POST /api/techmedix/research/ingest
- * Accepts structured research output from the web intelligence agent loop
- * and upserts it into the knowledge moat database.
+ * POST /api/techmedix/research/ingest  — Curated document ingestion (Phase B)
  *
- * Authorization: x-blackcat-secret header required
+ * Feeds high-quality curated sources (OEM service manuals, Reddit/forum thread
+ * exports, teardown write-ups) into the Knowledge Moat. Reuses the SAME extraction
+ * + Supabase persistence pipeline as the web-research cron, but the source material
+ * is supplied rather than web-searched (bypasses weak public-web search).
  *
- * Body shape:
+ * Body:
  * {
- *   agent_run_id: string,
- *   platforms: Array<{
- *     slug, name, manufacturer, type, introduced_year, specs_json,
- *     failure_modes: Array<{
- *       component, symptom, root_cause, severity, mtbf_hours,
- *       source_urls, confidence, tags,
- *       repair_protocol: { title, steps, tools_required, parts, labor_minutes, skill_level, source_url },
- *       predictive_signals: Array<{ signal_name, signal_source, threshold_value, threshold_operator, threshold_unit, lead_time_hours, confidence }>
- *     }>,
- *     suppliers: Array<{ name, website, region, component_types, lead_time_days, risk_level, notes }>,
- *     research_sources: string[]
- *   }>
+ *   "slug": "unitree_g1",
+ *   "documents": [
+ *     { "title": "...", "content": "...full text...",
+ *       "source_url": "https://...", "source_type": "manual|forum|teardown|patent|other" }
+ *   ]
  * }
+ *
+ * Auth: x-blackcat-secret (same as /run) required.
  */
 import { NextRequest, NextResponse } from "next/server";
 import {
-  upsertPlatform,
-  upsertFailureMode,
-  insertRepairProtocol,
-  insertPredictiveSignal,
-  logResearch,
-} from "@/lib/blackcat/knowledge/db";
-import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
+  RESEARCH_PLATFORMS,
+  ingestDocuments,
+  createAgentRun,
+  completeAgentRun,
+  type ResearchTarget,
+  type IngestDocument,
+} from "@/lib/blackcat/research/web-researcher";
 
 function isAuthorized(req: NextRequest): boolean {
   const secret = req.headers.get("x-blackcat-secret");
-  return !!secret && secret === process.env.BLACKCAT_API_SECRET;
+  if (secret && secret === process.env.BLACKCAT_API_SECRET) return true;
+  const auth = req.headers.get("authorization");
+  const cronSecret = process.env.CRON_SECRET;
+  if (cronSecret && auth === `Bearer ${cronSecret}`) return true;
+  return false;
 }
 
 export async function POST(req: NextRequest) {
@@ -41,149 +41,56 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let body: Record<string, unknown>;
+  let body: { slug?: string; documents?: IngestDocument[] };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const agentRunId = (body.agent_run_id as string) ?? `manual-${Date.now()}`;
-  const platforms = (body.platforms as unknown[]) ?? [];
-  const results: Record<string, unknown>[] = [];
-
-  if (!isSupabaseServerConfigured() || !createServiceClient()) {
+  const { slug, documents } = body;
+  if (!slug || !Array.isArray(documents) || documents.length === 0) {
     return NextResponse.json(
-      { agent_run_id: agentRunId, results: [], error: "Supabase not configured — research ingest disabled" },
-      { status: 503 }
+      { error: "Body must include 'slug' and a non-empty 'documents' array" },
+      { status: 400 }
     );
   }
 
-  for (const raw of platforms) {
-    const p = raw as any;
-    try {
-      const platformId = await upsertPlatform({
-        slug: p.slug,
-        name: p.name,
-        manufacturer: p.manufacturer,
-        type: p.type,
-        introduced_year: p.introduced_year ?? null,
-        specs_json: p.specs_json ?? {},
-        techmedix_status: "supported",
-        image_url: p.image_url ?? null,
-        notes: p.notes ?? null,
-      });
+  // Resolve the platform. Prefer the registry; otherwise build a minimal target
+  // from the slug so ad-hoc platforms can be ingested without code changes.
+  // Normalize slug separators (_ -> -) so e.g. "unitree_g1" matches the registry
+  // slug "unitree-g1" and doesn't create a duplicate platform.
+  const normSlug = slug.replace(/_/g, "-");
+  const known = RESEARCH_PLATFORMS.find((p) => p.slug === normSlug);
+  const platform: ResearchTarget =
+    known ??
+    {
+      slug: normSlug,
+      name: normSlug.replace(/[_-]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+      manufacturer: "Unknown",
+      type: "other",
+    };
 
-      const failureModeIds: string[] = [];
-
-      for (const fm of p.failure_modes ?? []) {
-        const fmId = await upsertFailureMode({
-          platform_id: platformId,
-          component: fm.component,
-          symptom: fm.symptom,
-          root_cause: fm.root_cause,
-          severity: fm.severity ?? "medium",
-          mtbf_hours: fm.mtbf_hours ?? null,
-          source_urls: fm.source_urls ?? [],
-          confidence: deriveConfidence(fm),
-          tags: fm.tags ?? [],
-        });
-        failureModeIds.push(fmId);
-
-        if (fm.repair_protocol) {
-          const proto = fm.repair_protocol;
-          await insertRepairProtocol({
-            failure_mode_id: fmId,
-            title: proto.title,
-            steps_json: (proto.steps ?? []).map((s: any, i: number) => ({
-              step: s.step ?? i + 1,
-              action: s.action,
-              tool: s.tool ?? null,
-              warning: s.warning ?? null,
-              image_hint: s.image_hint ?? null,
-            })),
-            tools_required: proto.tools_required ?? [],
-            parts_json: proto.parts ?? [],
-            labor_minutes: proto.labor_minutes ?? null,
-            skill_level: proto.skill_level ?? "intermediate",
-            source_url: proto.source_url ?? null,
-            verified_by: "research_agent",
-            version: 1,
-          });
-        }
-
-        for (const sig of fm.predictive_signals ?? []) {
-          await insertPredictiveSignal({
-            failure_mode_id: fmId,
-            signal_name: sig.signal_name,
-            signal_source: sig.signal_source ?? null,
-            threshold_value: sig.threshold_value ?? null,
-            threshold_operator: sig.threshold_operator ?? ">",
-            threshold_unit: sig.threshold_unit ?? null,
-            lead_time_hours: sig.lead_time_hours ?? null,
-            confidence: sig.confidence ?? null,
-            notes: sig.notes ?? null,
-          });
-        }
-      }
-
-      const supabase = createServiceClient();
-      for (const s of p.suppliers ?? []) {
-        await supabase.from("suppliers").upsert(
-          {
-            name: s.name,
-            website: s.website ?? null,
-            region: s.region ?? "global",
-            component_types: s.component_types ?? [],
-            platforms_served: [p.slug],
-            unit_cost_usd: s.unit_cost_usd ?? null,
-            lead_time_days: s.lead_time_days ?? null,
-            min_order_qty: s.min_order_qty ?? 1,
-            risk_level: s.risk_level ?? "medium",
-            notes: s.notes ?? null,
-          },
-          { onConflict: "name,region" }
-        );
-      }
-
-      for (const url of p.research_sources ?? []) {
-        await logResearch({
-          platform_id: platformId,
-          source_url: url,
-          source_type: "other",
-          content_summary: `Research run ${agentRunId} — ${p.name}`,
-          agent_run_id: agentRunId,
-        });
-      }
-
-      results.push({
-        slug: p.slug,
-        platform_id: platformId,
-        failure_modes_upserted: failureModeIds.length,
-        status: "ok",
-      });
-    } catch (err) {
-      results.push({
-        slug: (p as any).slug,
-        status: "error",
-        error: err instanceof Error ? err.message : String(err),
-      });
-    }
+  let runId: string;
+  try {
+    runId = await createAgentRun();
+  } catch {
+    runId = `offline-${Date.now()}`;
   }
 
-  const hasErrors = results.some((r) => r.status === "error");
-  return NextResponse.json(
-    { agent_run_id: agentRunId, results },
-    { status: hasErrors ? 207 : 200 }
-  );
-}
+  const summary = await ingestDocuments(platform, documents, runId);
 
-type ConfidenceLevel = "high" | "medium" | "low" | "unverified";
+  try {
+    await completeAgentRun(runId, [summary]);
+  } catch (err) {
+    console.error("[research/ingest] completeAgentRun failed:", err);
+  }
 
-function deriveConfidence(fm: { source_urls?: string[]; confidence?: string }): ConfidenceLevel {
-  const count = fm.source_urls?.length ?? 0;
-  if (count < 3) return "low";
-  const c = fm.confidence;
-  if (c === "high" || c === "medium" || c === "low" || c === "unverified") return c;
-  return "medium";
+  return NextResponse.json({
+    run_id: runId,
+    platforms: 1,
+    failed: summary.status === "failed" ? 1 : 0,
+    completed_at: new Date().toISOString(),
+    summaries: [summary],
+  });
 }
