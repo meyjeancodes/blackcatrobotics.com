@@ -9,10 +9,6 @@
     {
       "path": "/api/simulation/run",
       "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/techmedix/research/run",
-      "schedule": "0 3 * * *"
     }
   ],
   "headers": [
