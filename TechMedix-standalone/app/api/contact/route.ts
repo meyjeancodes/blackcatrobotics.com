@@ -94,7 +94,43 @@ export async function POST(req: NextRequest) {
     console.error('Resend auto-reply failed:', e);
   }
 
-  // 3️⃣ Discord notification to you (instant push)
+  // 3️⃣ SMS alert to Megan (iMessage via Twilio) — instant push, no Mac needed
+  let smsError: string | null = null;
+  if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM_NUMBER && process.env.LEAD_ALERT_TO) {
+    const interestLabel = interest_type || 'General Inquiry';
+    const companyLabel = company || '—';
+    const productLabel = product || 'core_platform';
+    const body = `🚨 New BlackCat lead: ${name} (${email})${companyLabel !== '—' ? ' @ ' + companyLabel : ''} — ${interestLabel} / ${productLabel}`;
+    const url = `https://api.twilio.com/2010-04-01/Accounts/${process.env.TWILIO_ACCOUNT_SID}/Messages.json`;
+    const params = new URLSearchParams({
+      To: process.env.LEAD_ALERT_TO,
+      From: process.env.TWILIO_FROM_NUMBER,
+      Body: body.slice(0, 1600),
+    });
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: 'Basic ' + Buffer.from(`${process.env.TWILIO_ACCOUNT_SID}:${process.env.TWILIO_AUTH_TOKEN}`).toString('base64'),
+        },
+        body: params.toString(),
+      });
+      if (!res.ok) {
+        const txt = await res.text();
+        smsError = `Twilio SMS failed: ${res.status} ${txt.slice(0, 200)}`;
+        console.error(smsError);
+      }
+    } catch (e) {
+      smsError = e instanceof Error ? e.message : 'Twilio fetch failed';
+      console.error('Twilio SMS error:', e);
+    }
+  } else {
+    smsError = 'Twilio env vars not configured';
+    console.warn('Twilio env vars not configured — lead SMS skipped');
+  }
+
+  // 4️⃣ Discord notification to you (instant push) — kept as fallback if webhook set
   let discordError: string | null = null;
   if (process.env.DISCORD_WEBHOOK_URL) {
     const interestLabel = interest_type || 'General Inquiry';
@@ -139,6 +175,7 @@ export async function POST(req: NextRequest) {
     ok: true,
     dbError,
     autoReplyError,
+    smsError,
     discordError,
   });
 }
