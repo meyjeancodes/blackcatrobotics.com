@@ -44,6 +44,18 @@ export async function proxy(request: NextRequest) {
       return NextResponse.next({ request });
     }
 
+    // Serve the TechMedix Operations console on dashboard.blackcatrobotics.com
+    if (host.startsWith("dashboard.")) {
+      if (pathname === "/" || pathname === "") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/dashboard";
+        return NextResponse.rewrite(url);
+      }
+      // All other paths (/fleet, /settings, /billing, ...) pass through to
+      // the (dashboard) Next.js routes.
+      return NextResponse.next({ request });
+    }
+
     // Serve the rich marketing homepage on blackcatrobotics.com.
     // CORRECTION: public/index.html is the real, fully-designed homepage
     // that's been actively maintained (nav, hero, TechMedix/Pricing/Acquire/
