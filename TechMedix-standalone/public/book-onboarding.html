@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Book your onboarding — BlackCat Robotics</title>
+<meta name="description" content="Book your TechMedix onboarding with BlackCat Robotics. Tell us about your robot fleet and we'll set up your diagnostic workspace.">
+<meta name="theme-color" content="#0a0a0f">
+<link rel="canonical" href="https://blackcatrobotics.com/book-onboarding">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=tanker@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0a0f; --ink-2:#3a3a45; --ink-3:#8888a0;
+  --paper:#f0efe8; --paper-2:#fafaf4; --white:#fff;
+  --fire:#cc3d17; --fire-2:#d4401a; --gold:#c8a96e; --green:#1db954;
+  --border:rgba(10,10,15,0.08); --border-d:rgba(255,255,255,0.07);
+  --r:12px; --r-lg:20px; --r-pill:999px; --nav-h:68px;
+  --shadow:0 2px 16px rgba(10,10,15,0.07); --shadow-xl:0 20px 60px rgba(10,10,15,0.15);
+  --serif:'Tanker',sans-serif; --display:'Satoshi','Helvetica Neue',sans-serif; --mono:'Chakra Petch',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--display);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+/* nav */
+.nav{position:sticky;top:0;z-index:50;height:var(--nav-h);display:flex;align-items:center;background:rgba(240,239,232,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:20px;letter-spacing:-0.02em;}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--fire);}
+.nav-links{display:flex;align-items:center;gap:22px;font-size:14px;color:var(--ink-2);}
+.nav-links a:hover{color:var(--ink);}
+.nav-cta{background:var(--ink);color:var(--paper);padding:9px 18px;border-radius:var(--r-pill);font-size:13px;font-weight:500;}
+@media(max-width:720px){.nav-links a:not(.nav-cta){display:none;}}
+/* hero */
+.hero{padding:72px 0 40px;}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fire-2);margin-bottom:18px;}
+.h1{font-family:var(--serif);font-size:clamp(44px,6vw,76px);line-height:0.94;letter-spacing:-0.03em;margin-bottom:22px;}
+.h1 em{font-style:italic;color:var(--fire-2);}
+.lede{font-size:17px;line-height:1.7;color:var(--ink-2);max-width:620px;margin-bottom:14px;}
+.provider{display:inline-flex;align-items:center;gap:10px;margin-top:8px;padding:8px 16px;border:1px solid var(--border);border-radius:var(--r-pill);font-size:13px;color:var(--ink-2);background:var(--paper-2);}
+.provider b{color:var(--ink);font-weight:600;}
+/* layout */
+.grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:start;padding:24px 0 96px;}
+@media(max-width:860px){.grid{grid-template-columns:1fr;gap:36px;}}
+/* form */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;box-shadow:var(--shadow);}
+.card h2{font-family:var(--serif);font-size:28px;letter-spacing:-0.02em;margin-bottom:6px;}
+.card .sub{font-size:14px;color:var(--ink-3);margin-bottom:24px;}
+.fgroup{margin-bottom:18px;}
+.fgroup label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:7px;}
+.fgroup input,.fgroup select,.fgroup textarea{width:100%;font-family:var(--display);font-size:15px;color:var(--ink);background:var(--paper-2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;outline:none;transition:border-color .15s;}
+.fgroup input:focus,.fgroup select:focus,.fgroup textarea:focus{border-color:var(--fire);}
+.fgroup textarea{resize:vertical;min-height:90px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fsub-btn{width:100%;background:var(--fire);color:#fff;border:none;border-radius:10px;padding:15px;font-family:var(--display);font-size:15px;font-weight:600;cursor:pointer;margin-top:6px;}
+.fsub-btn:disabled{opacity:0.6;cursor:default;}
+.fine{font-size:11px;color:var(--ink-3);margin-top:12px;text-align:center;line-height:1.5;}
+.fine a{color:var(--fire-2);text-decoration:underline;}
+.form-ok{display:none;text-align:center;padding:24px 0;}
+.form-ok .ok-title{font-family:var(--serif);font-size:26px;letter-spacing:-0.02em;margin-bottom:10px;}
+.form-ok .ok-sub{font-size:14px;color:var(--ink-2);max-width:380px;margin:0 auto;line-height:1.7;}
+/* side panel */
+.aside .panel{background:var(--ink);color:var(--paper);border-radius:var(--r-lg);padding:28px;}
+.aside h3{font-family:var(--serif);font-size:22px;letter-spacing:-0.02em;margin-bottom:16px;color:#fff;}
+.step{display:flex;gap:14px;padding:14px 0;border-top:1px solid rgba(255,255,255,0.08);}
+.step:first-of-type{border-top:none;}
+.step-n{font-family:var(--mono);font-size:12px;color:var(--fire-2);min-width:22px;}
+.step-t{font-size:14px;line-height:1.55;}
+.step-t b{color:#fff;font-weight:600;}
+.note{font-size:13px;color:rgba(240,239,232,0.6);line-height:1.7;margin-top:20px;}
+footer{border-top:1px solid var(--border);padding:28px 0;font-size:13px;color:var(--ink-3);}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="dot"></span>BlackCat Robotics</a>
+    <div class="nav-links">
+      <a href="/#platforms">Platforms</a>
+      <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener">Dashboard</a>
+      <a class="nav-cta" href="/book-onboarding.html">Book Onboarding</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Onboarding</div>
+    <h1 class="h1">Book your<br><em>TechMedix</em> setup.</h1>
+    <p class="lede">Tell us about your robot fleet. We'll stand up your diagnostic workspace and walk your team through the first failure-mode review.</p>
+    <div class="provider">Built and run by <b>BlackCat Robotics</b> — the team behind TechMedix.</div>
+  </div>
+</header>
+
+<section class="wrap">
+  <div class="grid">
+    <!-- form -->
+    <div class="card">
+      <h2>Request your onboarding</h2>
+      <p class="sub">We typically reply within one business day.</p>
+      <div id="bo-form">
+        <div class="row2">
+          <div class="fgroup">
+            <label>Full name</label>
+            <input type="text" id="bo-name" placeholder="Jane Smith">
+          </div>
+          <div class="fgroup">
+            <label>Work email</label>
+            <input type="email" id="bo-email" placeholder="jane@company.com">
+          </div>
+        </div>
+        <div class="fgroup">
+          <label>Company</label>
+          <input type="text" id="bo-company" placeholder="Your Company">
+        </div>
+        <div class="row2">
+          <div class="fgroup">
+            <label>Robots in fleet</label>
+            <input type="number" id="bo-robots" placeholder="5" min="1">
+          </div>
+          <div class="fgroup">
+            <label>Primary platforms</label>
+            <input type="text" id="bo-platforms" placeholder="Spot, Unitree G1, DJI Agras…">
+          </div>
+        </div>
+        <div class="fgroup">
+          <label>What do you want help with?</label>
+          <textarea id="bo-msg" placeholder="e.g. Predictive alerts for our Spot inspection fleet, repair protocol access, dashboard setup…"></textarea>
+        </div>
+        <button class="fsub-btn" id="bo-submit" onclick="submitBO()">Request onboarding</button>
+        <p class="fine">By submitting you agree to our <a href="/privacy">Privacy Policy</a>. We use your details only to set up your workspace.</p>
+      </div>
+      <div class="form-ok" id="bo-ok">
+        <div class="ok-title">Request received.</div>
+        <p class="ok-sub">Thanks — a BlackCat Robotics engineer will reach out within one business day to schedule your onboarding.</p>
+      </div>
+    </div>
+
+    <!-- aside -->
+    <aside class="aside">
+      <div class="panel">
+        <h3>What happens next</h3>
+        <div class="step"><div class="step-n">01</div><div class="step-t"><b>We review your fleet.</b> We map your platforms to their documented failure modes.</div></div>
+        <div class="step"><div class="step-n">02</div><div class="step-t"><b>Workspace setup.</b> Your TechMedix dashboard is configured with your robots.</div></div>
+        <div class="step"><div class="step-n">03</div><div class="step-t"><b>First review call.</b> We walk your team through live monitoring and repair protocols.</div></div>
+        <p class="note">TechMedix Core is free and open source — you can self-host anytime. Managed onboarding is for teams who'd rather we run it.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 BlackCat Robotics</span>
+    <a href="/">Back to home</a>
+  </div>
+</footer>
+
+<script>
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xreyrndq';
+function submitBO(){
+  const n=document.getElementById('bo-name').value.trim();
+  const e=document.getElementById('bo-email').value.trim();
+  if(!n||!e){alert('Please enter your name and email.');return;}
+  const btn=document.getElementById('bo-submit');
+  btn.textContent='Sending…';btn.disabled=true;
+  fetch(FORMSPREE_ENDPOINT,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      name:n,email:e,
+      company:document.getElementById('bo-company').value,
+      robots:document.getElementById('bo-robots').value,
+      platforms:document.getElementById('bo-platforms').value,
+      message:document.getElementById('bo-msg').value,
+      interest_type:'onboarding',
+      source:'blackcat_website',
+      product:'techmedix',
+      _subject:'Onboarding Request — '+n
+    })
+  }).then(r=>{
+    if(r.ok){document.getElementById('bo-form').style.display='none';document.getElementById('bo-ok').style.display='block';}
+    else{btn.textContent='Request onboarding';btn.disabled=false;alert('Something went wrong. Please try again or email us directly.');}
+  }).catch(()=>{btn.textContent='Request onboarding';btn.disabled=false;alert('Network error. Please try again.');});
+}
+</script>
+</body>
+</html>

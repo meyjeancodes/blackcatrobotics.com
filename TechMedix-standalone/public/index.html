@@ -577,7 +577,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <nav id="nav">
   <a href="#" class="nav-logo">BlackCat<span>.</span></a>
   <div class="nav-actions">
-    <button onclick="openModal('contact-modal')" class="nav-book">Book Onboarding</button>
+    <a href="/book-onboarding.html" class="nav-book">Book Onboarding</a>
     <a href="https://dashboard.blackcatrobotics.com" target="_blank" rel="noopener" class="nav-cta">Start TechMedix</a>
   </div>
   <ul class="nav-links" id="nav-links">
@@ -586,7 +586,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#acquire">Acquire</a></li>
     <li><a href="#signal">Signal</a></li>
-    <li><button onclick="openModal('contact-modal')" class="nav-book">Book Onboarding</button></li>
+    <li><a href="/book-onboarding.html" class="nav-book">Book Onboarding</a></li>
     <li class="nav-dropdown">
       <a href="#" class="nav-dropdown-toggle">Divisions &#9662;</a>
       <ul class="nav-dropdown-menu">
@@ -672,7 +672,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <div class="hero-actions">
       <a href="https://github.com/meyjeancodes/blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Get TechMedix — Free &amp; Open Source</a>
       <a href="#acquire" class="btn btn-outline-white">Browse Platforms &rarr;</a>
-      <button onclick="openModal('contact-modal')" class="btn btn-outline-white" style="cursor:pointer;">Book Onboarding &rarr;</button>
+      <a href="/book-onboarding.html" class="btn btn-outline-white">Book Onboarding &rarr;</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -1079,7 +1079,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <div class="hiw-n">03</div>
       <div class="hiw-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
       <div class="hiw-title">Live Monitoring</div>
-      <div class="hiw-desc">24/7 telemetry analysis. Alerts dispatched 48 hours before predicted failure. Dashboard access from day one.</div>
+      <div class="hiw-desc">Continuous telemetry monitoring. We flag likely failures up to 48 hours ahead, based on each platform's documented failure modes. Dashboard access from day one.</div>
     </div>
     <div class="hiw-cell">
       <div class="hiw-n">04</div>
@@ -1230,22 +1230,19 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <div class="addon"><div class="addon-name">Repair Services</div><div class="addon-desc">On-demand field repair by certified robotics technicians. Parts sourced, labor covered, unit back online fast.</div><div class="addon-price">Request Quote</div></div>
   </div>
 
-  <!-- ROI CALCULATOR -->
+  <!-- WHAT TECHMEDIX MONITORS -->
   <div class="calc-box reveal" style="margin-top:64px;">
     <div style="margin-bottom:28px;">
-      <div class="eyebrow" style="margin-bottom:12px;">ROI Calculator</div>
-      <h3 class="h3">See your savings.</h3>
+      <div class="eyebrow" style="margin-bottom:12px;">What TechMedix monitors</div>
+      <h3 class="h3">Failure modes we track.</h3>
     </div>
-    <div class="calc-sliders">
-      <div class="calc-group"><label><span class="calc-label">Robots in fleet</span><span class="calc-val" id="v-robots">5</span></label><input type="range" id="s-robots" class="calc-slider" min="1" max="50" value="5"></div>
-      <div class="calc-group"><label><span class="calc-label">Downtime hours / incident</span><span class="calc-val" id="v-hours">8</span></label><input type="range" id="s-hours" class="calc-slider" min="1" max="72" value="8"></div>
-      <div class="calc-group"><label><span class="calc-label">Cost per downtime hour</span><span class="calc-val" id="v-cost">$2,000</span></label><input type="range" id="s-cost" class="calc-slider" min="500" max="20000" step="500" value="2000"></div>
-      <div class="calc-group"><label><span class="calc-label">Incidents per robot / year</span><span class="calc-val" id="v-events">4</span></label><input type="range" id="s-events" class="calc-slider" min="1" max="24" value="4"></div>
-    </div>
+    <p style="max-width:640px; color:var(--ink-2); line-height:1.8; margin-bottom:24px;">
+      TechMedix watches each platform against its known failure modes — actuator drift, battery degradation, sensor faults, comms loss, and more. When live telemetry matches a documented pattern, we flag it before it becomes a breakdown.
+    </p>
     <div class="calc-outputs">
-      <div class="calc-out"><div class="calc-out-n" id="c-savings">$320K</div><div class="calc-out-l">Annual downtime avoided</div></div>
-      <div class="calc-out"><div class="calc-out-n" id="c-cost">$18K</div><div class="calc-out-l">TechMedix annual cost</div></div>
-      <div class="calc-out"><div class="calc-out-n pos" id="c-net">$302K</div><div class="calc-out-l">Net annual savings</div></div>
+      <div class="calc-out"><div class="calc-out-n">48h</div><div class="calc-out-l">Failure lead-time target</div></div>
+      <div class="calc-out"><div class="calc-out-n">14+</div><div class="calc-out-l">Robot platforms supported</div></div>
+      <div class="calc-out"><div class="calc-out-n">Free</div><div class="calc-out-l">Core diagnostics (open source)</div></div>
     </div>
   </div>
 </section>
@@ -1563,39 +1560,6 @@ function filterCompare(type, btn) {
   document.querySelectorAll('#cmp-filters .tab-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
 }
-
-// ROI Calculator
-function fmt(n) {
-  if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M';
-  if(n>=1000) return '$'+(n/1000).toFixed(0)+'K';
-  return '$'+n.toLocaleString();
-}
-function calcROI() {
-  const r = +document.getElementById('s-robots').value;
-  const h = +document.getElementById('s-hours').value;
-  const c = +document.getElementById('s-cost').value;
-  const e = +document.getElementById('s-events').value;
-  const savings = r*e*h*c;
-  const cost = r*199*12;
-  const net = savings-cost;
-  document.getElementById('c-savings').textContent = fmt(savings);
-  document.getElementById('c-cost').textContent = fmt(cost);
-  document.getElementById('c-net').textContent = fmt(net);
-  document.getElementById('c-net').className = 'calc-out-n'+(net>0?' pos':'');
-}
-const sliders = [
-  {id:'s-robots', val:'v-robots', fmt: v=>v},
-  {id:'s-hours',  val:'v-hours',  fmt: v=>v},
-  {id:'s-cost',   val:'v-cost',   fmt: v=>'$'+parseInt(v).toLocaleString()},
-  {id:'s-events', val:'v-events', fmt: v=>v}
-];
-sliders.forEach(s => {
-  document.getElementById(s.id).addEventListener('input', function() {
-    document.getElementById(s.val).textContent = s.fmt(this.value);
-    calcROI();
-  });
-});
-calcROI();
 
 // Formspree endpoint
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xreyrndq';
