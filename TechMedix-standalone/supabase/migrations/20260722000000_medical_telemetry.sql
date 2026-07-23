@@ -104,9 +104,9 @@ CREATE POLICY "Allow all delete" ON medical_device_adapters FOR DELETE USING (tr
 
 INSERT INTO medical_device_protocols (platform_slug, protocol_name, protocol_version, standard_body, endpoint, auth_required, notes)
 VALUES
-  ('jnj_ottava', 'IEEE 11073 SDC', 'ISO/IEEE 11073-10207', 'IEEE/ISO', 'internal://sdc/ottava', true, 'Planned for future firmware. SDC enables cross-manufacturer device-to-device communication in OR.'),
-  ('jnj_ottava', 'HL7 FHIR', 'R4', 'HL7 International', 'internal://fhir/ottava', true, 'Planned. Maps device data to FHIR Observation/DeviceUseStatement resources for EHR integration.'),
-  ('jnj_ottava', 'J&J MedTech Telemetry API', '2.0', 'Johnson & Johnson MedTech', 'internal://api/ottava-telemetry', true, 'Proprietary real-time telemetry stream. Primary data source until SDC/FHIR are available.')
+  ('jnj-ottava', 'IEEE 11073 SDC', 'ISO/IEEE 11073-10207', 'IEEE/ISO', 'internal://sdc/ottava', true, 'Planned for future firmware. SDC enables cross-manufacturer device-to-device communication in OR.'),
+  ('jnj-ottava', 'HL7 FHIR', 'R4', 'HL7 International', 'internal://fhir/ottava', true, 'Planned. Maps device data to FHIR Observation/DeviceUseStatement resources for EHR integration.'),
+  ('jnj-ottava', 'J&J MedTech Telemetry API', '2.0', 'Johnson & Johnson MedTech', 'internal://api/ottava-telemetry', true, 'Proprietary real-time telemetry stream. Primary data source until SDC/FHIR are available.')
 ON CONFLICT DO NOTHING;
 
 -- ── SEED: J&J OTTAVA ADAPTER MAPPING ────────────────────────────────────────
@@ -115,7 +115,7 @@ ON CONFLICT DO NOTHING;
 INSERT INTO medical_device_adapters (platform_slug, adapter_name, source_format, target_format, mapping_config, enabled)
 VALUES
 (
-  'jnj_ottava',
+  'jnj-ottava',
   'J&J Telemetry → TechMedix Canonical',
   'jnj_medtech_telemetry_v2',
   'techmedix_telemetry_v1',
