@@ -1,0 +1,201 @@
+{
+  "platform_id": "ekso_eksonr",
+  "platform_name": "EksoNR Rehabilitation Exoskeleton",
+  "manufacturer": "Ekso Bionics",
+  "category": "rehab_exoskeleton",
+  "compute_stack": {
+    "primary_compute": "Integrated surgical console PC",
+    "os": "Vendor medical-grade OS",
+    "middleware": "Proprietary robotic control stack",
+    "gpu": "Integrated + AI inference"
+  },
+  "actuators": [
+    {
+      "id": "hip_actuator_l",
+      "name": "Left Hip Actuator",
+      "joint": "hip_l",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "torque_assist",
+      "can_id": null
+    },
+    {
+      "id": "knee_actuator_l",
+      "name": "Left Knee Actuator",
+      "joint": "knee_l",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "torque_assist",
+      "can_id": null
+    },
+    {
+      "id": "hip_actuator_r",
+      "name": "Right Hip Actuator",
+      "joint": "hip_r",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "torque_assist",
+      "can_id": null
+    },
+    {
+      "id": "knee_actuator_r",
+      "name": "Right Knee Actuator",
+      "joint": "knee_r",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "torque_assist",
+      "can_id": null
+    }
+  ],
+  "sensors": [
+    {
+      "id": "joint_encoder",
+      "name": "Joint Encoder",
+      "type": "encoder",
+      "ros_topic": null,
+      "sample_rate_hz": 500.0,
+      "manufacturer": "Ekso Bionics"
+    },
+    {
+      "id": "battery_pack",
+      "name": "Battery Pack",
+      "type": "battery",
+      "ros_topic": null,
+      "sample_rate_hz": 1.0,
+      "manufacturer": "Ekso Bionics"
+    },
+    {
+      "id": "force_plate",
+      "name": "Foot Force Plate",
+      "type": "force_torque",
+      "ros_topic": null,
+      "sample_rate_hz": 200.0,
+      "manufacturer": "Ekso Bionics"
+    }
+  ],
+  "communication_protocols": [
+    {
+      "name": "Ekso Connect API",
+      "interface": "wifi",
+      "baud_rate": null,
+      "version": "REST",
+      "planned": false
+    },
+    {
+      "name": "HL7 FHIR",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "R4",
+      "planned": true
+    }
+  ],
+  "telemetry_map": {
+    "actuator_temperature": {
+      "signal_name": "Actuator Temperature",
+      "data_type": "float32",
+      "unit": "C",
+      "normal_range": [
+        15.0,
+        45.0
+      ],
+      "warning_threshold": 55.0,
+      "critical_threshold": 65.0
+    },
+    "battery_health": {
+      "signal_name": "Battery State of Health",
+      "data_type": "float32",
+      "unit": "percent",
+      "normal_range": [
+        20.0,
+        100.0
+      ],
+      "warning_threshold": null,
+      "critical_threshold": null
+    },
+    "gait_symmetry_error": {
+      "signal_name": "Gait Symmetry Error",
+      "data_type": "float32",
+      "unit": "percent",
+      "normal_range": [
+        0.0,
+        10.0
+      ],
+      "warning_threshold": 20.0,
+      "critical_threshold": 35.0
+    }
+  },
+  "diagnostic_rules": [
+    {
+      "rule_id": "EKSO_EKSONR_HIP/KNEE_WARN",
+      "component": "hip/knee BLDC actuator thermal",
+      "signal": "actuator_temperature",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on hip/knee BLDC actuator thermal. BLDC motor thermal overload from continuous assist; cooling blockage; gait asymm"
+    },
+    {
+      "rule_id": "EKSO_EKSONR_BATTERY_WARN",
+      "component": "battery pack degradation",
+      "signal": "actuator_temperature",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on battery pack degradation. Li-ion cell aging; deep-discharge cycles; temperature stress"
+    },
+    {
+      "rule_id": "EKSO_EKSONR_GAIT_WARN",
+      "component": "gait calibration / force-plate drift",
+      "signal": "actuator_temperature",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on gait calibration / force-plate drift. Force-plate zero drift; patient-specific calibration loss; encoder offset"
+    },
+    {
+      "rule_id": "EKSO_EKSONR_STRUCTURAL_WARN",
+      "component": "structural frame joint wear",
+      "signal": "actuator_temperature",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on structural frame joint wear. Repeated patient don/doff stress; bolt loosening; hinge wear"
+    }
+  ],
+  "fmea_summary": [
+    {
+      "component": "hip/knee BLDC actuator thermal",
+      "failure_mode": "Actuator temperature >55C; device throttles or shuts down mid-session",
+      "rpn": 150,
+      "action": "BLDC motor thermal overload from continuous assist; cooling blockage; gait asymmetry load"
+    },
+    {
+      "component": "battery pack degradation",
+      "failure_mode": "Runtime drops; state of health <70%; unexpected shutdown",
+      "rpn": 100,
+      "action": "Li-ion cell aging; deep-discharge cycles; temperature stress"
+    },
+    {
+      "component": "gait calibration / force-plate drift",
+      "failure_mode": "Gait symmetry error >20%; asymmetric assist; patient imbalance",
+      "rpn": 150,
+      "action": "Force-plate zero drift; patient-specific calibration loss; encoder offset"
+    },
+    {
+      "component": "structural frame joint wear",
+      "failure_mode": "Frame play at hip/knee joints; audible click; fit loosens",
+      "rpn": 100,
+      "action": "Repeated patient don/doff stress; bolt loosening; hinge wear"
+    }
+  ],
+  "maintenance_schedule": {
+    "inspection_interval_hours": 200,
+    "calibration_interval_hours": 40,
+    "firmware_update_interval_days": 60,
+    "notes": "Calibrate gait per patient session. Battery health monitored per charge cycle."
+  },
+  "atlas_cross_reference": "ekso-eksonr",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-23T00:00:00Z",
+  "generated_by": "blackcat-os"
+}

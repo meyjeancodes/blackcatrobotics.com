@@ -1,0 +1,189 @@
+{
+  "platform_id": "asensus_senhance",
+  "platform_name": "Senhance Surgical Robotic System",
+  "manufacturer": "Asensus Surgical",
+  "category": "medical_surgical_robot",
+  "compute_stack": {
+    "primary_compute": "Integrated surgical console PC",
+    "os": "Vendor medical-grade OS",
+    "middleware": "Proprietary robotic control stack",
+    "gpu": "Integrated + AI inference"
+  },
+  "actuators": [
+    {
+      "id": "senhance_arm_1",
+      "name": "Senhance Arm 1",
+      "joint": "arm_1_yaw",
+      "dof": 7,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    },
+    {
+      "id": "senhance_arm_2",
+      "name": "Senhance Arm 2",
+      "joint": "arm_2_pitch",
+      "dof": 7,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    }
+  ],
+  "sensors": [
+    {
+      "id": "endoscope_3d",
+      "name": "3D Endoscope",
+      "type": "camera",
+      "ros_topic": null,
+      "sample_rate_hz": 60.0,
+      "manufacturer": "Asensus Surgical"
+    },
+    {
+      "id": "instrument_force",
+      "name": "Haptic Force Sensor",
+      "type": "force_torque",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Asensus Surgical"
+    },
+    {
+      "id": "eye_tracking_cam",
+      "name": "Eye-Tracking Camera",
+      "type": "camera",
+      "ros_topic": null,
+      "sample_rate_hz": 120.0,
+      "manufacturer": "Asensus Surgical"
+    },
+    {
+      "id": "joint_encoder",
+      "name": "Arm Joint Encoder",
+      "type": "encoder",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Asensus Surgical"
+    }
+  ],
+  "communication_protocols": [
+    {
+      "name": "Senhance Telemetry API",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "REST",
+      "planned": false
+    },
+    {
+      "name": "IEEE 11073 SDC",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "ISO/IEEE 11073-10207",
+      "planned": true
+    }
+  ],
+  "telemetry_map": {
+    "joint_position_error": {
+      "signal_name": "Arm Joint Position Error",
+      "data_type": "float32",
+      "unit": "mm",
+      "normal_range": [
+        0.0,
+        1.0
+      ],
+      "warning_threshold": 2.0,
+      "critical_threshold": 5.0
+    },
+    "instrument_force": {
+      "signal_name": "Haptic Tip Force",
+      "data_type": "float32",
+      "unit": "N",
+      "normal_range": [
+        0.0,
+        15.0
+      ],
+      "warning_threshold": 20.0,
+      "critical_threshold": 30.0
+    },
+    "eye_tracking_latency": {
+      "signal_name": "Eye-Tracking Latency",
+      "data_type": "float32",
+      "unit": "ms",
+      "normal_range": [
+        0.0,
+        50.0
+      ],
+      "warning_threshold": 80.0,
+      "critical_threshold": 120.0
+    }
+  },
+  "diagnostic_rules": [
+    {
+      "rule_id": "ASENSUS_SENHANCE_EYE-TRACKING_WARN",
+      "component": "eye-tracking camera calibration",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on eye-tracking camera calibration. Camera lens contamination; ambient IR interference; calibration profile corrupti"
+    },
+    {
+      "rule_id": "ASENSUS_SENHANCE_HAPTIC_WARN",
+      "component": "haptic feedback actuator",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on haptic feedback actuator. Haptic actuator wear; instrument force sensor drift"
+    },
+    {
+      "rule_id": "ASENSUS_SENHANCE_PATIENT_WARN",
+      "component": "patient cart arm joint encoder",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on patient cart arm joint encoder. Encoder seal degradation; repeated reprocessing stress"
+    },
+    {
+      "rule_id": "ASENSUS_SENHANCE_CONSOLE_WARN",
+      "component": "console laparoscopic vision latency",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on console laparoscopic vision latency. GPU load; network congestion to vision cart"
+    }
+  ],
+  "fmea_summary": [
+    {
+      "component": "eye-tracking camera calibration",
+      "failure_mode": "Camera control lag; cursor drifts from gaze; recalibration prompt loops",
+      "rpn": 150,
+      "action": "Camera lens contamination; ambient IR interference; calibration profile corruption"
+    },
+    {
+      "component": "haptic feedback actuator",
+      "failure_mode": "Loss of haptic feel; force feedback absent or exaggerated",
+      "rpn": 100,
+      "action": "Haptic actuator wear; instrument force sensor drift"
+    },
+    {
+      "component": "patient cart arm joint encoder",
+      "failure_mode": "Joint position error >1mm; tip deviation",
+      "rpn": 150,
+      "action": "Encoder seal degradation; repeated reprocessing stress"
+    },
+    {
+      "component": "console laparoscopic vision latency",
+      "failure_mode": "Vision latency >50ms; visual lag",
+      "rpn": 100,
+      "action": "GPU load; network congestion to vision cart"
+    }
+  ],
+  "maintenance_schedule": {
+    "inspection_interval_hours": 250,
+    "calibration_interval_hours": 24,
+    "firmware_update_interval_days": 30,
+    "notes": "Eye-tracking camera requires periodic recalibration. Haptic instruments recalibrate per use."
+  },
+  "atlas_cross_reference": "asensus-senhance",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-23T00:00:00Z",
+  "generated_by": "blackcat-os"
+}

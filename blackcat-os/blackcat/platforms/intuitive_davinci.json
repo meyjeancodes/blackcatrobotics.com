@@ -1,0 +1,223 @@
+{
+  "platform_id": "intuitive_davinci",
+  "platform_name": "da Vinci Surgical System (Xi / X / SP / 5)",
+  "manufacturer": "Intuitive Surgical",
+  "category": "medical_surgical_robot",
+  "compute_stack": {
+    "primary_compute": "Integrated surgical console PC",
+    "os": "Vendor medical-grade OS",
+    "middleware": "Proprietary robotic control stack",
+    "gpu": "Integrated + AI inference"
+  },
+  "actuators": [
+    {
+      "id": "psm_arm_1",
+      "name": "Patient-Side Manipulator 1",
+      "joint": "psm_1_yaw",
+      "dof": 7,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    },
+    {
+      "id": "psm_arm_2",
+      "name": "Patient-Side Manipulator 2",
+      "joint": "psm_2_pitch",
+      "dof": 7,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    },
+    {
+      "id": "mtm_master",
+      "name": "Surgeon Master Tool Manipulator",
+      "joint": "mtm_grip",
+      "dof": 7,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "teleop",
+      "can_id": null
+    }
+  ],
+  "sensors": [
+    {
+      "id": "endoscope_3d",
+      "name": "3D Endoscope",
+      "type": "camera",
+      "ros_topic": null,
+      "sample_rate_hz": 60.0,
+      "manufacturer": "Intuitive Surgical"
+    },
+    {
+      "id": "instrument_force",
+      "name": "EndoWrist Force Sensor",
+      "type": "force_torque",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Intuitive Surgical"
+    },
+    {
+      "id": "joint_encoder",
+      "name": "PSM Joint Encoder",
+      "type": "encoder",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Intuitive Surgical"
+    }
+  ],
+  "communication_protocols": [
+    {
+      "name": "dVRK ROS Interface",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "dVRK 2.x",
+      "planned": false
+    },
+    {
+      "name": "IEEE 11073 SDC",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "ISO/IEEE 11073-10207",
+      "planned": true
+    },
+    {
+      "name": "HL7 FHIR",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "R4",
+      "planned": true
+    }
+  ],
+  "telemetry_map": {
+    "joint_position_error": {
+      "signal_name": "PSM Joint Position Error",
+      "data_type": "float32",
+      "unit": "mm",
+      "normal_range": [
+        0.0,
+        1.0
+      ],
+      "warning_threshold": 2.0,
+      "critical_threshold": 5.0
+    },
+    "instrument_force": {
+      "signal_name": "EndoWrist Tip Force",
+      "data_type": "float32",
+      "unit": "N",
+      "normal_range": [
+        0.0,
+        15.0
+      ],
+      "warning_threshold": 20.0,
+      "critical_threshold": 30.0
+    },
+    "master_input_latency": {
+      "signal_name": "MTM Input Latency",
+      "data_type": "float32",
+      "unit": "ms",
+      "normal_range": [
+        0.0,
+        20.0
+      ],
+      "warning_threshold": 30.0,
+      "critical_threshold": 50.0
+    },
+    "instrument_usage_count": {
+      "signal_name": "Instrument Usage Count",
+      "data_type": "uint16",
+      "unit": "count",
+      "normal_range": [
+        0,
+        10
+      ],
+      "warning_threshold": 8,
+      "critical_threshold": 10
+    }
+  },
+  "diagnostic_rules": [
+    {
+      "rule_id": "INTUITIVE_DAVINCI_ENDOWRIST_WARN",
+      "component": "endowrist surgical instrument",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on endowrist surgical instrument. EndoWrist strain-gauge zero-point drift from repeated sterilization (autoclave t"
+    },
+    {
+      "rule_id": "INTUITIVE_DAVINCI_PATIENT-SIDE_WARN",
+      "component": "patient-side manipulator (PSM) joint encoder",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on patient-side manipulator (PSM) joint encoder. Optical encoder disk contamination from OR debris; seal degradation after repeat"
+    },
+    {
+      "rule_id": "INTUITIVE_DAVINCI_3D_WARN",
+      "component": "3D endoscope / vision cart",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on 3D endoscope / vision cart. Endoscope lens thermal expansion from reprocessing causing inter-camera baseline"
+    },
+    {
+      "rule_id": "INTUITIVE_DAVINCI_SURGEON_WARN",
+      "component": "surgeon console master tool manipulator (MTM) haptics",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on surgeon console master tool manipulator (MTM) haptics. Console network switch degradation; gimbal potentiometer wear; graphics buffer u"
+    },
+    {
+      "rule_id": "INTUITIVE_DAVINCI_PATIENT_WARN",
+      "component": "patient cart brake / skid system",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "critical",
+      "action": "Alert on patient cart brake / skid system. Brake pad wear from repeated engagement; floor debris contamination; spring fati"
+    }
+  ],
+  "fmea_summary": [
+    {
+      "component": "endowrist surgical instrument",
+      "failure_mode": "Force/torque readings drift >5%; haptic feedback inconsistent; instrument fails instrument-qualification self-test",
+      "rpn": 150,
+      "action": "EndoWrist strain-gauge zero-point drift from repeated sterilization (autoclave thermal cycling); wrist cable wear past 1"
+    },
+    {
+      "component": "patient-side manipulator (PSM) joint encoder",
+      "failure_mode": "Joint position error >1mm; instrument tip deviates from commanded pose; dVRK reports measured_cp drift",
+      "rpn": 150,
+      "action": "Optical encoder disk contamination from OR debris; seal degradation after repeated reprocessing cycles"
+    },
+    {
+      "component": "3D endoscope / vision cart",
+      "failure_mode": "Stereo depth degraded; image appears flat or double-vision; dVRK scope calibration fails",
+      "rpn": 100,
+      "action": "Endoscope lens thermal expansion from reprocessing causing inter-camera baseline shift; fiber stress"
+    },
+    {
+      "component": "surgeon console master tool manipulator (MTM) haptics",
+      "failure_mode": "Master input latency >30ms; haptic feedback delayed or absent",
+      "rpn": 100,
+      "action": "Console network switch degradation; gimbal potentiometer wear; graphics buffer under load"
+    },
+    {
+      "component": "patient cart brake / skid system",
+      "failure_mode": "Cart drifts on incline; brake engagement delayed >200ms",
+      "rpn": 200,
+      "action": "Brake pad wear from repeated engagement; floor debris contamination; spring fatigue"
+    }
+  ],
+  "maintenance_schedule": {
+    "inspection_interval_hours": 250,
+    "calibration_interval_hours": 12,
+    "firmware_update_interval_days": 30,
+    "notes": "Recalibrate EndoWrist instruments every 10 uses or if force drift >5%. Verify PSM joint accuracy after each reprocessing cycle."
+  },
+  "atlas_cross_reference": "intuitive-davinci",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-23T00:00:00Z",
+  "generated_by": "blackcat-os"
+}
