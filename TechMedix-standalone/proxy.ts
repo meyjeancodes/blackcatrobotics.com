@@ -44,16 +44,17 @@ export async function proxy(request: NextRequest) {
       return NextResponse.next({ request });
     }
 
-    // Serve the TechMedix Operations console on dashboard.blackcatrobotics.com
+    // Serve the TechMedix Operations console on dashboard.blackcatrobotics.com.
+    // Rewrite the root to /dashboard, then fall through to the auth gate below
+    // so unauthenticated visitors are bounced to /login exactly like the apex host.
     if (host.startsWith("dashboard.")) {
       if (pathname === "/" || pathname === "") {
         const url = request.nextUrl.clone();
         url.pathname = "/dashboard";
         return NextResponse.rewrite(url);
       }
-      // All other paths (/fleet, /settings, /billing, ...) pass through to
-      // the (dashboard) Next.js routes.
-      return NextResponse.next({ request });
+      // Non-root paths (/fleet/battery, /settings, /billing, ...) fall through
+      // to the Supabase auth gate and render the (dashboard) routes normally.
     }
 
     // Serve the rich marketing homepage on blackcatrobotics.com.
