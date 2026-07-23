@@ -1,0 +1,257 @@
+{
+  "platform_id": "jnj_ottava",
+  "platform_name": "Ottava Robotic Surgical System",
+  "manufacturer": "Johnson & Johnson MedTech",
+  "category": "medical_surgical_robot",
+  "compute_stack": {
+    "primary_compute": "Integrated surgical console PC (Intel Xeon or equivalent)",
+    "os": "Windows 10 IoT Enterprise (medical grade)",
+    "middleware": "Proprietary J&J MedTech robotic control stack + DDS for telemetry",
+    "gpu": "Integrated graphics + dedicated AI inference accelerator"
+  },
+  "actuators": [
+    {
+      "id": "patient_cart_arm_1",
+      "name": "Patient Cart Arm 1 (Right Inferior)",
+      "joint": "arm_1_yaw",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    },
+    {
+      "id": "patient_cart_arm_2",
+      "name": "Patient Cart Arm 2 (Right Superior)",
+      "joint": "arm_2_pitch",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    },
+    {
+      "id": "patient_cart_arm_3",
+      "name": "Patient Cart Arm 3 (Left Superior)",
+      "joint": "arm_3_yaw",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    },
+    {
+      "id": "patient_cart_arm_4",
+      "name": "Patient Cart Arm 4 (Left Inferior)",
+      "joint": "arm_4_pitch",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    }
+  ],
+  "sensors": [
+    {
+      "id": "endoscope_camera",
+      "name": "3D Endoscope Camera",
+      "type": "camera",
+      "ros_topic": null,
+      "sample_rate_hz": 60.0,
+      "manufacturer": "Johnson & Johnson MedTech"
+    },
+    {
+      "id": "force_sensing_instrument",
+      "name": "Force-Sensing Surgical Instrument",
+      "type": "force_torque",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Johnson & Johnson MedTech"
+    },
+    {
+      "id": "instrument_tracking",
+      "name": "Instrument Tracking System",
+      "type": "encoder",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Johnson & Johnson MedTech"
+    },
+    {
+      "id": "cart_position_encoder",
+      "name": "Patient Cart Position Encoder",
+      "type": "encoder",
+      "ros_topic": null,
+      "sample_rate_hz": 500.0,
+      "manufacturer": "Johnson & Johnson MedTech"
+    },
+    {
+      "id": "console_imu",
+      "name": "Surgeon Console IMU",
+      "type": "imu",
+      "ros_topic": null,
+      "sample_rate_hz": 200.0,
+      "manufacturer": "Johnson & Johnson MedTech"
+    },
+    {
+      "id": "instrument_ecm_encoder",
+      "name": "Endoscope Camera Head Encoder",
+      "type": "encoder",
+      "ros_topic": null,
+      "sample_rate_hz": 500.0,
+      "manufacturer": "Johnson & Johnson MedTech"
+    }
+  ],
+  "communication_protocols": [
+    {
+      "name": "J&J MedTech Internal Bus",
+      "interface": "internal_ethernet",
+      "baud_rate": null,
+      "version": "2.0"
+    },
+    {
+      "name": "IEEE 11073 SDC (planned)",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "ISO/IEEE 11073-10207"
+    },
+    {
+      "name": "HL7 FHIR (planned)",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "R4"
+    }
+  ],
+  "telemetry_map": {
+    "arm_joint_torque": {
+      "signal_name": "Arm Joint Torque",
+      "can_id": null,
+      "ros_topic": null,
+      "data_type": "float32",
+      "unit": "Nm",
+      "normal_range": [0.0, 5.0],
+      "warning_threshold": 6.0,
+      "critical_threshold": 8.0
+    },
+    "instrument_force": {
+      "signal_name": "Instrument Tip Force",
+      "can_id": null,
+      "ros_topic": null,
+      "data_type": "float32",
+      "unit": "N",
+      "normal_range": [0.0, 15.0],
+      "warning_threshold": 20.0,
+      "critical_threshold": 30.0
+    },
+    "cart_position_error": {
+      "signal_name": "Cart Position Error",
+      "can_id": null,
+      "ros_topic": null,
+      "data_type": "float32",
+      "unit": "mm",
+      "normal_range": [0.0, 2.0],
+      "warning_threshold": 5.0,
+      "critical_threshold": 10.0
+    },
+    "console_master_input_latency": {
+      "signal_name": "Master Input Latency",
+      "can_id": null,
+      "ros_topic": null,
+      "data_type": "float32",
+      "unit": "ms",
+      "normal_range": [0.0, 20.0],
+      "warning_threshold": 30.0,
+      "critical_threshold": 50.0
+    },
+    "system_operational_hours": {
+      "signal_name": "System Operational Hours",
+      "can_id": null,
+      "ros_topic": null,
+      "data_type": "float32",
+      "unit": "hours",
+      "normal_range": [0.0, 99999.0],
+      "warning_threshold": null,
+      "critical_threshold": null
+    },
+    "instrument_usage_count": {
+      "signal_name": "Instrument Usage Count",
+      "can_id": null,
+      "ros_topic": null,
+      "data_type": "uint16",
+      "unit": "count",
+      "normal_range": [0, 10],
+      "warning_threshold": 8,
+      "critical_threshold": 10
+    }
+  },
+  "diagnostic_rules": [
+    {
+      "rule_id": "OTTAVA_INSTRUMENT_FORCE_WARN",
+      "component": "force_sensing_instrument",
+      "signal": "instrument_force",
+      "condition": "> 20",
+      "severity": "warning",
+      "action": "Alert surgeon to excessive tissue force. Log force profile for review. Consider instrument replacement if sustained."
+    },
+    {
+      "rule_id": "OTTAVA_CART_POS_ERROR_CRITICAL",
+      "component": "patient_cart",
+      "signal": "cart_position_error",
+      "condition": "> 10",
+      "severity": "critical",
+      "action": "Halt robotic motion immediately. Recalibrate cart position encoders. Do not resume until positional accuracy is verified."
+    },
+    {
+      "rule_id": "OTTAVA_MASTER_LATENCY_WARN",
+      "component": "surgeon_console",
+      "signal": "console_master_input_latency",
+      "condition": "> 30",
+      "severity": "warning",
+      "action": "Check console network connection. Reduce graphical rendering load. If latency persists, switch to manual mode."
+    },
+    {
+      "rule_id": "OTTAVA_INSTRUMENT_LIFECYCLE",
+      "component": "force_sensing_instrument",
+      "signal": "instrument_usage_count",
+      "condition": ">= 8",
+      "severity": "warning",
+      "action": "Instrument approaching usage limit. Schedule replacement. Log for sterile processing tracking."
+    }
+  ],
+  "fmea_summary": [
+    {
+      "component": "force_sensing_instrument",
+      "failure_mode": "Force sensor drift causing incorrect tissue pressure readings",
+      "rpn": 180,
+      "action": "Calibrate force sensor before each procedure. Replace instrument after 10 uses or if drift exceeds 5%."
+    },
+    {
+      "component": "patient_cart_arm_1",
+      "failure_mode": "Joint encoder failure from repeated sterilization cycle stress",
+      "rpn": 150,
+      "action": "Inspect encoder seals after each sterilization cycle. Replace encoder module at 5000 cycles or if position error exceeds 1mm."
+    },
+    {
+      "component": "surgeon_console",
+      "failure_mode": "Master controller potentiometer wear causing input lag",
+      "rpn": 120,
+      "action": "Run daily master input latency test. Replace master controller if latency exceeds 25ms or if jitter is detected."
+    },
+    {
+      "component": "cart_brake_system",
+      "failure_mode": "Brake failure during power loss causing uncontrolled cart movement",
+      "rpn": 200,
+      "action": "Test emergency brake function daily. Replace brake pads every 2000 operational hours or if response time exceeds 200ms."
+    }
+  ],
+  "maintenance_schedule": {
+    "inspection_interval_hours": 250,
+    "lubrication_interval_hours": null,
+    "calibration_interval_hours": 25,
+    "firmware_update_interval_days": 30,
+    "notes": "Inspect all 4 patient cart arms for positional accuracy. Calibrate force sensors before each procedure. Test emergency brake system daily. Replace instruments after 10 uses. Verify cart brake function weekly. Full system diagnostics monthly. Sterilization compatibility check after each cycle."
+  },
+  "atlas_cross_reference": "jnj-ottava",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-22T00:00:00Z",
+  "generated_by": "blackcat-os"
+}
