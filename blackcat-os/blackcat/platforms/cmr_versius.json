@@ -1,0 +1,170 @@
+{
+  "platform_id": "cmr_versius",
+  "platform_name": "Versius Surgical Robotic System",
+  "manufacturer": "CMR Surgical",
+  "category": "medical_surgical_robot",
+  "compute_stack": {
+    "primary_compute": "Integrated surgical console PC",
+    "os": "Vendor medical-grade OS",
+    "middleware": "Proprietary robotic control stack",
+    "gpu": "Integrated + AI inference"
+  },
+  "actuators": [
+    {
+      "id": "versius_arm_1",
+      "name": "Versius Arm 1",
+      "joint": "arm_1_yaw",
+      "dof": 7,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    },
+    {
+      "id": "versius_arm_2",
+      "name": "Versius Arm 2",
+      "joint": "arm_2_pitch",
+      "dof": 7,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "position_torque",
+      "can_id": null
+    }
+  ],
+  "sensors": [
+    {
+      "id": "endoscope_3d",
+      "name": "3D Endoscope",
+      "type": "camera",
+      "ros_topic": null,
+      "sample_rate_hz": 60.0,
+      "manufacturer": "CMR Surgical"
+    },
+    {
+      "id": "instrument_force",
+      "name": "Instrument Force Sensor",
+      "type": "force_torque",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "CMR Surgical"
+    },
+    {
+      "id": "joint_encoder",
+      "name": "Arm Joint Encoder",
+      "type": "encoder",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "CMR Surgical"
+    }
+  ],
+  "communication_protocols": [
+    {
+      "name": "Versius Ecosystem API",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "REST",
+      "planned": false
+    },
+    {
+      "name": "IEEE 11073 SDC",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "ISO/IEEE 11073-10207",
+      "planned": true
+    }
+  ],
+  "telemetry_map": {
+    "joint_position_error": {
+      "signal_name": "Arm Joint Position Error",
+      "data_type": "float32",
+      "unit": "mm",
+      "normal_range": [
+        0.0,
+        1.0
+      ],
+      "warning_threshold": 2.0,
+      "critical_threshold": 5.0
+    },
+    "instrument_force": {
+      "signal_name": "Instrument Tip Force",
+      "data_type": "float32",
+      "unit": "N",
+      "normal_range": [
+        0.0,
+        15.0
+      ],
+      "warning_threshold": 20.0,
+      "critical_threshold": 30.0
+    }
+  },
+  "diagnostic_rules": [
+    {
+      "rule_id": "CMR_VERSIUS_VERSIUS_WARN",
+      "component": "versius arm joint calibration",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on versius arm joint calibration. Joint encoder seal degradation; repeated cart relocation stress"
+    },
+    {
+      "rule_id": "CMR_VERSIUS_SINGLE-USE_WARN",
+      "component": "single-use instrument actuator",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on single-use instrument actuator. Wrist cable fatigue; single-use design limit reached; reprocessing damage"
+    },
+    {
+      "rule_id": "CMR_VERSIUS_VISION_WARN",
+      "component": "vision system stereo alignment",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on vision system stereo alignment. Endoscope lens thermal expansion from reprocessing; baseline shift"
+    },
+    {
+      "rule_id": "CMR_VERSIUS_MODULAR_WARN",
+      "component": "modular cart power",
+      "signal": "joint_position_error",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on modular cart power. Battery pack degradation; power connector wear from frequent relocation"
+    }
+  ],
+  "fmea_summary": [
+    {
+      "component": "versius arm joint calibration",
+      "failure_mode": "Joint position error >1mm; instrument tip deviates from commanded pose",
+      "rpn": 150,
+      "action": "Joint encoder seal degradation; repeated cart relocation stress"
+    },
+    {
+      "component": "single-use instrument actuator",
+      "failure_mode": "Instrument fails to actuate after fewer than expected uses; grating noise",
+      "rpn": 100,
+      "action": "Wrist cable fatigue; single-use design limit reached; reprocessing damage"
+    },
+    {
+      "component": "vision system stereo alignment",
+      "failure_mode": "Stereo depth degraded; 3D image flat or double-vision",
+      "rpn": 150,
+      "action": "Endoscope lens thermal expansion from reprocessing; baseline shift"
+    },
+    {
+      "component": "modular cart power",
+      "failure_mode": "Cart fails to power; intermittent shutdown",
+      "rpn": 100,
+      "action": "Battery pack degradation; power connector wear from frequent relocation"
+    }
+  ],
+  "maintenance_schedule": {
+    "inspection_interval_hours": 250,
+    "calibration_interval_hours": 24,
+    "firmware_update_interval_days": 30,
+    "notes": "Small individual carts simplify per-arm service. Verify arm accuracy at setup."
+  },
+  "atlas_cross_reference": "cmr-versius",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-23T00:00:00Z",
+  "generated_by": "blackcat-os"
+}

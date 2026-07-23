@@ -1,0 +1,181 @@
+{
+  "platform_id": "stryker_mako",
+  "platform_name": "Mako SmartRobotics System",
+  "manufacturer": "Stryker",
+  "category": "orthopedic_robot",
+  "compute_stack": {
+    "primary_compute": "Integrated surgical console PC",
+    "os": "Vendor medical-grade OS",
+    "middleware": "Proprietary robotic control stack",
+    "gpu": "Integrated + AI inference"
+  },
+  "actuators": [
+    {
+      "id": "mako_robotic_arm",
+      "name": "Mako Robotic Arm",
+      "joint": "arm_yaw",
+      "dof": 6,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "haptic_position",
+      "can_id": null
+    },
+    {
+      "id": "cutting_tool",
+      "name": "Reciprocating Cutter (Burr)",
+      "joint": "burr_spin",
+      "dof": 1,
+      "max_torque_nm": null,
+      "max_speed_rpm": null,
+      "control_mode": "speed",
+      "can_id": null
+    }
+  ],
+  "sensors": [
+    {
+      "id": "accustop_haptic",
+      "name": "AccuStop Haptic Boundary Sensor",
+      "type": "force_torque",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Stryker"
+    },
+    {
+      "id": "tracking_array",
+      "name": "Reflective Tracking Array",
+      "type": "optical",
+      "ros_topic": null,
+      "sample_rate_hz": 60.0,
+      "manufacturer": "Stryker"
+    },
+    {
+      "id": "joint_encoder",
+      "name": "Arm Joint Encoder",
+      "type": "encoder",
+      "ros_topic": null,
+      "sample_rate_hz": 1000.0,
+      "manufacturer": "Stryker"
+    }
+  ],
+  "communication_protocols": [
+    {
+      "name": "Mako Telemetry API",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "REST",
+      "planned": false
+    },
+    {
+      "name": "IEEE 11073 SDC",
+      "interface": "ethernet",
+      "baud_rate": null,
+      "version": "ISO/IEEE 11073-10207",
+      "planned": true
+    }
+  ],
+  "telemetry_map": {
+    "haptic_boundary_error": {
+      "signal_name": "AccuStop Boundary Error",
+      "data_type": "float32",
+      "unit": "mm",
+      "normal_range": [
+        0.0,
+        1.0
+      ],
+      "warning_threshold": 2.0,
+      "critical_threshold": 3.0
+    },
+    "registration_error": {
+      "signal_name": "CT Registration Error",
+      "data_type": "float32",
+      "unit": "mm",
+      "normal_range": [
+        0.0,
+        2.0
+      ],
+      "warning_threshold": 3.0,
+      "critical_threshold": 5.0
+    },
+    "cutter_rpm": {
+      "signal_name": "Cutter RPM",
+      "data_type": "float32",
+      "unit": "rpm",
+      "normal_range": [
+        0.0,
+        12000.0
+      ],
+      "warning_threshold": 13000.0,
+      "critical_threshold": 15000.0
+    }
+  },
+  "diagnostic_rules": [
+    {
+      "rule_id": "STRYKER_MAKO_ACCUSTOP_WARN",
+      "component": "accustop haptic boundary sensor",
+      "signal": "haptic_boundary_error",
+      "condition": "> warning",
+      "severity": "critical",
+      "action": "Alert on accustop haptic boundary sensor. Haptic sensor drift; force-torque calibration loss; arm stiffness change"
+    },
+    {
+      "rule_id": "STRYKER_MAKO_CT-BASED_WARN",
+      "component": "ct-based planning registration",
+      "signal": "haptic_boundary_error",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on ct-based planning registration. Patient motion during registration; tracker array occlusion; CT segmentation err"
+    },
+    {
+      "rule_id": "STRYKER_MAKO_RECIPROCATING_WARN",
+      "component": "reciprocating cutter (burr)",
+      "signal": "haptic_boundary_error",
+      "condition": "> warning",
+      "severity": "medium",
+      "action": "Alert on reciprocating cutter (burr). Burr wear past usage limit; debris buildup; motor bearing wear"
+    },
+    {
+      "rule_id": "STRYKER_MAKO_REFLECTIVE_WARN",
+      "component": "reflective tracking array markers",
+      "signal": "haptic_boundary_error",
+      "condition": "> warning",
+      "severity": "high",
+      "action": "Alert on reflective tracking array markers. Marker contamination; array loosening; IR interference"
+    }
+  ],
+  "fmea_summary": [
+    {
+      "component": "accustop haptic boundary sensor",
+      "failure_mode": "Haptic boundary error >3mm; robot fails to stop at planned resection boundary",
+      "rpn": 200,
+      "action": "Haptic sensor drift; force-torque calibration loss; arm stiffness change"
+    },
+    {
+      "component": "ct-based planning registration",
+      "failure_mode": "Registration error >3mm; planned vs anatomical mismatch",
+      "rpn": 150,
+      "action": "Patient motion during registration; tracker array occlusion; CT segmentation error"
+    },
+    {
+      "component": "reciprocating cutter (burr)",
+      "failure_mode": "Cutter RPM unstable; burn marks on bone; excessive vibration",
+      "rpn": 100,
+      "action": "Burr wear past usage limit; debris buildup; motor bearing wear"
+    },
+    {
+      "component": "reflective tracking array markers",
+      "failure_mode": "Tracking loss; array occlusion alerts; pose jumps",
+      "rpn": 150,
+      "action": "Marker contamination; array loosening; IR interference"
+    }
+  ],
+  "maintenance_schedule": {
+    "inspection_interval_hours": 250,
+    "calibration_interval_hours": 12,
+    "firmware_update_interval_days": 30,
+    "notes": "AccuStop haptic boundary must be verified before each case. Tracking array markers replaced per schedule."
+  },
+  "atlas_cross_reference": "stryker-mako",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-23T00:00:00Z",
+  "generated_by": "blackcat-os"
+}
