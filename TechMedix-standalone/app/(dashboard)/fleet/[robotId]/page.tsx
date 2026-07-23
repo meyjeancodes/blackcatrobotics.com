@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import { SurfaceCard } from "../../../../components/surface-card";
 import { StatusPill } from "../../../../components/status-pill";
 import { TelemetryChart } from "../../../../components/telemetry-chart";
+import { MedicalTelemetryChart } from "../../../../components/medical-telemetry-chart";
 import { formatDateTime } from "../../../../lib/format";
-import { getRobotPageData } from "../../../../lib/data";
+import { getRobotPageData, getMedicalTelemetry } from "../../../../lib/data";
 
 export default async function RobotDetailPage({
   params,
@@ -17,6 +18,9 @@ export default async function RobotDetailPage({
     notFound();
   }
 
+  // Medical-grade signal telemetry (da Vinci / dVRK adapter), if present.
+  const medicalSeries = await getMedicalTelemetry(robotId);
+  const isMedicalRobot = data.robot.platformsSupported.includes("intuitive-davinci");
   return (
     <div className="space-y-6">
       <SurfaceCard title={data.robot.name} eyebrow={data.robot.platform}>
@@ -57,6 +61,26 @@ export default async function RobotDetailPage({
           </div>
         </SurfaceCard>
       </div>
+
+      {isMedicalRobot && (
+        <SurfaceCard
+          title="Medical device signals"
+          eyebrow="da Vinci · dVRK adapter · medical_telemetry"
+        >
+          {medicalSeries.length === 0 ? (
+            <p className="text-sm text-theme-52">
+              No medical telemetry recorded for this device yet. Run the synthetic
+              ingest generator to populate demo data.
+            </p>
+          ) : (
+            <div className="grid gap-5 lg:grid-cols-2">
+              {medicalSeries.map((s) => (
+                <MedicalTelemetryChart key={s.signalName} series={s} />
+              ))}
+            </div>
+          )}
+        </SurfaceCard>
+      )}
 
       <SurfaceCard title="Alerts and jobs" eyebrow="Active work">
         <div className="grid gap-4 xl:grid-cols-2">

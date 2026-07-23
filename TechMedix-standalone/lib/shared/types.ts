@@ -36,6 +36,28 @@ export interface TelemetryPoint {
   anomalyCount: number;
 }
 
+/**
+ * A single threshold-banded medical device signal reading from
+ * medical_telemetry. Used by the medical-grade chart (da Vinci / dVRK adapter).
+ */
+export interface MedicalTelemetryPoint {
+  signalName: string;
+  unit: string;
+  value: number;
+  severity: "info" | "warning" | "critical";
+  timestamp: string;
+  warning: number | null;
+  critical: number | null;
+}
+
+export interface MedicalSignalSeries {
+  signalName: string;
+  unit: string;
+  warning: number | null;
+  critical: number | null;
+  points: MedicalTelemetryPoint[];
+}
+
 export interface RobotTelemetrySummary {
   batteryPct: number;
   motorTempC: number;
