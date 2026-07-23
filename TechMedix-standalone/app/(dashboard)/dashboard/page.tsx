@@ -16,6 +16,7 @@ import { RobotTable } from "../../../components/robot-table";
 import { SurfaceCard } from "../../../components/surface-card";
 import { StatusPill } from "../../../components/status-pill";
 import { TelemetryChart } from "../../../components/telemetry-chart";
+import { MedicalTelemetryChart } from "../../../components/medical-telemetry-chart";
 import { LiveSystemPanel } from "../../../components/live-system-panel";
 import { ServiceNetworkPanel } from "../../../components/service-network-panel";
 import { PerformanceKpis } from "../../../components/performance-kpis";
@@ -25,13 +26,17 @@ import { CheckoutBanner } from "../../../components/checkout-banner";
 import { AiInsightCard } from "../../../components/ai-insight-card";
 import { AlertList } from "../../../components/alert-list";
 import { ActivityFeed } from "../../../components/activity-feed";
-import { getDashboardData } from "../../../lib/data";
+import { getDashboardData, getMedicalTelemetry } from "../../../lib/data";
 import { Suspense } from "react";
 
 export default async function DashboardPage() {
   const { snapshot, stats } = await getDashboardData();
   const flagshipRobot = snapshot.robots[0];
   const telemetry = flagshipRobot ? snapshot.telemetryHistory[flagshipRobot.id] ?? [] : [];
+
+  // Medical device demo panel — pinned to the synthetic da Vinci robot.
+  const SYNTHETIC_DAVINCI_ID = "robot_davinci_synthetic";
+  const medicalSeries = await getMedicalTelemetry(SYNTHETIC_DAVINCI_ID);
 
   const timestamp = new Date().toLocaleTimeString("en-US", {
     hour: "2-digit",
@@ -197,6 +202,31 @@ export default async function DashboardPage() {
           )}
         </SurfaceCard>
       </section>
+
+      {/* ─── Medical device signals (da Vinci / dVRK demo) ───────── */}
+      {medicalSeries.length > 0 && (
+        <section className="space-y-4">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="kicker">Medical Device · Live Demo</p>
+              <h2 className="mt-1.5 font-header text-2xl leading-tight tracking-[-0.02em] text-theme-primary lg:text-3xl">
+                da Vinci Surgical System (dVRK feed)
+              </h2>
+            </div>
+            <span className="inline-flex items-center gap-2 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-theme-35">
+              <Radar size={12} />
+              real adapter mapping
+            </span>
+          </div>
+          <div className="grid gap-5 lg:grid-cols-2">
+            {medicalSeries.map((s) => (
+              <SurfaceCard key={s.signalName} title={s.signalName} eyebrow={`threshold ${s.warning ?? "—"}/${s.critical ?? "—"} ${s.unit}`}>
+                <MedicalTelemetryChart series={s} />
+              </SurfaceCard>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ─── Priority alerts + dispatch queue ────────────────── */}
       <section className="grid gap-6 xl:grid-cols-2">

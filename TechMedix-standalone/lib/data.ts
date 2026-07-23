@@ -15,6 +15,7 @@ import {
 } from "@/lib/shared";
 import { createClient } from "@/lib/supabase";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
+import type { MedicalSignalSeries, MedicalTelemetryPoint } from "@/lib/shared";
 
 const useMockData =
   process.env.TECHMEDIX_USE_MOCK_DATA === "true" ||
@@ -310,3 +311,86 @@ export async function getAdminCustomers() {
   if (error) throw new Error(error.message);
   return (data ?? []).map(mapCustomer);
 }
+
+/**
+ * Fetch medical-device telemetry for a robot from medical_telemetry, grouped
+ * into per-signal series with warning/critical thresholds drawn from the
+ * platform's adapter config (medical_device_adapters.mapping_config). Used by
+ * the da Vinci / dVRK demo. Returns [] if the table is empty for the robot.
+ */
+export async function getMedicalTelemetry(robotId: string): Promise<MedicalSignalSeries[]> {
+  if (useMockData) return [];
+
+  const supabase = createClient();
+  if (!supabase) return [];
+
+  try {
+    const { data: rows, error } = await supabase
+      .from("medical_telemetry")
+      .select("signal_name, signal_value, unit, severity, timestamp, source_device")
+      .eq("robot_id", robotId)
+      .order("timestamp", { ascending: true });
+
+    if (error) throw new Error(error.message);
+    if (!rows || rows.length === 0) return [];
+
+    // Resolve thresholds from the adapter config (dVRK mapping) for this robot's platform.
+    const robotRow = await supabase
+      .from("robots")
+      .select("platforms_supported")
+      .eq("id", robotId)
+      .maybeSingle();
+    const slug = (robotRow?.data?.platforms_supported as string[] | undefined)?.[0];
+
+    const thresholds: Record<
+      string,
+      { warning: number | null; critical: number | null; unit: string }
+    > = {};
+    if (slug) {
+      const { data: adapter } = await supabase
+        .from("medical_device_adapters")
+        .select("mapping_config")
+        .eq("platform_slug", slug)
+        .maybeSingle();
+      const cfg = (adapter?.mapping_config as Record<string, any> | undefined)?.signal_mappings as
+        Record<string, { target_field: string; warning?: number; critical?: number; unit?: string }> | undefined;
+      if (cfg) {
+        for (const [key, m] of Object.entries(cfg)) {
+          thresholds[m.target_field] = {
+            warning: m.warning ?? null,
+            critical: m.critical ?? null,
+            unit: m.unit ?? "",
+          };
+        }
+      }
+    }
+
+    // Group by signal name.
+    const grouped: Record<string, MedicalTelemetryPoint[]> = {};
+    for (const r of rows) {
+      const name = r.signal_name as string;
+      if (!grouped[name]) grouped[name] = [];
+      grouped[name].push({
+        signalName: name,
+        unit: (r.unit as string) ?? thresholds[name]?.unit ?? "",
+        value: Number(r.signal_value),
+        severity: (r.severity as MedicalTelemetryPoint["severity"]) ?? "info",
+        timestamp: r.timestamp as string,
+        warning: thresholds[name]?.warning ?? null,
+        critical: thresholds[name]?.critical ?? null,
+      });
+    }
+
+    return Object.entries(grouped).map(([name, points]) => ({
+      signalName: name,
+      unit: points[0].unit,
+      warning: thresholds[name]?.warning ?? null,
+      critical: thresholds[name]?.critical ?? null,
+      points,
+    }));
+  } catch (err) {
+    console.error("[techmedix] getMedicalTelemetry failed:", err);
+    return [];
+  }
+}
+
