@@ -68,9 +68,20 @@ export default async function LessonPage({
 
       {/* Content */}
       {lesson.content_blocks.length === 0 ? (
-        <p className="text-theme-30 text-sm py-8 text-center font-ui text-xs uppercase tracking-widest">
-          Content coming soon
-        </p>
+        <div className="py-10 text-center">
+          <p className="text-theme-30 text-sm font-ui text-xs uppercase tracking-widest mb-4">
+            This lesson is being authored
+          </p>
+          <Link
+            href={`/knowledge/modules/${moduleId}`}
+            className="inline-flex items-center gap-2 font-ui text-[0.62rem] uppercase tracking-widest text-theme-35 hover:text-theme-70 transition-colors"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="group-hover:-translate-x-0.5 transition-transform">
+              <path d="M9 3L5 7L9 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Back to module
+          </Link>
+        </div>
       ) : (
         <LessonViewer lesson={lesson} userId={userId} />
       )}
