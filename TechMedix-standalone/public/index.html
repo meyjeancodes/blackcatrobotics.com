@@ -570,6 +570,121 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 .unitree-banner-btns { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
 @media(max-width:768px) { .unitree-banner { padding: 24px 20px; } .unitree-banner-top { grid-template-columns: 1fr; gap: 20px; } .unitree-stats { flex-wrap: wrap; } }
 </style>
+<style>
+  :root{
+    --ink:#0a0a0f; --ink-2:#3a3a45; --ink-3:#8888a0;
+    --paper:#f0efe8; --paper-2:#fafaf4; --white:#fff;
+    --fire:#cc3d17; --fire-2:#d4401a;
+    --border:rgba(10,10,15,0.08);
+    --display:'Space Grotesk','Helvetica Neue',sans-serif; --mono:'JetBrains Mono','Courier New',monospace;
+    --joint:#ff5a1f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--display);background:var(--paper);color:var(--ink);overflow-x:hidden;}
+
+  /* ===== BOUNDED EMBED: ~200vh scroll band, drops into Acquire above the tabs ===== */
+  .teardown-embed{position:relative;height:200vh;background:linear-gradient(180deg,var(--paper) 0%,var(--paper-2) 60%,var(--paper) 100%);}
+  /* FIXED stage (not sticky) so it is immune to the live site's body{overflow:hidden} scroll container */
+  .stage{position:fixed;inset:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:0;transition:opacity .5s ease;pointer-events:none;}
+  .teardown-embed.live .stage{opacity:1;pointer-events:auto;}
+
+  /* cinematic glow + subtle scanner ring behind robot */
+  .glow{position:absolute;top:50%;left:50%;width:560px;height:560px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(204,61,23,.10) 0%,transparent 62%);pointer-events:none;z-index:0;}
+  .ring{position:absolute;top:50%;left:50%;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;}
+  .ring1{width:460px;height:460px;border:1px solid rgba(204,61,23,.10);animation:spin 34s linear infinite;}
+  @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+  /* headline — fades OUT as you scroll into teardown */
+  .stage-head{position:absolute;top:7vh;left:50%;transform:translateX(-50%);text-align:center;z-index:4;width:92%;max-width:820px;pointer-events:none;transition:opacity .25s ease;}
+  .eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fire);background:rgba(204,61,23,.08);border:1px solid rgba(204,61,23,.18);padding:6px 14px;border-radius:999px;margin-bottom:16px;}
+  .stage-head h1{font-size:clamp(26px,3vw,44px);line-height:1.05;letter-spacing:-.03em;}
+  .stage-head h1 em{color:var(--fire);font-style:italic;}
+
+  /* failure callout — slides in from bottom-left */
+  .callout{position:absolute;left:44px;bottom:11vh;background:var(--white);border:1px solid var(--border);border-left:4px solid var(--fire);border-radius:18px;padding:20px 22px;max-width:330px;box-shadow:0 16px 48px rgba(10,10,15,.12);z-index:5;opacity:0;transform:translateX(-28px);transition:opacity .45s cubic-bezier(.16,1,.3,1),transform .45s cubic-bezier(.16,1,.3,1),border-color .4s,box-shadow .4s;}
+  .callout.sev-HIGH{border-color:rgba(204,61,23,.9);box-shadow:0 0 24px rgba(204,61,23,.25),0 16px 48px rgba(10,10,15,.12);}
+  .callout.sev-MED{border-color:rgba(200,169,110,.8);box-shadow:0 0 20px rgba(200,169,110,.18),0 16px 48px rgba(10,10,15,.12);}
+  .callout.on{opacity:1;transform:none;}
+  .callout .tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--fire);margin-bottom:8px;}
+  .callout h3{font-size:20px;letter-spacing:-.02em;margin-bottom:7px;}
+  .callout p{font-size:13px;line-height:1.6;color:var(--ink-2);}
+  .callout .meta{margin-top:14px;display:flex;gap:18px;font-family:var(--mono);font-size:10px;color:var(--ink-3);border-top:1px solid var(--border);padding-top:12px;}
+  .callout .meta b{color:var(--ink);display:block;font-size:14px;margin-top:2px;}
+
+  /* robot dead-center, sized to fit the band */
+  .robot-stage{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;z-index:2;overflow:visible;padding-top:14vh;}
+  svg{height:min(74vh,560px);width:auto;max-width:94vw;overflow:visible;perspective:1200px;}
+  #floater{animation:bobFloat 6s ease-in-out infinite, yawFloat 14s ease-in-out infinite;transform-origin:center;will-change:transform;}
+  @keyframes bobFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  @keyframes yawFloat{0%,100%{transform:rotate(-1.2deg);}50%{transform:rotate(1.2deg);}}
+  .floor-grid{position:absolute;left:50%;bottom:8vh;width:120%;height:32vh;transform:translateX(-50%) perspective(420px) rotateX(62deg);transform-origin:bottom center;pointer-events:none;z-index:1;opacity:.5;
+    background-image:linear-gradient(rgba(204,61,23,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(204,61,23,.10) 1px,transparent 1px);background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 100%,#000 10%,transparent 75%);mask-image:radial-gradient(ellipse 60% 80% at 50% 100%,#000 10%,transparent 75%);}
+  @media(prefers-reduced-motion:reduce){
+    #floater{animation:none;} .ring1{animation:none;} html{scroll-behavior:auto;}
+  }
+  .part{transition:transform .14s linear, opacity .25s;transform-box:fill-box;transform-origin:center;}
+  .part.dim{opacity:.30;}
+  .part.focus{filter:drop-shadow(0 0 10px rgba(204,61,23,.85)) drop-shadow(0 0 3px rgba(255,90,31,.9));animation:turntable 6s linear infinite;transform-style:preserve-3d;}
+  .part.focus :first-child{stroke:var(--fire);stroke-width:2;}
+  .part.lit{filter:drop-shadow(0 0 9px rgba(204,61,23,.7)) drop-shadow(0 0 3px rgba(255,90,31,.6));}
+  .part.lit :first-child{stroke:var(--fire);stroke-width:2;}
+  @keyframes turntable{0%{transform:translate(var(--tx,0),var(--ty,0)) rotateY(0deg) scale(var(--ts,1.18));}100%{transform:translate(var(--tx,0),var(--ty,0)) rotateY(360deg) scale(var(--ts,1.18));}}
+  @keyframes spark{0%{filter:drop-shadow(0 0 4px rgba(204,61,23,.3));}40%{filter:drop-shadow(0 0 16px rgba(204,61,23,.9));}100%{filter:drop-shadow(0 0 10px rgba(204,61,23,.85));}}
+  .part.smear{filter:blur(1.4px);}
+  .subs{opacity:0;transition:opacity .4s;pointer-events:none;}
+  .part.focus .subs{opacity:1;}
+  .subs > *{transform-box:fill-box;transform-origin:center;}
+  #halo{fill:none;stroke:var(--fire);stroke-width:2.5;opacity:0;transition:opacity .35s;stroke-dasharray:5 5;animation:spinHalo 8s linear infinite, haloPulse 1.8s ease-in-out infinite;}
+  @keyframes haloPulse{0%,100%{stroke-width:2.5;filter:drop-shadow(0 0 2px rgba(204,61,23,.4));}50%{stroke-width:4;filter:drop-shadow(0 0 10px rgba(204,61,23,.9));}}
+  #scan{animation:scanDrift 5s linear infinite;mix-blend-mode:screen;filter:drop-shadow(0 0 6px rgba(204,61,23,.5));}
+  #scan.fast{animation-duration:2.2s;filter:drop-shadow(0 0 14px rgba(204,61,23,.9));}
+  @keyframes scanDrift{0%{transform:translateY(-40px);}100%{transform:translateY(600px);}}
+  @keyframes spinHalo{to{transform:rotate(360deg);}}
+  .lline{stroke:var(--fire);stroke-width:1;opacity:0;transition:opacity .3s;stroke-dasharray:2 3;}
+  .plabel{font-family:var(--mono);font-size:9px;letter-spacing:.03em;fill:var(--ink);opacity:0;transition:opacity .35s;paint-order:stroke;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round;}
+  .plabel.on{opacity:1;}
+  .lline.on{opacity:1;}
+  .bcore{animation:bcorePulse 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}
+  @keyframes bcorePulse{0%,100%{opacity:.8;filter:drop-shadow(0 0 2px rgba(204,61,23,.3));}50%{opacity:1;filter:drop-shadow(0 0 8px rgba(204,61,23,.7));}}
+
+  /* progress rail — fixed to viewport, shown only while band is live */
+  .rail{position:fixed;right:26px;top:50%;transform:translateY(-50%);width:3px;height:180px;background:rgba(10,10,15,.08);border-radius:2px;z-index:20;overflow:hidden;opacity:0;transition:opacity .3s;}
+  .teardown-embed.live .rail{opacity:1;}
+  .rail i{display:block;width:100%;background:linear-gradient(180deg,var(--fire),var(--fire-2));border-radius:2px;}
+  .hud{position:fixed;right:20px;bottom:24px;z-index:20;text-align:right;font-family:var(--mono);pointer-events:none;opacity:0;transition:opacity .3s;}
+  .teardown-embed.live .hud.on{opacity:1;}
+  .hud .idx{font-size:11px;letter-spacing:.1em;color:var(--ink-3);font-variant-numeric:tabular-nums;}
+  .hud .idx b{color:var(--fire);font-weight:600;}
+  .hud .ph{font-size:13px;color:var(--ink);margin-top:2px;font-weight:500;}
+
+  .hint{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--ink-3);background:var(--white);padding:8px 16px;border-radius:999px;border:1px solid var(--border);box-shadow:0 8px 30px rgba(10,10,15,.06);animation:bob 2s ease infinite;z-index:20;transition:opacity .3s;opacity:0;}
+  .teardown-embed.live .hint{opacity:1;transition:opacity .3s;}
+  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-6px);}}
+
+  /* closing caption under the band */
+  .embed-foot{position:absolute;left:50%;bottom:5vh;transform:translateX(-50%);text-align:center;width:90%;max-width:620px;z-index:4;pointer-events:none;}
+  .embed-foot p{font-size:14px;line-height:1.6;color:var(--ink-2);}
+  .embed-foot b{color:var(--ink);}
+
+  @media(max-width:820px){
+    .callout{left:14px;right:14px;bottom:6vh;max-width:none;padding:16px 18px;}
+    .callout h3{font-size:18px;}
+    svg{height:min(64vh,400px);max-width:94vw;}
+    .stage-head h1{font-size:20px;line-height:1.1;}
+    .stage-head{top:4vh;width:94%;}
+    .floor-grid{opacity:.25;}
+    .ring1{display:none;}
+    .plabel{font-size:7.5px;}
+    .hud{transform:scale(.92);transform-origin:bottom right;}
+    .rail{right:14px;}
+  }
+  @media(max-width:480px){
+    svg{width:min(58vh,260px);}
+    .stage-head h1{font-size:17px;}
+  }
+</style>
 </head>
 <body>
 
@@ -878,6 +993,257 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   <div class="notice reveal">BlackCat Robotics is actively pursuing authorized reseller partnerships with the manufacturers listed below. Units are available to order — all quotes are fulfilled through verified distribution channels while direct partnership agreements are finalized.</div>
 
   <div style="margin-bottom:24px;" class="reveal">
+
+
+    <!-- TECHMEDIX TEARDOWN BAND (embed) -->
+<section class="teardown-embed" id="acquire-teardown">
+  <div class="stage">
+    <div class="glow"></div>
+    <div class="ring ring1"></div>
+    <div class="floor-grid"></div>
+
+    <div class="stage-head" id="head-block">
+      <div class="eyebrow">TechMedix inside</div>
+      <h1>We know exactly<br><em>what breaks.</em></h1>
+    </div>
+
+    <div class="callout" id="callout">
+      <div class="tag" id="c-tag">Humanoid Platform</div>
+      <h3 id="c-title">Complete System</h3>
+      <p id="c-desc">Every autonomous humanoid is thousands of parts in sync. Scroll to see the ones that fail — and how TechMedix keeps them alive.</p>
+      <div class="meta" id="c-meta"><span>MTBF<b>—</b></span><span>Severity<b>—</b></span></div>
+    </div>
+
+    <div class="robot-stage">
+      <svg viewBox="0 0 460 720" id="robot">
+  <defs>
+    <linearGradient id="steelG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1a1f"/><stop offset=".5" stop-color="#0e0f14"/><stop offset="1" stop-color="#06070a"/>
+    </linearGradient>
+    <linearGradient id="darkG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#14151a"/><stop offset=".5" stop-color="#0a0a0f"/><stop offset="1" stop-color="#06070a"/>
+    </linearGradient>
+    <linearGradient id="coreG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff7a2a"/><stop offset="1" stop-color="#cc3d17"/>
+    </linearGradient>
+    <linearGradient id="bronzeG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d4a574"/><stop offset=".5" stop-color="#b8860b"/><stop offset="1" stop-color="#8c6a07"/>
+    </linearGradient>
+    <linearGradient id="scanG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cc3d17" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#cc3d17" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#cc3d17" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="specG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".35"/>
+      <stop offset=".3" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="shadowG" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#000" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#0a0a0f"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#ff5a1f" stroke-width="1" opacity=".55"/>
+    </pattern>
+  </defs>
+  <rect id="scan" x="120" y="0" width="220" height="36" fill="url(#scanG)" opacity="0" pointer-events="none"/>
+  <circle id="halo" cx="230" cy="224" r="44" fill="none"/>
+
+  <line class="lline" data-for="head"     x1="258" y1="68"  x2="390" y2="56"></line>
+  <text class="plabel" data-for="head"     x="392" y="59">HEAD · VISION / ENCODER</text>
+  <line class="lline" data-for="chest"    x1="300" y1="176" x2="396" y2="170"></line>
+  <text class="plabel" data-for="chest"    x="304" y="172">BATTERY PACK · 864Wh</text>
+  <line class="lline" data-for="arm-r"    x1="340" y1="220" x2="396" y2="270"></line>
+  <text class="plabel" data-for="arm-r"    x="314" y="284">ARM ACTUATOR</text>
+  <line class="lline" data-for="arm-l"    x1="120" y1="220" x2="66"  y2="190"></line>
+  <text class="plabel" data-for="arm-l"    x="42"  y="192">SHOULDER JOINT</text>
+  <line class="lline" data-for="thigh-l"  x1="170" y1="430" x2="66"  y2="456"></line>
+  <text class="plabel" data-for="thigh-l"  x="42"  y="470">KNEE HARMONIC DRIVE</text>
+  <line class="lline" data-for="thigh-r"  x1="290" y1="430" x2="394" y2="454"></line>
+  <text class="plabel" data-for="thigh-r"  x="316" y="468">HIP ABDUCTION BEARING</text>
+  <line class="lline" data-for="shin-r"   x1="284" y1="530" x2="394" y2="556"></line>
+  <text class="plabel" data-for="shin-r"   x="316" y="572">ANKLE ENCODER</text>
+
+  <g id="camera">
+  <ellipse cx="230" cy="620" rx="110" ry="14" fill="url(#shadowG)"/>
+  <g id="floater" stroke="#c9c7ba" stroke-width="1.5" stroke-linejoin="round">
+
+  <!-- HEAD -->
+  <g class="part" data-part="head">
+    <path d="M185 62 Q230 38 275 62 Q295 98 285 118 L175 118 Q165 98 185 62 Z" fill="url(#steelG)" stroke="none"/>
+    <path d="M189 66 Q230 46 271 66 Q285 96 275 114 L175 114 Q165 96 189 66 Z" fill="url(#specG)"/>
+    <circle cx="205" cy="82" r="6" fill="#cc3d17"/>
+    <circle cx="255" cy="82" r="6" fill="#cc3d17"/>
+    <circle cx="205" cy="82" r="2" fill="#ff7a2a"/>
+    <circle cx="255" cy="82" r="2" fill="#ff7a2a"/>
+  </g>
+  <!-- NECK -->
+  <g class="part" data-part="neck">
+    <ellipse cx="230" cy="120" rx="16" ry="10" fill="url(#bronzeG)" stroke="none"/>
+    <circle cx="230" cy="120" r="14" fill="none" stroke="#cc3d17" stroke-width="1.5"/>
+  </g>
+  <!-- TORSO -->
+  <g class="part" data-part="chest">
+    <path d="M160 144 Q230 120 300 144 Q320 180 300 220 L160 220 Q140 180 160 144 Z" fill="url(#steelG)" stroke="none"/>
+    <path d="M165 147 Q230 125 295 147 Q310 178 295 215 L165 215 Q150 178 165 147 Z" fill="url(#specG)"/>
+    <rect x="202" y="152" width="56" height="32" rx="6" fill="url(#coreG)" opacity="0.9"/>
+    <rect x="200" y="150" width="60" height="36" rx="8" fill="none" stroke="#cc3d17" stroke-width="1" opacity="0.4"/>
+    <rect x="184" y="210" width="72" height="10" rx="2" fill="url(#darkG)"/>
+  </g>
+  <!-- SHOULDERS -->
+  <g class="part" data-part="sh-l">
+    <circle cx="154" cy="162" r="18" fill="url(#bronzeG)" stroke="none"/>
+    <circle cx="154" cy="162" r="12" fill="none" stroke="#cc3d17" stroke-width="1.5"/>
+    <path d="M138 162 L170 162" stroke="#cc3d17" stroke-width="1.5" opacity=".7"/>
+  </g>
+  <g class="part" data-part="sh-r">
+    <circle cx="306" cy="162" r="18" fill="url(#bronzeG)" stroke="none"/>
+    <circle cx="306" cy="162" r="12" fill="none" stroke="#cc3d17" stroke-width="1.5"/>
+    <path d="M290 162 L322 162" stroke="#cc3d17" stroke-width="1.5" opacity=".7"/>
+  </g>
+  <!-- ARMS -->
+  <g class="part" data-part="arm-l">
+    <path d="M138 178 q-14 6 -18 32 l6 100 q16 6 28 0 l-6 -100 q-4 -26 -18 -32 z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M140 182 q-12 5 -16 28 l5 88 q14 5 24 0 l-5 -88 q-3 -22 -12 -28 z" fill="url(#specG)"/>
+    <path d="M152 182 q10 6 8 26 l-4 92 q4 -2 8 -10 l2 -96 q-3 -22 -14 -28 z" fill="#000" opacity=".18"/>
+    <circle cx="130" cy="210" r="9" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/><circle cx="130" cy="210" r="3.2" fill="#ff5a1f"/>
+    <path d="M130 210 L130 280" stroke="#cc3d17" stroke-width="1.5" opacity=".45"/>
+    <circle cx="130" cy="290" r="10" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.8"/><circle cx="130" cy="290" r="3.2" fill="#ff5a1f"/>
+    <g class="subs">
+      <g transform="translate(130 220)"><circle r="7" fill="url(#darkG)" stroke="#cc3d17" stroke-width="1.5"/><circle r="2.6" fill="#cc3d17"/></g>
+      <g transform="translate(138 260)"><rect x="-7" y="-8" width="14" height="16" rx="3" fill="url(#steelG)" stroke="#3a3a48" stroke-width="1"/></g>
+      <g transform="translate(130 290)"><circle r="8" fill="url(#darkG)" stroke="#ff5a1f" stroke-width="1.5"/></g>
+    </g>
+  </g>
+  <g class="part" data-part="arm-r">
+    <path d="M322 178 q14 6 18 32 l-6 100 q-16 6 -28 0 l6 -100 q4 -26 18 -32 z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M320 182 q12 5 16 28 l-5 88 q-14 5 -24 0 l5 -88 q-3 -22 12 -28 z" fill="url(#specG)"/>
+    <path d="M308 182 q-10 6 -8 26 l4 92 q-4 -2 -8 -10 l-2 -96 q3 -22 14 -28 z" fill="#000" opacity=".18"/>
+    <circle cx="330" cy="210" r="9" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/><circle cx="330" cy="210" r="3.2" fill="#ff5a1f"/>
+    <path d="M330 210 L330 280" stroke="#cc3d17" stroke-width="1.5" opacity=".45"/>
+    <circle cx="330" cy="290" r="10" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.8"/><circle cx="330" cy="290" r="3.2" fill="#ff5a1f"/>
+  </g>
+  <!-- HANDS -->
+  <g class="part" data-part="hand-l">
+    <path d="M118 302 L142 302 L142 310 L118 310 Z" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.4"/>
+    <circle cx="130" cy="306" r="2.2" fill="#ff5a1f"/>
+    <path d="M112 310 L148 310 L150 322 L110 322 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M114 312 L146 312 L148 320 L112 320 Z" fill="url(#specG)"/>
+    <g><rect x="106" y="286" width="8" height="22" rx="1.2" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2" transform="rotate(-16 110 297)"/><circle cx="110" cy="306" r="2.2" fill="#0a0a0f" stroke="#ff5a1f" stroke-width="1"/></g>
+    <g><rect x="120" y="278" width="8" height="30" rx="1.2" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2"/><circle cx="124" cy="306" r="2.2" fill="#0a0a0f" stroke="#ff5a1f" stroke-width="1"/></g>
+    <g><rect x="132" y="278" width="8" height="30" rx="1.2" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2"/><circle cx="136" cy="306" r="2.2" fill="#0a0a0f" stroke="#ff5a1f" stroke-width="1"/></g>
+    <g><rect x="144" y="286" width="8" height="22" rx="1.2" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2" transform="rotate(16 148 297)"/><circle cx="148" cy="306" r="2.2" fill="#0a0a0f" stroke="#ff5a1f" stroke-width="1"/></g>
+    <path d="M118 310 h30" stroke="#cc3d17" stroke-width="1.2" opacity=".35"/>
+  </g>
+  <g class="part" data-part="hand-r">
+    <path d="M318 302 L342 302 L342 310 L318 310 Z" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.4"/>
+    <circle cx="330" cy="306" r="2.2" fill="#ff5a1f"/>
+    <path d="M312 310 L348 310 L350 322 L310 322 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M314 312 L346 312 L348 320 L312 320 Z" fill="url(#specG)"/>
+    <g><rect x="346" y="286" width="8" height="22" rx="1.2" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2" transform="rotate(16 350 297)"/><circle cx="350" cy="306" r="2.2" fill="#0a0a0f" stroke="#ff5a1f" stroke-width="1"/></g>
+    <g><rect x="332" y="278" width="8" height="30" rx="1.2" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2"/><circle cx="336" cy="306" r="2.2" fill="#0a0a0f" stroke="#ff5a1f" stroke-width="1"/></g>
+    <g><rect x="320" y="278" width="8" height="30" rx="1.2" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2"/><circle cx="324" cy="306" r="2.2" fill="#0a0a0f" stroke="#ff5a1f" stroke-width="1"/></g>
+    <g><rect x="306" y="286" width="8" height="22" rx="1.2" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2" transform="rotate(-16 310 297)"/><circle cx="310" cy="306" r="2.2" fill="#0a0a0f" stroke="#ff5a1f" stroke-width="1"/></g>
+    <path d="M312 310 h30" stroke="#cc3d17" stroke-width="1.2" opacity=".35"/>
+  </g>
+  <!-- PELVIS -->
+  <g class="part" data-part="pelvis">
+    <path d="M178 228 L282 228 L296 268 L164 268 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M182 230 L278 230 L290 264 L170 264 Z" fill="url(#specG)"/>
+    <path d="M190 238 H270 M190 244 H270" stroke="#c9c7ba" stroke-width="1.2" opacity=".35"/>
+    <circle cx="230" cy="248" r="12" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/>
+    <circle cx="230" cy="248" r="12" fill="none" stroke="#c9c7ba" stroke-width="1.6" stroke-dasharray="1.8 1.8" opacity=".8"/>
+    <circle cx="230" cy="248" r="3.5" fill="#ff5a1f"/>
+    <path d="M164 268 L296 268 L312 312 L148 312 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M170 270 L290 270 L304 308 L156 308 Z" fill="url(#specG)"/>
+  </g>
+  <!-- THIGHS -->
+  <g class="part" data-part="thigh-l">
+    <path d="M170 316 q-8 6 -8 24 l4 88 q14 6 22 0 l-4 -88 q0 -18 -8 -24 z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M172 320 q-6 6 -6 22 l4 82 q12 5 18 0 l-3 -82 q0 -18 -5 -22 z" fill="url(#specG)"/>
+    <circle cx="166" cy="320" r="10" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/><circle cx="166" cy="320" r="3.2" fill="#ff5a1f"/>
+    <circle cx="176" cy="428" r="14" fill="none" stroke="#0a0a0f" stroke-width="2.2" stroke-dasharray="1.8 1.8"/>
+    <circle cx="176" cy="428" r="3.5" fill="#ff5a1f"/>
+    <path d="M176 328 V418" stroke="#cc3d17" stroke-width="1.5" opacity=".45"/>
+    <g class="subs">
+      <g transform="translate(176 428)"><circle r="9" fill="url(#darkG)" stroke="#cc3d17" stroke-width="1.5"/><circle r="3.5" fill="#cc3d17"/></g>
+      <g transform="translate(196 416)"><rect x="-8" y="-8" width="16" height="16" rx="2" fill="url(#steelG)" stroke="#3a3a48" stroke-width="1"/></g>
+      <g transform="translate(154 416)"><path d="M-8 0 a8 8 0 0 1 16 0" fill="none" stroke="#ff5a1f" stroke-width="2.5"/></g>
+    </g>
+  </g>
+  <g class="part" data-part="thigh-r">
+    <path d="M290 316 q8 6 8 24 l-4 88 q-14 6 -22 0 l4 -88 q0 -18 8 -24 z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M288 320 q6 6 6 22 l-4 82 q-12 5 -18 0 l3 -82 q0 -18 5 -22 z" fill="url(#specG)"/>
+    <circle cx="294" cy="320" r="10" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/><circle cx="294" cy="320" r="3.2" fill="#ff5a1f"/>
+    <circle cx="284" cy="428" r="14" fill="none" stroke="#c9c7ba" stroke-width="1.1" stroke-dasharray="1 1.8" opacity=".85"/>
+    <circle cx="284" cy="428" r="3.5" fill="#ff5a1f"/>
+    <path d="M284 328 V418" stroke="#cc3d17" stroke-width="1.5" opacity=".45"/>
+    <g class="subs">
+      <g transform="translate(284 428)"><circle r="10" fill="url(#darkG)" stroke="#cc3d17" stroke-width="1.5"/><circle r="4" fill="#cc3d17"/></g>
+      <g transform="translate(264 416)"><path d="M-9 -9 h18 v18 h-18 z" fill="none" stroke="#ff5a1f" stroke-width="2"/></g>
+      <g transform="translate(306 416)"><circle r="6" fill="url(#steelG)" stroke="#3a3a48"/></g>
+    </g>
+  </g>
+  <!-- SHINS -->
+  <g class="part" data-part="shin-l">
+    <path d="M170 446 q-6 6 -6 20 l4 70 q14 6 20 0 l-4 -70 q0 -14 -6 -20 z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M172 450 q-4 6 -4 18 l4 68 q10 4 16 0 l-3 -68 q0 -14 -4 -18 z" fill="url(#specG)"/>
+    <circle cx="178" cy="522" r="9" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/>
+    <circle cx="178" cy="522" r="3" fill="#ff5a1f"/>
+    <path d="M178 446 V516" stroke="#cc3d17" stroke-width="1.5" opacity=".45"/>
+    <path d="M170 478 h16 M170 494 h16 M170 508 h16" stroke="#c9c7ba" stroke-width="1.1" opacity=".3"/>
+  </g>
+  <g class="part" data-part="shin-r">
+    <path d="M290 446 q6 6 6 20 l-4 70 q-14 6 -20 0 l4 -70 q0 -14 6 -20 z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M288 450 q4 6 4 18 l-4 68 q-10 4 -16 0 l3 -68 q0 -14 4 -18 z" fill="url(#specG)"/>
+    <circle cx="282" cy="522" r="9" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/>
+    <circle cx="282" cy="522" r="3" fill="#ff5a1f"/>
+    <path d="M282 446 V516" stroke="#cc3d17" stroke-width="1.5" opacity=".45"/>
+    <path d="M290 478 h16 M290 494 h16 M290 508 h16" stroke="#c9c7ba" stroke-width="1.1" opacity=".3"/>
+    <g class="subs">
+      <g transform="translate(282 522)"><circle r="8" fill="url(#darkG)" stroke="#cc3d17" stroke-width="1.5"/><circle r="3" fill="#ff5a1f"/></g>
+      <g transform="translate(302 510)"><rect x="-6" y="-6" width="12" height="12" rx="2" fill="url(#steelG)" stroke="#3a3a48"/></g>
+      <g transform="translate(262 510)"><path d="M-7 0 a7 7 0 0 1 14 0" fill="none" stroke="#ff5a1f" stroke-width="2"/></g>
+    </g>
+  </g>
+  <!-- FEET -->
+  <g class="part" data-part="foot-l">
+    <path d="M170 532 L182 532 L178 542 L174 542 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M162 546 L190 546 L194 556 L158 556 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M158 556 L194 556 L196 562 L156 562 Z" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/>
+    <path d="M156 562 L196 562 L196 590 L156 590 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.6"/>
+    <path d="M160 566 h36 M160 574 h36 M160 582 h36" stroke="#0a0a0f" stroke-width="1.4" opacity=".5"/>
+    <rect x="148" y="568" width="8" height="18" rx="1" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2"/>
+    <rect x="196" y="568" width="8" height="18" rx="1" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2"/>
+  </g>
+  <g class="part" data-part="foot-r">
+    <path d="M278 532 L290 532 L286 542 L282 542 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M270 546 L298 546 L302 556 L266 556 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M266 556 L302 556 L304 562 L264 562 Z" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.6"/>
+    <path d="M264 562 L304 562 L304 590 L264 590 Z" fill="url(#steelG)" stroke="#0f1016" stroke-width="1.6"/>
+    <path d="M268 566 h36 M268 574 h36 M268 582 h36" stroke="#0a0a0f" stroke-width="1.4" opacity=".5"/>
+    <rect x="256" y="568" width="8" height="18" rx="1" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2"/>
+    <rect x="304" y="568" width="8" height="18" rx="1" fill="url(#darkG)" stroke="#0f1016" stroke-width="1.2"/>
+  </g>
+  </g><!-- /floater -->
+  </g><!-- /camera -->
+</svg>
+    </div>
+
+    <div class="embed-foot">
+      <p>Every part above is tracked in the <b>Knowledge Moat</b> — real failure modes, MTBF, and repair protocols. That's how TechMedix keeps your fleet running.</p>
+    </div>
+
+    <div class="rail"><i id="rail-fill"></i></div>
+    <div class="hud" id="hud"><div class="idx"><b id="hud-idx">01</b> / 08</div><div class="ph" id="hud-ph">Complete System</div></div>
+    <div class="hint" id="hint">↓ scroll to disassemble</div>
+  </div>
+
+</section>
+
+
+
     <div class="tabs-bar">
       <button class="tab-btn active" onclick="switchAcq('humanoids',this)">Humanoids</button>
       <button class="tab-btn" onclick="switchAcq('quadrupeds',this)">Quadrupeds</button>
@@ -1617,3 +1983,151 @@ function handleSignal() {
     }
   }).catch(() => {});
 }
+</script>
+<script>
+// explosion vectors per part at full teardown (dx,dy)
+const vectors = {
+  head:[0,-58], neck:[0,-30], chest:[48,-10], 'sh-l':[-52,-18],'sh-r':[52,-18],
+  'arm-l':[-72,-4],'arm-r':[72,-4],'hand-l':[-78,24],'hand-r':[78,24],
+  pelvis:[0,12],'thigh-l':[-38,46],'thigh-r':[38,38],
+  'shin-l':[-54,76],'shin-r':[54,84],'foot-l':[-62,104],'foot-r':[62,104]
+};
+const stagger = {
+  head:0.00, neck:0.04, chest:0.10, pelvis:0.14,
+  'sh-l':0.20,'sh-r':0.20,'arm-l':0.26,'arm-r':0.26,'hand-l':0.32,'hand-r':0.32,
+  'thigh-l':0.38,'thigh-r':0.38,'shin-l':0.46,'shin-r':0.46,'foot-l':0.54,'foot-r':0.54
+};
+// scroll phases — real failure_modes data, each highlights part(s)
+const phases = [
+  {at:0.00,tag:'Humanoid Platform',title:'Complete System',desc:'Thousands of parts in sync. Scroll to see the ones that fail — and how TechMedix keeps them alive.',mtbf:'—',sev:'—',focus:[]},
+  {at:0.13,tag:'Head & Sensing',title:'Vision / Encoder',desc:'Camera and head IMU drift; degraded depth perception triggers cautious gait and slower navigation.',mtbf:'2,800h',sev:'MED',focus:['head']},
+  {at:0.26,tag:'Knee Actuator',title:'Harmonic Drive',desc:'Flexspline fatigue from cyclical high-torque loading — torque ripple, grinding, gait instability on inclines.',mtbf:'1,400h',sev:'HIGH',focus:['thigh-l']},
+  {at:0.39,tag:'Power System',title:'Battery Pack · 864Wh',desc:'Cell-group voltage imbalance from repeated high-current discharge. Runtime drops below 45 minutes; BMS faults.',mtbf:'1,200h',sev:'HIGH',focus:['chest']},
+  {at:0.52,tag:'Hip Joint',title:'Abduction Bearing',desc:'Wave-generator bearing pitting under lateral load. Side-step gait shows lean drift and clicking.',mtbf:'1,800h',sev:'HIGH',focus:['thigh-r']},
+  {at:0.64,tag:'Lower Limb',title:'Ankle Encoder',desc:'Magnetic position sensor degradation. Robot fails self-check and refuses to stand.',mtbf:'2,800h',sev:'MED',focus:['shin-r']},
+  {at:0.76,tag:'Upper Body',title:'Arm Actuator',desc:'Shoulder harmonic drive wear from repetitive manipulation cycles. Position error and reduced payload accuracy.',mtbf:'2,100h',sev:'MED',focus:['arm-l','arm-r']},
+  {at:0.88,tag:'Full Teardown',title:'Every Serviceable Part',desc:'Head, core, actuators, encoders, hands, feet — each tracked with its own repair protocol in the Knowledge Moat.',mtbf:'—',sev:'—',litOnly:true,focus:['head','neck','chest','sh-l','sh-r','arm-l','arm-r','hand-l','hand-r','pelvis','thigh-l','thigh-r','shin-l','shin-r','foot-l','foot-r']},
+];
+const td=document.getElementById('acquire-teardown');
+const headBlock=document.getElementById('head-block');
+const callout=document.getElementById('callout');
+const hint=document.getElementById('hint');
+const railFill=document.getElementById('rail-fill');
+const hud=document.getElementById('hud');
+const hudIdx=document.getElementById('hud-idx');
+const hudPh=document.getElementById('hud-ph');
+const parts=[...document.querySelectorAll('.part')];
+const labels=[...document.querySelectorAll('.plabel')];
+const lines=[...document.querySelectorAll('.lline')];
+const halo=document.getElementById('halo');
+const scanEl=document.getElementById('scan');
+const camera=document.getElementById('camera');
+const CAM_C={x:230,y:265};
+let lastP=0,lastT=0,smearAmt=0;
+const anchor={
+  head:[230,82], neck:[230,130], chest:[230,185], 'sh-l':[154,162], 'sh-r':[306,162],
+  'arm-l':[130,210], 'arm-r':[330,210], 'hand-l':[130,306], 'hand-r':[330,306],
+  pelvis:[230,240], 'thigh-l':[166,320], 'thigh-r':[294,320], 'shin-l':[178,522], 'shin-r':[282,522],
+  'foot-l':[176,566], 'foot-r':[284,566]
+};
+function ease(t){return t*t*t*(t*(t*6-15)+10);}
+function partProgress(p,start){const span=0.42;const local=(p-start)/span;return Math.min(1,Math.max(0,local));}
+function onScroll(){
+  const r=td.getBoundingClientRect();
+  const total=td.offsetHeight-window.innerHeight;
+  const p=Math.min(1,Math.max(0,-r.top/total));
+  const now=performance.now();
+  const dt=Math.max(1,now-lastT);
+  const vel=Math.abs(p-lastP)/dt;
+  lastP=p;lastT=now;
+  smearAmt+=(Math.min(1,vel*900)-smearAmt)*0.3;
+  hud.classList.toggle('on',p>0.03);
+  railFill.style.height=(p*100)+'%';
+  hint.style.opacity=p>0.03?0:1;
+  headBlock.style.opacity=Math.max(0,1-p/0.14);
+  scanEl.style.opacity=(p>0.06 && p<0.97)?0.30:0;
+  const cam=ease(Math.min(1,p/0.5));
+  const scale=0.92+0.18*cam-0.06*ease(Math.max(0,(p-0.85)/0.15));
+  camera.setAttribute('transform',`translate(${CAM_C.x} ${CAM_C.y}) scale(${scale}) translate(${-CAM_C.x} ${-CAM_C.y})`);
+  const cur={};
+  parts.forEach(el=>{
+    const v=vectors[el.dataset.part]||[0,0];
+    const lp=ease(partProgress(p,stagger[el.dataset.part]||0));
+    const x=v[0]*lp, y=v[1]*lp;
+    cur[el.dataset.part]=[x,y];
+    const overshoot=Math.sin(lp*Math.PI)*0.06;
+    el.style.transform=`translate(${x}px,${y}px) scale(${1+0.04*lp+overshoot})`;
+    el.classList.toggle('smear',smearAmt>0.25);
+  });
+  let active=phases[0];
+  for(const ph of phases){if(p>=ph.at)active=ph;}
+  const hasFocus=active.focus.length>0;
+  const litOnly=!!active.litOnly;
+  callout.classList.toggle('on',hasFocus);
+  document.getElementById('c-tag').textContent=active.tag;
+  document.getElementById('c-title').textContent=active.title;
+  const phNum=phases.indexOf(active)+1;
+  hudIdx.textContent=String(phNum).padStart(2,'0');
+  hudPh.textContent=active.title;
+  document.getElementById('c-desc').textContent=active.desc;
+  const sevColor=active.sev==='HIGH'?'#cc3d17':active.sev==='MED'?'#c8a96e':'#8888a0';
+  scanEl.classList.toggle('fast',active.sev==='HIGH');
+  callout.classList.toggle('sev-HIGH',active.sev==='HIGH');
+  callout.classList.toggle('sev-MED',active.sev==='MED');
+  document.getElementById('c-meta').innerHTML=`<span>MTBF<b>${active.mtbf}</b></span><span>Severity<b style="color:${sevColor}">${active.sev}</b></span>`;
+  let haloC=null;
+  parts.forEach(el=>{
+    const f=active.focus.includes(el.dataset.part);
+    el.classList.toggle('dim',hasFocus&&!f&&!litOnly);
+    el.classList.toggle('focus',f&&!litOnly);
+    el.classList.toggle('lit',f&&litOnly);
+    const c=cur[el.dataset.part]||[0,0];
+    const baseScale=1+0.04*(Math.min(1,Math.max(0,(p-(stagger[el.dataset.part]||0))/0.42)))+Math.sin((Math.min(1,Math.max(0,(p-(stagger[el.dataset.part]||0))/0.42)))*Math.PI)*0.06;
+    if(f&&!litOnly){
+      el.style.setProperty('--tx',c[0]+'px');
+      el.style.setProperty('--ty',c[1]+'px');
+      el.style.setProperty('--ts',(baseScale*1.18));
+    }else{
+      el.style.transform=`translate(${c[0]}px,${c[1]}px) scale(${baseScale})`;
+    }
+    if(f&&!litOnly)haloC=c;
+  });
+  labels.forEach(l=>l.classList.toggle('on',active.focus.includes(l.dataset.for)));
+  lines.forEach(l=>{
+    const on=active.focus.includes(l.dataset.for);
+    l.classList.toggle('on',on);
+    if(on){
+      const a=anchor[l.dataset.for]||[180,300];
+      const off=cur[l.dataset.for]||[0,0];
+      const px=a[0]+off[0], py=a[1]+off[1];
+      const lx=parseFloat(l.getAttribute('x2'));
+      const ly=parseFloat(l.getAttribute('y2'));
+      l.setAttribute('x1',px+ (lx>px?14:-14));
+      l.setAttribute('y1',py);
+    }
+  });
+  if(haloC){
+    halo.setAttribute('cx',230+haloC[0]);
+    halo.setAttribute('cy',265+haloC[1]);
+    halo.style.opacity=0.9;
+  }else{halo.style.opacity=0;}
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+// visibility: toggle 'live' from scroll progress (fixed stage shows only while band in viewport)
+function syncLive(){
+  const r=td.getBoundingClientRect();
+  const total=td.offsetHeight-window.innerHeight;
+  const p=Math.min(1,Math.max(0,-r.top/total));
+  if(p>0.001 && p<0.999) td.classList.add('live'); else td.classList.remove('live');
+}
+window.addEventListener('scroll',syncLive,{passive:true});
+syncLive();
+// keep IntersectionObserver as a backup entrance fade
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)td.classList.add('live');});},{threshold:0.05});
+  io.observe(td);
+}
+</script>
+</body>
+</html>
