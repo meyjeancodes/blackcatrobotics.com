@@ -10,12 +10,16 @@
 -- violate the enum and abort the migration.
 -- ═══════════════════════════════════════════════════════════════════════════════
 
--- 1) Widen platforms.type to include the two new verticals
+-- 1) Widen platforms.type ADDITIVELY — preserve every value already live
+--    (humanoid, quadruped, drone, delivery_ground, delivery_air, warehouse_amr,
+--     micromobility, medical_surgical_robot, orthopedic_robot, rehab_exoskeleton,
+--     other) and only ADD the two new verticals. Per repo rule: never reorder/remove.
 ALTER TABLE platforms DROP CONSTRAINT IF EXISTS platforms_type_check;
 ALTER TABLE platforms ADD CONSTRAINT platforms_type_check
   CHECK (type IN (
     'humanoid','quadruped','drone','delivery_ground',
     'delivery_air','warehouse_amr','micromobility','other',
+    'medical_surgical_robot','orthopedic_robot','rehab_exoskeleton',
     'agri_robot','construction_robot'
   ));
 

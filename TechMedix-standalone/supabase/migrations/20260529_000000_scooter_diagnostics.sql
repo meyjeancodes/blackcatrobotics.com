@@ -2,6 +2,12 @@
 -- Use an explicit CTE so the platform id is visible to all downstream inserts
 WITH new_platform AS (
   INSERT INTO platforms (
+    slug,
+    name,
+    manufacturer,
+    type,
+    specs_json,
+    techmedix_status,
     motor_power_w,
     top_speed_kmh,
     range_km,
@@ -11,6 +17,12 @@ WITH new_platform AS (
     updated_at
   )
   VALUES (
+    'veo-s1',
+    'VEO S1',
+    'VEO Mobility',
+    'micromobility',
+    '{"motor_power_w":350,"top_speed_kmh":30,"range_km":25,"ip_rating":"IP54","tire_type":"airless"}',
+    'beta',
     350,
     30,
     25,
@@ -44,7 +56,7 @@ fm_battery AS (
     'high',
     5500,
     ARRAY['https://veo.tools/guides/battery-cycles'],
-    0.88,
+    'high',
     ARRAY['battery', 'soc', 'range'],
     now(),
     now()
@@ -74,7 +86,7 @@ fm_motor AS (
     'medium',
     5000,
     ARRAY['https://veo.tools/guides/motor-errors'],
-    0.85,
+    'high',
     ARRAY['motor', 'controller', 'torque'],
     now(),
     now()
@@ -104,7 +116,7 @@ fm_brake AS (
     'high',
     1500,
     ARRAY['https://veo.tools/guides/brake-service'],
-    0.91,
+    'high',
     ARRAY['brake', 'pad', 'caliper'],
     now(),
     now()
@@ -167,7 +179,7 @@ rp_motor AS (
   SELECT id,
     'Motor Controller Current Limit Diagnosis',
     jsonb_build_array(
-      jsonb_build_object('step', 1, 'title', "Check diagnostic logs for error code 'MOTOR_OVERCURRENT'", 'details', ''),
+      jsonb_build_object('step', 1, 'title', 'Check diagnostic logs for error code ''MOTOR_OVERCURRENT''', 'details', ''),
       jsonb_build_object('step', 2, 'title', 'Inspect phase wires from controller to motor for chafing or loose crimp', 'details', ''),
       jsonb_build_object('step', 3, 'title', 'Measure motor winding resistance (should be ~0.3Ω)', 'details', 'Use multimeter on motor leads'),
       jsonb_build_object('step', 4, 'title', 'If resistance OK, replace controller (part # VEO-CTRL-S1)', 'details', 'Program new controller with latest firmware via USB'),
@@ -333,8 +345,5 @@ ps_brake_pad_thickness AS (
     now(),
     now()
   FROM fm_brake
-
-  -- Final SELECT keeps the CTE chain valid; result is discarded
-  SELECT 1
 )
 SELECT 1;
