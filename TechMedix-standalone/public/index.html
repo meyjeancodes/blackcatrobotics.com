@@ -1800,5 +1800,110 @@ function handleSignal() {
 }
 </script>
 
+<script>
+// ── Acquire teardown controller (was missing from live index.html) ──
+(function () {
+  const embed = document.getElementById('acquire-teardown');
+  if (!embed) return;
+  const stage = embed.querySelector('.stage');
+  const headBlock = document.getElementById('head-block');
+  const callout = document.getElementById('callout');
+  const cTag = document.getElementById('c-tag');
+  const cTitle = document.getElementById('c-title');
+  const cDesc = document.getElementById('c-desc');
+  const cMeta = document.getElementById('c-meta');
+  const hud = document.getElementById('hud');
+  const hudIdx = document.getElementById('hud-idx');
+  const hudPh = document.getElementById('hud-ph');
+  const railFill = document.getElementById('rail-fill');
+  const hint = document.getElementById('hint');
+  const halo = document.getElementById('halo');
+  const scan = document.getElementById('scan');
+  const lines = [].slice.call(document.querySelectorAll('.overlay .lline'));
+  const labels = [].slice.call(document.querySelectorAll('.overlay .plabel'));
+
+  const revealObs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { embed.classList.toggle('live', e.isIntersecting); });
+  }, { threshold: 0.02 });
+  revealObs.observe(embed);
+
+  const phases = [
+    { at: 0.00, tag: 'Unitree H1',     title: 'Complete System',
+      desc: 'Thousands of parts in sync. Scroll to see the ones that fail first.', mtbf: '—', sev: '—', focus: [] },
+    { at: 0.14, tag: 'Head & Sensing', title: '3D LiDAR / Camera',
+      desc: 'Head IMU and camera drift; degraded depth perception triggers cautious gait and slower navigation.', mtbf: '2,800h', sev: 'MED', focus: ['head'] },
+    { at: 0.28, tag: 'Torso',          title: '864Wh Battery',
+      desc: 'Cell-group voltage imbalance from repeated high-current discharge. Runtime drops below 45 min; BMS faults.', mtbf: '1,200h', sev: 'HIGH', focus: ['chest'] },
+    { at: 0.42, tag: 'Shoulders',      title: 'Shoulder Actuators',
+      desc: 'Harmonic-drive wear from repetitive manipulation cycles. Position error and reduced payload accuracy.', mtbf: '2,100h', sev: 'MED', focus: ['sh-l', 'sh-r'] },
+    { at: 0.56, tag: 'Hips',           title: 'Hip Joints',
+      desc: 'Wave-generator bearing pitting under lateral load. Side-step gait shows lean drift and clicking.', mtbf: '1,800h', sev: 'HIGH', focus: ['hip-l', 'hip-r'] },
+    { at: 0.70, tag: 'Knees',          title: 'Knee Actuators',
+      desc: 'Flexspline fatigue from cyclical high-torque loading — torque ripple, grinding, gait instability on inclines.', mtbf: '1,400h', sev: 'HIGH', focus: ['knee-l', 'knee-r'] },
+    { at: 0.84, tag: 'Feet',           title: 'Ankle / Foot IMU',
+      desc: 'Magnetic position sensor degradation. Robot fails self-check and refuses to stand.', mtbf: '2,800h', sev: 'MED', focus: ['ankle-l', 'ankle-r'] },
+    { at: 0.94, tag: 'Full Teardown',  title: 'Every Serviceable Part',
+      desc: 'Head, core, actuators, encoders, hands, feet — each tracked with its own repair protocol in the Knowledge Moat.', mtbf: '—', sev: '—', focus: ['head','chest','sh-l','sh-r','hip-l','hip-r','knee-l','knee-r','ankle-l','ankle-r'] }
+  ];
+
+  function focusPart(name, on) {
+    lines.forEach(function (l) { if (l.dataset.for === name) l.classList.toggle('on', on); });
+    labels.forEach(function (l) { if (l.dataset.for === name) l.classList.toggle('on', on); });
+  }
+
+  function onScroll() {
+    const r = embed.getBoundingClientRect();
+    const total = embed.offsetHeight - window.innerHeight;
+    const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
+
+    // Deterministic reveal: show stage whenever the section is in/near viewport
+    const inView = (r.top < window.innerHeight * 0.9) && (r.bottom > window.innerHeight * 0.1);
+    embed.classList.toggle('live', inView);
+
+    if (railFill) railFill.style.height = (p * 100) + '%';
+    if (hud) hud.classList.toggle('on', p > 0.03);
+    if (hint) hint.style.opacity = p > 0.03 ? 0 : 1;
+    if (headBlock) headBlock.style.opacity = Math.max(0, 1 - p / 0.12);
+    if (scan) scan.style.opacity = (p > 0.05 && p < 0.97) ? 0.30 : 0;
+
+    let active = phases[0];
+    for (let i = 0; i < phases.length; i++) if (p >= phases[i].at) active = phases[i];
+
+    if (callout) {
+      callout.classList.toggle('on', active.focus.length > 0);
+      callout.classList.toggle('sev-HIGH', active.sev === 'HIGH');
+      callout.classList.toggle('sev-MED', active.sev === 'MED');
+    }
+    if (cTag) cTag.textContent = active.tag;
+    if (cTitle) cTitle.textContent = active.title;
+    if (cDesc) cDesc.textContent = active.desc;
+    if (cMeta) {
+      const sevColor = active.sev === 'HIGH' ? '#cc3d17' : active.sev === 'MED' ? '#c8a96e' : '#8888a0';
+      cMeta.innerHTML = '<span>MTBF<b>' + active.mtbf + '</b></span><span>Severity<b style="color:' + sevColor + '">' + active.sev + '</b></span>';
+    }
+    if (hudIdx) hudIdx.textContent = String(phases.indexOf(active) + 1).padStart(2, '0');
+    if (hudPh) hudPh.textContent = active.title;
+
+    const allNames = ['head','chest','sh-l','sh-r','hip-l','hip-r','knee-l','knee-r','ankle-l','ankle-r'];
+    allNames.forEach(function (n) { focusPart(n, active.focus.indexOf(n) !== -1); });
+
+    if (active.focus.length) {
+      const line = lines.filter(function (l) { return l.dataset.for === active.focus[0]; })[0];
+      if (line && halo) {
+        halo.setAttribute('cx', line.getAttribute('x1'));
+        halo.setAttribute('cy', line.getAttribute('y1'));
+        halo.style.opacity = 0.9;
+      }
+    } else if (halo) {
+      halo.style.opacity = 0;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+
 </body>
 </html>
