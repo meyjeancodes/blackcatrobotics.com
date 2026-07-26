@@ -1,10 +1,11 @@
 -- Seed test customer for BlackCat development
-INSERT INTO customers (name, email, api_key, subscription_status, plan, robot_count)
+INSERT INTO customers (id, company, name, email, plan, status, fleet_size)
 VALUES (
+  'test_fleet',
+  'BlackCat Test Fleet',
   'BlackCat Test Fleet',
   'blackcatrobotics.ai@gmail.com',
-  'bcat_test_' || substr(md5(random()::text), 1, 16),
+  'operator',
   'active',
-  'fleet',
   1
-) ON CONFLICT DO NOTHING;
+) ON CONFLICT (id) DO NOTHING;

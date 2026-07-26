@@ -25,8 +25,6 @@ DO $$ BEGIN
   CREATE TYPE job_status AS ENUM ('pending','in_progress','completed');
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
--- ── Suppliers ────────────────────────────────────────────────────────────────
-
 CREATE TABLE IF NOT EXISTS suppliers (
   id                  uuid primary key default gen_random_uuid(),
   name                text not null,
@@ -114,7 +112,7 @@ CREATE TABLE IF NOT EXISTS certifications (
 -- ── Technician Certifications (many-to-many) ─────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS technician_certifications (
-  technician_id     uuid references technicians(id) on delete cascade,
+  technician_id     text references technicians(id) on delete cascade,
   certification_id  uuid references certifications(id) on delete cascade,
   earned_at         timestamptz default now(),
   ai_score          numeric,
@@ -126,10 +124,10 @@ CREATE TABLE IF NOT EXISTS technician_certifications (
 CREATE TABLE IF NOT EXISTS jobs (
   id                uuid primary key default gen_random_uuid(),
   robot_id          text references robots(id) on delete set null,
-  technician_id     uuid references technicians(id) on delete set null,
+  technician_id     text references technicians(id) on delete set null,
   procedure_id      uuid references procedures(id) on delete set null,
   component_id      uuid references components(id) on delete set null,
-  status            job_status not null default 'pending',
+  status            job_status not null default 'open',
   timestamps        jsonb default '{}',
   ai_feedback       jsonb default '{}',
   completion_score  numeric,
@@ -142,7 +140,7 @@ CREATE TABLE IF NOT EXISTS jobs (
 
 CREATE TABLE IF NOT EXISTS ai_agents (
   id                        uuid primary key default gen_random_uuid(),
-  technician_id             uuid references technicians(id) on delete cascade,
+  technician_id             text references technicians(id) on delete cascade,
   trained_procedure_ids     uuid[] default '{}',
   voice_enabled             boolean default false,
   realtime_guidance_enabled boolean default true,

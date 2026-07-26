@@ -1,9 +1,9 @@
 -- Diagnostic results from three-layer pipeline
 CREATE TABLE IF NOT EXISTS diagnostic_results (
   id uuid primary key default gen_random_uuid(),
-  customer_id uuid references customers(id),
+  customer_id text references customers(id),
   robot_id text,
-  telemetry_log_id uuid references telemetry_logs(id),
+  telemetry_log_id uuid,
   layer1_violations jsonb,
   layer2_anomalies jsonb,
   layer3_claude_response jsonb,

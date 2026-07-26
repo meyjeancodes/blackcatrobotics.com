@@ -22,11 +22,11 @@ BEGIN
       INSERT INTO failure_modes (platform_id,component,symptom,root_cause,severity,mtbf_hours,source_urls,confidence,tags)
       VALUES (pid, fm->>'component', fm->>'symptom', fm->>'root_cause',
               COALESCE(fm->>'severity','medium'),
-              NULLIF(fm->>'mtbf_hours','null')::integer,
+              NULLIF(fm->>'mtbf_hours','null')::numeric,
               ARRAY(SELECT jsonb_array_elements_text(COALESCE(fm->'source_urls','["unverified-training-data"]'::jsonb))),
               COALESCE(fm->>'confidence','low'),
               ARRAY(SELECT jsonb_array_elements_text(COALESCE(fm->'tags','[]'::jsonb))))
-      ON CONFLICT (platform_id,component,symptom) DO UPDATE SET severity=EXCLUDED.severity, updated_at=now()
+      ON CONFLICT DO NOTHING
       RETURNING id INTO fmid;
       IF fm ? 'repair_protocol' THEN
         INSERT INTO repair_protocols (failure_mode_id,title,steps_json,tools_required,parts_json,labor_minutes,skill_level,source_url,verified_by,version)
@@ -48,7 +48,7 @@ BEGIN
                NULLIF(sig->>'threshold_value','null')::numeric,
                COALESCE(sig->>'threshold_operator','>'),
                sig->>'threshold_unit',
-               NULLIF(sig->>'lead_time_hours','null')::integer,
+               NULLIF(sig->>'lead_time_hours','null')::numeric,
                NULLIF(sig->>'confidence','null')::numeric,
                sig->>'notes'
         WHERE NOT EXISTS (SELECT 1 FROM predictive_signals WHERE failure_mode_id=fmid AND signal_name=sig->>'signal_name');

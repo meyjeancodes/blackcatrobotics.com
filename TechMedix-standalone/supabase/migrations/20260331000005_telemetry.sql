@@ -1,7 +1,7 @@
 -- Telemetry ingestion table
 CREATE TABLE IF NOT EXISTS telemetry_logs (
   id uuid primary key default gen_random_uuid(),
-  customer_id uuid references customers(id),
+  customer_id text references customers(id),
   robot_id text not null,
   timestamp timestamptz not null,
   joint_health jsonb,

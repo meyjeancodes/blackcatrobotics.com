@@ -1,8 +1,8 @@
 -- Alert delivery log
 CREATE TABLE IF NOT EXISTS alert_log (
   id uuid primary key default gen_random_uuid(),
-  diagnostic_result_id uuid references diagnostic_results(id),
-  customer_id uuid references customers(id),
+  diagnostic_result_id uuid,
+  customer_id text references customers(id),
   robot_id text,
   severity text,
   email_sent_to text,

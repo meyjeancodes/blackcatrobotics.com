@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS failure_modes (
   root_cause          text not null,
   severity            text not null default 'medium'
                       check (severity in ('critical','high','medium','low')),
-  mtbf_hours          integer,
+  mtbf_hours          numeric,
   source_urls         text[] default '{}',
   source_count        integer generated always as (array_length(source_urls, 1)) stored,
   confidence          text not null default 'medium'
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS predictive_signals (
   threshold_value     numeric,
   threshold_operator  text default '>' check (threshold_operator in ('>','<','>=','<=','==')),
   threshold_unit      text,
-  lead_time_hours     integer,
+  lead_time_hours     numeric,
   confidence          numeric(3,2) check (confidence between 0 and 1),
   notes               text,
   created_at          timestamptz default now()
