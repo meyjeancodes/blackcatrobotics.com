@@ -47,7 +47,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import { RobotModelViewer } from "./robot-model-viewer";
+import { PlatformCard } from "./platform-card";
 import { BlueprintExplorer } from "./blueprint-explorer";
 import { SimLab } from "./sim-lab";
 import { StaggerContainer } from "./animated-stat";
@@ -85,57 +85,6 @@ const CAT_COLOR: Record<string, string> = {
   datacenter: "bg-slate-500/[0.10] text-slate-700 border-slate-500/20",
 };
 
-const SEV_COLOR: Record<string, string> = {
-  critical: "text-red-600 bg-red-500/[0.10] border-red-500/20",
-  warning: "text-amber-600 bg-amber-500/[0.10] border-amber-500/20",
-  info: "text-sky-600 bg-sky-500/[0.10] border-sky-500/20",
-};
-
-const SEV_LABEL: Record<string, string> = {
-  critical: "Critical",
-  warning: "Warning",
-  info: "Info",
-};
-
-const SEV_ICON: Record<string, React.ReactNode> = {
-  critical: <AlertCircle size={10} className="shrink-0" />,
-  warning: <AlertTriangle size={10} className="shrink-0" />,
-  info: <Info size={10} className="shrink-0" />,
-};
-
-// Health score color based on value
-function getHealthColor(score: number): string {
-  if (score >= 90) return "text-emerald-600 bg-emerald-500/[0.10]";
-  if (score >= 75) return "text-amber-600 bg-amber-500/[0.10]";
-  if (score >= 60) return "text-orange-600 bg-orange-500/[0.10]";
-  return "text-red-600 bg-red-500/[0.10]";
-}
-
-// Component category icons
-const COMPONENT_ICONS: Record<string, React.ReactNode> = {
-  actuator: <Zap size={12} />,
-  sensor: <Radio size={12} />,
-  compute: <Cpu size={12} />,
-  battery: <Battery size={12} />,
-  frame: <HardDrive size={12} />,
-  drivetrain: <Settings size={12} />,
-  cooling: <Thermometer size={12} />,
-  comms: <Wifi size={12} />,
-  "end-effector": <GitBranch size={12} />,
-  safety: <Shield size={12} />,
-};
-
-// VIAM-style service icons
-const SERVICE_ICONS: Record<string, React.ReactNode> = {
-  navigation: <Globe size={12} />,
-  vision: <Camera size={12} />,
-  manipulation: <GitBranch size={12} />,
-  perception: <Radio size={12} />,
-  control: <Cpu size={12} />,
-  telemetry: <Database size={12} />,
-  voice: <Mic size={12} />,
-};
-
 export function KnowledgeHubClient({ initialPlatforms = [] }: Props) {
   const { platforms: supabasePlatforms, loading, error, source, refetch } = usePlatforms();
   const [modal, setModal] = useState<Modal>(null);
@@ -143,13 +92,22 @@ export function KnowledgeHubClient({ initialPlatforms = [] }: Props) {
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
-  // Combine initial (SSR) + supabase platforms, deduplicate by id
+  // SSR already resolves platforms via the service-role Supabase client.
+  // Only let the client hook REPLACE that data when it genuinely succeeded
+  // (source === "supabase"). Previously the hook's *static fallback* was
+  // merged over the good SSR rows, which wiped real `image_url` values and
+  // left every card pointing at a non-existent `/images/platforms/<id>.png`
+  // — that 404 is what produced the tall empty white blocks.
   const allPlatforms = useMemo(() => {
-    const map = new Map<string, PlatformProfile>();
-    initialPlatforms.forEach((p) => map.set(p.id, p));
-    supabasePlatforms.forEach((p) => map.set(p.id, p));
-    return Array.from(map.values());
-  }, [initialPlatforms, supabasePlatforms]);
+    if (source === "supabase" && supabasePlatforms.length > 0) {
+      const map = new Map<string, PlatformProfile>();
+      initialPlatforms.forEach((p) => map.set(p.id, p));
+      supabasePlatforms.forEach((p) => map.set(p.id, p));
+      return Array.from(map.values());
+    }
+    // Client fetch failed or fell back to static — trust the SSR payload.
+    return initialPlatforms.length > 0 ? initialPlatforms : supabasePlatforms;
+  }, [initialPlatforms, supabasePlatforms, source]);
 
   // Filter state
   const [query, setQuery] = useState("");
@@ -303,277 +261,6 @@ export function KnowledgeHubClient({ initialPlatforms = [] }: Props) {
       document.body.style.paddingRight = "";
     };
   }, [modal]);
-
-  // Calculate average health score per platform
-  const getAvgHealth = (platform: PlatformProfile) => {
-    const { healthScoreMin, healthScoreMax } = platform.tlmRanges;
-    return Math.round((healthScoreMin + healthScoreMax) / 2);
-  };
-
-  // Get component breakdown for platform
-  const getComponents = (platform: PlatformProfile) => {
-    const dofSpec = platform.specs.find((s) => s.label.toLowerCase().includes("dof"));
-    const dofCount = dofSpec ? parseInt(dofSpec.value) || 0 : 0;
-    const hasCamera = platform.specs.some(
-      (s) =>
-        s.label.toLowerCase().includes("camera") ||
-        s.label.toLowerCase().includes("lidar")
-    );
-    const components = [
-      { category: "actuator", name: "Actuators", count: Math.max(dofCount, 1) },
-      { category: "compute", name: "Compute", count: 1 },
-      { category: "sensor", name: "Sensors", count: hasCamera ? 2 : 1 },
-      { category: "battery", name: "Battery", count: 1 },
-    ];
-    return components.filter((c) => c.count > 0);
-  };
-
-  // Get VIAM-style services for platform
-  const getServices = (platform: PlatformProfile) => {
-    const services = [];
-    if (platform.category === "humanoid" || platform.category === "industrial") {
-      services.push("navigation", "vision", "manipulation", "perception", "control");
-    } else if (platform.category === "drone") {
-      services.push("navigation", "vision", "perception", "control");
-    } else if (platform.category === "delivery") {
-      services.push("navigation", "vision", "perception", "control");
-    } else if (platform.category === "micromobility") {
-      services.push("navigation", "perception", "control", "telemetry");
-    }
-    return services;
-  };
-
-  const renderFailureSignature = (sig: PlatformProfile["failureSignatures"][0]) => (
-    <div
-      key={sig.id}
-      className={`flex items-start gap-2 rounded-lg px-3 py-2 transition hover:bg-[var(--ink)]/[0.03] ${SEV_COLOR[sig.severity]}`}
-      title={`${SEV_LABEL[sig.severity]} • ${sig.description}`}
-    >
-      {SEV_ICON[sig.severity]}
-      <div className="min-w-0 flex-1">
-        <p className="text-[0.62rem] font-semibold text-[var(--ink)]/85 leading-snug">{sig.name}</p>
-        <p className="text-[0.56rem] text-[var(--ink)]/50 leading-snug truncate">{sig.description}</p>
-      </div>
-    </div>
-  );
-
-  const renderPlatformCard = (platform: PlatformProfile) => {
-    const avgHealth = getAvgHealth(platform);
-    const healthColor = getHealthColor(avgHealth);
-    const components = getComponents(platform);
-    const services = getServices(platform);
-    const criticalCount = platform.failureSignatures.filter((fs) => fs.severity === "critical").length;
-    const warningCount = platform.failureSignatures.filter((fs) => fs.severity === "warning").length;
-
-    return (
-      <div
-        key={platform.id}
-        className={`
-          cad-card-float panel-elevated flex flex-col gap-4 p-6 transition-all duration-300
-          ${viewMode === "list" ? "flex-row items-start" : ""}
-          border border-[var(--ink)]/[0.06]
-        `}
-        style={{
-          width: '100%',
-          maxWidth: '100%',
-          flexShrink: 0,
-flexGrow: 1,
-          boxShadow: highlightedId === platform.id
-            ? "0 0 0 2px rgba(56,189,248,0.35), 0 0 40px rgba(56,189,248,0.12)"
-            : "",
-          transform: highlightedId === platform.id ? "scale(1.012)" : "scale(1)",
-        }}
-      >
-        {/* Image Preview */}
-        <div className={viewMode === "list" ? "w-[160px] h-[120px] shrink-0" : "w-full"}>
-          <RobotModelViewer
-            platformId={platform.id}
-            mode="preview"
-            className={viewMode === "list" ? "h-full w-full" : "h-72 w-full cursor-pointer"}
-            onClick={() => openBlueprint(platform.id)}
-          />
-        </div>
-
-        {/* Card Content */}
-        <div className={viewMode === "list" ? "flex-1 min-w-0" : "flex-1 flex flex-col"}>
-          {/* Header */}
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span
-                  className={`inline-flex items-center rounded-full px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold border ${CAT_COLOR[platform.category]}`}
-                >
-                  {CAT_LABEL[platform.category] ?? platform.category}
-                </span>
-                {platform.badge && (
-                  <span className="inline-flex items-center rounded-full bg-amber-400/[0.14] px-2 py-0.5 font-ui text-[0.52rem] uppercase tracking-[0.12em] font-semibold text-amber-700 border border-amber-400/30">
-                    {platform.badge}
-                  </span>
-                )}
-              </div>
-              <h3 className="mt-1.5 font-header text-base leading-tight text-[var(--ink)] truncate">
-                {platform.name}
-              </h3>
-              <p className="font-ui text-[0.58rem] uppercase tracking-[0.14em] text-[var(--ink)]/40">
-                {platform.manufacturer}
-              </p>
-            </div>
-
-            {/* Health Score Badge */}
-            <div className="shrink-0 flex flex-col items-end gap-1">
-              <div
-                className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[0.65rem] font-semibold ${healthColor} border`}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                <span>{avgHealth}%</span>
-              </div>
-              <span className="font-ui text-[0.48rem] uppercase tracking-[0.1em] text-[var(--ink)]/35">
-                Fleet Health
-              </span>
-            </div>
-          </div>
-
-          {/* VIAM-style: Key Specs Row */}
-          <div className="flex flex-wrap gap-2">
-            {platform.specs.slice(0, 3).map((s) => (
-              <div key={s.label} className="rounded-[10px] bg-[var(--ink)]/[0.025] px-2.5 py-1.5">
-                <p className="font-ui text-[0.48rem] uppercase tracking-[0.1em] text-[var(--ink)]/35">
-                  {s.label}
-                </p>
-                <p className="font-mono text-[0.62rem] font-semibold text-[var(--ink)]/75">
-                  {s.value}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* VIAM-style: Component Breakdown */}
-          <div className="flex flex-wrap gap-1.5">
-            {components.slice(0, 4).map((comp) => (
-              <div
-                key={comp.category}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--ink)]/[0.03] px-2 py-1 border border-[var(--ink)]/[0.05]"
-                title={`${comp.name}: ${comp.count} components`}
-              >
-                <span className="text-[var(--ink)]/45">{COMPONENT_ICONS[comp.category]}</span>
-                <span className="font-ui text-[0.5rem] uppercase tracking-[0.08em] text-[var(--ink)]/60">
-                  {comp.name}
-                </span>
-                <span className="font-mono text-[0.6rem] font-semibold text-[var(--ink)]/75">
-                  {comp.count}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* VIAM-style: Services */}
-          <div className="flex flex-wrap gap-1">
-            {services.slice(0, 4).map((svc) => (
-              <span
-                key={svc}
-                className="inline-flex items-center gap-1 rounded-full bg-[var(--ink)]/[0.02] px-2 py-0.5 border border-[var(--ink)]/[0.05]"
-                title={svc.charAt(0).toUpperCase() + svc.slice(1)}
-              >
-                <span className="text-[var(--ink)]/40">{SERVICE_ICONS[svc]}</span>
-                <span className="font-ui text-[0.48rem] uppercase tracking-[0.08em] text-[var(--ink)]/50">
-                  {svc.slice(0, 3)}
-                </span>
-              </span>
-            ))}
-            {services.length > 4 && (
-              <span className="inline-flex items-center rounded-full bg-[var(--ink)]/[0.02] px-2 py-0.5 border border-[var(--ink)]/[0.05]">
-                <span className="font-ui text-[0.48rem] uppercase tracking-[0.08em] text-[var(--ink)]/40">
-                  +{services.length - 4}
-                </span>
-              </span>
-            )}
-          </div>
-
-          {/* Failure Signatures Summary */}
-          <div className="flex items-center gap-3 pt-2 border-t border-[var(--ink)]/[0.05]">
-            {criticalCount > 0 && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-red-500/[0.10] px-2 py-0.5 border border-red-500/20" title={`${criticalCount} critical failure signatures`}>
-                <AlertCircle size={9} className="text-red-600" />
-                <span className="font-ui text-[0.5rem] uppercase tracking-[0.1em] font-semibold text-red-600">
-                  {criticalCount} Critical
-                </span>
-              </span>
-            )}
-            {warningCount > 0 && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/[0.10] px-2 py-0.5 border border-amber-500/20" title={`${warningCount} warning failure signatures`}>
-                <AlertTriangle size={9} className="text-amber-600" />
-                <span className="font-ui text-[0.5rem] uppercase tracking-[0.1em] font-semibold text-amber-600">
-                  {warningCount} Warning
-                </span>
-              </span>
-            )}
-            <span className="font-ui text-[0.5rem] uppercase tracking-[0.1em] text-[var(--ink)]/35 ml-auto">
-              {platform.failureSignatures.length} Total Signatures
-            </span>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="mt-2 pt-2 flex flex-wrap items-center gap-1.5 border-t border-[var(--ink)]/[0.05]">
-            {platform.manualUrl && (
-              <a
-                href={platform.manualUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-full border border-[var(--ink)]/[0.10] px-2.5 py-1 font-ui text-[0.5rem] uppercase tracking-[0.1em] font-semibold text-[var(--ink)]/45 transition hover:text-[var(--ink)] hover:border-[var(--ink)]/20"
-                title="View official service manual"
-              >
-                <BookOpen size={10} /> Manual
-              </a>
-            )}
-            <button
-              type="button"
-              onClick={() => openBlueprint(platform.id)}
-              className="flex items-center gap-1 rounded-full border border-sky-500/[0.18] px-2.5 py-1 font-ui text-[0.5rem] uppercase tracking-[0.1em] font-semibold text-sky-600 transition hover:bg-sky-500/[0.06] hover:text-sky-700"
-              title="Interactive technical blueprint — part-by-part reveal, explode view"
-            >
-              <Crosshair size={10} /> Blueprint
-            </button>
-            <button
-              type="button"
-              onClick={() => openModal({ kind: "sim", platformId: platform.id })}
-              className="flex items-center gap-1 rounded-full border border-[var(--ink)]/[0.14] px-2.5 py-1 font-ui text-[0.5rem] uppercase tracking-[0.1em] font-semibold text-[var(--ink)]/55 transition hover:bg-[var(--ink)]/[0.04] hover:text-[var(--ink)]"
-              title="Launch simulation environment with fault injection"
-            >
-              <Play size={10} /> Sim
-            </button>
-            <button
-              type="button"
-              onClick={() => {}}
-              className="flex items-center gap-1 rounded-full border border-[var(--ink)]/[0.10] px-2.5 py-1 font-ui text-[0.5rem] uppercase tracking-[0.1em] font-semibold text-[var(--ink)]/40 transition hover:bg-[var(--ink)]/[0.03]"
-              title="Export platform data for offline use"
-            >
-              <Download size={10} /> Offline
-            </button>
-          </div>
-        </div>
-
-        {/* Failure Signatures Expandable Section (List View) */}
-        {viewMode === "list" && platform.failureSignatures.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-[var(--ink)]/[0.05] w-full">
-            <p className="font-ui text-[0.55rem] uppercase tracking-[0.16em] text-[var(--ink)]/35 flex items-center gap-1.5 mb-2">
-              <AlertTriangle size={10} /> Known Failure Signatures
-            </p>
-            <div className="space-y-1.5">
-              {platform.failureSignatures.slice(0, 5).map(renderFailureSignature)}
-              {platform.failureSignatures.length > 5 && (
-                <button
-                  type="button"
-                  className="w-full text-left text-[0.6rem] text-sky-600 hover:text-sky-700 font-ui uppercase tracking-[0.1em]"
-                >
-                  +{platform.failureSignatures.length - 5} more signatures
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
 
   if (!mounted) {
     return (
@@ -807,11 +494,28 @@ flexGrow: 1,
                   {CAT_LABEL[cat] ?? cat} <span className="font-mono text-[var(--ink)]/30">{filteredList.length}</span>
                 </p>
                 {viewMode === "grid" ? (
-                  <div className="flex flex-col gap-5">
-                    {filteredList.map(renderPlatformCard)}
+                  <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                    {filteredList.map((p) => (
+                      <PlatformCard
+                        key={p.id}
+                        platform={p}
+                        onBlueprint={openBlueprint}
+                        onSim={(id) => openModal({ kind: "sim", platformId: id })}
+                      />
+                    ))}
                   </div>
                 ) : (
-                  filteredList.map(renderPlatformCard)
+                  <div className="flex flex-col gap-3">
+                    {filteredList.map((p) => (
+                      <PlatformCard
+                        key={p.id}
+                        platform={p}
+                        onBlueprint={openBlueprint}
+                        onSim={(id) => openModal({ kind: "sim", platformId: id })}
+                        compact
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
             );
