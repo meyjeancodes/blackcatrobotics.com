@@ -78,6 +78,20 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false,
  result.position.y = -center.y + height * 0.05;
  result.position.x = -center.x;
 
+ // DEBUG: expose load truth for verification (can be removed later)
+ let meshCount = 0;
+ result.traverse((c: any) => { if (c instanceof THREE.Mesh) meshCount++; });
+ (window as any).__urdfDebug = {
+ loaded: true,
+ meshCount,
+ box: {
+ x: +(box.max.x - box.min.x).toFixed(3),
+ y: +(box.max.y - box.min.y).toFixed(3),
+ z: +(box.max.z - box.min.z).toFixed(3),
+ },
+ error: null,
+ };
+
  groupRef.current?.add(result);
  setIsLoaded(true);
  onLoad();
@@ -86,6 +100,7 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false,
  (err: Error) => {
  if (!mountedRef.current) return;
  console.error('URDF load failed:', err);
+ (window as any).__urdfDebug = { loaded: false, error: err.message || 'Failed to load URDF model' };
  onError(err.message || 'Failed to load URDF model');
  }
  );

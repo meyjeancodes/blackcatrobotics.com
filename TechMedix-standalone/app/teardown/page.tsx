@@ -138,6 +138,16 @@ export default function TeardownPage() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // TEMP DEBUG: surface URDF load truth on screen (remove after fix)
+  const [dbg, setDbg] = useState<any>(null);
+  useEffect(() => {
+    const t = setInterval(() => {
+      const d = (window as any).__urdfDebug;
+      if (d) setDbg(d);
+    }, 500);
+    return () => clearInterval(t);
+  }, []);
+
   // Map scroll → continuous Y rotation (one full turn across the band)
   const rotation = progress * Math.PI * 2;
 
@@ -170,6 +180,38 @@ export default function TeardownPage() {
               scrollRotation={rotation}
               hiddenPartIds={[]}
             />
+            {/* TEMP DEBUG HUD — remove after fix */}
+            {dbg && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 12,
+                  right: 12,
+                  zIndex: 50,
+                  background: 'rgba(0,0,0,0.7)',
+                  border: '1px solid #444',
+                  borderRadius: 8,
+                  padding: '8px 12px',
+                  fontFamily: 'ui-monospace, monospace',
+                  fontSize: 11,
+                  color: '#9fe6a0',
+                  maxWidth: 240,
+                  lineHeight: 1.5,
+                  pointerEvents: 'none',
+                }}
+              >
+                <div>URDF: {dbg.loaded ? 'LOADED' : 'FAILED'}</div>
+                {dbg.error && <div style={{ color: '#ff6b6b' }}>err: {dbg.error}</div>}
+                {dbg.loaded && (
+                  <>
+                    <div>meshes: {dbg.meshCount}</div>
+                    <div>
+                      box: {dbg.box?.x} × {dbg.box?.y} × {dbg.box?.z}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
             {/* SVG scan line + halo overlay */}
             <div className={`td-scan ${active.parts.length ? 'on' : ''}`} />
             <div className="td-rail">
