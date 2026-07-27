@@ -71,6 +71,7 @@ const CAT_LABEL: Record<string, string> = {
   industrial: "Industrial",
   delivery: "Delivery",
   micromobility: "Micromobility",
+  medical: "Medical",
   datacenter: "Data Center",
 };
 
@@ -80,6 +81,7 @@ const CAT_COLOR: Record<string, string> = {
   industrial: "bg-amber-500/[0.10] text-amber-700 border-amber-500/20",
   delivery: "bg-emerald-500/[0.10] text-emerald-700 border-emerald-500/20",
   micromobility: "bg-rose-500/[0.10] text-rose-700 border-rose-500/20",
+  medical: "bg-teal-500/[0.10] text-teal-700 border-teal-500/20",
   datacenter: "bg-slate-500/[0.10] text-slate-700 border-slate-500/20",
 };
 

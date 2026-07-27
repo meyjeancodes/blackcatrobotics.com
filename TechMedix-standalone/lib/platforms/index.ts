@@ -9,7 +9,7 @@ export interface PlatformProfile {
   id: string;
   name: string;
   manufacturer: string;
-  category: "humanoid" | "drone" | "industrial" | "delivery" | "micromobility" | "datacenter";
+  category: "humanoid" | "drone" | "industrial" | "delivery" | "micromobility" | "medical" | "datacenter";
   description: string;
   specs: { label: string; value: string }[];
   /** Simulated live telemetry ranges for mock data */

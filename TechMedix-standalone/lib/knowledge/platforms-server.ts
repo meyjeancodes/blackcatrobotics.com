@@ -86,6 +86,13 @@ function mapTypeToCategory(type: string): PlatformProfile["category"] {
       return "drone";
     case "warehouse_amr":
       return "industrial";
+    case "medical_surgical_robot":
+    case "orthopedic_robot":
+    case "rehab_exoskeleton":
+      return "medical";
+    case "construction_robot":
+    case "agri_robot":
+      return "industrial";
     case "micromobility":
       return "micromobility";
     default:
