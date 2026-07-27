@@ -50,7 +50,6 @@ import {
 import { PlatformCard } from "./platform-card";
 import { BlueprintExplorer } from "./blueprint-explorer";
 import { SimLab } from "./sim-lab";
-import { StaggerContainer } from "./animated-stat";
 import { usePlatforms } from "@/lib/knowledge/supabase-platforms";
 import type { PlatformProfile } from "@/lib/platforms/index";
 
@@ -478,10 +477,12 @@ export function KnowledgeHubClient({ initialPlatforms = [] }: Props) {
           )}
         </div>
 
-        {/* Category Section Headers + Grid */}
-        <StaggerContainer
-          className={viewMode === "grid" ? "space-y-6" : "space-y-3"}
-        >
+        {/* Category Section Headers + Grid.
+            NOTE: plain div, NOT StaggerContainer — that component gates
+            visibility on a window-root IntersectionObserver, which never
+            fires inside the dashboard's overflow-y-auto <main>, leaving the
+            whole catalog invisible (the "white space" bug's second head). */}
+        <div className={viewMode === "grid" ? "space-y-6" : "space-y-3"}>
           {Object.entries(byCategory).map(([cat, list]) => {
             const filteredList = list.filter((p) =>
               filteredPlatforms.some((fp) => fp.id === p.id)
@@ -520,7 +521,7 @@ export function KnowledgeHubClient({ initialPlatforms = [] }: Props) {
               </div>
             );
           })}
-        </StaggerContainer>
+        </div>
       </div>
 
       {/* TechMedix Sandbox launcher */}

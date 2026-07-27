@@ -68,6 +68,18 @@ export function PlatformModelView({
       setNear(true);
       return;
     }
+    // The dashboard scrolls inside <main class="overflow-y-auto">, not the
+    // window. With the default (viewport) root, cards below main's fold are
+    // CLIPPED by the ancestor and never report intersecting — rootMargin does
+    // not expand ancestor clip rects. Use the actual scroll container as root.
+    let scrollRoot: Element | null = null;
+    for (let n = el.parentElement; n; n = n.parentElement) {
+      const ov = getComputedStyle(n).overflowY;
+      if (ov === "auto" || ov === "scroll") {
+        scrollRoot = n;
+        break;
+      }
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -79,7 +91,7 @@ export function PlatformModelView({
           }
         }
       },
-      { rootMargin: "400px 0px" }
+      { root: scrollRoot, rootMargin: "500px 0px" }
     );
     io.observe(el);
     return () => io.disconnect();
