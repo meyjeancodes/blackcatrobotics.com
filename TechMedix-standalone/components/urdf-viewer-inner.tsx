@@ -60,9 +60,9 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false,
  if (child instanceof THREE.Mesh) {
  const mat = child.material as THREE.MeshStandardMaterial;
  if (!mat.color || mat.color.getHex() === 0xffffff) {
- mat.color = new THREE.Color('#808ea0');
- mat.metalness = 0.65;
- mat.roughness = 0.35;
+ mat.color = new THREE.Color('#aeb8c6');
+ mat.metalness = 0.55;
+ mat.roughness = 0.4;
  }
  mat.wireframe = wireframe || false;
         child.castShadow = true;
@@ -102,11 +102,12 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false,
     });
   }, [wireframe]);
 
-  // Apply base model rotation to fix orientation (URDF faces X-forward, we need Z-forward).
-  // Y is left free for scroll-driven rotation.
+  // Base orientation: URDF is Z-up, three.js is Y-up. Rotate -90° about X so the
+  // robot's +Z (up) aligns with +Y and it stands with feet on the ground.
+  // Scroll yaw is applied on top of this in useFrame (Y axis).
   useEffect(() => {
     if (groupRef.current) {
-      groupRef.current.rotation.set(0, -Math.PI / 2, 0);
+      groupRef.current.rotation.set(-Math.PI / 2, 0, 0);
     }
   }, []);
 
@@ -115,7 +116,8 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false,
   scrollRotRef.current = scrollRotation;
   useFrame(() => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = -Math.PI / 2 + (scrollRotRef.current || 0);
+      // base X tilt (-90° Z-up→Y-up) + scroll-driven Y yaw
+      groupRef.current.rotation.set(-Math.PI / 2, scrollRotRef.current || 0, 0);
     }
   });
 
@@ -316,16 +318,16 @@ function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, hidd
  style={{ background: 'transparent' }}
  gl={{ antialias: true, alpha: true, outputColorSpace: THREE.SRGBColorSpace }}
  >
- <ambientLight intensity={0.35} />
- <directionalLight position={[2, 4, 3]} intensity={1.2} castShadow />
- <directionalLight position={[-2, 1, -1]} intensity={0.3} color="#89a4ff" />
- <pointLight position={[0, 1.5, 1]} intensity={0.4} color="#FF6B35" distance={4} />
+ <ambientLight intensity={0.85} />
+ <directionalLight position={[3, 5, 4]} intensity={1.9} castShadow />
+ <directionalLight position={[-3, 2, -2]} intensity={0.7} color="#a9c0ff" />
+ <pointLight position={[0, 2, 2]} intensity={0.6} color="#FF6B35" distance={6} />
 
- <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.66, 0]} receiveShadow>
- <planeGeometry args={[4, 4]} />
- <meshStandardMaterial color="#151520" transparent opacity={0.6} />
+ <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.95, 0]} receiveShadow>
+ <planeGeometry args={[6, 6]} />
+ <meshStandardMaterial color="#2a2a38" transparent opacity={0.55} />
  </mesh>
- <gridHelper args={[4, 12, '#252535', '#1a1a28']} position={[0, -0.65, 0]} />
+ <gridHelper args={[6, 18, '#4a4a5e', '#2c2c3a']} position={[0, -0.94, 0]} />
 
  <Suspense fallback={null}>
  <UrdfRobot
