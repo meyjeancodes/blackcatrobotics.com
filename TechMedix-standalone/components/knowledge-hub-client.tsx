@@ -388,6 +388,7 @@ flexGrow: 1,
         <div className={viewMode === "list" ? "w-[160px] h-[120px] shrink-0" : "w-full"}>
           <RobotModelViewer
             platformId={platform.id}
+            imageUrl={platform.diagramUrl}
             mode="preview"
             className={viewMode === "list" ? "h-full w-full" : "h-72 w-full cursor-pointer"}
             onClick={() => openBlueprint(platform.id)}

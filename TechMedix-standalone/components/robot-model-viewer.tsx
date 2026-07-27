@@ -60,6 +60,8 @@ export type RobotViewerMode = 'preview' | 'explore' | 'blueprint' | 'sim';
 
 export interface RobotModelViewerProps {
  platformId?: string;
+ /** Direct image URL (e.g. platforms.image_url from Supabase) — takes priority over the static map */
+ imageUrl?: string;
  robotType?: "humanoid" | "quadruped" | "drone";
  activeZone?: BodyZone | null;
  onZoneClick?: (zone: BodyZone) => void;
@@ -73,6 +75,7 @@ export interface RobotModelViewerProps {
 
 export function RobotModelViewer({
  platformId = "",
+ imageUrl,
  robotType,
  activeZone = null,
  onZoneClick,
@@ -141,7 +144,7 @@ export function RobotModelViewer({
   // URDF models are reserved for dedicated blueprint routes where they can
   // load properly without competing for resources on card grids.
   if (mode === 'preview') {
-    const imgSrc = PLATFORM_IMAGE_MAP[platformId] ?? `/images/platforms/${platformId}.png`;
+    const imgSrc = imageUrl ?? PLATFORM_IMAGE_MAP[platformId] ?? `/images/platforms/${platformId}.png`;
     return (
       <div className={`relative overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] ${config.background} ${className}`} onClick={onClick}>
         {/* eslint-disable-next-line @next/next/no-img-element */}

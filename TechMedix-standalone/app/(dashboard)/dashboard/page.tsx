@@ -185,7 +185,7 @@ export default async function DashboardPage() {
 
       {/* ─── Fleet overview + telemetry ──────────────────────── */}
       <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <SurfaceCard title="Fleet overview" eyebrow={snapshot.customer.company}>
+        <SurfaceCard title="Fleet overview" eyebrow={snapshot.customer?.company ?? "TechMedix"}>
           <RobotTable robots={snapshot.robots} />
         </SurfaceCard>
         <SurfaceCard

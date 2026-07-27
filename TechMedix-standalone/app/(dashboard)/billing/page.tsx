@@ -48,6 +48,17 @@ export default async function BillingPage() {
   const { snapshot } = await getDashboardData();
   const { customer } = snapshot;
 
+  if (!customer) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="font-display text-2xl">Billing</h1>
+          <p className="mt-2 text-sm opacity-70">No customer account is linked to this session yet. Billing details will appear once your account is provisioned.</p>
+        </div>
+      </div>
+    );
+  }
+
   const isOnTrial = customer.status === "trial";
   const trialDaysLeft = isOnTrial && customer.trialEndsAt
     ? Math.max(0, Math.ceil((new Date(customer.trialEndsAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
