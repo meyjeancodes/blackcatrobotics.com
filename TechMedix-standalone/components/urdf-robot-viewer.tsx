@@ -39,9 +39,11 @@ interface Props {
  onPartClick?: (partName: string) => void;
  /** Maps URDF mesh names → parts-catalog component IDs */
  meshToComponentMap?: Record<string, string>;
+ /** Continuous Y rotation in radians (driven by scroll for the teardown band) */
+ scrollRotation?: number;
 }
 
-export function UrdfRobotViewer({ urdfPath, label, height, selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap }: Props) {
+export function UrdfRobotViewer({ urdfPath, label, height, selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap, scrollRotation }: Props) {
  const [error, setError] = useState<string | null>(null);
 
  return (
@@ -57,6 +59,7 @@ export function UrdfRobotViewer({ urdfPath, label, height, selectedPartId, explo
                  hiddenPartIds={hiddenPartIds}
                  onPartClick={onPartClick}
  meshToComponentMap={meshToComponentMap}
+ scrollRotation={scrollRotation}
  />
  </div>
  );

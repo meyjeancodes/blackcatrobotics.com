@@ -19,9 +19,11 @@ interface UrdfRobotProps {
  onPartClick?: (partName: string) => void;
  /** Maps URDF mesh names → parts-catalog component IDs */
  meshToComponentMap?: Record<string, string>;
+ /** Continuous Y rotation in radians (driven by scroll for the teardown band) */
+ scrollRotation?: number;
 }
 
-function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap }: UrdfRobotProps) {
+function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap, scrollRotation = 0 }: UrdfRobotProps) {
   const groupRef = useRef<THREE.Group>(null!);
   const [isLoaded, setIsLoaded] = useState(false);
   const mountedRef = useRef(true);
@@ -100,12 +102,22 @@ function UrdfRobot({ urdfUrl, onLoad, onError, selectedPartId, exploded = false,
     });
   }, [wireframe]);
 
-  // Apply model rotation to fix orientation (URDF faces X-forward, we need Z-forward)
+  // Apply base model rotation to fix orientation (URDF faces X-forward, we need Z-forward).
+  // Y is left free for scroll-driven rotation.
   useEffect(() => {
     if (groupRef.current) {
       groupRef.current.rotation.set(0, -Math.PI / 2, 0);
     }
   }, []);
+
+  // Latest scrollRotation, read each frame by the render loop (avoids re-mounting on scroll)
+  const scrollRotRef = useRef(scrollRotation);
+  scrollRotRef.current = scrollRotation;
+  useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = -Math.PI / 2 + (scrollRotRef.current || 0);
+    }
+  });
 
   // ─── Stable pointer NDC — tracked each frame from R3F's event state ─────────
   // gl.pointer is injected by R3F's event layer (not native WebGLRenderer)
@@ -278,7 +290,13 @@ useEffect(() => {
 
 // ─── Full canvas with lights, controls, grounding ────────────────────────────
 
-function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap }: {
+interface UrdfSceneProps {
+ /** Maps URDF mesh names → parts-catalog component IDs */
+ meshToComponentMap?: Record<string, string>;
+ scrollRotation?: number;
+}
+
+function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap, scrollRotation = 0 }: {
  urdfUrl: string;
  onError: (msg: string) => void;
  selectedPartId?: string | null;
@@ -287,6 +305,7 @@ function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, hidd
  hiddenPartIds?: string[];
  onPartClick?: (partName: string) => void;
  meshToComponentMap?: Record<string, string>;
+ scrollRotation?: number;
 }) {
  const [loaded, setLoaded] = useState(false);
 
@@ -297,7 +316,6 @@ function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, hidd
  style={{ background: 'transparent' }}
  gl={{ antialias: true, alpha: true, outputColorSpace: THREE.SRGBColorSpace }}
  >
- <Environment preset="city" />
  <ambientLight intensity={0.35} />
  <directionalLight position={[2, 4, 3]} intensity={1.2} castShadow />
  <directionalLight position={[-2, 1, -1]} intensity={0.3} color="#89a4ff" />
@@ -319,8 +337,9 @@ function UrdfScene({ urdfUrl, onError, selectedPartId, exploded, wireframe, hidd
                  wireframe={wireframe}
                  hiddenPartIds={hiddenPartIds}
                  onPartClick={onPartClick}
- meshToComponentMap={meshToComponentMap}
- />
+                 meshToComponentMap={meshToComponentMap}
+                 scrollRotation={scrollRotation}
+                 />
  </Suspense>
 
  <OrbitControls
@@ -359,9 +378,11 @@ interface Props {
  onPartClick?: (partName: string) => void;
  /** Maps URDF mesh names → parts-catalog component IDs */
  meshToComponentMap?: Record<string, string>;
+ /** Scroll-driven Y rotation (radians) passed through to the render loop */
+ scrollRotation?: number;
 }
 
-export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]', selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap }: Props) {
+export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]', selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap, scrollRotation }: Props) {
  const [error, setError] = useState<string | null>(null);
 
  if (error) {
@@ -401,7 +422,7 @@ export default function UrdfViewerInner({ urdfPath, label, height = 'h-[420px]',
  )}
 
  <div className="h-full w-full">
- <UrdfScene urdfUrl={urdfPath} onError={setError} selectedPartId={selectedPartId} exploded={exploded} wireframe={wireframe} hiddenPartIds={hiddenPartIds} onPartClick={onPartClick} meshToComponentMap={meshToComponentMap} />
+ <UrdfScene urdfUrl={urdfPath} onError={setError} selectedPartId={selectedPartId} exploded={exploded} wireframe={wireframe} hiddenPartIds={hiddenPartIds} onPartClick={onPartClick} meshToComponentMap={meshToComponentMap} scrollRotation={scrollRotation} />
  </div>
  </div>
  );
