@@ -193,7 +193,7 @@ export async function getDashboardData() {
       supabase.from("customers").select("*").eq("id", customerId).maybeSingle(),
       supabase.from("robots").select("*").eq("customer_id", customerId),
       supabase.from("alerts").select("*").eq("customer_id", customerId).eq("resolved", false),
-      supabase.from("dispatch_jobs").select("*").eq("customer_id", customerId).neq("status", "resolved"),
+      supabase.from("dispatch_jobs").select("*").eq("customer_id", customerId).neq("status", "completed").neq("status", "resolved"),
       supabase.from("technicians").select("*")
     ]);
 

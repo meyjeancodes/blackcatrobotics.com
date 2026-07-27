@@ -8,7 +8,7 @@ import type { PlatformProfile } from "@/lib/platforms/index";
 export interface SupabasePlatform extends Omit<PlatformProfile, "failureSignatures"> {
   id: string;
   slug: string;
-  type: "humanoid" | "quadruped" | "drone" | "delivery_ground" | "delivery_air" | "warehouse_amr" | "micromobility" | "other";
+  type: "humanoid" | "quadruped" | "drone" | "delivery_ground" | "delivery_air" | "warehouse_amr" | "micromobility" | "medical_surgical_robot" | "orthopedic_robot" | "rehab_exoskeleton" | "construction_robot" | "agri_robot" | "other";
   introduced_year: number | null;
   specs_json: Record<string, unknown>;
   techmedix_status: "supported" | "beta" | "roadmap" | "deprecated";
@@ -129,6 +129,10 @@ function mapTypeToCategory(type: SupabasePlatform["type"]): PlatformProfile["cat
       return "drone";
     case "warehouse_amr":
       return "industrial";
+    case "medical_surgical_robot":
+    case "orthopedic_robot":
+    case "rehab_exoskeleton":
+      return "medical";
     case "micromobility":
       return "micromobility";
     default:
