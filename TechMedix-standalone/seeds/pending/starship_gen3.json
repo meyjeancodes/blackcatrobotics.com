@@ -1,0 +1,76 @@
+{
+  "slug": "starship_gen3",
+  "specs_json": {
+    "manufacturer": "Starship Technologies",
+    "category": "sidewalk delivery robot (AMR)",
+    "weight_kg": 35.0,
+    "payload_kg": 10.0,
+    "battery_wh": 1260,
+    "runtime_min": 720,
+    "top_speed_ms": 1.67,
+    "range_km": 6.0,
+    "sensors": [
+      "12 cameras (stereo + time-of-flight)",
+      "ultrasonic array",
+      "radar",
+      "GPS",
+      "IMU",
+      "wheel odometry"
+    ],
+    "compute": "onboard embedded vision computer, ~2000 fps object detection pipeline; L4 autonomy with remote assist",
+    "ip_rating": "IP54",
+    "price_usd_est": 5500
+  },
+  "notes": "Six-wheeled sidewalk delivery robot operating at pedestrian speed (~6 km/h) with a locked, insulated ~10 kg cargo bay opened via customer app. Fleet exceeds 3,000 robots and 10M+ deliveries across 8 countries; newer generations add radar and improved night/winter operation. Gen 3 ('e-model') specifics are not fully published; battery/sensor values reflect company-published platform figures.",
+  "introduced_year": 2022,
+  "failure_modes": [
+    {
+      "name": "Wheel hub motor failure from water/grit ingress",
+      "component": "wheel drive motors",
+      "severity": "high",
+      "mtbf_hours_est": 2500,
+      "symptoms": "Pulling to one side, current spikes, stranded robot",
+      "mitigation": "Seal inspections, post-winter refurb (salt exposure), motor current trend monitoring"
+    },
+    {
+      "name": "Curb-climb suspension linkage wear",
+      "component": "bogie suspension",
+      "severity": "medium",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Clunking on curbs, reduced climb ability, misalignment",
+      "mitigation": "Scheduled linkage/bushing replacement, curb-impact telemetry review"
+    },
+    {
+      "name": "Cellular connectivity dead zones",
+      "component": "LTE modem/connectivity",
+      "severity": "medium",
+      "mtbf_hours_est": 800,
+      "symptoms": "Loss of remote-assist, robot stops and waits, delivery delays",
+      "mitigation": "Multi-carrier SIM failover, coverage-aware routing, store-and-forward telemetry"
+    },
+    {
+      "name": "Camera lens fouling (rain/mud/snow)",
+      "component": "vision sensors",
+      "severity": "high",
+      "mtbf_hours_est": 600,
+      "symptoms": "Degraded obstacle detection, increased operator interventions",
+      "mitigation": "Hydrophobic coatings, operator alerting on percept confidence drop, field cleaning rounds"
+    },
+    {
+      "name": "Battery capacity fade in cold climates",
+      "component": "Li-ion battery pack",
+      "severity": "medium",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Shortened shift range, low-voltage cutoffs",
+      "mitigation": "Thermal management, winter duty derating, pack replacement thresholds"
+    },
+    {
+      "name": "Cargo lid lock actuator jam",
+      "component": "cargo bay locking mechanism",
+      "severity": "low",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Customer unable to open lid, remote unlock required",
+      "mitigation": "Actuator lubrication schedule, remote override, debris seals"
+    }
+  ]
+}

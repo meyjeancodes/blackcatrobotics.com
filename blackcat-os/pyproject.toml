@@ -9,7 +9,7 @@ description = "Open source robotics platform intelligence layer by BlackCat Robo
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
-authors = [{name = "BlackCat Robotics", email = "blackcatrobotics.ai@gmail.com"}]
+authors = [{name = "BlackCat Robotics", email = "support@blackcatrobotics.com"}]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",

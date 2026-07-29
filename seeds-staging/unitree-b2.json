@@ -1,0 +1,75 @@
+{
+  "slug": "unitree-b2",
+  "specs_json": {
+    "manufacturer": "Unitree Robotics",
+    "category": "quadruped (industrial)",
+    "dof": 12,
+    "weight_kg": 60,
+    "payload_kg": 40,
+    "battery_wh": 2250,
+    "runtime_min": 300,
+    "top_speed_ms": 6.0,
+    "sensors": [
+      "3D lidar",
+      "depth cameras",
+      "optical cameras",
+      "IMU",
+      "joint encoders",
+      "IP67-rated sensor suite"
+    ],
+    "compute": "Onboard industrial PC; optional NVIDIA Jetson Orin NX high-compute module",
+    "price_usd_est": 100000
+  },
+  "notes": "The Unitree B2 (2023) is an IP67-rated industrial quadruped weighing ~60 kg that carries up to 40 kg standing (120 kg static) and sprints over 6 m/s \u2014 among the fastest industrial quadrupeds. Its 2250 Wh hot-swappable battery gives 4-6 h of walking endurance. It targets inspection, logistics, and hazardous-environment missions in all weather.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "IP67 seal degradation",
+      "component": "Chassis gaskets and joint seals",
+      "severity": "high",
+      "mtbf_hours_est": 4000,
+      "symptoms": "Moisture ingress alarms, corrosion on connectors, electronics faults after rain/washdown operations",
+      "mitigation": "Pressure-test seals on maintenance schedule, replace gaskets annually, inspect after chemical exposure"
+    },
+    {
+      "name": "Knee actuator overload at max payload",
+      "component": "Knee joint actuator",
+      "severity": "high",
+      "mtbf_hours_est": 3500,
+      "symptoms": "Torque saturation warnings, sagging stance under 40 kg load, elevated motor temps on slopes",
+      "mitigation": "Derate payload for slope/stair missions, monitor per-joint torque headroom, rotate high-load duty across fleet"
+    },
+    {
+      "name": "Lidar contamination in dusty/industrial sites",
+      "component": "3D lidar unit",
+      "severity": "medium",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Point-cloud dropouts, phantom obstacles, localization jumps, mission aborts",
+      "mitigation": "Clean optical windows per shift in dirty environments, fuse with cameras/IMU odometry, add protective cowling"
+    },
+    {
+      "name": "High-current battery contactor failure",
+      "component": "2250 Wh battery power contactor",
+      "severity": "critical",
+      "mtbf_hours_est": 5000,
+      "symptoms": "Sudden full power loss mid-mission, robot collapses, no fault forewarning",
+      "mitigation": "Log contactor cycle counts, replace at rated cycles, verify emergency-stop behavior in safety zone"
+    },
+    {
+      "name": "Foot force sensor drift",
+      "component": "Foot-end force sensors",
+      "severity": "medium",
+      "mtbf_hours_est": 2500,
+      "symptoms": "Gait timing errors, stumbling on terrain transitions, incorrect contact detection",
+      "mitigation": "Recalibrate zero-load offsets weekly, replace sensors showing drift beyond spec"
+    },
+    {
+      "name": "High-speed gait resonance / fastener loosening",
+      "component": "Leg structural fasteners",
+      "severity": "low",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Rattling at >5 m/s, gradual loosening of leg covers, vibration alarms",
+      "mitigation": "Torque-check fasteners on interval, apply threadlocker, limit sustained sprint duration"
+    }
+  ]
+}

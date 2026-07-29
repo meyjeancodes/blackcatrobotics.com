@@ -1,0 +1,74 @@
+{
+  "slug": "boston_dynamics_spot",
+  "specs_json": {
+    "manufacturer": "Boston Dynamics",
+    "category": "quadruped",
+    "dof": 12,
+    "weight_kg": 32.7,
+    "payload_kg": 14,
+    "battery_wh": 605,
+    "runtime_min": 90,
+    "top_speed_ms": 1.6,
+    "sensors": [
+      "5x stereo depth cameras (360\u00b0 perception)",
+      "IMU",
+      "joint position/force sensors",
+      "optional Spot CAM (PTZ + IR)",
+      "optional lidar payload"
+    ],
+    "compute": "Dual onboard Intel-class PCs; optional Spot CORE / CORE I/O (NVIDIA Jetson) payload compute",
+    "price_usd_est": 74500
+  },
+  "notes": "Boston Dynamics Spot is a 12-DOF electric quadruped for industrial inspection and data collection, launched commercially in 2019 at ~$74.5k. It carries up to 14 kg of payload, runs ~90 minutes on a 605 Wh swappable battery, and navigates autonomously using five stereo camera pairs. It is the most widely deployed commercial quadruped, used in energy, construction, and public-safety applications.",
+  "introduced_year": 2019,
+  "failure_modes": [
+    {
+      "name": "Hip actuator gearbox wear",
+      "component": "Leg hip abduction/flexion actuator",
+      "severity": "high",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Increased joint backlash, audible grinding, gait asymmetry, elevated motor current on affected leg",
+      "mitigation": "Track per-joint current/temperature telemetry; schedule actuator swap at wear thresholds; avoid sustained max-payload stair climbs"
+    },
+    {
+      "name": "Stereo camera degradation in low light / glare",
+      "component": "Perception cameras",
+      "severity": "medium",
+      "mtbf_hours_est": 5000,
+      "symptoms": "Obstacle avoidance failures, terrain misclassification, refusal to traverse stairs, drift in visual odometry",
+      "mitigation": "Keep lenses clean, add lidar payload for dark environments, use pre-mapped Autowalk missions with fiducials"
+    },
+    {
+      "name": "Battery pack capacity fade",
+      "component": "605 Wh Li-ion swappable battery",
+      "severity": "medium",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Runtime below 60 min, unexpected low-battery sit-downs mid-mission, cell imbalance warnings",
+      "mitigation": "Rotate battery fleet, store at ~50% SOC, retire packs below 80% capacity, use dock-based self-charging"
+    },
+    {
+      "name": "Knee actuator thermal shutdown",
+      "component": "Lower-leg (knee) actuator",
+      "severity": "high",
+      "mtbf_hours_est": 4000,
+      "symptoms": "Leg goes compliant under load, robot sits down and reports overheating, repeated faults on inclines",
+      "mitigation": "Limit continuous incline/stair duty cycles at high payload; monitor thermal telemetry; allow cool-down between missions"
+    },
+    {
+      "name": "Wi-Fi/comms dropout during teleop",
+      "component": "Wireless communications module",
+      "severity": "medium",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Control latency spikes, robot enters safe-stand or halts mid-mission, tablet disconnects",
+      "mitigation": "Use mesh/LTE payload radios, configure comms-loss behavior (safe sit vs. return), pre-survey RF environment"
+    },
+    {
+      "name": "Foot pad delamination",
+      "component": "Rubber foot contact pads",
+      "severity": "low",
+      "mtbf_hours_est": 1000,
+      "symptoms": "Slipping on smooth floors, degraded traction telemetry, visible pad wear",
+      "mitigation": "Inspect and replace foot pads on maintenance interval; avoid abrasive hot surfaces"
+    }
+  ]
+}

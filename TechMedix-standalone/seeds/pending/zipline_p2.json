@@ -1,0 +1,73 @@
+{
+  "slug": "zipline_p2",
+  "specs_json": {
+    "manufacturer": "Zipline",
+    "category": "hybrid VTOL delivery drone with tethered droid",
+    "weight_kg": 25.0,
+    "payload_kg": 3.6,
+    "battery_wh": 4000,
+    "runtime_min": 40,
+    "top_speed_ms": 31.3,
+    "range_km": 38.6,
+    "sensors": [
+      "GNSS",
+      "onboard cameras/vision for droid docking",
+      "microphone-based detect-and-avoid array",
+      "IMU/air data"
+    ],
+    "compute": "redundant proprietary flight computers with acoustic DAA processing",
+    "price_usd_est": 100000
+  },
+  "notes": "Platform 2 'Zip' is a hybrid lift+cruise eVTOL (~55 lb aircraft, 8 lb payload) that hovers ~90 m up and winches down a small maneuverable 'delivery droid' for ~30 cm precision doorstep drops, per FAA filings ~24 mi one-way range. Docks and recharges autonomously on charging arms; uses an acoustic detect-and-avoid system for BVLOS. Commercial rollouts began 2024-2025 with Walmart, Panera, and health systems.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "Droid tether winch jam",
+      "component": "delivery droid winch/tether",
+      "severity": "high",
+      "mtbf_hours_est": 1200,
+      "symptoms": "Droid fails to descend/retract, aborted delivery, RTB with droid deployed",
+      "mitigation": "Tether inspection cycles, winch torque monitoring, automated abort-and-return logic"
+    },
+    {
+      "name": "Acoustic DAA false positives in noisy environments",
+      "component": "microphone detect-and-avoid array",
+      "severity": "medium",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Unnecessary avoidance maneuvers, route deviations, delayed deliveries",
+      "mitigation": "Sensor fusion with ADS-B, acoustic model retraining, mic housing maintenance"
+    },
+    {
+      "name": "Lift rotor ESC failure during hover-delivery phase",
+      "component": "VTOL lift propulsion",
+      "severity": "critical",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Asymmetric thrust in hover, emergency climb-out or parachute event",
+      "mitigation": "Redundant lift motors sized for one-out hover, ESC health telemetry, pre-dock diagnostics"
+    },
+    {
+      "name": "Autonomous dock misalignment",
+      "component": "charging dock interface",
+      "severity": "medium",
+      "mtbf_hours_est": 800,
+      "symptoms": "Failed capture attempts, repeated go-arounds, charge not initiated",
+      "mitigation": "Vision-guided approach recalibration, dock fiducial cleaning, wind-limit gating"
+    },
+    {
+      "name": "Battery thermal event from rapid recharge cycling",
+      "component": "flight battery pack",
+      "severity": "critical",
+      "mtbf_hours_est": 5000,
+      "symptoms": "Cell overtemp alerts, charge termination, pack swelling",
+      "mitigation": "Dock-managed charge profiles, cell-level monitoring, scheduled pack retirement"
+    },
+    {
+      "name": "Icing/precipitation on wing in cruise",
+      "component": "fixed wing/airframe",
+      "severity": "high",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Lift degradation, increased power draw, mission aborts",
+      "mitigation": "Weather gating in fleet dispatch, icing forecast integration, coated surfaces"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "slug": "dji_matrice_350",
+  "specs_json": {
+    "manufacturer": "DJI",
+    "category": "enterprise inspection quadcopter",
+    "weight_kg": 6.47,
+    "payload_kg": 2.7,
+    "battery_wh": 263,
+    "runtime_min": 55,
+    "top_speed_ms": 23.0,
+    "range_km": 20.0,
+    "sensors": [
+      "6-direction binocular vision",
+      "IR sensing",
+      "RTK GNSS",
+      "FPV camera",
+      "CSM radar (optional)"
+    ],
+    "compute": "DJI flight controller; O3 Enterprise transmission",
+    "ip_rating": "IP55",
+    "price_usd_est": 12000
+  },
+  "notes": "DJI's flagship enterprise platform for inspection, public safety, and mapping, supporting up to three gimbal payloads (Zenmuse H20T/P1/L2 etc.). Dual hot-swappable TB65 batteries give up to 55 min flight; IP55 rated with O3 Enterprise link up to 20 km. Introduced May 2023 as the M300 RTK successor.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "Gimbal connector/ribbon failure",
+      "component": "gimbal payload interface",
+      "severity": "medium",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Payload not recognized, gimbal drift, video dropouts",
+      "mitigation": "Inspect DGC 2.0 connector, avoid hot-swapping payloads with power on, keep seals clean"
+    },
+    {
+      "name": "TB65 battery cell imbalance",
+      "component": "dual flight batteries",
+      "severity": "high",
+      "mtbf_hours_est": 800,
+      "symptoms": "Voltage delta warnings, shortened flight time, forced RTH",
+      "mitigation": "Use battery station storage mode, cycle pairs together, retire packs past 400 cycles"
+    },
+    {
+      "name": "Propeller icing / heavy rain ingress",
+      "component": "propellers/airframe",
+      "severity": "critical",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Vibration alarm, attitude instability in precipitation",
+      "mitigation": "Respect IP55 limits (no icing), pre-flight weather check, carry spare props"
+    },
+    {
+      "name": "O3 link interference in urban RF",
+      "component": "O3 Enterprise transmission",
+      "severity": "medium",
+      "mtbf_hours_est": 1000,
+      "symptoms": "Video lag, link-loss RTH events",
+      "mitigation": "Use 5.8 GHz where legal, dual operator antennas elevated, plan LOS routes"
+    },
+    {
+      "name": "RTK antenna multipath near steel structures",
+      "component": "RTK GNSS",
+      "severity": "medium",
+      "mtbf_hours_est": 1200,
+      "symptoms": "Float solutions during inspections, waypoint drift",
+      "mitigation": "Blend vision positioning, increase standoff distance, use D-RTK 2 base"
+    },
+    {
+      "name": "Obstacle sensor blinding by sun glare",
+      "component": "binocular vision system",
+      "severity": "high",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Missed obstacle warnings at low sun angles",
+      "mitigation": "Plan flights avoiding sun-aligned approaches, keep sensors clean, enable radar option"
+    }
+  ]
+}

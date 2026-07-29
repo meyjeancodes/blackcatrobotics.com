@@ -1,0 +1,65 @@
+{
+  "slug": "unitree-h1-2",
+  "specs_json": {
+    "manufacturer": "Unitree Robotics",
+    "category": "humanoid (full-size)",
+    "dof": 27,
+    "weight_kg": 70,
+    "payload_kg": 15,
+    "battery_wh": 864,
+    "runtime_min": 120,
+    "top_speed_ms": 3.3,
+    "sensors": [
+      "3D lidar (Livox Mid-360)",
+      "Intel RealSense depth camera",
+      "IMU",
+      "joint encoders/torque sensing"
+    ],
+    "compute": "High-performance onboard PC; optional NVIDIA Jetson Orin secondary compute",
+    "price_usd_est": 119000
+  },
+  "notes": "The Unitree H1-2 (2024) is a full-size ~70 kg humanoid with 27 DOF, upgraded from the original H1 with more arm/wrist articulation for manipulation research. Powered by Unitree's high-torque M107 joint motors (up to ~360 N\u00b7m), it walks at 3.3 m/s \u2014 a humanoid speed record class \u2014 on an 864 Wh battery, priced around $119k for research labs.",
+  "introduced_year": 2024,
+  "failure_modes": [
+    {
+      "name": "M107 hip motor winding overheating",
+      "component": "M107 hip joint motor",
+      "severity": "high",
+      "mtbf_hours_est": 1800,
+      "symptoms": "Thermal fault during sustained fast walking, torque derating, controller-forced stop",
+      "mitigation": "Cap continuous walking speed below thermal limit, monitor winding temps, allow cool-down between locomotion trials"
+    },
+    {
+      "name": "Fall damage to head sensor mast",
+      "component": "Lidar/depth camera head assembly",
+      "severity": "critical",
+      "mtbf_hours_est": 700,
+      "symptoms": "Lidar misalignment or failure after fall, perception dropout, cracked head housing",
+      "mitigation": "Use overhead gantry during controller development, add crash structure, recalibrate extrinsics after any fall"
+    },
+    {
+      "name": "Harmonic/planetary reducer backlash growth in wrist joints",
+      "component": "Wrist actuator reducers",
+      "severity": "medium",
+      "mtbf_hours_est": 2200,
+      "symptoms": "End-effector positioning error, oscillation during fine manipulation, audible clicking",
+      "mitigation": "Limit impact loads at end-effector, measure backlash quarterly, replace reducers past tolerance"
+    },
+    {
+      "name": "Ankle actuator overload on uneven terrain",
+      "component": "Ankle pitch actuator",
+      "severity": "high",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Balance recovery failures, torque saturation logs, ankle temperature spikes on gravel/slopes",
+      "mitigation": "Constrain deployment terrain, tune controller torque limits, inspect ankle assemblies after outdoor sessions"
+    },
+    {
+      "name": "Power bus brownout under peak multi-joint torque",
+      "component": "Battery/power distribution board",
+      "severity": "medium",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Compute reboot or sensor dropout during jumps/rapid squats, undervoltage log entries",
+      "mitigation": "Keep battery above 30% for dynamic tests, verify bus capacitance health, update firmware current limits"
+    }
+  ]
+}

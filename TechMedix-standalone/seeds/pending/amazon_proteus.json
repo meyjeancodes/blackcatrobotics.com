@@ -1,0 +1,73 @@
+{
+  "slug": "amazon_proteus",
+  "specs_json": {
+    "manufacturer": "Amazon Robotics",
+    "category": "warehouse autonomous mobile robot (AMR)",
+    "weight_kg": 180.0,
+    "payload_kg": 400.0,
+    "battery_wh": 2000,
+    "runtime_min": 480,
+    "top_speed_ms": 1.5,
+    "range_km": 30.0,
+    "sensors": [
+      "forward perception cameras",
+      "LiDAR safety scanner",
+      "upward/downward barcode cameras",
+      "IMU/wheel odometry"
+    ],
+    "compute": "onboard computer with perception stack; fleet-managed via Amazon AMR software",
+    "price_usd_est": 50000
+  },
+  "notes": "Amazon's first fully autonomous warehouse AMR (unveiled June 2022), designed to lift and move GoCarts (~800-900 lb capacity) while operating safely around people, compliant with ANSI/RIA R15.08. Uses a green safety-projection beam and perception stack to stop for humans, with autonomous docking and charging. Exact battery/compute specs are unpublished; figures are estimates from industry reporting.",
+  "introduced_year": 2022,
+  "failure_modes": [
+    {
+      "name": "LiDAR safety scanner occlusion",
+      "component": "safety LiDAR",
+      "severity": "high",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Protective stops, false obstacle fields, reduced fleet throughput",
+      "mitigation": "Scheduled lens cleaning, dust management, scanner health telemetry"
+    },
+    {
+      "name": "Drive wheel slippage on dust/spills",
+      "component": "drive wheels/traction",
+      "severity": "medium",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Localization drift, path deviation faults",
+      "mitigation": "Floor cleaning SOPs, traction monitoring, re-localization routines"
+    },
+    {
+      "name": "Lift mechanism actuator failure under max GoCart load",
+      "component": "cart lifting mechanism",
+      "severity": "high",
+      "mtbf_hours_est": 4000,
+      "symptoms": "Failure to engage/raise cart, load cell errors",
+      "mitigation": "Load-cycle based preventive maintenance, torque monitoring, derate near limit loads"
+    },
+    {
+      "name": "Fleet WiFi/roaming dropouts",
+      "component": "wireless connectivity",
+      "severity": "medium",
+      "mtbf_hours_est": 1000,
+      "symptoms": "Robot idles awaiting tasking, traffic jams at handoff zones",
+      "mitigation": "Dense AP coverage with fast roaming, autonomous safe-behavior on link loss"
+    },
+    {
+      "name": "Charging contact wear/misdock",
+      "component": "autonomous charging interface",
+      "severity": "low",
+      "mtbf_hours_est": 1800,
+      "symptoms": "Failed charge sessions, battery depletion mid-shift",
+      "mitigation": "Contact inspection/replacement schedule, dock alignment calibration"
+    },
+    {
+      "name": "Barcode fiducial misread on worn floor markers",
+      "component": "navigation cameras/floor fiducials",
+      "severity": "medium",
+      "mtbf_hours_est": 1200,
+      "symptoms": "Position uncertainty, slow creep mode, task reassignment",
+      "mitigation": "Floor marker replacement program, SLAM fallback, camera exposure calibration"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "slug": "dji_agras_t50",
+  "specs_json": {
+    "manufacturer": "DJI",
+    "category": "agricultural spray drone",
+    "weight_kg": 52.0,
+    "payload_kg": 40.0,
+    "battery_wh": 1560,
+    "runtime_min": 18,
+    "top_speed_ms": 13.8,
+    "range_km": 2.0,
+    "sensors": [
+      "dual phased-array radar (front+rear)",
+      "binocular vision",
+      "RTK GNSS",
+      "FPV camera"
+    ],
+    "compute": "proprietary DJI flight controller with dual-radar fusion",
+    "ip_rating": "IPX6K (core components)",
+    "price_usd_est": 21000
+  },
+  "notes": "Flagship agricultural drone with 40 kg spray / 50 kg spread payload, coaxial dual-rotor design and dual phased-array radars for terrain follow and obstacle sensing. Weighs 52 kg with the 30 Ah DB1560 battery; typically operated with rapid battery swaps and generator charging in the field.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "Spray nozzle clogging",
+      "component": "atomizing spray system",
+      "severity": "medium",
+      "mtbf_hours_est": 300,
+      "symptoms": "Uneven spray pattern, flow rate deviation alerts, reduced coverage",
+      "mitigation": "Flush tank and lines after each session; use filtered mixture; replace centrifugal nozzle discs on schedule"
+    },
+    {
+      "name": "Coaxial motor/ESC overheat",
+      "component": "propulsion (ESC)",
+      "severity": "high",
+      "mtbf_hours_est": 1500,
+      "symptoms": "ESC temperature warnings, power derating, forced landing",
+      "mitigation": "Avoid sustained max-payload hover in high ambient temps; clean motor cooling paths; firmware-current limits"
+    },
+    {
+      "name": "RTK fix loss near obstacles",
+      "component": "RTK GNSS module",
+      "severity": "medium",
+      "mtbf_hours_est": 800,
+      "symptoms": "Degrades to GNSS float, swath drift, boundary overshoot",
+      "mitigation": "Site D-RTK 2 base station with clear sky view; enable vision fallback; re-plan routes away from tree lines"
+    },
+    {
+      "name": "Phased-array radar false negatives on wires",
+      "component": "obstacle sensing radar",
+      "severity": "critical",
+      "mtbf_hours_est": 2500,
+      "symptoms": "No avoidance response to thin power lines or guy wires",
+      "mitigation": "Manually mark linear obstacles in field plan; maintain altitude buffer; pre-flight field survey"
+    },
+    {
+      "name": "Battery connector corrosion from chemical exposure",
+      "component": "DB1560 flight battery interface",
+      "severity": "high",
+      "mtbf_hours_est": 1000,
+      "symptoms": "Intermittent power, voltage sag warnings, boot failures",
+      "mitigation": "Rinse airframe after spraying, inspect and dielectric-grease connectors, rotate battery packs"
+    },
+    {
+      "name": "Pump impeller wear from abrasive slurries",
+      "component": "dual impeller pumps",
+      "severity": "medium",
+      "mtbf_hours_est": 400,
+      "symptoms": "Reduced L/min flow, pump current spikes",
+      "mitigation": "Use recommended formulations; replace impellers per hour schedule; avoid dry running"
+    }
+  ]
+}

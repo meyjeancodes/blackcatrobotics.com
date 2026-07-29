@@ -1,0 +1,74 @@
+{
+  "slug": "unitree-b2",
+  "specs_json": {
+    "manufacturer": "Unitree Robotics",
+    "category": "quadruped",
+    "dof": 12,
+    "weight_kg": 60,
+    "payload_kg": 40,
+    "battery_wh": 2250,
+    "runtime_min": 300,
+    "top_speed_ms": 6.0,
+    "sensors": [
+      "3D lidar (RS-Helios / MID-360 class)",
+      "Intel RealSense D435i depth camera",
+      "optical cameras",
+      "IMU",
+      "dual joint encoders"
+    ],
+    "compute": "Intel Core i5 (platform) + i7 (development); optional NVIDIA Jetson Orin NX",
+    "price_usd_est": 100000
+  },
+  "notes": "The Unitree B2 is an industrial-grade quadruped rated IP67 with 360 N\u00b7m knee joints, >6 m/s top speed, and a 45 Ah (2250 Wh) quick-swap battery giving 4-6 h endurance. It sustains >40 kg continuous walking load (~120 kg standing) and targets power-plant, tunnel, and industrial inspection duty from -20 to 55 \u00b0C.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "Knee actuator thermal derating under load",
+      "component": "360 N\u00b7m knee joint motor",
+      "severity": "high",
+      "mtbf_hours_est": 3500,
+      "symptoms": "Torque limiting during stair climbs with payload, joint over-temperature faults",
+      "mitigation": "Respect 40 kg continuous load limit, allow cooldown between high-grade climbs, verify local air-cooling ducts unobstructed"
+    },
+    {
+      "name": "Battery cell imbalance in 13S pack",
+      "component": "45 Ah smart battery",
+      "severity": "medium",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Runtime below 4 h unloaded, BMS cell-delta warnings, premature low-voltage cutoffs",
+      "mitigation": "Full balance-charge weekly, store at ~50% SOC, retire packs with >100 mV persistent cell delta"
+    },
+    {
+      "name": "IP67 seal degradation at leg joints",
+      "component": "joint seals/gaskets",
+      "severity": "high",
+      "mtbf_hours_est": 4000,
+      "symptoms": "Moisture ingress alarms, corrosion on joint boards after washdown or rain ops",
+      "mitigation": "Inspect seals quarterly and after submersion events, replace gaskets per service interval"
+    },
+    {
+      "name": "Foot pad wear and slip",
+      "component": "foot contact pads",
+      "severity": "low",
+      "mtbf_hours_est": 800,
+      "symptoms": "Slipping on smooth concrete, degraded stair traction, contact-detection noise",
+      "mitigation": "Replace foot pads on a distance-based schedule (~500 km), check after abrasive-terrain missions"
+    },
+    {
+      "name": "Lidar/camera extrinsic drift",
+      "component": "perception suite",
+      "severity": "medium",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Autonomy path errors, mapping ghosting, obstacle false negatives",
+      "mitigation": "Re-run factory calibration routine after transport or impacts; validate with test course"
+    },
+    {
+      "name": "Hip abduction dual-encoder disagreement",
+      "component": "hip joint encoders",
+      "severity": "critical",
+      "mtbf_hours_est": 6000,
+      "symptoms": "Sudden joint lockout, robot sits down mid-mission, encoder mismatch fault codes",
+      "mitigation": "Firmware kept current (OTA), replace encoder assembly on first mismatch fault rather than clearing"
+    }
+  ]
+}

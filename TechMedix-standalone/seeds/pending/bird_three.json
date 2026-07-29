@@ -1,0 +1,68 @@
+{
+  "slug": "bird_three",
+  "specs_json": {
+    "manufacturer": "Bird Rides, Inc.",
+    "category": "shared standing e-scooter",
+    "weight_kg": 21.0,
+    "payload_kg": 100,
+    "battery_wh": 1000,
+    "motor_power_w": 300,
+    "top_speed_kmh": 25,
+    "range_km": 50,
+    "ip_rating": "IP68",
+    "tire_type": "pneumatic 12-inch (tubeless)",
+    "price_usd_est": 1500
+  },
+  "notes": "The Bird Three (2021) is Bird's third-generation shared scooter, built around a hermetically sealed, tamper-resistant battery pack of up to 1 kWh \u2014 the largest in the shared-scooter industry at launch \u2014 with IP68-rated protection. It features dual independent drum brakes, autonomous emergency braking sensors, and a rated chassis lifespan of over 14,000 miles for fleet durability.",
+  "introduced_year": 2021,
+  "failure_modes": [
+    {
+      "name": "BMS cell-imbalance lockout",
+      "component": "battery/BMS",
+      "severity": "high",
+      "mtbf_hours_est": 6000,
+      "symptoms": "Vehicle refuses to unlock, reports low SOC despite recent charge, thermal warnings in fleet dashboard",
+      "mitigation": "Swap pack at warehouse, run balance-charge cycle, retire packs past cycle-count threshold"
+    },
+    {
+      "name": "Drum brake wear/glazing",
+      "component": "brakes",
+      "severity": "high",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Increased stopping distance, squealing, brake lever travel to bar",
+      "mitigation": "Scheduled brake inspection every 2-4 weeks in fleet rotation; replace shoes and adjust cable"
+    },
+    {
+      "name": "IoT module GPS/LTE dropout",
+      "component": "IoT/telematics",
+      "severity": "medium",
+      "mtbf_hours_est": 4000,
+      "symptoms": "Vehicle goes dark on fleet map, cannot be located or remotely locked",
+      "mitigation": "OTA firmware watchdog reboot; replace IoT board or antenna; sweep last-known-location zones"
+    },
+    {
+      "name": "Charge/battery connector corrosion",
+      "component": "wiring/connectors",
+      "severity": "medium",
+      "mtbf_hours_est": 3500,
+      "symptoms": "Intermittent charging, error codes, no-power events after rain exposure",
+      "mitigation": "Dielectric grease on connectors, inspect seals during service, replace corroded harness pigtails"
+    },
+    {
+      "name": "Vandalism / cable cut",
+      "component": "chassis/cabling",
+      "severity": "critical",
+      "mtbf_hours_est": 2500,
+      "symptoms": "Severed brake or throttle cables, smashed display, bent stem, missing QR codes",
+      "mitigation": "Anti-tamper fasteners, geofenced no-park zones, rapid retrieval of reported vehicles, full safety inspection before redeploy"
+    },
+    {
+      "name": "Tire puncture / flat",
+      "component": "wheels/tires",
+      "severity": "low",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Pulling to one side, low ride height, vibration",
+      "mitigation": "Use sealant-filled or solid-core tires, pressure check during battery swaps"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "slug": "rad_commercial",
+  "name": "Rad Power Commercial Fleet eBike (RadRunner platform)",
+  "manufacturer": "Rad Power Bikes",
+  "category": "fleet_ebike",
+  "introduced_year": 2019,
+  "notes": "Rad Power's commercial/fleet ebike built on the RadRunner utility platform (2019): 750 W geared hub motor, 672 Wh (48V 14Ah) battery, 145 kg total payload, modular cargo accessories; widely used in delivery fleets (e.g. Domino's DXB variant).",
+  "specs_json": {
+    "motor_power_w": 750,
+    "top_speed_kmh": 32,
+    "range_km": 72,
+    "ip_rating": "IP65 (battery/controller, est.)",
+    "tire_type": "fat pneumatic, 20 x 3.3 in",
+    "battery_wh": 672,
+    "payload_kg": 145,
+    "brakes": "mechanical disc, 180 mm",
+    "class": "Class 2 (throttle + pedal assist)"
+  },
+  "failure_modes": [
+    {
+      "name": "BMS/cell fault",
+      "component": "battery",
+      "severity": "high",
+      "symptom": "Pack imbalance or BMS lockout; scooter reports low SoC or shuts down under load",
+      "mitigation": "Periodic pack diagnostics, cell-balance check, replace packs failing capacity threshold"
+    },
+    {
+      "name": "Brake wear",
+      "component": "brakes",
+      "severity": "high",
+      "symptom": "Increased stopping distance, grinding or loose lever feel",
+      "mitigation": "Scheduled brake inspection/adjustment per service interval; replace pads/shoes/cables"
+    },
+    {
+      "name": "IoT/GPS dropout",
+      "component": "telematics",
+      "severity": "medium",
+      "symptom": "Vehicle goes offline, stale GPS fix, cannot be located/unlocked via app",
+      "mitigation": "Firmware watchdog reboot, antenna inspection, swap IoT module if repeated dropouts"
+    },
+    {
+      "name": "Connector corrosion",
+      "component": "electrical",
+      "severity": "medium",
+      "symptom": "Intermittent power loss, throttle/display faults after rain or washdown",
+      "mitigation": "Dielectric grease on connectors, inspect seals, replace corroded harness plugs"
+    },
+    {
+      "name": "Vandalism",
+      "component": "chassis",
+      "severity": "medium",
+      "symptom": "Broken display, cut brake lines, spray paint, forced lock or thrown in water",
+      "mitigation": "Geofence alerts, tamper sensors, rapid retrieval workflow, hardened fasteners"
+    },
+    {
+      "name": "Tire wear",
+      "component": "tires",
+      "severity": "low",
+      "symptom": "Reduced traction, flats or flat spots, vibration at speed",
+      "mitigation": "Tread/pressure checks each service cycle; replace tires past wear limit"
+    }
+  ]
+}

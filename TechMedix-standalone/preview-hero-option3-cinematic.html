@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option 3 — GSAP/Lottie Cinematic Hero</title>
+<style>
+  :root{
+    --ink:#0a0a0f; --ink-2:#3a3a45; --ink-3:#8888a0;
+    --paper:#f0efe8; --paper-2:#fafaf4; --white:#fff;
+    --fire:#cc3d17; --green:#1db954;
+    --border:rgba(10,10,15,0.08);
+    --display:'Helvetica Neue',sans-serif; --mono:'Chakra Petch','Courier New',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--display);background:var(--ink);color:var(--white);overflow-x:hidden;}
+
+  .cine{position:relative;height:500vh;}
+  .pin{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 40%,#15151f 0%,#0a0a0f 70%);}
+  .glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(204,61,23,.18) 0%,transparent 60%);filter:blur(20px);opacity:.6;}
+
+  /* the "pre-made" robot — clean vector, cinematic spin+scale via JS timeline */
+  .robot{position:relative;width:min(70vw,420px);transform-style:preserve-3d;transition:transform .1s linear;}
+  .robot svg{width:100%;height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.5));}
+  .ring{position:absolute;top:50%;left:50%;border:1px solid rgba(204,61,23,.25);border-radius:50%;transform:translate(-50%,-50%);}
+  .ring1{width:520px;height:520px;animation:spin 24s linear infinite;}
+  .ring2{width:640px;height:640px;border-style:dashed;animation:spin 40s linear infinite reverse;}
+  @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+  /* cinematic caption cross-fades */
+  .caps{position:absolute;bottom:14vh;left:0;width:100%;text-align:center;pointer-events:none;}
+  .cap{position:absolute;left:0;width:100%;opacity:0;transition:opacity .5s ease,transform .5s ease;transform:translateY(20px);}
+  .cap.on{opacity:1;transform:none;}
+  .cap .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fire);margin-bottom:10px;}
+  .cap h2{font-size:clamp(28px,4vw,52px);letter-spacing:-.03em;line-height:1.05;}
+  .cap h2 em{color:var(--fire);font-style:italic;}
+
+  .topbadge{position:absolute;top:40px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);}
+  .bar{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);width:200px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
+  .bar i{display:block;height:100%;width:0;background:var(--fire);transition:width .1s;}
+  .hint{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--ink-3);animation:bob 2s infinite;}
+  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-6px);}}
+</style>
+</head>
+<body>
+
+<section class="cine" id="cine">
+  <div class="pin">
+    <div class="topbadge">BlackCat Robotics · Option 3 — Cinematic (GSAP/Lottie style)</div>
+    <div class="glow" id="glow"></div>
+    <div class="ring ring1"></div>
+    <div class="ring ring2"></div>
+
+    <div class="robot" id="robot">
+      <svg viewBox="0 0 300 520">
+        <defs>
+          <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3a3a48"/><stop offset="1" stop-color="#15151f"/>
+          </linearGradient>
+        </defs>
+        <circle cx="150" cy="55" r="30" fill="url(#steel)"/>
+        <rect x="135" y="48" width="30" height="8" rx="4" fill="#cc3d17"/>
+        <rect x="110" y="95" width="80" height="120" rx="18" fill="url(#steel)"/>
+        <rect x="128" y="120" width="44" height="60" rx="8" fill="#cc3d17" opacity=".9"/>
+        <rect x="78" y="105" width="26" height="100" rx="13" fill="url(#steel)"/>
+        <rect x="196" y="105" width="26" height="100" rx="13" fill="url(#steel)"/>
+        <rect x="115" y="215" width="70" height="40" rx="12" fill="#0a0a0f"/>
+        <rect x="118" y="255" width="28" height="180" rx="14" fill="url(#steel)"/>
+        <rect x="154" y="255" width="28" height="180" rx="14" fill="url(#steel)"/>
+        <circle cx="132" cy="350" r="10" fill="#cc3d17"/>
+        <circle cx="168" cy="350" r="10" fill="#cc3d17"/>
+        <rect x="112" y="435" width="42" height="16" rx="6" fill="#0a0a0f"/>
+        <rect x="148" y="435" width="42" height="16" rx="6" fill="#0a0a0f"/>
+      </svg>
+    </div>
+
+    <div class="caps">
+      <div class="cap" data-at="0"><div class="eyebrow">Autonomous Systems</div><h2>The future runs<br>on <em>robots.</em></h2></div>
+      <div class="cap" data-at="0.25"><div class="eyebrow">Every Machine</div><h2>Thousands of parts.<br><em>One point of failure.</em></h2></div>
+      <div class="cap" data-at="0.5"><div class="eyebrow">TechMedix AI</div><h2>We see the failure<br><em>before it happens.</em></h2></div>
+      <div class="cap" data-at="0.75"><div class="eyebrow">Human + AI</div><h2>AI finds it.<br><em>Humans fix it.</em></h2></div>
+    </div>
+
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+</section>
+
+<div class="hint" id="hint">↓ scroll</div>
+
+<script>
+const cine=document.getElementById('cine');
+const robot=document.getElementById('robot');
+const glow=document.getElementById('glow');
+const bar=document.getElementById('bar');
+const hint=document.getElementById('hint');
+const caps=[...document.querySelectorAll('.cap')];
+function onScroll(){
+  const r=cine.getBoundingClientRect();
+  const total=cine.offsetHeight-window.innerHeight;
+  let p=Math.min(1,Math.max(0,-r.top/total));
+  bar.style.width=(p*100)+'%';
+  hint.style.opacity=p>0.02?0:1;
+  // cinematic: rotate + scale + float (the "pre-made timeline" feel)
+  const rot=p*360;
+  const scale=1+Math.sin(p*Math.PI)*0.25;
+  const float=Math.sin(p*Math.PI*4)*10;
+  robot.style.transform=`rotateY(${rot}deg) scale(${scale}) translateY(${float}px)`;
+  glow.style.opacity=0.4+Math.sin(p*Math.PI)*0.5;
+  glow.style.transform=`scale(${1+p*0.5})`;
+  // caption crossfade
+  let active=0;
+  caps.forEach((c,i)=>{if(p>=parseFloat(c.dataset.at))active=i;});
+  caps.forEach((c,i)=>c.classList.toggle('on',i===active));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+</script>
+</body>
+</html>

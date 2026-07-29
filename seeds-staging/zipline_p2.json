@@ -1,0 +1,87 @@
+{
+  "slug": "zipline_p2",
+  "specs_json": {
+    "type": "delivery_drone_hybrid",
+    "manufacturer": "Zipline",
+    "aircraft_weight_lb": 55,
+    "payload_lb": 8,
+    "range_mi_one_way": 24,
+    "per": "FAA Part 135 OpSpecs filings",
+    "delivery_mechanism": "tethered autonomous 'droid' lowered from ~300 ft hover",
+    "cruise": "fixed-wing lift + hover props",
+    "noise_design": "low-noise ducted delivery droid",
+    "navigation": "redundant GPS/INS + onboard detect-and-avoid (acoustic + visual)",
+    "charging": "dock-based, charging at nest/loading portal"
+  },
+  "notes": "Platform 2 (P2 Zip) hybrid VTOL for precision home delivery; hovers high and winches a maneuverable droid to drop packages within ~a dinner-plate radius. FAA Part 135 operations; BVLOS approvals expanding since 2023.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "Tether/winch jam during droid deployment",
+      "component": "winch & tether system",
+      "severity": 4,
+      "mtbf_hours_est": 800,
+      "symptoms": [
+        "droid descent stall",
+        "tension anomaly alarm",
+        "aborted delivery"
+      ],
+      "mitigation": "tether inspection/replacement schedule, winch load-cell monitoring, auto-retract and return-to-nest on anomaly"
+    },
+    {
+      "name": "Droid thruster failure causing drop-point inaccuracy",
+      "component": "delivery droid propulsion",
+      "severity": 3,
+      "mtbf_hours_est": 700,
+      "symptoms": [
+        "droid drift in wind",
+        "off-target placement"
+      ],
+      "mitigation": "pre-flight droid self-test, wind limits enforcement, redundant thruster control"
+    },
+    {
+      "name": "Transition failure between hover and cruise",
+      "component": "VTOL transition control/props",
+      "severity": 5,
+      "mtbf_hours_est": 2000,
+      "symptoms": [
+        "attitude excursion at transition",
+        "abort to hover"
+      ],
+      "mitigation": "redundant lift motors, transition envelope monitoring, parachute/safe-landing contingency logic"
+    },
+    {
+      "name": "Acoustic/visual DAA false alarms in bird-dense corridors",
+      "component": "detect-and-avoid suite",
+      "severity": 2,
+      "mtbf_hours_est": 400,
+      "symptoms": [
+        "frequent avoidance maneuvers",
+        "mission time overrun"
+      ],
+      "mitigation": "corridor tuning of DAA thresholds, route planning away from rookeries, fleet-level data feedback"
+    },
+    {
+      "name": "Battery reserve shortfall on max-range missions with headwind",
+      "component": "propulsion battery",
+      "severity": 4,
+      "mtbf_hours_est": 900,
+      "symptoms": [
+        "low-energy RTB alerts",
+        "diversion to alternate nest"
+      ],
+      "mitigation": "conservative energy margins in mission planner, live wind-aloft integration, alternate landing sites"
+    },
+    {
+      "name": "Icing/precipitation exposure beyond ops limits",
+      "component": "airframe & sensors",
+      "severity": 4,
+      "mtbf_hours_est": 3000,
+      "symptoms": [
+        "sensor occlusion",
+        "lift degradation"
+      ],
+      "mitigation": "weather-hold dispatch rules, onboard weather monitoring, geofenced no-go weather cells"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "slug": "skydio_x10",
+  "specs_json": {
+    "manufacturer": "Skydio",
+    "category": "autonomous inspection/public-safety quadcopter",
+    "weight_kg": 2.11,
+    "payload_kg": 0.15,
+    "battery_wh": 98,
+    "runtime_min": 40,
+    "top_speed_ms": 20.1,
+    "range_km": 12.0,
+    "sensors": [
+      "6x navigation cameras (360\u00b0 obstacle avoidance)",
+      "64MP zoom camera",
+      "48MP telephoto",
+      "FLIR Boson+ thermal",
+      "GPS/visual odometry"
+    ],
+    "compute": "NVIDIA Jetson Orin (~100 TOPS) onboard AI",
+    "ip_rating": "IP55",
+    "price_usd_est": 15000
+  },
+  "notes": "Skydio's flagship autonomy-first drone (announced Sept 2023) with onboard NVIDIA-class edge compute for GPS-denied visual navigation and night autonomy via IR illumination. Carries a tri-sensor gimbal (zoom, telephoto, radiometric thermal) and optional attachments (spotlight, speaker/mic, parachute). Used heavily in DFR (drone-as-first-responder) and utility inspection; NDAA compliant.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "Visual navigation degradation in low-texture darkness",
+      "component": "navigation cameras / autonomy stack",
+      "severity": "high",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Autonomy warnings, refusal to fly obstacle-avoidance in dark without IR mode",
+      "mitigation": "Enable NightSense/IR illumination, maintain GPS fallback, avoid featureless environments"
+    },
+    {
+      "name": "Gimbal motor fault after hard landing",
+      "component": "tri-sensor gimbal",
+      "severity": "medium",
+      "mtbf_hours_est": 1800,
+      "symptoms": "Horizon tilt, gimbal error codes, blurry stabilization",
+      "mitigation": "Post-incident gimbal calibration, transport in case, factory service for persistent errors"
+    },
+    {
+      "name": "Battery cold-weather voltage sag",
+      "component": "smart battery",
+      "severity": "medium",
+      "mtbf_hours_est": 900,
+      "symptoms": "Sudden % drops below 0\u00b0C, early RTH",
+      "mitigation": "Pre-warm batteries, keep >30% reserve in cold ops"
+    },
+    {
+      "name": "Connectivity loss on 5G/LTE remote ops",
+      "component": "cellular/Skydio Connect link",
+      "severity": "high",
+      "mtbf_hours_est": 1000,
+      "symptoms": "Video freeze, autonomous RTH/hover during DFR missions",
+      "mitigation": "Configure lost-link behavior, multi-carrier SIMs, mesh/Connect antenna placement"
+    },
+    {
+      "name": "Prop strike in confined-space inspection",
+      "component": "propellers/guards",
+      "severity": "medium",
+      "mtbf_hours_est": 600,
+      "symptoms": "Audible strike, vibration, autonomy abort",
+      "mitigation": "Use prop guards indoors, conservative obstacle margins, inspect props each flight"
+    },
+    {
+      "name": "Thermal sensor NUC artifacts",
+      "component": "FLIR Boson+ thermal",
+      "severity": "low",
+      "mtbf_hours_est": 2500,
+      "symptoms": "Banding/ghosting in radiometric imagery",
+      "mitigation": "Allow warm-up, trigger flat-field correction, firmware updates"
+    }
+  ]
+}

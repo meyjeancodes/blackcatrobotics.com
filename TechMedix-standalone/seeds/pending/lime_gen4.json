@@ -1,0 +1,68 @@
+{
+  "slug": "lime_gen4",
+  "specs_json": {
+    "manufacturer": "Lime (Neutron Holdings)",
+    "category": "shared standing e-scooter",
+    "weight_kg": 27.7,
+    "payload_kg": 100,
+    "battery_wh": 460,
+    "motor_power_w": 350,
+    "top_speed_kmh": 25,
+    "range_km": 40,
+    "ip_rating": "IP67",
+    "tire_type": "pneumatic 10-inch",
+    "price_usd_est": 1200
+  },
+  "notes": "The Lime Gen4 (rolled out globally from 2021) is Lime's fourth-generation shared scooter, featuring a swappable ~414-468 Wh battery interchangeable with Lime's Gen4 e-bikes, a more powerful 350 W hill-capable motor, dual hand brakes, and a lower center of gravity for stability. At 27.7 kg it is built heavy for fleet abuse, with a max rider load of 100 kg.",
+  "introduced_year": 2021,
+  "failure_modes": [
+    {
+      "name": "Swappable battery latch/interface failure",
+      "component": "battery/BMS",
+      "severity": "high",
+      "mtbf_hours_est": 5000,
+      "symptoms": "Battery not detected, intermittent power loss over bumps, swap ejection failures in field",
+      "mitigation": "Inspect latch and blade contacts at each swap, clean contacts, replace worn latch assemblies"
+    },
+    {
+      "name": "BMS overheat/derate in summer",
+      "component": "battery/BMS",
+      "severity": "medium",
+      "mtbf_hours_est": 7000,
+      "symptoms": "Reduced power output, mid-ride shutdowns, thermal fault codes",
+      "mitigation": "Shade staging areas, firmware thermal limits, rotate packs out of high-cycle duty"
+    },
+    {
+      "name": "Brake cable stretch and lever wear",
+      "component": "brakes",
+      "severity": "high",
+      "mtbf_hours_est": 1800,
+      "symptoms": "Soft lever, longer stopping distance, rider complaints via app",
+      "mitigation": "Preventive cable adjustment/replacement in maintenance cycles; verify both front and rear systems"
+    },
+    {
+      "name": "IoT/GPS unit loss of fix",
+      "component": "IoT/telematics",
+      "severity": "medium",
+      "mtbf_hours_est": 4500,
+      "symptoms": "Inaccurate parking verification, ghost vehicles on map, failed geofence speed control",
+      "mitigation": "Antenna reseat/replacement, firmware updates, flag repeat offenders for board swap"
+    },
+    {
+      "name": "Kickstand and stem vandalism damage",
+      "component": "chassis",
+      "severity": "medium",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Bent stems from throwing/tipping, broken kickstands, scooters found in water",
+      "mitigation": "Structural inspection on retrieval, torque-check folding mechanism, retire water-submerged units' electronics"
+    },
+    {
+      "name": "Pneumatic tire puncture",
+      "component": "wheels/tires",
+      "severity": "low",
+      "mtbf_hours_est": 2200,
+      "symptoms": "Flat tire, rim riding, instability",
+      "mitigation": "Sealant pre-fill, pressure checks at battery swap, transition to puncture-resistant tires"
+    }
+  ]
+}

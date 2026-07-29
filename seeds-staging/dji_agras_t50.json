@@ -1,0 +1,97 @@
+{
+  "slug": "dji_agras_t50",
+  "specs_json": {
+    "type": "agricultural_spray_drone",
+    "manufacturer": "DJI",
+    "weight_kg": 52,
+    "weight_no_battery_kg": 39.9,
+    "max_takeoff_weight_spray_kg": 92,
+    "max_takeoff_weight_spread_kg": 103,
+    "spray_tank_l": 40,
+    "spray_payload_kg": 40,
+    "spread_payload_kg": 50,
+    "battery": "DB1560 Intelligent Flight Battery, 30000 mAh, 52.22 V, ~12.1 kg",
+    "charge_time": "~9-12 min fast charge with D12000iE generator",
+    "ip_rating": "IP56 (aircraft core)",
+    "radar": "dual active phased-array radar (front + rear)",
+    "vision": "binocular vision system",
+    "spray_rate_l_min": 16,
+    "spread_rate_kg_min": 108,
+    "transmission": "O3 Agras, 2 km typical"
+  },
+  "notes": "Flagship global ag drone; coaxial twin-rotor x4 layout for heavy lift. Spray and spread systems swappable. Phased-array radar enables terrain follow and obstacle bypass over crops.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "Nozzle/pump clogging",
+      "component": "dual atomizing spray system",
+      "severity": 3,
+      "mtbf_hours_est": 300,
+      "symptoms": [
+        "uneven spray pattern",
+        "flow rate deviation alarm",
+        "dripping nozzles"
+      ],
+      "mitigation": "flush tank and lines with clean water after every session; strain chemicals; replace atomizer discs on schedule"
+    },
+    {
+      "name": "Battery swelling / capacity fade from fast-charge heat",
+      "component": "DB1560 battery",
+      "severity": 4,
+      "mtbf_hours_est": 400,
+      "symptoms": [
+        "reduced hover time",
+        "battery temp warnings",
+        "case deformation"
+      ],
+      "mitigation": "allow cool-down between cycles, use active-cooling charging station, retire packs below 80% health"
+    },
+    {
+      "name": "Chemical corrosion of connectors and frame",
+      "component": "electrical connectors / airframe",
+      "severity": 3,
+      "mtbf_hours_est": 800,
+      "symptoms": [
+        "intermittent ESC comms",
+        "corroded pins",
+        "paint blistering"
+      ],
+      "mitigation": "rinse airframe post-flight, dielectric grease on connectors, periodic teardown inspection"
+    },
+    {
+      "name": "Phased-array radar false negatives on thin obstacles",
+      "component": "omnidirectional radar",
+      "severity": 5,
+      "mtbf_hours_est": 1500,
+      "symptoms": [
+        "failure to detect wires/poles",
+        "late obstacle alarms"
+      ],
+      "mitigation": "pre-map field obstacles, maintain manual line-of-sight supervision, fly conservative margins near wires"
+    },
+    {
+      "name": "Motor/ESC failure under max gross weight in heat",
+      "component": "propulsion (8x motor, coaxial)",
+      "severity": 5,
+      "mtbf_hours_est": 1200,
+      "symptoms": [
+        "ESC overtemp warnings",
+        "asymmetric attitude",
+        "auto-land triggered"
+      ],
+      "mitigation": "derate payload at high density altitude and >40\u00b0C, clean motor cooling paths, log and trend ESC temps"
+    },
+    {
+      "name": "RTK/GNSS degradation causing swath overlap errors",
+      "component": "RTK positioning module",
+      "severity": 2,
+      "mtbf_hours_est": 1000,
+      "symptoms": [
+        "position jump",
+        "route drift",
+        "RTK fixed\u2192float"
+      ],
+      "mitigation": "use D-RTK 2 base station, check antenna mounts, pause ops during ionospheric disturbance"
+    }
+  ]
+}

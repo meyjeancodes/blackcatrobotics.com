@@ -1,0 +1,86 @@
+{
+  "slug": "amazon_proteus",
+  "specs_json": {
+    "type": "warehouse_amr",
+    "manufacturer": "Amazon Robotics",
+    "function": "fully autonomous mobile robot moving GoCarts in open, human-populated areas",
+    "cart_lift_capacity_kg": 400,
+    "navigation": "lidar + camera perception, safety-rated human detection, green guidance light",
+    "drive": "differential, low-profile tunnel under carts",
+    "operation": "lifts and tows non-automated wheeled GoCarts",
+    "deployment": "outbound dock sortation across Amazon fulfillment network",
+    "safety": "stops/slows around humans without caged zones"
+  },
+  "notes": "Amazon's first fully autonomous AMR (announced 2022) safe to operate outside fenced areas alongside employees; scales cart movement at outbound dock. ~400 kg-class cart handling; exact specs unpublished.",
+  "introduced_year": 2022,
+  "failure_modes": [
+    {
+      "name": "Lidar contamination from warehouse dust",
+      "component": "navigation lidar",
+      "severity": 3,
+      "mtbf_hours_est": 1000,
+      "symptoms": [
+        "localization confidence drop",
+        "spurious safety stops"
+      ],
+      "mitigation": "scheduled sensor cleaning, contamination self-check, dock-side maintenance triggers"
+    },
+    {
+      "name": "Lift mechanism wear under repeated 400 kg cart cycles",
+      "component": "cart lift actuator",
+      "severity": 3,
+      "mtbf_hours_est": 3000,
+      "symptoms": [
+        "lift stall",
+        "cart engagement faults",
+        "actuator current rise"
+      ],
+      "mitigation": "load-cycle-based preventive maintenance, current-signature monitoring, torque calibration"
+    },
+    {
+      "name": "Safety-field nuisance stops in high-traffic dock areas",
+      "component": "human-detection safety system",
+      "severity": 2,
+      "mtbf_hours_est": 300,
+      "symptoms": [
+        "throughput drop",
+        "frequent slow-mode",
+        "clustering of stopped units"
+      ],
+      "mitigation": "traffic-flow zoning, fleet manager path re-planning, tuned safety field profiles per zone"
+    },
+    {
+      "name": "Drive wheel slip on wet/dusty concrete",
+      "component": "drive train",
+      "severity": 2,
+      "mtbf_hours_est": 1200,
+      "symptoms": [
+        "path deviation",
+        "odometry mismatch"
+      ],
+      "mitigation": "floor condition monitoring, traction-aware speed limits, wheel tread replacement schedule"
+    },
+    {
+      "name": "Fleet-management comms loss (WiFi dead zones)",
+      "component": "wireless comms",
+      "severity": 3,
+      "mtbf_hours_est": 700,
+      "symptoms": [
+        "robot idles awaiting tasks",
+        "stale traffic map"
+      ],
+      "mitigation": "warehouse RF surveys, mesh AP redundancy, autonomous safe-hold behavior on comms loss"
+    },
+    {
+      "name": "Cart mis-engagement with damaged/non-standard GoCarts",
+      "component": "cart docking interface",
+      "severity": 3,
+      "mtbf_hours_est": 900,
+      "symptoms": [
+        "failed pickup retries",
+        "cart dropped mid-route alarms"
+      ],
+      "mitigation": "cart inspection program, engagement sensor verification, damaged-cart flagging in WMS"
+    }
+  ]
+}

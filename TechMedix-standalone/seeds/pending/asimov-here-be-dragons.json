@@ -1,0 +1,60 @@
+{
+  "slug": "asimov-here-be-dragons",
+  "specs_json": {
+    "manufacturer": "BlackCat Robotics (internal prototype)",
+    "category": "experimental humanoid",
+    "dof": 30,
+    "weight_kg": 62,
+    "payload_kg": 10,
+    "battery_wh": 1200,
+    "runtime_min": 120,
+    "top_speed_ms": 2.5,
+    "sensors": [
+      "stereo RGB-D head cameras",
+      "solid-state lidar",
+      "IMU",
+      "joint torque sensors",
+      "tactile fingertip arrays"
+    ],
+    "compute": "NVIDIA Jetson AGX Orin class edge compute (placeholder)",
+    "price_usd_est": 250000,
+    "confidence": "low",
+    "placeholder": true
+  },
+  "notes": "ASIMOV 'Here Be Dragons' is a fictional/internal experimental platform; all specifications here are placeholders with LOW confidence and should be replaced with real internal engineering data. Values are modeled on a generic full-size research humanoid for schema completeness only.",
+  "introduced_year": 2026,
+  "failure_modes": [
+    {
+      "name": "Prototype actuator firmware fault (placeholder)",
+      "component": "custom joint actuators",
+      "severity": "high",
+      "mtbf_hours_est": 500,
+      "symptoms": "Unexpected joint faults during untested control policies",
+      "mitigation": "Gantry-only operation until firmware matures; log all fault codes for internal review"
+    },
+    {
+      "name": "Battery management immaturity (placeholder)",
+      "component": "prototype BMS",
+      "severity": "critical",
+      "mtbf_hours_est": 400,
+      "symptoms": "Inaccurate SOC reporting, sudden shutdowns",
+      "mitigation": "Conservative 50% depth-of-discharge limit, supervised charging only"
+    },
+    {
+      "name": "Sensor calibration drift (placeholder)",
+      "component": "perception stack",
+      "severity": "medium",
+      "mtbf_hours_est": 600,
+      "symptoms": "Localization and grasp-pose errors after thermal cycling",
+      "mitigation": "Daily calibration routine during prototype phase"
+    },
+    {
+      "name": "Harness chafing at high-motion joints (placeholder)",
+      "component": "wiring harness",
+      "severity": "medium",
+      "mtbf_hours_est": 700,
+      "symptoms": "Intermittent joint comms, insulation wear at hip/shoulder pass-throughs",
+      "mitigation": "Weekly harness inspection, add abrasion sleeving at known chafe points"
+    }
+  ]
+}

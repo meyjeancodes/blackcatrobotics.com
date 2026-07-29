@@ -1,0 +1,84 @@
+{
+  "slug": "skydio_x10",
+  "specs_json": {
+    "type": "autonomous_inspection_drone",
+    "manufacturer": "Skydio",
+    "weight_kg": 2.11,
+    "max_takeoff_weight_kg": 2.49,
+    "max_flight_time_min": 40,
+    "max_hover_time_min": 35,
+    "ip_rating": "IP55",
+    "max_speed_m_s": 20,
+    "max_gust_m_s": 12.8,
+    "compute": "NVIDIA Jetson Orin SoC + Qualcomm QRB5165/Snapdragon 865",
+    "obstacle_avoidance": "true 360\u00b0 visual",
+    "sensors": "VT300-L / VT300-Z / V100-L pods; FLIR Boson+ 640x512 radiometric thermal, 64MP narrow, 50MP wide or 48MP tele",
+    "battery": "156 Wh Li-ion polymer",
+    "link": "Connect SL 12 km / Connect 5G",
+    "gnss": "GPS+Galileo+GLONASS+BeiDou",
+    "max_attachment_payload_g": 385,
+    "ndaa_compliant": true
+  },
+  "notes": "US-made NDAA-compliant autonomy-first platform for DFR, inspection, defense. Onboard Jetson-class AI enables GPS-denied flight and night autonomy; dockable (Dock for X10).",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "VIO degradation in low-texture/low-light scenes",
+      "component": "visual navigation cameras",
+      "severity": 4,
+      "mtbf_hours_est": 700,
+      "symptoms": [
+        "position drift",
+        "autonomy disengage",
+        "erratic hold"
+      ],
+      "mitigation": "enable night autonomy attachments/IR illumination, avoid featureless surfaces up close, keep nav lenses clean"
+    },
+    {
+      "name": "Thermal throttling of Jetson Orin in hot climates",
+      "component": "onboard compute",
+      "severity": 3,
+      "mtbf_hours_est": 900,
+      "symptoms": [
+        "reduced OA performance",
+        "overtemp warnings",
+        "forced RTH"
+      ],
+      "mitigation": "limit ground idle time in sun, operate within -20 to 45\u00b0C envelope, keep vents unobstructed"
+    },
+    {
+      "name": "Battery connector/latch wear on dock cycles",
+      "component": "flight battery interface",
+      "severity": 3,
+      "mtbf_hours_est": 1200,
+      "symptoms": [
+        "boot failures",
+        "mid-mission power blips"
+      ],
+      "mitigation": "inspect latch and contacts on schedule, replace batteries showing connector wear, firmware health checks"
+    },
+    {
+      "name": "Prop damage from close-proximity inspection contact",
+      "component": "3-blade folding props",
+      "severity": 2,
+      "mtbf_hours_est": 500,
+      "symptoms": [
+        "vibration",
+        "audible tick",
+        "OA margin faults"
+      ],
+      "mitigation": "use standard OA margins where possible, pre/post-flight prop inspection, carry spares"
+    },
+    {
+      "name": "Radio link loss in RF-shielded industrial interiors",
+      "component": "Connect SL link",
+      "severity": 2,
+      "mtbf_hours_est": 600,
+      "symptoms": [
+        "controller disconnect",
+        "autonomous return behavior"
+      ],
+      "mitigation": "use 5G variant or plan lost-link behavior, stage repeaters, brief on lost-link contingencies"
+    }
+  ]
+}

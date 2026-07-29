@@ -1,0 +1,68 @@
+{
+  "slug": "rad_commercial",
+  "specs_json": {
+    "manufacturer": "Rad Power Bikes",
+    "category": "commercial/fleet utility eBike",
+    "weight_kg": 29.5,
+    "payload_kg": 145,
+    "battery_wh": 672,
+    "motor_power_w": 750,
+    "top_speed_kmh": 32,
+    "range_km": 72,
+    "ip_rating": "IP65 (est., battery/controller)",
+    "tire_type": "pneumatic 20x3.3-inch puncture-resistant",
+    "price_usd_est": 1800
+  },
+  "notes": "Rad Power's commercial fleet eBikes are based on the RadRunner utility platform: a 750 W geared rear-hub motor, 672 Wh (48 V, 14 Ah) removable battery, 180 mm mechanical disc brakes, and a 145 kg (320 lb) payload capacity on reinforced 12-gauge-spoke 20-inch wheels. Rad Fleet variants add telematics, heavy-duty racks, and swap-friendly shared battery packs, targeting delivery and last-mile logistics operators.",
+  "introduced_year": 2019,
+  "failure_modes": [
+    {
+      "name": "Battery pack capacity fade / cell degradation",
+      "component": "battery/BMS",
+      "severity": "high",
+      "mtbf_hours_est": 8000,
+      "symptoms": "Sharply reduced range, voltage sag under load, premature low-battery cutouts",
+      "mitigation": "Track cycle counts per pack, rotate packs across fleet, retire below 70% state-of-health"
+    },
+    {
+      "name": "Mechanical disc brake pad wear",
+      "component": "brakes",
+      "severity": "high",
+      "mtbf_hours_est": 1200,
+      "symptoms": "Grinding noise, reduced stopping power under cargo load, lever pull to grip",
+      "mitigation": "Pad inspection every 500 km in delivery duty, rotor replacement when below min thickness"
+    },
+    {
+      "name": "Chain/drivetrain stretch under cargo load",
+      "component": "drivetrain",
+      "severity": "medium",
+      "mtbf_hours_est": 2500,
+      "symptoms": "Chain skipping, drops, noisy tensioner, worn sprocket teeth",
+      "mitigation": "Chain wear gauge checks, lubrication schedule, replace chain and 16T sprocket as a set"
+    },
+    {
+      "name": "Controller/connector water ingress",
+      "component": "controller/wiring",
+      "severity": "high",
+      "mtbf_hours_est": 5000,
+      "symptoms": "Error codes, cutting out in rain, throttle/PAS dropouts",
+      "mitigation": "Dielectric grease, inspect underslung controller box seals, reroute or sleeve exposed harness sections"
+    },
+    {
+      "name": "GPS/fleet telematics unit failure",
+      "component": "IoT/telematics",
+      "severity": "medium",
+      "mtbf_hours_est": 6000,
+      "symptoms": "Bike missing from fleet dashboard, failed remote lock, stale location data",
+      "mitigation": "Watchdog reboot firmware, hardwire power feed check, swap telematics module"
+    },
+    {
+      "name": "Spoke fatigue / wheel out-of-true",
+      "component": "wheels/tires",
+      "severity": "medium",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Wobble at speed, broken spokes under heavy payload, brake rub",
+      "mitigation": "Tension-check 12-gauge spokes at service intervals, enforce payload limits, retrue or rebuild wheels"
+    }
+  ]
+}

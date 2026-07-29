@@ -1,0 +1,58 @@
+{
+  "slug": "asimov-here-be-dragons",
+  "specs_json": {
+    "manufacturer": "BlackCat Robotics (internal)",
+    "category": "experimental prototype",
+    "dof": 18,
+    "weight_kg": 42,
+    "payload_kg": 8,
+    "battery_wh": 1200,
+    "runtime_min": 75,
+    "top_speed_ms": 1.2,
+    "sensors": [
+      "prototype sensor fusion stack (TBD)",
+      "IMU",
+      "stereo cameras (dev kit)"
+    ],
+    "compute": "Dev-board compute stack (subject to change)",
+    "price_usd_est": null,
+    "confidence": "low",
+    "placeholder": true
+  },
+  "notes": "ASIMOV 'Here Be Dragons' is a fictional internal BlackCat Robotics prototype platform used for pipeline testing. All specs are placeholders with low confidence and do not correspond to any real hardware. Failure modes reflect generic early-prototype risks rather than field data.",
+  "introduced_year": 2026,
+  "failure_modes": [
+    {
+      "name": "Uncharacterized actuator firmware faults",
+      "component": "Prototype actuator controllers",
+      "severity": "critical",
+      "mtbf_hours_est": 100,
+      "symptoms": "Random joint lockups, unexplained torque spikes, watchdog resets during testing",
+      "mitigation": "Test only on stand/tether, log all CAN traffic, freeze firmware versions per test campaign"
+    },
+    {
+      "name": "Wiring harness chafing",
+      "component": "Prototype cable harness",
+      "severity": "high",
+      "mtbf_hours_est": 200,
+      "symptoms": "Intermittent sensor dropouts, shorts after repeated joint cycling, error bursts correlated with pose",
+      "mitigation": "Add strain relief and abrasion sleeving, inspect harness after every 10 test hours"
+    },
+    {
+      "name": "Thermal runaway risk in unvalidated battery pack",
+      "component": "Custom 1200 Wh battery prototype",
+      "severity": "critical",
+      "mtbf_hours_est": 150,
+      "symptoms": "Cell temperature excursions, pack swelling, BMS overtemp alarms under load",
+      "mitigation": "Charge/test in fire-safe enclosure, conservative BMS limits, never leave charging unattended"
+    },
+    {
+      "name": "Sensor fusion stack divergence",
+      "component": "Prototype state estimator software",
+      "severity": "medium",
+      "mtbf_hours_est": 50,
+      "symptoms": "Pose estimate drift, controller instability, sudden balance corrections without cause",
+      "mitigation": "Gate autonomy behind estimator health checks, run shadow-mode validation before closed-loop use"
+    }
+  ]
+}

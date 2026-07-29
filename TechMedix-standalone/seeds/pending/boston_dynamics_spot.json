@@ -1,0 +1,74 @@
+{
+  "slug": "boston_dynamics_spot",
+  "specs_json": {
+    "manufacturer": "Boston Dynamics",
+    "category": "quadruped",
+    "dof": 12,
+    "weight_kg": 32.7,
+    "payload_kg": 14,
+    "battery_wh": 605,
+    "runtime_min": 90,
+    "top_speed_ms": 1.6,
+    "sensors": [
+      "5x stereo depth cameras (360\u00b0 perception)",
+      "IMU",
+      "joint position/force sensors",
+      "optional Spot CAM pan-tilt-zoom",
+      "optional lidar payload"
+    ],
+    "compute": "Dual onboard PCs; optional Spot CORE / CORE I/O (NVIDIA Jetson) payload compute",
+    "price_usd_est": 74500
+  },
+  "notes": "Boston Dynamics Spot is the industry-reference agile quadruped for industrial inspection, gauge reading, and thermal/acoustic anomaly detection. It carries up to 14 kg of payloads on standardized rails, runs ~90 minutes per hot-swappable 605 Wh battery, and is IP54-rated for wet industrial environments.",
+  "introduced_year": 2019,
+  "failure_modes": [
+    {
+      "name": "Hip actuator seal degradation",
+      "component": "leg actuator (hip abduction)",
+      "severity": "high",
+      "mtbf_hours_est": 4000,
+      "symptoms": "Grinding noise, elevated joint temperature, gait asymmetry warnings in service logs",
+      "mitigation": "Follow BD annual service intervals; monitor joint torque residuals; replace actuator module at wear threshold"
+    },
+    {
+      "name": "Battery pack capacity fade",
+      "component": "605 Wh Li-ion battery",
+      "severity": "medium",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Runtime drops below 60 min, unexpected low-battery sit-downs mid-mission",
+      "mitigation": "Rotate battery fleet, keep charge between 20-80% in storage, retire packs below 80% state-of-health"
+    },
+    {
+      "name": "Stereo camera condensation/occlusion",
+      "component": "perception cameras",
+      "severity": "medium",
+      "mtbf_hours_est": 3000,
+      "symptoms": "Degraded obstacle avoidance, stumbling on stairs, 'perception degraded' faults in Autowalk",
+      "mitigation": "Clean lens covers each mission, use anti-fog inserts in humid sites, verify camera health check pre-mission"
+    },
+    {
+      "name": "Knee output gearbox wear",
+      "component": "knee transmission",
+      "severity": "high",
+      "mtbf_hours_est": 5000,
+      "symptoms": "Backlash growth, position tracking error, audible clicking under load",
+      "mitigation": "Track cumulative distance/load duty; schedule gearbox inspection at 4000 h or per BD service bulletin"
+    },
+    {
+      "name": "Payload port connector corrosion",
+      "component": "DB25/payload electrical ports",
+      "severity": "low",
+      "mtbf_hours_est": 6000,
+      "symptoms": "Intermittent payload dropouts, comms errors to Spot CAM/CORE",
+      "mitigation": "Keep port caps installed when unused, apply dielectric grease, inspect after washdown"
+    },
+    {
+      "name": "Fall-induced structural damage",
+      "component": "chassis/leg linkages",
+      "severity": "critical",
+      "mtbf_hours_est": 8000,
+      "symptoms": "Post-fall calibration failure, bent linkages, self-right failures",
+      "mitigation": "Restrict autonomous ops near unguarded edges, enable stair mode, full inspection and recalibration after any fall"
+    }
+  ]
+}

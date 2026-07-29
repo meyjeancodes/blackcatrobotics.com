@@ -1,0 +1,88 @@
+{
+  "slug": "starship_gen3",
+  "specs_json": {
+    "type": "sidewalk_delivery_robot",
+    "manufacturer": "Starship Technologies",
+    "weight_kg": 35,
+    "payload_kg": 10,
+    "battery_wh": 1260,
+    "endurance_h": 12,
+    "drive": "6-wheel electric, curb-climbing",
+    "speed_kph_max": 6,
+    "sensors": "cameras + ultrasonic + radar + GNSS, ML-based perception",
+    "autonomy_level": "L4 sidewalk within service areas, remote oversight",
+    "cargo_bay": "lockable, insulated",
+    "operating": "rain/snow capable, day/night"
+  },
+  "notes": "Gen 3 of world's largest sidewalk delivery fleet (millions of deliveries, campuses and grocery). Larger 1260 Wh pack gives ~12 h operation; wireless charging pads on newer deployments.",
+  "introduced_year": 2022,
+  "failure_modes": [
+    {
+      "name": "Wheel motor/hub failure from curb impacts",
+      "component": "6x wheel drive units",
+      "severity": 3,
+      "mtbf_hours_est": 1500,
+      "symptoms": [
+        "drive fault codes",
+        "pulling to one side",
+        "stall on curb climb"
+      ],
+      "mitigation": "curb-climb force monitoring, scheduled hub replacement, route grading to avoid hostile curbs"
+    },
+    {
+      "name": "Battery capacity fade under daily deep-cycling",
+      "component": "1260 Wh Li-ion pack",
+      "severity": 3,
+      "mtbf_hours_est": 4000,
+      "symptoms": [
+        "shrinking service window",
+        "low-voltage returns"
+      ],
+      "mitigation": "opportunity charging between jobs, SoC window limits (20-90%), fleet battery health telemetry"
+    },
+    {
+      "name": "Camera/sensor occlusion from rain, mud, snow spray",
+      "component": "perception suite",
+      "severity": 4,
+      "mtbf_hours_est": 600,
+      "symptoms": [
+        "remote-operator takeover rate spike",
+        "hesitation/stops"
+      ],
+      "mitigation": "hydrophobic coatings, operator-assist fallback, cleaning at hub each cycle"
+    },
+    {
+      "name": "GNSS urban-canyon drift causing localization error",
+      "component": "localization (GNSS+vision)",
+      "severity": 3,
+      "mtbf_hours_est": 800,
+      "symptoms": [
+        "map mismatch",
+        "wrong-side sidewalk travel"
+      ],
+      "mitigation": "vision-map matching priority in canyons, geofence review, remote op confirmation at crossings"
+    },
+    {
+      "name": "Lid lock actuator failure",
+      "component": "cargo bay locking mechanism",
+      "severity": 2,
+      "mtbf_hours_est": 2500,
+      "symptoms": [
+        "customer cannot open bay",
+        "lock jam alerts"
+      ],
+      "mitigation": "lock cycle testing at depot, remote unlock fallback, actuator replacement schedule"
+    },
+    {
+      "name": "Vandalism/theft attempts",
+      "component": "chassis & alarms",
+      "severity": 2,
+      "mtbf_hours_est": 2000,
+      "symptoms": [
+        "tilt/lift alarms",
+        "comms from unusual location"
+      ],
+      "mitigation": "audible alarm + tracking, remote operator engagement, community reporting and geofenced no-go zones"
+    }
+  ]
+}

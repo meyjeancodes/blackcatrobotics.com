@@ -1,0 +1,74 @@
+{
+  "slug": "dji-agras-t60",
+  "specs_json": {
+    "manufacturer": "DJI",
+    "category": "agricultural spray/spread drone",
+    "weight_kg": 60.0,
+    "payload_kg": 50.0,
+    "battery_wh": 2130,
+    "runtime_min": 15,
+    "top_speed_ms": 13.8,
+    "sensors": [
+      "phased-array radar",
+      "binocular vision",
+      "RTK GNSS",
+      "FPV camera"
+    ],
+    "compute": "DJI proprietary flight controller",
+    "ip_rating": "IPX6K (core components)",
+    "price_usd_est": 28000,
+    "range_km": 2.0
+  },
+  "notes": "Successor to the T50 with larger tank (~55-60 L spray) and up to ~60 kg spreading payload, primarily released for the China/Asia agricultural market. Retains coaxial rotor layout, radar+vision fusion, and rapid-swap high-capacity batteries. Some specs are region-specific and not fully published in English; figures here are best estimates.",
+  "introduced_year": 2024,
+  "failure_modes": [
+    {
+      "name": "Spray line blockage",
+      "component": "spray plumbing/nozzles",
+      "severity": "medium",
+      "mtbf_hours_est": 300,
+      "symptoms": "Flow anomaly alerts, streaking in coverage maps",
+      "mitigation": "Post-job flushing, inline filters, scheduled nozzle replacement"
+    },
+    {
+      "name": "ESC failure under high payload takeoff",
+      "component": "propulsion (ESC)",
+      "severity": "critical",
+      "mtbf_hours_est": 1800,
+      "symptoms": "Sudden motor loss, asymmetric thrust, emergency landing",
+      "mitigation": "Respect altitude-derated payload limits; monitor ESC temps; firmware updates"
+    },
+    {
+      "name": "RTK base link dropout",
+      "component": "RTK datalink",
+      "severity": "medium",
+      "mtbf_hours_est": 700,
+      "symptoms": "Position accuracy degradation, paused missions",
+      "mitigation": "Relocate base station; use NTRIP network RTK fallback"
+    },
+    {
+      "name": "Radar terrain-follow error over dense crops",
+      "component": "terrain-follow radar",
+      "severity": "high",
+      "mtbf_hours_est": 1200,
+      "symptoms": "Altitude oscillation, occasional crop strikes",
+      "mitigation": "Set conservative follow height; calibrate radar; avoid extreme slope missions"
+    },
+    {
+      "name": "Battery swell from fast-charge heat cycling",
+      "component": "intelligent flight battery",
+      "severity": "high",
+      "mtbf_hours_est": 900,
+      "symptoms": "Reduced capacity, swelling, charge faults",
+      "mitigation": "Charge at 15-45\u00b0C cell temp, use DJI inverter-generator profiles, retire swollen packs"
+    },
+    {
+      "name": "Spreader disc motor jam",
+      "component": "spreading system",
+      "severity": "low",
+      "mtbf_hours_est": 500,
+      "symptoms": "Uneven granule distribution, spreader current alarms",
+      "mitigation": "Clean hopper and discs after use; keep granules dry"
+    }
+  ]
+}

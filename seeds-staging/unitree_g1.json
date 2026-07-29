@@ -1,0 +1,66 @@
+{
+  "slug": "unitree_g1",
+  "specs_json": {
+    "manufacturer": "Unitree Robotics",
+    "category": "humanoid",
+    "dof": 23,
+    "weight_kg": 35,
+    "payload_kg": 3,
+    "battery_wh": 900,
+    "runtime_min": 120,
+    "top_speed_ms": 2.0,
+    "sensors": [
+      "3D lidar (Livox Mid-360)",
+      "Intel RealSense D435i depth camera",
+      "IMU",
+      "joint encoders/torque sensors",
+      "optional force-feedback dexterous hands"
+    ],
+    "compute": "8-core high-performance CPU; optional NVIDIA Jetson Orin (EDU version)",
+    "price_usd_est": 16000
+  },
+  "notes": "The Unitree G1 is a compact 23-DOF (up to 43 DOF with dexterous hands) humanoid launched in 2024 at a disruptive ~$16k base price. It weighs ~35 kg, folds for transport, and uses a ~9000 mAh (~900 Wh-class) quick-release battery. Aimed at research and development, it features hollow-joint wiring, imitation/reinforcement learning support, and optional Jetson Orin compute.",
+  "introduced_year": 2024,
+  "failure_modes": [
+    {
+      "name": "Knee/hip joint motor overheating during dynamic gaits",
+      "component": "Leg joint motors",
+      "severity": "high",
+      "mtbf_hours_est": 1200,
+      "symptoms": "Thermal derating mid-walk, sudden stiffness loss, controller thermal fault codes, robot falls",
+      "mitigation": "Enforce duty-cycle limits on running/jumping demos; monitor joint temps; add cooling rest intervals"
+    },
+    {
+      "name": "Fall-induced structural damage",
+      "component": "Torso shell / arm linkages",
+      "severity": "critical",
+      "mtbf_hours_est": 800,
+      "symptoms": "Cracked covers, bent arm links, misaligned joints after balance-loss falls during RL policy testing",
+      "mitigation": "Use gantry/tether during policy development, enable damping fall-protection mode, inspect after every fall"
+    },
+    {
+      "name": "Waist actuator encoder drift",
+      "component": "Waist yaw actuator encoder",
+      "severity": "medium",
+      "mtbf_hours_est": 2500,
+      "symptoms": "Torso orientation offset, degraded balance, calibration errors at boot",
+      "mitigation": "Re-run factory zero-calibration routine; replace encoder if drift recurs; avoid impact loads on torso"
+    },
+    {
+      "name": "Quick-release battery connector wear",
+      "component": "Battery interface connector",
+      "severity": "medium",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Intermittent power loss, brownout reboots during high-current motion, connector heat discoloration",
+      "mitigation": "Inspect/clean contacts, limit swap cycles per connector spec, replace connector assembly proactively"
+    },
+    {
+      "name": "Dexterous hand tendon/gear failure",
+      "component": "Dex3-1 hand fingers",
+      "severity": "low",
+      "mtbf_hours_est": 600,
+      "symptoms": "Finger fails to close fully, grip force drops, grinding in finger joints",
+      "mitigation": "Limit grasp force in software, avoid overload objects, keep spare finger modules"
+    }
+  ]
+}

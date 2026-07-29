@@ -1,0 +1,74 @@
+{
+  "slug": "unitree_g1",
+  "specs_json": {
+    "manufacturer": "Unitree Robotics",
+    "category": "humanoid",
+    "dof": 23,
+    "weight_kg": 35,
+    "payload_kg": 3,
+    "battery_wh": 900,
+    "runtime_min": 120,
+    "top_speed_ms": 2.0,
+    "sensors": [
+      "Livox MID-360 3D lidar",
+      "Intel RealSense D435i depth camera",
+      "IMU",
+      "dual joint encoders",
+      "optional Dex3-1 force-controlled hands"
+    ],
+    "compute": "8-core high-performance CPU; EDU version adds NVIDIA Jetson Orin NX (100 TOPS)",
+    "price_usd_est": 16000
+  },
+  "notes": "The Unitree G1 is a compact ~1.3 m humanoid aimed at research and light manipulation, notable for its low $16k entry price. It offers 23-43 DOF depending on configuration, a quick-release 9,000 mAh battery giving ~2 h runtime, and knee torque up to 90 N\u00b7m via Unitree's low-inertia joint motors.",
+  "introduced_year": 2024,
+  "failure_modes": [
+    {
+      "name": "Knee joint motor overheating",
+      "component": "knee actuator (M-series joint motor)",
+      "severity": "high",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Thermal derating warnings, reduced walking speed, joint temperature alarms during sustained locomotion",
+      "mitigation": "Limit continuous walk duty cycles, ensure ventilation paths clear, firmware thermal limits kept enabled"
+    },
+    {
+      "name": "Ankle actuator backlash growth",
+      "component": "ankle pitch/roll actuators",
+      "severity": "medium",
+      "mtbf_hours_est": 2500,
+      "symptoms": "Standing sway, balance controller oscillation, foot slap on heel strike",
+      "mitigation": "Periodic joint calibration via Unitree app, replace actuator when encoder residuals exceed spec"
+    },
+    {
+      "name": "Battery quick-release connector wear",
+      "component": "quick-swap battery interface",
+      "severity": "medium",
+      "mtbf_hours_est": 1800,
+      "symptoms": "Intermittent power loss on impact, brownouts during high-torque moves",
+      "mitigation": "Inspect latch and contacts each swap, avoid hot-swapping under load, replace connector housing at wear"
+    },
+    {
+      "name": "Dexterous hand tendon/gear failure",
+      "component": "Dex3-1 hand fingers",
+      "severity": "low",
+      "mtbf_hours_est": 1200,
+      "symptoms": "Finger position drift, grip force loss, stalled finger joints",
+      "mitigation": "Cap grip force in software, avoid impacts on fingertips, keep spare finger modules"
+    },
+    {
+      "name": "MID-360 lidar mount vibration fatigue",
+      "component": "head lidar assembly",
+      "severity": "medium",
+      "mtbf_hours_est": 4000,
+      "symptoms": "Point cloud misregistration, SLAM drift after falls or long runtime",
+      "mitigation": "Check mount torque after any fall, re-run extrinsic calibration monthly"
+    },
+    {
+      "name": "Fall damage to torso shell and hip harness",
+      "component": "chassis/wiring harness",
+      "severity": "critical",
+      "mtbf_hours_est": 1000,
+      "symptoms": "Post-fall joint comm errors (CAN timeouts), cracked covers, hip encoder faults",
+      "mitigation": "Operate with gantry/spotter during RL policy testing, full harness inspection after falls"
+    }
+  ]
+}

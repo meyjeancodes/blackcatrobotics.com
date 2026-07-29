@@ -1,0 +1,62 @@
+{
+  "slug": "bird_three",
+  "name": "Bird Three",
+  "manufacturer": "Bird Rides, Inc.",
+  "category": "shared_escooter",
+  "introduced_year": 2021,
+  "notes": "Bird's flagship shared scooter (2021): IP68-rated sealed battery enclosure, up to ~1 kWh battery (largest in shared micromobility at launch), dual independent drum brakes plus regen, autonomous emergency braking sensors.",
+  "specs_json": {
+    "motor_power_w": 300,
+    "top_speed_kmh": 25,
+    "range_km": 60,
+    "ip_rating": "IP68",
+    "tire_type": "pneumatic (semi-solid option), 12 in front",
+    "battery_wh": 1000,
+    "brakes": "dual drum + regenerative",
+    "weight_kg": 30
+  },
+  "failure_modes": [
+    {
+      "name": "BMS/cell fault",
+      "component": "battery",
+      "severity": "high",
+      "symptom": "Pack imbalance or BMS lockout; scooter reports low SoC or shuts down under load",
+      "mitigation": "Periodic pack diagnostics, cell-balance check, replace packs failing capacity threshold"
+    },
+    {
+      "name": "Brake wear",
+      "component": "brakes",
+      "severity": "high",
+      "symptom": "Increased stopping distance, grinding or loose lever feel",
+      "mitigation": "Scheduled brake inspection/adjustment per service interval; replace pads/shoes/cables"
+    },
+    {
+      "name": "IoT/GPS dropout",
+      "component": "telematics",
+      "severity": "medium",
+      "symptom": "Vehicle goes offline, stale GPS fix, cannot be located/unlocked via app",
+      "mitigation": "Firmware watchdog reboot, antenna inspection, swap IoT module if repeated dropouts"
+    },
+    {
+      "name": "Connector corrosion",
+      "component": "electrical",
+      "severity": "medium",
+      "symptom": "Intermittent power loss, throttle/display faults after rain or washdown",
+      "mitigation": "Dielectric grease on connectors, inspect seals, replace corroded harness plugs"
+    },
+    {
+      "name": "Vandalism",
+      "component": "chassis",
+      "severity": "medium",
+      "symptom": "Broken display, cut brake lines, spray paint, forced lock or thrown in water",
+      "mitigation": "Geofence alerts, tamper sensors, rapid retrieval workflow, hardened fasteners"
+    },
+    {
+      "name": "Tire wear",
+      "component": "tires",
+      "severity": "low",
+      "symptom": "Reduced traction, flats or flat spots, vibration at speed",
+      "mitigation": "Tread/pressure checks each service cycle; replace tires past wear limit"
+    }
+  ]
+}

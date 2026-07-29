@@ -1,0 +1,95 @@
+{
+  "slug": "dji_matrice_350",
+  "specs_json": {
+    "type": "enterprise_inspection_drone",
+    "manufacturer": "DJI",
+    "max_flight_time_min": 55,
+    "ip_rating": "IP55",
+    "transmission": "O3 Enterprise, 20 km (FCC)",
+    "max_takeoff_weight_kg": 9.2,
+    "max_payload_kg": 2.7,
+    "weight_with_batteries_kg": 6.47,
+    "batteries": "dual TB65 hot-swappable, up to 400 cycles",
+    "service_ceiling_m": 7000,
+    "wind_resistance_m_s": 12,
+    "operating_temp_c": "-20 to 50",
+    "payloads": [
+      "Zenmuse H20/H20T/H20N",
+      "H30 series",
+      "P1",
+      "L1/L2"
+    ],
+    "positioning": "GPS+GLONASS+BeiDou+Galileo, RTK"
+  },
+  "notes": "Workhorse enterprise platform (successor to M300 RTK) for utility inspection, public safety, surveying. Hot-swap dual batteries, 6-directional sensing + CSM radar option, night-vision FPV.",
+  "introduced_year": 2023,
+  "failure_modes": [
+    {
+      "name": "TB65 battery cycle-life degradation",
+      "component": "dual TB65 batteries",
+      "severity": 3,
+      "mtbf_hours_est": 400,
+      "symptoms": [
+        "flight time shrinkage",
+        "cell imbalance warnings"
+      ],
+      "mitigation": "track cycles in DJI Pilot 2, retire near 400 cycles, store at ~50% charge"
+    },
+    {
+      "name": "Gimbal/payload connector wear from frequent swaps",
+      "component": "payload interface (DGC 2.0)",
+      "severity": 3,
+      "mtbf_hours_est": 1000,
+      "symptoms": [
+        "payload not recognized",
+        "video feed dropout"
+      ],
+      "mitigation": "inspect and clean connector pins, avoid hot-swapping payloads with power on"
+    },
+    {
+      "name": "O3 transmission dropout in RF-dense urban areas",
+      "component": "O3 Enterprise link",
+      "severity": 2,
+      "mtbf_hours_est": 600,
+      "symptoms": [
+        "video lag",
+        "RC signal lost, RTH triggered"
+      ],
+      "mitigation": "pre-plan RTH altitude, use dual operator/4G dongle where legal, survey RF environment"
+    },
+    {
+      "name": "IMU/compass interference near steel structures",
+      "component": "navigation sensors",
+      "severity": 4,
+      "mtbf_hours_est": 900,
+      "symptoms": [
+        "compass error on takeoff",
+        "toilet-bowl drift"
+      ],
+      "mitigation": "calibrate away from rebar/vehicles, rely on RTK heading, maintain standoff from transmission towers"
+    },
+    {
+      "name": "Motor bearing wear in dusty/wet ops despite IP55",
+      "component": "propulsion",
+      "severity": 4,
+      "mtbf_hours_est": 1800,
+      "symptoms": [
+        "abnormal motor noise",
+        "vibration warnings in logs"
+      ],
+      "mitigation": "post-flight cleaning, scheduled motor replacement per DJI maintenance program tiers"
+    },
+    {
+      "name": "Ice accretion on props in cold-humid inspections",
+      "component": "propellers",
+      "severity": 5,
+      "mtbf_hours_est": 2500,
+      "symptoms": [
+        "rapid lift loss",
+        "current spike",
+        "altitude sag"
+      ],
+      "mitigation": "avoid visible moisture below 0\u00b0C, monitor for prop icing warnings, land immediately on symptoms"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "slug": "dji-agras-t60",
+  "specs_json": {
+    "type": "agricultural_spray_drone",
+    "manufacturer": "DJI",
+    "market": "China (initial release)",
+    "spray_payload_kg": 50,
+    "spread_payload_kg": 60,
+    "spray_tank_l": 50,
+    "max_spray_rate_l_min": 18,
+    "max_spread_rate_kg_min": 190,
+    "battery": "~41 Ah class intelligent flight battery, fast-charge",
+    "radar": "phased-array radar + binocular vision",
+    "mapping": "integrated mapping/survey capability",
+    "transmission": "O3 Agras enhanced"
+  },
+  "notes": "China-market successor to T50 with ~25% higher spray payload (50 kg) and much faster spreading (up to 190 kg/min). Adds combined spray/spread/mapping workflows. Global availability limited.",
+  "introduced_year": 2024,
+  "failure_modes": [
+    {
+      "name": "Spreader impeller wear / jam with granular fertilizer",
+      "component": "spreading system",
+      "severity": 3,
+      "mtbf_hours_est": 250,
+      "symptoms": [
+        "spread rate drop",
+        "motor current spike",
+        "uneven distribution"
+      ],
+      "mitigation": "clean spreader after each load, avoid caked/wet granules, replace impeller per wear schedule"
+    },
+    {
+      "name": "High-rate pump seal failure",
+      "component": "spray pumps (18 L/min)",
+      "severity": 3,
+      "mtbf_hours_est": 400,
+      "symptoms": [
+        "flow alarm",
+        "chemical leak at pump body",
+        "pressure drop"
+      ],
+      "mitigation": "run pumps only with fluid, replace seals proactively, avoid abrasive suspensions"
+    },
+    {
+      "name": "Battery thermal stress from ultra-fast charging",
+      "component": "intelligent flight battery",
+      "severity": 4,
+      "mtbf_hours_est": 350,
+      "symptoms": [
+        "shortened cycle life",
+        "charge termination faults",
+        "overtemp lockout"
+      ],
+      "mitigation": "use OEM cooling charge cabinet, rotate multiple packs, avoid charging immediately after high-load flight"
+    },
+    {
+      "name": "Structural fatigue at arm joints under 100kg-class TOW",
+      "component": "folding arm assemblies",
+      "severity": 5,
+      "mtbf_hours_est": 1500,
+      "symptoms": [
+        "cracks at hinge",
+        "vibration increase",
+        "fold-lock play"
+      ],
+      "mitigation": "inspect arm locks before each session, torque-check fasteners, retire arms after hard landings"
+    },
+    {
+      "name": "Downwash-induced radar/vision misreads in dusty spreading",
+      "component": "perception suite",
+      "severity": 2,
+      "mtbf_hours_est": 800,
+      "symptoms": [
+        "phantom obstacles",
+        "terrain-follow oscillation"
+      ],
+      "mitigation": "clean sensor windows, raise operating altitude in dusty conditions, recalibrate vision periodically"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "slug": "unitree-h1-2",
+  "specs_json": {
+    "manufacturer": "Unitree Robotics",
+    "category": "humanoid",
+    "dof": 27,
+    "weight_kg": 70,
+    "payload_kg": 7,
+    "battery_wh": 864,
+    "runtime_min": 90,
+    "top_speed_ms": 3.3,
+    "sensors": [
+      "Livox MID-360 3D lidar",
+      "Intel RealSense depth camera",
+      "IMU",
+      "joint encoders on 27 M107 motors",
+      "optional dexterous hands"
+    ],
+    "compute": "3x onboard PCs: i5-1235U motion control + dual i7-1255U/1265U development units",
+    "price_usd_est": 119000
+  },
+  "notes": "The Unitree H1-2 is a full-size (~1.78 m, ~70 kg) research humanoid upgrading the H1 with 7-DOF arms and 6-DOF legs for 27 total DOF, driven by Unitree M107 joint motors delivering up to 360 N\u00b7m. It uses a dual 15 Ah (864 Wh) quick-swap battery system and triple Intel onboard computers, targeting locomotion and manipulation research at roughly $119k.",
+  "introduced_year": 2024,
+  "failure_modes": [
+    {
+      "name": "M107 joint motor winding overheating",
+      "component": "hip/knee M107 actuators",
+      "severity": "high",
+      "mtbf_hours_est": 2500,
+      "symptoms": "Thermal throttling during dynamic walking, torque fade, over-temp fault codes on high-load joints",
+      "mitigation": "Limit sustained high-speed locomotion, monitor per-joint temps via SDK, allow cool-down cycles"
+    },
+    {
+      "name": "Ankle roll actuator fatigue",
+      "component": "6-DOF leg ankle assembly",
+      "severity": "medium",
+      "mtbf_hours_est": 2000,
+      "symptoms": "Lateral balance oscillation, increased ZMP error, clicking at ankle under load",
+      "mitigation": "Recalibrate ankle joints regularly, inspect linkage bolts after falls, restrict aggressive lateral maneuvers"
+    },
+    {
+      "name": "Dual-battery contactor/imbalance fault",
+      "component": "dual 15 Ah battery system (67.2 V)",
+      "severity": "medium",
+      "mtbf_hours_est": 1500,
+      "symptoms": "Asymmetric pack discharge, unexpected shutdown at ~30% indicated charge",
+      "mitigation": "Swap packs as matched pairs, balance-charge both packs together, replace mismatched pairs"
+    },
+    {
+      "name": "7-DOF arm wrist actuator backlash",
+      "component": "wrist pitch/yaw joints",
+      "severity": "low",
+      "mtbf_hours_est": 3000,
+      "symptoms": "End-effector position drift, teleoperation imprecision, encoder residual growth",
+      "mitigation": "Cap wrist payload/moment, run joint backlash check monthly, replace wrist module when out of spec"
+    },
+    {
+      "name": "Fall-induced torso structural/harness damage",
+      "component": "torso frame and CAN/EtherCAT harness",
+      "severity": "critical",
+      "mtbf_hours_est": 800,
+      "symptoms": "Post-fall joint communication timeouts, multiple-joint dropout, frame cracks near waist joint",
+      "mitigation": "Use overhead gantry during controller development, full harness and frame inspection after any fall"
+    },
+    {
+      "name": "MID-360 lidar SLAM drift from mount loosening",
+      "component": "head lidar",
+      "severity": "medium",
+      "mtbf_hours_est": 4000,
+      "symptoms": "Localization drift, map doubling, degraded obstacle detection",
+      "mitigation": "Torque-check head mount after transport, re-run extrinsic calibration after impacts"
+    }
+  ]
+}
