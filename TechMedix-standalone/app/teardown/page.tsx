@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { UrdfRobotViewer } from '@/components/urdf-robot-viewer';
+import { URDF_PART_MAPPINGS } from '@/lib/platforms/urdf-part-mapping';
+
+const H1_MESH_MAP = URDF_PART_MAPPINGS['unitree-h1'] ?? {};
 
 /**
  * Live 3D teardown of the Unitree H1 — scroll-driven.
@@ -121,7 +124,6 @@ export default function TeardownPage() {
   const stageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let raf = 0;
     const onScroll = () => {
       const el = stageRef.current;
       if (!el) return;
@@ -148,8 +150,8 @@ export default function TeardownPage() {
     return () => clearInterval(t);
   }, []);
 
-  // Map scroll → continuous Y rotation (one full turn across the band)
-  const rotation = progress * Math.PI * 2;
+  // Map scroll → effective selection phase (no rotation)
+  const rotation = 0;
 
   return (
     <main className="td-root">
@@ -175,43 +177,12 @@ export default function TeardownPage() {
               urdfPath="/robots/unitree-h1/h1.urdf"
               label="Unitree H1 · Official URDF"
               height="h-full"
-              selectedPartId={null}
-              meshToComponentMap={{}}
-              scrollRotation={rotation}
+              selectedPartIds={active.parts}
+              meshToComponentMap={H1_MESH_MAP}
               hiddenPartIds={[]}
+              exploded={false}
+              explodeAmount={progress}
             />
-            {/* TEMP DEBUG HUD — remove after fix */}
-            {dbg && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 12,
-                  right: 12,
-                  zIndex: 50,
-                  background: 'rgba(0,0,0,0.7)',
-                  border: '1px solid #444',
-                  borderRadius: 8,
-                  padding: '8px 12px',
-                  fontFamily: 'ui-monospace, monospace',
-                  fontSize: 11,
-                  color: '#9fe6a0',
-                  maxWidth: 240,
-                  lineHeight: 1.5,
-                  pointerEvents: 'none',
-                }}
-              >
-                <div>URDF: {dbg.loaded ? 'LOADED' : 'FAILED'}</div>
-                {dbg.error && <div style={{ color: '#ff6b6b' }}>err: {dbg.error}</div>}
-                {dbg.loaded && (
-                  <>
-                    <div>meshes: {dbg.meshCount}</div>
-                    <div>
-                      box: {dbg.box?.x} × {dbg.box?.y} × {dbg.box?.z}
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
             {/* SVG scan line + halo overlay */}
             <div className={`td-scan ${active.parts.length ? 'on' : ''}`} />
             <div className="td-rail">
@@ -274,8 +245,8 @@ export default function TeardownPage() {
 
       <style jsx>{`
         .td-root {
-          background: #0d0d12;
-          color: #f2f2f5;
+          background: #ffffff;
+          color: #1a1a22;
           font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
           min-height: 100vh;
         }
@@ -314,7 +285,7 @@ export default function TeardownPage() {
         }
         .td-sub {
           max-width: 620px;
-          color: #9a9aa8;
+          color: #4a4a58;
           font-size: 15px;
           line-height: 1.6;
           margin: 0 auto;
@@ -369,7 +340,7 @@ export default function TeardownPage() {
           top: 18vh;
           height: 64vh;
           width: 3px;
-          background: rgba(255, 255, 255, 0.08);
+          background: rgba(255, 255, 255, 0.8);
           border-radius: 3px;
           pointer-events: none;
         }
@@ -386,18 +357,18 @@ export default function TeardownPage() {
           bottom: 12vh;
           width: 340px;
           max-width: calc(100vw - 96px);
-          background: #fff;
+          background: #ffffff;
           color: #1a1a22;
           border-radius: 18px;
           padding: 20px 22px;
           border-left: 4px solid #ff6b35;
-          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
           transition: opacity 0.4s, border-color 0.4s;
           z-index: 5;
         }
         .td-callout.sev-HIGH {
           border-color: #ff3b1f;
-          box-shadow: 0 0 28px rgba(255, 59, 31, 0.3), 0 16px 48px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 0 28px rgba(255, 59, 31, 0.3), 0 16px 48px rgba(0, 0, 0, 0.25);
         }
         .td-callout.sev-MED {
           border-color: #c8a96e;
@@ -454,7 +425,7 @@ export default function TeardownPage() {
         }
         .td-phase {
           font-size: 13px;
-          color: #b8b8c4;
+          color: #6a6a7a;
           letter-spacing: 0.04em;
           margin-top: 2px;
         }
@@ -474,14 +445,14 @@ export default function TeardownPage() {
         }
         .td-outro p {
           max-width: 560px;
-          color: #9a9aa8;
+          color: #4a4a58;
           line-height: 1.6;
           margin: 0 0 28px;
         }
         .td-cta {
           display: inline-block;
           background: #ff6b35;
-          color: #fff;
+          color: #ffffff;
           text-decoration: none;
           font-weight: 600;
           font-size: 14px;
@@ -498,9 +469,6 @@ export default function TeardownPage() {
             right: 14px;
             width: auto;
             bottom: 8vh;
-          }
-          .td-rail {
-            right: 14px;
           }
         }
       `}</style>

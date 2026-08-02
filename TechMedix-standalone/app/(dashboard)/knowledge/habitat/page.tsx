@@ -169,8 +169,8 @@ export default function KnowledgeHabitatPage() {
             Why This Matters for TechMedix
           </h2>
           <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-2xl">
-            When every home is a smart autonomous system, the technician's job changes
-            from reactive repair to proactive optimization. Here's how HABITAT connects
+            When every home is a smart autonomous system, the technician&apos;s job changes
+            from reactive repair to proactive optimization. Here&apos;s how HABITAT connects
             to the TechMedix platform:
           </p>
         </div>

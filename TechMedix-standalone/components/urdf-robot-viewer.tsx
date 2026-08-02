@@ -29,40 +29,45 @@ function UrdfLoadingShell() {
 // ─── Wrapper that dynamically switches between URDF and fallback ──────────────
 
 interface Props {
- urdfPath: string;
- label?: string;
- height?: string;
- selectedPartId?: string | null;
- exploded?: boolean;
- wireframe?: boolean;
- hiddenPartIds?: string[];
- onPartClick?: (partName: string) => void;
- /** Maps URDF mesh names → parts-catalog component IDs */
- meshToComponentMap?: Record<string, string>;
- /** Continuous Y rotation in radians (driven by scroll for the teardown band) */
- scrollRotation?: number;
+  urdfPath: string;
+  label?: string;
+  height?: string;
+  selectedPartId?: string | null;
+  selectedPartIds?: string[];
+  exploded?: boolean;
+  explodeAmount?: number;
+  wireframe?: boolean;
+  hiddenPartIds?: string[];
+  onPartClick?: (partName: string) => void;
+  meshToComponentMap?: Record<string, string>;
+  scrollRotation?: number;
 }
 
-export function UrdfRobotViewer({ urdfPath, label, height, selectedPartId, exploded = false, wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap, scrollRotation }: Props) {
- const [error, setError] = useState<string | null>(null);
+export function UrdfRobotViewer({
+  urdfPath, label, height, selectedPartId, selectedPartIds, exploded = false, explodeAmount = 0,
+  wireframe, hiddenPartIds = [], onPartClick, meshToComponentMap, scrollRotation = 0
+}: Props) {
+  const [error, setError] = useState<string | null>(null);
 
- return (
- <div className={height ?? 'h-[420px]'}>
- <UrdfViewerInner
- key={urdfPath}
- urdfPath={urdfPath}
- label={label}
- height="h-full"
- selectedPartId={selectedPartId}
-                 exploded={exploded}
-                 wireframe={wireframe}
-                 hiddenPartIds={hiddenPartIds}
-                 onPartClick={onPartClick}
- meshToComponentMap={meshToComponentMap}
- scrollRotation={scrollRotation}
- />
- </div>
- );
+  return (
+    <div className={height ?? 'h-[420px]'}>
+      <UrdfViewerInner
+        key={urdfPath}
+        urdfPath={urdfPath}
+        label={label}
+        height="h-full"
+        selectedPartId={selectedPartId}
+        selectedPartIds={selectedPartIds}
+        exploded={exploded}
+        explodeAmount={explodeAmount}
+        wireframe={wireframe}
+        hiddenPartIds={hiddenPartIds}
+        onPartClick={onPartClick}
+        meshToComponentMap={meshToComponentMap}
+        scrollRotation={scrollRotation}
+      />
+    </div>
+  );
 }
 
 // ─── URDF platform registry ├── maps platform slugs to their URDF paths ─────────
