@@ -404,7 +404,7 @@ export function DiagnosticsPanel({ platformId }: { platformId: string }) {
       {/* Idle state */}
       {!loading && !report && !error && (
         <p className="text-sm text-theme-35 text-center py-6">
-          Click "Run Diagnostics" to analyze live telemetry across all three layers.
+          Click &quot;Run Diagnostics&quot; to analyze live telemetry across all three layers.
         </p>
       )}
     </section>

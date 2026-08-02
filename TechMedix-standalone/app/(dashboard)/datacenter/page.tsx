@@ -247,7 +247,7 @@ export default function DataCenterPage() {
             </p>
           </div>
           <a
-            href="https://blackcatrobotics.com/blackcat-os.html"
+            href="https://blackcatrobotics.com/blackcat-grid#datacenter"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.18em] font-semibold text-[#0d0d14] transition hover:bg-white/90 shrink-0"

@@ -4,6 +4,7 @@ import { AlertTriangle, AlertCircle, Info, ChevronDown, ChevronUp, Wrench } from
 import { HealthScoreRing } from "./HealthScoreRing";
 import type { DroneDiagnosticReport, DiagnosticAlert, DroneMotorHealth } from "../../types/dji-drone";
 import { useState } from "react";
+import Link from "next/link";
 
 interface DiagnosticReportProps {
   report: DroneDiagnosticReport;
@@ -243,16 +244,16 @@ export function DiagnosticReport({ report, certModules }: DiagnosticReportProps)
           <p className="kicker mb-3">Relevant Certification Modules</p>
           <div className="flex flex-wrap gap-2">
             {certModules.map((mod) => (
-              <a
+              <Link
                 key={mod}
                 href="/certifications"
                 className="inline-flex items-center gap-1.5 rounded-full bg-[#e8601e]/[0.07] border border-[#e8601e]/15 px-3 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.12em] text-[#e8601e] hover:bg-[#e8601e]/[0.12] transition-colors"
               >
                 {mod} →
-              </a>
+              </Link>
             ))}
           </div>
-          <p className="mt-2.5 text-[0.60rem] text-theme-30">Study these modules to handle this drone's maintenance needs.</p>
+          <p className="mt-2.5 text-[0.60rem] text-theme-30">Study these modules to handle this drone&apos;s maintenance needs.</p>
         </div>
       )}
 

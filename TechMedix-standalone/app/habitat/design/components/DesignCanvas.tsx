@@ -37,7 +37,7 @@ export function DesignCanvas({ params }: DesignCanvasProps) {
         </div>
         <div className="text-right">
           <p className="font-ui text-[0.60rem] uppercase tracking-[0.16em] text-theme-50">
-            {plan.width * 2}' x {plan.height * 2}' &middot; {Math.round(plan.width * plan.height * 4).toLocaleString()} sqft
+            {plan.width * 2}&apos; x {plan.height * 2}&apos; &middot; {Math.round(plan.width * plan.height * 4).toLocaleString()} sqft
           </p>
         </div>
       </div>
