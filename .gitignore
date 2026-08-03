@@ -40,3 +40,6 @@ RESEARCH_CAD_SOURCES.md
 !TechMedix-standalone/public/icons/*.png
 !TechMedix-standalone/public/apple-touch-icon.png
 .env*
+# Allow env example files (no secrets) so newcomers can clone-and-run
+!.env.example
+!TechMedix-standalone/.env.example
