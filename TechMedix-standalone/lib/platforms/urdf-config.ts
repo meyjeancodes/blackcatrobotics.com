@@ -55,6 +55,31 @@ export const PLATFORM_URDFS: PlatformUrdf[] = [
     urdfPath: '/robots/unitree-go2/go2_description.urdf',
     badge: 'Official URDF',
   },
+  // Aftermarket H1 parts render the real H1 model (no public part-level URDF exists)
+  {
+    id: 'h1-knee-act',
+    name: 'H1 Knee Actuator',
+    urdfPath: '/robots/unitree-h1/h1.urdf',
+    badge: 'H1 Model',
+  },
+  {
+    id: 'h1-battery',
+    name: 'H1 Battery Pack',
+    urdfPath: '/robots/unitree-h1/h1.urdf',
+    badge: 'H1 Model',
+  },
+  {
+    id: 'h1-shoulder-act',
+    name: 'H1 Shoulder Actuator',
+    urdfPath: '/robots/unitree-h1/h1.urdf',
+    badge: 'H1 Model',
+  },
+  {
+    id: 'h1-dex-hand',
+    name: 'H1 Dexterous Hand',
+    urdfPath: '/robots/unitree-h1/h1.urdf',
+    badge: 'H1 Model',
+  },
 ];
 
 /** Look up URDF config by platform ID */
