@@ -44,3 +44,4 @@ blackcatrobotics.com/
 - Dashboard subdomain: `dashboard.blackcatrobotics.com` (same Vercel project, separate route).
 
 _Note: the static homepage is currently served through the same Vercel project as the Next.js app. See issue #B for the planned split to a standalone static host so homepage edits deploy independently of the app build._
+
