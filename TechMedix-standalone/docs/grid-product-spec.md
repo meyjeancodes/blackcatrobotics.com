@@ -39,8 +39,8 @@ Reuse PlatformProfile / failureSignatures shapes from lib/platforms so Grid aler
 look identical to TechMedix alerts.
 
 ## Open questions for Megan
-- Is Grid B2B (developers/operators) or B2C (homeowners)? Page copy says both — pick one
-  for Phase 1 to avoid building two products.
+- [ANSWERED 2026-08-04] Grid = BOTH B2B (operators/builders) and B2C (homeowners).
+  Phase 1 builds one data model + role switch (operator view vs homeowner view).
 - Any real telemetry source yet, or is Phase 1 a simulator demo?
 
 ## Non-goals (do NOT build yet)

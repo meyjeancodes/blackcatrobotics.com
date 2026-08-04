@@ -1,8 +1,10 @@
 # Competitive Scan — AI / Robotic Home Construction
 
-> Data gathered 2026-08-04 via live browser reads of company sites + Wikipedia.
-> Firecrawl web_search was out of credits; sources are primary/primary-adjacent.
-> Flags: [VERIFIED] = read directly this session; [VERIFY] = needs a paid scan.
+> Data gathered 2026-08-04. Firecrawl (web_search/web_extract) was OUT OF CREDITS
+> (402 billing errors), so all facts below were pulled LIVE via the Hermes BROWSER tool
+> reading primary sources (company sites, Wikipedia). Sources are primary/primary-adjacent.
+> Flags: [VERIFIED] = read directly this session; [VERIFY] = still needs confirmation.
+> To upgrade [VERIFY] items later, add Firecrawl credits OR I can keep using the browser.
 
 ## The category
 "Construction 3D printing" (c3Dp / 3DCP) = using 3D printing to fabricate buildings or
@@ -13,12 +15,22 @@ control, structural durability, and regulation/standardization lag. [VERIFIED]
 
 ## Players (real positioning, read live)
 
-### ICON (iconbuild.com) [VERIFIED]
+### ICON (iconbuild.com) [VERIFIED — live newsroom, 2026-08-04]
 - Pillars: "Design + Build", "Technology", "ICON Prime", "CODEX".
 - CODEX = their AI / building-system layer (the differentiator to watch).
 - Positioning: full-stack — they design, build, and supply the tech.
 - Threat to HABITAT: HIGH. Marquee brand in 3D-printed homes + pushing an AI/OS narrative
   that overlaps HABITAT's "operating layer" claim.
+- HARD DATA (from iconbuild.com/newsroom, dated):
+  - U.S. Army **$62.8M** production contract for 3D-printed barracks at Fort Bliss (Jan 2026).
+  - **ICON Prime** gov't division launched Apr 2026 (military/intel/space).
+  - "Largest robotic construction deployment in DoD history" at Fort Bliss (Jul 2026).
+  - **Wells Fargo** named preferred mortgage lender for 3D-printed homes (Jun 2026) —
+    they are closing the financing gap, not just building.
+  - **TIME100 Companies 2026**; received ICC Evaluation Service acceptance criteria for
+    3D-printed walls (code-compliance milestone — a moat we lack).
+  - First commercial rollout of tech to builders (Mar 2026); homes for sale in Austin's
+    Mueller community; El Cosmico hotel (Marfa) underway.
 
 ### Apis Cor (apis-cor.com) [VERIFIED]
 - "Robotic construction systems" — autonomous robots that 3D-print concrete on-site.
