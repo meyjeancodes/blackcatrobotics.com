@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Grid Control — BlackCat Grid</title>
+<style>
+  :root{ --ink:#0a0a0f; --fire:#ff6535; --fire2:#e84e1b; --white:#fff; --border-d:rgba(255,255,255,0.10); --card:rgba(255,255,255,0.04); --mono:'Chakra Petch',ui-monospace,monospace; --display:'Tanker',system-ui,sans-serif; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--ink);color:var(--white);font-family:system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:96px 24px 80px;}
+  .back{color:var(--fire);text-decoration:none;font-size:14px;}
+  h1{font-family:var(--display);font-size:44px;margin:16px 0 4px;}
+  .toggle{display:flex;gap:8px;background:var(--card);border:1px solid var(--border-d);border-radius:999px;padding:4px;}
+  .toggle button{border:none;border-radius:999px;padding:8px 18px;font-weight:600;cursor:pointer;background:transparent;color:rgba(255,255,255,0.6);}
+  .toggle button.on{background:var(--fire2);color:#fff;}
+  .sub{color:rgba(255,255,255,0.6);max-width:640px;margin:8px 0 28px;}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px;}
+  .stat{background:var(--card);border:1px solid var(--border-d);border-radius:16px;padding:20px;}
+  .stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px;}
+  .stat .v{font-family:var(--display);font-size:28px;}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .panel{background:var(--card);border:1px solid var(--border-d);border-radius:16px;padding:20px;}
+  .panel h2{font-family:var(--display);font-size:22px;margin:0 0 14px;}
+  .row{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.08);}
+  .dot{width:8px;height:8px;border-radius:50%;}
+  .id{font-family:var(--mono);font-size:13px;flex:1;}
+  .lvl{font-size:13px;color:rgba(255,255,255,0.7);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{color:rgba(255,255,255,0.5);text-align:left;padding:6px 8px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;}
+  td{padding:6px 8px;border-top:1px solid var(--border-d);}
+  .mono{font-family:var(--mono);}
+  .demo{background:rgba(232,78,27,0.12);border:1px solid rgba(232,78,27,0.3);border-radius:12px;padding:10px 16px;font-size:13px;color:#ffb499;margin-bottom:20px;}
+  .foot{font-size:12px;color:rgba(255,255,255,0.4);margin-top:24px;}
+  .foot a{color:var(--fire);}
+  .empty{color:rgba(255,255,255,0.4);font-size:14px;}
+  @media(max-width:720px){ .cols{grid-template-columns:1fr;} h1{font-size:34px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/blackcat-grid.html">&larr; BlackCat Grid</a>
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;">
+    <h1>Grid Control</h1>
+    <div class="toggle">
+      <button id="b-op" class="on" onclick="setRole('operator')">Operator</button>
+      <button id="b-ho" onclick="setRole('homeowner')">Homeowner</button>
+    </div>
+  </div>
+  <p class="sub" id="sub">Fleet energy orchestration: which units are exporting, which are drawing, and live peer-to-peer trades across your sites.</p>
+
+  <div id="demo" class="demo" style="display:none;">Demo mode — no live telemetry connected. Showing an empty grid. Wire Supabase + robot telemetry to populate real supply/demand.</div>
+  <div id="loading" class="sub">Loading grid state…</div>
+
+  <div id="content" style="display:none;">
+    <div class="stats">
+      <div class="stat"><div class="l">Supply available</div><div class="v" id="s-supply">–</div></div>
+      <div class="stat"><div class="l">Demand open</div><div class="v" id="s-demand">–</div></div>
+      <div class="stat"><div class="l">Trades</div><div class="v" id="s-trades">–</div></div>
+      <div class="stat"><div class="l">Energy traded</div><div class="v" id="s-kwh">–</div></div>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
+        <h2 id="h-supply">Exporting units</h2>
+        <div id="supply-list"></div>
+      </div>
+      <div class="panel">
+        <h2 id="h-demand">Drawing units</h2>
+        <div id="demand-list"></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:20px;">
+      <h2>Recent trades</h2>
+      <div id="tx-list"></div>
+    </div>
+
+    <p class="foot">BlackCat Grid matches surplus robot energy to demand across your fleet — the same orchestration layer that keeps a HABITAT home running. Need a part for one of these units? <a href="/store">Visit the store →</a></p>
+  </div>
+</div>
+
+<script>
+  let role = 'operator';
+  function setRole(r){
+    role = r;
+    document.getElementById('b-op').className = r==='operator'?'on':'';
+    document.getElementById('b-ho').className = r==='homeowner'?'on':'';
+    document.getElementById('sub').textContent = r==='operator'
+      ? "Fleet energy orchestration: which units are exporting, which are drawing, and live peer-to-peer trades across your sites."
+      : "Your home's energy at a glance: what your systems are producing, what they're drawing, and how the grid is balancing around you.";
+    document.getElementById('h-supply').textContent = r==='operator' ? "Exporting units" : "Your production";
+    document.getElementById('h-demand').textContent = r==='homeowner' ? "Your draw" : "Drawing units";
+    if (window.__last) render(window.__last);
+  }
+  function short(id){ return id && id.length>10 ? id.slice(0,6)+'…' : id; }
+  function render(d){
+    window.__last = d;
+    document.getElementById('loading').style.display='none';
+    document.getElementById('content').style.display='block';
+    if (d.mock) document.getElementById('demo').style.display='block';
+    document.getElementById('s-supply').textContent = d.totals.supply_kwh + ' kWh';
+    document.getElementById('s-demand').textContent = d.totals.demand_kwh + ' kWh';
+    document.getElementById('s-trades').textContent = d.totals.transaction_count;
+    document.getElementById('s-kwh').textContent = d.totals.total_traded_kwh + ' kWh';
+    fill('supply-list', d.supply, '#1db954', role==='homeowner'?'Your production':'Exporting units');
+    fill('demand-list', d.demand, '#ff6535', role==='homeowner'?'Your draw':'Drawing units');
+    const tx = document.getElementById('tx-list');
+    if (!d.transactions.length){ tx.innerHTML = '<p class="empty">No trades yet — grid is balanced or idle.</p>'; return; }
+    let rows = d.transactions.slice(0,10).map(t=>`<tr><td class="mono">${short(t.seller_id)}</td><td class="mono">${short(t.buyer_id)}</td><td>${t.kwh} kWh</td><td>$${(t.total_price||0).toFixed(2)}</td></tr>`).join('');
+    tx.innerHTML = `<table><thead><tr><th>From</th><th>To</th><th>kWh</th><th>Price</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+  function fill(elId, arr, color, emptyLabel){
+    const el = document.getElementById(elId);
+    if (!arr.length){ el.innerHTML = '<p class="empty">'+emptyLabel+': none right now.</p>'; return; }
+    el.innerHTML = arr.map(s=>`<div class="row"><span class="dot" style="background:${color}"></span><span class="id">${short(s.robot_id)}</span><span class="lvl">${s.battery_level}%</span></div>`).join('');
+  }
+  async function load(){
+    try{
+      const r = await fetch('/api/grid/state');
+      if(!r.ok) throw new Error('unavailable');
+      render(await r.json());
+    }catch(e){ document.getElementById('loading').textContent = 'Grid state unavailable.'; }
+  }
+  load();
+  setInterval(load, 15000);
+</script>
+</body>
+</html>
