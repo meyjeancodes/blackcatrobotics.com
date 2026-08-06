@@ -22,6 +22,7 @@ const nextConfig = {
       { source: '/habitat-landing', destination: '/habitat.html' },
       { source: '/certifications-landing', destination: '/certifications.html' },
       { source: '/book-onboarding', destination: '/book-onboarding.html' },
+      { source: '/book', destination: '/book.html' },
     ];
   },
 };
