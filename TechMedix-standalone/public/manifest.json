@@ -1,13 +1,13 @@
 {
-  "name": "BlackCat OS",
-  "short_name": "BCOS",
-  "description": "Humanoid robot maintenance platform by BlackCat Robotics",
-  "start_url": "/dashboard",
+  "name": "TechMedix",
+  "short_name": "TechMedix",
+  "description": "Predictive maintenance and fleet intelligence for autonomous robots — by BlackCat Robotics",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#0d0d12",
   "theme_color": "#0d0d12",
-  "categories": ["utilities", "productivity"],
+  "categories": ["utilities", "productivity", "business"],
   "icons": [
     {
       "src": "/icons/icon-192.png",

@@ -1,4 +1,4 @@
-// BlackCat OS Service Worker
+// TechMedix Service Worker
 // Caches procedure data for offline AR mode use
 
 const CACHE_NAME = "blackcat-os-v1";

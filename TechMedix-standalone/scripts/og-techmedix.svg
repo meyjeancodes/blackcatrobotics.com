@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a0f"/>
+      <stop offset="1" stop-color="#15110d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <rect x="560" y="270" width="640" height="360" fill="#160c09"/>
+  <text x="80" y="118" font-family="Chakra Petch, monospace" font-size="22" letter-spacing="3" fill="#cc3d17">BLACKCAT ROBOTICS</text>
+  <text x="78" y="225" font-family="Tanker, Georgia, serif" font-size="84" fill="#ffffff">Predictive maintenance</text>
+  <text x="78" y="320" font-family="Tanker, Georgia, serif" font-size="84" fill="#ffffff">&amp; fleet intelligence</text>
+  <text x="78" y="415" font-family="Tanker, Georgia, serif" font-size="84" fill="#cc3d17">for autonomous robots.</text>
+  <text x="80" y="488" font-family="Satoshi, Helvetica, sans-serif" font-size="27" fill="#c8c8d2">TechMedix AI predicts robot failures up to 48 hours before they happen.</text>
+  <text x="80" y="588" font-family="Tanker, Georgia, serif" font-size="32" fill="#ffffff">TechMedix</text>
+</svg>
