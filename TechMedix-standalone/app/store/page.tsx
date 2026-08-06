@@ -37,7 +37,7 @@ export default function StorePage() {
       <div style={{ background: "#0a0a0f", color: "#fff", borderRadius: 20, padding: "32px 28px", marginBottom: 36, display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center", justifyContent: "space-between" }}>
         <div>
           <div style={{ fontFamily: "Georgia, serif", fontSize: 22, marginBottom: 4 }}>Run a fleet? Monitor it with TechMedix.</div>
-          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", margin: 0, maxWidth: 520 }}>BlackCat OS predicts part wear and tells you exactly what to order. Pair the store with the dashboard.</p>
+          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", margin: 0, maxWidth: 520 }}>TechMedix predicts part wear and tells you exactly what to order. Pair the store with the dashboard.</p>
         </div>
         <a href="https://dashboard.blackcatrobotics.com/signup" target="_blank" rel="noopener" style={{ background: "#cc3d17", color: "#fff", padding: "12px 22px", borderRadius: 999, fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>Start TechMedix →</a>
       </div>

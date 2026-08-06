@@ -2,6 +2,10 @@ import type { ReactNode } from "react";
 import { DashboardShell } from "../../components/dashboard-shell";
 import { createSupabaseServerClient } from "../../lib/supabase-server";
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default async function ConsoleLayout({ children }: { children: ReactNode }) {
   let user = null;
   try {

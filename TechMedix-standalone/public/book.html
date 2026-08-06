@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Book a Session — TechMedix Consultations & Robotics Classes | BlackCat Robotics</title>
+<meta name="description" content="Book a consultation, robotics/AI class, or fleet onboarding with Megan Foster, founder of BlackCat Robotics. Hands-on sessions on autonomous robots, predictive maintenance, and AI fleet operations.">
+<meta property="og:title" content="Book a Session with BlackCat Robotics">
+<meta property="og:description" content="Consultations, robotics & AI classes, and fleet onboarding with Megan Foster, founder of BlackCat Robotics.">
+<meta property="og:url" content="https://blackcatrobotics.com/book">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BlackCat Robotics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0a0f">
+<link rel="canonical" href="https://blackcatrobotics.com/book">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=tanker@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0a0a0f; --ink-2:#3a3a45; --ink-3:#8888a0;
+  --paper:#f0efe8; --paper-2:#fafaf4; --white:#fff;
+  --fire:#cc3d17; --fire-2:#d4401a; --gold:#c8a96e;
+  --border:rgba(10,10,15,0.08);
+  --r:12px; --r-lg:20px; --r-pill:999px;
+  --serif:'Tanker',sans-serif; --display:'Satoshi','Helvetica Neue',sans-serif; --mono:'Chakra Petch',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--display);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{display:flex;align-items:center;justify-content:space-between;height:68px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(240,239,232,0.85);backdrop-filter:blur(8px);z-index:50}
+.nav-logo{font-family:var(--serif);font-size:22px;letter-spacing:-0.02em;text-decoration:none;color:var(--ink)}
+.nav-logo span{color:var(--fire)}
+.nav-links{display:flex;gap:28px;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase}
+.nav-links a{text-decoration:none;color:var(--ink-2);transition:color .2s}
+.nav-links a:hover{color:var(--fire)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--fire);background:rgba(204,61,23,0.08);border:1px solid rgba(204,61,23,0.18);padding:6px 14px;border-radius:999px;display:inline-block}
+.hero{padding:72px 0 40px;text-align:center}
+.hero h1{font-family:var(--serif);font-size:clamp(44px,7vw,88px);line-height:0.98;letter-spacing:-0.03em;margin:22px 0 18px}
+.hero p{max-width:620px;margin:0 auto;color:var(--ink-2);font-size:17px}
+.lede{margin-top:18px;font-family:var(--mono);font-size:12px;letter-spacing:0.05em;color:var(--ink-3);text-transform:uppercase}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:48px 0}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--fire);transform:translateY(-3px)}
+.card .tag{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fire)}
+.card h2{font-family:var(--serif);font-size:26px;letter-spacing:-0.02em;line-height:1.05}
+.card p{color:var(--ink-2);font-size:14.5px}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.card li{font-size:13.5px;color:var(--ink-2);padding-left:18px;position:relative}
+.card li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;background:var(--fire);border-radius:50%}
+.card .meta{margin-top:auto;display:flex;gap:14px;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:0.04em;text-transform:uppercase;border-top:1px solid var(--border);padding-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--fire);color:#fff;text-decoration:none;font-family:var(--display);font-weight:600;font-size:13px;padding:12px 22px;border-radius:var(--r-pill);transition:background .2s}
+.btn:hover{background:var(--fire-2)}
+.book-cta{text-align:center;margin:8px 0 56px}
+.embed-sec{padding:8px 0 96px}
+.embed-sec h3{font-family:var(--serif);font-size:30px;letter-spacing:-0.02em;margin-bottom:6px}
+.embed-sec .sub{color:var(--ink-2);margin-bottom:24px;max-width:560px}
+.cal-frame{width:100%;min-height:760px;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--white);overflow:hidden}
+.cal-frame iframe{width:100%;height:760px;border:0}
+.cal-fallback{padding:40px;text-align:center;font-family:var(--mono);font-size:13px;color:var(--ink-2);letter-spacing:0.04em}
+.cal-fallback a{color:var(--fire);text-decoration:underline}
+.note{font-size:12px;color:var(--ink-3);margin-top:14px;font-family:var(--mono);letter-spacing:0.03em}
+footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font-size:13px;text-align:center}
+@media(max-width:640px){.nav-links{display:none}.hero{padding:48px 0 24px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%">
+    <a href="/" class="nav-logo">BlackCat<span>.</span></a>
+    <div class="nav-links">
+      <a href="/#techmedix">TechMedix</a>
+      <a href="/store">Store</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#signal">Signal</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="eyebrow">Book with BlackCat Robotics</span>
+  <h1>Learn robotics.<br>From the people building it.</h1>
+  <p>Consultations, hands-on classes, and fleet onboarding with Megan Foster — founder of BlackCat Robotics and the engineer behind TechMedix predictive maintenance.</p>
+  <div class="lede">Pick a session · 30-min intro call is free</div>
+</header>
+
+<section class="wrap">
+  <div class="cards">
+    <div class="card">
+      <span class="tag">Consultation</span>
+      <h2>Robotics &amp; AI Strategy</h2>
+      <p>Talk through your autonomous fleet, deployment plan, or predictive-maintenance roadmap. For operators, founders, and teams evaluating robotics.</p>
+      <ul>
+        <li>Fleet architecture &amp; ROI modeling</li>
+        <li>Predictive maintenance readiness</li>
+        <li>Where AI actually pays off (and where it doesn't)</li>
+      </ul>
+      <div class="meta"><span>60 min</span><span>Remote</span><span>Paid</span></div>
+    </div>
+    <div class="card">
+      <span class="tag">Class</span>
+      <h2>Intro to Robotics &amp; AI</h2>
+      <p>A hands-on class for builders and the curious. Cover the real stack: actuators, telemetry, failure modes, and how predictive AI keeps robots running.</p>
+      <ul>
+        <li>Anatomy of a robot (humanoid, drone, AMR)</li>
+        <li>Reading telemetry like a technician</li>
+        <li>Live TechMedix failure-prediction walkthrough</li>
+      </ul>
+      <div class="meta"><span>90 min</span><span>Remote / On-site</span><span>Paid</span></div>
+    </div>
+    <div class="card">
+      <span class="tag">Onboarding</span>
+      <h2>Fleet Onboarding</h2>
+      <p>Get your robots onto TechMedix. We map your platforms, wire up telemetry, and stand up predictive alerts before your first failure.</p>
+      <ul>
+        <li>Platform &amp; sensor mapping</li>
+        <li>Telemetry ingestion setup</li>
+        <li>First 48-hour alert window configured</li>
+      </ul>
+      <div class="meta"><span>Custom</span><span>Remote</span><span>Included w/ plan</span></div>
+    </div>
+  </div>
+
+  <div class="book-cta">
+    <a href="#calendar" class="btn">Book a 30-min intro call →</a>
+    <div class="note">All sessions are 1:1 with Megan Foster unless arranged for a group.</div>
+  </div>
+</section>
+
+<section class="embed-sec wrap" id="calendar">
+  <h3>Pick a time</h3>
+  <p class="sub">Choose a session type, then grab an open slot. Cal.com handles confirmations and reminders.</p>
+
+  <!-- CAL.COM EMBED — replace CALCOM_URL with your deployed Cal.com link, e.g. https://cal.com/blackcatrobotics/consultation -->
+  <div class="cal-frame">
+    <div class="cal-fallback">
+      Scheduling is powered by Cal.com.
+      <a href="https://cal.com/blackcatrobotics" target="_blank" rel="noopener">Open the booking page →</a>
+      <!-- Once deployed, swap this fallback for: <iframe src="https://cal.com/blackcatrobotics/consultation" ...></iframe> -->
+    </div>
+  </div>
+  <p class="note">Prefer email? Reach Megan at <a href="mailto:blackcat@blackcatrobotics.com" style="color:var(--fire)">blackcat@blackcatrobotics.com</a></p>
+</section>
+
+<footer>
+  BlackCat Robotics · TechMedix predictive maintenance · <a href="/" style="color:var(--ink-3);text-decoration:underline">blackcatrobotics.com</a>
+</footer>
+
+<!-- STRUCTURED DATA: Booking offerings (Event / Course / Product) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Event",
+      "name": "Robotics & AI Strategy Consultation",
+      "description": "A 60-minute consultation on autonomous fleet architecture, predictive-maintenance readiness, and where AI pays off — with Megan Foster, founder of BlackCat Robotics.",
+      "organizer": { "@type": "Organization", "name": "BlackCat Robotics", "url": "https://blackcatrobotics.com" },
+      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://blackcatrobotics.com/book" }
+    },
+    {
+      "@type": "Course",
+      "name": "Intro to Robotics & AI",
+      "description": "A 90-minute hands-on class covering robot anatomy, reading telemetry like a technician, and a live TechMedix failure-prediction walkthrough. Taught by Megan Foster, founder of BlackCat Robotics.",
+      "provider": { "@type": "Organization", "name": "BlackCat Robotics", "sameAs": "https://blackcatrobotics.com" },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": ["Online", "Onsite"],
+        "courseWorkload": "PT1H30M",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://blackcatrobotics.com/book" }
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "TechMedix Fleet Onboarding",
+      "description": "Get your robots onto TechMedix: platform and sensor mapping, telemetry ingestion, and a configured 48-hour predictive alert window.",
+      "brand": { "@type": "Brand", "name": "TechMedix" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://blackcatrobotics.com/book" }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

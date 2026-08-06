@@ -241,7 +241,7 @@ export default function DataCenterPage() {
               Connect your facility to TechMedix
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-6 text-white/48">
-              TechMedix integrates directly with your data center robots via BlackCat OS telemetry streams.
+              TechMedix integrates directly with your data center robots via TechMedix telemetry streams.
               Layer 3 AI diagnostics run against live sensor data — real fault detection, real repair protocols,
               real outcomes for your fleet.
             </p>
@@ -252,7 +252,7 @@ export default function DataCenterPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-ui text-[0.62rem] uppercase tracking-[0.18em] font-semibold text-[#0d0d14] transition hover:bg-white/90 shrink-0"
           >
-            BlackCat OS Docs
+            TechMedix Docs
             <ExternalLink size={12} />
           </a>
         </div>

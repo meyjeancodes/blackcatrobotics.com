@@ -673,6 +673,88 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     .stage-head h1{font-size:17px;}
   }
 </style>
+
+<!-- ─── STRUCTURED DATA: BlackCat Robotics (Company) + TechMedix (Product) ─── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://blackcatrobotics.com/#organization",
+      "name": "BlackCat Robotics",
+      "url": "https://blackcatrobotics.com",
+      "logo": "https://blackcatrobotics.com/favicon.svg",
+      "sameAs": [
+        "https://github.com/meyjeancodes/blackcatrobotics.com",
+        "https://twitter.com/HerbGottiTX"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Megan Foster",
+        "jobTitle": "Founder & CEO",
+        "worksFor": { "@id": "https://blackcatrobotics.com/#organization" }
+      },
+      "description": "BlackCat Robotics builds TechMedix — predictive maintenance and fleet intelligence for autonomous robots, drones, humanoids, and EV fleets."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://blackcatrobotics.com/#techmedix",
+      "name": "TechMedix",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Predictive Maintenance & Fleet Intelligence",
+      "operatingSystem": "Web",
+      "url": "https://blackcatrobotics.com",
+      "isFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "AI diagnostics that predict robot failures up to 48 hours before they happen. Maintenance intelligence for autonomous drones, humanoids, EV fleets, and industrial AMRs.",
+      "provider": { "@id": "https://blackcatrobotics.com/#organization" }
+    }
+  ]
+}
+</script>
+
+<!-- FAQ schema: wins the snippet for the 48-hour prediction claim + pre-empts 'says who?' -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does TechMedix do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TechMedix is an open-source predictive maintenance platform by BlackCat Robotics. It analyzes telemetry from autonomous fleets — drones, humanoids, EV fleets, and industrial AMRs — to predict failures up to 48 hours before they happen, so you can repair before breakdown."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which robots and fleets does TechMedix support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TechMedix supports autonomous drones, humanoid robots (including Unitree H1/G1 and UBTECH), quadrupeds like Boston Dynamics Spot, eBikes and micromobility fleets, and industrial robot arms such as UR5e and Kinova Gen3."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How early can TechMedix predict a robot failure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TechMedix is designed to flag impending failures up to 48 hours in advance using continuous telemetry analysis and documented failure-mode models, giving operators time to schedule maintenance before a breakdown."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is TechMedix free and open source?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. TechMedix is free and open source, published by BlackCat Robotics. The source is available in the BlackCat Robotics repository."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -680,7 +762,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <nav id="nav">
   <a href="/" class="nav-logo">BlackCat<span>.</span></a>
   <div class="nav-actions">
-    <a href="/book-onboarding.html" class="nav-book">Book Onboarding</a>
+    <a href="/book.html" class="nav-book">Book a Session</a>
     <a href="https://dashboard.blackcatrobotics.com/signup" target="_blank" rel="noopener" class="nav-cta">Start TechMedix</a>
   </div>
   <ul class="nav-links" id="nav-links">
@@ -690,7 +772,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
     <li><a href="#acquire">Acquire</a></li>
     <li><a href="/store">Store</a></li>
     <li><a href="#signal">Signal</a></li>
-    <li><a href="/book-onboarding.html" class="nav-book">Book Onboarding</a></li>
+    <li><a href="/book.html" class="nav-book">Book a Session</a></li>
     <li class="nav-dropdown">
       <a href="#" class="nav-dropdown-toggle">Divisions &#9662;</a>
       <ul class="nav-dropdown-menu">
@@ -767,12 +849,12 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <span class="pulse"></span>
       <span class="badge-txt">TechMedix AI &nbsp;·&nbsp; Open Source &nbsp;·&nbsp; Live</span>
     </div>
-    <h1 class="hero-title">The future<br>runs on robots.<br><em>We keep them<br>running.</em></h1>
-    <p class="hero-sub">Maintenance and intelligence platform for autonomous drones, humanoid robots, EV fleets, and aerospace ground support.</p>
+    <h1 class="hero-title">Predictive maintenance<br>&amp; fleet intelligence<br>for autonomous robots.</h1>
+    <p class="hero-sub">The future runs on robots. We keep them running — from drones and humanoids to EV fleets and aerospace ground support. TechMedix AI predicts failures up to 48 hours before they happen.</p>
     <div class="hero-actions">
       <a href="https://github.com/meyjeancodes/blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Get TechMedix — Free &amp; Open Source</a>
       <a href="#acquire" class="btn btn-outline-white">Browse Platforms &rarr;</a>
-      <a href="/book-onboarding.html" class="btn btn-outline-white">Book Onboarding &rarr;</a>
+      <a href="/book.html" class="btn btn-outline-white">Book a Session &rarr;</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -812,9 +894,9 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
           </div>
         </div>
         <div style="margin-top:24px;background:rgba(232,92,26,.06);border:1px solid rgba(232,92,26,.16);border-radius:12px;padding:18px 20px;">
-          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--fire);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;">Join the Network</div>
-          <p style="font-size:13px;color:var(--ink-2);line-height:1.65;margin-bottom:12px;">Are you a robotics technician, mechatronics engineer, or eBike fleet specialist? We're building the world's first AI-dispatched human tech network.</p>
-          <button onclick="openModal('techs-modal')" style="background:var(--fire);color:#fff;border:none;border-radius:999px;padding:10px 20px;font-family:var(--display);font-size:12px;font-weight:600;cursor:pointer;">Apply to Join &rarr;</button>
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--fire);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;">Learn the trade</div>
+          <p style="font-size:13px;color:var(--ink-2);line-height:1.65;margin-bottom:12px;">Want to understand robotics and AI hands-on? Book a consultation or a class with Megan Foster, BlackCat Robotics founder — from fleet strategy to hands-on repair.</p>
+          <a href="/book.html" class="btn btn-fire" style="padding:10px 20px;font-size:12px;">Book a Session &rarr;</a>
         </div>
       </div>
     </div>
@@ -1674,7 +1756,7 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <div class="foot-col-head">Company</div>
       <ul class="foot-links">
         <li><a href="javascript:void(0)" onclick="openModal('about-modal');return false;">About</a></li>
-        <li><button onclick="openModal('techs-modal')">Technicians</button></li>
+        <li><a href="/book.html">Book a Session</a></li>
         <li><button onclick="openModal('contact-modal')">Contact</button></li>
         <li><button onclick="openModal('privacy-modal')">Privacy</button></li>
       </ul>
@@ -1702,8 +1784,6 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 <div class="overlay" id="contact-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Contact</span><button class="modal-x" onclick="closeModal('contact-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div id="contact-form"><div class="modal-title">Get in touch.</div><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="c-name" name="full_name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="c-email" name="email" placeholder="jane@company.com"></div><div class="fgroup"><label>Company / Organization</label><input type="text" id="c-company" name="company" placeholder="Your Company"></div><div class="fgroup"><label>I'm interested in...</label><select id="c-interest" name="interest"><option value="">Select one...</option><option value="habitat">HABITAT Homes</option><option value="techmedix">TechMedix Platform</option><option value="partnership">Partnership Opportunity</option><option value="investment">Investment</option></select></div><div class="fgroup"><label>Message</label><textarea id="c-msg" name="message" rows="3" placeholder="Tell us more about your interest..."></textarea></div><input type="text" name="_gotcha" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none;" tabindex="-1" aria-hidden="true" autocomplete="off"><button class="fsub-btn" onclick="submitContact()">Send Message</button><p style="font-size:11px; color:var(--ink-3); margin-top:8px; text-align:center;">By submitting, you agree to our <button type="button" onclick="openModal('privacy-modal')" style="background:none; border:none; color:var(--ink-3); text-decoration:underline; cursor:pointer; font:inherit; padding:0;">Privacy Policy</button>.</p></div></div><div id="contact-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Message sent.</div><p class="form-ok-sub">We'll reply within one business day.</p></div></div></div></div>
 
 <div class="overlay" id="about-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">About</span><button class="modal-x" onclick="closeModal('about-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">BlackCat Robotics</div><div class="modal-prose"><p>BlackCat Robotics is a AI maintenance intelligence company built for the autonomous systems economy. We exist because the robot economy is arriving faster than the infrastructure to support it.</p><h3>Our Mission</h3><p>To keep every autonomous system in the world running — before it breaks. TechMedix AI monitors your fleet 24/7, predicts failures 48 hours in advance, and dispatches certified technicians automatically.</p><h3>Technology</h3><p>Our diagnostic models are developed and refined per robot platform as we onboard them.</p><h3>Coverage</h3><p>14+ robot platforms across humanoids, drones, delivery robots, industrial AMRs, and aerospace ground support, backed by a growing certified technician network.</p></div></div></div></div>
-
-<div class="overlay" id="techs-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Technicians</span><button class="modal-x" onclick="closeModal('techs-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Join the Network</div><p class="modal-sub" style="font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:20px;">Apply to become a BlackCat-certified robotics technician. We'll review your background and reach out within 48 hours.</p><div id="tech-form"><div class="fstack"><div class="fgroup"><label>Full Name</label><input type="text" id="tech-name" name="full_name" placeholder="Jane Smith"></div><div class="fgroup"><label>Work Email</label><input type="email" id="tech-email" name="email" placeholder="jane@company.com"></div><div class="fgroup"><label>Specialty</label><select id="tech-specialty" name="specialty"><option value="">Select your specialty...</option><option>Robotics Engineer</option><option>Mechatronics Specialist</option><option>eBike Fleet Technician</option><option>Drone Operator / Repair</option><option>Industrial Automation</option><option>Other</option></select></div><div class="fgroup"><label>Years of experience</label><select id="tech-experience" name="experience"><option value="">Select...</option><option>0–2 years</option><option>3–5 years</option><option>6–10 years</option><option>10+ years</option></select></div><div class="fgroup"><label>Coverage area (city/region)</label><input type="text" id="tech-area" name="area" placeholder="Dallas, TX"></div><div class="fgroup"><label>Message (optional)</label><textarea id="tech-msg" name="message" rows="3" placeholder="Tell us about your experience with autonomous systems..."></textarea></div><input type="text" name="_gotcha" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none;" tabindex="-1" aria-hidden="true" autocomplete="off"><button class="fsub-btn" onclick="submitTech()">Submit Application</button><p style="font-size:11px; color:var(--ink-3); margin-top:8px; text-align:center;">By submitting, you agree to our <button type="button" onclick="openModal('privacy-modal')" style="background:none; border:none; color:var(--ink-3); text-decoration:underline; cursor:pointer; font:inherit; padding:0;">Privacy Policy</button>.</p></div></div><div id="tech-ok" style="display:none;" class="form-ok"><div class="form-ok-title">Application received. We'll review and reach out within 48 hours.</div></div></div></div></div>
 
 <div class="overlay" id="privacy-modal"><div class="modal"><div class="modal-hd"><span class="modal-ey">Legal</span><button class="modal-x" onclick="closeModal('privacy-modal')"><svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg></button></div><div class="modal-bd"><div class="modal-title">Privacy Policy</div><div class="modal-prose"><p><strong>Effective:</strong> January 1, 2026</p><h3>Data We Collect</h3><p>We collect information you provide in forms (name, email, company), robot fleet telemetry data under service agreements, and standard web analytics via Plausible (privacy-first, no cookies).</p><h3>How We Use It</h3><p>Fleet data is used exclusively to provide TechMedix diagnostics. Contact information is used to respond to inquiries and deliver service updates. We do not sell personal data.</p><h3>Contact</h3><p>Privacy inquiries: <a href="mailto:blackcat@blackcatrobotics.com">blackcat@blackcatrobotics.com</a></p></div></div></div></div>
 
@@ -1813,14 +1893,6 @@ function submitContact() {
   const btn=document.querySelector('#contact-form .fsub-btn');
   const interest=document.getElementById('c-interest').value;
   postForm({name:n,email:e,company:document.getElementById('c-company').value,interest_type:interest||'general',message:document.getElementById('c-msg').value,source:'blackcat_website',product:'core_platform',_subject:'New BlackCat Inquiry — '+n},btn,'Send Message','contact-ok','contact-form');
-}
-
-function submitTech() {
-  const n=document.getElementById('tech-name').value.trim();
-  const e=document.getElementById('tech-email').value.trim();
-  if(!n||!e){alert('Please fill in your name and email.');return;}
-  const btn=document.querySelector('#tech-form .fsub-btn');
-  postForm({name:n,email:e,specialty:document.getElementById('tech-specialty').value,experience:document.getElementById('tech-experience').value,area:document.getElementById('tech-area').value,message:document.getElementById('tech-msg').value,source:'blackcat_website',product:'technician_network',_subject:'Technician Application — '+n},btn,'Submit Application','tech-ok','tech-form');
 }
 
 function handleLead() {

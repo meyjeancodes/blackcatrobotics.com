@@ -2,13 +2,14 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "BlackCat OS",
-  description: "Humanoid robot maintenance platform by BlackCat Robotics",
+  title: "TechMedix",
+  description:
+    "Predictive maintenance and fleet intelligence for autonomous robots — drones, humanoids, EV fleets, and industrial AMRs. By BlackCat Robotics.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "BlackCat OS",
+    title: "TechMedix",
   },
 };
 
