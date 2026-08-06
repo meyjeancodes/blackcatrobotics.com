@@ -133,14 +133,59 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
   <h3>Pick a time</h3>
   <p class="sub">Choose a session type, then grab an open slot. Cal.com handles confirmations and reminders.</p>
 
-  <!-- CAL.COM EMBED — replace CALCOM_URL with your deployed Cal.com link, e.g. https://cal.com/blackcatrobotics/consultation -->
-  <div class="cal-frame">
+  <!-- CAL.COM EMBED — real booking, default event = 30min intro call -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+    <button class="cal-tab btn" data-cal="30min" style="background:var(--fire)">30-min Intro Call</button>
+    <button class="cal-tab btn" data-cal="15min" style="background:var(--ink);color:#fff">15-min Quick Chat</button>
+    <button class="cal-tab btn" data-cal="fullsession" style="background:var(--ink);color:#fff">Full Session</button>
+  </div>
+  <div id="cal-embed" class="cal-frame">
     <div class="cal-fallback">
-      Scheduling is powered by Cal.com.
-      <a href="https://cal.com/blackcatrobotics" target="_blank" rel="noopener">Open the booking page →</a>
-      <!-- Once deployed, swap this fallback for: <iframe src="https://cal.com/blackcatrobotics/consultation" ...></iframe> -->
+      Loading scheduler…
+      <a href="https://cal.com/black-cat-orjpcq/30min" target="_blank" rel="noopener">Open in Cal.com →</a>
     </div>
   </div>
+
+  <script>
+    (function () {
+      var CAL = "https://cal.com/black-cat-orjpcq";
+      function loadCal() {
+        if (window.Cal) return Promise.resolve();
+        return new Promise(function (res) {
+          var s = document.createElement("script");
+          s.src = "https://cal.com/embed/embed.js";
+          s.onload = function () {
+            window.Cal("init", { origin: "https://cal.com" });
+            res();
+          };
+          document.head.appendChild(s);
+        });
+      }
+      function render(slug) {
+        var el = document.getElementById("cal-embed");
+        el.innerHTML = "";
+        loadCal().then(function () {
+          window.Cal("inline", {
+            elementOrSelector: "#cal-embed",
+            calLink: "black-cat-orjpcq/" + slug,
+            config: { theme: "light", layout: "month_view" },
+          });
+        });
+      }
+      document.querySelectorAll(".cal-tab").forEach(function (b) {
+        b.addEventListener("click", function () {
+          document.querySelectorAll(".cal-tab").forEach(function (x) {
+            x.style.background = "var(--ink)";
+            x.style.color = "#fff";
+          });
+          b.style.background = "var(--fire)";
+          b.style.color = "#fff";
+          render(b.getAttribute("data-cal"));
+        });
+      });
+      render("30min");
+    })();
+  </script>
   <p class="note">Prefer email? Reach Megan at <a href="mailto:blackcat@blackcatrobotics.com" style="color:var(--fire)">blackcat@blackcatrobotics.com</a></p>
 </section>
 
@@ -160,7 +205,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
       "organizer": { "@type": "Organization", "name": "BlackCat Robotics", "url": "https://blackcatrobotics.com" },
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://blackcatrobotics.com/book" }
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession" }
     },
     {
       "@type": "Course",
@@ -171,7 +216,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
         "@type": "CourseInstance",
         "courseMode": ["Online", "Onsite"],
         "courseWorkload": "PT1H30M",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://blackcatrobotics.com/book" }
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession" }
       }
     },
     {
@@ -179,7 +224,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
       "name": "TechMedix Fleet Onboarding",
       "description": "Get your robots onto TechMedix: platform and sensor mapping, telemetry ingestion, and a configured 48-hour predictive alert window.",
       "brand": { "@type": "Brand", "name": "TechMedix" },
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://blackcatrobotics.com/book" }
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession" }
     }
   ]
 }
