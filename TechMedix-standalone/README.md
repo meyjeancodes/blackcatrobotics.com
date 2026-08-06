@@ -1,6 +1,10 @@
-# BlackCat OS
+# TechMedix
 
-Humanoid robot maintenance platform by BlackCat Robotics. Full-stack Next.js app with Supabase backend, AI-powered AR guidance, and Atlas-sourced supply chain data.
+Predictive maintenance and fleet intelligence for autonomous robots — by BlackCat Robotics. Full-stack Next.js app with Supabase backend, AI-powered AR guidance, and Atlas-sourced supply chain data.
+
+## License
+
+TechMedix Core is free and open source under the [GNU Affero General Public License v3.0](./LICENSE). You may self-host and use it at no cost. Paid Managed and Enterprise plans are optional and provided on a per-agreement basis.
 
 ## Setup
 
