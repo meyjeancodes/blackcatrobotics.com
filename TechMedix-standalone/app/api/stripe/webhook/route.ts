@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { isSupabaseServerConfigured, createServiceClient } from "@/lib/supabase-service";
+import { recordSessionBooking } from "@/lib/store/booking-history";
 
 export async function POST(req: NextRequest) {
   const rawSecret = process.env.STRIPE_SECRET_KEY;
@@ -42,6 +43,20 @@ export async function POST(req: NextRequest) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const { customer_email, plan, robot_count, free_trial } = session.metadata ?? {};
+
+    // --- Record paid session bookings (consultation / class) ---
+    const meta = session.metadata ?? {};
+    if (meta.type === "session" && meta.email && meta.product) {
+      const amountCents =
+        typeof session.amount_total === "number" ? session.amount_total : 0;
+      await recordSessionBooking({
+        email: meta.email,
+        product_id: meta.product,
+        kind: (meta.kind as "consultation" | "class") ?? "consultation",
+        stripe_session_id: session.id,
+        amount_cents: amountCents,
+      });
+    }
 
     if (!supabase) {
       console.warn(

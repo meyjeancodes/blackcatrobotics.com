@@ -4,7 +4,9 @@ import { getPartBySku, stripePriceIdFor } from "@/lib/store/parts-catalog";
 import {
   getSessionById,
   stripePriceIdForSession,
+  SESSION_PRODUCTS,
 } from "@/lib/store/sessions-catalog";
+import { hasPriorSessionBooking } from "@/lib/store/booking-history";
 
 export const runtime = "nodejs";
 
@@ -23,7 +25,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { sku?: string; product?: string; quantity?: number };
+  let body: { sku?: string; product?: string; kind?: "consultation" | "class"; email?: string; quantity?: number };
   try {
     body = await req.json();
   } catch {
@@ -33,15 +35,25 @@ export async function POST(req: NextRequest) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://blackcatrobotics.com";
 
   // --- Paid booking session (consultation / class) ---
-  if (body.product) {
-    const sess = getSessionById(body.product);
+  if (body.product || body.kind) {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://blackcatrobotics.com";
+
+    // Resolve product: either explicitly passed, or derived from kind + history.
+    let sess = body.product ? getSessionById(body.product) : undefined;
+    if (!sess && body.kind) {
+      const returning = body.email ? await hasPriorSessionBooking(body.email) : false;
+      const tier = returning ? "follow" : "first";
+      sess = SESSION_PRODUCTS.find((s) => s.kind === body.kind && s.tier === tier);
+    }
     if (!sess) {
       return NextResponse.json({ ok: false, error: "Unknown session product." }, { status: 404 });
     }
+
     const priceId = stripePriceIdForSession(sess);
     try {
       const stripeSession = await stripe.checkout.sessions.create({
         mode: "payment",
+        customer_email: body.email || undefined,
         line_items: priceId
           ? [{ price: priceId, quantity: 1 }]
           : [
@@ -63,10 +75,13 @@ export async function POST(req: NextRequest) {
         metadata: {
           type: "session",
           product: sess.id,
+          kind: sess.kind,
+          tier: sess.tier,
+          email: body.email || "",
           calLink: sess.calLink,
         },
       });
-      return NextResponse.json({ ok: true, url: stripeSession.url });
+      return NextResponse.json({ ok: true, url: stripeSession.url, tier: sess.tier });
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Stripe session creation failed";
       console.error("Stripe session checkout error:", msg);

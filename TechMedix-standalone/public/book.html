@@ -139,7 +139,12 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
 <section class="wrap" id="rates">
   <div class="eyebrow" style="margin-bottom:14px;">Session rates</div>
   <h2 style="font-family:var(--serif);font-size:clamp(30px,4vw,44px);letter-spacing:-0.02em;margin-bottom:8px;">Simple, transparent pricing</h2>
-  <p style="color:var(--ink-2);max-width:620px;margin-bottom:28px;">Your <strong>first paid session is $30/hour</strong>; every session after that is <strong>$50/hour</strong>. Paid at checkout via Stripe. (The 30-min intro call stays free.)</p>
+  <p style="color:var(--ink-2);max-width:620px;margin-bottom:20px;">Your <strong>first paid session is $30/hour</strong>; every session after that is <strong>$50/hour</strong>. Paid at checkout via Stripe. (The 30-min intro call stays free.)</p>
+  <div style="max-width:420px;margin-bottom:24px;">
+    <label for="bc-email" style="display:block;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;">Your email (we'll apply the right rate)</label>
+    <input id="bc-email" type="email" placeholder="you@company.com" required style="width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:var(--r);font-family:var(--display);font-size:14px;background:var(--white);" />
+    <div id="bc-tier-note" style="font-size:12px;color:var(--ink-3);margin-top:6px;min-height:16px;"></div>
+  </div>
   <div class="rates">
     <div class="rate free">
       <span class="rtag">Intro Call</span>
@@ -149,18 +154,18 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
       <a href="https://cal.com/black-cat-orjpcq/30min" target="_blank" rel="noopener" class="btn" style="margin-top:14px;">Book free call →</a>
     </div>
     <div class="rate">
-      <span class="rtag">Consultation · First</span>
+      <span class="rtag">Consultation</span>
       <div class="rname">Robotics &amp; AI Strategy</div>
-      <div class="rprice">$30 <span style="font-size:14px;color:var(--ink-3);">/ 60 min</span></div>
-      <div class="rnote">First paid session at $30/hr. Subsequent sessions $50/hr. Remote.</div>
-      <button class="bc-pay-btn btn" data-product="consult-first" style="margin-top:14px;">Book &amp; pay $30 →</button>
+      <div class="rprice" data-price="consult">$30 <span style="font-size:14px;color:var(--ink-3);">/ 60 min</span></div>
+      <div class="rnote">First session $30/hr. Returning $50/hr. Remote.</div>
+      <button class="bc-pay-btn btn" data-kind="consultation" style="margin-top:14px;">Book consultation →</button>
     </div>
     <div class="rate">
-      <span class="rtag">Class · First</span>
+      <span class="rtag">Class</span>
       <div class="rname">Intro to Robotics &amp; AI</div>
-      <div class="rprice">$45 <span style="font-size:14px;color:var(--ink-3);">/ 90 min</span></div>
-      <div class="rnote">First paid session at $30/hr. Subsequent sessions $50/hr. Remote or on-site.</div>
-      <button class="bc-pay-btn btn" data-product="class-first" style="margin-top:14px;">Book &amp; pay $45 →</button>
+      <div class="rprice" data-price="class">$45 <span style="font-size:14px;color:var(--ink-3);">/ 90 min</span></div>
+      <div class="rnote">First session $45 (90 min). Returning $75. Remote or on-site.</div>
+      <button class="bc-pay-btn btn" data-kind="class" style="margin-top:14px;">Book class →</button>
     </div>
     <div class="rate">
       <span class="rtag">Onboarding</span>
@@ -244,25 +249,36 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
 </section>
 
 <script>
+  var bcEmail = document.getElementById('bc-email');
+  var bcTierNote = document.getElementById('bc-tier-note');
+
   document.querySelectorAll('.bc-pay-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var product = btn.getAttribute('data-product');
+      var email = (bcEmail.value || '').trim();
+      if (!email || email.indexOf('@') < 0) {
+        bcTierNote.textContent = 'Enter your email first so we can apply the right rate.';
+        bcTierNote.style.color = 'var(--fire)';
+        bcEmail.focus();
+        return;
+      }
+      var kind = btn.getAttribute('data-kind');
+      var original = btn.textContent;
       btn.textContent = 'Redirecting to checkout…';
       btn.disabled = true;
       fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ product: product, quantity: 1 }),
+        body: JSON.stringify({ kind: kind, email: email, quantity: 1 }),
       }).then(function (r) { return r.json(); }).then(function (d) {
         if (d.ok && d.url) { window.location.href = d.url; }
         else {
           alert('Checkout unavailable: ' + (d.error || 'unknown error'));
-          btn.textContent = 'Book & pay →';
+          btn.textContent = original;
           btn.disabled = false;
         }
       }).catch(function () {
         alert('Checkout request failed.');
-        btn.textContent = 'Book & pay →';
+        btn.textContent = original;
         btn.disabled = false;
       });
     });
