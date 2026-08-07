@@ -2,7 +2,16 @@ export const dynamic = "force-static";
 
 export default function StoreSuccessPage() {
   return (
-    <main style={{ maxWidth: 640, margin: "0 auto", padding: "120px 20px 80px", textAlign: "center" }}>
+    <main
+      style={{
+        maxWidth: 640,
+        margin: "0 auto",
+        padding: "120px 20px 80px",
+        textAlign: "center",
+        fontFamily: "'Satoshi', 'Helvetica Neue', sans-serif",
+        color: "#0a0a0f",
+      }}
+    >
       <div
         style={{
           width: 56,
@@ -17,7 +26,7 @@ export default function StoreSuccessPage() {
       >
         ✓
       </div>
-      <h1 style={{ fontFamily: "Georgia, serif", fontSize: 34, marginBottom: 12 }}>Order confirmed</h1>
+      <h1 style={{ fontFamily: "'Tanker', sans-serif", fontSize: 34, marginBottom: 12, letterSpacing: "-0.02em" }}>Order confirmed</h1>
       <p style={{ color: "#3a3a45", fontSize: 16, lineHeight: 1.7 }}>
         Thank you. Your aftermarket part order is in. We&apos;ll email fulfilment and tracking details
         shortly. Most H1 parts ship in 3–10 business days.
