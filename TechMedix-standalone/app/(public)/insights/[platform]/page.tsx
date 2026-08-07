@@ -12,9 +12,18 @@ export async function generateMetadata({ params }: { params: Promise<{ platform:
   const { platform } = await params;
   const p = (ALL_PLATFORMS as any[]).find((x) => x.id === platform);
   if (!p) return {};
+  const url = `https://blackcatrobotics.com/insights/${p.id}`;
   return {
     title: `${p.name} Predictive Maintenance & Failure Modes | TechMedix`,
     description: `Common failure modes for the ${p.name} by ${p.manufacturer}, and how TechMedix predicts them before breakdown. ${p.description}`,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${p.name} Predictive Maintenance & Failure Modes | TechMedix`,
+      description: `Failure modes for the ${p.name} by ${p.manufacturer}, and how TechMedix predicts them before breakdown.`,
+      url,
+      siteName: "BlackCat Robotics",
+      images: [{ url: "/og-techmedix.png", width: 1200, height: 630, alt: `${p.name} predictive maintenance` }],
+    },
   };
 }
 

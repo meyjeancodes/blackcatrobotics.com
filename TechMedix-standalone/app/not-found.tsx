@@ -19,7 +19,7 @@ export default function NotFound() {
       <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
         <path
           d="M8 34 H20 L25 22 L32 44 L38 30 L43 34 H56"
-          stroke="#E84E1B"
+          stroke="#cc3d17"
           strokeWidth="4"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -28,7 +28,7 @@ export default function NotFound() {
         <rect x="24" y="14" width="16" height="6" rx="2" fill="#0a0a0f" />
       </svg>
       <h1 style={{ fontSize: "64px", letterSpacing: "-0.04em", fontWeight: 800, margin: "24px 0 8px" }}>
-        4<span style={{ color: "#E84E1B" }}>0</span>4
+        4<span style={{ color: "#cc3d17" }}>0</span>4
       </h1>
       <p style={{ fontSize: "16px", color: "#555", maxWidth: "420px", lineHeight: 1.6, marginBottom: "28px" }}>
         This page flew off the radar. Let&apos;s get you back to the flock.
@@ -37,7 +37,7 @@ export default function NotFound() {
         href="/"
         style={{
           display: "inline-block",
-          background: "#E84E1B",
+          background: "#cc3d17",
           color: "#fff",
           textDecoration: "none",
           fontWeight: 600,

@@ -5,6 +5,15 @@ export const metadata = {
   title: "Robotics Maintenance Insights & Failure Modes | TechMedix",
   description:
     "TechMedix research on predictive maintenance for autonomous robots — failure modes, telemetry signatures, and MTBF data across humanoids, drones, AMRs, and EV fleets.",
+  alternates: { canonical: "https://blackcatrobotics.com/insights" },
+  openGraph: {
+    title: "Robotics Maintenance Insights & Failure Modes | TechMedix",
+    description:
+      "Failure modes and predictive maintenance across autonomous fleets — humanoids, drones, AMRs, and EV fleets.",
+    url: "https://blackcatrobotics.com/insights",
+    siteName: "BlackCat Robotics",
+    images: [{ url: "/og-techmedix.png", width: 1200, height: 630, alt: "TechMedix predictive maintenance" }],
+  },
 };
 
 const CATEGORY_LABEL: Record<string, string> = {
