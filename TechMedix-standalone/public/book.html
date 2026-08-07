@@ -139,7 +139,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
 <section class="wrap" id="rates">
   <div class="eyebrow" style="margin-bottom:14px;">Session rates</div>
   <h2 style="font-family:var(--serif);font-size:clamp(30px,4vw,44px);letter-spacing:-0.02em;margin-bottom:8px;">Simple, transparent pricing</h2>
-  <p style="color:var(--ink-2);max-width:600px;margin-bottom:28px;">Your exact price is confirmed at checkout in Cal.com before you pay. Rates below are the starting points.</p>
+  <p style="color:var(--ink-2);max-width:620px;margin-bottom:28px;">Your <strong>first paid session is $30/hour</strong>; every session after that is <strong>$50/hour</strong>. Paid at checkout via Stripe. (The 30-min intro call stays free.)</p>
   <div class="rates">
     <div class="rate free">
       <span class="rtag">Intro Call</span>
@@ -148,16 +148,16 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
       <div class="rnote">A no-obligation conversation to see if we're a fit. Remote.</div>
     </div>
     <div class="rate">
-      <span class="rtag">Consultation</span>
+      <span class="rtag">Consultation · First</span>
       <div class="rname">Robotics &amp; AI Strategy</div>
-      <div class="rprice">Paid</div>
-      <div class="rnote">60 min, remote. Final price confirmed at Cal.com checkout.</div>
+      <div class="rprice">$30 <span style="font-size:14px;color:var(--ink-3);">/ 60 min</span></div>
+      <div class="rnote">First paid session at $30/hr. Subsequent sessions $50/hr. Remote.</div>
     </div>
     <div class="rate">
-      <span class="rtag">Class</span>
+      <span class="rtag">Class · First</span>
       <div class="rname">Intro to Robotics &amp; AI</div>
-      <div class="rprice">Paid</div>
-      <div class="rnote">90 min, remote or on-site. Final price confirmed at Cal.com checkout.</div>
+      <div class="rprice">$45 <span style="font-size:14px;color:var(--ink-3);">/ 90 min</span></div>
+      <div class="rnote">First paid session at $30/hr. Subsequent sessions $50/hr. Remote or on-site.</div>
     </div>
     <div class="rate">
       <span class="rtag">Onboarding</span>
@@ -172,11 +172,11 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
   <h3>Pick a time</h3>
   <p class="sub">Choose a session type, then grab an open slot. Cal.com handles confirmations and reminders.</p>
 
-  <!-- CAL.COM EMBED — real booking, default event = 30min intro call -->
+  <!-- CAL.COM EMBED — official snippet, three event types -->
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
-    <button class="cal-tab btn" data-cal="30min" style="background:var(--fire)">30-min Intro Call</button>
-    <button class="cal-tab btn" data-cal="15min" style="background:var(--ink);color:#fff">15-min Quick Chat</button>
-    <button class="cal-tab btn" data-cal="fullsession" style="background:var(--ink);color:#fff">Full Session</button>
+    <button class="cal-tab btn" data-cal-link="black-cat-orjpcq/30min" style="background:var(--fire);color:#fff">30-min Intro Call</button>
+    <button class="cal-tab btn" data-cal-link="black-cat-orjpcq/15min" style="background:var(--ink);color:#fff">15-min Quick Chat</button>
+    <button class="cal-tab btn" data-cal-link="black-cat-orjpcq/fullsession" style="background:var(--ink);color:#fff">Full Session</button>
   </div>
   <div id="cal-embed" class="cal-frame">
     <div class="cal-fallback">
@@ -185,45 +185,56 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
     </div>
   </div>
 
+  <!-- Official Cal.com embed snippet -->
   <script>
-    (function () {
-      var CAL = "https://cal.com/black-cat-orjpcq";
-      function loadCal() {
-        if (window.Cal) return Promise.resolve();
-        return new Promise(function (res) {
-          var s = document.createElement("script");
-          s.src = "https://cal.com/embed/embed.js";
-          s.onload = function () {
-            window.Cal("init", { origin: "https://cal.com" });
-            res();
-          };
-          document.head.appendChild(s);
-        });
-      }
-      function render(slug) {
-        var el = document.getElementById("cal-embed");
-        el.innerHTML = "";
-        loadCal().then(function () {
-          window.Cal("inline", {
-            elementOrSelector: "#cal-embed",
-            calLink: "black-cat-orjpcq/" + slug,
-            config: { theme: "light", layout: "month_view" },
-          });
-        });
-      }
-      document.querySelectorAll(".cal-tab").forEach(function (b) {
-        b.addEventListener("click", function () {
-          document.querySelectorAll(".cal-tab").forEach(function (x) {
-            x.style.background = "var(--ink)";
-            x.style.color = "#fff";
-          });
-          b.style.background = "var(--fire)";
-          b.style.color = "#fff";
-          render(b.getAttribute("data-cal"));
-        });
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://cal.com/embed/embed.js", "init");
+
+    Cal("init", { origin: "https://cal.com" });
+
+    function renderCal(slug) {
+      var el = document.getElementById("cal-embed");
+      el.innerHTML = "";
+      Cal("inline", {
+        elementOrSelector: "#cal-embed",
+        calLink: slug,
+        config: { theme: "light", layout: "month_view" },
       });
-      render("30min");
-    })();
+    }
+
+    document.querySelectorAll(".cal-tab").forEach(function (b) {
+      b.addEventListener("click", function () {
+        document.querySelectorAll(".cal-tab").forEach(function (x) {
+          x.style.background = "var(--ink)";
+          x.style.color = "#fff";
+        });
+        b.style.background = "var(--fire)";
+        b.style.color = "#fff";
+        renderCal(b.getAttribute("data-cal-link"));
+      });
+    });
+
+    renderCal("black-cat-orjpcq/30min");
   </script>
   <p class="note">Prefer email? Reach Megan at <a href="mailto:blackcat@blackcatrobotics.com" style="color:var(--fire)">blackcat@blackcatrobotics.com</a></p>
 </section>
