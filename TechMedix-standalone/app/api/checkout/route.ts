@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getPartBySku, stripePriceIdFor } from "@/lib/store/parts-catalog";
+import {
+  getSessionById,
+  stripePriceIdForSession,
+} from "@/lib/store/sessions-catalog";
 
 export const runtime = "nodejs";
 
@@ -19,16 +23,61 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { sku?: string; quantity?: number };
+  let body: { sku?: string; product?: string; quantity?: number };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ ok: false, error: "Invalid JSON body." }, { status: 400 });
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://blackcatrobotics.com";
+
+  // --- Paid booking session (consultation / class) ---
+  if (body.product) {
+    const sess = getSessionById(body.product);
+    if (!sess) {
+      return NextResponse.json({ ok: false, error: "Unknown session product." }, { status: 404 });
+    }
+    const priceId = stripePriceIdForSession(sess);
+    try {
+      const stripeSession = await stripe.checkout.sessions.create({
+        mode: "payment",
+        line_items: priceId
+          ? [{ price: priceId, quantity: 1 }]
+          : [
+              {
+                quantity: 1,
+                price_data: {
+                  currency: sess.currency,
+                  unit_amount: sess.unitAmount,
+                  product_data: {
+                    name: sess.name,
+                    description: sess.description,
+                  },
+                },
+              },
+            ],
+        success_url: `${siteUrl}/book/success?session_id={CHECKOUT_SESSION_ID}&product=${sess.id}`,
+        cancel_url: `${siteUrl}/book`,
+        allow_promotion_codes: true,
+        metadata: {
+          type: "session",
+          product: sess.id,
+          calLink: sess.calLink,
+        },
+      });
+      return NextResponse.json({ ok: true, url: stripeSession.url });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Stripe session creation failed";
+      console.error("Stripe session checkout error:", msg);
+      return NextResponse.json({ ok: false, error: msg }, { status: 500 });
+    }
+  }
+
+  // --- Parts order ---
   const { sku, quantity } = body;
   if (!sku) {
-    return NextResponse.json({ ok: false, error: "Missing sku." }, { status: 400 });
+    return NextResponse.json({ ok: false, error: "Missing sku or product." }, { status: 400 });
   }
 
   const part = getPartBySku(sku);
@@ -38,11 +87,10 @@ export async function POST(req: NextRequest) {
 
   const qty = Math.min(Math.max(parseInt(String(quantity), 10) || 1, 1), 50);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://blackcatrobotics.com";
   const priceId = stripePriceIdFor(part);
 
   try {
-    const session = await stripe.checkout.sessions.create({
+    const stripeSession = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: priceId
         ? [{ price: priceId, quantity: qty }]
@@ -67,7 +115,7 @@ export async function POST(req: NextRequest) {
       metadata: { sku: part.sku, platformId: part.platformId },
     });
 
-    return NextResponse.json({ ok: true, url: session.url });
+    return NextResponse.json({ ok: true, url: stripeSession.url });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Stripe session creation failed";
     console.error("Stripe checkout error:", msg);

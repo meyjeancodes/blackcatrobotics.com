@@ -146,24 +146,28 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
       <div class="rname">30-min Intro Call</div>
       <div class="rprice">Free</div>
       <div class="rnote">A no-obligation conversation to see if we're a fit. Remote.</div>
+      <a href="https://cal.com/black-cat-orjpcq/30min" target="_blank" rel="noopener" class="btn" style="margin-top:14px;">Book free call →</a>
     </div>
     <div class="rate">
       <span class="rtag">Consultation · First</span>
       <div class="rname">Robotics &amp; AI Strategy</div>
       <div class="rprice">$30 <span style="font-size:14px;color:var(--ink-3);">/ 60 min</span></div>
       <div class="rnote">First paid session at $30/hr. Subsequent sessions $50/hr. Remote.</div>
+      <button class="bc-pay-btn btn" data-product="consult-first" style="margin-top:14px;">Book &amp; pay $30 →</button>
     </div>
     <div class="rate">
       <span class="rtag">Class · First</span>
       <div class="rname">Intro to Robotics &amp; AI</div>
       <div class="rprice">$45 <span style="font-size:14px;color:var(--ink-3);">/ 90 min</span></div>
       <div class="rnote">First paid session at $30/hr. Subsequent sessions $50/hr. Remote or on-site.</div>
+      <button class="bc-pay-btn btn" data-product="class-first" style="margin-top:14px;">Book &amp; pay $45 →</button>
     </div>
     <div class="rate">
       <span class="rtag">Onboarding</span>
       <div class="rname">Fleet Onboarding</div>
       <div class="rprice">Plan-based</div>
       <div class="rnote">Included with any active TechMedix plan. Scope set on a discovery call.</div>
+      <a href="https://cal.com/black-cat-orjpcq/fullsession" target="_blank" rel="noopener" class="btn" style="margin-top:14px;">Book discovery →</a>
     </div>
   </div>
 </section>
@@ -239,6 +243,32 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
   <p class="note">Prefer email? Reach Megan at <a href="mailto:blackcat@blackcatrobotics.com" style="color:var(--fire)">blackcat@blackcatrobotics.com</a></p>
 </section>
 
+<script>
+  document.querySelectorAll('.bc-pay-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var product = btn.getAttribute('data-product');
+      btn.textContent = 'Redirecting to checkout…';
+      btn.disabled = true;
+      fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product: product, quantity: 1 }),
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        if (d.ok && d.url) { window.location.href = d.url; }
+        else {
+          alert('Checkout unavailable: ' + (d.error || 'unknown error'));
+          btn.textContent = 'Book & pay →';
+          btn.disabled = false;
+        }
+      }).catch(function () {
+        alert('Checkout request failed.');
+        btn.textContent = 'Book & pay →';
+        btn.disabled = false;
+      });
+    });
+  });
+</script>
+
 <footer>
   BlackCat Robotics · TechMedix predictive maintenance · <a href="/" style="color:var(--ink-3);text-decoration:underline">blackcatrobotics.com</a>
 </footer>
@@ -251,22 +281,22 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
     {
       "@type": "Event",
       "name": "Robotics & AI Strategy Consultation",
-      "description": "A 60-minute paid consultation on autonomous fleet architecture, predictive-maintenance readiness, and where AI pays off — with Megan Foster, founder of BlackCat Robotics. Final price confirmed at Cal.com checkout.",
+      "description": "A 60-minute paid consultation on autonomous fleet architecture, predictive-maintenance readiness, and where AI pays off — with Megan Foster, founder of BlackCat Robotics. First session $30/hr; subsequent $50/hr.",
       "organizer": { "@type": "Organization", "name": "BlackCat Robotics", "url": "https://blackcatrobotics.com" },
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
-      "offers": { "@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession", "description": "Paid session — exact price confirmed at Cal.com checkout." }
+      "offers": { "@type": "Offer", "price": "30.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://blackcatrobotics.com/book", "description": "First session $30/hr. Follow-up sessions $50/hr." }
     },
     {
       "@type": "Course",
       "name": "Intro to Robotics & AI",
-      "description": "A 90-minute paid hands-on class covering robot anatomy, reading telemetry like a technician, and a live TechMedix failure-prediction walkthrough. Taught by Megan Foster, founder of BlackCat Robotics. Final price confirmed at Cal.com checkout.",
+      "description": "A 90-minute paid hands-on class covering robot anatomy, reading telemetry like a technician, and a live TechMedix failure-prediction walkthrough. Taught by Megan Foster, founder of BlackCat Robotics. First session $30/hr; subsequent $50/hr.",
       "provider": { "@type": "Organization", "name": "BlackCat Robotics", "sameAs": "https://blackcatrobotics.com" },
       "hasCourseInstance": {
         "@type": "CourseInstance",
         "courseMode": ["Online", "Onsite"],
         "courseWorkload": "PT1H30M",
-        "offers": { "@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession", "description": "Paid session — exact price confirmed at Cal.com checkout." }
+        "offers": { "@type": "Offer", "price": "45.00", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://blackcatrobotics.com/book", "description": "First session $45 (90 min at $30/hr). Follow-up $75." }
       }
     },
     {
