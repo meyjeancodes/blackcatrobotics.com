@@ -53,6 +53,13 @@ nav{display:flex;align-items:center;justify-content:space-between;height:68px;bo
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--fire);color:#fff;text-decoration:none;font-family:var(--display);font-weight:600;font-size:13px;padding:12px 22px;border-radius:var(--r-pill);transition:background .2s}
 .btn:hover{background:var(--fire-2)}
 .book-cta{text-align:center;margin:8px 0 56px}
+.rates{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:8px 0 56px}
+.rate{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;display:flex;flex-direction:column;gap:6px}
+.rate .rtag{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fire)}
+.rate .rname{font-family:var(--serif);font-size:22px;letter-spacing:-0.02em;line-height:1.05}
+.rate .rprice{font-family:var(--serif);font-size:30px;margin:6px 0 2px}
+.rate .rnote{font-size:13px;color:var(--ink-2)}
+.rate.free{border-color:rgba(204,61,23,0.3)}
 .embed-sec{padding:8px 0 96px}
 .embed-sec h3{font-family:var(--serif);font-size:30px;letter-spacing:-0.02em;margin-bottom:6px}
 .embed-sec .sub{color:var(--ink-2);margin-bottom:24px;max-width:560px}
@@ -73,7 +80,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
     <div class="nav-links">
       <a href="/#techmedix">TechMedix</a>
       <a href="/store">Store</a>
-      <a href="/#pricing">Pricing</a>
+      <a href="#rates">Pricing</a>
       <a href="/#signal">Signal</a>
     </div>
   </div>
@@ -126,6 +133,38 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
   <div class="book-cta">
     <a href="#calendar" class="btn">Book a 30-min intro call →</a>
     <div class="note">All sessions are 1:1 with Megan Foster unless arranged for a group.</div>
+  </div>
+</section>
+
+<section class="wrap" id="rates">
+  <div class="eyebrow" style="margin-bottom:14px;">Session rates</div>
+  <h2 style="font-family:var(--serif);font-size:clamp(30px,4vw,44px);letter-spacing:-0.02em;margin-bottom:8px;">Simple, transparent pricing</h2>
+  <p style="color:var(--ink-2);max-width:600px;margin-bottom:28px;">Your exact price is confirmed at checkout in Cal.com before you pay. Rates below are the starting points.</p>
+  <div class="rates">
+    <div class="rate free">
+      <span class="rtag">Intro Call</span>
+      <div class="rname">30-min Intro Call</div>
+      <div class="rprice">Free</div>
+      <div class="rnote">A no-obligation conversation to see if we're a fit. Remote.</div>
+    </div>
+    <div class="rate">
+      <span class="rtag">Consultation</span>
+      <div class="rname">Robotics &amp; AI Strategy</div>
+      <div class="rprice">Paid</div>
+      <div class="rnote">60 min, remote. Final price confirmed at Cal.com checkout.</div>
+    </div>
+    <div class="rate">
+      <span class="rtag">Class</span>
+      <div class="rname">Intro to Robotics &amp; AI</div>
+      <div class="rprice">Paid</div>
+      <div class="rnote">90 min, remote or on-site. Final price confirmed at Cal.com checkout.</div>
+    </div>
+    <div class="rate">
+      <span class="rtag">Onboarding</span>
+      <div class="rname">Fleet Onboarding</div>
+      <div class="rprice">Plan-based</div>
+      <div class="rnote">Included with any active TechMedix plan. Scope set on a discovery call.</div>
+    </div>
   </div>
 </section>
 
@@ -201,30 +240,30 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--ink-3);font
     {
       "@type": "Event",
       "name": "Robotics & AI Strategy Consultation",
-      "description": "A 60-minute consultation on autonomous fleet architecture, predictive-maintenance readiness, and where AI pays off — with Megan Foster, founder of BlackCat Robotics.",
+      "description": "A 60-minute paid consultation on autonomous fleet architecture, predictive-maintenance readiness, and where AI pays off — with Megan Foster, founder of BlackCat Robotics. Final price confirmed at Cal.com checkout.",
       "organizer": { "@type": "Organization", "name": "BlackCat Robotics", "url": "https://blackcatrobotics.com" },
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession" }
+      "offers": { "@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession", "description": "Paid session — exact price confirmed at Cal.com checkout." }
     },
     {
       "@type": "Course",
       "name": "Intro to Robotics & AI",
-      "description": "A 90-minute hands-on class covering robot anatomy, reading telemetry like a technician, and a live TechMedix failure-prediction walkthrough. Taught by Megan Foster, founder of BlackCat Robotics.",
+      "description": "A 90-minute paid hands-on class covering robot anatomy, reading telemetry like a technician, and a live TechMedix failure-prediction walkthrough. Taught by Megan Foster, founder of BlackCat Robotics. Final price confirmed at Cal.com checkout.",
       "provider": { "@type": "Organization", "name": "BlackCat Robotics", "sameAs": "https://blackcatrobotics.com" },
       "hasCourseInstance": {
         "@type": "CourseInstance",
         "courseMode": ["Online", "Onsite"],
         "courseWorkload": "PT1H30M",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession" }
+        "offers": { "@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession", "description": "Paid session — exact price confirmed at Cal.com checkout." }
       }
     },
     {
       "@type": "Product",
       "name": "TechMedix Fleet Onboarding",
-      "description": "Get your robots onto TechMedix: platform and sensor mapping, telemetry ingestion, and a configured 48-hour predictive alert window.",
+      "description": "Get your robots onto TechMedix: platform and sensor mapping, telemetry ingestion, and a configured 48-hour predictive alert window. Included with any active TechMedix plan.",
       "brand": { "@type": "Brand", "name": "TechMedix" },
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession" }
+      "offers": { "@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://cal.com/black-cat-orjpcq/fullsession", "description": "Plan-based — included with active TechMedix subscription." }
     }
   ]
 }
