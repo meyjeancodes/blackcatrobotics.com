@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
                 },
               },
             ],
-        success_url: `${siteUrl}/book/success?session_id={CHECKOUT_SESSION_ID}&product=${sess.id}`,
+        success_url: `${siteUrl}/book/success?session_id={CHECKOUT_SESSION_ID}&product=${sess.id}&email=${encodeURIComponent(body.email || "")}`,
         cancel_url: `${siteUrl}/book`,
         allow_promotion_codes: true,
         metadata: {

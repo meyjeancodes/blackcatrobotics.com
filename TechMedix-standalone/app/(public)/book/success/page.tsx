@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getSessionById } from "@/lib/store/sessions-catalog";
+import PlanUpsell from "../_components/PlanUpsell";
 
 export const dynamic = "force-dynamic";
 
@@ -13,9 +14,9 @@ const CAL = "https://cal.com/black-cat-orjpcq";
 export default async function BookSuccessPage({
   searchParams,
 }: {
-  searchParams: Promise<{ product?: string; session_id?: string }>;
+  searchParams: Promise<{ product?: string; session_id?: string; email?: string }>;
 }) {
-  const { product } = await searchParams;
+  const { product, email } = await searchParams;
   const sess = product ? getSessionById(product) : undefined;
   const calLink = sess?.calLink || "black-cat-orjpcq/fullsession";
 
@@ -75,6 +76,8 @@ export default async function BookSuccessPage({
           title="Schedule your session"
         />
       </div>
+
+      <PlanUpsell email={email} />
 
       <p style={{ marginTop: 28 }}>
         <Link href="/book" style={{ color: "#cc3d17", marginRight: 16 }}>
