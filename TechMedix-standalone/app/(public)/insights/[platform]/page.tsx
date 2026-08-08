@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ALL_PLATFORMS, { PLATFORM_IMAGE_MAP } from "@/lib/platforms";
+import InsightCTA from "../_components/InsightCTA";
 
 export function generateStaticParams() {
   return ALL_PLATFORMS.filter(
@@ -125,12 +126,15 @@ export default async function PlatformInsightPage({
         </div>
       </section>
 
+      <InsightCTA platformName={p.name} platformId={p.id} />
+
       <section className="rounded-2xl border border-theme-12 bg-theme-4 p-8">
         <h2 className="font-header text-2xl tracking-[-0.02em] text-theme-primary">
           Keep your {p.name} running
         </h2>
         <p className="mt-2 max-w-xl text-sm leading-6 text-theme-52">
           TechMedix monitors these signatures 24/7 and predicts failures up to 48 hours in advance.
+          Replace worn parts before they fail — browse the H1 parts we keep in stock.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <Link

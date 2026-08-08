@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ALL_PLATFORMS from "@/lib/platforms";
+import InsightCTA from "./_components/InsightCTA";
 
 export const metadata = {
   title: "Robotics Maintenance Insights & Failure Modes | TechMedix",
@@ -90,6 +91,23 @@ export default function InsightsIndexPage() {
         >
           Read the methodology →
         </Link>
+      </section>
+
+      <InsightCTA />
+
+      <section className="rounded-2xl border border-theme-12 bg-white p-6">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h3 className="font-header text-lg tracking-[-0.02em] text-theme-primary">Field guides &amp; deep dives</h3>
+            <p className="mt-1 text-sm text-theme-52">Practical writing on predictive maintenance and failure modes.</p>
+          </div>
+          <Link
+            href="/insights/blog"
+            className="inline-flex items-center rounded-full bg-theme-fire px-5 py-2.5 font-ui text-[0.62rem] uppercase tracking-[0.16em] font-semibold text-white transition hover:bg-theme-fire/90"
+          >
+            Read the blog →
+          </Link>
+        </div>
       </section>
     </div>
   );
