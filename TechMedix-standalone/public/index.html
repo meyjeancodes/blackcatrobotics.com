@@ -1097,90 +1097,12 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 
     <div class="robot-stage">
       <div class="photo-wrap">
-        <div class="overlay">
-          <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet">
-            <!-- ROBOT (inline SVG build — replaces removed photo; part coords match leader-line anchors) -->
-            <g class="mecha">
-              <ellipse cx="985" cy="1044" rx="330" ry="32" fill="rgba(10,10,15,0.10)"/>
-              <!-- HEAD -->
-              <rect x="905" y="62" width="150" height="140" rx="48" fill="#1c1f27" stroke="#3b3f4a" stroke-width="3"/>
-              <rect x="930" y="118" width="100" height="34" rx="14" fill="#0c0e13"/>
-              <circle cx="980" cy="60" r="13" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="980" cy="60" r="5" fill="#cc3d17"/>
-              <!-- NECK -->
-              <rect x="952" y="196" width="56" height="34" rx="10" fill="#23262f" stroke="#3b3f4a" stroke-width="3"/>
-              <!-- TORSO -->
-              <path d="M845 250 Q845 216 882 212 L1078 212 Q1115 216 1115 250 L1086 470 Q1056 560 1010 560 L950 560 Q904 560 874 470 Z" fill="#1c1f27" stroke="#3b3f4a" stroke-width="3"/>
-              <line x1="980" y1="230" x2="980" y2="545" stroke="#3b3f4a" stroke-width="1.5" opacity="0.6"/>
-              <!-- chest battery module -->
-              <rect x="928" y="250" width="124" height="108" rx="14" fill="#262a33" stroke="#cc3d17" stroke-width="2.5"/>
-              <line x1="928" y1="284" x2="1052" y2="284" stroke="#cc3d17" stroke-width="1.5" opacity="0.55"/>
-              <line x1="928" y1="318" x2="1052" y2="318" stroke="#cc3d17" stroke-width="1.5" opacity="0.55"/>
-              <!-- pelvis -->
-              <path d="M906 472 L1054 472 L1040 558 L920 558 Z" fill="#1c1f27" stroke="#3b3f4a" stroke-width="3"/>
-              <!-- SHOULDER JOINTS -->
-              <circle cx="845" cy="216" r="28" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="1115" cy="216" r="28" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <!-- LEFT ARM -->
-              <path d="M845 230 Q804 250 800 320 L792 470 L820 476 L832 340 Q840 280 870 256 Z" fill="#20232c" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="806" cy="488" r="22" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <rect x="772" y="498" width="62" height="80" rx="20" fill="#20232c" stroke="#3b3f4a" stroke-width="3"/>
-              <!-- RIGHT ARM -->
-              <path d="M1115 230 Q1156 250 1160 320 L1168 470 L1140 476 L1128 340 Q1120 280 1090 256 Z" fill="#20232c" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="1144" cy="488" r="22" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <rect x="1092" y="498" width="62" height="80" rx="20" fill="#20232c" stroke="#3b3f4a" stroke-width="3"/>
-              <!-- HIP JOINTS -->
-              <circle cx="922" cy="540" r="24" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="1098" cy="540" r="24" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <!-- LEFT LEG -->
-              <path d="M922 548 Q900 570 902 590 L890 982 L936 982 L944 590 Q946 566 956 548 Z" fill="#20232c" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="902" cy="594" r="22" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="845" cy="1026" r="18" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <rect x="800" y="1000" width="100" height="30" rx="12" fill="#1c1f27" stroke="#3b3f4a" stroke-width="3"/>
-              <!-- RIGHT LEG -->
-              <path d="M1098 548 Q1120 570 1114 590 L1126 982 L1080 982 L1072 590 Q1070 566 1060 548 Z" fill="#20232c" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="1114" cy="594" r="22" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <circle cx="1114" cy="994" r="18" fill="#2c2f38" stroke="#3b3f4a" stroke-width="3"/>
-              <rect x="1064" y="1000" width="100" height="30" rx="12" fill="#1c1f27" stroke="#3b3f4a" stroke-width="3"/>
-            </g>
-            <!-- scan line -->
-            <rect class="scan" id="scan" x="0" y="0" width="1920" height="120"></rect>
-            <!-- focus halo (positioned per active part) -->
-            <circle class="halo" id="halo" cx="960" cy="540" r="120"></circle>
-
-            <!-- leader lines: from part anchor to label. label side chosen by anchor x -->
-            <!-- head / camera -->
-            <line class="lline" data-for="head" x1="980" y1="86" x2="1480" y2="120"></line>
-            <text class="plabel" data-for="head" x="1496" y="126">HEAD · 3D LIDAR / CAMERA</text>
-            <!-- torso / battery -->
-            <line class="lline" data-for="chest" x1="998" y1="270" x2="1480" y2="320"></line>
-            <text class="plabel" data-for="chest" x="1496" y="326">TORSO · 864Wh BATTERY</text>
-            <!-- right shoulder (viewer-left) -->
-            <line class="lline" data-for="sh-r" x1="845" y1="216" x2="360" y2="200"></line>
-            <text class="plabel alt" data-for="sh-r" x="120" y="206">SHOULDER ACTUATOR</text>
-            <!-- left shoulder (viewer-right) -->
-            <line class="lline" data-for="sh-l" x1="1115" y1="216" x2="1560" y2="200"></line>
-            <text class="plabel" data-for="sh-l" x="1560" y="206">SHOULDER ACTUATOR</text>
-            <!-- right knee -->
-            <line class="lline" data-for="knee-r" x1="902" y1="594" x2="360" y2="600"></line>
-            <text class="plabel alt" data-for="knee-r" x="120" y="606">KNEE ACTUATOR</text>
-            <!-- left knee -->
-            <line class="lline" data-for="knee-l" x1="1114" y1="594" x2="1600" y2="600"></line>
-            <text class="plabel" data-for="knee-l" x="1600" y="606">KNEE ACTUATOR</text>
-            <!-- right hip -->
-            <line class="lline" data-for="hip-r" x1="922" y1="540" x2="360" y2="520"></line>
-            <text class="plabel alt" data-for="hip-r" x="120" y="526">HIP JOINT</text>
-            <!-- left hip -->
-            <line class="lline" data-for="hip-l" x1="1098" y1="540" x2="1600" y2="520"></line>
-            <text class="plabel" data-for="hip-l" x="1600" y="526">HIP JOINT</text>
-            <!-- right ankle/foot -->
-            <line class="lline" data-for="ankle-r" x1="845" y1="1026" x2="360" y2="1000"></line>
-            <text class="plabel alt" data-for="ankle-r" x="120" y="1006">ANKLE / FOOT IMU</text>
-            <!-- left ankle/foot -->
-            <line class="lline" data-for="ankle-l" x1="1114" y1="994" x2="1560" y2="1000"></line>
-            <text class="plabel" data-for="ankle-l" x="1560" y="1006">ANKLE / FOOT IMU</text>
-          </svg>
-        </div>
+        <iframe
+          src="/embed/h1"
+          title="Unitree H1 interactive 3D model"
+          loading="lazy"
+          style="position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;"
+        ></iframe>
       </div>
     </div>
 
