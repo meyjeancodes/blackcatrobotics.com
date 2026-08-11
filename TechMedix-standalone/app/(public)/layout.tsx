@@ -15,6 +15,18 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
           </Link>
           <div className="flex items-center gap-4">
             <Link
+              href="/insights"
+              className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-55 transition hover:text-theme-primary"
+            >
+              Insights
+            </Link>
+            <Link
+              href="/markets"
+              className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-55 transition hover:text-theme-primary"
+            >
+              Markets
+            </Link>
+            <Link
               href="/technicians"
               className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-55 transition hover:text-theme-primary"
             >
