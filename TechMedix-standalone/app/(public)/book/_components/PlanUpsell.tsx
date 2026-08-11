@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { PLAN_TIERS } from "@/lib/store/plans";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xreyrndq";
+const FORMSPREE_ENDPOINT =
+  process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || 'https://formspree.io/f/xreyrndq';
 
 export default function PlanUpsell({ email }: { email?: string }) {
   const [picked, setPicked] = useState<string | null>(null);

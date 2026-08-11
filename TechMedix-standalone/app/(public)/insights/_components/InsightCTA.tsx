@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xreyrndq";
+const FORMSPREE_ENDPOINT =
+  process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || 'https://formspree.io/f/xreyrndq';
 
 /**
  * Conversion block for insights pages. Closes the loop: a reader landed on a

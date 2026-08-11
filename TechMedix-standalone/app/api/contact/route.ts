@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createServiceClient } from '@/lib/supabase-service';
 
+// Canonical lead inbox. Matches the Formspree endpoint already used by the
+// client-side forms (InsightCTA, PlanUpsell, public/index.html) so every lead
+// lands in the same place. Override per-environment via env if needed.
+const FORMSPREE_ENDPOINT =
+  process.env.FORMSPREE_ENDPOINT || 'https://formspree.io/f/xreyrndq';
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
@@ -94,51 +100,46 @@ export async function POST(req: NextRequest) {
     console.error('Resend auto-reply failed:', e);
   }
 
-  // 3️⃣ Discord notification to you (instant push) — kept as fallback if webhook set
-  let discordError: string | null = null;
-  if (process.env.DISCORD_WEBHOOK_URL) {
-    const interestLabel = interest_type || 'General Inquiry';
-    const productLabel = product || 'core_platform';
-    const companyLabel = company || '—';
-    const messagePreview = message ? message.slice(0, 800) : '—';
-
-    const embed = {
-      title: `🚨 New Lead: ${interestLabel}`,
-      color: 0xff6b35,
-      fields: [
-        { name: 'Name', value: name, inline: true },
-        { name: 'Email', value: email, inline: true },
-        { name: 'Company', value: companyLabel, inline: true },
-        { name: 'Product', value: productLabel, inline: true },
-        { name: 'Source', value: source || 'website', inline: true },
-        { name: 'Interest', value: interestLabel, inline: true },
-        { name: 'Message', value: messagePreview },
-      ],
-      footer: { text: `BlackCat Robotics • ${new Date().toISOString()}` },
-      timestamp: new Date().toISOString(),
-    };
-
-    try {
-      const res = await fetch(process.env.DISCORD_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ embeds: [embed] }),
-      });
-      if (!res.ok) {
-        const txt = await res.text();
-        discordError = `Discord webhook failed: ${res.status} ${txt}`;
-        console.error(discordError);
-      }
-    } catch (e) {
-      discordError = e instanceof Error ? e.message : 'Discord fetch failed';
-      console.error('Discord webhook error:', e);
+  // 3️⃣ Deliver the lead to Formspree (canonical inbox for every BlackCat lead).
+  // This is the same endpoint the client-side forms post to, so all leads
+  // (Acquire quotes, insights, plan upsells) land in one place. Failures here
+  // are surfaced, not swallowed — a silent lead pipeline is worse than a loud one.
+  let formspreeError: string | null = null;
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        company: company || '',
+        interest_type: interest_type || 'Contact form',
+        message: message || '',
+        product: product || '',
+        source: source || 'blackcat_website',
+        _subject:
+          _subject || `New lead — ${name} (${email})${company ? ' @ ' + company : ''}`,
+      }),
+    });
+    if (!res.ok) {
+      const txt = await res.text();
+      formspreeError = `Formspree failed: ${res.status} ${txt.slice(0, 200)}`;
+      console.error(formspreeError);
     }
+  } catch (e) {
+    formspreeError = e instanceof Error ? e.message : 'Formspree fetch failed';
+    console.error('Formspree delivery error:', e);
   }
 
+  // If every delivery channel failed, respond with an error so the client shows
+  // a retry state instead of a false "sent". Supabase (CRM) + Resend (prospect
+  // auto-reply) + Formspree (our inbox) — partial success still counts as ok.
+  const deliveryFailed = Boolean(formspreeError && autoReplyError && dbError);
+
   return NextResponse.json({
-    ok: true,
+    ok: !deliveryFailed,
     dbError,
     autoReplyError,
-    discordError,
-  });
+    formspreeError,
+  }, { status: deliveryFailed ? 502 : 200 });
 }
