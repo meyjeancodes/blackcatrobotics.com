@@ -336,7 +336,7 @@ function UrdfScene({ urdfUrl, onError, selectedPartId, selectedPartIds, exploded
 	return (
 		<Canvas
 			shadows
-			camera={{ position: [0.8, 0.4, 1.35], fov: 45 }}
+			camera={{ position: [0, 0.35, 1.5], fov: 45 }}
 			style={{ background: 'transparent' }}
 			gl={{ antialias: true, alpha: true, outputColorSpace: THREE.SRGBColorSpace }}
 		>
