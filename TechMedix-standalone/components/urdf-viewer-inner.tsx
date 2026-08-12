@@ -99,10 +99,10 @@ function UrdfRobot({
 		const loader = new URDFLoaderClass();
 		const urdfDir = urdfUrl.substring(0, urdfUrl.lastIndexOf('/') + 1);
 		loader.packages = {
-			h1_description: urdfDir,
-			g1_description: urdfDir,
-			go2_description: urdfDir,
-			h2_description: urdfDir,
+			h1_description: '/robots/unitree-h1',
+			g1_description: '/robots/unitree-g1',
+			go2_description: '/robots/unitree-go2',
+			h2_description: '/robots/unitree-h2',
 		};
 
 		loader.load(
