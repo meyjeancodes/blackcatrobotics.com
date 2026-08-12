@@ -135,34 +135,6 @@ function UrdfRobot({
 
 				groupRef.current?.add(result);
 
-				// ── Deterministic front-facing: rotate the group about Y so the
-				// robot's forward sensor (mid360) points at the camera (+Z).
-				// Computed from the actual URDF link positions, not eyeballed.
-				try {
-					const torso = result.getObjectByName('torso_link') || result.getObjectByName('pelvis');
-					const front =
-						result.getObjectByName('mid360_link') ||
-						result.getObjectByName('imu_link') ||
-						result.getObjectByName('d435_rgb_module_link');
-					if (torso && front && groupRef.current) {
-						groupRef.current.updateMatrixWorld(true);
-						const tp = new THREE.Vector3();
-						const fp = new THREE.Vector3();
-						torso.getWorldPosition(tp);
-						front.getWorldPosition(fp);
-						const fwd = new THREE.Vector3(fp.x - tp.x, 0, fp.z - tp.z);
-						if (fwd.lengthSq() > 1e-6) {
-							fwd.normalize();
-							// angle of forward from +Z, measured about Y
-							const yaw = Math.atan2(fwd.x, fwd.z);
-							// cancel it so forward -> +Z (toward camera)
-							groupRef.current.rotation.y = yaw;
-						}
-					}
-				} catch {
-					/* leave default orientation if links are missing */
-				}
-
 				setIsLoaded(true);
 				onLoad();
 				setTimeout(() => fitCameraToMesh(result), 500);
