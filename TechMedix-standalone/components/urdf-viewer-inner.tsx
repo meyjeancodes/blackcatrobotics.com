@@ -156,7 +156,7 @@ function UrdfRobot({
 							// angle of forward from +Z, measured about Y
 							const yaw = Math.atan2(fwd.x, fwd.z);
 							// cancel it so forward -> +Z (toward camera)
-							groupRef.current.rotation.y = -yaw;
+							groupRef.current.rotation.y = yaw;
 						}
 					}
 				} catch {
