@@ -151,7 +151,7 @@ function UrdfRobot({
 
 	// Base Orient: remain forward-facing at all times (no side rotation)
 	useEffect(() => {
-		if (groupRef.current) groupRef.current.rotation.set(-Math.PI / 2, Math.PI / 2, 0);
+		if (groupRef.current) groupRef.current.rotation.set(-Math.PI / 2, -Math.PI / 6, 0);
 	}, []);
 
 	// Re-camera-fit on viewport change
