@@ -26,6 +26,7 @@ import { CheckoutBanner } from "../../../components/checkout-banner";
 import { AiInsightCard } from "../../../components/ai-insight-card";
 import { AlertList } from "../../../components/alert-list";
 import { ActivityFeed } from "../../../components/activity-feed";
+import { ActionCenter } from "../../../components/action-center";
 import { getDashboardData, getMedicalTelemetry } from "../../../lib/data";
 import { Suspense } from "react";
 
@@ -57,6 +58,7 @@ export default async function DashboardPage() {
       <Suspense fallback={null}>
         <CheckoutBanner />
       </Suspense>
+
       {/* ─── Page header ─────────────────────────────────────── */}
       <header className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
@@ -93,8 +95,17 @@ export default async function DashboardPage() {
         </div>
       </header>
 
-      {/* ─── Core fleet metrics ──────────────────────────────── */}
-      <section className="grid gap-4 xl:grid-cols-4">
+      {/* ─── Action Center — leads the dashboard ──────────────── */}
+      <ActionCenter
+        alerts={snapshot.alerts}
+        diagnostics={snapshot.diagnostics}
+        jobs={snapshot.jobs}
+        robots={snapshot.robots}
+        technicians={snapshot.technicians}
+      />
+
+      {/* ─── Fleet health strip (condensed) ───────────────────── */}
+      <section className="grid gap-4 xl:grid-cols-3">
         <FleetHealthCard
           initialValue={stats.fleetHealthAverage}
           detail="Average health score across active robots in the customer fleet."
@@ -113,13 +124,6 @@ export default async function DashboardPage() {
           detail="Dispatch jobs still open, assigned, en route, or onsite."
           icon={<BriefcaseBusiness size={18} />}
           accent="warning"
-        />
-        <MetricCard
-          label="Active Robots"
-          value={`${stats.activeRobots}`}
-          detail="Robots online, degraded, or in service across the current account."
-          icon={<BatteryCharging size={18} />}
-          accent="success"
         />
       </section>
 
