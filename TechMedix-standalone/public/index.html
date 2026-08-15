@@ -115,6 +115,67 @@ ul { list-style: none; }
   .nav-links.open { display: flex; }
   .nav-links a { padding: 13px 16px; border-radius: var(--r); }
   .nav-burger { display: flex; }
+
+  /* ── Dropdown menu ────────────────────────────────────────── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--paper-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    box-shadow: var(--shadow-xl);
+    padding: 8px;
+    min-width: 220px;
+    z-index: 910;
+    list-style: none;
+    margin: 0;
+  }
+  .nav-dropdown:hover > .nav-dropdown-menu,
+  .nav-dropdown-menu:hover { display: block; }
+  .nav-dropdown-menu li { display: block; }
+  .nav-dropdown-menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border-radius: 8px;
+    gap: 2px;
+  }
+  .nav-dropdown-menu a:hover { background: rgba(10,10,15,0.05); }
+  .nav-dropdown-menu .dropdown-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .nav-dropdown-menu .dropdown-desc {
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  @media(max-width:1024px){
+    .nav-dropdown-menu{
+      position: static;
+      transform: none;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+      padding: 0 0 0 16px;
+      min-width: unset;
+      display: none;
+    }
+    .nav-dropdown:hover > .nav-dropdown-menu,
+    .nav-dropdown-menu:hover { display: block; }
+    .nav-dropdown-menu li { display: block; }
+    .nav-dropdown-menu a {
+      padding: 10px 0;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+  }
 }
 
 /* HERO */
@@ -137,7 +198,8 @@ ul { list-style: none; }
 @media(max-width:768px) { #hero { padding: calc(var(--nav-h)+32px) 20px 56px; } .hero-title { font-size: clamp(42px,11vw,72px); } .hero-scroll { display: none; } .hero-actions { flex-direction: column; } .hero-actions a { text-align: center; justify-content: center; } }
 
 /* TICKER */
-</style>/* ===== BOUNDED EMBED: ~200vh scroll band, drops into Acquire above the tabs ===== */
+</style>
+<style>/* ===== BOUNDED EMBED: ~200vh scroll band, drops into Acquire above the tabs ===== */
   .teardown-embed{position:relative;height:200vh;background:linear-gradient(180deg,var(--paper) 0%,var(--paper-2) 60%,var(--paper) 100%);}
   /* FIXED stage (not sticky) so it is immune to the live site's body{overflow:hidden} scroll container */
   .stage{position:fixed;inset:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:0;transition:opacity .5s ease;pointer-events:none;}
