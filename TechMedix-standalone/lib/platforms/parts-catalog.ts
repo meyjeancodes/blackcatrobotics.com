@@ -52,7 +52,8 @@ export type ChassisType =
   | "arm"
   | "ag-rover"
   | "compute-module"
-  | "unitree-h1-2";
+  | "unitree-h1-2"
+  | "unitree-g1";
 
 export interface Part {
   id: string;
@@ -115,8 +116,9 @@ const HUMANOID: ChassisDefinition = {
     "M 38,326 L 96,326 L 96,346 L 38,346 Z " +
     "M 104,326 L 162,326 L 162,346 L 104,346 Z",
   platformIds: [
-    // "unitree-g1" — uses generic HUMANOID chassis (see getChassisForPlatform fallback)
-    "unitree-h1-2",
+    // `unitree-g1` and `unitree-h1-2` have dedicated, manufacturer-accurate
+    // chassis definitions (G1, H1_2_AUTOPSY) — they must NOT be in the generic
+    // pool or the registry's generic-first iteration hides the dedicated view.
     "figure-02",
     "optimus-gen3",
     "asimov-1",
@@ -359,6 +361,166 @@ const HUMANOID: ChassisDefinition = {
       replacement:
         "30 min per foot. L3 cert. Re-zero both ankle sensors together.",
       labelAnchor: [73, 341],
+    },
+  ],
+};
+
+// ─── Unitree G1 chassis (manufacturer-accurate) ──────────────────────────────
+// Silhouette paths derived from Unitree's open-source G1 URDF + STL meshes
+// (BSD-3, unitree_ros g1_29dof). Each sub-assembly is the TRUE side-view convex
+// hull of that platform's actual CAD, not a generic humanoid template. This is
+// the "blueprint moat": the G1 teardown shows G1-specific geometry.
+
+const G1: ChassisDefinition = {
+  id: "unitree-g1",
+  label: "Unitree G1 — Engineering Blueprint",
+  viewBox: "0 0 200 360",
+  silhouette:
+    "M 56.6,20.7 L 54.6,27.7 L 56.6,65.2 L 83.4,65.3 L 89.6,20.7 L 82.1,15.6 L 71.6,13.3 L 63.4,14.9 L 57.0,20.1 Z " +
+    "M 56.7,168.5 L 58.0,178.5 L 65.8,184.8 L 77.1,184.8 L 84.9,178.1 L 91.5,91.3 L 86.3,69.1 L 75.4,58.0 L 56.4,64.7 L 53.6,86.9 Z " +
+    "M 68.1,134.6 L 71.7,139.4 L 88.3,144.3 L 131.0,143.0 L 132.2,129.3 L 74.5,125.3 L 69.7,127.8 L 67.9,134.1 Z " +
+    "M 68.1,134.6 L 71.7,139.4 L 88.3,144.3 L 131.0,143.0 L 132.2,129.3 L 74.5,125.3 L 69.7,127.8 L 67.9,134.1 Z " +
+    "M 132.3,134.5 L 132.3,140.0 L 139.3,143.8 L 161.8,146.2 L 165.6,134.1 L 163.8,126.4 L 154.3,119.3 L 137.0,126.3 L 132.3,133.6 Z " +
+    "M 132.3,133.8 L 132.3,140.0 L 138.0,143.2 L 159.5,146.2 L 162.4,145.6 L 165.6,134.1 L 163.8,126.4 L 154.3,119.3 L 137.0,126.3 L 132.3,133.1 Z " +
+    "M 41.2,255.5 L 34.4,346.5 L 87.0,346.5 L 100.6,207.8 L 99.2,195.9 L 91.4,169.8 L 75.7,163.9 L 66.8,165.5 L 60.7,172.8 Z " +
+    "M 41.2,255.5 L 34.4,346.5 L 87.0,346.5 L 100.6,207.8 L 99.2,195.9 L 91.4,169.8 L 75.7,163.9 L 66.8,165.5 L 60.7,172.8 Z",
+  platformIds: ["unitree-g1"],
+  parts: [
+    {
+      id: "g1-head",
+      name: "Head / Perception Pod",
+      category: "sensor",
+      d: "M 56.6,20.7 L 54.6,27.7 L 56.6,65.2 L 83.4,65.3 L 89.6,20.7 L 82.1,15.6 L 71.6,13.3 L 63.4,14.9 L 57.0,20.1 Z",
+      explodeOffset: [0, -28],
+      summary: "D455 depth cam + 3× stereo cameras, edge compute",
+      details:
+        "G1's head carries a Livox/D455-class depth unit flanked by stereo camera pairs for 360° perception. On-device compute runs the locomotion + VLA stack. The head is a sealed perception pod, not user-serviceable compute.",
+      failureSignature:
+        "Perception dropout, depth noise spikes, loss of visual-inertial odometry, head overheating at sustained inference.",
+      diagnosticCue:
+        "Stream the depth topic; check for NaN clusters or frame drops. Verify head fans spin under load. Inspect camera lenses for condensation/obstruction.",
+      replacement:
+        "Field-replaceable pod. L3 cert. Re-run extrinsic calibration + VIO baseline after swap.",
+      labelAnchor: [72, 40],
+    },
+    {
+      id: "g1-torso",
+      name: "Torso / Battery + Waist",
+      category: "battery",
+      d: "M 56.7,168.5 L 58.0,178.5 L 65.8,184.8 L 77.1,184.8 L 84.9,178.1 L 91.5,91.3 L 86.3,69.1 L 75.4,58.0 L 56.4,64.7 L 53.6,86.9 Z",
+      explodeOffset: [0, 18],
+      summary: "23.4 V Li-ion pack, waist yaw actuator, BMS + PD",
+      details:
+        "G1 uses a ~23.4 V Li-ion battery (nominal ~864 Wh on the EDU build) with an integrated BMS and power-distribution board feeding all joints. The waist yaw joint sits at the pelvis and provides the robot's primary turning DOF.",
+      failureSignature:
+        "Cell delta > ±50 mV (imbalance), pack temp > 45°C at rest, waist yaw binding or backlash, swelling (thermal-event risk).",
+      diagnosticCue:
+        "Read pack cell deltas from BMS. Never charge a swollen pack. Command a slow waist yaw; audible grind or > 3° L/R asymmetry = waist actuator wear.",
+      replacement:
+        "Battery: 45 min, L2 + L3 sign-off, LOTO + zero-energy mandatory. Waist actuator: 90 min, L4 cert, re-run structural calibration.",
+      labelAnchor: [70, 120],
+    },
+    {
+      id: "g1-arm-l",
+      name: "Left Arm (3-DoF)",
+      category: "actuator",
+      d: "M 68.1,134.6 L 71.7,139.4 L 88.3,144.3 L 131.0,143.0 L 132.2,129.3 L 74.5,125.3 L 69.7,127.8 L 67.9,134.1 Z",
+      explodeOffset: [-26, 8],
+      summary: "Shoulder (3) + elbow (1) + wrist (3) actuators",
+      details:
+        "Each G1 arm is 7-DoF total but driven by 3 proximal actuators (shoulder pitch/roll/yaw) plus elbow and a 3-DoF wrist. Gear reducers are the dominant wear item; the arm is built light for balance, not heavy payload.",
+      failureSignature:
+        "Elbow/shoulder backlash, position error growing with cycle count, faint grinding at end-of-travel.",
+      diagnosticCue:
+        "Command arm to a fixed target 10×; measure end-effector drift. > 2 mm drift = reducer wear. Compare L/R motor current under identical poses.",
+      replacement:
+        "40 min per joint. L3 cert. New reducer lube + re-zero joint encoder.",
+      labelAnchor: [100, 135],
+    },
+    {
+      id: "g1-arm-r",
+      name: "Right Arm (3-DoF)",
+      category: "actuator",
+      d: "M 68.1,134.6 L 71.7,139.4 L 88.3,144.3 L 131.0,143.0 L 132.2,129.3 L 74.5,125.3 L 69.7,127.8 L 67.9,134.1 Z",
+      explodeOffset: [26, 8],
+      summary: "Mirror of left arm actuator stack",
+      details:
+        "Mirrored 3-DoF proximal + elbow + 3-DoF wrist. Both arms share the same reducer/wiring topology; left/right spares are interchangeable after re-zeroing.",
+      failureSignature:
+        "Symmetric to left arm: backlash, end-of-travel grind, growing pose error.",
+      diagnosticCue:
+        "Mirror-test against left arm. Delta > 15% in matched-pose motor current flags the worn side.",
+      replacement:
+        "40 min per joint. L3 cert. Re-zero joint encoder post-install.",
+      labelAnchor: [100, 135],
+    },
+    {
+      id: "g1-hand-l",
+      name: "Left Dexterous Hand",
+      category: "end-effector",
+      d: "M 132.3,134.5 L 132.3,140.0 L 139.3,143.8 L 161.8,146.2 L 165.6,134.1 L 163.8,126.4 L 154.3,119.3 L 137.0,126.3 L 132.3,133.6 Z",
+      explodeOffset: [22, 6],
+      summary: "5-finger articulated hand, tendon/cable-driven",
+      details:
+        "G1's dexterous hand (Dex1-class) has five articulated fingers with tactile sensing on the phalanges. Cable-driven tendons are the primary failure point; grip force is modest by design.",
+      failureSignature:
+        "Dropped objects below rated payload, finger stall mid-close, tactile pad dead zones, tendon fraying.",
+      diagnosticCue:
+        "Grasp a 50%-rated object, hold 10 s. Slip or climbing motor current = tendon wear or pad failure.",
+      replacement:
+        "20-60 min depending on DOF. L3 cert. Re-tension tendons; re-map tactile grid.",
+      labelAnchor: [150, 133],
+    },
+    {
+      id: "g1-hand-r",
+      name: "Right Dexterous Hand",
+      category: "end-effector",
+      d: "M 132.3,133.8 L 132.3,140.0 L 138.0,143.2 L 159.5,146.2 L 162.4,145.6 L 165.6,134.1 L 163.8,126.4 L 154.3,119.3 L 137.0,126.3 L 132.3,133.1 Z",
+      explodeOffset: [22, 6],
+      summary: "Mirror of left dexterous hand",
+      details:
+        "Mirrored Dex1-class 5-finger hand. Tendon tension and tactile calibration must match the left hand for symmetric manipulation.",
+      failureSignature:
+        "Symmetric to left hand: dropped objects, tendon fray, tactile dead zones.",
+      diagnosticCue:
+        "Mirror-test grip force against left hand within ±5 N.",
+      replacement:
+        "20-60 min. L3 cert. Re-map tactile calibration grid.",
+      labelAnchor: [150, 133],
+    },
+    {
+      id: "g1-leg-l",
+      name: "Left Leg (Hip/Knee/Ankle)",
+      category: "actuator",
+      d: "M 41.2,255.5 L 34.4,346.5 L 87.0,346.5 L 100.6,207.8 L 99.2,195.9 L 91.4,169.8 L 75.7,163.9 L 66.8,165.5 L 60.7,172.8 Z",
+      explodeOffset: [-22, 14],
+      summary: "Hip (3) + knee (1) + ankle (2) high-torque actuators",
+      details:
+        "Each leg is 6-DoF: 3-DOF hip, 1-DOF knee, 2-DOF ankle. The knee is the highest-duty actuator (direct or near-direct drive) and runs the highest thermal load during stairs/inclines. Hip actuators carry full body weight.",
+      failureSignature:
+        "Gait asymmetry, elevated motor current at mid-stance, anomalous knee thermal cutoff on sustained incline, ankle foot-slap on contact.",
+      diagnosticCue:
+        "IR camera during 60 s stair-climb; knee > 80°C after 30 s flags cooling. Listen for asymmetric heel-strike; compare L/R ankle mid-stance delta > 3°.",
+      replacement:
+        "Knee 75 min / hip 90 min. L3-L4 cert. Full leg re-calibration after swap.",
+      labelAnchor: [70, 260],
+    },
+    {
+      id: "g1-leg-r",
+      name: "Right Leg (Hip/Knee/Ankle)",
+      category: "actuator",
+      d: "M 41.2,255.5 L 34.4,346.5 L 87.0,346.5 L 100.6,207.8 L 99.2,195.9 L 91.4,169.8 L 75.7,163.9 L 66.8,165.5 L 60.7,172.8 Z",
+      explodeOffset: [22, 14],
+      summary: "Mirror of left leg actuator stack",
+      details:
+        "Mirrored 6-DoF leg (3 hip / 1 knee / 2 ankle). Legs are the highest-mileage subsystem; ankle F/T and hip reducers wear first in high-use units.",
+      failureSignature:
+        "Symmetric to left leg: gait asymmetry, knee thermal cutoff, ankle foot-slap.",
+      diagnosticCue:
+        "Mirror-test gait symmetry and L/R motor-current balance within 15%.",
+      replacement:
+        "Knee 75 min / hip 90 min. L3-L4 cert. Re-calibrate ankle F/T sensor.",
+      labelAnchor: [70, 260],
     },
   ],
 };
@@ -1885,6 +2047,7 @@ export const CHASSIS_REGISTRY: Record<ChassisType, ChassisDefinition> = {
   "ag-rover": AG_ROVER,
   "compute-module": COMPUTE,
   "unitree-h1-2": H1_2_AUTOPSY,
+  "unitree-g1": G1,
 };
 
 /** Map a platform id to the correct chassis definition. */
