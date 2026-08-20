@@ -1111,6 +1111,333 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   </div>
 </section>
 
+<!-- SHOP BY PLATFORM -->
+<section class="sec" id="shop-by-platform">
+  <style>
+    #shop-by-platform .shop-grid { display:flex; flex-wrap:wrap; gap:18px; margin-top:28px; }
+    #shop-by-platform .shop-grid .scard { flex:1 1 280px; max-width:320px; }
+    @media (max-width:680px) { #shop-by-platform .shop-grid .scard { flex:1 1 100%; max-width:100%; } }
+  </style>
+  <div class="sec-head reveal">
+    <div class="eyebrow">Shop by Platform</div>
+    <h2 class="h2">Diagnostics for the robots you run.</h2>
+    <p class="body" style="margin-top:14px;max-width:560px;">Pick your platform to see its failure modes, maintenance playbooks, and TechMedix integration depth. Every platform ships with open-source diagnostics and the full dashboard.</p>
+  </div>
+  <div class="shop-grid reveal">
+      <div class="scard">
+        <a href="/insights/unitree-g1" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/unitree_g1.jpg" alt="Unitree G1" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Unitree Robotics</div>
+            <div class="scard-name">Unitree G1</div>
+            <div class="scard-desc">43-DOF bimanual humanoid with Dex1 hands</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/unitree-h1-2" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/unitree_h1_2.png" alt="Unitree H1-2" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Unitree Robotics</div>
+            <div class="scard-name">Unitree H1-2</div>
+            <div class="scard-desc">Full-size humanoid at ~178cm, ~70kg with 360° depth sensing via 3D LiDAR + depth camera</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/unitree-b2" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/unitree_b2.png" alt="Unitree B2" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Unitree Robotics</div>
+            <div class="scard-name">Unitree B2</div>
+            <div class="scard-desc">Industrial quadruped (~60kg). 40kg sustained walking load / 120kg standing payload, IP67-rated</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Industrial</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/figure-02" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/figure_02.jpg" alt="Figure 02" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Figure AI</div>
+            <div class="scard-name">Figure 02</div>
+            <div class="scard-desc">Commercial humanoid for automotive assembly. 28 total DOF, 16 DOF hands, 20kg payload</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/optimus-gen3" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/tesla_optimus.jpg" alt="Tesla Optimus Gen 3" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Tesla</div>
+            <div class="scard-name">Tesla Optimus Gen 3</div>
+            <div class="scard-desc">Tesla's 3rd-gen humanoid. 173cm / 57kg, 22 DOF hands, FSD-derived perception stack</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/digit-v5" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/agility_digit.jpg" alt="Digit V5" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Agility Robotics</div>
+            <div class="scard-name">Digit V5</div>
+            <div class="scard-desc">Bipedal humanoid built for logistics and warehousing. Hands for manipulating totes and cases</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/spot" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/bostondynamics_spot.jpg" alt="Boston Dynamics Spot" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Boston Dynamics</div>
+            <div class="scard-name">Boston Dynamics Spot</div>
+            <div class="scard-desc">The industrial inspection standard. Modular payload for sensors, cameras, robotic arm. IP54 rated</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Industrial</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/dji-agras-t50" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/dji_agras_t50.jpg" alt="DJI Agras T50" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">DJI Agriculture</div>
+            <div class="scard-name">DJI Agras T50</div>
+            <div class="scard-desc">Professional agricultural drone. 40 kg payload, 40L spray tank, radar + vision obstacle avoidance</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Drone</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/skydio-x10" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/skydio_x10.jpg" alt="Skydio X10" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Skydio</div>
+            <div class="scard-name">Skydio X10</div>
+            <div class="scard-desc">Autonomous drone for Inspector, first responder, and defense missions. 360° obstacle avoidance</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Drone</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/zipline-p2" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/zipline_p2.png" alt="Zipline Platform 2" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Zipline</div>
+            <div class="scard-name">Zipline Platform 2</div>
+            <div class="scard-desc">Autonomous fixed-wing delivery drone for medical and commercial payloads. VTOL transition</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Delivery</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/serve-rs2" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/serve_rs2.jpg" alt="Serve RS2" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Serve Robotics</div>
+            <div class="scard-name">Serve RS2</div>
+            <div class="scard-desc">Autonomous sidewalk delivery robot. Modular cargo bay, camera + lidar perception</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Delivery</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/starship-gen3" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/starship_gen3.jpg" alt="Starship Gen 3" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Starship Technologies</div>
+            <div class="scard-name">Starship Gen 3</div>
+            <div class="scard-desc">Autonomous sidewalk delivery robot for food and parcel. 6-wheel, geofenced routing</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Delivery</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/lime-gen4" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/lime_ebike.jpg" alt="Lime Gen 4 E-Scooter" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Lime</div>
+            <div class="scard-name">Lime Gen 4 E-Scooter</div>
+            <div class="scard-desc">Shared micromobility scooter. Swappable battery, IoT telemetry, ride-share firmware</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">eBike</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/bird-three" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/bird_three.jpg" alt="Bird Three E-Scooter" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Bird</div>
+            <div class="scard-name">Bird Three E-Scooter</div>
+            <div class="scard-desc">Shared micromobility scooter. Swappable battery, theft-deterrent firmware, fleet telemetry</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">eBike</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/radcommercial" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/rad_power.png" alt="Rad Power RadCommercial" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Rad Power Bikes</div>
+            <div class="scard-name">Rad Power RadCommercial</div>
+            <div class="scard-desc">Cargo e-bike for commercial fleets. 750W motor, rack-rated payload, fleet telemetry</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">eBike</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/uworld-u1-lite" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/ubtech_u1.svg" alt="UBTECH UWORLD U1 Lite" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">UBTECH Robotics</div>
+            <div class="scard-name">UWORLD U1 Lite</div>
+            <div class="scard-desc">Entry humanoid in the UWORLD U1 line. Balanced height and payload for research and education</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/uworld-u1-pro" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/ubtech_u1.svg" alt="UBTECH UWORLD U1 Pro" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">UBTECH Robotics</div>
+            <div class="scard-name">UWORLD U1 Pro</div>
+            <div class="scard-desc">Mid-tier UWORLD U1 with expanded payload and longer runtime. Dexterous hands, SDK access</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/phantom-mk1" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/foundation_phantom.webp" alt="Phantom Mk1" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Foundation Robotics Corp</div>
+            <div class="scard-name">Phantom Mk1</div>
+            <div class="scard-desc">Bipedal humanoid for research and dev. Modular joints, open SDK, ROS 2 native</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/asimov-1" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/asimov_1.jpg" alt="Asimov 1" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Menlo Robotics</div>
+            <div class="scard-name">Asimov 1</div>
+            <div class="scard-desc">Open-source humanoid platform. Modular, 3D-printable, community firmware</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/rebot-devarm" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/robo_inc.png" alt="reBot-DevArm" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Seeed Studio</div>
+            <div class="scard-name">reBot-DevArm</div>
+            <div class="scard-desc">6-DOF desktop robotic arm for makers and education. ROS 2, Python SDK</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Industrial</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/proteus-amr" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/amazon_proteus.jpg" alt="Amazon Proteus AMR" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Amazon Robotics</div>
+            <div class="scard-name">Amazon Proteus AMR</div>
+            <div class="scard-desc">First fully autonomous mobile robot for Amazon's fulfillment floors. Lidar + safety-rated</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Industrial</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="scard">
+        <a href="/insights/unitree-r1" style="text-decoration:none;color:inherit;display:block;">
+          <div class="scard-img"><img src="/images/platforms/unitree_g1.jpg" alt="Unitree R1" loading="lazy"></div>
+          <div class="scard-body">
+            <div class="scard-maker">Unitree Robotics</div>
+            <div class="scard-name">Unitree R1</div>
+            <div class="scard-desc">Lightweight educational humanoid. 25 DOF, under 30kg, for research and classrooms</div>
+          </div>
+          <div class="scard-foot">
+            <div><div class="scard-price">Humanoid</div><div class="scard-sub">TechMedix-ready</div></div>
+            <span class="scard-btn">View &rarr;</span>
+          </div>
+        </a>
+      </div>
+  </div>
+  <div class="reveal" style="margin-top:28px;">
+    <a href="/insights" class="btn btn-outline">Browse all 34 platforms &rarr;</a>
+  </div>
+</section>
+
 <!-- ACQUIRE -->
 <section class="sec acquire-sec" id="acquire">
   <div class="sec-head reveal">
