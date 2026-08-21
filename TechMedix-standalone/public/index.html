@@ -652,6 +652,28 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
   transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .scard:hover, .signal-card:hover, .rcard:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
+/* ICON-inspired: architectural hero scale + narrative kicker + breathing room */
+.hero-title {
+  font-size: clamp(60px, 9vw, 132px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  max-width: 14ch;
+}
+.hero-title em { font-style: italic; color: var(--fire-2); }
+.hero-kicker {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-top: 22px;
+  padding-left: 2px;
+  border-left: 2px solid var(--fire);
+  padding-left: 14px;
+}
+/* More negative space so sections read confident, not crowded */
+.sec { padding-top: clamp(72px, 9vw, 128px); padding-bottom: clamp(72px, 9vw, 128px); }
+.hiw-sec, .signal-sec, .lead-sec, .diag-cta-sec { padding-top: clamp(72px, 9vw, 128px); padding-bottom: clamp(72px, 9vw, 128px); }
 </style>
 <style>
   :root{
@@ -893,8 +915,9 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
       <span class="pulse"></span>
       <span class="badge-txt">TechMedix &nbsp;·&nbsp; Open Source &nbsp;·&nbsp; Free Core</span>
     </div>
-    <h1 class="hero-title">Know what's going to<br><em>fail before it stops</em><br>your fleet.</h1>
+    <h1 class="hero-title">Know what's going to<br><em>fail</em> — before it<br>stops your fleet.</h1>
     <p class="hero-sub">TechMedix watches every robot, detects abnormal behavior, explains the risk, recommends the repair, and connects the right parts + technician. Open source — run it yourself or let us operate it.</p>
+    <p class="hero-kicker">Intelligent machines, keeping autonomous fleets running.</p>
     <div class="hero-actions">
       <a href="https://github.com/meyjeancodes/blackcatrobotics.com" target="_blank" rel="noopener" class="btn btn-fire">Get TechMedix — Free &amp; Open Source</a>
       <a href="#detect-flow" class="btn btn-outline-white">See How It Works &rarr;</a>
