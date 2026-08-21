@@ -674,6 +674,25 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 /* More negative space so sections read confident, not crowded */
 .sec { padding-top: clamp(72px, 9vw, 128px); padding-bottom: clamp(72px, 9vw, 128px); }
 .hiw-sec, .signal-sec, .lead-sec, .diag-cta-sec { padding-top: clamp(72px, 9vw, 128px); padding-bottom: clamp(72px, 9vw, 128px); }
+/* Keyboard focus — a deliberate fire ring so intent is visible (ICON-grade polish + a11y).
+   Only fires for real keyboard focus, never on mouse click, and never on the disabled/touch path. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--fire);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* Quiet the ring on reduced-motion users (color still carries the signal) */
+@media (prefers-reduced-motion: reduce) {
+  a:focus-visible, button:focus-visible, input:focus-visible,
+  select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+    outline-offset: 2px;
+  }
+}
 </style>
 <style>
   :root{
