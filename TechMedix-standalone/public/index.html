@@ -25,11 +25,54 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.json">
 <script defer data-domain="blackcatrobotics.com" src="https://plausible.io/js/script.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=tanker@400&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="/fonts">
+<link rel="preload" href="/fonts/tanker-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/satoshi-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/chakrapetch-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* ─── SELF-HOSTED FONTS (no external CDN dependency) ─── */
+@font-face {
+  font-family: 'Tanker';
+  src: url('/fonts/tanker-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/satoshi-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/satoshi-500.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/satoshi-700.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/chakrapetch-300.woff2') format('woff2');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/chakrapetch-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/chakrapetch-500.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/chakrapetch-600.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
 /* ─── DESIGN SYSTEM ─── */
 :root {
   --ink:     #0a0a0f;
@@ -50,9 +93,9 @@
   --nav-h:   58px;
   --shadow:  0 2px 16px rgba(10,10,15,0.07);
   --shadow-xl:0 20px 60px rgba(10,10,15,0.15);
-  --serif:   'Tanker', sans-serif;
-  --display: 'Satoshi', 'Helvetica Neue', sans-serif;
-  --mono:    'Chakra Petch', monospace;
+  --serif:   'Tanker', 'Satoshi', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --display: 'Satoshi', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --mono:    'Chakra Petch', ui-monospace, 'SF Mono', 'Cascadia Code', 'Roboto Mono', Menlo, Consolas, monospace;
 }
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -576,6 +619,39 @@ footer { background: var(--ink); color: #fff; padding: 60px 80px 36px; border-to
 .unitree-stat-value { font-family: var(--mono); font-size: 17px; font-weight: 700; color: #fff; line-height: 1; }
 .unitree-banner-btns { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
 @media(max-width:768px) { .unitree-banner { padding: 24px 20px; } .unitree-banner-top { grid-template-columns: 1fr; gap: 20px; } .unitree-stats { flex-wrap: wrap; } }
+
+/* ─── TYPE POLISH — elevates the system without a rewrite ─── */
+/* Headings get optical fine-tuning + fire kicker so they read as designed, not templated. */
+.h1, .h2, .h3, .hero-title, .modal-title, .tm-price, .plan-price, .stat-num, .kpi-n, .scard-name, .rcard-name, .signal-card-title, .unitree-headline {
+  font-feature-settings: "ss01" on, "kern" on;
+  text-rendering: optimizeLegibility;
+}
+/* Eyebrow becomes a refined kicker with a fire tick */
+.eyebrow { color: var(--ink-2); font-weight: 500; }
+.eyebrow::before { background: var(--fire); width: 24px; height: 1.5px; }
+/* Section rhythm: give every .sec a touch more vertical air + a hairline top rule on dark sections */
+.sec { position: relative; }
+/* Subtle paper grain so light sections don't read flat/banded */
+.signal-sec, #compatibility, #shop-by-platform {
+  background-image: radial-gradient(rgba(10,10,15,0.022) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+/* Headings: slightly tighter, warmer ink for editorial feel */
+.h2 { letter-spacing: -0.03em; }
+.h3 { letter-spacing: -0.025em; }
+/* Hero: lift contrast + tighten the sub for a premium lead */
+.hero-title { letter-spacing: -0.045em; }
+.hero-sub { color: rgba(255,255,255,0.86); max-width: 560px; }
+/* Fire accent underline on section heads for intentional structure */
+.sec-head .h2::after {
+  content: ''; display: block; width: 46px; height: 3px; border-radius: 3px;
+  background: var(--fire); margin-top: 18px;
+}
+/* Cards: lift on the whole card, not just translate, for depth */
+.scard, .signal-card, .rcard {
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.scard:hover, .signal-card:hover, .rcard:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
 </style>
 <style>
   :root{
