@@ -693,6 +693,21 @@ textarea:focus-visible,
     outline-offset: 2px;
   }
 }
+
+/* SECTION RHYTHM — ICON-grade: adjacent dark chapters read as deliberate,
+   not one banded blob. A hairline + extra desktop air separates the dark-on-dark
+   bands (Demo Terminal → How It Works, Diagnostics CTA → Lead Magnet) so the
+   page feels composed. Restrained single-tone hairline, no new accent color. */
+.hiw-sec,
+.lead-sec {
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+@media (min-width: 769px) {
+  .hiw-sec,
+  .lead-sec {
+    padding-top: clamp(88px, 10vw, 144px);
+  }
+}
 </style>
 <style>
   :root{
@@ -983,7 +998,7 @@ textarea:focus-visible,
           <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="term-label">techmedix · fleet-demo-node · demo</span></div>
           <div class="term-body">
             <div class="tl"><span class="tk">fleet:</span>Atlas-7F4A · Boston Dynamics Spot</div>
-            <div class="tl"><span class="tk">location:</span>BMW Plant Spartanburg, SC</div>
+            <div class="tl"><span class="tk">location:</span>Anonymized demo site · Southeast US</div>
             <div class="tsep"></div>
             <div class="tl"><span class="tk">status:</span><span class="tok">monitoring active</span></div>
             <div class="tsep"></div>
