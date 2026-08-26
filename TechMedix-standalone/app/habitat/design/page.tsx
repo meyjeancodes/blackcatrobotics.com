@@ -9,6 +9,7 @@ import { IterationInput } from "./components/IterationInput";
 import { SaveDesignButton } from "./components/SaveDesignButton";
 import { CheckoutFlow } from "./components/CheckoutFlow";
 import { Preview3D } from "./components/Preview3D";
+import { SourcingPanel } from "./components/SourcingPanel";
 import { useDesignSession, type DesignParams } from "./hooks/useDesignSession";
 import { computeQuote, type Quote } from "./lib/quote-engine";
 import { generateFloorPlan, floorPlanToSvg, type FloorPlan } from "./lib/floor-plan-generator";
@@ -348,6 +349,7 @@ export default function HabitatDesignPage() {
               </div>
               <div className="panel p-6 space-y-4">
                 <QuotePanel params={session.params} />
+                <SourcingPanel params={session.params} />
                 <div className="border-t border-theme-6 pt-4 space-y-3">
                   <SaveDesignButton
                     params={session.params}
