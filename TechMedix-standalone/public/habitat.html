@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HABITAT — AI-Driven Home Construction | BlackCat Robotics</title>
-<meta name="description" content="HABITAT is the BlackCat Robotics division building AI-driven home construction — design your home by conversation, get a real quote, and lock it with a deposit.">
-<meta property="og:title" content="HABITAT — AI-Driven Home Construction">
-<meta property="og:description" content="Design your home by conversation. HABITAT AI generates a floor plan and a real quote, then locks your build with a deposit.">
-<meta property="og:url" content="https://blackcatrobotics.com/habitat">
+<title>HABITAT — Give a Budget. The Agent Team Builds Your Home. | BlackCat Robotics</title>
+<meta name="description" content="HABITAT by BlackCat Robotics: tell the agent team your budget and design intent. AI agents design, source, fabricate, and assemble your home — rendered in photorealistic Gaussian splats before ground breaks.">
+<meta property="og:title" content="HABITAT — An Agent Team That Builds Your Home">
+<meta property="og:description" content="Give a budget and a vision. The HABITAT agent team designs, shops, fabricates, and assembles — with a photoreal preview before you commit.">
+<meta property="og:url" content="https://blackcatrobotics.com/habitat.html">
 <meta property="og:image" content="https://blackcatrobotics.com/og-techmedix.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://blackcatrobotics.com/habitat">
+<link rel="canonical" href="https://blackcatrobotics.com/habitat.html">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 @font-face{font-family:'Tanker';src:url('/fonts/tanker-400.woff2') format('woff2');font-weight:400;font-display:swap}
@@ -19,11 +19,9 @@
 @font-face{font-family:'Satoshi';src:url('/fonts/satoshi-700.woff2') format('woff2');font-weight:700;font-display:swap}
 @font-face{font-family:'Chakra Petch';src:url('/fonts/chakrapetch-400.woff2') format('woff2');font-weight:400;font-display:swap}
 
-/* shared BlackCat design system — matches live homepage */
+/* shared BlackCat dark design system */
 :root{
-  --ink:#0a0a0f; --ink-3:#8888a0;
-  --fire:#cc3d17; --green:#1db954;
-  --white:#fff;
+  --ink:#0a0a0f; --fire:#cc3d17; --green:#1db954;
   --serif:'Tanker',ui-sans-serif,system-ui,sans-serif;
   --display:'Satoshi',ui-sans-serif,system-ui,sans-serif;
   --mono:'Chakra Petch',ui-monospace,Menlo,monospace;
@@ -48,25 +46,31 @@ a{color:inherit;text-decoration:none}
 .btn-ghost:hover{border-color:#fff}
 @media(max-width:900px){.nav-links{display:none}}
 
-.panel{position:relative;z-index:2;min-height:auto;display:flex;flex-direction:column;justify-content:center;
+.panel{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;
   padding:clamp(80px,11vw,150px) clamp(24px,7vw,110px);max-width:1400px;margin:0 auto}
 .panel.tall{min-height:92svh}
-.h-giant{font-family:var(--serif);font-weight:400;line-height:.96;font-size:clamp(44px,7.6vw,116px)}
+.h-giant{font-family:var(--serif);font-weight:400;line-height:.96;font-size:clamp(44px,7.4vw,114px)}
 .h-giant em{font-style:normal;color:var(--fire)}
 .h-big{font-family:var(--serif);font-weight:400;line-height:1;font-size:clamp(34px,4.8vw,72px)}
-.sub{margin-top:24px;max-width:56ch;font-size:clamp(15px,1.25vw,18px);color:rgba(255,255,255,.68)}
+.sub{margin-top:24px;max-width:58ch;font-size:clamp(15px,1.25vw,18px);color:rgba(255,255,255,.68)}
 .kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-bottom:26px;display:block}
 .kicker b{color:var(--green);font-weight:400}
 .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:40px}
 
-/* steps — hairline timeline, no boxes */
-.steps{margin-top:56px;display:grid;max-width:900px}
-.step{display:grid;grid-template-columns:90px 200px 1fr;gap:28px;padding:32px 0;border-top:1px solid rgba(255,255,255,.09);align-items:baseline}
-.step:last-child{border-bottom:1px solid rgba(255,255,255,.09)}
-.step .n{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--fire)}
-.step h3{font-family:var(--serif);font-weight:400;font-size:clamp(21px,2.2vw,29px)}
-.step p{font-size:14.5px;color:rgba(255,255,255,.6);max-width:46ch}
-@media(max-width:760px){.step{grid-template-columns:56px 1fr}.step p{grid-column:2}}
+/* agent roster — hairline rows */
+.agents{margin-top:56px;display:grid;max-width:1000px}
+.agent{display:grid;grid-template-columns:70px 230px 1fr;gap:28px;padding:30px 0;border-top:1px solid rgba(255,255,255,.09);align-items:baseline}
+.agent:last-child{border-bottom:1px solid rgba(255,255,255,.09)}
+.agent .id{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--fire)}
+.agent h3{font-family:var(--serif);font-weight:400;font-size:clamp(21px,2.3vw,30px)}
+.agent p{font-size:14.5px;color:rgba(255,255,255,.6);max-width:48ch}
+@media(max-width:760px){.agent{grid-template-columns:56px 1fr}.agent p{grid-column:2}}
+
+/* pipeline */
+.pipe{margin-top:56px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-family:var(--mono);
+  font-size:clamp(11px,1.1vw,13px);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.pipe b{color:#fff;font-weight:500}
+.pipe i{color:var(--fire);font-style:normal}
 
 .note{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:rgba(255,255,255,.35);margin-top:26px;line-height:1.9}
 
@@ -96,37 +100,41 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
 
 <!-- HERO -->
 <section class="panel tall">
-  <span class="kicker reveal">BlackCat Robotics Division · <b>Live Product</b></span>
-  <h1 class="h-giant reveal">Design your home by <em>conversation.</em></h1>
-  <p class="sub reveal">Describe your ideal home in plain language. HABITAT AI extracts every detail, generates a floor plan, and produces a real line-item quote. Lock the build with a deposit and we take it from there.</p>
+  <span class="kicker reveal">BlackCat Robotics Division · <b>Agent-Powered Building</b></span>
+  <h1 class="h-giant reveal">You give a budget.<br>The agent team builds <em>your home.</em></h1>
+  <p class="sub reveal">HABITAT is an agent crew, not a design tool. State your budget and your vision in plain words — specialized agents take it from there: designing, sourcing materials at real prices, fabricating components, and coordinating assembly. You watch it happen in photorealistic renders before ground ever breaks.</p>
   <div class="actions reveal">
-    <a class="btn btn-fire" href="/habitat/design">Launch the AI Designer →</a>
-    <a class="btn btn-ghost" href="/store">Browse Parts Store</a>
+    <a class="btn btn-fire" href="/habitat/design">Brief the Agents →</a>
+    <a class="btn btn-ghost" href="#crew">Meet the Crew</a>
   </div>
 </section>
 
-<!-- WHAT IT DOES -->
-<section class="panel">
-  <span class="kicker reveal">What it does</span>
-  <h2 class="h-big reveal">Construction, automated end to end.</h2>
-  <p class="sub reveal">Autonomous robotics transformed warehouses, farms, and factories. Housing hasn't followed — until now. HABITAT targets the full chain: AI design, off-site robotic fabrication, on-site assembly.</p>
-  <div class="steps">
-    <div class="step reveal"><span class="n">01</span><h3>Conversational design</h3><p>Say "3 bed, off-grid, solar, modern." The AI captures bedrooms, baths, footprint, style — no architecture software.</p></div>
-    <div class="step reveal"><span class="n">02</span><h3>Instant floor plan</h3><p>A parametric layout generates from your brief, with live design-rule checks on square footage and structure.</p></div>
-    <div class="step reveal"><span class="n">03</span><h3>Real quote</h3><p>Line-item pricing for construction, solar, rainwater, permits. A 10% deposit locks it. No guessing.</p></div>
-    <div class="step reveal"><span class="n">04</span><h3>Robotic build</h3><p>Off-site mills produce precision components; on-site systems assemble with tighter tolerances, less labor.</p></div>
+<!-- THE CREW -->
+<section class="panel" id="crew">
+  <span class="kicker reveal">The Roster</span>
+  <h2 class="h-big reveal">Six agents. One house.</h2>
+  <div class="agents">
+    <div class="agent reveal"><span class="id">A-01</span><h3>Design Agent</h3><p>Turns "3 bed, off-grid, cedar, lots of light" into a parametric floor plan — with structural and code checks running live.</p></div>
+    <div class="agent reveal"><span class="id">A-02</span><h3>Sourcing Agent</h3><p>Shops every component against live supplier catalogs to hit your budget line by line — solar, timber, fixtures, permits.</p></div>
+    <div class="agent reveal"><span class="id">A-03</span><h3>Render Agent</h3><p>Photorealistic Gaussian-splat previews of your exact home on your lot. Walk it in the browser before you spend a dollar.</p></div>
+    <div class="agent reveal"><span class="id">A-04</span><h3>Fabrication Agent</h3><p>Drives off-site robotic milling and printing — precision components cut to tolerance, sequenced for delivery.</p></div>
+    <div class="agent reveal"><span class="id">A-05</span><h3>Assembly Agent</h3><p>Coordinates on-site robotic assembly and human crews, day by day, against weather and inspection windows.</p></div>
+    <div class="agent reveal"><span class="id">A-06</span><h3>Care Agent</h3><p>Hands your finished home to TechMedix-grade monitoring so systems stay healthy for decades — not just move-in day.</p></div>
   </div>
-  <p class="note reveal">Deposit checkout powered by Stripe · Final pricing confirmed after site survey</p>
 </section>
 
-<!-- CTA -->
+<!-- PIPELINE -->
 <section class="panel">
-  <span class="kicker reveal">Start</span>
-  <h2 class="h-big reveal">Build the resilient, affordable home the market keeps promising.</h2>
-  <p class="sub reveal">HABITAT pairs generative design with BlackCat's robotics and maintenance stack (TechMedix) so the home you build stays operational for decades — not just delivered.</p>
+  <span class="kicker reveal">How It Runs</span>
+  <h2 class="h-big reveal">Budget in. Keys out.</h2>
+  <div class="pipe reveal">
+    <b>Brief</b> <i>→</i> <b>Plan + Quote</b> <i>→</i> <b>Photoreal Preview</b> <i>→</i> <b>Deposit Locks It</b> <i>→</i> <b>Fabricate</b> <i>→</i> <b>Assemble</b> <i>→</i> <b>Handover</b>
+  </div>
+  <p class="sub reveal">Every stage is visible in your dashboard. Change your mind mid-run — the agents re-plan, re-source, and re-render without starting over.</p>
+  <p class="note reveal">The AI Designer is live today: conversational design → floor plan → line-item quote → Stripe deposit lock. Fabrication + assembly phases activate as regional capacity comes online. Final pricing confirmed after site survey.</p>
   <div class="actions reveal">
-    <a class="btn btn-fire" href="/habitat/design">Start designing →</a>
-    <a class="btn btn-ghost" href="/book.html">Book a Session</a>
+    <a class="btn btn-fire" href="/habitat/design">Start Your Brief →</a>
+    <a class="btn btn-ghost" href="/book.html">Talk to a Human</a>
   </div>
 </section>
 
