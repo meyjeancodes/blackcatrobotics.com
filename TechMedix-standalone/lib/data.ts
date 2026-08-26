@@ -193,7 +193,9 @@ export async function getDashboardData() {
       supabase.from("customers").select("*").eq("id", customerId).maybeSingle(),
       supabase.from("robots").select("*").eq("customer_id", customerId),
       supabase.from("alerts").select("*").eq("customer_id", customerId).eq("resolved", false),
-      supabase.from("dispatch_jobs").select("*").eq("customer_id", customerId).neq("status", "completed").neq("status", "resolved"),
+      // dispatch_jobs.status uses the job_status enum (open/assigned/en_route/onsite/resolved).
+      // "Active" jobs = anything not resolved (and not open-cancelled equivalents).
+      supabase.from("dispatch_jobs").select("*").eq("customer_id", customerId).neq("status", "resolved"),
       supabase.from("technicians").select("*")
     ]);
 
