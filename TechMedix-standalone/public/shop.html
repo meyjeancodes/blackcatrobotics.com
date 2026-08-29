@@ -70,21 +70,20 @@ a{color:inherit;text-decoration:none}
 
 /* shop grid */
 .shop-section{padding:0 clamp(24px,7vw,110px) 100px;max-width:1500px;margin:0 auto}
-.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
-.shop-card{border:1px solid rgba(255,255,255,.10);border-radius:20px;overflow:hidden;background:rgba(10,10,15,.5);backdrop-filter:blur(6px);transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column}
-.shop-card:hover{border-color:var(--fire);transform:translateY(-4px);box-shadow:0 20px 50px rgba(204,61,23,.13)}
-.shop-card .shop-img{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden}
-.shop-card .shop-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.7) brightness(.85);transition:filter .35s,transform .45s}
-.shop-card:hover .shop-img img{filter:saturate(1) brightness(1);transform:scale(1.04)}
-.shop-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,15,.9) 0%,transparent 60%);pointer-events:none}
-.shop-price-badge{position:absolute;top:14px;right:14px;background:rgba(10,10,15,.78);backdrop-filter:blur(8px);padding:7px 14px;border-radius:999px;font-family:var(--serif);font-size:18px;line-height:1;color:#fff;border:1px solid rgba(255,255,255,.12);z-index:1}
-.shop-card .sbody{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
+.shop-card{border:1px solid rgba(255,255,255,.10);border-radius:18px;overflow:hidden;background:#101018;transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.shop-card:hover{border-color:var(--fire);transform:translateY(-3px);box-shadow:0 16px 40px rgba(204,61,23,.15)}
+.shop-card .shop-img{position:relative;width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#16161e 0%,#0a0a0f 100%);display:flex;align-items:center;justify-content:center;padding:24px}
+.shop-card .shop-img img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 8px 24px rgba(0,0,0,.4));transition:transform .4s}
+.shop-card:hover .shop-img img{transform:scale(1.06)}
+.shop-price-badge{position:absolute;top:12px;right:12px;background:rgba(10,10,15,.82);backdrop-filter:blur(8px);padding:6px 12px;border-radius:999px;font-family:var(--serif);font-size:16px;line-height:1;color:#fff;border:1px solid rgba(255,255,255,.12);z-index:1}
+.shop-card .sbody{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
 .shop-card .smaker{font-family:var(--mono);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.4)}
-.shop-card .sname{font-family:var(--serif);font-weight:400;font-size:22px;margin-top:6px}
-.shop-card .stagline{margin-top:6px;font-size:12px;line-height:1.5;color:rgba(255,255,255,.5);flex:1}
-.shop-specs{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+.shop-card .sname{font-family:var(--serif);font-weight:400;font-size:20px;margin-top:5px}
+.shop-card .stagline{margin-top:5px;font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.5);flex:1}
+.shop-specs{margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);padding-top:12px;border-top:1px solid rgba(255,255,255,.08)}
 .shop-specs span::before{content:"—";color:var(--fire);margin-right:4px}
-.shop-card .sactions{margin-top:16px;display:flex;gap:10px}
+.shop-card .sactions{margin-top:14px;display:flex;gap:10px}
 .shop-card .sactions .btn{flex:1;justify-content:center;padding:10px 0;font-size:10px}
 
 /* quote modal */
@@ -183,28 +182,28 @@ const SHOP_PARTS = [
   // Unitree H1
   {sku:'H1-KNEE-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Knee Actuator',
    tagline:'Genuine replacement knee actuator. Replace at 73% wear before Joint Backlash failure.',
-   price:1180,img:'/images/platforms/unitree_h1_2.png',lead:'5–7 days',warranty:'12 months'},
+   price:1180,img:'/images/platforms/part_knee_actuator.svg',lead:'5–7 days',warranty:'12 months'},
   {sku:'H1-HIP-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Hip Actuator',
    tagline:'Heavy-duty hip torque actuator. Factory-torque-matched for gait integrity.',
-   price:1320,img:'/images/platforms/unitree_h1_2.png',lead:'5–7 days',warranty:'12 months'},
+   price:1320,img:'/images/platforms/part_hip_actuator.svg',lead:'5–7 days',warranty:'12 months'},
   {sku:'H1-SHOULDER-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Shoulder Actuator',
    tagline:'Genuine shoulder actuator assembly. CubeMars drive, factory-torque-matched.',
-   price:950,img:'/images/platforms/unitree_h1_2.png',lead:'5–7 days',warranty:'12 months'},
+   price:950,img:'/images/platforms/part_shoulder_actuator.svg',lead:'5–7 days',warranty:'12 months'},
   {sku:'H1-ANKLE-FOOT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Ankle & Foot Module',
    tagline:'Articulated ankle with textured foot sole for stable gait on uneven terrain.',
-   price:880,img:'/images/platforms/unitree_h1_2.png',lead:'7–10 days',warranty:'12 months'},
+   price:880,img:'/images/platforms/part_ankle_foot.svg',lead:'7–10 days',warranty:'12 months'},
   {sku:'H1-WAIST-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Waist Actuator',
    tagline:'Central yaw waist actuator. Replace on drift warnings before torso wobble.',
-   price:1020,img:'/images/platforms/unitree_h1_2.png',lead:'7–10 days',warranty:'12 months'},
+   price:1020,img:'/images/platforms/part_waist_actuator.svg',lead:'7–10 days',warranty:'12 months'},
   {sku:'H1-BATTERY',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Battery Pack (864Wh)',
    tagline:'864Wh hot-swappable battery. Replace on TechMedix cell-balance alerts.',
-   price:1450,img:'/images/platforms/unitree_h1_2.png',lead:'5–7 days',warranty:'12 months'},
+   price:1450,img:'/images/platforms/part_battery_pack.svg',lead:'5–7 days',warranty:'12 months'},
   {sku:'H1-DEX-HAND',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Dexterous Hand',
    tagline:'Replacement dexterous end-effector with integrated tactile sensing. Sharpa module.',
-   price:2400,img:'/images/platforms/unitree_h1_2.png',lead:'7–10 days',warranty:'12 months'},
+   price:2400,img:'/images/platforms/part_dex_hand.svg',lead:'7–10 days',warranty:'12 months'},
   {sku:'H1-CONTROLLER',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Main Controller',
    tagline:'Main compute / motion controller module. Heatsunk enclosure, edge connector.',
-   price:1650,img:'/images/platforms/unitree_h1_2.png',lead:'7–10 days',warranty:'12 months'},
+   price:1650,img:'/images/platforms/part_controller.svg',lead:'7–10 days',warranty:'12 months'},
   // Boston Dynamics Spot
   {sku:'SPOT-BATTERY',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Battery Module',
    tagline:'Hot-swappable intelligent battery. 605Wh. Replace at 800 cycles or on power-fault alert.',
