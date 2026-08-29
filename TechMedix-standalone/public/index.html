@@ -246,6 +246,21 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
 .hintline{text-align:center;font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;
   color:rgba(255,255,255,.3);margin-top:18px}
 
+/* shop by platform grid */
+.shop-grid{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;max-width:1100px}
+.shop-card{border:1px solid rgba(255,255,255,.10);border-radius:20px;overflow:hidden;background:rgba(10,10,15,.5);backdrop-filter:blur(6px);transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.shop-card:hover{border-color:var(--fire);transform:translateY(-4px);box-shadow:0 20px 50px rgba(204,61,23,.13)}
+.shop-card img{width:100%;aspect-ratio:16/10;object-fit:cover;filter:saturate(.7) brightness(.85);transition:filter .35s}
+.shop-card:hover img{filter:saturate(1) brightness(1)}
+.shop-card .sbody{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column}
+.shop-card .smaker{font-family:var(--mono);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.shop-card .sname{font-family:var(--serif);font-weight:400;font-size:22px;margin-top:6px}
+.shop-card .stagline{margin-top:6px;font-size:12px;line-height:1.5;color:rgba(255,255,255,.5);flex:1}
+.shop-card .sprice{margin-top:14px;font-family:var(--serif);font-size:24px;line-height:1;color:#fff}
+.shop-card .sprice small{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.4);display:block;margin-top:3px}
+.shop-card .sactions{margin-top:16px;display:flex;gap:10px}
+.shop-card .sactions .btn{flex:1;justify-content:center;padding:10px 0;font-size:10px}
+
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}}
@@ -266,6 +281,7 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
     <a class="link" href="#about">About</a>
     <a class="link" href="#loop">How It Works</a>
     <a class="link" href="#platforms">Platforms</a>
+    <a class="link" href="#shop">Shop</a>
     <a class="link" href="#pricing">Pricing</a>
     <a class="btn btn-fire" href="https://dashboard.blackcatrobotics.com/signup">Start TechMedix</a>
   </div>
@@ -386,6 +402,16 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
     <p class="hintline">Scroll to browse · click a card to flip for full specs</p>
   </div>
   <p class="sub reveal" style="font-size:13px;max-width:66ch;color:rgba(255,255,255,.42)">BlackCat Robotics is actively pursuing authorized reseller partnerships with the manufacturers listed. Units are available through verified distribution channels while direct agreements are finalized.</p>
+</section>
+
+<!-- 04.5 — SHOP BY PLATFORM -->
+<section class="panel" id="shop">
+  <span class="kicker reveal">Shop by Platform</span>
+  <h2 class="h-big reveal">Parts for the robots you run.</h2>
+  <p class="sub reveal">Genuine replacement parts, sourced by BlackCat Robotics and tied to documented TechMedix failure modes. Replace before it breaks — not after.</p>
+  <div class="cats reveal" id="shopCats"><!-- JS --></div>
+  <div class="shop-grid reveal" id="shopGrid"><!-- JS --></div>
+  <p class="sub reveal" style="font-size:13px;margin-top:40px;max-width:66ch;color:rgba(255,255,255,.42)">Don't see your platform? <a href="/book.html" style="color:var(--fire);text-decoration:underline">Request a part</a> — we source across all supported manufacturers.</p>
 </section>
 
 <!-- 05 — PRICING -->
@@ -638,6 +664,62 @@ addEventListener('keydown',e=>{
 
 const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ── SHOP BY PLATFORM ──────────────────────────────────────────────────────
+const SHOP_PARTS = [
+  {sku:'H1-KNEE-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Knee Actuator',
+   tagline:'Genuine replacement knee actuator. Replace at 73% wear before Joint Backlash failure.',
+   price:1180,img:'/images/platforms/part_knee_actuator.svg',lead:'5–7 days'},
+  {sku:'H1-HIP-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Hip Actuator',
+   tagline:'Heavy-duty hip torque actuator. Factory-torque-matched for gait integrity.',
+   price:1320,img:'/images/platforms/part_hip_actuator.svg',lead:'5–7 days'},
+  {sku:'H1-SHOULDER-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Shoulder Actuator',
+   tagline:'Genuine shoulder actuator assembly. CubeMars drive, factory-torque-matched.',
+   price:950,img:'/images/platforms/part_shoulder_actuator.svg',lead:'5–7 days'},
+  {sku:'H1-ANKLE-FOOT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Ankle & Foot Module',
+   tagline:'Articulated ankle with textured foot sole for stable gait on uneven terrain.',
+   price:880,img:'/images/platforms/part_ankle_foot.svg',lead:'7–10 days'},
+  {sku:'H1-WAIST-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Waist Actuator',
+   tagline:'Central yaw waist actuator. Replace on drift warnings before torso wobble.',
+   price:1020,img:'/images/platforms/part_waist_actuator.svg',lead:'7–10 days'},
+  {sku:'H1-BATTERY',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Battery Pack (864Wh)',
+   tagline:'864Wh hot-swappable battery. Replace on TechMedix cell-balance alerts.',
+   price:1450,img:'/images/platforms/part_battery_pack.svg',lead:'5–7 days'},
+];
+const SHOP_CATS = [['all','All Parts'],['unitree-h1','Unitree H1']];
+let shopCat='all';
+const shopGrid=document.getElementById('shopGrid'), shopCatsEl=document.getElementById('shopCats');
+shopCatsEl.innerHTML = SHOP_CATS.map(([id,label])=>`<button class="cat${id===shopCat?' on':''}" data-shop-cat="${id}">${label}</button>`).join('');
+shopCatsEl.addEventListener('click',e=>{
+  const b=e.target.closest('[data-shop-cat]'); if(!b) return;
+  shopCat=b.dataset.shopCat;
+  shopCatsEl.querySelectorAll('.cat').forEach(c=>c.classList.toggle('on',c.dataset.shopCat===shopCat));
+  renderShop();
+});
+function shopCard(p){
+  return `
+  <article class="shop-card">
+    <img src="${p.img}" alt="${p.name}" loading="lazy">
+    <div class="sbody">
+      <div class="smaker">${p.maker}</div>
+      <div class="sname">${p.name}</div>
+      <div class="stagline">${p.tagline}</div>
+      <div class="sprice">$${p.price.toLocaleString()}<small>Lead time: ${p.lead}</small></div>
+      <div class="sactions">
+        <button class="btn btn-fire" data-quote="${p.maker} ${p.name}">Request Quote</button>
+      </div>
+    </div>
+  </article>`;
+}
+function renderShop(){
+  const list=SHOP_PARTS.filter(p=>shopCat==='all'||p.cat===shopCat);
+  shopGrid.innerHTML=list.map(shopCard).join('');
+  // attach quote handlers
+  shopGrid.querySelectorAll('[data-quote]').forEach(btn=>{
+    btn.addEventListener('click',e=>{ e.preventDefault(); openQuote(btn.dataset.quote); });
+  });
+}
+renderShop();
 </script>
 </body>
 </html>
