@@ -263,6 +263,7 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
 <nav class="nav">
   <a class="nav-logo" href="/"><span class="dot"></span>BlackCat<span style="color:var(--fire)">.</span></a>
   <div class="nav-links">
+    <a class="link" href="#about">About</a>
     <a class="link" href="#loop">How It Works</a>
     <a class="link" href="#platforms">Platforms</a>
     <a class="link" href="#pricing">Pricing</a>
@@ -271,6 +272,7 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="mnav" id="mnav">
+  <a class="link" href="#about">About</a>
   <a class="link" href="#loop">How It Works</a>
   <a class="link" href="#platforms">Platforms</a>
   <a class="link" href="#pricing">Pricing</a>
@@ -292,6 +294,27 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
   <div class="cue"><i></i><span>Scroll</span></div>
 </section>
 
+<!-- 01.5 — ABOUT -->
+<section class="panel" id="about">
+  <span class="kicker reveal">About BlackCat Robotics</span>
+  <h2 class="h-big reveal">We build the intelligence layer for the world's robots.</h2>
+  <p class="sub reveal">BlackCat Robotics is a Houston-based company building predictive maintenance and fleet intelligence for autonomous systems. Our flagship product, TechMedix, watches every robot, detects failures before they happen, and connects the right parts and technicians — open source at its core.</p>
+  <div class="about-stats reveal" style="margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:700px">
+    <div>
+      <div style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);line-height:1">8+</div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:8px">Robot platforms supported</div>
+    </div>
+    <div>
+      <div style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);line-height:1">40+</div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:8px">Documented failure signatures</div>
+    </div>
+    <div>
+      <div style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);line-height:1">48h</div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:8px">Predicted failure lead time</div>
+    </div>
+  </div>
+</section>
+
 <!-- 02 — THE LOOP -->
 <section class="panel" id="loop">
   <span class="kicker reveal">The Loop</span>
@@ -301,6 +324,35 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
     <div class="step reveal"><span class="n">02</span><h3>Detect</h3><p>Anomalies flagged against each platform's baseline, not a generic threshold.</p></div>
     <div class="step reveal"><span class="n">03</span><h3>Explain</h3><p>Every alert states what degraded, how confident we are, and what happens if you keep running.</p></div>
     <div class="step reveal"><span class="n">04</span><h3>Repair</h3><p>The right part matched from the catalog, dispatched with the work order.</p></div>
+  </div>
+</section>
+
+<!-- 02.5 — SOCIAL PROOF -->
+<section class="panel" id="proof">
+  <span class="kicker reveal">Trusted by operators</span>
+  <h2 class="h-big reveal">Fleet teams rely on TechMedix.</h2>
+  <p class="sub reveal">From research labs running Unitree humanoids to agricultural teams flying DJI fleets — here's what operators say about predictive maintenance that actually prevents downtime.</p>
+  <div class="proof-grid reveal" style="margin-top:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;max-width:1000px">
+    <div class="proof-card" style="padding:32px 28px;border-radius:22px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02)">
+      <p style="font-size:15px;line-height:1.6;color:rgba(255,255,255,.75)">"We caught a knee actuator drift on our H1 three days before it would have failed during a demo. TechMedix flagged it, we swapped the part during scheduled maintenance, zero downtime."</p>
+      <div style="margin-top:24px;display:flex;align-items:center;gap:12px">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--fire);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;color:#fff">R</div>
+        <div>
+          <div style="font-family:var(--display);font-size:14px;color:#fff">Research Robotics Lab</div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">Unitree H1 Fleet Operator</div>
+        </div>
+      </div>
+    </div>
+    <div class="proof-card" style="padding:32px 28px;border-radius:22px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02)">
+      <p style="font-size:15px;line-height:1.6;color:rgba(255,255,255,.75)">"The motor degradation models for our Agras T50s are surprisingly accurate. We went from reactive replacements to planned cycles — 30% reduction in drone downtime during spray season."</p>
+      <div style="margin-top:24px;display:flex;align-items:center;gap:12px">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--fire);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;color:#fff">A</div>
+        <div>
+          <div style="font-family:var(--display);font-size:14px;color:#fff">Agricultural Operations Co.</div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">DJI Agras T50 Fleet (20+ units)</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -356,6 +408,30 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
   </div>
 </section>
 
+<!-- 05.5 — RESOURCES / SEO HUB TEASER -->
+<section class="panel" id="resources">
+  <span class="kicker reveal">Resources</span>
+  <h2 class="h-big reveal">Insights for fleet operators.</h2>
+  <p class="sub reveal">Technical research, failure-mode deep dives, and supply-chain analysis — published regularly to help you run smarter fleets.</p>
+  <div class="resource-links reveal" style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:900px">
+    <a href="/insights" class="resource-link" style="display:flex;flex-direction:column;gap:8px;padding:24px 22px;border-radius:18px;border:1px solid rgba(255,255,255,.10);transition:border-color .2s">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fire)">Failure Modes</div>
+      <div style="font-family:var(--serif);font-size:20px;line-height:1.2">Platform insights</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.55)">Documented failure signatures across 8+ robot platforms.</div>
+    </a>
+    <a href="/markets" class="resource-link" style="display:flex;flex-direction:column;gap:8px;padding:24px 22px;border-radius:18px;border:1px solid rgba(255,255,255,.10);transition:border-color .2s">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fire)">Supply Chain</div>
+      <div style="font-family:var(--serif);font-size:20px;line-height:1.2">Robotics markets</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.55)">Where the robotics supply chain concentrates and why it matters.</div>
+    </a>
+    <a href="/certifications" class="resource-link" style="display:flex;flex-direction:column;gap:8px;padding:24px 22px;border-radius:18px;border:1px solid rgba(255,255,255,.10);transition:border-color .2s">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fire)">Careers</div>
+      <div style="font-family:var(--serif);font-size:20px;line-height:1.2">BCR Certifications</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.55)">Five levels from Operator to Autonomous Architect.</div>
+    </a>
+  </div>
+</section>
+
 <!-- 06 — ACQUIRE -->
 <section class="panel" id="acquire">
   <span class="kicker reveal">Acquire</span>
@@ -392,9 +468,9 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
     <div class="f-brand">BlackCat<span style="color:var(--fire)">.</span></div>
     <div class="f-meta">TechMedix Autonomous Systems<br>© 2026 BlackCat Robotics</div>
   </div>
-  <div class="f-links"><a href="#loop">How It Works</a><a href="#pricing">Pricing</a><a href="https://dashboard.blackcatrobotics.com/signup">Dashboard Signup</a></div>
-  <div class="f-links"><a href="/habitat.html">HABITAT</a><a href="/">TechMedix</a><a href="/blackcat-grid.html">BlackCat Grid</a></div>
-  <div class="f-links"><a href="/privacy.html">Privacy</a><a href="/book.html">Book a Session</a><a href="https://github.com/meyjeancodes/blackcatrobotics.com">GitHub</a></div>
+  <div class="f-links"><a href="#about">About</a><a href="#loop">How It Works</a><a href="#pricing">Pricing</a></div>
+  <div class="f-links"><a href="/insights">Insights</a><a href="/markets">Markets</a><a href="/certifications">Certifications</a></div>
+  <div class="f-links"><a href="https://dashboard.blackcatrobotics.com/signup">Dashboard</a><a href="/book.html">Book a Session</a><a href="https://github.com/meyjeancodes/blackcatrobotics.com">GitHub</a></div>
 </footer>
 
 
@@ -468,7 +544,7 @@ function cardHTML(m,i){
         </div>
       </div>
       <div class="sactions">
-        <button class="btn btn-fire" style="flex:1;justify-content:center;padding:11px 0;font-size:10.5px" data-quote="${m.maker} ${m.name}">Buy Now — Get Quote</button>
+        <button class="btn btn-fire" style="flex:1;justify-content:center;padding:11px 0;font-size:10.5px" data-quote="${m.maker} ${m.name}">Request Quote</button>
       </div>
     </div>
   </article>`;
