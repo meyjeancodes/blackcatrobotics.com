@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img">
+  <rect width="600" height="400" fill="#15171d"/>
+  <rect x="14" y="14" width="572" height="372" rx="14" fill="none" stroke="#3a3d47" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="546" cy="54" r="6" fill="#cc3d17"/>
+  <!-- digit foot -->
+  <ellipse cx="300" cy="240" rx="70" ry="20" fill="#3a3d47"/>
+  <ellipse cx="300" cy="235" rx="65" ry="16" fill="#5a5e6b"/>
+  <rect x="270" y="180" width="60" height="55" rx="6" fill="#0a0a0f" stroke="#3a3d47" stroke-width="2"/>
+  <!-- ankle joint -->
+  <circle cx="300" cy="180" r="16" fill="#16161e" stroke="#cc3d17" stroke-width="2"/>
+  <circle cx="300" cy="180" r="5" fill="#cc3d17"/>
+  <!-- contact sensors -->
+  <circle cx="260" cy="245" r="4" fill="#cc3d17"/>
+  <circle cx="300" cy="250" r="4" fill="#cc3d17"/>
+  <circle cx="340" cy="245" r="4" fill="#cc3d17"/>
+  <text x="300" y="370" text-anchor="middle" fill="#c9c8c0" font-family="monospace" font-size="16" letter-spacing="2">DIGIT FOOT ASSEMBLY</text>
+</svg>

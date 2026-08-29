@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img">
+  <rect width="600" height="400" fill="#15171d"/>
+  <rect x="14" y="14" width="572" height="372" rx="14" fill="none" stroke="#3a3d47" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="546" cy="54" r="6" fill="#cc3d17"/>
+  <!-- digit knee -->
+  <circle cx="300" cy="160" r="30" fill="#0a0a0f" stroke="#3a3d47" stroke-width="3"/>
+  <circle cx="300" cy="160" r="12" fill="#16161e"/>
+  <circle cx="300" cy="160" r="5" fill="#cc3d17"/>
+  <rect x="278" y="190" width="44" height="80" rx="5" fill="#5a5e6b"/>
+  <circle cx="300" cy="270" r="22" fill="#0a0a0f" stroke="#5a5e6b" stroke-width="3"/>
+  <circle cx="300" cy="270" r="6" fill="#cc3d17"/>
+  <rect x="280" y="292" width="40" height="50" rx="4" fill="#3a3d47"/>
+  <!-- SEA spring -->
+  <path d="M280 270 Q290 250 300 270 Q310 290 320 270" stroke="#cc3d17" stroke-width="2" fill="none"/>
+  <text x="300" y="370" text-anchor="middle" fill="#c9c8c0" font-family="monospace" font-size="16" letter-spacing="2">DIGIT KNEE ACTUATOR</text>
+</svg>

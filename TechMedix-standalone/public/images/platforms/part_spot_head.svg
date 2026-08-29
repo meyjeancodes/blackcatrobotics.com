@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img">
+  <rect width="600" height="400" fill="#15171d"/>
+  <rect x="14" y="14" width="572" height="372" rx="14" fill="none" stroke="#3a3d47" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="546" cy="54" r="6" fill="#cc3d17"/>
+  <!-- head/sensor unit -->
+  <rect x="220" y="120" width="160" height="140" rx="20" fill="#0a0a0f" stroke="#3a3d47" stroke-width="3"/>
+  <circle cx="270" cy="175" r="16" fill="#16161e" stroke="#cc3d17" stroke-width="2"/>
+  <circle cx="270" cy="175" r="5" fill="#cc3d17"/>
+  <circle cx="330" cy="175" r="16" fill="#16161e" stroke="#cc3d17" stroke-width="2"/>
+  <circle cx="330" cy="175" r="5" fill="#cc3d17"/>
+  <rect x="250" y="210" width="100" height="8" rx="3" fill="#5a5e6b"/>
+  <circle cx="300" cy="235" r="8" fill="#3a3d47"/>
+  <!-- neck -->
+  <rect x="288" y="260" width="24" height="30" rx="3" fill="#5a5e6b"/>
+  <text x="300" y="370" text-anchor="middle" fill="#c9c8c0" font-family="monospace" font-size="16" letter-spacing="2">SPOT HEAD UNIT</text>
+</svg>

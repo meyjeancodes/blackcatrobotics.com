@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img">
+  <rect width="600" height="400" fill="#15171d"/>
+  <rect x="14" y="14" width="572" height="372" rx="14" fill="none" stroke="#3a3d47" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="546" cy="54" r="6" fill="#cc3d17"/>
+  <!-- propeller pair -->
+  <ellipse cx="220" cy="200" rx="80" ry="14" fill="#3a3d47" transform="rotate(-15,220,200)"/>
+  <ellipse cx="220" cy="200" rx="80" ry="14" fill="#5a5e6b" transform="rotate(15,220,200)"/>
+  <circle cx="220" cy="200" r="14" fill="#0a0a0f" stroke="#cc3d17" stroke-width="2"/>
+  <circle cx="220" cy="200" r="4" fill="#cc3d17"/>
+  <ellipse cx="380" cy="200" rx="80" ry="14" fill="#3a3d47" transform="rotate(15,380,200)"/>
+  <ellipse cx="380" cy="200" rx="80" ry="14" fill="#5a5e6b" transform="rotate(-15,380,200)"/>
+  <circle cx="380" cy="200" r="14" fill="#0a0a0f" stroke="#cc3d17" stroke-width="2"/>
+  <circle cx="380" cy="200" r="4" fill="#cc3d17"/>
+  <!-- motor bell -->
+  <rect x="206" y="220" width="28" height="40" rx="4" fill="#3a3d47"/>
+  <rect x="366" y="220" width="28" height="40" rx="4" fill="#3a3d47"/>
+  <text x="300" y="370" text-anchor="middle" fill="#c9c8c0" font-family="monospace" font-size="16" letter-spacing="2">T50 PROPELLER SET</text>
+</svg>

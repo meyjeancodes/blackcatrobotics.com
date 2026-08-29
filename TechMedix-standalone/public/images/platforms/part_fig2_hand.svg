@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img">
+  <rect width="600" height="400" fill="#15171d"/>
+  <rect x="14" y="14" width="572" height="372" rx="14" fill="none" stroke="#3a3d47" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="546" cy="54" r="6" fill="#cc3d17"/>
+  <!-- Figure hand - 4 fingers + thumb -->
+  <rect x="260" y="120" width="80" height="50" rx="8" fill="#3a3d47"/>
+  <!-- finger 1 -->
+  <rect x="245" y="70" width="14" height="55" rx="3" fill="#5a5e6b"/>
+  <rect x="240" y="125" width="24" height="10" rx="3" fill="#cc3d17"/>
+  <!-- finger 2 -->
+  <rect x="275" y="60" width="14" height="65" rx="3" fill="#5a5e6b"/>
+  <rect x="270" y="125" width="24" height="10" rx="3" fill="#cc3d17"/>
+  <!-- finger 3 -->
+  <rect x="305" y="65" width="14" height="60" rx="3" fill="#5a5e6b"/>
+  <rect x="300" y="125" width="24" height="10" rx="3" fill="#cc3d17"/>
+  <!-- finger 4 -->
+  <rect x="335" y="75" width="14" height="50" rx="3" fill="#5a5e6b"/>
+  <rect x="330" y="125" width="24" height="10" rx="3" fill="#cc3d17"/>
+  <!-- thumb -->
+  <rect x="225" y="130" width="14" height="40" rx="3" fill="#5a5e6b" transform="rotate(-30,225,130)"/>
+  <!-- wrist connector -->
+  <rect x="275" y="170" width="50" height="30" rx="4" fill="#3a3d47"/>
+  <text x="300" y="370" text-anchor="middle" fill="#c9c8c0" font-family="monospace" font-size="16" letter-spacing="2">FIGURE 02 DEXTEROUS HAND</text>
+</svg>

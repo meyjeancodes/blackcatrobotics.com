@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img">
+  <rect width="600" height="400" fill="#15171d"/>
+  <rect x="14" y="14" width="572" height="372" rx="14" fill="none" stroke="#3a3d47" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="546" cy="54" r="6" fill="#cc3d17"/>
+  <!-- 3-finger gripper -->
+  <rect x="260" y="200" width="80" height="40" rx="6" fill="#3a3d47"/>
+  <!-- finger 1 -->
+  <rect x="240" y="150" width="18" height="60" rx="3" fill="#5a5e6b"/>
+  <rect x="235" y="210" width="28" height="12" rx="4" fill="#cc3d17"/>
+  <!-- finger 2 -->
+  <rect x="291" y="140" width="18" height="70" rx="3" fill="#5a5e6b"/>
+  <rect x="286" y="210" width="28" height="12" rx="4" fill="#cc3d17"/>
+  <!-- finger 3 -->
+  <rect x="342" y="150" width="18" height="60" rx="3" fill="#5a5e6b"/>
+  <rect x="337" y="210" width="28" height="12" rx="4" fill="#cc3d17"/>
+  <!-- palm -->
+  <rect x="235" y="222" width="130" height="20" rx="4" fill="#3a3d47"/>
+  <text x="300" y="370" text-anchor="middle" fill="#c9c8c0" font-family="monospace" font-size="16" letter-spacing="2">GEN3 GRIPPER KIT</text>
+</svg>
