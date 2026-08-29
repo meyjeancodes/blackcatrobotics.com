@@ -250,14 +250,18 @@ footer{position:relative;z-index:2;padding:70px clamp(24px,7vw,110px) 50px;borde
 .shop-grid{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;max-width:1100px}
 .shop-card{border:1px solid rgba(255,255,255,.10);border-radius:20px;overflow:hidden;background:rgba(10,10,15,.5);backdrop-filter:blur(6px);transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column}
 .shop-card:hover{border-color:var(--fire);transform:translateY(-4px);box-shadow:0 20px 50px rgba(204,61,23,.13)}
-.shop-card img{width:100%;aspect-ratio:16/10;object-fit:cover;filter:saturate(.7) brightness(.85);transition:filter .35s}
-.shop-card:hover img{filter:saturate(1) brightness(1)}
+.shop-card .shop-img{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden}
+.shop-card .shop-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.7) brightness(.85);transition:filter .35s,transform .45s}
+.shop-card:hover .shop-img img{filter:saturate(1) brightness(1);transform:scale(1.04)}
+.shop-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,15,.9) 0%,transparent 60%);pointer-events:none}
+.shop-price-badge{position:absolute;top:14px;right:14px;background:rgba(10,10,15,.78);backdrop-filter:blur(8px);padding:7px 14px;border-radius:999px;font-family:var(--serif);font-size:18px;line-height:1;color:#fff;border:1px solid rgba(255,255,255,.12);z-index:1}
 .shop-card .sbody{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column}
 .shop-card .smaker{font-family:var(--mono);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.4)}
 .shop-card .sname{font-family:var(--serif);font-weight:400;font-size:22px;margin-top:6px}
 .shop-card .stagline{margin-top:6px;font-size:12px;line-height:1.5;color:rgba(255,255,255,.5);flex:1}
-.shop-card .sprice{margin-top:14px;font-family:var(--serif);font-size:24px;line-height:1;color:#fff}
-.shop-card .sprice small{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.4);display:block;margin-top:3px}
+.shop-specs{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+.shop-specs span{display:flex;align-items:center;gap:5px}
+.shop-specs span::before{content:"—";color:var(--fire);margin-right:4px}
 .shop-card .sactions{margin-top:16px;display:flex;gap:10px}
 .shop-card .sactions .btn{flex:1;justify-content:center;padding:10px 0;font-size:10px}
 
@@ -667,26 +671,89 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 // ── SHOP BY PLATFORM ──────────────────────────────────────────────────────
 const SHOP_PARTS = [
+  // Unitree H1
   {sku:'H1-KNEE-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Knee Actuator',
    tagline:'Genuine replacement knee actuator. Replace at 73% wear before Joint Backlash failure.',
-   price:1180,img:'/images/platforms/part_knee_actuator.svg',lead:'5–7 days'},
+   price:1180,img:'/images/platforms/unitree_h1_2.png',partImg:'/images/platforms/part_knee_actuator.svg',lead:'5–7 days',warranty:'12 months'},
   {sku:'H1-HIP-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Hip Actuator',
    tagline:'Heavy-duty hip torque actuator. Factory-torque-matched for gait integrity.',
-   price:1320,img:'/images/platforms/part_hip_actuator.svg',lead:'5–7 days'},
+   price:1320,img:'/images/platforms/unitree_h1_2.png',partImg:'/images/platforms/part_hip_actuator.svg',lead:'5–7 days',warranty:'12 months'},
   {sku:'H1-SHOULDER-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Shoulder Actuator',
    tagline:'Genuine shoulder actuator assembly. CubeMars drive, factory-torque-matched.',
-   price:950,img:'/images/platforms/part_shoulder_actuator.svg',lead:'5–7 days'},
+   price:950,img:'/images/platforms/unitree_h1_2.png',partImg:'/images/platforms/part_shoulder_actuator.svg',lead:'5–7 days',warranty:'12 months'},
   {sku:'H1-ANKLE-FOOT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Ankle & Foot Module',
    tagline:'Articulated ankle with textured foot sole for stable gait on uneven terrain.',
-   price:880,img:'/images/platforms/part_ankle_foot.svg',lead:'7–10 days'},
+   price:880,img:'/images/platforms/unitree_h1_2.png',partImg:'/images/platforms/part_ankle_foot.svg',lead:'7–10 days',warranty:'12 months'},
   {sku:'H1-WAIST-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Waist Actuator',
    tagline:'Central yaw waist actuator. Replace on drift warnings before torso wobble.',
-   price:1020,img:'/images/platforms/part_waist_actuator.svg',lead:'7–10 days'},
+   price:1020,img:'/images/platforms/unitree_h1_2.png',partImg:'/images/platforms/part_waist_actuator.svg',lead:'7–10 days',warranty:'12 months'},
   {sku:'H1-BATTERY',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Battery Pack (864Wh)',
    tagline:'864Wh hot-swappable battery. Replace on TechMedix cell-balance alerts.',
-   price:1450,img:'/images/platforms/part_battery_pack.svg',lead:'5–7 days'},
+   price:1450,img:'/images/platforms/unitree_h1_2.png',partImg:'/images/platforms/part_battery_pack.svg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-DEX-HAND',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Dexterous Hand',
+   tagline:'Replacement dexterous end-effector with integrated tactile sensing. Sharpa module.',
+   price:2400,img:'/images/platforms/unitree_h1_2.png',partImg:'/images/platforms/part_dex_hand.svg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-CONTROLLER',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Main Controller',
+   tagline:'Main compute / motion controller module. Heatsunk enclosure, edge connector.',
+   price:1650,img:'/images/platforms/unitree_h1_2.png',partImg:'/images/platforms/part_controller.svg',lead:'7–10 days',warranty:'12 months'},
+  // Boston Dynamics Spot
+  {sku:'SPOT-BATTERY',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Battery Module',
+   tagline:'Hot-swappable intelligent battery. 605Wh. Replace at 800 cycles or on power-fault alert.',
+   price:2800,img:'/images/platforms/bostondynamics_spot.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'SPOT-ARM',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Arm Assembly',
+   tagline:'5-DOF manipulator arm with gripper. Payload 5kg. Full calibration included.',
+   price:12500,img:'/images/platforms/bostondynamics_spot.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'SPOT-HEAD',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Head Unit',
+   tagline:'Sensor head with stereo cameras, IMU, and illumination LEDs. IP54 rated.',
+   price:4200,img:'/images/platforms/bostondynamics_spot.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'SPOT-LEG-ACT',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Leg Actuator',
+   tagline:'High-torque leg actuator module. 12 per robot. Replace on gait-anomaly alerts.',
+   price:3400,img:'/images/platforms/bostondynamics_spot.jpg',lead:'10–14 days',warranty:'12 months'},
+  // DJI Agras T50
+  {sku:'T50-PROPELLER',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Propeller Set',
+   tagline:'Carbon-fiber propeller pair (CW+CCW). Replace after 500 flight-hours or on vibration alert.',
+   price:180,img:'/images/platforms/dji_agras_t50.jpg',lead:'3–5 days',warranty:'6 months'},
+  {sku:'T50-SPRAY-PUMP',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Spray Pump',
+   tagline:'High-pressure diaphragm pump. 16L/min flow rate. Replace on pressure-drop alerts.',
+   price:520,img:'/images/platforms/dji_agras_t50.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'T50-BATTERY',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Battery (TB65)',
+   tagline:'TB65 intelligent flight battery. 30.6Ah. Replace at 800 cycles or on cell-imbalance alert.',
+   price:1200,img:'/images/platforms/dji_agras_t50.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'T50-RADAR',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Radar Module',
+   tagline:'Omnidirectional radar for obstacle avoidance. FPV camera included.',
+   price:890,img:'/images/platforms/dji_agras_t50.jpg',lead:'5–7 days',warranty:'12 months'},
+  // Kinova Gen3
+  {sku:'GEN3-ACTUATOR',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Actuator Module',
+   tagline:'7-DOF actuator with torque sensor. Replace on joint-fault or drift alerts.',
+   price:2200,img:'/images/platforms/kinova_gen3.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'GEN3-GRIPPER',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Gripper Kit',
+   tagline:'3-finger adaptive gripper. 2kg payload. Quick-connect mount.',
+   price:1800,img:'/images/platforms/kinova_gen3.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'GEN3-WRIST-CAM',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Wrist Camera',
+   tagline:'RGB-D wrist-mounted camera. Intel RealSense. Replace on vision-fault alerts.',
+   price:950,img:'/images/platforms/kinova_gen3.jpg',lead:'7–10 days',warranty:'12 months'},
+  // Agility Digit
+  {sku:'DIGIT-FOOT',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Foot Assembly',
+   tagline:'Articulated foot with contact sensors. Replace on terrain-adaptation alerts.',
+   price:1400,img:'/images/platforms/agility_digit.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'DIGIT-KNEE',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Knee Actuator',
+   tagline:'High-torque knee joint. Series-elastic actuator. Replace on gait-anomaly alerts.',
+   price:2600,img:'/images/platforms/agility_digit.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'DIGIT-BATTERY',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Battery Pack',
+   tagline:'1.8kWh hot-swappable battery. Replace at 1000 cycles or on power-fault alert.',
+   price:1900,img:'/images/platforms/agility_digit.jpg',lead:'7–10 days',warranty:'12 months'},
+  // Figure 02
+  {sku:'FIG2-HAND',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Dexterous Hand',
+   tagline:'16-DOF hand with tactile sensing. Replace on grip-fault or comms-drop alerts.',
+   price:4500,img:'/images/platforms/figure_02.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'FIG2-WRIST',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Wrist Actuator',
+   tagline:'Compact wrist actuator with 3-axis rotation. Replace on drift alerts.',
+   price:2800,img:'/images/platforms/figure_02.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'FIG2-BATTERY',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Battery Module',
+   tagline:'1.5kWh battery pack. Replace at 800 cycles or on cell-balance alerts.',
+   price:2200,img:'/images/platforms/figure_02.jpg',lead:'10–14 days',warranty:'12 months'},
 ];
-const SHOP_CATS = [['all','All Parts'],['unitree-h1','Unitree H1']];
+const SHOP_CATS = [['all','All Parts'],['unitree-h1','Unitree H1'],['bostondynamics-spot','Boston Dynamics'],['dji-agras','DJI Agras'],['kinova-gen3','Kinova'],['agility-digit','Agility'],['figure-02','Figure']];
 let shopCat='all';
 const shopGrid=document.getElementById('shopGrid'), shopCatsEl=document.getElementById('shopCats');
 shopCatsEl.innerHTML = SHOP_CATS.map(([id,label])=>`<button class="cat${id===shopCat?' on':''}" data-shop-cat="${id}">${label}</button>`).join('');
@@ -699,12 +766,19 @@ shopCatsEl.addEventListener('click',e=>{
 function shopCard(p){
   return `
   <article class="shop-card">
-    <img src="${p.img}" alt="${p.name}" loading="lazy">
+    <div class="shop-img">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="shop-overlay"></div>
+      <div class="shop-price-badge">$${p.price.toLocaleString()}</div>
+    </div>
     <div class="sbody">
       <div class="smaker">${p.maker}</div>
       <div class="sname">${p.name}</div>
       <div class="stagline">${p.tagline}</div>
-      <div class="sprice">$${p.price.toLocaleString()}<small>Lead time: ${p.lead}</small></div>
+      <div class="shop-specs">
+        <span>Lead: ${p.lead}</span>
+        <span>${p.warranty}</span>
+      </div>
       <div class="sactions">
         <button class="btn btn-fire" data-quote="${p.maker} ${p.name}">Request Quote</button>
       </div>
@@ -714,7 +788,6 @@ function shopCard(p){
 function renderShop(){
   const list=SHOP_PARTS.filter(p=>shopCat==='all'||p.cat===shopCat);
   shopGrid.innerHTML=list.map(shopCard).join('');
-  // attach quote handlers
   shopGrid.querySelectorAll('[data-quote]').forEach(btn=>{
     btn.addEventListener('click',e=>{ e.preventDefault(); openQuote(btn.dataset.quote); });
   });
