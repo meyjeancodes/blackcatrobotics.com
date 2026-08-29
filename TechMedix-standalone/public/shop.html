@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop by Platform — BlackCat Robotics</title>
+<meta name="description" content="Genuine replacement parts for Unitree H1, Boston Dynamics Spot, DJI Agras, Kinova, Agility Digit, and Figure 02. Sourced by BlackCat Robotics, tied to TechMedix failure modes.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:'Tanker';src:url('/fonts/tanker-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Satoshi';src:url('/fonts/satoshi-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Satoshi';src:url('/fonts/satoshi-500.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Satoshi';src:url('/fonts/satoshi-700.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Chakra Petch';src:url('/fonts/chakrapetch-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Chakra Petch';src:url('/fonts/chakrapetch-600.woff2') format('woff2');font-weight:600;font-display:swap}
+
+:root{
+  --ink:#0a0a0f; --ink-2:#3a3a45; --ink-3:#8888a0;
+  --paper:#f0efe8; --paper-2:#fafaf4; --white:#ffffff;
+  --fire:#cc3d17; --fire-2:#d4401a; --gold:#c8a96e;
+  --border:rgba(10,10,15,.08); --border-d:rgba(255,255,255,.07);
+  --r:12px; --r-lg:20px;
+  --serif:'Tanker',ui-sans-serif,system-ui,sans-serif;
+  --display:'Satoshi',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:'Chakra Petch',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:var(--display);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(20px,4vw,52px);height:64px;background:rgba(10,10,15,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-d)}
+.nav-logo{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:20px;letter-spacing:.05em}
+.nav-logo .dot{width:9px;height:9px;border-radius:50%;background:var(--fire);box-shadow:0 0 14px var(--fire)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a.link{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);transition:color .2s}
+.nav-links a.link:hover{color:#fff}
+.btn{display:inline-flex;align-items:center;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:12px 22px;border-radius:999px;transition:all .2s}
+.btn-fire{background:var(--fire);color:#fff}
+.btn-fire:hover{background:#e04a20;transform:translateY(-1px)}
+.btn-ghost{border:1px solid rgba(255,255,255,.28);color:#fff}
+.btn-ghost:hover{border-color:#fff}
+.burger{display:none;background:none;border:0;cursor:pointer;padding:10px;z-index:60}
+.burger span{display:block;width:22px;height:2px;background:#fff;margin:5px 0}
+.mnav{position:fixed;inset:64px 0 auto 0;z-index:55;background:rgba(10,10,15,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);padding:28px clamp(24px,6vw,48px) 36px;
+  display:none;flex-direction:column;gap:20px}
+.mnav.open{display:flex}
+.mnav a.link{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.mnav .btn{justify-content:center;margin-top:8px}
+@media(max-width:900px){.nav-links{display:none}.burger{display:block}}
+
+/* hero */
+.shop-hero{position:relative;padding:140px clamp(24px,7vw,110px) 80px;max-width:1500px;margin:0 auto}
+.shop-hero h1{font-family:var(--serif);font-weight:400;line-height:.96;letter-spacing:-.005em;
+  font-size:clamp(46px,8.4vw,104px);max-width:14ch}
+.shop-hero h1 em{font-style:normal;color:var(--fire)}
+.shop-hero p{margin-top:26px;max-width:52ch;font-size:clamp(15px,1.25vw,18px);color:rgba(255,255,255,.68)}
+
+/* category filter */
+.cats{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px}
+.cat{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.55);
+  cursor:pointer;transition:all .2s;background:none}
+.cat:hover{border-color:rgba(255,255,255,.45);color:#fff}
+.cat.on{background:var(--fire);border-color:var(--fire);color:#fff}
+
+/* shop grid */
+.shop-section{padding:0 clamp(24px,7vw,110px) 100px;max-width:1500px;margin:0 auto}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+.shop-card{border:1px solid rgba(255,255,255,.10);border-radius:20px;overflow:hidden;background:rgba(10,10,15,.5);backdrop-filter:blur(6px);transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.shop-card:hover{border-color:var(--fire);transform:translateY(-4px);box-shadow:0 20px 50px rgba(204,61,23,.13)}
+.shop-card .shop-img{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden}
+.shop-card .shop-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.7) brightness(.85);transition:filter .35s,transform .45s}
+.shop-card:hover .shop-img img{filter:saturate(1) brightness(1);transform:scale(1.04)}
+.shop-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,15,.9) 0%,transparent 60%);pointer-events:none}
+.shop-price-badge{position:absolute;top:14px;right:14px;background:rgba(10,10,15,.78);backdrop-filter:blur(8px);padding:7px 14px;border-radius:999px;font-family:var(--serif);font-size:18px;line-height:1;color:#fff;border:1px solid rgba(255,255,255,.12);z-index:1}
+.shop-card .sbody{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column}
+.shop-card .smaker{font-family:var(--mono);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.shop-card .sname{font-family:var(--serif);font-weight:400;font-size:22px;margin-top:6px}
+.shop-card .stagline{margin-top:6px;font-size:12px;line-height:1.5;color:rgba(255,255,255,.5);flex:1}
+.shop-specs{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+.shop-specs span::before{content:"—";color:var(--fire);margin-right:4px}
+.shop-card .sactions{margin-top:16px;display:flex;gap:10px}
+.shop-card .sactions .btn{flex:1;justify-content:center;padding:10px 0;font-size:10px}
+
+/* quote modal */
+.qwrap{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:24px}
+.qwrap.open{display:flex}
+.qback{position:absolute;inset:0;background:rgba(5,5,9,.75);backdrop-filter:blur(6px)}
+.qbox{position:relative;z-index:1;width:min(460px,100%);border-radius:22px;background:#12121a;border:1px solid rgba(255,255,255,.12);padding:34px 32px 30px}
+.qbox h3{font-family:var(--serif);font-weight:400;font-size:28px}
+.qsub{margin-top:8px;font-size:13.5px;color:rgba(255,255,255,.55)}
+#qModel{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fire)}
+.qfield{margin-top:16px}
+.qfield input,.qfield textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:13px 15px;color:#fff;font-family:var(--display);font-size:14px;outline:none;transition:border-color .2s}
+.qfield input:focus,.qfield textarea:focus{border-color:var(--fire)}
+.qfield textarea{resize:vertical;min-height:70px}
+.qclose{position:absolute;top:16px;right:20px;background:none;border:0;color:rgba(255,255,255,.45);font-size:22px;cursor:pointer}
+.qclose:hover{color:#fff}
+.qnote{margin-top:12px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+
+/* footer */
+footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.f-brand{font-family:var(--serif);font-size:24px}
+.f-meta{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-top:10px;line-height:2}
+.f-links{display:grid;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.f-links a:hover{color:#fff}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/"><span class="dot"></span>BlackCat<span style="color:var(--fire)">.</span></a>
+  <div class="nav-links">
+    <a class="link" href="/#about">About</a>
+    <a class="link" href="/#loop">How It Works</a>
+    <a class="link" href="/#platforms">Platforms</a>
+    <a class="link" href="/#pricing">Pricing</a>
+    <a class="btn btn-fire" href="https://dashboard.blackcatrobotics.com/signup">Start TechMedix</a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+<div class="mnav" id="mnav">
+  <a class="link" href="/#about">About</a>
+  <a class="link" href="/#loop">How It Works</a>
+  <a class="link" href="/#platforms">Platforms</a>
+  <a class="link" href="/#pricing">Pricing</a>
+  <a class="btn btn-fire" href="https://dashboard.blackcatrobotics.com/signup">Start TechMedix</a>
+  <a class="btn btn-ghost" href="/book.html">Book a Session</a>
+</div>
+
+<!-- HERO -->
+<section class="shop-hero">
+  <span style="font-family:var(--mono);font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-bottom:26px;display:block">Shop by Platform</span>
+  <h1>Parts for the robots you <em>run</em>.</h1>
+  <p>Genuine replacement parts, sourced by BlackCat Robotics and tied to documented TechMedix failure modes. Replace before it breaks — not after.</p>
+  <div class="cats" id="shopCats"><!-- JS --></div>
+</section>
+
+<!-- SHOP GRID -->
+<section class="shop-section">
+  <div class="shop-grid" id="shopGrid"><!-- JS --></div>
+  <p style="font-size:13px;margin-top:60px;max-width:66ch;color:rgba(255,255,255,.42)">Don't see your platform? <a href="/book.html" style="color:var(--fire);text-decoration:underline">Request a part</a> — we source across all supported manufacturers.</p>
+</section>
+
+<!-- quote modal -->
+<div class="qwrap" id="qModal" role="dialog" aria-modal="true" aria-labelledby="qTitle">
+  <div class="qback" onclick="closeQuote()"></div>
+  <div class="qbox">
+    <button class="qclose" onclick="closeQuote()" aria-label="Close">&times;</button>
+    <h3 id="qTitle">Request a quote</h3>
+    <p class="qsub">Tell us where to send pricing. Quotes are fulfilled through verified distribution channels.</p>
+    <div id="qModel"></div>
+    <form id="qForm">
+      <div class="qfield"><input type="text" name="name" placeholder="Your name" required></div>
+      <div class="qfield"><input type="email" name="email" placeholder="Work email" required></div>
+      <div class="qfield"><input type="text" name="company" placeholder="Company (optional)"></div>
+      <div class="qfield"><textarea name="msg" placeholder="Fleet size, timeline, anything useful"></textarea></div>
+      <button class="btn btn-fire" style="width:100%;justify-content:center;margin-top:18px" type="submit">Send Request</button>
+      <p class="qnote" id="qStatus">No spam — one reply from a human.</p>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <div class="f-brand">BlackCat<span style="color:var(--fire)">.</span></div>
+    <div class="f-meta">TechMedix Autonomous Systems<br>© 2026 BlackCat Robotics</div>
+  </div>
+  <div class="f-links"><a href="/#about">About</a><a href="/#loop">How It Works</a><a href="/#pricing">Pricing</a></div>
+  <div class="f-links"><a href="/insights">Insights</a><a href="/markets">Markets</a><a href="/certifications">Certifications</a></div>
+  <div class="f-links"><a href="https://dashboard.blackcatrobotics.com/signup">Dashboard</a><a href="/book.html">Book a Session</a><a href="https://github.com/meyjeancodes/blackcatrobotics.com">GitHub</a></div>
+</footer>
+
+<script>
+const SHOP_PARTS = [
+  // Unitree H1
+  {sku:'H1-KNEE-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Knee Actuator',
+   tagline:'Genuine replacement knee actuator. Replace at 73% wear before Joint Backlash failure.',
+   price:1180,img:'/images/platforms/unitree_h1_2.png',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-HIP-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Hip Actuator',
+   tagline:'Heavy-duty hip torque actuator. Factory-torque-matched for gait integrity.',
+   price:1320,img:'/images/platforms/unitree_h1_2.png',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-SHOULDER-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Shoulder Actuator',
+   tagline:'Genuine shoulder actuator assembly. CubeMars drive, factory-torque-matched.',
+   price:950,img:'/images/platforms/unitree_h1_2.png',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-ANKLE-FOOT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Ankle & Foot Module',
+   tagline:'Articulated ankle with textured foot sole for stable gait on uneven terrain.',
+   price:880,img:'/images/platforms/unitree_h1_2.png',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-WAIST-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Waist Actuator',
+   tagline:'Central yaw waist actuator. Replace on drift warnings before torso wobble.',
+   price:1020,img:'/images/platforms/unitree_h1_2.png',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-BATTERY',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Battery Pack (864Wh)',
+   tagline:'864Wh hot-swappable battery. Replace on TechMedix cell-balance alerts.',
+   price:1450,img:'/images/platforms/unitree_h1_2.png',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-DEX-HAND',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Dexterous Hand',
+   tagline:'Replacement dexterous end-effector with integrated tactile sensing. Sharpa module.',
+   price:2400,img:'/images/platforms/unitree_h1_2.png',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-CONTROLLER',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Main Controller',
+   tagline:'Main compute / motion controller module. Heatsunk enclosure, edge connector.',
+   price:1650,img:'/images/platforms/unitree_h1_2.png',lead:'7–10 days',warranty:'12 months'},
+  // Boston Dynamics Spot
+  {sku:'SPOT-BATTERY',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Battery Module',
+   tagline:'Hot-swappable intelligent battery. 605Wh. Replace at 800 cycles or on power-fault alert.',
+   price:2800,img:'/images/platforms/bostondynamics_spot.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'SPOT-ARM',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Arm Assembly',
+   tagline:'5-DOF manipulator arm with gripper. Payload 5kg. Full calibration included.',
+   price:12500,img:'/images/platforms/bostondynamics_spot.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'SPOT-HEAD',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Head Unit',
+   tagline:'Sensor head with stereo cameras, IMU, and illumination LEDs. IP54 rated.',
+   price:4200,img:'/images/platforms/bostondynamics_spot.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'SPOT-LEG-ACT',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Leg Actuator',
+   tagline:'High-torque leg actuator module. 12 per robot. Replace on gait-anomaly alerts.',
+   price:3400,img:'/images/platforms/bostondynamics_spot.jpg',lead:'10–14 days',warranty:'12 months'},
+  // DJI Agras T50
+  {sku:'T50-PROPELLER',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Propeller Set',
+   tagline:'Carbon-fiber propeller pair (CW+CCW). Replace after 500 flight-hours or on vibration alert.',
+   price:180,img:'/images/platforms/dji_agras_t50.jpg',lead:'3–5 days',warranty:'6 months'},
+  {sku:'T50-SPRAY-PUMP',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Spray Pump',
+   tagline:'High-pressure diaphragm pump. 16L/min flow rate. Replace on pressure-drop alerts.',
+   price:520,img:'/images/platforms/dji_agras_t50.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'T50-BATTERY',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Battery (TB65)',
+   tagline:'TB65 intelligent flight battery. 30.6Ah. Replace at 800 cycles or on cell-imbalance alert.',
+   price:1200,img:'/images/platforms/dji_agras_t50.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'T50-RADAR',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Radar Module',
+   tagline:'Omnidirectional radar for obstacle avoidance. FPV camera included.',
+   price:890,img:'/images/platforms/dji_agras_t50.jpg',lead:'5–7 days',warranty:'12 months'},
+  // Kinova Gen3
+  {sku:'GEN3-ACTUATOR',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Actuator Module',
+   tagline:'7-DOF actuator with torque sensor. Replace on joint-fault or drift alerts.',
+   price:2200,img:'/images/platforms/kinova_gen3.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'GEN3-GRIPPER',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Gripper Kit',
+   tagline:'3-finger adaptive gripper. 2kg payload. Quick-connect mount.',
+   price:1800,img:'/images/platforms/kinova_gen3.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'GEN3-WRIST-CAM',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Wrist Camera',
+   tagline:'RGB-D wrist-mounted camera. Intel RealSense. Replace on vision-fault alerts.',
+   price:950,img:'/images/platforms/kinova_gen3.jpg',lead:'7–10 days',warranty:'12 months'},
+  // Agility Digit
+  {sku:'DIGIT-FOOT',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Foot Assembly',
+   tagline:'Articulated foot with contact sensors. Replace on terrain-adaptation alerts.',
+   price:1400,img:'/images/platforms/agility_digit.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'DIGIT-KNEE',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Knee Actuator',
+   tagline:'High-torque knee joint. Series-elastic actuator. Replace on gait-anomaly alerts.',
+   price:2600,img:'/images/platforms/agility_digit.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'DIGIT-BATTERY',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Battery Pack',
+   tagline:'1.8kWh hot-swappable battery. Replace at 1000 cycles or on power-fault alert.',
+   price:1900,img:'/images/platforms/agility_digit.jpg',lead:'7–10 days',warranty:'12 months'},
+  // Figure 02
+  {sku:'FIG2-HAND',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Dexterous Hand',
+   tagline:'16-DOF hand with tactile sensing. Replace on grip-fault or comms-drop alerts.',
+   price:4500,img:'/images/platforms/figure_02.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'FIG2-WRIST',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Wrist Actuator',
+   tagline:'Compact wrist actuator with 3-axis rotation. Replace on drift alerts.',
+   price:2800,img:'/images/platforms/figure_02.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'FIG2-BATTERY',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Battery Module',
+   tagline:'1.5kWh battery pack. Replace at 800 cycles or on cell-balance alerts.',
+   price:2200,img:'/images/platforms/figure_02.jpg',lead:'10–14 days',warranty:'12 months'},
+];
+const SHOP_CATS = [['all','All Parts'],['unitree-h1','Unitree H1'],['bostondynamics-spot','Boston Dynamics'],['dji-agras','DJI Agras'],['kinova-gen3','Kinova'],['agility-digit','Agility'],['figure-02','Figure']];
+let shopCat='all';
+const shopGrid=document.getElementById('shopGrid'), shopCatsEl=document.getElementById('shopCats');
+shopCatsEl.innerHTML = SHOP_CATS.map(([id,label])=>`<button class="cat${id===shopCat?' on':''}" data-shop-cat="${id}">${label}</button>`).join('');
+shopCatsEl.addEventListener('click',e=>{
+  const b=e.target.closest('[data-shop-cat]'); if(!b) return;
+  shopCat=b.dataset.shopCat;
+  shopCatsEl.querySelectorAll('.cat').forEach(c=>c.classList.toggle('on',c.dataset.shopCat===shopCat));
+  renderShop();
+});
+function shopCard(p){
+  return `
+  <article class="shop-card">
+    <div class="shop-img">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="shop-overlay"></div>
+      <div class="shop-price-badge">$${p.price.toLocaleString()}</div>
+    </div>
+    <div class="sbody">
+      <div class="smaker">${p.maker}</div>
+      <div class="sname">${p.name}</div>
+      <div class="stagline">${p.tagline}</div>
+      <div class="shop-specs">
+        <span>Lead: ${p.lead}</span>
+        <span>${p.warranty}</span>
+      </div>
+      <div class="sactions">
+        <button class="btn btn-fire" data-quote="${p.maker} ${p.name}">Request Quote</button>
+      </div>
+    </div>
+  </article>`;
+}
+function renderShop(){
+  const list=SHOP_PARTS.filter(p=>shopCat==='all'||p.cat===shopCat);
+  shopGrid.innerHTML=list.map(shopCard).join('');
+  shopGrid.querySelectorAll('[data-quote]').forEach(btn=>{
+    btn.addEventListener('click',e=>{ e.preventDefault(); openQuote(btn.dataset.quote); });
+  });
+}
+renderShop();
+
+// quote modal
+const qModal=document.getElementById('qModal');
+function openQuote(model){ document.getElementById('qModel').textContent=model||''; qModal.classList.add('open'); }
+function closeQuote(){ qModal.classList.remove('open'); }
+window.openQuote=openQuote; window.closeQuote=closeQuote;
+document.getElementById('qForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const btn=e.target.querySelector('button[type=submit]');
+  btn.disabled=true; btn.textContent='Sending…';
+  const st=document.getElementById('qStatus');
+  const model=document.getElementById('qModel').textContent;
+  const d=Object.fromEntries(new FormData(e.target).entries());
+  try{
+    try{ const leads=JSON.parse(localStorage.getItem('bc-leads')||'[]'); leads.push({...d,model,at:Date.now()}); localStorage.setItem('bc-leads',JSON.stringify(leads)); }catch(_){}
+    const r=await fetch('https://formspree.io/f/xreyrndq',{
+      method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({name:d.name,email:d.email,company:d.company,message:d.msg,
+        interest_type:'robot_quote',_subject:`Robot quote request: ${model} — ${d.email}`,model})
+    });
+    if(!r.ok) throw new Error('formspree '+r.status);
+    e.target.reset();
+    st.textContent='Request sent — we\'ll reply within one business day.'; st.style.color='#4ade80';
+    setTimeout(closeQuote,1800);
+  }catch(err){
+    st.textContent='Could not send right now — email us directly at blackcatrobotics.ai@gmail.com';
+    st.style.color='#cc3d17';
+  }finally{ btn.disabled=false; btn.textContent='Send Request'; }
+});
+
+// mobile nav
+const burger=document.getElementById('burger'), mnav=document.getElementById('mnav');
+burger.addEventListener('click',()=>{
+  const open=mnav.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open);
+  burger.children[1].style.opacity=open?'0':'';
+  burger.children[0].style.transform=open?'translateY(7px) rotate(45deg)':'';
+  burger.children[2].style.transform=open?'translateY(-7px) rotate(-45deg)':'';
+});
+mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mnav.classList.remove('open')));
+</script>
+</body>
+</html>
