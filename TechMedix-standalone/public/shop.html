@@ -37,11 +37,11 @@ a{color:inherit;text-decoration:none}
 .nav-links{display:flex;gap:32px;align-items:center}
 .nav-links a.link{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);transition:color .2s}
 .nav-links a.link:hover{color:#fff}
-.btn{display:inline-flex;align-items:center;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
-  padding:12px 22px;border-radius:999px;transition:all .2s}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:12px 22px;border-radius:999px;transition:all .2s;cursor:pointer;border:none}
 .btn-fire{background:var(--fire);color:#fff}
 .btn-fire:hover{background:#e04a20;transform:translateY(-1px)}
-.btn-ghost{border:1px solid rgba(255,255,255,.28);color:#fff}
+.btn-ghost{border:1px solid rgba(255,255,255,.28);color:#fff;background:transparent}
 .btn-ghost:hover{border-color:#fff}
 .burger{display:none;background:none;border:0;cursor:pointer;padding:10px;z-index:60}
 .burger span{display:block;width:22px;height:2px;background:#fff;margin:5px 0}
@@ -53,6 +53,11 @@ a{color:inherit;text-decoration:none}
 .mnav .btn{justify-content:center;margin-top:8px}
 @media(max-width:900px){.nav-links{display:none}.burger{display:block}}
 
+/* cart button */
+.cart-btn{position:relative}
+.cart-count{position:absolute;top:-6px;right:-8px;background:var(--fire);color:#fff;font-family:var(--mono);font-size:9px;
+  width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1}
+
 /* hero */
 .shop-hero{position:relative;padding:140px clamp(24px,7vw,110px) 80px;max-width:1500px;margin:0 auto}
 .shop-hero h1{font-family:var(--serif);font-weight:400;line-height:.96;letter-spacing:-.005em;
@@ -60,7 +65,7 @@ a{color:inherit;text-decoration:none}
 .shop-hero h1 em{font-style:normal;color:var(--fire)}
 .shop-hero p{margin-top:26px;max-width:52ch;font-size:clamp(15px,1.25vw,18px);color:rgba(255,255,255,.68)}
 
-/* category filter */
+/* categories */
 .cats{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px}
 .cat{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
   padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.55);
@@ -68,40 +73,74 @@ a{color:inherit;text-decoration:none}
 .cat:hover{border-color:rgba(255,255,255,.45);color:#fff}
 .cat.on{background:var(--fire);border-color:var(--fire);color:#fff}
 
+/* search + sort */
+.controls{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.search-box{flex:1;min-width:240px}
+.search-box input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;padding:11px 20px;color:#fff;font-family:var(--display);font-size:14px;outline:none;transition:border-color .2s}
+.search-box input:focus{border-color:var(--fire)}
+.search-box input::placeholder{color:rgba(255,255,255,.35)}
+.sort-select{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;padding:11px 18px;color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;outline:none;cursor:pointer}
+.sort-select option{background:#12121a;color:#fff}
+
 /* shop grid */
 .shop-section{padding:0 clamp(24px,7vw,110px) 100px;max-width:1500px;margin:0 auto}
-.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
-.shop-card{border:1px solid rgba(255,255,255,.10);border-radius:18px;overflow:hidden;background:#101018;transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+.shop-card{border:1px solid rgba(255,255,255,.10);border-radius:18px;overflow:hidden;background:#101018;
+  transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column}
 .shop-card:hover{border-color:var(--fire);transform:translateY(-3px);box-shadow:0 16px 40px rgba(204,61,23,.15)}
-.shop-card .shop-img{position:relative;width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#16161e 0%,#0a0a0f 100%);display:flex;align-items:center;justify-content:center;padding:24px}
-.shop-card .shop-img img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 8px 24px rgba(0,0,0,.4));transition:transform .4s}
-.shop-card:hover .shop-img img{transform:scale(1.06)}
-.shop-price-badge{position:absolute;top:12px;right:12px;background:rgba(10,10,15,.82);backdrop-filter:blur(8px);padding:6px 12px;border-radius:999px;font-family:var(--serif);font-size:16px;line-height:1;color:#fff;border:1px solid rgba(255,255,255,.12);z-index:1}
+.shop-card .shop-img{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden}
+.shop-card .shop-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.shop-card:hover .shop-img img{transform:scale(1.04)}
 .shop-card .sbody{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
 .shop-card .smaker{font-family:var(--mono);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.4)}
 .shop-card .sname{font-family:var(--serif);font-weight:400;font-size:20px;margin-top:5px}
 .shop-card .stagline{margin-top:5px;font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.5);flex:1}
-.shop-specs{margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);padding-top:12px;border-top:1px solid rgba(255,255,255,.08)}
+.shop-card .sprice{margin-top:14px;font-family:var(--serif);font-size:22px;line-height:1;color:#fff}
+.shop-specs{margin-top:8px;display:flex;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:rgba(255,255,255,.45);padding-top:12px;border-top:1px solid rgba(255,255,255,.08)}
 .shop-specs span::before{content:"—";color:var(--fire);margin-right:4px}
 .shop-card .sactions{margin-top:14px;display:flex;gap:10px}
-.shop-card .sactions .btn{flex:1;justify-content:center;padding:10px 0;font-size:10px}
+.qty-ctrl{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:999px;padding:4px}
+.qty-ctrl button{background:none;border:0;color:#fff;font-family:var(--mono);font-size:16px;width:28px;height:28px;
+  border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.qty-ctrl button:hover{background:rgba(255,255,255,.1)}
+.qty-ctrl span{font-family:var(--mono);font-size:12px;min-width:16px;text-align:center}
+.btn-add{flex:1;justify-content:center;padding:10px 0;font-size:10px}
 
-/* quote modal */
-.qwrap{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:24px}
-.qwrap.open{display:flex}
-.qback{position:absolute;inset:0;background:rgba(5,5,9,.75);backdrop-filter:blur(6px)}
-.qbox{position:relative;z-index:1;width:min(460px,100%);border-radius:22px;background:#12121a;border:1px solid rgba(255,255,255,.12);padding:34px 32px 30px}
-.qbox h3{font-family:var(--serif);font-weight:400;font-size:28px}
-.qsub{margin-top:8px;font-size:13.5px;color:rgba(255,255,255,.55)}
-#qModel{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fire)}
-.qfield{margin-top:16px}
-.qfield input,.qfield textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
-  border-radius:12px;padding:13px 15px;color:#fff;font-family:var(--display);font-size:14px;outline:none;transition:border-color .2s}
-.qfield input:focus,.qfield textarea:focus{border-color:var(--fire)}
-.qfield textarea{resize:vertical;min-height:70px}
-.qclose{position:absolute;top:16px;right:20px;background:none;border:0;color:rgba(255,255,255,.45);font-size:22px;cursor:pointer}
-.qclose:hover{color:#fff}
-.qnote{margin-top:12px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+/* cart drawer */
+.cart-overlay{position:fixed;inset:0;background:rgba(5,5,9,.6);z-index:80;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#12121a;border-left:1px solid rgba(255,255,255,.08);
+  z-index:81;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.6,.2,1);display:flex;flex-direction:column}
+.cart-drawer.open{transform:none}
+.cart-header{display:flex;align-items:center;justify-content:space-between;padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.08)}
+.cart-header h3{font-family:var(--serif);font-weight:400;font-size:22px}
+.cart-close{background:none;border:0;color:rgba(255,255,255,.5);font-size:22px;cursor:pointer}
+.cart-close:hover{color:#fff}
+.cart-items{flex:1;overflow-y:auto;padding:20px 28px}
+.cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.cart-item-img{width:72px;height:48px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.cart-item-img img{width:100%;height:100%;object-fit:cover}
+.cart-item-info{flex:1}
+.cart-item-name{font-family:var(--serif);font-size:15px;line-height:1.2}
+.cart-item-sku{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
+.cart-item-price{font-family:var(--mono);font-size:12px;color:var(--fire);margin-top:5px}
+.cart-item-qty{display:flex;align-items:center;gap:6px;margin-top:6px}
+.cart-item-qty button{background:rgba(255,255,255,.06);border:0;color:#fff;width:22px;height:22px;border-radius:4px;cursor:pointer;font-size:12px}
+.cart-item-qty span{font-family:var(--mono);font-size:11px;min-width:14px;text-align:center}
+.cart-item-remove{background:none;border:0;color:rgba(255,255,255,.3);cursor:pointer;font-size:11px;margin-left:auto}
+.cart-item-remove:hover{color:var(--fire)}
+.cart-empty{flex:1;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.cart-footer{padding:24px 28px;border-top:1px solid rgba(255,255,255,.08)}
+.cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cart-subtotal span:first-child{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.cart-subtotal span:last-child{font-family:var(--serif);font-size:24px}
+.cart-checkout{width:100%;padding:14px;font-size:13px;justify-content:center}
+.cart-note{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.3);text-align:center;margin-top:12px}
 
 /* footer */
 footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255,255,.08);
@@ -121,6 +160,8 @@ footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255
     <a class="link" href="/#loop">How It Works</a>
     <a class="link" href="/#platforms">Platforms</a>
     <a class="link" href="/#pricing">Pricing</a>
+    <a class="link" href="/book.html">Book</a>
+    <button class="btn btn-ghost cart-btn" onclick="toggleCart()">Cart<span class="cart-count" id="cartCount">0</span></button>
     <a class="btn btn-fire" href="https://dashboard.blackcatrobotics.com/signup">Start TechMedix</a>
   </div>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -130,8 +171,9 @@ footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255
   <a class="link" href="/#loop">How It Works</a>
   <a class="link" href="/#platforms">Platforms</a>
   <a class="link" href="/#pricing">Pricing</a>
+  <a class="link" href="/book.html">Book</a>
+  <button class="btn btn-ghost" onclick="toggleCart()">Cart (<span id="cartCountMob">0</span>)</button>
   <a class="btn btn-fire" href="https://dashboard.blackcatrobotics.com/signup">Start TechMedix</a>
-  <a class="btn btn-ghost" href="/book.html">Book a Session</a>
 </div>
 
 <!-- HERO -->
@@ -139,31 +181,34 @@ footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255
   <span style="font-family:var(--mono);font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-bottom:26px;display:block">Shop by Platform</span>
   <h1>Parts for the robots you <em>run</em>.</h1>
   <p>Genuine replacement parts, sourced by BlackCat Robotics and tied to documented TechMedix failure modes. Replace before it breaks — not after.</p>
-  <div class="cats" id="shopCats"><!-- JS --></div>
+  <div class="cats" id="shopCats"></div>
+  <div class="controls">
+    <div class="search-box"><input type="text" id="searchInput" placeholder="Search parts by name, SKU, or manufacturer..."></div>
+    <select class="sort-select" id="sortSelect">
+      <option value="default">Sort: Default</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name">Name: A–Z</option>
+      <option value="maker">Manufacturer</option>
+    </select>
+  </div>
 </section>
 
 <!-- SHOP GRID -->
 <section class="shop-section">
-  <div class="shop-grid" id="shopGrid"><!-- JS --></div>
-  <p style="font-size:13px;margin-top:60px;max-width:66ch;color:rgba(255,255,255,.42)">Don't see your platform? <a href="/book.html" style="color:var(--fire);text-decoration:underline">Request a part</a> — we source across all supported manufacturers.</p>
+  <div class="shop-grid" id="shopGrid"></div>
+  <p style="font-size:13px;margin-top:60px;max-width:66ch;color:rgba(255,255,255,.42)">Need a part not listed? <a href="/book.html" style="color:var(--fire);text-decoration:underline">Request a part</a> — we source across all supported manufacturers.</p>
 </section>
 
-<!-- quote modal -->
-<div class="qwrap" id="qModal" role="dialog" aria-modal="true" aria-labelledby="qTitle">
-  <div class="qback" onclick="closeQuote()"></div>
-  <div class="qbox">
-    <button class="qclose" onclick="closeQuote()" aria-label="Close">&times;</button>
-    <h3 id="qTitle">Request a quote</h3>
-    <p class="qsub">Tell us where to send pricing. Quotes are fulfilled through verified distribution channels.</p>
-    <div id="qModel"></div>
-    <form id="qForm">
-      <div class="qfield"><input type="text" name="name" placeholder="Your name" required></div>
-      <div class="qfield"><input type="email" name="email" placeholder="Work email" required></div>
-      <div class="qfield"><input type="text" name="company" placeholder="Company (optional)"></div>
-      <div class="qfield"><textarea name="msg" placeholder="Fleet size, timeline, anything useful"></textarea></div>
-      <button class="btn btn-fire" style="width:100%;justify-content:center;margin-top:18px" type="submit">Send Request</button>
-      <p class="qnote" id="qStatus">No spam — one reply from a human.</p>
-    </form>
+<!-- CART OVERLAY + DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header"><h3>Cart</h3><button class="cart-close" onclick="toggleCart()">&times;</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
+    <button class="btn btn-fire cart-checkout" onclick="checkoutCart()">Checkout with Stripe</button>
+    <p class="cart-note">Secure payment · Parts ship from verified distributors</p>
   </div>
 </div>
 
@@ -174,95 +219,40 @@ footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255
   </div>
   <div class="f-links"><a href="/#about">About</a><a href="/#loop">How It Works</a><a href="/#pricing">Pricing</a></div>
   <div class="f-links"><a href="/insights">Insights</a><a href="/markets">Markets</a><a href="/certifications">Certifications</a></div>
-  <div class="f-links"><a href="https://dashboard.blackcatrobotics.com/signup">Dashboard</a><a href="/book.html">Book a Session</a><a href="https://github.com/meyjeancodes/blackcatrobotics.com">GitHub</a></div>
+  <div class="f-links"><a href="https://dashboard.blackcatrobotics.com/signup">Dashboard</a><a href="/book.html">Book</a><a href="https://github.com/meyjeancodes/blackcatrobotics.com">GitHub</a></div>
 </footer>
 
 <script>
 const SHOP_PARTS = [
-  // Unitree H1
-  {sku:'H1-KNEE-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Knee Actuator',
-   tagline:'Genuine replacement knee actuator. Replace at 73% wear before Joint Backlash failure.',
-   price:1180,img:'/images/platforms/part_knee_actuator.svg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'H1-HIP-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Hip Actuator',
-   tagline:'Heavy-duty hip torque actuator. Factory-torque-matched for gait integrity.',
-   price:1320,img:'/images/platforms/part_hip_actuator.svg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'H1-SHOULDER-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Shoulder Actuator',
-   tagline:'Genuine shoulder actuator assembly. CubeMars drive, factory-torque-matched.',
-   price:950,img:'/images/platforms/part_shoulder_actuator.svg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'H1-ANKLE-FOOT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Ankle & Foot Module',
-   tagline:'Articulated ankle with textured foot sole for stable gait on uneven terrain.',
-   price:880,img:'/images/platforms/part_ankle_foot.svg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'H1-WAIST-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Waist Actuator',
-   tagline:'Central yaw waist actuator. Replace on drift warnings before torso wobble.',
-   price:1020,img:'/images/platforms/part_waist_actuator.svg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'H1-BATTERY',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Battery Pack (864Wh)',
-   tagline:'864Wh hot-swappable battery. Replace on TechMedix cell-balance alerts.',
-   price:1450,img:'/images/platforms/part_battery_pack.svg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'H1-DEX-HAND',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Dexterous Hand',
-   tagline:'Replacement dexterous end-effector with integrated tactile sensing. Sharpa module.',
-   price:2400,img:'/images/platforms/part_dex_hand.svg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'H1-CONTROLLER',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Main Controller',
-   tagline:'Main compute / motion controller module. Heatsunk enclosure, edge connector.',
-   price:1650,img:'/images/platforms/part_controller.svg',lead:'7–10 days',warranty:'12 months'},
-  // Boston Dynamics Spot
-  {sku:'SPOT-BATTERY',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Battery Module',
-   tagline:'Hot-swappable intelligent battery. 605Wh. Replace at 800 cycles or on power-fault alert.',
-   price:2800,img:'/images/platforms/part_spot_battery.svg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'SPOT-ARM',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Arm Assembly',
-   tagline:'5-DOF manipulator arm with gripper. Payload 5kg. Full calibration included.',
-   price:12500,img:'/images/platforms/part_spot_arm.svg',lead:'14–21 days',warranty:'12 months'},
-  {sku:'SPOT-HEAD',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Head Unit',
-   tagline:'Sensor head with stereo cameras, IMU, and illumination LEDs. IP54 rated.',
-   price:4200,img:'/images/platforms/part_spot_head.svg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'SPOT-LEG-ACT',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Leg Actuator',
-   tagline:'High-torque leg actuator module. 12 per robot. Replace on gait-anomaly alerts.',
-   price:3400,img:'/images/platforms/part_spot_leg.svg',lead:'10–14 days',warranty:'12 months'},
-  // DJI Agras T50
-  {sku:'T50-PROPELLER',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Propeller Set',
-   tagline:'Carbon-fiber propeller pair (CW+CCW). Replace after 500 flight-hours or on vibration alert.',
-   price:180,img:'/images/platforms/part_t50_propeller.svg',lead:'3–5 days',warranty:'6 months'},
-  {sku:'T50-SPRAY-PUMP',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Spray Pump',
-   tagline:'High-pressure diaphragm pump. 16L/min flow rate. Replace on pressure-drop alerts.',
-   price:520,img:'/images/platforms/part_t50_spray_pump.svg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'T50-BATTERY',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Battery (TB65)',
-   tagline:'TB65 intelligent flight battery. 30.6Ah. Replace at 800 cycles or on cell-imbalance alert.',
-   price:1200,img:'/images/platforms/part_t50_battery.svg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'T50-RADAR',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Radar Module',
-   tagline:'Omnidirectional radar for obstacle avoidance. FPV camera included.',
-   price:890,img:'/images/platforms/part_t50_radar.svg',lead:'5–7 days',warranty:'12 months'},
-  // Kinova Gen3
-  {sku:'GEN3-ACTUATOR',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Actuator Module',
-   tagline:'7-DOF actuator with torque sensor. Replace on joint-fault or drift alerts.',
-   price:2200,img:'/images/platforms/part_gen3_actuator.svg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'GEN3-GRIPPER',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Gripper Kit',
-   tagline:'3-finger adaptive gripper. 2kg payload. Quick-connect mount.',
-   price:1800,img:'/images/platforms/part_gen3_gripper.svg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'GEN3-WRIST-CAM',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Wrist Camera',
-   tagline:'RGB-D wrist-mounted camera. Intel RealSense. Replace on vision-fault alerts.',
-   price:950,img:'/images/platforms/part_gen3_wrist_cam.svg',lead:'7–10 days',warranty:'12 months'},
-  // Agility Digit
-  {sku:'DIGIT-FOOT',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Foot Assembly',
-   tagline:'Articulated foot with contact sensors. Replace on terrain-adaptation alerts.',
-   price:1400,img:'/images/platforms/part_digit_foot.svg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'DIGIT-KNEE',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Knee Actuator',
-   tagline:'High-torque knee joint. Series-elastic actuator. Replace on gait-anomaly alerts.',
-   price:2600,img:'/images/platforms/part_digit_knee.svg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'DIGIT-BATTERY',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Battery Pack',
-   tagline:'1.8kWh hot-swappable battery. Replace at 1000 cycles or on power-fault alert.',
-   price:1900,img:'/images/platforms/part_digit_battery.svg',lead:'7–10 days',warranty:'12 months'},
-  // Figure 02
-  {sku:'FIG2-HAND',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Dexterous Hand',
-   tagline:'16-DOF hand with tactile sensing. Replace on grip-fault or comms-drop alerts.',
-   price:4500,img:'/images/platforms/part_fig2_hand.svg',lead:'14–21 days',warranty:'12 months'},
-  {sku:'FIG2-WRIST',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Wrist Actuator',
-   tagline:'Compact wrist actuator with 3-axis rotation. Replace on drift alerts.',
-   price:2800,img:'/images/platforms/part_fig2_wrist.svg',lead:'14–21 days',warranty:'12 months'},
-  {sku:'FIG2-BATTERY',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Battery Module',
-   tagline:'1.5kWh battery pack. Replace at 800 cycles or on cell-balance alerts.',
-   price:2200,img:'/images/platforms/part_fig2_battery.svg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'H1-KNEE-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Knee Actuator',tagline:'Genuine replacement knee actuator. Replace at 73% wear before Joint Backlash failure.',price:1180,img:'/images/platforms/cards/h1-knee-act.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-HIP-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Hip Actuator',tagline:'Heavy-duty hip torque actuator. Factory-torque-matched for gait integrity.',price:1320,img:'/images/platforms/cards/h1-hip-act.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-SHOULDER-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Shoulder Actuator',tagline:'Genuine shoulder actuator assembly. CubeMars drive, factory-torque-matched.',price:950,img:'/images/platforms/cards/h1-shoulder-act.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-ANKLE-FOOT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Ankle & Foot Module',tagline:'Articulated ankle with textured foot sole for stable gait on uneven terrain.',price:880,img:'/images/platforms/cards/h1-ankle-foot.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-WAIST-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Waist Actuator',tagline:'Central yaw waist actuator. Replace on drift warnings before torso wobble.',price:1020,img:'/images/platforms/cards/h1-waist-act.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-BATTERY',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Battery Pack (864Wh)',tagline:'864Wh hot-swappable battery. Replace on TechMedix cell-balance alerts.',price:1450,img:'/images/platforms/cards/h1-battery.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-DEX-HAND',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Dexterous Hand',tagline:'Replacement dexterous end-effector with integrated tactile sensing. Sharpa module.',price:2400,img:'/images/platforms/cards/h1-dex-hand.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-CONTROLLER',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Main Controller',tagline:'Main compute / motion controller module. Heatsunk enclosure, edge connector.',price:1650,img:'/images/platforms/cards/h1-controller.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'SPOT-BATTERY',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Battery Module',tagline:'Hot-swappable intelligent battery. 605Wh. Replace at 800 cycles or on power-fault alert.',price:2800,img:'/images/platforms/cards/spot-battery.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'SPOT-ARM',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Arm Assembly',tagline:'5-DOF manipulator arm with gripper. Payload 5kg. Full calibration included.',price:12500,img:'/images/platforms/cards/spot-arm.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'SPOT-HEAD',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Head Unit',tagline:'Sensor head with stereo cameras, IMU, and illumination LEDs. IP54 rated.',price:4200,img:'/images/platforms/cards/spot-head.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'SPOT-LEG-ACT',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Leg Actuator',tagline:'High-torque leg actuator module. 12 per robot. Replace on gait-anomaly alerts.',price:3400,img:'/images/platforms/cards/spot-leg-act.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'T50-PROPELLER',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Propeller Set',tagline:'Carbon-fiber propeller pair (CW+CCW). Replace after 500 flight-hours or on vibration alert.',price:180,img:'/images/platforms/cards/t50-propeller.jpg',lead:'3–5 days',warranty:'6 months'},
+  {sku:'T50-SPRAY-PUMP',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Spray Pump',tagline:'High-pressure diaphragm pump. 16L/min flow rate. Replace on pressure-drop alerts.',price:520,img:'/images/platforms/cards/t50-spray-pump.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'T50-BATTERY',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Battery (TB65)',tagline:'TB65 intelligent flight battery. 30.6Ah. Replace at 800 cycles or on cell-imbalance alert.',price:1200,img:'/images/platforms/cards/t50-battery.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'T50-RADAR',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Radar Module',tagline:'Omnidirectional radar for obstacle avoidance. FPV camera included.',price:890,img:'/images/platforms/cards/t50-radar.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'GEN3-ACTUATOR',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Actuator Module',tagline:'7-DOF actuator with torque sensor. Replace on joint-fault or drift alerts.',price:2200,img:'/images/platforms/cards/gen3-act.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'GEN3-GRIPPER',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Gripper Kit',tagline:'3-finger adaptive gripper. 2kg payload. Quick-connect mount.',price:1800,img:'/images/platforms/cards/gen3-gripper.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'GEN3-WRIST-CAM',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Wrist Camera',tagline:'RGB-D wrist-mounted camera. Intel RealSense. Replace on vision-fault alerts.',price:950,img:'/images/platforms/cards/gen3-wrist-cam.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'DIGIT-FOOT',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Foot Assembly',tagline:'Articulated foot with contact sensors. Replace on terrain-adaptation alerts.',price:1400,img:'/images/platforms/cards/digit-foot.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'DIGIT-KNEE',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Knee Actuator',tagline:'High-torque knee joint. Series-elastic actuator. Replace on gait-anomaly alerts.',price:2600,img:'/images/platforms/cards/digit-knee.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'DIGIT-BATTERY',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Battery Pack',tagline:'1.8kWh hot-swappable battery. Replace at 1000 cycles or on power-fault alert.',price:1900,img:'/images/platforms/cards/digit-battery.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'FIG2-HAND',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Dexterous Hand',tagline:'16-DOF hand with tactile sensing. Replace on grip-fault or comms-drop alerts.',price:4500,img:'/images/platforms/cards/fig2-hand.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'FIG2-WRIST',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Wrist Actuator',tagline:'Compact wrist actuator with 3-axis rotation. Replace on drift alerts.',price:2800,img:'/images/platforms/cards/fig2-wrist.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'FIG2-BATTERY',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Battery Module',tagline:'1.5kWh battery pack. Replace at 800 cycles or on cell-balance alerts.',price:2200,img:'/images/platforms/cards/fig2-battery.jpg',lead:'10–14 days',warranty:'12 months'},
 ];
 const SHOP_CATS = [['all','All Parts'],['unitree-h1','Unitree H1'],['bostondynamics-spot','Boston Dynamics'],['dji-agras','DJI Agras'],['kinova-gen3','Kinova'],['agility-digit','Agility'],['figure-02','Figure']];
-let shopCat='all';
+let shopCat='all', searchQ='', sortMode='default';
+
 const shopGrid=document.getElementById('shopGrid'), shopCatsEl=document.getElementById('shopCats');
 shopCatsEl.innerHTML = SHOP_CATS.map(([id,label])=>`<button class="cat${id===shopCat?' on':''}" data-shop-cat="${id}">${label}</button>`).join('');
 shopCatsEl.addEventListener('click',e=>{
@@ -271,67 +261,110 @@ shopCatsEl.addEventListener('click',e=>{
   shopCatsEl.querySelectorAll('.cat').forEach(c=>c.classList.toggle('on',c.dataset.shopCat===shopCat));
   renderShop();
 });
+document.getElementById('searchInput').addEventListener('input',e=>{searchQ=e.target.value.toLowerCase();renderShop();});
+document.getElementById('sortSelect').addEventListener('change',e=>{sortMode=e.target.value;renderShop();});
+
+function getFiltered(){
+  let list=SHOP_PARTS.filter(p=>shopCat==='all'||p.cat===shopCat);
+  if(searchQ) list=list.filter(p=>p.name.toLowerCase().includes(searchQ)||p.sku.toLowerCase().includes(searchQ)||p.maker.toLowerCase().includes(searchQ));
+  if(sortMode==='price-asc') list=[...list].sort((a,b)=>a.price-b.price);
+  if(sortMode==='price-desc') list=[...list].sort((a,b)=>b.price-a.price);
+  if(sortMode==='name') list=[...list].sort((a,b)=>a.name.localeCompare(b.name));
+  if(sortMode==='maker') list=[...list].sort((a,b)=>a.maker.localeCompare(b.maker));
+  return list;
+}
+
 function shopCard(p){
   return `
   <article class="shop-card">
-    <div class="shop-img">
-      <img src="${p.img}" alt="${p.name}" loading="lazy">
-    </div>
+    <div class="shop-img"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
     <div class="sbody">
       <div class="smaker">${p.maker}</div>
       <div class="sname">${p.name}</div>
       <div class="stagline">${p.tagline}</div>
       <div class="sprice">$${p.price.toLocaleString()}</div>
-      <div class="shop-specs">
-        <span>Lead: ${p.lead}</span>
-        <span>${p.warranty}</span>
-      </div>
+      <div class="shop-specs"><span>Lead: ${p.lead}</span><span>${p.warranty}</span></div>
       <div class="sactions">
-        <button class="btn btn-fire" data-quote="${p.maker} ${p.name}">Request Quote</button>
+        <div class="qty-ctrl">
+          <button onclick="adjustQty('${p.sku}',-1)">−</button>
+          <span id="qty-${p.sku}">1</span>
+          <button onclick="adjustQty('${p.sku}',1)">+</button>
+        </div>
+        <button class="btn btn-fire btn-add" onclick="addToCart('${p.sku}')">Add to Cart</button>
       </div>
     </div>
   </article>`;
 }
 function renderShop(){
-  const list=SHOP_PARTS.filter(p=>shopCat==='all'||p.cat===shopCat);
+  const list=getFiltered();
   shopGrid.innerHTML=list.map(shopCard).join('');
-  shopGrid.querySelectorAll('[data-quote]').forEach(btn=>{
-    btn.addEventListener('click',e=>{ e.preventDefault(); openQuote(btn.dataset.quote); });
-  });
 }
 renderShop();
 
-// quote modal
-const qModal=document.getElementById('qModal');
-function openQuote(model){ document.getElementById('qModel').textContent=model||''; qModal.classList.add('open'); }
-function closeQuote(){ qModal.classList.remove('open'); }
-window.openQuote=openQuote; window.closeQuote=closeQuote;
-document.getElementById('qForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  const btn=e.target.querySelector('button[type=submit]');
-  btn.disabled=true; btn.textContent='Sending…';
-  const st=document.getElementById('qStatus');
-  const model=document.getElementById('qModel').textContent;
-  const d=Object.fromEntries(new FormData(e.target).entries());
-  try{
-    try{ const leads=JSON.parse(localStorage.getItem('bc-leads')||'[]'); leads.push({...d,model,at:Date.now()}); localStorage.setItem('bc-leads',JSON.stringify(leads)); }catch(_){}
-    const r=await fetch('https://formspree.io/f/xreyrndq',{
-      method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({name:d.name,email:d.email,company:d.company,message:d.msg,
-        interest_type:'robot_quote',_subject:`Robot quote request: ${model} — ${d.email}`,model})
-    });
-    if(!r.ok) throw new Error('formspree '+r.status);
-    e.target.reset();
-    st.textContent='Request sent — we\'ll reply within one business day.'; st.style.color='#4ade80';
-    setTimeout(closeQuote,1800);
-  }catch(err){
-    st.textContent='Could not send right now — email us directly at blackcatrobotics.ai@gmail.com';
-    st.style.color='#cc3d17';
-  }finally{ btn.disabled=false; btn.textContent='Send Request'; }
-});
+// CART
+const cart = {}; // sku -> {part, qty}
+function adjustQty(sku, delta){
+  const el=document.getElementById('qty-'+sku); if(!el) return;
+  let n=parseInt(el.textContent,10)||1; n=Math.max(1,Math.min(50,n+delta)); el.textContent=n;
+}
+function addToCart(sku){
+  const qty=parseInt(document.getElementById('qty-'+sku).textContent,10)||1;
+  const part=SHOP_PARTS.find(p=>p.sku===sku); if(!part) return;
+  if(cart[sku]) cart[sku].qty+=qty; else cart[sku]={part,qty};
+  updateCartUI();
+  // visual feedback
+  const btn=document.querySelector(`button[onclick="addToCart('${sku}')"]`);
+  if(btn){const t=btn.textContent;btn.textContent='✓ Added';setTimeout(()=>{btn.textContent=t;},1200);}
+}
+function removeFromSku(sku){delete cart[sku];updateCartUI();}
+function setSkuQty(sku,qty){if(qty<=0){removeFromSku(sku);return;}if(cart[sku])cart[sku].qty=qty;updateCartUI();}
+function cartTotal(){return Object.values(cart).reduce((s,i)=>s+i.part.price*i.qty,0);}
+function cartCount(){return Object.values(cart).reduce((s,i)=>s+i.qty,0);}
+function updateCartUI(){
+  const count=cartCount();document.getElementById('cartCount').textContent=count;
+  const itemsEl=document.getElementById('cartItems');
+  const ids=Object.keys(cart);
+  if(!itemsEl) return;
+  if(ids.length===0){itemsEl.innerHTML='<div class="cart-empty">Cart is empty</div>';document.getElementById('cartFooter').style.display='none';return;}
+  itemsEl.innerHTML=ids.map(sku=>{
+    const it=cart[sku];const{part,qty}=it;
+    return `<div class="cart-item">
+      <div class="cart-item-img"><img src="${part.img}" alt=""></div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${part.name}</div>
+        <div class="cart-item-sku">${part.sku} · ${part.maker}</div>
+        <div class="cart-item-price">$${part.price.toLocaleString()} each</div>
+        <div class="cart-item-qty">
+          <button onclick="setSkuQty('${sku}',${qty-1})">−</button>
+          <span>${qty}</span>
+          <button onclick="setSkuQty('${sku}',${qty+1})">+</button>
+        </div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromSku('${sku}')">✕</button>
+    </div>`;
+  }).join('');
+  document.getElementById('cartSubtotal').textContent='$'+cartTotal().toLocaleString();
+  document.getElementById('cartFooter').style.display='block';
+}
+function toggleCart(){
+  const overlay=document.getElementById('cartOverlay'),drawer=document.getElementById('cartDrawer');
+  const open=overlay.classList.toggle('open');drawer.classList.toggle('open',open);
+}
+function checkoutCart(){
+  const ids=Object.keys(cart);if(!ids.length)return;
+  // First item checkout (Stripe supports multiple items but one SKU per call in current API)
+  // For multi-item, we'd need to batch — do one at a time for now
+  const sku=ids[0];const qty=cart[sku].qty;
+  const btn=document.querySelector('.cart-checkout');btn.textContent='Redirecting…';btn.disabled=true;
+  fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sku,quantity:qty})})
+    .then(r=>r.json()).then(d=>{
+      if(d.ok&&d.url)window.location.href=d.url;
+      else{alert('Checkout unavailable: '+(d.error||'unknown'));btn.textContent='Checkout with Stripe';btn.disabled=false;}
+    }).catch(()=>{alert('Checkout request failed.');btn.textContent='Checkout with Stripe';btn.disabled=false;});
+}
 
 // mobile nav
-const burger=document.getElementById('burger'), mnav=document.getElementById('mnav');
+const burger=document.getElementById('burger'),mnav=document.getElementById('mnav');
 burger.addEventListener('click',()=>{
   const open=mnav.classList.toggle('open');
   burger.setAttribute('aria-expanded',open);
