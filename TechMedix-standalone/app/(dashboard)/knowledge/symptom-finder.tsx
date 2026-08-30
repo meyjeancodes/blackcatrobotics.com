@@ -1,12 +1,21 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, AlertTriangle, ChevronRight, Wrench, ExternalLink } from "lucide-react";
+import { Search, AlertTriangle, ChevronRight, Wrench, DollarSign, ExternalLink, Package, Clock, Shield, Zap } from "lucide-react";
 import type { FailureMode } from "@/lib/blackcat/knowledge/db";
 
 interface SymptomFinderProps {
   failureModes: (FailureMode & { platform_name: string; platform_slug: string })[];
 }
+
+const SYMPTOM_CATEGORIES = [
+  { label: "Movement", icon: Zap, symptoms: ["won't walk", "not moving", "slow", "vibration"] },
+  { label: "Noise", icon: AlertTriangle, symptoms: ["grinding noise", "clicking", "squealing"] },
+  { label: "Heat", icon: AlertTriangle, symptoms: ["overheating", "hot", "thermal"] },
+  { label: "Power", icon: Zap, symptoms: ["battery draining", "not charging", "power loss"] },
+  { label: "Sensing", icon: Search, symptoms: ["camera offline", "sensor error", "perception"] },
+  { label: "Manipulation", icon: Wrench, symptoms: ["arm not responding", "gripper", "hand"] },
+];
 
 const SYMPTOM_KEYWORDS: Record<string, string[]> = {
   "won't walk": ["gait", "walking", "leg", "foot", "ankle", "knee", "hip"],
@@ -71,6 +80,28 @@ export function SymptomFinder({ failureModes }: SymptomFinderProps) {
           onChange={(e) => setQuery(e.target.value)}
           className="w-full rounded-[14px] border border-theme-5 bg-theme-2 pl-4 pr-4 py-3 text-sm text-theme-primary placeholder:text-theme-35 focus:outline-none focus:border-ember/50 focus:ring-1 focus:ring-ember/20 transition"
         />
+      </div>
+
+      {/* Symptom categories */}
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-4">
+        {SYMPTOM_CATEGORIES.map((cat) => {
+          const Icon = cat.icon;
+          const isActive = cat.symptoms.some((s) => query.includes(s));
+          return (
+            <button
+              key={cat.label}
+              onClick={() => setQuery(cat.symptoms[0])}
+              className={`flex flex-col items-center gap-1 rounded-xl border p-2 text-xs transition ${
+                isActive
+                  ? "border-ember/50 bg-ember/10 text-ember"
+                  : "border-theme-5 text-theme-40 hover:border-theme-10 hover:text-theme-50"
+              }`}
+            >
+              <Icon size={14} />
+              <span>{cat.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Quick symptom chips */}
