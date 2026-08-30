@@ -84,7 +84,7 @@ export default async function KnowledgePage() {
     severity: fm.severity,
     tags: fm.tags,
     platform_name: fm.platform?.name ?? "",
-    platform_slug: fm.platform?.slug ?? "",
+    platform_slug: (fm.platform?.slug ?? "").replace(/_/g, "-"),
   }));
 
   return (

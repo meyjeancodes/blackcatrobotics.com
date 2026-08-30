@@ -118,13 +118,17 @@ export async function getPlatformBySlug(slug: string): Promise<KnowledgePlatform
   if (!isSupabaseServerConfigured()) return null;
   const supabase = createServiceClient();
   if (!supabase) return null;
-  const { data, error } = await supabase
-    .from("platforms")
-    .select("*")
-    .eq("slug", slug)
-    .single();
-  if (error) return null;
-  return data;
+  // Try exact slug match first, then try underscore/hyphen variants
+  const variants = [slug, slug.replace(/-/g, "_"), slug.replace(/_/g, "-")];
+  for (const variant of variants) {
+    const { data, error } = await supabase
+      .from("platforms")
+      .select("*")
+      .eq("slug", variant)
+      .single();
+    if (!error && data) return data;
+  }
+  return null;
 }
 
 export async function getFailureModesByPlatform(
@@ -134,22 +138,29 @@ export async function getFailureModesByPlatform(
   if (!isSupabaseServerConfigured()) return [];
   const supabase = createServiceClient();
   if (!supabase) return [];
-  let q = supabase
-    .from("failure_modes")
-    .select(`
-      *,
-      repair_protocols(*),
-      predictive_signals(*)
-    `)
-    .eq("platform_id", platformId)
-    .order("severity", { ascending: true })
-    .order("mtbf_hours", { ascending: true });
-
-  if (severity) q = q.eq("severity", severity);
-
-  const { data, error } = await q;
-  if (error) throw new Error(`getFailureModesByPlatform: ${error.message}`);
-  return (data ?? []) as FailureModeWithProtocol[];
+  // Try exact match first, then try underscore/hyphen variants
+  const variants = [platformId, platformId.replace(/-/g, "_"), platformId.replace(/_/g, "-")];
+  let data: any[] | null = null;
+  for (const variant of variants) {
+    let q = supabase
+      .from("failure_modes")
+      .select(`
+        *,
+        repair_protocols(*),
+        predictive_signals(*)
+      `)
+      .eq("platform_id", variant)
+      .order("severity", { ascending: true })
+      .order("mtbf_hours", { ascending: true });
+    if (severity) q = q.eq("severity", severity);
+    const { data: result, error } = await q;
+    if (!error && result?.length) {
+      data = result;
+      break;
+    }
+  }
+  if (!data) return [];
+  return data as FailureModeWithProtocol[];
 }
 
 export async function getRepairProtocol(failureModeId: string): Promise<RepairProtocol | null> {
