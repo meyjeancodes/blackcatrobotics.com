@@ -380,19 +380,30 @@ export function PlatformKnowledgeClient({
 
               {selectedProtocol.steps_json.length > 0 && (
                 <div className="mt-3 space-y-2">
-                  {selectedProtocol.steps_json.slice(0, 3).map((s) => (
-                    <div key={s.step} className="flex gap-3">
-                      <div className="shrink-0 w-6 h-6 rounded-full border border-theme-5 flex items-center justify-center text-xs text-theme-40">
-                        {s.step}
-                      </div>
-                      <p className="text-xs text-theme-55 leading-snug">{s.action}</p>
+                  <details className="group" open={selectedProtocol.steps_json.length <= 3}>
+                    <summary className="cursor-pointer text-xs text-theme-35 hover:text-theme-primary transition flex items-center gap-1">
+                      <ChevronRight size={10} className="transition group-open:rotate-90" />
+                      Procedure ({selectedProtocol.steps_json.length} steps)
+                    </summary>
+                    <div className="mt-2 space-y-2">
+                      {selectedProtocol.steps_json.map((s) => (
+                        <div key={s.step} className="flex gap-3">
+                          <div className="shrink-0 w-6 h-6 rounded-full border border-theme-5 flex items-center justify-center text-xs text-theme-40">
+                            {s.step}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs text-theme-55 leading-snug">{s.action}</p>
+                            {s.tool && (
+                              <p className="text-[10px] text-theme-35 mt-0.5">Tool: {s.tool}</p>
+                            )}
+                            {s.warning && (
+                              <p className="text-[10px] text-red-500 mt-0.5">⚠ {s.warning}</p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                  {selectedProtocol.steps_json.length > 3 && (
-                    <p className="text-xs text-theme-35 pl-9">
-                      +{selectedProtocol.steps_json.length - 3} more steps
-                    </p>
-                  )}
+                  </details>
                 </div>
               )}
               {selectedProtocol.parts_json.length > 0 && (
