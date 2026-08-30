@@ -198,19 +198,18 @@ export async function getRepairProtocolById(id: string): Promise<RepairProtocol 
   return data;
 }
 
-export async function getCriticalFailureModes(): Promise<
-  (FailureMode & { platform: KnowledgePlatform })[]
+export async function listAllFailureModes(): Promise<
+  (FailureMode & { platform: { name: string; slug: string } })[]
 > {
   if (!isSupabaseServerConfigured()) return [];
   const supabase = createServiceClient();
   if (!supabase) return [];
   const { data, error } = await supabase
     .from("failure_modes")
-    .select("*, platform:platforms(slug, name)")
-    .eq("severity", "critical")
-    .order("mtbf_hours", { ascending: true });
-  if (error) throw new Error(`getCriticalFailureModes: ${error.message}`);
-  return (data ?? []) as (FailureMode & { platform: KnowledgePlatform })[];
+    .select("*, platform:platforms(name, slug)")
+    .order("severity", { ascending: true });
+  if (error) return [];
+  return (data ?? []) as (FailureMode & { platform: { name: string; slug: string } })[];
 }
 
 export async function getPredictiveSignals(failureModeId: string): Promise<PredictiveSignal[]> {

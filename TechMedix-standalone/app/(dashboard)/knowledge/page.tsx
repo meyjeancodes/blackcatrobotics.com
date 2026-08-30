@@ -9,7 +9,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { getPlatformsFromSupabase } from "@/lib/knowledge/platforms-server";
-import { getCriticalFailureModes } from "@/lib/blackcat/knowledge/db";
+import { listAllFailureModes } from "@/lib/blackcat/knowledge/db";
 import { PlatformSearch } from "@/components/platform-search";
 import { SymptomFinder } from "./symptom-finder";
 
@@ -74,9 +74,9 @@ export default async function KnowledgePage() {
     0
   );
 
-  // Fetch critical failure modes for the symptom finder
-  const criticalFailures = await getCriticalFailureModes().catch(() => []);
-  const symptomFinderData = criticalFailures.map((fm) => ({
+  // Fetch ALL failure modes for the symptom finder (not just critical)
+  const allFailures = await listAllFailureModes().catch(() => []);
+  const symptomFinderData = allFailures.map((fm) => ({
     id: fm.id,
     symptom: fm.symptom,
     root_cause: fm.root_cause,

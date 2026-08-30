@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, AlertTriangle, ChevronRight, Wrench } from "lucide-react";
+import { Search, AlertTriangle, ChevronRight, Wrench, ExternalLink } from "lucide-react";
 import type { FailureMode } from "@/lib/blackcat/knowledge/db";
 
 interface SymptomFinderProps {
@@ -106,11 +106,11 @@ export function SymptomFinder({ failureModes }: SymptomFinderProps) {
                 <a
                   key={fm.id}
                   href={`/knowledge/${fm.platform_slug}`}
-                  className="flex items-center gap-3 rounded-[14px] border border-theme-5 bg-theme-2 p-3 hover:border-ember/30 transition"
+                  className="flex items-center gap-3 rounded-[14px] border border-theme-5 bg-theme-2 p-3 hover:border-ember/30 transition group"
                 >
                   <AlertTriangle size={12} className="text-amber-600 shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-theme-primary truncate">
+                    <p className="text-sm font-medium text-theme-primary truncate group-hover:text-ember transition">
                       {fm.symptom}
                     </p>
                     <p className="text-xs text-theme-40">
@@ -128,7 +128,7 @@ export function SymptomFinder({ failureModes }: SymptomFinderProps) {
                   >
                     {fm.severity}
                   </span>
-                  <ChevronRight size={14} className="text-theme-35 shrink-0" />
+                  <ExternalLink size={12} className="text-theme-35 group-hover:text-ember transition shrink-0" />
                 </a>
               ))}
             </>
