@@ -85,12 +85,12 @@ function UrdfRobot({
 		box.getCenter(center);
 
 		const fovRad = (camera as any).fov * Math.PI / 180;
-		const maxDim = Math.max(size.x, size.z);
+		const maxDim = Math.max(size.x, size.y, size.z);
 		const viewportFraction = 0.55;
 		const dist = (maxDim / (2 * Math.tan(fovRad / 2))) / viewportFraction * 1.35;
 
-		camera.position.set(center.x + dist * 0.4, center.y + size.y * 0.15, center.z + dist);
-		camera.lookAt(new THREE.Vector3(center.x, center.y - size.y * 0.05, center.z));
+		camera.position.set(center.x + dist * 0.28, center.y + size.y * 0.06, center.z + dist);
+		camera.lookAt(new THREE.Vector3(center.x, center.y, center.z));
 	}, [camera]);
 
 	// Load URDF
@@ -127,11 +127,13 @@ function UrdfRobot({
 					}
 				});
 
-				const box = new THREE.Box3().setFromObject(result);
-				const center = new THREE.Vector3();
-				box.getCenter(center);
-				const yBias = (box.max.y - box.min.y) * 0.5;
-				result.position.set(-center.x, -center.y + yBias, -center.z);
+				result.applyMatrix4(new THREE.Matrix4().makeRotationX(-Math.PI / 2)); // Z-up → Y-up
+				result.applyMatrix4(new THREE.Matrix4().makeRotationY(Math.PI / 2));  // face camera
+
+				const box0 = new THREE.Box3().setFromObject(result);
+				const c0 = new THREE.Vector3();
+				box0.getCenter(c0);
+				result.position.set(-c0.x, -c0.y, -c0.z);
 
 				groupRef.current?.add(result);
 
