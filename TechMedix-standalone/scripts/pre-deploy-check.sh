@@ -86,7 +86,8 @@ fi
 if [ -n "${BASE:-}" ] && curl -sf "$BASE" >/dev/null 2>&1; then
   check "GET /" "curl -sf '$BASE/' >/dev/null"
   check "GET /api/health" "curl -sf '$BASE/api/health' | grep -q status"
-  check "GET /api/skills" "curl -sf '$BASE/api/skills' | grep -q ok"
+  # /api/skills returns { skills: [...] }, not an { ok: true } envelope.
+  check "GET /api/skills" "curl -sf '$BASE/api/skills' | grep -q 'skills'"
   check "GET /api/techmedix/memory" "curl -sf '$BASE/api/techmedix/memory' | grep -q ok"
 else
   echo "  [skip] local server not started; route checks skipped"
