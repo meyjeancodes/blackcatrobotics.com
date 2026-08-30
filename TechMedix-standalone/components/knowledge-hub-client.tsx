@@ -261,7 +261,7 @@ export function KnowledgeHubClient({ initialPlatforms = [] }: Props) {
     };
   }, [modal]);
 
-  if (!mounted) {
+  if (!mounted && allPlatforms.length === 0) {
     return (
       <div className="space-y-8" aria-busy="true">
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">

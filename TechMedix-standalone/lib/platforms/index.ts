@@ -998,7 +998,14 @@ export const PLATFORM_IMAGE_MAP: Record<string, string> = {
   "bird-three":            "/images/platforms/bird_three.jpg",
   "radcommercial":         "/images/platforms/rad_power.png",
 
-  // Compute / Edge AI
-  "nvidia-jetson-agx-thor": "/images/platforms/nvidia_jetson_agx_thor.png",
-  "aigen-element-gen2":    "/images/platforms/aigen_element_gen2.jpg",
+  // New platforms (HF-sourced, Aug 2026)
+  "franka-panda":            "/images/platforms/franka_panda.jpg",
+  "kuka-med14":              "/images/platforms/kuka_med14.jpg",
+  "moon-surgical-maestro":   "/images/platforms/moon_maestro.jpg",
+  "rob-surgical-bitrack":    "/images/platforms/rob_bitrack.jpg",
+  "unitree-go2":             "/images/platforms/unitree_go2.jpg",
+  "unitree-h2":              "/images/platforms/unitree_h2.png",
+  "universal-ur5e":          "/images/platforms/universal_robots_ur5e.jpg",
+  "virtual-incision-mira":   "/images/platforms/virtual_incision_mira.jpg",
+  "torin-surgical":          "/images/platforms/torin_surgical.jpg",
 };

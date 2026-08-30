@@ -149,6 +149,17 @@ footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255
 .f-meta{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-top:10px;line-height:2}
 .f-links{display:grid;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
 .f-links a:hover{color:#fff}
+
+/* floating cart */
+.floating-cart{position:fixed;bottom:28px;right:28px;z-index:70;background:var(--fire);color:#fff;border:none;width:56px;height:56px;
+  border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(204,61,23,.4);
+  transition:transform .2s,box-shadow .2s}
+.floating-cart:hover{transform:scale(1.06);box-shadow:0 12px 36px rgba(204,61,23,.5)}
+.floating-cart svg{display:block}
+.floating-cart-count{position:absolute;top:-4px;right:-4px;background:#fff;color:var(--fire);font-family:var(--mono);font-size:10px;
+  font-weight:600;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1}
+@media(max-width:600px){.floating-cart{bottom:20px;right:20px;width:50px;height:50px}}
+
 </style>
 </head>
 <body>
@@ -161,7 +172,6 @@ footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255
     <a class="link" href="/#platforms">Platforms</a>
     <a class="link" href="/#pricing">Pricing</a>
     <a class="link" href="/book.html">Book</a>
-    <button class="btn btn-ghost cart-btn" onclick="toggleCart()">Cart<span class="cart-count" id="cartCount">0</span></button>
     <a class="btn btn-fire" href="https://dashboard.blackcatrobotics.com/signup">Start TechMedix</a>
   </div>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -172,7 +182,6 @@ footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255
   <a class="link" href="/#platforms">Platforms</a>
   <a class="link" href="/#pricing">Pricing</a>
   <a class="link" href="/book.html">Book</a>
-  <button class="btn btn-ghost" onclick="toggleCart()">Cart (<span id="cartCountMob">0</span>)</button>
   <a class="btn btn-fire" href="https://dashboard.blackcatrobotics.com/signup">Start TechMedix</a>
 </div>
 
@@ -224,31 +233,31 @@ footer{padding:70px clamp(24px,7vw,110px) 50px;border-top:1px solid rgba(255,255
 
 <script>
 const SHOP_PARTS = [
-  {sku:'H1-KNEE-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Knee Actuator',tagline:'Genuine replacement knee actuator. Replace at 73% wear before Joint Backlash failure.',price:1180,img:'/images/platforms/cards/h1-knee-act.jpg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'H1-HIP-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Hip Actuator',tagline:'Heavy-duty hip torque actuator. Factory-torque-matched for gait integrity.',price:1320,img:'/images/platforms/cards/h1-hip-act.jpg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'H1-SHOULDER-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Shoulder Actuator',tagline:'Genuine shoulder actuator assembly. CubeMars drive, factory-torque-matched.',price:950,img:'/images/platforms/cards/h1-shoulder-act.jpg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'H1-ANKLE-FOOT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Ankle & Foot Module',tagline:'Articulated ankle with textured foot sole for stable gait on uneven terrain.',price:880,img:'/images/platforms/cards/h1-ankle-foot.jpg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'H1-WAIST-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Waist Actuator',tagline:'Central yaw waist actuator. Replace on drift warnings before torso wobble.',price:1020,img:'/images/platforms/cards/h1-waist-act.jpg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'H1-BATTERY',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Battery Pack (864Wh)',tagline:'864Wh hot-swappable battery. Replace on TechMedix cell-balance alerts.',price:1450,img:'/images/platforms/cards/h1-battery.jpg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'H1-DEX-HAND',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Dexterous Hand',tagline:'Replacement dexterous end-effector with integrated tactile sensing. Sharpa module.',price:2400,img:'/images/platforms/cards/h1-dex-hand.jpg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'H1-CONTROLLER',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Main Controller',tagline:'Main compute / motion controller module. Heatsunk enclosure, edge connector.',price:1650,img:'/images/platforms/cards/h1-controller.jpg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'SPOT-BATTERY',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Battery Module',tagline:'Hot-swappable intelligent battery. 605Wh. Replace at 800 cycles or on power-fault alert.',price:2800,img:'/images/platforms/cards/spot-battery.jpg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'SPOT-ARM',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Arm Assembly',tagline:'5-DOF manipulator arm with gripper. Payload 5kg. Full calibration included.',price:12500,img:'/images/platforms/cards/spot-arm.jpg',lead:'14–21 days',warranty:'12 months'},
-  {sku:'SPOT-HEAD',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Head Unit',tagline:'Sensor head with stereo cameras, IMU, and illumination LEDs. IP54 rated.',price:4200,img:'/images/platforms/cards/spot-head.jpg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'SPOT-LEG-ACT',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Leg Actuator',tagline:'High-torque leg actuator module. 12 per robot. Replace on gait-anomaly alerts.',price:3400,img:'/images/platforms/cards/spot-leg-act.jpg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'T50-PROPELLER',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Propeller Set',tagline:'Carbon-fiber propeller pair (CW+CCW). Replace after 500 flight-hours or on vibration alert.',price:180,img:'/images/platforms/cards/t50-propeller.jpg',lead:'3–5 days',warranty:'6 months'},
-  {sku:'T50-SPRAY-PUMP',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Spray Pump',tagline:'High-pressure diaphragm pump. 16L/min flow rate. Replace on pressure-drop alerts.',price:520,img:'/images/platforms/cards/t50-spray-pump.jpg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'T50-BATTERY',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Battery (TB65)',tagline:'TB65 intelligent flight battery. 30.6Ah. Replace at 800 cycles or on cell-imbalance alert.',price:1200,img:'/images/platforms/cards/t50-battery.jpg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'T50-RADAR',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Radar Module',tagline:'Omnidirectional radar for obstacle avoidance. FPV camera included.',price:890,img:'/images/platforms/cards/t50-radar.jpg',lead:'5–7 days',warranty:'12 months'},
-  {sku:'GEN3-ACTUATOR',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Actuator Module',tagline:'7-DOF actuator with torque sensor. Replace on joint-fault or drift alerts.',price:2200,img:'/images/platforms/cards/gen3-act.jpg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'GEN3-GRIPPER',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Gripper Kit',tagline:'3-finger adaptive gripper. 2kg payload. Quick-connect mount.',price:1800,img:'/images/platforms/cards/gen3-gripper.jpg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'GEN3-WRIST-CAM',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Wrist Camera',tagline:'RGB-D wrist-mounted camera. Intel RealSense. Replace on vision-fault alerts.',price:950,img:'/images/platforms/cards/gen3-wrist-cam.jpg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'DIGIT-FOOT',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Foot Assembly',tagline:'Articulated foot with contact sensors. Replace on terrain-adaptation alerts.',price:1400,img:'/images/platforms/cards/digit-foot.jpg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'DIGIT-KNEE',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Knee Actuator',tagline:'High-torque knee joint. Series-elastic actuator. Replace on gait-anomaly alerts.',price:2600,img:'/images/platforms/cards/digit-knee.jpg',lead:'10–14 days',warranty:'12 months'},
-  {sku:'DIGIT-BATTERY',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Battery Pack',tagline:'1.8kWh hot-swappable battery. Replace at 1000 cycles or on power-fault alert.',price:1900,img:'/images/platforms/cards/digit-battery.jpg',lead:'7–10 days',warranty:'12 months'},
-  {sku:'FIG2-HAND',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Dexterous Hand',tagline:'16-DOF hand with tactile sensing. Replace on grip-fault or comms-drop alerts.',price:4500,img:'/images/platforms/cards/fig2-hand.jpg',lead:'14–21 days',warranty:'12 months'},
-  {sku:'FIG2-WRIST',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Wrist Actuator',tagline:'Compact wrist actuator with 3-axis rotation. Replace on drift alerts.',price:2800,img:'/images/platforms/cards/fig2-wrist.jpg',lead:'14–21 days',warranty:'12 months'},
-  {sku:'FIG2-BATTERY',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Battery Module',tagline:'1.5kWh battery pack. Replace at 800 cycles or on cell-balance alerts.',price:2200,img:'/images/platforms/cards/fig2-battery.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'H1-KNEE-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Knee Actuator',tagline:'Genuine replacement knee actuator. Replace at 73% wear before Joint Backlash failure.',price:1180,img:'/images/platforms/highlighted/h1-knee-act.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-HIP-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Hip Actuator',tagline:'Heavy-duty hip torque actuator. Factory-torque-matched for gait integrity.',price:1320,img:'/images/platforms/highlighted/h1-hip-act.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-SHOULDER-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Shoulder Actuator',tagline:'Genuine shoulder actuator assembly. CubeMars drive, factory-torque-matched.',price:950,img:'/images/platforms/highlighted/h1-shoulder-act.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-ANKLE-FOOT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Ankle & Foot Module',tagline:'Articulated ankle with textured foot sole for stable gait on uneven terrain.',price:880,img:'/images/platforms/highlighted/h1-ankle-foot.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-WAIST-ACT',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Waist Actuator',tagline:'Central yaw waist actuator. Replace on drift warnings before torso wobble.',price:1020,img:'/images/platforms/highlighted/h1-waist-act.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-BATTERY',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Battery Pack (864Wh)',tagline:'864Wh hot-swappable battery. Replace on TechMedix cell-balance alerts.',price:1450,img:'/images/platforms/highlighted/h1-battery.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'H1-DEX-HAND',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Dexterous Hand',tagline:'Replacement dexterous end-effector with integrated tactile sensing. Sharpa module.',price:2400,img:'/images/platforms/highlighted/h1-dex-hand.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'H1-CONTROLLER',cat:'unitree-h1',maker:'Unitree Robotics',name:'H1 Main Controller',tagline:'Main compute / motion controller module. Heatsunk enclosure, edge connector.',price:1650,img:'/images/platforms/highlighted/h1-controller.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'SPOT-BATTERY',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Battery Module',tagline:'Hot-swappable intelligent battery. 605Wh. Replace at 800 cycles or on power-fault alert.',price:2800,img:'/images/platforms/highlighted/spot-battery.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'SPOT-ARM',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Arm Assembly',tagline:'5-DOF manipulator arm with gripper. Payload 5kg. Full calibration included.',price:12500,img:'/images/platforms/highlighted/spot-arm.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'SPOT-HEAD',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Head Unit',tagline:'Sensor head with stereo cameras, IMU, and illumination LEDs. IP54 rated.',price:4200,img:'/images/platforms/highlighted/spot-head.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'SPOT-LEG-ACT',cat:'bostondynamics-spot',maker:'Boston Dynamics',name:'Spot Leg Actuator',tagline:'High-torque leg actuator module. 12 per robot. Replace on gait-anomaly alerts.',price:3400,img:'/images/platforms/highlighted/spot-leg-act.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'T50-PROPELLER',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Propeller Set',tagline:'Carbon-fiber propeller pair (CW+CCW). Replace after 500 flight-hours or on vibration alert.',price:180,img:'/images/platforms/highlighted/t50-propeller.jpg',lead:'3–5 days',warranty:'6 months'},
+  {sku:'T50-SPRAY-PUMP',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Spray Pump',tagline:'High-pressure diaphragm pump. 16L/min flow rate. Replace on pressure-drop alerts.',price:520,img:'/images/platforms/highlighted/t50-spray-pump.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'T50-BATTERY',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Battery (TB65)',tagline:'TB65 intelligent flight battery. 30.6Ah. Replace at 800 cycles or on cell-imbalance alert.',price:1200,img:'/images/platforms/highlighted/t50-battery.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'T50-RADAR',cat:'dji-agras',maker:'DJI Agriculture',name:'Agras T50 Radar Module',tagline:'Omnidirectional radar for obstacle avoidance. FPV camera included.',price:890,img:'/images/platforms/highlighted/t50-radar.jpg',lead:'5–7 days',warranty:'12 months'},
+  {sku:'GEN3-ACTUATOR',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Actuator Module',tagline:'7-DOF actuator with torque sensor. Replace on joint-fault or drift alerts.',price:2200,img:'/images/platforms/highlighted/gen3-act.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'GEN3-GRIPPER',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Gripper Kit',tagline:'3-finger adaptive gripper. 2kg payload. Quick-connect mount.',price:1800,img:'/images/platforms/highlighted/gen3-gripper.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'GEN3-WRIST-CAM',cat:'kinova-gen3',maker:'Kinova Robotics',name:'Gen3 Wrist Camera',tagline:'RGB-D wrist-mounted camera. Intel RealSense. Replace on vision-fault alerts.',price:950,img:'/images/platforms/highlighted/gen3-wrist-cam.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'DIGIT-FOOT',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Foot Assembly',tagline:'Articulated foot with contact sensors. Replace on terrain-adaptation alerts.',price:1400,img:'/images/platforms/highlighted/digit-foot.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'DIGIT-KNEE',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Knee Actuator',tagline:'High-torque knee joint. Series-elastic actuator. Replace on gait-anomaly alerts.',price:2600,img:'/images/platforms/highlighted/digit-knee.jpg',lead:'10–14 days',warranty:'12 months'},
+  {sku:'DIGIT-BATTERY',cat:'agility-digit',maker:'Agility Robotics',name:'Digit Battery Pack',tagline:'1.8kWh hot-swappable battery. Replace at 1000 cycles or on power-fault alert.',price:1900,img:'/images/platforms/highlighted/digit-battery.jpg',lead:'7–10 days',warranty:'12 months'},
+  {sku:'FIG2-HAND',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Dexterous Hand',tagline:'16-DOF hand with tactile sensing. Replace on grip-fault or comms-drop alerts.',price:4500,img:'/images/platforms/highlighted/fig2-hand.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'FIG2-WRIST',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Wrist Actuator',tagline:'Compact wrist actuator with 3-axis rotation. Replace on drift alerts.',price:2800,img:'/images/platforms/highlighted/fig2-wrist.jpg',lead:'14–21 days',warranty:'12 months'},
+  {sku:'FIG2-BATTERY',cat:'figure-02',maker:'Figure AI',name:'Figure 02 Battery Module',tagline:'1.5kWh battery pack. Replace at 800 cycles or on cell-balance alerts.',price:2200,img:'/images/platforms/highlighted/fig2-battery.jpg',lead:'10–14 days',warranty:'12 months'},
 ];
 const SHOP_CATS = [['all','All Parts'],['unitree-h1','Unitree H1'],['bostondynamics-spot','Boston Dynamics'],['dji-agras','DJI Agras'],['kinova-gen3','Kinova'],['agility-digit','Agility'],['figure-02','Figure']];
 let shopCat='all', searchQ='', sortMode='default';
@@ -321,7 +330,7 @@ function setSkuQty(sku,qty){if(qty<=0){removeFromSku(sku);return;}if(cart[sku])c
 function cartTotal(){return Object.values(cart).reduce((s,i)=>s+i.part.price*i.qty,0);}
 function cartCount(){return Object.values(cart).reduce((s,i)=>s+i.qty,0);}
 function updateCartUI(){
-  const count=cartCount();document.getElementById('cartCount').textContent=count;
+  const count=cartCount();const el=document.getElementById('cartCountFloat');if(el)el.textContent=count;
   const itemsEl=document.getElementById('cartItems');
   const ids=Object.keys(cart);
   if(!itemsEl) return;
@@ -352,15 +361,13 @@ function toggleCart(){
 }
 function checkoutCart(){
   const ids=Object.keys(cart);if(!ids.length)return;
-  // First item checkout (Stripe supports multiple items but one SKU per call in current API)
-  // For multi-item, we'd need to batch — do one at a time for now
-  const sku=ids[0];const qty=cart[sku].qty;
+  const items=ids.map(sku=>({sku:sku,qty:cart[sku].qty}));
   const btn=document.querySelector('.cart-checkout');btn.textContent='Redirecting…';btn.disabled=true;
-  fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sku,quantity:qty})})
+  fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items})})
     .then(r=>r.json()).then(d=>{
       if(d.ok&&d.url)window.location.href=d.url;
-      else{alert('Checkout unavailable: '+(d.error||'unknown'));btn.textContent='Checkout with Stripe';btn.disabled=false;}
-    }).catch(()=>{alert('Checkout request failed.');btn.textContent='Checkout with Stripe';btn.disabled=false;});
+      else{alert('Checkout unavailable: '+(d.error||'unknown error'));btn.textContent='Checkout with Stripe';btn.disabled=false;}
+    }).catch((e)=>{alert('Checkout request failed: '+e.message);btn.textContent='Checkout with Stripe';btn.disabled=false;});
 }
 
 // mobile nav
@@ -374,5 +381,12 @@ burger.addEventListener('click',()=>{
 });
 mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mnav.classList.remove('open')));
 </script>
+
+<!-- FLOATING CART BUTTON -->
+<button class="floating-cart" onclick="toggleCart()">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span class="floating-cart-count" id="cartCountFloat">0</span>
+</button>
+
 </body>
 </html>

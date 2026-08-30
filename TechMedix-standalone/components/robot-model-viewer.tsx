@@ -141,7 +141,7 @@ export function RobotModelViewer({
   // URDF models are reserved for dedicated blueprint routes where they can
   // load properly without competing for resources on card grids.
   if (mode === 'preview') {
-    const imgSrc = PLATFORM_IMAGE_MAP[platformId] ?? `/images/platforms/${platformId}.png`;
+    const imgSrc = PLATFORM_IMAGE_MAP[platformId] ?? platform?.diagramUrl ?? `/images/platforms/${platformId}.png`;
     return (
       <div className={`relative overflow-hidden rounded-[14px] border border-[var(--ink)]/[0.08] ${config.background} ${className}`} onClick={onClick}>
         {/* eslint-disable-next-line @next/next/no-img-element */}

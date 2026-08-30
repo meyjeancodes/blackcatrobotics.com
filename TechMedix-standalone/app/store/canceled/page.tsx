@@ -1,15 +1,14 @@
 export const dynamic = "force-static";
 
 export function generateMetadata() {
-  return { title: "Order Confirmed — BlackCat Robotics" };
+  return { title: "Checkout Canceled — BlackCat Robotics" };
 }
 
-export default function StoreSuccess() {
+export default function StoreCanceled() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Order Confirmed — BlackCat Robotics",
-    description: "Your order has been confirmed. Thank you for your purchase.",
+    name: "Checkout Canceled — BlackCat Robotics",
   };
   return (
     <main
@@ -41,7 +40,7 @@ export default function StoreSuccess() {
           lineHeight: 1,
         }}
       >
-        Order Confirmed.
+        Checkout Canceled.
       </div>
       <p
         style={{
@@ -52,8 +51,8 @@ export default function StoreSuccess() {
           margin: "0 auto 32px",
         }}
       >
-        Thank you for your order. You&apos;ll receive an email confirmation
-        shortly. Parts ship from verified distribution channels.
+        Your cart is still saved. Ready to complete your order? Head back to the
+        shop.
       </p>
       <a
         href="/shop.html"
@@ -69,7 +68,7 @@ export default function StoreSuccess() {
           display: "inline-block",
         }}
       >
-        Continue Shopping
+        Return to Shop
       </a>
     </main>
   );

@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { sku?: string; product?: string; kind?: "consultation" | "class"; email?: string; quantity?: number };
+  let body: { sku?: string; product?: string; kind?: "consultation" | "class"; email?: string; quantity?: number; items?: { sku: string; quantity: number }[] };
   try {
     body = await req.json();
   } catch {
@@ -89,45 +89,64 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // --- Parts order ---
-  const { sku, quantity } = body;
-  if (!sku) {
-    return NextResponse.json({ ok: false, error: "Missing sku or product." }, { status: 400 });
+  // --- Parts order (single or multi-item) ---
+  // Accept either { sku, quantity } or { items: [{ sku, quantity }, ...] }
+  const items: { sku: string; quantity: number }[] = [];
+
+  if (body.items && Array.isArray(body.items)) {
+    // Multi-item checkout
+    for (const item of body.items) {
+      if (item.sku) {
+        items.push({ sku: String(item.sku), quantity: Math.min(Math.max(parseInt(String(item.quantity), 10) || 1, 1), 50) });
+      }
+    }
+  } else if (body.sku) {
+    // Single-item checkout (backwards compat)
+    items.push({ sku: String(body.sku), quantity: Math.min(Math.max(parseInt(String(body.quantity), 10) || 1, 1), 50) });
   }
 
-  const part = getPartBySku(sku);
-  if (!part) {
-    return NextResponse.json({ ok: false, error: "Unknown part." }, { status: 404 });
+  if (items.length === 0) {
+    return NextResponse.json({ ok: false, error: "No items in order." }, { status: 400 });
   }
 
-  const qty = Math.min(Math.max(parseInt(String(quantity), 10) || 1, 1), 50);
-
-  const priceId = stripePriceIdFor(part);
+  // Validate all SKUs
+  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+  for (const item of items) {
+    const part = getPartBySku(item.sku);
+    if (!part) {
+      return NextResponse.json({ ok: false, error: `Unknown SKU: ${item.sku}` }, { status: 404 });
+    }
+    const priceId = stripePriceIdFor(part);
+    if (priceId) {
+      lineItems.push({ price: priceId, quantity: item.quantity });
+    } else {
+      lineItems.push({
+        quantity: item.quantity,
+        price_data: {
+          currency: part.currency,
+          unit_amount: part.unitAmount,
+          product_data: {
+            name: part.name,
+            description: part.description,
+            images: [`${siteUrl}${part.image}`],
+            metadata: { sku: part.sku, platformId: part.platformId },
+          },
+        },
+      });
+    }
+  }
 
   try {
     const stripeSession = await stripe.checkout.sessions.create({
       mode: "payment",
-      line_items: priceId
-        ? [{ price: priceId, quantity: qty }]
-        : [
-            {
-              quantity: qty,
-              price_data: {
-                currency: part.currency,
-                unit_amount: part.unitAmount,
-                product_data: {
-                  name: part.name,
-                  description: part.description,
-                  images: [`${siteUrl}${part.image}`],
-                  metadata: { sku: part.sku, platformId: part.platformId },
-                },
-              },
-            },
-          ],
+      line_items: lineItems,
       success_url: `${siteUrl}/store/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/store?canceled=true`,
       allow_promotion_codes: true,
-      metadata: { sku: part.sku, platformId: part.platformId },
+      metadata: {
+        type: "store_order",
+        items: JSON.stringify(items.map(i => `${i.sku}:${i.quantity}`)),
+      },
     });
 
     return NextResponse.json({ ok: true, url: stripeSession.url });

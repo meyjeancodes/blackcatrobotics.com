@@ -149,7 +149,23 @@ export function PlatformModelView({
             };
             const loader = new URDFLoader();
             const base = urdfPath.substring(0, urdfPath.lastIndexOf("/"));
-            loader.packages = base;
+            // URDFLoader expects packages as Record<string, URL>.
+            // URDFs reference meshes like "package://go2_description/dae/base.dae" —
+            // loader resolves package://{name}/rest → {packages[name]}/rest.
+            // Auto-discover package names from the URDF and map each to base dir.
+            try {
+              const urdfRes = await fetch(urdfPath);
+              const urdfText = await urdfRes.text();
+              const pkgNames = new Set<string>();
+              const re = /package:\/\/([^\s"'/]+)/g;
+              let m: RegExpExecArray | null;
+              while ((m = re.exec(urdfText)) !== null) pkgNames.add(m[1]);
+              const pkgMap: Record<string, string> = {};
+              pkgNames.forEach((name) => { pkgMap[name] = base; });
+              loader.packages = pkgMap as unknown as string;
+            } catch {
+              loader.packages = base;
+            }
             await new Promise<void>((resolve) => {
               let settled = false;
               const done = () => {
