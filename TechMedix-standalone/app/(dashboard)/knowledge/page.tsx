@@ -67,8 +67,15 @@ const REPAIR_LOOP = [
 
 export default async function KnowledgePage() {
   const platforms = await getPlatformsFromSupabase();
-  const totalPlatforms = platforms.length;
-  const totalFailureModes = platforms.reduce(
+  
+  // Filter out fictional/test platforms
+  const realPlatforms = platforms.filter((p) => 
+    !p.id.includes("asimov-here-be-dragons") && 
+    !p.id.includes("fictional")
+  );
+  
+  const totalPlatforms = realPlatforms.length;
+  const totalFailureModes = realPlatforms.reduce(
     (sum, p) => sum + p.failureSignatures.length,
     0
   );
@@ -76,7 +83,7 @@ export default async function KnowledgePage() {
   // Build symptom finder data from individual failure signatures across all platforms
   const symptomFinderData: { id: string; symptom: string; root_cause: string; component: string; severity: string; tags: string[]; platform_name: string; platform_slug: string }[] = [];
   
-  for (const p of platforms) {
+  for (const p of realPlatforms) {
     for (const fs of p.failureSignatures) {
       symptomFinderData.push({
         id: fs.id,
@@ -228,7 +235,7 @@ export default async function KnowledgePage() {
             Specs, failure signatures, and interactive diagrams for every supported platform.
           </p>
         </div>
-        <PlatformSearch platforms={platforms} />
+        <PlatformSearch platforms={realPlatforms} />
       </section>
 
       {/* ── Supporting Areas ──────────────────────────────────────────────── */}
