@@ -73,17 +73,23 @@ export default async function KnowledgePage() {
     0
   );
 
-  // Build symptom finder data from platforms (which include failure signatures)
-  const symptomFinderData = platforms.map((p) => ({
-    id: p.id,
-    symptom: p.name,
-    root_cause: p.description,
-    component: p.category,
-    severity: "medium" as const,
-    tags: p.failureSignatures.map((fs) => fs.name),
-    platform_name: p.name,
-    platform_slug: p.id,
-  }));
+  // Build symptom finder data from individual failure signatures across all platforms
+  const symptomFinderData: { id: string; symptom: string; root_cause: string; component: string; severity: string; tags: string[]; platform_name: string; platform_slug: string }[] = [];
+  
+  for (const p of platforms) {
+    for (const fs of p.failureSignatures) {
+      symptomFinderData.push({
+        id: fs.id,
+        symptom: fs.name,
+        root_cause: fs.description,
+        component: fs.severity,
+        severity: fs.severity,
+        tags: [fs.name, fs.description, p.category, p.manufacturer],
+        platform_name: p.name,
+        platform_slug: p.id,
+      });
+    }
+  }
 
   return (
     <div className="space-y-8">
