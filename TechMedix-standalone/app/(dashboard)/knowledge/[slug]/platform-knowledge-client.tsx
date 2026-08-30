@@ -22,6 +22,7 @@ import { getUrdfForPlatform } from "@/lib/platforms/urdf-config";
 import { resolveArchetype, ARCHETYPE_META } from "@/lib/platforms/archetypes";
 import { formatSpecs, type FormattedSpec } from "@/lib/platforms/spec-format";
 import { UrdfRobotViewer } from "@/components/urdf-robot-viewer";
+import { ProceduralModelViewer } from "./procedural-model";
 import { PLATFORM_IMAGE_MAP } from "@/lib/platforms/index";
 
 interface Props {
@@ -134,29 +135,7 @@ export function PlatformKnowledgeClient({
                 onPartClick={handlePartClick}
               />
             ) : (
-              <div className="relative h-[420px] overflow-hidden rounded-xl border border-theme-5 bg-theme-2">
-                {/* Product image fallback */}
-                {PLATFORM_IMAGE_MAP[slug] ? (
-                  <img
-                    src={PLATFORM_IMAGE_MAP[slug]}
-                    alt={displayName}
-                    className="absolute inset-0 h-full w-full object-contain p-4"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center">
-                    <div className="text-center">
-                      <ImageIcon size={32} className="mx-auto mb-2 text-theme-20" />
-                      <p className="text-theme-35 text-sm">3D model not available</p>
-                      <p className="text-theme-20 text-xs mt-1">Product image coming soon</p>
-                    </div>
-                  </div>
-                )}
-                <div className="absolute bottom-3 left-3">
-                  <span className="rounded-full bg-black/50 px-2 py-1 text-[10px] text-white/70 backdrop-blur">
-                    Product Photo
-                  </span>
-                </div>
-              </div>
+              <ProceduralModelViewer archetype={archetype} accentColor={accent} />
             )}
             {selectedPart && (
               <div className="mt-3 flex items-center gap-2 rounded-xl border border-theme-5 bg-theme-2 px-4 py-3">
