@@ -152,9 +152,10 @@ function UrdfRobot({
 		return () => { mountedRef.current = false; };
 	}, [urdfUrl, onLoad, onError, wireframe, onPartClick, fitCameraToMesh]);
 
-	// Base Orient: remain forward-facing at all times (no side rotation)
+	// Base Orient: keep upright — model already oriented via applyMatrix4 above
+	// Do NOT add additional rotation here or models flip onto their backs
 	useEffect(() => {
-		if (groupRef.current) groupRef.current.rotation.set(-Math.PI / 2, 0, 0);
+		if (groupRef.current) groupRef.current.rotation.set(0, 0, 0);
 	}, []);
 
 	// Re-camera-fit on viewport change
