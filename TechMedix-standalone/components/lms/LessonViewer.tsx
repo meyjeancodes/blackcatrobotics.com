@@ -135,7 +135,6 @@ export function LessonViewer({
         <MarkCompleteButton
           lessonId={lesson.id}
           moduleId={lesson.module_id}
-          userId={userId}
           isComplete={isComplete}
         />
       </div>

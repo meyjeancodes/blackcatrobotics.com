@@ -55,6 +55,7 @@ export type UserStats = {
 
 export async function getModules(userId: string): Promise<ModuleWithProgress[]> {
   const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
 
   const [modulesResult, lessonsResult, progressResult, profileResult] =
     await Promise.all([
@@ -119,6 +120,7 @@ export async function getModuleLessons(
   userId: string
 ): Promise<{ module: { id: string; title: string; description: string | null } | null; lessons: LessonWithProgress[] }> {
   const supabase = await createSupabaseServerClient();
+  if (!supabase) return { module: null, lessons: [] };
 
   const [moduleResult, lessonsResult, progressResult] = await Promise.all([
     supabase
@@ -165,6 +167,7 @@ export async function getLesson(
   userId: string
 ): Promise<LessonDetail | null> {
   const supabase = await createSupabaseServerClient();
+  if (!supabase) return null;
 
   const [lessonResult, contentResult, progressResult] = await Promise.all([
     supabase
@@ -208,6 +211,7 @@ export async function updateProgress(
   status: "not_started" | "in_progress" | "completed"
 ): Promise<void> {
   const supabase = await createSupabaseServerClient();
+  if (!supabase) return;
 
   const now = new Date().toISOString();
 
@@ -233,6 +237,7 @@ export async function updateProgress(
 
 export async function getUserStats(userId: string): Promise<UserStats> {
   const supabase = await createSupabaseServerClient();
+  if (!supabase) return { xp: 0, level: 1, completed_lessons: 0, active_module: null };
 
   const [profileResult, progressResult, modulesResult] = await Promise.all([
     supabase
