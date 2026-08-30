@@ -123,7 +123,14 @@ export async function getPlatformBySlug(slug: string): Promise<KnowledgePlatform
   for (const variant of variants) {
     const { data, error } = await supabase
       .from("platforms")
-      .select("*")
+      .select(`
+        *,
+        failure_modes(
+          *,
+          repair_protocols(*),
+          predictive_signals(*)
+        )
+      `)
       .eq("slug", variant)
       .single();
     if (!error && data) return data;
@@ -199,7 +206,7 @@ export async function getCriticalFailureModes(): Promise<
   if (!supabase) return [];
   const { data, error } = await supabase
     .from("failure_modes")
-    .select("*, platform:platforms(*)")
+    .select("*, platform:platforms(slug, name)")
     .eq("severity", "critical")
     .order("mtbf_hours", { ascending: true });
   if (error) throw new Error(`getCriticalFailureModes: ${error.message}`);

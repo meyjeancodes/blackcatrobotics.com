@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPlatformBySlug, getFailureModesByPlatform } from "@/lib/blackcat/knowledge/db";
+import type { FailureMode, RepairProtocol } from "@/lib/blackcat/knowledge/db";
 import { getPlatformKnowledge } from "@/lib/knowledge-content";
 import { getAllPlatforms } from "@/lib/platforms/index";
 import { hasUrdf } from "@/lib/platforms/urdf-config";
@@ -42,6 +43,29 @@ export default async function PlatformKnowledgePage({
     ? await getFailureModesByPlatform(platform.id).catch(() => [])
     : [];
 
+  // Extract failure modes from static data if Supabase doesn't have this platform
+  const staticFailureModes: (FailureMode & { repair_protocols: RepairProtocol[] })[] = !platform && staticPlatform
+    ? staticPlatform.failureSignatures.map((fs) => ({
+        id: fs.id,
+        platform_id: staticPlatform.id,
+        component: fs.name.split(":")[0] || fs.name,
+        symptom: fs.name.includes(":") ? fs.name.split(":")[1].trim() : fs.description,
+        root_cause: fs.description,
+        severity: fs.severity,
+        mtbf_hours: fs.mtbfHours || null,
+        source_urls: [],
+        source_count: null,
+        confidence: "medium" as const,
+        tags: [],
+        created_at: "",
+        updated_at: "",
+        repair_protocols: [],
+        predictive_signals: [],
+      }))
+    : [];
+
+  const allFailureModes = [...failureModes, ...staticFailureModes];
+
   const displayName = staticPlatform?.name ?? knowledge?.name ?? slug;
 
   const jsonLd = {
@@ -66,7 +90,7 @@ export default async function PlatformKnowledgePage({
       <PlatformKnowledgeClient
         platform={platform}
         knowledge={knowledge}
-        failureModes={failureModes}
+        failureModes={allFailureModes}
         displayName={displayName}
         slug={slug}
       />
