@@ -989,48 +989,73 @@ export default ALL_PLATFORMS;
 
 /** Maps platform IDs to locally-hosted official product images. */
 export const PLATFORM_IMAGE_MAP: Record<string, string> = {
-  // Humanoids
+  // ── Humanoids ───────────────────────────────────────────────────────────────
   "unitree-g1":            "/images/platforms/unitree_g1.jpg",
   "unitree-h1":            "/images/platforms/unitree_h1_2.png",
   "unitree-h1-2":          "/images/platforms/unitree_h1_2.png",
   "unitree-b2":            "/images/platforms/unitree_b2.png",
+  "unitree-r1":            "/images/platforms/unitree_h1.jpg",
   "figure-02":             "/images/platforms/figure_02.jpg",
   "optimus-gen3":          "/images/platforms/tesla_optimus.jpg",
   "digit-v5":              "/images/platforms/agility_digit.jpg",
-  "asimov-1":              "https://docs.menlo.ai/_next/static/media/opnosurce%20asimov-v1.239758c4.jpeg",
+  "asimov-1":              "/images/platforms/asimov_1.jpg",
+  "asimov-v1":             "/images/platforms/asimov_diy_kit.png",
   "phantom-mk1":           "/images/platforms/foundation_phantom.webp",
-  "unitree-r1":            "/images/platforms/unitree_r1.jpg",  // Need to add this image
-
-  // Drones
+  "aigen-element-gen2":    "/images/platforms/aigen_element_gen2.jpg",
+  "ubtech-u1":             "/images/platforms/ubtech_u1.svg",
+  "gaussian-phantas":      "/images/platforms/gaussian_phantas.jpg",
+  
+  // ── Quadrupeds ─────────────────────────────────────────────────────────────
+  "spot":                  "/images/platforms/bostondynamics_spot.jpg",
+  "unitree-go2":           "/images/platforms/unitree_go2.jpg",
+  "unitree-h2":            "/images/platforms/unitree_h2.png",
+  
+  // ── Drones ─────────────────────────────────────────────────────────────────
   "dji-agras-t50":         "/images/platforms/dji_agras_t50.jpg",
+  "dji-agras-t60":         "/images/platforms/dji_agras_t60.jpg",
+  "dji-matrice-350":       "/images/platforms/dji_matrice350.jpg",
   "skydio-x10":            "/images/platforms/skydio_x10.jpg",
   "zipline-p2":            "/images/platforms/zipline_p2.png",
-  "dji-agras-t60":         "/images/platforms/dji_agras_t60.jpg",  // Need to add
-  "dji-matrice-350":       "/images/platforms/dji_matrice350.jpg",
-
-  // Delivery
+  
+  // ── Delivery ───────────────────────────────────────────────────────────────
   "serve-rs2":             "/images/platforms/serve_rs2.jpg",
   "starship-gen3":         "/images/platforms/starship_gen3.jpg",
-
-  // Industrial
-  "spot":                  "/images/platforms/bostondynamics_spot.jpg",
-  "proteus-amr":           "/images/platforms/amazon_proteus.jpg",
-  "rebot-devarm":          "/images/platforms/robo_inc.png",
   "amazon-proteus":        "/images/platforms/amazon_proteus.jpg",
-
-  // Micromobility
-  "lime-gen4":             "/images/platforms/lime_ebike.jpg",
+  "proteus-amr":           "/images/platforms/amazon_proteus.jpg",
+  "dewalt-dale":           "/images/platforms/dewalt_dale.jpg",
+  
+  // ── Industrial ─────────────────────────────────────────────────────────────
+  "franka-panda":          "/images/platforms/franka_panda.jpg",
+  "universal-ur5e":        "/images/platforms/universal_robots_ur5e.jpg",
+  "kuka-med14":            "/images/platforms/kuka_med14.jpg",
+  "ufactory-xarm6":        "/images/platforms/ufactory_xarm6.jpg",
+  "kinova-gen3":           "/images/platforms/kinova_gen3.jpg",
+  "rebot-devarm":          "/images/platforms/robo_inc.png",
+  "avidbots-neo2":         "/images/platforms/avidbots_neo2.png",
+  
+  // ── Medical ────────────────────────────────────────────────────────────────
+  "intuitive-davinci":     "/images/platforms/intuitive_davinci.jpg",
+  "cmr-versius":           "/images/platforms/cmr_versius.jpg",
+  "medtronic-hugo":        "/images/platforms/medtronic_hugo.jpg",
+  "stryker-mako":          "/images/platforms/stryker_mako.png",
+  "jnj-ottava":            "/images/platforms/jnj_ottava.jpg",
+  "moon-surgical-maestro": "/images/platforms/moon_maestro.jpg",
+  "virtual-incision-mira": "/images/platforms/virtual_incision_mira.jpg",
+  "asensus-senhance":      "/images/platforms/asensus_senhance.jpg",
+  "torin-surgical":        "/images/platforms/torin_surgical.jpg",
+  "rob-surgical-bitrack":  "/images/platforms/rob_bitrack.jpg",
+  "ekso-eksonr":           "/images/platforms/ekso_eksonr.jpg",
+  
+  // ── Micromobility ──────────────────────────────────────────────────────────
   "bird-three":            "/images/platforms/bird_three.jpg",
-  "radcommercial":         "/images/platforms/rad_power.png",
-
-  // New platforms (HF-sourced, Aug 2026)
-  "franka-panda":            "/images/platforms/franka_panda.jpg",
-  "kuka-med14":              "/images/platforms/kuka_med14.jpg",
-  "moon-surgical-maestro":   "/images/platforms/moon_maestro.jpg",
-  "rob-surgical-bitrack":    "/images/platforms/rob_bitrack.jpg",
-  "unitree-go2":             "/images/platforms/unitree_go2.jpg",
-  "unitree-h2":              "/images/platforms/unitree_h2.png",
-  "universal-ur5e":          "/images/platforms/universal_robots_ur5e.jpg",
-  "virtual-incision-mira":   "/images/platforms/virtual_incision_mira.jpg",
-  "torin-surgical":          "/images/platforms/torin_surgical.jpg",
+  "lime-gen4":             "/images/platforms/lime_ebike.jpg",
+  "veo-s1":                "/images/platforms/veo_s1.jpg",
+  "rad-commercial":        "/images/platforms/rad_power.png",
+  
+  // ── Other ──────────────────────────────────────────────────────────────────
+  "lely-discovery-collector": "/images/platforms/lely_discovery_collector.jpg",
+  "taski-swingobot":       "/images/platforms/taski_swingobot.jpg",
+  "rotaku-domo":           "/images/platforms/rotaku_domo.jpg",
+  "karcher-kira-b50":      "/images/platforms/karcher_kira_b50.jpg",
+  "robo-inc":              "/images/platforms/robo_inc.png",
 };
