@@ -7,7 +7,9 @@ import {
   BookOpen,
   ChevronRight,
   Crosshair,
+  DollarSign,
   Gauge,
+  Image as ImageIcon,
   Layers,
   Play,
   Shield,
@@ -20,6 +22,7 @@ import { getUrdfForPlatform } from "@/lib/platforms/urdf-config";
 import { resolveArchetype, ARCHETYPE_META } from "@/lib/platforms/archetypes";
 import { formatSpecs, type FormattedSpec } from "@/lib/platforms/spec-format";
 import { UrdfRobotViewer } from "@/components/urdf-robot-viewer";
+import { PLATFORM_IMAGE_MAP } from "@/lib/platforms/index";
 
 interface Props {
   platform: KnowledgePlatform | null;
@@ -131,8 +134,28 @@ export function PlatformKnowledgeClient({
                 onPartClick={handlePartClick}
               />
             ) : (
-              <div className="flex h-[420px] items-center justify-center rounded-xl border border-theme-5 bg-theme-2">
-                <p className="text-theme-35 text-sm">3D model not available for this platform</p>
+              <div className="relative h-[420px] overflow-hidden rounded-xl border border-theme-5 bg-theme-2">
+                {/* Product image fallback */}
+                {PLATFORM_IMAGE_MAP[slug] ? (
+                  <img
+                    src={PLATFORM_IMAGE_MAP[slug]}
+                    alt={displayName}
+                    className="absolute inset-0 h-full w-full object-contain p-4"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center">
+                    <div className="text-center">
+                      <ImageIcon size={32} className="mx-auto mb-2 text-theme-20" />
+                      <p className="text-theme-35 text-sm">3D model not available</p>
+                      <p className="text-theme-20 text-xs mt-1">Product image coming soon</p>
+                    </div>
+                  </div>
+                )}
+                <div className="absolute bottom-3 left-3">
+                  <span className="rounded-full bg-black/50 px-2 py-1 text-[10px] text-white/70 backdrop-blur">
+                    Product Photo
+                  </span>
+                </div>
               </div>
             )}
             {selectedPart && (
@@ -325,6 +348,36 @@ export function PlatformKnowledgeClient({
                   </span>
                 )}
               </div>
+              
+              {/* Cost Estimate */}
+              {selectedProtocol.parts_json.length > 0 && (() => {
+                const partsCost = selectedProtocol.parts_json.reduce((sum, p) => sum + (p.unit_cost_usd || 0) * p.qty, 0);
+                const laborCost = selectedProtocol.labor_minutes ? Math.round(selectedProtocol.labor_minutes * 0.5 * 100) / 100 : 0;
+                const totalCost = partsCost + laborCost;
+                return (
+                  <div className="mt-3 rounded-xl border border-theme-5 bg-theme-2 p-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <DollarSign size={12} className="text-emerald-600" />
+                      <span className="text-xs uppercase tracking-widest text-theme-35">Cost Estimate</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-center">
+                      <div>
+                        <p className="text-xs text-theme-35">Parts</p>
+                        <p className="text-sm font-semibold text-theme-primary">${partsCost.toFixed(0)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-theme-35">Labor</p>
+                        <p className="text-sm font-semibold text-theme-primary">${laborCost.toFixed(0)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-theme-35">Total</p>
+                        <p className="text-sm font-semibold text-ember">${totalCost.toFixed(0)}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
               {selectedProtocol.steps_json.length > 0 && (
                 <div className="mt-3 space-y-2">
                   {selectedProtocol.steps_json.slice(0, 3).map((s) => (
