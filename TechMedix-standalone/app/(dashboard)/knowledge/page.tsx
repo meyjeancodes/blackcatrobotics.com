@@ -9,7 +9,6 @@ import {
   Wrench,
 } from "lucide-react";
 import { getPlatformsFromSupabase } from "@/lib/knowledge/platforms-server";
-import { listAllFailureModes } from "@/lib/blackcat/knowledge/db";
 import { PlatformSearch } from "@/components/platform-search";
 import { SymptomFinder } from "./symptom-finder";
 
@@ -74,17 +73,16 @@ export default async function KnowledgePage() {
     0
   );
 
-  // Fetch ALL failure modes for the symptom finder (not just critical)
-  const allFailures = await listAllFailureModes().catch(() => []);
-  const symptomFinderData = allFailures.map((fm) => ({
-    id: fm.id,
-    symptom: fm.symptom,
-    root_cause: fm.root_cause,
-    component: fm.component,
-    severity: fm.severity,
-    tags: fm.tags,
-    platform_name: fm.platform?.name ?? "",
-    platform_slug: (fm.platform?.slug ?? "").replace(/_/g, "-"),
+  // Build symptom finder data from platforms (which include failure signatures)
+  const symptomFinderData = platforms.map((p) => ({
+    id: p.id,
+    symptom: p.name,
+    root_cause: p.description,
+    component: p.category,
+    severity: "medium" as const,
+    tags: p.failureSignatures.map((fs) => fs.name),
+    platform_name: p.name,
+    platform_slug: p.id,
   }));
 
   return (
