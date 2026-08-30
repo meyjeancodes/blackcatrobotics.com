@@ -88,6 +88,30 @@ const PLATFORMS: PlatformProfile[] = [
     diagramUrl: "https://github.com/unitreerobotics/unitree_ros/tree/master/robots/g1_description",
   },
   {
+    id: "unitree-h1",
+    name: "Unitree H1",
+    manufacturer: "Unitree Robotics",
+    category: "humanoid",
+    description: "Compact humanoid at ~178cm with 26 DOF. Official TechMedix partner platform with full URDF model available for interactive 3D teardown.",
+    specs: [
+      { label: "Height", value: "~178 cm" },
+      { label: "Total DOF", value: "26" },
+      { label: "Arm DOF", value: "7 per arm" },
+      { label: "Leg DOF", value: "6 per leg" },
+      { label: "Sensors", value: "3D LiDAR + Depth Camera" },
+      { label: "Battery", value: "~2h operation" },
+    ],
+    tlmRanges: { healthScoreMin: 70, healthScoreMax: 95, batteryPctMin: 15, batteryPctMax: 90, motorTempMin: 38, motorTempMax: 75 },
+    failureSignatures: [
+      { id: "actuator-overheat", name: "Actuator Overheat", severity: "critical", description: "Joint temp > 75°C sustained > 30s" },
+      { id: "joint-backlash", name: "Joint Backlash", severity: "warning", description: "Leg joint position error > 20mm" },
+      { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 15% during active task" },
+    ],
+    maintenanceCta: "Schedule H1 service",
+    manualUrl: "https://support.unitree.com/home/en/H1_developer",
+    diagramUrl: "https://github.com/unitreerobotics/unitree_ros/tree/master/robots/h1_description",
+  },
+  {
     id: "unitree-h1-2",
     name: "Unitree H1-2",
     manufacturer: "Unitree Robotics",
@@ -967,6 +991,7 @@ export default ALL_PLATFORMS;
 export const PLATFORM_IMAGE_MAP: Record<string, string> = {
   // Humanoids
   "unitree-g1":            "/images/platforms/unitree_g1.jpg",
+  "unitree-h1":            "/images/platforms/unitree_h1_2.png",
   "unitree-h1-2":          "/images/platforms/unitree_h1_2.png",
   "unitree-b2":            "/images/platforms/unitree_b2.png",
   "figure-02":             "/images/platforms/figure_02.jpg",

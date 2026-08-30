@@ -26,6 +26,7 @@ interface Props {
   knowledge: PlatformKnowledge | null;
   failureModes: (FailureMode & { repair_protocols: RepairProtocol[] })[];
   displayName: string;
+  slug: string;
 }
 
 const severityColors: Record<string, string> = {
@@ -52,6 +53,7 @@ export function PlatformKnowledgeClient({
   knowledge,
   failureModes,
   displayName,
+  slug,
 }: Props) {
   const [selectedPart, setSelectedPart] = useState<string | null>(null);
   const [selectedFailureId, setSelectedFailureId] = useState<string | null>(null);
@@ -61,7 +63,7 @@ export function PlatformKnowledgeClient({
     [platform]
   );
   const meta = ARCHETYPE_META[archetype];
-  const urdf = platform ? getUrdfForPlatform(platform.id) : null;
+  const urdf = getUrdfForPlatform(slug);
   const accent = meta?.accent ?? "#8b5cf6";
 
   const specs: FormattedSpec[] = useMemo(() => {

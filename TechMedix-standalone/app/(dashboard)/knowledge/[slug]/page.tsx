@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPlatformBySlug, getFailureModesByPlatform } from "@/lib/blackcat/knowledge/db";
 import { getPlatformKnowledge } from "@/lib/knowledge-content";
+import { getAllPlatforms } from "@/lib/platforms/index";
+import { hasUrdf } from "@/lib/platforms/urdf-config";
 import { PlatformKnowledgeClient } from "./platform-knowledge-client";
 
 export async function generateMetadata({
@@ -11,9 +13,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const platform = await getPlatformBySlug(slug).catch(() => null);
+  const staticPlatform = platform ?? getAllPlatforms().find((p) => p.id === slug);
   const knowledge = getPlatformKnowledge(slug);
-  if (!platform && !knowledge) return {};
-  const name = platform?.name ?? knowledge?.name ?? slug;
+  if (!staticPlatform && !knowledge) return {};
+  const name = staticPlatform?.name ?? knowledge?.name ?? slug;
   const description =
     knowledge?.overview ||
     `${name} — interactive 3D teardown, failure modes, and repair protocols on TechMedix.`;
@@ -31,14 +34,15 @@ export default async function PlatformKnowledgePage({
 }) {
   const { slug } = await params;
   const platform = await getPlatformBySlug(slug).catch(() => null);
+  const staticPlatform = platform ?? getAllPlatforms().find((p) => p.id === slug);
   const knowledge = getPlatformKnowledge(slug);
-  if (!platform && !knowledge) notFound();
+  if (!staticPlatform && !knowledge) notFound();
 
   const failureModes = platform
     ? await getFailureModesByPlatform(platform.id).catch(() => [])
     : [];
 
-  const displayName = platform?.name ?? knowledge?.name ?? slug;
+  const displayName = staticPlatform?.name ?? knowledge?.name ?? slug;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -64,6 +68,7 @@ export default async function PlatformKnowledgePage({
         knowledge={knowledge}
         failureModes={failureModes}
         displayName={displayName}
+        slug={slug}
       />
     </>
   );

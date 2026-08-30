@@ -10,17 +10,17 @@ type RepairProtocolViewerProps = {
 };
 
 const severityColors: Record<string, string> = {
-  critical: "bg-red-900/60 text-red-200 border-red-700",
-  high: "bg-orange-900/60 text-orange-200 border-orange-700",
-  medium: "bg-yellow-900/40 text-yellow-200 border-yellow-700",
-  low: "bg-green-900/40 text-green-200 border-green-700",
+  critical: "bg-red-500/10 text-red-700 border-red-500/30",
+  high: "bg-orange-500/10 text-orange-700 border-orange-500/30",
+  medium: "bg-amber-500/10 text-amber-700 border-amber-500/30",
+  low: "bg-emerald-500/10 text-emerald-700 border-emerald-500/30",
 };
 
 const skillColors: Record<string, string> = {
-  basic: "text-green-400",
-  intermediate: "text-yellow-400",
-  advanced: "text-orange-400",
-  specialist: "text-red-400",
+  basic: "text-emerald-600",
+  intermediate: "text-amber-600",
+  advanced: "text-orange-600",
+  specialist: "text-red-600",
 };
 
 export function RepairProtocolViewer({
@@ -47,33 +47,33 @@ export function RepairProtocolViewer({
   const pct = totalSteps > 0 ? Math.round((doneCount / totalSteps) * 100) : 0;
 
   return (
-    <div className="bg-[#0d1117] border border-white/10 rounded-xl overflow-hidden text-sm font-mono">
+    <div className="rounded-[22px] border border-theme-5 bg-theme-2 overflow-hidden">
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-white/10 bg-white/[0.02]">
+      <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-theme-5">
         <div className="space-y-1">
           <div className="flex items-center gap-2 flex-wrap">
             <span
-              className={`px-2 py-0.5 rounded border text-xs uppercase tracking-wider ${
-                severityColors[failureMode.severity] ?? "bg-white/10 text-white/60"
+              className={`px-2 py-0.5 rounded-full border text-xs uppercase tracking-wider ${
+                severityColors[failureMode.severity] ?? "bg-theme-5 text-theme-40"
               }`}
             >
               {failureMode.severity}
             </span>
             {failureMode.confidence === "low" || failureMode.confidence === "unverified" ? (
-              <span className="px-2 py-0.5 rounded border border-yellow-700 bg-yellow-900/30 text-yellow-300 text-xs uppercase tracking-wider">
-                ⚠ low-confidence
+              <span className="px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-600 text-xs uppercase tracking-wider">
+                low-confidence
               </span>
             ) : null}
           </div>
-          <h2 className="text-white font-semibold text-base">
+          <h2 className="text-theme-primary font-semibold text-base">
             {protocol?.title ?? `${failureMode.component} — ${failureMode.symptom}`}
           </h2>
-          <p className="text-white/50 text-xs">{failureMode.component}</p>
+          <p className="text-theme-50 text-xs">{failureMode.component}</p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-white/30 hover:text-white/70 transition-colors mt-1 shrink-0"
+            className="text-theme-35 hover:text-theme-primary transition-colors mt-1 shrink-0"
             aria-label="Close"
           >
             ✕
@@ -82,11 +82,11 @@ export function RepairProtocolViewer({
       </div>
 
       {/* Root cause */}
-      <div className="px-5 py-3 bg-white/[0.015] border-b border-white/10">
-        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Root Cause</p>
-        <p className="text-white/80">{failureMode.root_cause}</p>
+      <div className="px-5 py-3 border-b border-theme-5">
+        <p className="text-theme-35 text-xs uppercase tracking-wider mb-1">Root Cause</p>
+        <p className="text-theme-55">{failureMode.root_cause}</p>
         {failureMode.mtbf_hours && (
-          <p className="text-white/40 text-xs mt-1">
+          <p className="text-theme-35 text-xs mt-1">
             MTBF est. {failureMode.mtbf_hours.toLocaleString()} hours
           </p>
         )}
@@ -94,7 +94,7 @@ export function RepairProtocolViewer({
 
       {/* No protocol fallback */}
       {!protocol && (
-        <div className="px-5 py-6 text-center text-white/40">
+        <div className="px-5 py-6 text-center text-theme-35">
           <p>No repair protocol on file for this failure mode.</p>
           <p className="text-xs mt-1">Protocols are added as technicians complete work orders.</p>
         </div>
@@ -103,17 +103,17 @@ export function RepairProtocolViewer({
       {protocol && (
         <>
           {/* Meta row */}
-          <div className="flex flex-wrap gap-4 px-5 py-3 border-b border-white/10 text-xs text-white/50">
+          <div className="flex flex-wrap gap-4 px-5 py-3 border-b border-theme-5 text-xs text-theme-40">
             <span>
-              <span className="text-white/30">Skill: </span>
-              <span className={skillColors[protocol.skill_level] ?? "text-white/60"}>
+              <span className="text-theme-35">Skill: </span>
+              <span className={skillColors[protocol.skill_level] ?? "text-theme-50"}>
                 {protocol.skill_level}
               </span>
             </span>
             {protocol.labor_minutes && (
               <span>
-                <span className="text-white/30">Est. time: </span>
-                <span className="text-white/70">
+                <span className="text-theme-35">Est. time: </span>
+                <span className="text-theme-primary">
                   {protocol.labor_minutes >= 60
                     ? `${Math.floor(protocol.labor_minutes / 60)}h ${protocol.labor_minutes % 60}m`
                     : `${protocol.labor_minutes}m`}
@@ -122,24 +122,24 @@ export function RepairProtocolViewer({
             )}
             {protocol.version > 1 && (
               <span>
-                <span className="text-white/30">Rev: </span>
-                <span className="text-white/70">v{protocol.version}</span>
+                <span className="text-theme-35">Rev: </span>
+                <span className="text-theme-primary">v{protocol.version}</span>
               </span>
             )}
           </div>
 
           {/* Progress bar */}
           {totalSteps > 0 && (
-            <div className="px-5 py-3 border-b border-white/10">
+            <div className="px-5 py-3 border-b border-theme-5">
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-white/40 text-xs uppercase tracking-wider">Progress</span>
-                <span className="text-white/60 text-xs">
+                <span className="text-theme-35 text-xs uppercase tracking-wider">Progress</span>
+                <span className="text-theme-50 text-xs">
                   {doneCount}/{totalSteps} steps
                 </span>
               </div>
-              <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-theme-5 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#2affa8] rounded-full transition-all duration-300"
+                  className="h-full bg-ember rounded-full transition-all duration-300"
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -148,8 +148,8 @@ export function RepairProtocolViewer({
 
           {/* Steps */}
           {steps.length > 0 && (
-            <div className="px-5 py-4 border-b border-white/10 space-y-3">
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Procedure</p>
+            <div className="px-5 py-4 border-b border-theme-5 space-y-3">
+              <p className="text-theme-35 text-xs uppercase tracking-wider mb-2">Procedure</p>
               {steps.map((s) => {
                 const done = completedSteps.has(s.step);
                 return (
@@ -160,28 +160,26 @@ export function RepairProtocolViewer({
                     }`}
                     onClick={() => toggleStep(s.step)}
                   >
-                    {/* Step number / checkmark */}
                     <div
                       className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center text-xs transition-colors ${
                         done
-                          ? "bg-[#2affa8]/20 border-[#2affa8]/60 text-[#2affa8]"
-                          : "border-white/20 text-white/40 group-hover:border-white/40"
+                          ? "bg-ember/20 border-ember/60 text-ember"
+                          : "border-theme-5 text-theme-40 group-hover:border-theme-10"
                       }`}
                     >
                       {done ? "✓" : s.step}
                     </div>
-
                     <div className="space-y-1 flex-1 min-w-0">
-                      <p className={`leading-snug ${done ? "line-through text-white/40" : "text-white/85"}`}>
+                      <p className={`leading-snug ${done ? "line-through text-theme-40" : "text-theme-55"}`}>
                         {s.action}
                       </p>
                       {s.tool && (
-                        <p className="text-[#2affa8]/60 text-xs">
+                        <p className="text-ember/60 text-xs">
                           Tool: {s.tool}
                         </p>
                       )}
                       {s.warning && (
-                        <div className="flex items-start gap-1.5 mt-1 px-2 py-1.5 bg-red-900/20 border border-red-800/50 rounded text-xs text-red-300">
+                        <div className="flex items-start gap-1.5 mt-1 px-2 py-1.5 bg-red-500/10 border border-red-500/20 rounded text-xs text-red-600">
                           <span className="shrink-0">⚠</span>
                           <span>{s.warning}</span>
                         </div>
@@ -195,13 +193,13 @@ export function RepairProtocolViewer({
 
           {/* Tools required */}
           {tools.length > 0 && (
-            <div className="px-5 py-4 border-b border-white/10">
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Tools Required</p>
+            <div className="px-5 py-4 border-b border-theme-5">
+              <p className="text-theme-35 text-xs uppercase tracking-wider mb-2">Tools Required</p>
               <div className="flex flex-wrap gap-1.5">
                 {tools.map((t) => (
                   <span
                     key={t}
-                    className="px-2 py-0.5 bg-white/5 border border-white/10 rounded text-white/60 text-xs"
+                    className="px-2 py-0.5 bg-theme-5/50 border border-theme-5 rounded text-theme-50 text-xs"
                   >
                     {t}
                   </span>
@@ -212,29 +210,29 @@ export function RepairProtocolViewer({
 
           {/* Parts */}
           {parts.length > 0 && (
-            <div className="px-5 py-4 border-b border-white/10">
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Parts Required</p>
+            <div className="px-5 py-4 border-b border-theme-5">
+              <p className="text-theme-35 text-xs uppercase tracking-wider mb-2">Parts Required</p>
               <div className="space-y-2">
                 {parts.map((part, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between gap-2 py-1.5 border-b border-white/5 last:border-0"
+                    className="flex items-center justify-between gap-2 py-1.5 border-b border-theme-5 last:border-0"
                   >
                     <div>
-                      <p className="text-white/80">{part.part_name}</p>
+                      <p className="text-theme-55">{part.part_name}</p>
                       {part.part_number && (
-                        <p className="text-white/30 text-xs">{part.part_number}</p>
+                        <p className="text-theme-35 text-xs">{part.part_number}</p>
                       )}
                       {part.supplier && (
-                        <p className="text-white/40 text-xs">via {part.supplier}</p>
+                        <p className="text-theme-40 text-xs">via {part.supplier}</p>
                       )}
                     </div>
                     <div className="text-right shrink-0">
                       {part.unit_cost_usd && (
-                        <p className="text-white/70">${part.unit_cost_usd.toFixed(2)}</p>
+                        <p className="text-theme-primary">${part.unit_cost_usd.toFixed(2)}</p>
                       )}
                       {part.qty > 1 && (
-                        <p className="text-white/30 text-xs">×{part.qty}</p>
+                        <p className="text-theme-35 text-xs">×{part.qty}</p>
                       )}
                     </div>
                   </div>
@@ -246,17 +244,17 @@ export function RepairProtocolViewer({
           {/* Source */}
           {protocol.source_url && (
             <div className="px-5 py-3">
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Source</p>
+              <p className="text-theme-35 text-xs uppercase tracking-wider mb-1">Source</p>
               <a
                 href={protocol.source_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#2affa8]/60 hover:text-[#2affa8] text-xs underline underline-offset-2 break-all transition-colors"
+                className="text-ember hover:text-ember/80 text-xs underline underline-offset-2 break-all transition-colors"
               >
                 {protocol.source_url}
               </a>
               {failureMode.source_urls.length > 0 && (
-                <p className="text-white/30 text-xs mt-1">
+                <p className="text-theme-35 text-xs mt-1">
                   +{failureMode.source_urls.length} research source
                   {failureMode.source_urls.length !== 1 ? "s" : ""}
                 </p>

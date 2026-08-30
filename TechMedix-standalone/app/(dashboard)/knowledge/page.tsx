@@ -9,7 +9,9 @@ import {
   Wrench,
 } from "lucide-react";
 import { getPlatformsFromSupabase } from "@/lib/knowledge/platforms-server";
+import { getCriticalFailureModes } from "@/lib/blackcat/knowledge/db";
 import { PlatformSearch } from "@/components/platform-search";
+import { SymptomFinder } from "./symptom-finder";
 
 // ─── Supporting areas ────────────────────────────────────────────────────────
 
@@ -71,6 +73,19 @@ export default async function KnowledgePage() {
     (sum, p) => sum + p.failureSignatures.length,
     0
   );
+
+  // Fetch critical failure modes for the symptom finder
+  const criticalFailures = await getCriticalFailureModes().catch(() => []);
+  const symptomFinderData = criticalFailures.map((fm) => ({
+    id: fm.id,
+    symptom: fm.symptom,
+    root_cause: fm.root_cause,
+    component: fm.component,
+    severity: fm.severity,
+    tags: fm.tags,
+    platform_name: fm.platform?.name ?? "",
+    platform_slug: fm.platform?.slug ?? "",
+  }));
 
   return (
     <div className="space-y-8">
@@ -182,6 +197,20 @@ export default async function KnowledgePage() {
             <ChevronRight size={14} className="text-[var(--ink)]/20 group-hover:text-emerald-600 transition" />
           </Link>
         </div>
+      </section>
+
+      {/* ── Diagnostic Symptom Finder ─────────────────────────────────────── */}
+      <section>
+        <div className="mb-4">
+          <p className="kicker">Level 1 — Diagnose</p>
+          <h2 className="mt-1.5 font-header text-2xl leading-tight text-[var(--ink)]">
+            Find Your Failure
+          </h2>
+          <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
+            Describe a symptom — we'll match it to documented failure modes and repair protocols.
+          </p>
+        </div>
+        <SymptomFinder failureModes={symptomFinderData as any} />
       </section>
 
       {/* ── Platform Search (Level 2) ─────────────────────────────────────── */}
