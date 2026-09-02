@@ -39,13 +39,34 @@ export default async function PlatformKnowledgePage({
   const knowledge = getPlatformKnowledge(slug);
   if (!staticPlatform && !knowledge) notFound();
 
-  const failureModes = platform
-    ? await getFailureModesByPlatform(platform.id).catch(() => [])
-    : [];
-
-  // Extract failure modes from static data if Supabase doesn't have this platform
-  const staticFailureModes: (FailureMode & { repair_protocols: RepairProtocol[] })[] = !platform && staticPlatform
-    ? staticPlatform.failureSignatures.map((fs) => ({
+  // Extract failure modes from platform data (Supabase) or static fallback
+  const allFailureModes: (FailureMode & { repair_protocols: RepairProtocol[]; predictive_signals: string[] })[] = [];
+  
+  if (platform && platform.failure_modes) {
+    // Supabase platform has embedded failure_modes
+    for (const fm of platform.failure_modes) {
+      allFailureModes.push({
+        id: fm.id,
+        platform_id: fm.platform_id,
+        component: fm.component,
+        symptom: fm.symptom,
+        root_cause: fm.root_cause,
+        severity: fm.severity,
+        mtbf_hours: fm.mtbf_hours,
+        source_urls: fm.source_urls || [],
+        source_count: fm.source_count,
+        confidence: fm.confidence,
+        tags: fm.tags || [],
+        created_at: fm.created_at || "",
+        updated_at: fm.updated_at || "",
+        repair_protocols: fm.repair_protocols || [],
+        predictive_signals: fm.predictive_signals || [],
+      });
+    }
+  } else if (staticPlatform) {
+    // Static fallback
+    for (const fs of staticPlatform.failureSignatures) {
+      allFailureModes.push({
         id: fs.id,
         platform_id: staticPlatform.id,
         component: fs.name.split(":")[0] || fs.name,
@@ -55,16 +76,15 @@ export default async function PlatformKnowledgePage({
         mtbf_hours: fs.mtbfHours || null,
         source_urls: [],
         source_count: null,
-        confidence: "medium" as const,
+        confidence: "medium",
         tags: [],
         created_at: "",
         updated_at: "",
         repair_protocols: [],
         predictive_signals: [],
-      }))
-    : [];
-
-  const allFailureModes = [...failureModes, ...staticFailureModes];
+      });
+    }
+  }
 
   const displayName = staticPlatform?.name ?? knowledge?.name ?? slug;
 
