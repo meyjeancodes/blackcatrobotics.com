@@ -1,4 +1,4 @@
-import { createClient } from "../../../lib/supabase-browser";
+import { createSupabaseServerClient } from "../../../lib/supabase-server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -7,10 +7,12 @@ export async function GET(request: Request) {
   const next = searchParams.get("next") ?? "/dashboard";
 
   if (code) {
-    const supabase = createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+    const supabase = await createSupabaseServerClient();
+    if (supabase) {
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      if (!error) {
+        return NextResponse.redirect(`${origin}${next}`);
+      }
     }
   }
 
