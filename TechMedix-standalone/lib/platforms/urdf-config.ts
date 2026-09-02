@@ -80,6 +80,12 @@ export const PLATFORM_URDFS: PlatformUrdf[] = [
     urdfPath: '/robots/unitree-h1/h1.urdf',
     badge: 'H1 Model',
   },
+  {
+    id: 'asimov-here-be-dragons',
+    name: 'Asimov v1',
+    urdfPath: '/robots/asimov/asimov_1.urdf',
+    badge: 'Open-Source URDF',
+  },
 ];
 
 /** Look up URDF config by platform ID */

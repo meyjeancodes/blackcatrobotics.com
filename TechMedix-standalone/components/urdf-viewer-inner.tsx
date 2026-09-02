@@ -103,6 +103,7 @@ function UrdfRobot({
 			g1_description: '/robots/unitree-g1',
 			go2_description: '/robots/unitree-go2',
 			h2_description: '/robots/unitree-h2',
+			asimov_description: '/robots/asimov',
 		};
 
 		loader.load(
