@@ -1,14 +1,11 @@
 import Link from "next/link";
 import {
-  Activity,
   AlertTriangle,
   ArrowRight,
   ArrowUpRight,
-  BatteryCharging,
   BriefcaseBusiness,
   Cpu,
-  Radar,
-  Signal,
+  Wrench,
 } from "lucide-react";
 import { MetricCard } from "../../../components/metric-card";
 import { FleetHealthCard } from "../../../components/fleet-health-card";
@@ -16,28 +13,14 @@ import { RobotTable } from "../../../components/robot-table";
 import { SurfaceCard } from "../../../components/surface-card";
 import { StatusPill } from "../../../components/status-pill";
 import { TelemetryChart } from "../../../components/telemetry-chart";
-import { MedicalTelemetryChart } from "../../../components/medical-telemetry-chart";
-import { LiveSystemPanel } from "../../../components/live-system-panel";
-import { ServiceNetworkPanel } from "../../../components/service-network-panel";
-import { PerformanceKpis } from "../../../components/performance-kpis";
-import { FleetHealthCategories } from "../../../components/fleet-health-categories";
 import { ChatPanel } from "../../../components/chat-panel";
-import { CheckoutBanner } from "../../../components/checkout-banner";
-import { AiInsightCard } from "../../../components/ai-insight-card";
-import { AlertList } from "../../../components/alert-list";
-import { ActivityFeed } from "../../../components/activity-feed";
 import { ActionCenter } from "../../../components/action-center";
-import { getDashboardData, getMedicalTelemetry } from "../../../lib/data";
-import { Suspense } from "react";
+import { getDashboardData } from "../../../lib/data";
 
 export default async function DashboardPage() {
   const { snapshot, stats } = await getDashboardData();
   const flagshipRobot = snapshot.robots[0];
   const telemetry = flagshipRobot ? snapshot.telemetryHistory[flagshipRobot.id] ?? [] : [];
-
-  // Medical device demo panel — pinned to the synthetic da Vinci robot.
-  const SYNTHETIC_DAVINCI_ID = "robot_davinci_synthetic";
-  const medicalSeries = await getMedicalTelemetry(SYNTHETIC_DAVINCI_ID);
 
   const timestamp = new Date().toLocaleTimeString("en-US", {
     hour: "2-digit",
@@ -45,20 +28,8 @@ export default async function DashboardPage() {
     hour12: false,
   });
 
-  const connectedNodes = [
-    { label: "HABITAT Home", status: "Online", detail: "HABITAT-TX-01", connection: "Synced with Energy + TechMedix", tone: "moss" as const },
-    { label: "Robots", status: "Active", detail: `${stats.activeRobots} units monitored`, connection: "Maintained via TechMedix", tone: "ember" as const },
-    { label: "Energy System", status: "Optimal", detail: "18.4 kWh solar today", connection: "Optimized across network", tone: "moss" as const },
-    { label: "EV / Mobility", status: "Idle", detail: "Tesla Model Y — 82%", connection: "Integrated with home system", tone: "gold" as const },
-    { label: "TechMedix Core", status: "Online", detail: "All nodes reporting", connection: "Monitoring all systems", tone: "moss" as const },
-  ];
-
   return (
     <div className="space-y-8">
-      <Suspense fallback={null}>
-        <CheckoutBanner />
-      </Suspense>
-
       {/* ─── Page header ─────────────────────────────────────── */}
       <header className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
@@ -73,16 +44,15 @@ export default async function DashboardPage() {
             TechMedix Operations
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-theme-52">
-            Fleet health, alert pressure, technician dispatch, and customer operations for
-            BlackCat Robotics — surfaced in one console.
+            Fleet health, open alerts, and technician dispatch — focused on the repair loop.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Link
-            href="/dispatch"
+            href="/knowledge"
             className="inline-flex items-center gap-1.5 rounded-full border border-theme-10 px-4 py-2 font-ui text-[0.66rem] uppercase tracking-[0.18em] text-theme-65 transition hover:border-theme-20 hover:text-theme-primary"
           >
-            Open Dispatch
+            Knowledge Hub
             <ArrowUpRight size={12} />
           </Link>
           <Link
@@ -104,7 +74,7 @@ export default async function DashboardPage() {
         technicians={snapshot.technicians}
       />
 
-      {/* ─── Fleet health strip (condensed) ───────────────────── */}
+      {/* ─── Fleet health strip ──────────────────────────────── */}
       <section className="grid gap-4 xl:grid-cols-3">
         <FleetHealthCard
           initialValue={stats.fleetHealthAverage}
@@ -127,66 +97,6 @@ export default async function DashboardPage() {
         />
       </section>
 
-      {/* ─── AI Fleet Insight ────────────────────────────────── */}
-      <AiInsightCard />
-
-      {/* ─── Live system panels ──────────────────────────────── */}
-      <LiveSystemPanel />
-      <PerformanceKpis />
-      <FleetHealthCategories />
-      <ServiceNetworkPanel />
-
-      {/* ─── Connected System Overview ───────────────────────── */}
-      <section>
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="kicker">Integrated System</p>
-            <h2 className="mt-1.5 font-header text-2xl leading-tight tracking-[-0.02em] text-theme-primary lg:text-3xl">
-              Connected System Overview
-            </h2>
-          </div>
-          <span className="inline-flex items-center gap-2 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-theme-35">
-            <Radar size={12} />
-            Real-time monitoring
-          </span>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {connectedNodes.map((node) => {
-            const dotTone =
-              node.tone === "ember" ? "bg-ember" : node.tone === "gold" ? "bg-gold" : "bg-moss";
-            const glow =
-              node.tone === "ember"
-                ? "rgba(232,96,30,0.22)"
-                : node.tone === "gold"
-                ? "rgba(195,165,91,0.22)"
-                : "rgba(29,184,122,0.22)";
-            return (
-              <div
-                key={node.label}
-                className="panel-elevated flex flex-col gap-3 p-5 transition-all duration-200 hover:-translate-y-1"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-ui text-[0.60rem] uppercase tracking-[0.20em] text-theme-35">
-                    {node.label}
-                  </span>
-                  <span
-                    className={`h-2 w-2 rounded-full ${dotTone}`}
-                    style={{ boxShadow: `0 0 0 4px ${glow}` }}
-                  />
-                </div>
-                <p className="font-ui text-[0.68rem] uppercase tracking-[0.18em] font-semibold text-theme-70">
-                  {node.status}
-                </p>
-                <p className="text-xs leading-snug text-theme-55">{node.detail}</p>
-                <p className="mt-auto border-t border-theme-5 pt-2 text-[0.65rem] leading-snug text-theme-35">
-                  {node.connection}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
       {/* ─── Fleet overview + telemetry ──────────────────────── */}
       <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <SurfaceCard title="Fleet overview" eyebrow={snapshot.customer?.company ?? "TechMedix"}>
@@ -207,35 +117,40 @@ export default async function DashboardPage() {
         </SurfaceCard>
       </section>
 
-      {/* ─── Medical device signals (da Vinci / dVRK demo) ───────── */}
-      {medicalSeries.length > 0 && (
-        <section className="space-y-4">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="kicker">Medical Device · Live Demo</p>
-              <h2 className="mt-1.5 font-header text-2xl leading-tight tracking-[-0.02em] text-theme-primary lg:text-3xl">
-                da Vinci Surgical System (dVRK feed)
-              </h2>
-            </div>
-            <span className="inline-flex items-center gap-2 font-ui text-[0.58rem] uppercase tracking-[0.22em] text-theme-35">
-              <Radar size={12} />
-              real adapter mapping
-            </span>
-          </div>
-          <div className="grid gap-5 lg:grid-cols-2">
-            {medicalSeries.map((s) => (
-              <SurfaceCard key={s.signalName} title={s.signalName} eyebrow={`threshold ${s.warning ?? "—"}/${s.critical ?? "—"} ${s.unit}`}>
-                <MedicalTelemetryChart series={s} />
-              </SurfaceCard>
-            ))}
-          </div>
-        </section>
-      )}
-
       {/* ─── Priority alerts + dispatch queue ────────────────── */}
       <section className="grid gap-6 xl:grid-cols-2">
         <SurfaceCard title="Priority alerts" eyebrow="Needs action">
-          <AlertList alerts={snapshot.alerts} />
+          <div className="space-y-3">
+            {snapshot.alerts
+              .filter((a) => a.status === "active")
+              .slice(0, 6)
+              .map((alert) => (
+                <div
+                  key={alert.id}
+                  className="relative overflow-hidden rounded-[14px] border border-theme-5 bg-theme-18 p-4 pl-5 transition-colors duration-220 hover:border-theme-10 hover:bg-theme-25"
+                  style={{ borderLeftColor: "#e8601e", borderLeftWidth: "3px" }}
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-ui text-[0.62rem] uppercase tracking-[0.22em] text-theme-40">
+                        {alert.title}
+                      </p>
+                      <h3 className="mt-1.5 text-base font-semibold leading-snug text-theme-primary">
+                        {alert.message}
+                      </h3>
+                    </div>
+                    <StatusPill label={alert.severity} />
+                  </div>
+                  <div className="mt-3 font-ui text-[0.62rem] uppercase tracking-[0.16em] text-theme-52">
+                    <span className="text-theme-35">Detected · </span>
+                    {alert.createdAt}
+                  </div>
+                </div>
+              ))}
+            {snapshot.alerts.filter((a) => a.status === "active").length === 0 && (
+              <p className="text-sm text-theme-52 py-4 text-center">No active alerts.</p>
+            )}
+          </div>
         </SurfaceCard>
 
         <SurfaceCard title="Dispatch queue" eyebrow="In progress">
@@ -281,19 +196,14 @@ export default async function DashboardPage() {
                 </div>
               );
             })}
+            {snapshot.jobs.length === 0 && (
+              <p className="text-sm text-theme-52 py-4 text-center">No active jobs.</p>
+            )}
           </div>
         </SurfaceCard>
       </section>
 
-      {/* ─── Activity feed ───────────────────────────────────── */}
-      <ActivityFeed
-        alerts={snapshot.alerts}
-        jobs={snapshot.jobs}
-        robots={snapshot.robots}
-        technicians={snapshot.technicians}
-      />
-
-      {/* ─── Footer accent strip ─────────────────────────────── */}
+      {/* ─── Quick repair access ─────────────────────────────── */}
       <section className="panel-dark relative overflow-hidden px-8 py-6 lg:px-10 lg:py-7">
         <div
           className="pointer-events-none absolute inset-0"
@@ -305,30 +215,29 @@ export default async function DashboardPage() {
         <div className="relative flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-center">
           <div className="flex items-center gap-3">
             <div className="rounded-xl bg-white/10 p-2 text-ember">
-              <Signal size={16} />
+              <Wrench size={16} />
             </div>
             <div>
               <p className="font-ui text-[0.58rem] uppercase tracking-[0.22em] text-white/45">
-                Signal plane
+                Repair loop
               </p>
               <p className="mt-0.5 text-sm text-white/80">
-                All surfaces reporting. Last sync {timestamp}.
+                {stats.openJobs} active job{stats.openJobs !== 1 ? "s" : ""} · {stats.criticalAlerts} critical alert{stats.criticalAlerts !== 1 ? "s" : ""} · Last sync {timestamp}
               </p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Link
-              href="/network"
+              href="/knowledge"
               className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 font-ui text-[0.62rem] uppercase tracking-[0.18em] text-white/85 transition hover:bg-white/10"
             >
-              <Activity size={11} />
-              Network map
+              Browse failures
             </Link>
             <Link
-              href="/alerts"
+              href="/dispatch"
               className="inline-flex items-center gap-1.5 rounded-full bg-ember px-4 py-2 font-ui text-[0.62rem] uppercase tracking-[0.18em] font-semibold text-white transition hover:bg-ember/90"
             >
-              Alert feed
+              Open dispatch
               <ArrowUpRight size={11} />
             </Link>
           </div>
