@@ -6,12 +6,10 @@ import { markLessonComplete } from "@/app/(dashboard)/knowledge/actions";
 export function MarkCompleteButton({
   lessonId,
   moduleId,
-  userId,
   isComplete,
 }: {
   lessonId: string;
   moduleId: string;
-  userId: string;
   isComplete: boolean;
 }) {
   const [isPending, startTransition] = useTransition();
@@ -41,7 +39,7 @@ export function MarkCompleteButton({
     <button
       onClick={() => {
         startTransition(async () => {
-          await markLessonComplete(userId, lessonId, moduleId);
+          await markLessonComplete(lessonId, moduleId);
         });
       }}
       disabled={isPending}

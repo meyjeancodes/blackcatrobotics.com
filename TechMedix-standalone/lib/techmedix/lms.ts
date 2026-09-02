@@ -208,6 +208,9 @@ export async function updateProgress(
   status: "not_started" | "in_progress" | "completed"
 ): Promise<void> {
   const supabase = await createSupabaseServerClient();
+  if (!supabase) {
+    throw new Error("Supabase server client not configured");
+  }
 
   const now = new Date().toISOString();
 
