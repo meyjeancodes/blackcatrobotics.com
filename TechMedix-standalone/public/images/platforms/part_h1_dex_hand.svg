@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" fill="#f8f8f8"/>
+  <path d="M60 150 L60 70 Q60 50 100 50 Q140 50 140 70 L140 150" fill="#e0e0e0" stroke="#ccc" stroke-width="2"/>
+  <rect x="70" y="70" width="15" height="50" rx="3" fill="#cc3d17" opacity="0.7"/>
+  <rect x="115" y="70" width="15" height="50" rx="3" fill="#cc3d17" opacity="0.7"/>
+  <text x="100" y="185" text-anchor="middle" font-family="system-ui" font-size="10" fill="#666">H1 Dexterous Hand</text>
+</svg>

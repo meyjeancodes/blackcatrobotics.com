@@ -1,14 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img">
-  <rect width="600" height="400" fill="#15171d"/>
-  <rect x="14" y="14" width="572" height="372" rx="14" fill="none" stroke="#3a3d47" stroke-width="1.5" opacity="0.5"/>
-  <circle cx="546" cy="54" r="6" fill="#cc3d17"/>
-  <!-- leg actuator -->
-  <circle cx="300" cy="120" r="24" fill="#0a0a0f" stroke="#3a3d47" stroke-width="3"/>
-  <circle cx="300" cy="120" r="8" fill="#cc3d17"/>
-  <rect x="280" y="144" width="40" height="100" rx="5" fill="#5a5e6b"/>
-  <circle cx="300" cy="244" r="20" fill="#0a0a0f" stroke="#5a5e6b" stroke-width="3"/>
-  <circle cx="300" cy="244" r="6" fill="#cc3d17"/>
-  <rect x="278" y="264" width="44" height="70" rx="5" fill="#3a3d47"/>
-  <rect x="270" y="334" width="60" height="16" rx="4" fill="#5a5e6b"/>
-  <text x="300" y="370" text-anchor="middle" fill="#c9c8c0" font-family="monospace" font-size="16" letter-spacing="2">SPOT LEG ACTUATOR</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" fill="#f8f8f8"/>
+  <rect x="70" y="50" width="60" height="100" rx="6" fill="#e0e0e0" stroke="#ccc" stroke-width="2"/>
+  <circle cx="100" cy="80" r="12" fill="#cc3d17" opacity="0.6"/>
+  <circle cx="100" cy="120" r="12" fill="#cc3d17" opacity="0.4"/>
+  <text x="100" y="185" text-anchor="middle" font-family="system-ui" font-size="10" fill="#666">Spot Leg Actuator</text>
 </svg>

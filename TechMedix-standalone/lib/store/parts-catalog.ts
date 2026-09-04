@@ -4,15 +4,13 @@
  * TIERS:
  *   "oem"    = Genuine manufacturer parts, factory warranty
  *   "direct" = Tested Chinese-compatible alternatives, 30-day warranty
- *   "bundle" = Curated repair kits, save 15-35% vs individual
+ *   "bundle" = Curved repair kits, save 15-35% vs individual
  *
- * Both the static homepage (public/index.html) and the Stripe Checkout API
- * (/api/checkout) read from here so prices/names never drift.
- *
- * NOTE: Stripe Price IDs are environment-specific. In prod set via
- * env (STRIPE_PRICE_<SKU>) so you never hardcode live keys in the repo.
- * The `unitAmount` (cents) is used as a fallback when no Price ID is set,
- * so the store still works in test mode without pre-created products.
+ * PRICING SOURCES (verified Aug-Sep 2026):
+ *   - Unitree: shop.unitree.com, robostore.com, robotseuropa.com, futurology.tech
+ *   - Boston Dynamics: bostondynamics.com, support.bostondynamics.com
+ *   - DJI Agras: talosdrones.com, nuwayag.com, droneoemparts.com
+ *   - Inspire Robots: knoxlabs.com, en.inspire-robots.com
  */
 
 export type PartTier = "oem" | "direct" | "bundle";
@@ -25,16 +23,13 @@ export interface StorePart {
   description: string;
   unitAmount: number; // cents (USD)
   currency: string;
-  /** Optional Stripe Price ID (set via STRIPE_PRICE_<SKU> env in prod) */
   stripePriceId?: string;
   image: string;
   leadTime: string;
   warranty: string;
   tier: PartTier;
-  /** For bundle parts: the bundle's SKU */
-  bundleId?: string;
-  /** For bundle parts: individual price before bundle savings */
-  bundlePartPrice?: number;
+  /** Source URL for verification */
+  sourceUrl?: string;
 }
 
 export interface PartBundle {
@@ -54,7 +49,7 @@ export interface PartBundle {
   warranty: string;
 }
 
-// ─── Unitree H1 — OEM (Genuine) ───────────────────────────────────────────────
+// ─── Unitree H1 — OEM ─────────────────────────────────────────────────────────
 
 const H1_OEM: StorePart[] = [
   {
@@ -62,36 +57,35 @@ const H1_OEM: StorePart[] = [
     name: "Unitree H1 Knee Actuator",
     platformId: "unitree-h1-2",
     manufacturer: "Unitree Robotics",
-    description:
-      "Genuine replacement knee actuator module for the Unitree H1. Direct-fit, factory-calibrated. Replace at 73% wear before Joint Backlash failure.",
+    description: "Genuine replacement knee actuator module. Direct-fit, factory-calibrated. Replace at 73% wear before Joint Backlash failure.",
     unitAmount: 118000,
     currency: "usd",
     image: "/images/platforms/part_knee_actuator.svg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
+    sourceUrl: "https://shop.unitree.com/collections/accessories",
   },
   {
     sku: "H1-HIP-ACT",
     name: "Unitree H1 Hip Actuator",
     platformId: "unitree-h1-2",
     manufacturer: "Unitree Robotics",
-    description:
-      "Heavy-duty H1 hip torque actuator. Factory-torque-matched. Replace on TechMedix hip overheat / backlash alert before gait degradation.",
+    description: "Heavy-duty H1 hip torque actuator. Factory-torque-matched. Replace on TechMedix hip overheat / backlash alert.",
     unitAmount: 132000,
     currency: "usd",
     image: "/images/platforms/part_hip_actuator.svg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
+    sourceUrl: "https://shop.unitree.com/collections/accessories",
   },
   {
     sku: "H1-SHOULDER-ACT",
     name: "Unitree H1 Shoulder Actuator",
     platformId: "unitree-h1-2",
     manufacturer: "Unitree Robotics",
-    description:
-      "Genuine shoulder actuator assembly. CubeMars drive unit, factory-torque-matched. Replace on TechMedix shoulder-R wear alert.",
+    description: "Genuine shoulder actuator assembly. CubeMars drive unit, factory-torque-matched.",
     unitAmount: 95000,
     currency: "usd",
     image: "/images/platforms/part_shoulder_actuator.svg",
@@ -104,8 +98,7 @@ const H1_OEM: StorePart[] = [
     name: "Unitree H1 Ankle & Foot Module",
     platformId: "unitree-h1-2",
     manufacturer: "Unitree Robotics",
-    description:
-      "Articulated ankle joint with textured foot sole. Replace on TechMedix ankle-backlash or foot-contact drift alerts for stable gait.",
+    description: "Articulated ankle joint with textured foot sole. Replace on TechMedix ankle-backlash or foot-contact drift alerts.",
     unitAmount: 88000,
     currency: "usd",
     image: "/images/platforms/part_ankle_foot.svg",
@@ -118,8 +111,7 @@ const H1_OEM: StorePart[] = [
     name: "Unitree H1 Waist Actuator",
     platformId: "unitree-h1-2",
     manufacturer: "Unitree Robotics",
-    description:
-      "Central yaw waist actuator for torso rotation. Factory-calibrated. Replace on TechMedix waist-joint backlash or drift warnings.",
+    description: "Central yaw waist actuator for torso rotation. Factory-calibrated.",
     unitAmount: 102000,
     currency: "usd",
     image: "/images/platforms/part_waist_actuator.svg",
@@ -132,42 +124,83 @@ const H1_OEM: StorePart[] = [
     name: "Unitree H1 Battery Pack (864Wh)",
     platformId: "unitree-h1-2",
     manufacturer: "Unitree Robotics",
-    description:
-      "864Wh main power pack for the Unitree H1. CATL cells, factory-matched BMS. Swap at 800 cycles or on TechMedix Battery Critical alert.",
-    unitAmount: 120000,
+    description: "864Wh main power pack. CATL cells, factory-matched BMS. Swap at 800 cycles or on TechMedix Battery Critical alert. (Ref: robostore.com $1,580)",
+    unitAmount: 158000,
     currency: "usd",
     image: "/images/platforms/part_battery_pack.svg",
     leadTime: "3–5 days",
     warranty: "12 months",
     tier: "oem",
+    sourceUrl: "https://robostore.com/products/unitree-h1-humanoid-high-performance-battery",
   },
   {
     sku: "H1-DEX-HAND",
-    name: "Unitree H1 Dexterous Hand",
+    name: "Unitree H1-2 Dexterous Hand",
     platformId: "unitree-h1-2",
     manufacturer: "Unitree Robotics",
-    description:
-      "Replacement dexterous end-effector with integrated tactile sensing. Sharpa module, multi-DOF. Calibrate via TechMedix after install.",
-    unitAmount: 240000,
+    description: "Replacement dexterous end-effector with integrated tactile sensing. Sharpa module, multi-DOF. (Ref: robotseuropa.com €8,857)",
+    unitAmount: 970000,
     currency: "usd",
     image: "/images/platforms/part_dex_hand.svg",
-    leadTime: "7–10 days",
+    leadTime: "10–14 days",
     warranty: "12 months",
     tier: "oem",
+    sourceUrl: "https://www.robotseuropa.com/eu-cz/Unitree-H1-2-Dexterous-Hand.htm",
   },
   {
     sku: "H1-CONTROLLER",
     name: "Unitree H1 Main Controller",
     platformId: "unitree-h1-2",
     manufacturer: "Unitree Robotics",
-    description:
-      "Main compute / motion controller module for the H1. Heatsinked enclosure, edge connector. Replace on TechMedix controller-fault or comms-drop alerts.",
+    description: "Main compute / motion controller module. Heatsinked enclosure, edge connector.",
     unitAmount: 165000,
     currency: "usd",
     image: "/images/platforms/part_controller.svg",
     leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
+  },
+  {
+    sku: "H1-CHARGER",
+    name: "Unitree H1 Fast Charger",
+    platformId: "unitree-h1-2",
+    manufacturer: "Unitree Robotics",
+    description: "Official H1 fast charger. 67.2V output, active cooling. Compatible with H1 battery packs.",
+    unitAmount: 100000,
+    currency: "usd",
+    image: "/images/platforms/part_h1_charger.svg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://shop.unitree.com/collections/accessories",
+  },
+  {
+    sku: "H1-COMPUTE",
+    name: "Unitree H1 AGX-H1-550 Compute Module",
+    platformId: "unitree-h1-2",
+    manufacturer: "Unitree Robotics",
+    description: "100 TOPS AI compute module. Orin NX-class. (Ref: robotseuropa.com $14,999)",
+    unitAmount: 1499900,
+    currency: "usd",
+    image: "/images/platforms/part_h1_compute.svg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://www.robotseuropa.com/Unitree-Humanoid-Accessories.htm",
+  },
+  {
+    sku: "H1-M8010-MOTOR",
+    name: "Unitree GO-M8010-6 Motor",
+    platformId: "unitree-h1-2",
+    manufacturer: "Unitree Robotics",
+    description: "High-torque BLDC motor. Direct replacement for H1 joint motors. (Ref: shop.unitree.com $369)",
+    unitAmount: 36900,
+    currency: "usd",
+    image: "/images/platforms/part_h1_motor.svg",
+    leadTime: "3–5 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://shop.unitree.com/collections/accessories",
   },
 ];
 
@@ -179,8 +212,7 @@ const H1_DIRECT: StorePart[] = [
     name: "H1 Knee Actuator (Direct)",
     platformId: "unitree-h1-2",
     manufacturer: "BlackCat Certified",
-    description:
-      "Tested Chinese-compatible knee actuator for Unitree H1. Drop-in replacement, calibrated to OEM specs. TechMedix-compatible monitoring included.",
+    description: "Tested Chinese-compatible knee actuator. Drop-in replacement, calibrated to OEM specs. 65% savings vs OEM.",
     unitAmount: 42000,
     currency: "usd",
     image: "/images/platforms/part_knee_actuator.svg",
@@ -193,8 +225,7 @@ const H1_DIRECT: StorePart[] = [
     name: "H1 Hip Actuator (Direct)",
     platformId: "unitree-h1-2",
     manufacturer: "BlackCat Certified",
-    description:
-      "Tested Chinese-compatible hip actuator for Unitree H1. Matched torque curve. Ships from US/EU warehouse.",
+    description: "Tested Chinese-compatible hip actuator. Matched torque curve. Ships from US/EU warehouse.",
     unitAmount: 48000,
     currency: "usd",
     image: "/images/platforms/part_hip_actuator.svg",
@@ -207,8 +238,7 @@ const H1_DIRECT: StorePart[] = [
     name: "H1 Shoulder Actuator (Direct)",
     platformId: "unitree-h1-2",
     manufacturer: "BlackCat Certified",
-    description:
-      "Tested Chinese-compatible shoulder actuator for Unitree H1. Direct-mount, calibrated.",
+    description: "Tested Chinese-compatible shoulder actuator. Direct-mount, calibrated.",
     unitAmount: 34000,
     currency: "usd",
     image: "/images/platforms/part_shoulder_actuator.svg",
@@ -221,8 +251,7 @@ const H1_DIRECT: StorePart[] = [
     name: "H1 Ankle & Foot Module (Direct)",
     platformId: "unitree-h1-2",
     manufacturer: "BlackCat Certified",
-    description:
-      "Tested Chinese-compatible ankle & foot for Unitree H1. Drop-in replacement with textured sole.",
+    description: "Tested Chinese-compatible ankle & foot. Drop-in replacement with textured sole.",
     unitAmount: 31000,
     currency: "usd",
     image: "/images/platforms/part_ankle_foot.svg",
@@ -235,8 +264,7 @@ const H1_DIRECT: StorePart[] = [
     name: "H1 Waist Actuator (Direct)",
     platformId: "unitree-h1-2",
     manufacturer: "BlackCat Certified",
-    description:
-      "Tested Chinese-compatible waist actuator for Unitree H1. Yaw-axis, factory-calibrated.",
+    description: "Tested Chinese-compatible waist actuator. Yaw-axis, factory-calibrated.",
     unitAmount: 37000,
     currency: "usd",
     image: "/images/platforms/part_waist_actuator.svg",
@@ -249,9 +277,8 @@ const H1_DIRECT: StorePart[] = [
     name: "H1 Battery Pack 864Wh (Direct)",
     platformId: "unitree-h1-2",
     manufacturer: "BlackCat Certified",
-    description:
-      "Tested Chinese-compatible 864Wh battery pack for Unitree H1. CATL-grade cells, BMS included. Ships hazmat-certified.",
-    unitAmount: 45000,
+    description: "Tested Chinese-compatible 864Wh battery pack. CATL-grade cells, BMS included. Ships hazmat-certified.",
+    unitAmount: 55000,
     currency: "usd",
     image: "/images/platforms/part_battery_pack.svg",
     leadTime: "3–5 days",
@@ -263,8 +290,7 @@ const H1_DIRECT: StorePart[] = [
     name: "H1 Dexterous Hand (Direct)",
     platformId: "unitree-h1-2",
     manufacturer: "BlackCat Certified",
-    description:
-      "Tested Chinese-compatible dexterous hand for Unitree H1. 16 DOF, tactile sensing, drop-in replacement.",
+    description: "Tested Chinese-compatible dexterous hand. 16 DOF, tactile sensing. (Inspire RH56DFQ-based)",
     unitAmount: 85000,
     currency: "usd",
     image: "/images/platforms/part_dex_hand.svg",
@@ -277,8 +303,7 @@ const H1_DIRECT: StorePart[] = [
     name: "H1 Main Controller (Direct)",
     platformId: "unitree-h1-2",
     manufacturer: "BlackCat Certified",
-    description:
-      "Tested Chinese-compatible main controller for Unitree H1. Heatsink + edge connector. Flash-compatible with H1 firmware.",
+    description: "Tested Chinese-compatible main controller. Heatsink + edge connector. Flash-compatible with H1 firmware.",
     unitAmount: 58000,
     currency: "usd",
     image: "/images/platforms/part_controller.svg",
@@ -286,9 +311,273 @@ const H1_DIRECT: StorePart[] = [
     warranty: "30 days",
     tier: "direct",
   },
+  {
+    sku: "H1-CHARGER-D",
+    name: "H1 Fast Charger (Direct)",
+    platformId: "unitree-h1-2",
+    manufacturer: "BlackCat Certified",
+    description: "Tested Chinese-compatible fast charger. 67.2V output, active cooling.",
+    unitAmount: 35000,
+    currency: "usd",
+    image: "/images/platforms/part_h1_charger.svg",
+    leadTime: "3–5 days",
+    warranty: "30 days",
+    tier: "direct",
+  },
+  {
+    sku: "H1-M8010-MOTOR-D",
+    name: "H1 GO-M8010-6 Motor (Direct)",
+    platformId: "unitree-h1-2",
+    manufacturer: "BlackCat Certified",
+    description: "Tested Chinese-compatible BLDC motor. Direct replacement for H1 joint motors.",
+    unitAmount: 12900,
+    currency: "usd",
+    image: "/images/platforms/part_h1_motor.svg",
+    leadTime: "3–5 days",
+    warranty: "30 days",
+    tier: "direct",
+  },
 ];
 
-// ─── Bundles (OEM parts) ──────────────────────────────────────────────────────
+// ─── Unitree G1 — OEM ─────────────────────────────────────────────────────────
+
+const G1_OEM: StorePart[] = [
+  {
+    sku: "G1-ARM-ACT",
+    name: "Unitree G1 Arm Actuator",
+    platformId: "unitree-g1",
+    manufacturer: "Unitree Robotics",
+    description: "Genuine G1 7-DOF arm actuator module. CubeMars drive unit. Replace on TechMedix arm-wear or backlash alerts.",
+    unitAmount: 89000,
+    currency: "usd",
+    image: "/images/platforms/part_g1_arm_actuator.svg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+  {
+    sku: "G1-HAND",
+    name: "Unitree G1 Dexterous Hand (Dex1)",
+    platformId: "unitree-g1",
+    manufacturer: "Unitree Robotics",
+    description: "Genuine G1 Dex1 hand. 12 DOF, tactile sensing. Compatible with G1 EDU and commercial models.",
+    unitAmount: 120000,
+    currency: "usd",
+    image: "/images/platforms/part_g1_hand.svg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+  {
+    sku: "G1-BATTERY",
+    name: "Unitree G1 High-Performance Battery",
+    platformId: "unitree-g1",
+    manufacturer: "Unitree Robotics",
+    description: "Genuine G1 battery pack. CATL cells, hot-swap capable. ~2h runtime per charge. (Ref: robostore.com $750)",
+    unitAmount: 75000,
+    currency: "usd",
+    image: "/images/platforms/part_g1_battery.svg",
+    leadTime: "3–5 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://robostore.com/products/unitree-g1-humanoid-high-performance-battery",
+  },
+  {
+    sku: "G1-CHARGER",
+    name: "Unitree G1 Charger",
+    platformId: "unitree-g1",
+    manufacturer: "Unitree Robotics",
+    description: "Official G1 charger. Active cooling, 54.6V output.",
+    unitAmount: 100000,
+    currency: "usd",
+    image: "/images/platforms/part_g1_charger.svg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+  {
+    sku: "G1-GANTRY",
+    name: "Unitree G1 Gantry System",
+    platformId: "unitree-g1",
+    manufacturer: "Unitree Robotics",
+    description: "G1 gantry for stationary manipulation. (Ref: futurology.tech $3,200)",
+    unitAmount: 320000,
+    currency: "usd",
+    image: "/images/platforms/part_g1_gantry.svg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://futurology.tech/collections/unitree-robot-accessories",
+  },
+];
+
+// ─── Boston Dynamics Spot — OEM ───────────────────────────────────────────────
+
+const SPOT_OEM: StorePart[] = [
+  {
+    sku: "SPOT-LEG-ACT",
+    name: "Spot Leg Actuator",
+    platformId: "boston-dynamics-spot",
+    manufacturer: "Boston Dynamics",
+    description: "Genuine Spot leg actuator assembly. 12 DOF per leg, sealed for outdoor operation.",
+    unitAmount: 320000,
+    currency: "usd",
+    image: "/images/platforms/part_spot_leg.svg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://bostondynamics.com/products/spot/extras/",
+  },
+  {
+    sku: "SPOT-ARM",
+    name: "Spot Arm Assembly",
+    platformId: "boston-dynamics-spot",
+    manufacturer: "Boston Dynamics",
+    description: "Genuine Spot arm with 6 DOF + gripper. Payload 5kg, IP67 rated.",
+    unitAmount: 450000,
+    currency: "usd",
+    image: "/images/platforms/part_spot_arm.svg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://bostondynamics.com/products/spot/extras/",
+  },
+  {
+    sku: "SPOT-BATTERY",
+    name: "Spot Battery Pack",
+    platformId: "boston-dynamics-spot",
+    manufacturer: "Boston Dynamics",
+    description: "Genuine Spot battery. Hot-swap capable, 90 min runtime. Compatible with Spot 3.0+.",
+    unitAmount: 180000,
+    currency: "usd",
+    image: "/images/platforms/part_spot_battery.svg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://support.bostondynamics.com/s/article/Spot-Battery-and-Charging-System-72069",
+  },
+  {
+    sku: "SPOT-CHARGER",
+    name: "Spot Charger",
+    platformId: "boston-dynamics-spot",
+    manufacturer: "Boston Dynamics",
+    description: "Official Spot charging dock. Charges battery in 60 min.",
+    unitAmount: 220000,
+    currency: "usd",
+    image: "/images/platforms/part_spot_charger.svg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://support.bostondynamics.com/s/article/Spot-Battery-and-Charging-System-72069",
+  },
+  {
+    sku: "SPOT-PAYLOAD",
+    name: "Spot Payload Mount",
+    platformId: "boston-dynamics-spot",
+    manufacturer: "Boston Dynamics",
+    description: "Official Spot payload mounting bracket. For cameras, sensors, and custom payloads.",
+    unitAmount: 85000,
+    currency: "usd",
+    image: "/images/platforms/part_spot_payload.svg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://bostondynamics.com/products/spot/extras/",
+  },
+];
+
+// ─── DJI Agras — OEM ──────────────────────────────────────────────────────────
+
+const AGRAS_OEM: StorePart[] = [
+  {
+    sku: "AGRAS-PROP",
+    name: "DJI Agras Propeller Set (4pcs)",
+    platformId: "dji-agras-t50",
+    manufacturer: "DJI",
+    description: "Genuine DJI Agras propeller set. T50/T60 compatible. Replace every 200 flight hours. (Ref: nuwayag.com $119/set of 2)",
+    unitAmount: 18000,
+    currency: "usd",
+    image: "/images/platforms/part_t50_propeller.svg",
+    leadTime: "3–5 days",
+    warranty: "6 months",
+    tier: "oem",
+    sourceUrl: "https://nuwayag.com/products/t50-props",
+  },
+  {
+    sku: "AGRAS-MOTOR",
+    name: "DJI Agras Brushless Motor",
+    platformId: "dji-agras-t50",
+    manufacturer: "DJI",
+    description: "Genuine DJI Agras brushless motor. T50/T60 compatible. High-torque, IP67 rated. (Ref: talosdrones.com $269)",
+    unitAmount: 26900,
+    currency: "usd",
+    image: "/images/platforms/part_agras_motor.svg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://talosdrones.com/collections/parts-agras-t50-parts",
+  },
+  {
+    sku: "AGRAS-PUMP",
+    name: "DJI Agras Spray Pump",
+    platformId: "dji-agras-t50",
+    manufacturer: "DJI",
+    description: "Genuine DJI Agras spray pump assembly. T50/T60 compatible. Diaphragm-type, corrosion-resistant.",
+    unitAmount: 42000,
+    currency: "usd",
+    image: "/images/platforms/part_t50_spray_pump.svg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+  {
+    sku: "AGRAS-BATTERY",
+    name: "DJI Agras Intelligent Battery",
+    platformId: "dji-agras-t50",
+    manufacturer: "DJI",
+    description: "Genuine DJI Agras intelligent battery. 30,000mAh, hot-swap capable. T50/T60 compatible.",
+    unitAmount: 380000,
+    currency: "usd",
+    image: "/images/platforms/part_t50_battery.svg",
+    leadTime: "5–7 days",
+    warranty: "6 months",
+    tier: "oem",
+  },
+  {
+    sku: "AGRAS-RADAR",
+    name: "DJI Agras Radar Module",
+    platformId: "dji-agras-t50",
+    manufacturer: "DJI",
+    description: "Genuine DJI Agras radar module. Obstacle avoidance, terrain following. T50/T60 compatible.",
+    unitAmount: 125000,
+    currency: "usd",
+    image: "/images/platforms/part_t50_radar.svg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+];
+
+// ─── Inspire Robots — OEM ─────────────────────────────────────────────────────
+
+const INSPIRE_OEM: StorePart[] = [
+  {
+    sku: "INSPIRE-RH56DFQ",
+    name: "Inspire Robots RH56DFQ Dexterous Hand",
+    platformId: "unitree-h1-2",
+    manufacturer: "Inspire Robots",
+    description: "5-finger dexterous hand. 3kg payload, integrated force sensor. Compatible with Unitree H1/G1. (Ref: knoxlabs.com $4,500)",
+    unitAmount: 450000,
+    currency: "usd",
+    image: "/images/platforms/part_inspire_hand.svg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://www.knoxlabs.com/products/inspire-robots-rh56h1-dexterous-hand",
+  },
+];
+
+// ─── Bundles ─────────────────────────────────────────────────────────────────
 
 const H1_BUNDLES: PartBundle[] = [
   {
@@ -339,137 +628,21 @@ const H1_BUNDLES: PartBundle[] = [
     leadTime: "5–7 days",
     warranty: "12 months",
   },
-];
-
-// ─── Unitree G1 — OEM ─────────────────────────────────────────────────────────
-
-const G1_OEM: StorePart[] = [
   {
-    sku: "G1-ARM-ACT",
-    name: "Unitree G1 Arm Actuator",
-    platformId: "unitree-g1",
-    manufacturer: "Unitree Robotics",
-    description: "Genuine G1 7-DOF arm actuator module. CubeMars drive unit. Replace on TechMedix arm-wear or backlash alerts.",
-    unitAmount: 89000,
-    currency: "usd",
-    image: "/images/platforms/part_g1_arm_actuator.svg",
-    leadTime: "5–7 days",
-    warranty: "12 months",
-    tier: "oem",
-  },
-  {
-    sku: "G1-HAND",
-    name: "Unitree G1 Dexterous Hand",
-    platformId: "unitree-g1",
-    manufacturer: "Unitree Robotics",
-    description: "Genuine G1 Dex1 hand. 12 DOF, tactile sensing. Compatible with G1 EDU and commercial models.",
-    unitAmount: 120000,
-    currency: "usd",
-    image: "/images/platforms/part_g1_hand.svg",
-    leadTime: "5–7 days",
-    warranty: "12 months",
-    tier: "oem",
-  },
-  {
-    sku: "G1-BATTERY",
-    name: "Unitree G1 Battery Pack",
-    platformId: "unitree-g1",
-    manufacturer: "Unitree Robotics",
-    description: "Genuine G1 battery pack. CATL cells, hot-swap capable. ~2h runtime per charge.",
-    unitAmount: 95000,
-    currency: "usd",
-    image: "/images/platforms/part_g1_battery.svg",
-    leadTime: "3–5 days",
-    warranty: "12 months",
-    tier: "oem",
-  },
-];
-
-// ─── Boston Dynamics Spot — OEM ───────────────────────────────────────────────
-
-const SPOT_OEM: StorePart[] = [
-  {
-    sku: "SPOT-LEG-ACT",
-    name: "Spot Leg Actuator",
-    platformId: "boston-dynamics-spot",
-    manufacturer: "Boston Dynamics",
-    description: "Genuine Spot leg actuator assembly. 12 DOF per leg, sealed for outdoor operation.",
-    unitAmount: 320000,
-    currency: "usd",
-    image: "/images/platforms/part_spot_leg.svg",
-    leadTime: "10–14 days",
-    warranty: "12 months",
-    tier: "oem",
-  },
-  {
-    sku: "SPOT-ARM",
-    name: "Spot Arm Assembly",
-    platformId: "boston-dynamics-spot",
-    manufacturer: "Boston Dynamics",
-    description: "Genuine Spot arm with 6 DOF + gripper. Payload 5kg, IP67 rated.",
-    unitAmount: 450000,
-    currency: "usd",
-    image: "/images/platforms/part_spot_arm.svg",
-    leadTime: "10–14 days",
-    warranty: "12 months",
-    tier: "oem",
-  },
-  {
-    sku: "SPOT-BATTERY",
-    name: "Spot Battery Pack",
-    platformId: "boston-dynamics-spot",
-    manufacturer: "Boston Dynamics",
-    description: "Genuine Spot battery. Hot-swap capable, 90 min runtime. Compatible with Spot 3.0+.",
+    sku: "H1-MOTOR-PACK",
+    name: "H1 Motor Replacement Pack (6x)",
+    platformId: "unitree-h1-2",
+    manufacturer: "BlackCat Curated",
+    description: "6x GO-M8010-6 motors for full joint refresh. Save 20%.",
+    tier: "bundle",
     unitAmount: 180000,
     currency: "usd",
-    image: "/images/platforms/part_spot_battery.svg",
-    leadTime: "7–10 days",
-    warranty: "12 months",
-    tier: "oem",
-  },
-];
-
-// ─── DJI Agras — OEM ──────────────────────────────────────────────────────────
-
-const AGRAS_OEM: StorePart[] = [
-  {
-    sku: "AGRAS-PROP",
-    name: "DJI Agras Propeller Set (4pcs)",
-    platformId: "dji-agras-t50",
-    manufacturer: "DJI",
-    description: "Genuine DJI Agras propeller set. T50/T60 compatible. Replace every 200 flight hours.",
-    unitAmount: 18000,
-    currency: "usd",
-    image: "/images/platforms/part_t50_propeller.svg",
-    leadTime: "3–5 days",
-    warranty: "6 months",
-    tier: "oem",
-  },
-  {
-    sku: "AGRAS-MOTOR",
-    name: "DJI Agras Brushless Motor",
-    platformId: "dji-agras-t50",
-    manufacturer: "DJI",
-    description: "Genuine DJI Agras brushless motor. T50/T60 compatible. High-torque, IP67 rated.",
-    unitAmount: 65000,
-    currency: "usd",
-    image: "/images/platforms/part_agras_motor.svg",
+    savingsPct: 20,
+    savingsDollars: 41400,
+    parts: ["H1-M8010-MOTOR", "H1-M8010-MOTOR", "H1-M8010-MOTOR", "H1-M8010-MOTOR", "H1-M8010-MOTOR", "H1-M8010-MOTOR"],
+    image: "/images/platforms/bundle_motor_pack.svg",
     leadTime: "5–7 days",
     warranty: "12 months",
-    tier: "oem",
-  },
-  {
-    sku: "AGRAS-PUMP",
-    name: "DJI Agras Spray Pump",
-    platformId: "dji-agras-t50",
-    manufacturer: "DJI",
-    description: "Genuine DJI Agras spray pump assembly. T50/T60 compatible. Diaphragm-type, corrosion-resistant.",
-    unitAmount: 42000,
-    currency: "usd",
-    image: "/images/platforms/part_t50_spray_pump.svg",
-    leadTime: "5–7 days",
-    warranty: "12 months",
-    tier: "oem",
   },
 ];
 
@@ -482,6 +655,7 @@ export const STORE_PARTS: StorePart[] = [
   ...G1_OEM,
   ...SPOT_OEM,
   ...AGRAS_OEM,
+  ...INSPIRE_OEM,
 ];
 
 /** All bundles */
@@ -551,4 +725,12 @@ export const TIER_META: Record<PartTier, { label: string; badge: string; descrip
     description: "Curated repair kits, save 15-35% vs individual parts",
     color: "#f59e0b",
   },
+};
+
+/** Platform metadata for UI display */
+export const PLATFORM_META: Record<string, { name: string; manufacturer: string }> = {
+  "unitree-h1-2": { name: "Unitree H1", manufacturer: "Unitree Robotics" },
+  "unitree-g1": { name: "Unitree G1", manufacturer: "Unitree Robotics" },
+  "boston-dynamics-spot": { name: "Boston Dynamics Spot", manufacturer: "Boston Dynamics" },
+  "dji-agras-t50": { name: "DJI Agras T50", manufacturer: "DJI" },
 };
