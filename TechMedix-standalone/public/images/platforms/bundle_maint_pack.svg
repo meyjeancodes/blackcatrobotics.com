@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" fill="#fff8f0"/>
+  <rect x="40" y="30" width="120" height="140" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <rect x="55" y="50" width="90" height="20" rx="4" fill="#f59e0b" opacity="0.3"/>
+  <rect x="55" y="80" width="90" height="20" rx="4" fill="#f59e0b" opacity="0.3"/>
+  <rect x="55" y="110" width="90" height="20" rx="4" fill="#f59e0b" opacity="0.3"/>
+  <text x="100" y="185" text-anchor="middle" font-family="system-ui" font-size="10" fill="#92400e">Maintenance Pack</text>
+</svg>

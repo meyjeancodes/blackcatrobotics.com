@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" fill="#f8f8f8"/>
+  <rect x="60" y="40" width="80" height="120" rx="8" fill="#e0e0e0" stroke="#ccc" stroke-width="2"/>
+  <rect x="75" y="60" width="50" height="30" rx="4" fill="#cc3d17" opacity="0.8"/>
+  <rect x="75" y="100" width="50" height="30" rx="4" fill="#cc3d17" opacity="0.6"/>
+  <circle cx="100" cy="150" r="8" fill="#1db87a"/>
+  <text x="100" y="185" text-anchor="middle" font-family="system-ui" font-size="10" fill="#666">G1 Arm Actuator</text>
+</svg>

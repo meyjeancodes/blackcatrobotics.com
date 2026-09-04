@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" fill="#f8f8f8"/>
+  <path d="M70 140 L70 80 Q70 60 90 60 L110 60 Q130 60 130 80 L130 140" fill="#e0e0e0" stroke="#ccc" stroke-width="2"/>
+  <rect x="75" y="70" width="12" height="40" rx="3" fill="#cc3d17" opacity="0.7"/>
+  <rect x="93" y="70" width="12" height="40" rx="3" fill="#cc3d17" opacity="0.7"/>
+  <rect x="111" y="70" width="12" height="40" rx="3" fill="#cc3d17" opacity="0.7"/>
+  <text x="100" y="185" text-anchor="middle" font-family="system-ui" font-size="10" fill="#666">G1 Dexterous Hand</text>
+</svg>
