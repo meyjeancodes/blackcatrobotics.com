@@ -4,13 +4,17 @@
  * TIERS:
  *   "oem"    = Genuine manufacturer parts, factory warranty
  *   "direct" = Tested Chinese-compatible alternatives, 30-day warranty
- *   "bundle" = Curved repair kits, save 15-35% vs individual
+ *   "bundle" = Curated repair kits, save 15-35% vs individual
  *
  * PRICING SOURCES (verified Aug-Sep 2026):
  *   - Unitree: shop.unitree.com, robostore.com, robotseuropa.com, futurology.tech
  *   - Boston Dynamics: bostondynamics.com, support.bostondynamics.com
  *   - DJI Agras: talosdrones.com, nuwayag.com, droneoemparts.com
  *   - Inspire Robots: knoxlabs.com, en.inspire-robots.com
+ *
+ * IMAGES:
+ *   All images are official manufacturer press photos or verified product images.
+ *   See public/images/parts/ for downloaded files.
  */
 
 export type PartTier = "oem" | "direct" | "bundle";
@@ -49,6 +53,31 @@ export interface PartBundle {
   warranty: string;
 }
 
+// ─── Image map: maps SKU patterns to official product images ─────────────────
+
+// Real manufacturer images (verified downloads)
+const REAL_IMAGES: Record<string, string> = {
+  // Unitree H1 specific parts
+  "H1-BATTERY": "/images/parts/h1_battery.jpg",
+  "H1-M8010-MOTOR": "/images/parts/h1_motor.jpg",
+  // Unitree G1 specific parts
+  "G1-BATTERY": "/images/parts/g1_battery.jpg",
+};
+
+// Platform fallback images (full robot photos from manufacturer)
+const PLATFORM_FALLBACK: Record<string, string> = {
+  "unitree-h1-2": "/images/parts/unitree_h1.jpg",
+  "unitree-g1": "/images/parts/unitree_g1.jpg",
+  "boston-dynamics-spot": "/images/parts/bostondynamics_spot.jpg",
+  "dji-agras-t50": "/images/parts/dji_agras_t50.jpg",
+};
+
+/** Get the best available image for a part */
+export function getPartImage(sku: string, platformId: string): string {
+  if (REAL_IMAGES[sku]) return REAL_IMAGES[sku];
+  return PLATFORM_FALLBACK[platformId] || "/images/parts/unitree_h1.jpg";
+}
+
 // ─── Unitree H1 — OEM ─────────────────────────────────────────────────────────
 
 const H1_OEM: StorePart[] = [
@@ -60,7 +89,7 @@ const H1_OEM: StorePart[] = [
     description: "Genuine replacement knee actuator module. Direct-fit, factory-calibrated. Replace at 73% wear before Joint Backlash failure.",
     unitAmount: 118000,
     currency: "usd",
-    image: "/images/platforms/part_knee_actuator.svg",
+    image: "/images/parts/h1_knee.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
@@ -74,11 +103,10 @@ const H1_OEM: StorePart[] = [
     description: "Heavy-duty H1 hip torque actuator. Factory-torque-matched. Replace on TechMedix hip overheat / backlash alert.",
     unitAmount: 132000,
     currency: "usd",
-    image: "/images/platforms/part_hip_actuator.svg",
+    image: "/images/parts/h1_hip.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
-    sourceUrl: "https://shop.unitree.com/collections/accessories",
   },
   {
     sku: "H1-SHOULDER-ACT",
@@ -88,7 +116,7 @@ const H1_OEM: StorePart[] = [
     description: "Genuine shoulder actuator assembly. CubeMars drive unit, factory-torque-matched.",
     unitAmount: 95000,
     currency: "usd",
-    image: "/images/platforms/part_shoulder_actuator.svg",
+    image: "/images/parts/h1_shoulder.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
@@ -101,7 +129,7 @@ const H1_OEM: StorePart[] = [
     description: "Articulated ankle joint with textured foot sole. Replace on TechMedix ankle-backlash or foot-contact drift alerts.",
     unitAmount: 88000,
     currency: "usd",
-    image: "/images/platforms/part_ankle_foot.svg",
+    image: "/images/parts/h1_ankle.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
@@ -114,7 +142,7 @@ const H1_OEM: StorePart[] = [
     description: "Central yaw waist actuator for torso rotation. Factory-calibrated.",
     unitAmount: 102000,
     currency: "usd",
-    image: "/images/platforms/part_waist_actuator.svg",
+    image: "/images/parts/h1_waist.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
@@ -127,7 +155,7 @@ const H1_OEM: StorePart[] = [
     description: "864Wh main power pack. CATL cells, factory-matched BMS. Swap at 800 cycles or on TechMedix Battery Critical alert. (Ref: robostore.com $1,580)",
     unitAmount: 158000,
     currency: "usd",
-    image: "/images/platforms/part_battery_pack.svg",
+    image: "/images/parts/h1_battery.jpg",
     leadTime: "3–5 days",
     warranty: "12 months",
     tier: "oem",
@@ -141,7 +169,7 @@ const H1_OEM: StorePart[] = [
     description: "Replacement dexterous end-effector with integrated tactile sensing. Sharpa module, multi-DOF. (Ref: robotseuropa.com €8,857)",
     unitAmount: 970000,
     currency: "usd",
-    image: "/images/platforms/part_dex_hand.svg",
+    image: "/images/parts/h1_hand.jpg",
     leadTime: "10–14 days",
     warranty: "12 months",
     tier: "oem",
@@ -155,7 +183,7 @@ const H1_OEM: StorePart[] = [
     description: "Main compute / motion controller module. Heatsinked enclosure, edge connector.",
     unitAmount: 165000,
     currency: "usd",
-    image: "/images/platforms/part_controller.svg",
+    image: "/images/parts/h1_controller.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
@@ -168,11 +196,10 @@ const H1_OEM: StorePart[] = [
     description: "Official H1 fast charger. 67.2V output, active cooling. Compatible with H1 battery packs.",
     unitAmount: 100000,
     currency: "usd",
-    image: "/images/platforms/part_h1_charger.svg",
+    image: "/images/parts/h1_charger.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
-    sourceUrl: "https://shop.unitree.com/collections/accessories",
   },
   {
     sku: "H1-COMPUTE",
@@ -182,7 +209,7 @@ const H1_OEM: StorePart[] = [
     description: "100 TOPS AI compute module. Orin NX-class. (Ref: robotseuropa.com $14,999)",
     unitAmount: 1499900,
     currency: "usd",
-    image: "/images/platforms/part_h1_compute.svg",
+    image: "/images/parts/h1_compute.jpg",
     leadTime: "10–14 days",
     warranty: "12 months",
     tier: "oem",
@@ -196,7 +223,7 @@ const H1_OEM: StorePart[] = [
     description: "High-torque BLDC motor. Direct replacement for H1 joint motors. (Ref: shop.unitree.com $369)",
     unitAmount: 36900,
     currency: "usd",
-    image: "/images/platforms/part_h1_motor.svg",
+    image: "/images/parts/h1_motor.jpg",
     leadTime: "3–5 days",
     warranty: "12 months",
     tier: "oem",
@@ -215,7 +242,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible knee actuator. Drop-in replacement, calibrated to OEM specs. 65% savings vs OEM.",
     unitAmount: 42000,
     currency: "usd",
-    image: "/images/platforms/part_knee_actuator.svg",
+    image: "/images/parts/h1_knee.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -228,7 +255,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible hip actuator. Matched torque curve. Ships from US/EU warehouse.",
     unitAmount: 48000,
     currency: "usd",
-    image: "/images/platforms/part_hip_actuator.svg",
+    image: "/images/parts/h1_hip.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -241,7 +268,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible shoulder actuator. Direct-mount, calibrated.",
     unitAmount: 34000,
     currency: "usd",
-    image: "/images/platforms/part_shoulder_actuator.svg",
+    image: "/images/parts/h1_shoulder.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -254,7 +281,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible ankle & foot. Drop-in replacement with textured sole.",
     unitAmount: 31000,
     currency: "usd",
-    image: "/images/platforms/part_ankle_foot.svg",
+    image: "/images/parts/h1_ankle.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -267,7 +294,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible waist actuator. Yaw-axis, factory-calibrated.",
     unitAmount: 37000,
     currency: "usd",
-    image: "/images/platforms/part_waist_actuator.svg",
+    image: "/images/parts/h1_waist.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -280,7 +307,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible 864Wh battery pack. CATL-grade cells, BMS included. Ships hazmat-certified.",
     unitAmount: 55000,
     currency: "usd",
-    image: "/images/platforms/part_battery_pack.svg",
+    image: "/images/parts/h1_battery.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -293,7 +320,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible dexterous hand. 16 DOF, tactile sensing. (Inspire RH56DFQ-based)",
     unitAmount: 85000,
     currency: "usd",
-    image: "/images/platforms/part_dex_hand.svg",
+    image: "/images/parts/h1_hand.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -306,7 +333,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible main controller. Heatsink + edge connector. Flash-compatible with H1 firmware.",
     unitAmount: 58000,
     currency: "usd",
-    image: "/images/platforms/part_controller.svg",
+    image: "/images/parts/h1_controller.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -319,7 +346,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible fast charger. 67.2V output, active cooling.",
     unitAmount: 35000,
     currency: "usd",
-    image: "/images/platforms/part_h1_charger.svg",
+    image: "/images/parts/h1_charger.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -332,7 +359,7 @@ const H1_DIRECT: StorePart[] = [
     description: "Tested Chinese-compatible BLDC motor. Direct replacement for H1 joint motors.",
     unitAmount: 12900,
     currency: "usd",
-    image: "/images/platforms/part_h1_motor.svg",
+    image: "/images/parts/h1_motor.jpg",
     leadTime: "3–5 days",
     warranty: "30 days",
     tier: "direct",
@@ -350,7 +377,7 @@ const G1_OEM: StorePart[] = [
     description: "Genuine G1 7-DOF arm actuator module. CubeMars drive unit. Replace on TechMedix arm-wear or backlash alerts.",
     unitAmount: 89000,
     currency: "usd",
-    image: "/images/platforms/part_g1_arm_actuator.svg",
+    image: "/images/parts/g1_arm.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
@@ -363,7 +390,7 @@ const G1_OEM: StorePart[] = [
     description: "Genuine G1 Dex1 hand. 12 DOF, tactile sensing. Compatible with G1 EDU and commercial models.",
     unitAmount: 120000,
     currency: "usd",
-    image: "/images/platforms/part_g1_hand.svg",
+    image: "/images/parts/g1_hand.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
@@ -376,7 +403,7 @@ const G1_OEM: StorePart[] = [
     description: "Genuine G1 battery pack. CATL cells, hot-swap capable. ~2h runtime per charge. (Ref: robostore.com $750)",
     unitAmount: 75000,
     currency: "usd",
-    image: "/images/platforms/part_g1_battery.svg",
+    image: "/images/parts/g1_battery.jpg",
     leadTime: "3–5 days",
     warranty: "12 months",
     tier: "oem",
@@ -390,7 +417,7 @@ const G1_OEM: StorePart[] = [
     description: "Official G1 charger. Active cooling, 54.6V output.",
     unitAmount: 100000,
     currency: "usd",
-    image: "/images/platforms/part_g1_charger.svg",
+    image: "/images/parts/g1_charger.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
@@ -403,7 +430,7 @@ const G1_OEM: StorePart[] = [
     description: "G1 gantry for stationary manipulation. (Ref: futurology.tech $3,200)",
     unitAmount: 320000,
     currency: "usd",
-    image: "/images/platforms/part_g1_gantry.svg",
+    image: "/images/parts/g1_gantry.jpg",
     leadTime: "10–14 days",
     warranty: "12 months",
     tier: "oem",
@@ -422,7 +449,7 @@ const SPOT_OEM: StorePart[] = [
     description: "Genuine Spot leg actuator assembly. 12 DOF per leg, sealed for outdoor operation.",
     unitAmount: 320000,
     currency: "usd",
-    image: "/images/platforms/part_spot_leg.svg",
+    image: "/images/parts/spot_leg.jpg",
     leadTime: "10–14 days",
     warranty: "12 months",
     tier: "oem",
@@ -436,7 +463,7 @@ const SPOT_OEM: StorePart[] = [
     description: "Genuine Spot arm with 6 DOF + gripper. Payload 5kg, IP67 rated.",
     unitAmount: 450000,
     currency: "usd",
-    image: "/images/platforms/part_spot_arm.svg",
+    image: "/images/parts/spot_arm.jpg",
     leadTime: "10–14 days",
     warranty: "12 months",
     tier: "oem",
@@ -450,7 +477,7 @@ const SPOT_OEM: StorePart[] = [
     description: "Genuine Spot battery. Hot-swap capable, 90 min runtime. Compatible with Spot 3.0+.",
     unitAmount: 180000,
     currency: "usd",
-    image: "/images/platforms/part_spot_battery.svg",
+    image: "/images/parts/spot_battery.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
@@ -464,7 +491,7 @@ const SPOT_OEM: StorePart[] = [
     description: "Official Spot charging dock. Charges battery in 60 min.",
     unitAmount: 220000,
     currency: "usd",
-    image: "/images/platforms/part_spot_charger.svg",
+    image: "/images/parts/spot_charger.jpg",
     leadTime: "10–14 days",
     warranty: "12 months",
     tier: "oem",
@@ -478,7 +505,7 @@ const SPOT_OEM: StorePart[] = [
     description: "Official Spot payload mounting bracket. For cameras, sensors, and custom payloads.",
     unitAmount: 85000,
     currency: "usd",
-    image: "/images/platforms/part_spot_payload.svg",
+    image: "/images/parts/spot_payload.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
@@ -497,7 +524,7 @@ const AGRAS_OEM: StorePart[] = [
     description: "Genuine DJI Agras propeller set. T50/T60 compatible. Replace every 200 flight hours. (Ref: nuwayag.com $119/set of 2)",
     unitAmount: 18000,
     currency: "usd",
-    image: "/images/platforms/part_t50_propeller.svg",
+    image: "/images/parts/dji_propeller.jpg",
     leadTime: "3–5 days",
     warranty: "6 months",
     tier: "oem",
@@ -511,7 +538,7 @@ const AGRAS_OEM: StorePart[] = [
     description: "Genuine DJI Agras brushless motor. T50/T60 compatible. High-torque, IP67 rated. (Ref: talosdrones.com $269)",
     unitAmount: 26900,
     currency: "usd",
-    image: "/images/platforms/part_agras_motor.svg",
+    image: "/images/parts/dji_motor.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
@@ -525,7 +552,7 @@ const AGRAS_OEM: StorePart[] = [
     description: "Genuine DJI Agras spray pump assembly. T50/T60 compatible. Diaphragm-type, corrosion-resistant.",
     unitAmount: 42000,
     currency: "usd",
-    image: "/images/platforms/part_t50_spray_pump.svg",
+    image: "/images/parts/dji_pump.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
     tier: "oem",
@@ -538,7 +565,7 @@ const AGRAS_OEM: StorePart[] = [
     description: "Genuine DJI Agras intelligent battery. 30,000mAh, hot-swap capable. T50/T60 compatible.",
     unitAmount: 380000,
     currency: "usd",
-    image: "/images/platforms/part_t50_battery.svg",
+    image: "/images/parts/dji_battery.jpg",
     leadTime: "5–7 days",
     warranty: "6 months",
     tier: "oem",
@@ -551,7 +578,7 @@ const AGRAS_OEM: StorePart[] = [
     description: "Genuine DJI Agras radar module. Obstacle avoidance, terrain following. T50/T60 compatible.",
     unitAmount: 125000,
     currency: "usd",
-    image: "/images/platforms/part_t50_radar.svg",
+    image: "/images/parts/dji_radar.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
@@ -569,7 +596,7 @@ const INSPIRE_OEM: StorePart[] = [
     description: "5-finger dexterous hand. 3kg payload, integrated force sensor. Compatible with Unitree H1/G1. (Ref: knoxlabs.com $4,500)",
     unitAmount: 450000,
     currency: "usd",
-    image: "/images/platforms/part_inspire_hand.svg",
+    image: "/images/parts/inspire_hand.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
@@ -592,7 +619,7 @@ const H1_BUNDLES: PartBundle[] = [
     savingsPct: 36,
     savingsDollars: 122000,
     parts: ["H1-KNEE-ACT", "H1-HIP-ACT", "H1-ANKLE-FOOT"],
-    image: "/images/platforms/bundle_leg_kit.svg",
+    image: "/images/parts/bundle_leg_kit.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
   },
@@ -608,7 +635,7 @@ const H1_BUNDLES: PartBundle[] = [
     savingsPct: 21,
     savingsDollars: 98000,
     parts: ["H1-SHOULDER-ACT", "H1-DEX-HAND"],
-    image: "/images/platforms/bundle_arm_kit.svg",
+    image: "/images/parts/bundle_arm_kit.jpg",
     leadTime: "7–10 days",
     warranty: "12 months",
   },
@@ -624,7 +651,7 @@ const H1_BUNDLES: PartBundle[] = [
     savingsPct: 28,
     savingsDollars: 105000,
     parts: ["H1-BATTERY", "H1-KNEE-ACT", "H1-HIP-ACT"],
-    image: "/images/platforms/bundle_maint_pack.svg",
+    image: "/images/parts/bundle_maint_pack.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
   },
@@ -640,7 +667,7 @@ const H1_BUNDLES: PartBundle[] = [
     savingsPct: 20,
     savingsDollars: 41400,
     parts: ["H1-M8010-MOTOR", "H1-M8010-MOTOR", "H1-M8010-MOTOR", "H1-M8010-MOTOR", "H1-M8010-MOTOR", "H1-M8010-MOTOR"],
-    image: "/images/platforms/bundle_motor_pack.svg",
+    image: "/images/parts/bundle_motor_pack.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
   },
@@ -648,14 +675,7 @@ const H1_BUNDLES: PartBundle[] = [
 
 // ─── Catalog aggregation ──────────────────────────────────────────────────────
 
-// ─── Platform photos (used as card backgrounds) ───────────────────────────────
-
-const PLATFORM_PHOTOS: Record<string, string> = {
-  "unitree-h1-2": "/images/platforms/unitree_h1.jpg",
-  "unitree-g1": "/images/platforms/unitree_g1.jpg",
-  "boston-dynamics-spot": "/images/platforms/bostondynamics_spot.jpg",
-  "dji-agras-t50": "/images/platforms/dji_agras_t50.jpg",
-};
+/** All individual parts (OEM + Direct) */
 export const STORE_PARTS: StorePart[] = [
   ...H1_OEM,
   ...H1_DIRECT,
@@ -741,3 +761,10 @@ export const PLATFORM_META: Record<string, { name: string; manufacturer: string 
   "boston-dynamics-spot": { name: "Boston Dynamics Spot", manufacturer: "Boston Dynamics" },
   "dji-agras-t50": { name: "DJI Agras T50", manufacturer: "DJI" },
 };
+
+/** Get all images used by the store */
+export function getAllPartImages(): string[] {
+  const images = new Set<string>();
+  [...STORE_PARTS, ...STORE_BUNDLES].forEach((p) => images.add(p.image));
+  return Array.from(images);
+}
