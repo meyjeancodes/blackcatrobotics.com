@@ -288,10 +288,22 @@ export default function StorePage() {
                   {bundle && <span className="text-[0.6rem] font-bold text-amber-600">Save {bundle.savingsPct}%</span>}
                 </div>
 
-                {/* Image placeholder */}
-                <div className="mb-3 flex h-40 items-center justify-center rounded-xl bg-theme-5">
-                  <span className="text-xs text-theme-300">{item.name}</span>
-                </div>
+                {/* Product Image */}
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="mb-3 h-40 w-full rounded-xl object-cover"
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.className = "mb-3 flex h-40 items-center justify-center rounded-xl bg-theme-5";
+                      parent.innerHTML = `<span class="text-xs text-theme-300">${item.name}</span>`;
+                    }
+                  }}
+                />
 
                 <p className="font-ui text-[0.6rem] uppercase tracking-[0.18em] text-theme-40">
                   {item.manufacturer}
@@ -370,9 +382,20 @@ export default function StorePage() {
             </div>
 
             <div className="p-5">
-              <div className="mb-4 flex h-48 items-center justify-center rounded-xl bg-theme-5">
-                <span className="text-sm text-theme-300">{selectedItem.name}</span>
-              </div>
+              <img
+                src={selectedItem.image}
+                alt={selectedItem.name}
+                className="mb-4 h-48 w-full rounded-xl object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.className = "mb-4 flex h-48 items-center justify-center rounded-xl bg-theme-5";
+                    parent.innerHTML = `<span class="text-sm text-theme-300">${selectedItem.name}</span>`;
+                  }
+                }}
+              />
 
               <div className="mb-3">
                 <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-wider" style={{ backgroundColor: `${TIER_META[selectedItem.tier].color}15`, color: TIER_META[selectedItem.tier].color }}>
@@ -453,9 +476,15 @@ export default function StorePage() {
                 <p className="py-12 text-center text-sm text-theme-40">Your cart is empty.</p>
               ) : cartItems.map((cartItem) => (
                 <div key={cartItem.item.sku} className="flex items-center gap-3 rounded-xl border border-theme-10 p-3">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-theme-5">
-                    <span className="text-[0.5rem] text-theme-300">{cartItem.item.name.slice(0, 10)}</span>
-                  </div>
+                  <img
+                    src={cartItem.item.image}
+                    alt={cartItem.item.name}
+                    className="h-16 w-16 rounded-lg object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
+                  />
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold text-theme-primary truncate">{cartItem.item.name}</p>
                     <p className="text-xs text-theme-40">{cartItem.item.sku}</p>
