@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { STORE_PARTS, STORE_BUNDLES, STORE_CATALOG, StorePart, PartBundle, TIER_META, PRICE_MATCH_GUARANTEE, PLATFORM_META } from "@/lib/store/parts-catalog";
+import StoreFooter from "./StoreFooter";
 
 interface CartItem {
   item: StorePart | PartBundle;
@@ -9,7 +10,6 @@ interface CartItem {
 }
 
 type TierFilter = "all" | "oem" | "direct" | "bundle";
-type ViewMode = "grid" | "detail";
 
 const CATEGORIES = [
   { id: "all", label: "All Platforms" },
@@ -111,198 +111,200 @@ export default function StorePage() {
   const closeDetail = () => setSelectedSku(null);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-12">
-      {/* Hero */}
-      <header className="mb-10">
-        <a href="/" className="text-sm text-[#cc3d17] hover:text-[#cc3d17]/80 transition">
-          ← Back to TechMedix
-        </a>
-        <h1 className="mt-2 font-header text-4xl tracking-[-0.04em] text-theme-primary">
-          Aftermarket Parts
-        </h1>
-        <p className="mt-2 max-w-2xl text-sm text-theme-50">
-          The world's most trusted source for robotic parts. Three tiers, one guarantee: the best price or we beat it by 10%. Every order includes free TechMedix monitoring.
-        </p>
+    <>
+      <div className="mx-auto max-w-7xl px-4 py-12">
+        {/* Hero */}
+        <header className="mb-10">
+          <a href="/" className="text-sm text-[#cc3d17] hover:text-[#cc3d17]/80 transition">
+            ← Back to TechMedix
+          </a>
+          <h1 className="mt-2 font-header text-4xl tracking-[-0.04em] text-theme-primary">
+            Aftermarket Parts
+          </h1>
+          <p className="mt-2 max-w-2xl text-sm text-theme-50">
+            The world's most trusted source for robotic parts. Three tiers, one guarantee: the best price or we beat it by 10%. Every order includes free TechMedix monitoring.
+          </p>
 
-        {/* Trust Badges */}
-        <div className="mt-4 flex flex-wrap gap-3">
-          {TRUST_BADGES.map((badge) => (
-            <div key={badge.text} className="flex items-center gap-1.5 rounded-full bg-theme-5 px-3 py-1 text-[0.65rem] text-theme-50">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#1db87a]" />
-              {badge.text}
+          {/* Trust Badges */}
+          <div className="mt-4 flex flex-wrap gap-3">
+            {TRUST_BADGES.map((badge) => (
+              <div key={badge.text} className="flex items-center gap-1.5 rounded-full bg-theme-5 px-3 py-1 text-[0.65rem] text-theme-50">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#1db87a]" />
+                {badge.text}
+              </div>
+            ))}
+          </div>
+
+          {PRICE_MATCH_GUARANTEE.enabled && (
+            <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#1db87a]/10 px-3 py-1 text-xs text-[#1db87a]">
+              <span className="font-semibold">✓ Price Match Guarantee</span>
+              <span className="text-theme-40">— We beat any verified seller by 10%</span>
             </div>
+          )}
+        </header>
+
+        {/* Comparison Toggle */}
+        <div className="mb-6 flex items-center justify-between">
+          <p className="text-sm text-theme-40">{filteredItems.length} parts</p>
+          <button
+            onClick={() => setShowComparison(!showComparison)}
+            className="text-xs text-theme-50 hover:text-theme-30 underline"
+          >
+            {showComparison ? "Hide" : "Show"} tier comparison
+          </button>
+        </div>
+
+        {/* Tier Comparison */}
+        {showComparison && (
+          <div className="mb-8 grid gap-4 sm:grid-cols-3">
+            {(["oem", "direct", "bundle"] as const).map((tier) => {
+              const meta = TIER_META[tier];
+              const count = tier === "bundle" ? STORE_BUNDLES.length : STORE_PARTS.filter(p => p.tier === tier).length;
+              return (
+                <div key={tier} className="rounded-xl border border-theme-10 bg-white p-5">
+                  <div className="flex items-center gap-2">
+                    <div className="h-3 w-3 rounded-full" style={{ backgroundColor: meta.color }} />
+                    <span className="font-ui text-xs uppercase tracking-wider text-theme-40">{meta.label}</span>
+                  </div>
+                  <p className="mt-2 text-sm font-semibold text-theme-primary">{meta.badge}</p>
+                  <p className="mt-1 text-xs text-theme-50">{meta.description}</p>
+                  <div className="mt-3 flex items-center justify-between border-t border-theme-5 pt-3">
+                    <span className="text-xs text-theme-40">{count} SKUs</span>
+                    <span className="text-xs text-theme-40">from {formatPrice(tier === "bundle" ? Math.min(...STORE_BUNDLES.map(b => b.unitAmount)) : Math.min(...STORE_PARTS.filter(p => p.tier === tier).map(p => p.unitAmount)))}</span>
+                  </div>
+                  <button
+                    onClick={() => { setTierFilter(tier); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    className="mt-3 w-full rounded-lg border border-theme-10 py-1.5 text-xs text-theme-50 hover:border-theme-20"
+                  >
+                    Shop {meta.label}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Tier Filter Pills */}
+        <div className="mb-4 flex flex-wrap gap-2">
+          {([["all", "All Tiers"], ["bundle", `Bundles (${STORE_BUNDLES.length})`], ["oem", "OEM Genuine"], ["direct", "Direct (Compatible)"]] as [TierFilter, string][]).map(([id, label]) => (
+            <button
+              key={id}
+              onClick={() => setTierFilter(id)}
+              className={`rounded-full border px-3 py-1.5 font-ui text-[0.6rem] uppercase tracking-[0.18em] transition ${
+                tierFilter === id ? "border-ember bg-ember text-white" : "border-theme-10 text-theme-50 hover:border-theme-20"
+              }`}
+            >
+              {label}
+            </button>
           ))}
         </div>
 
-        {PRICE_MATCH_GUARANTEE.enabled && (
-          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#1db87a]/10 px-3 py-1 text-xs text-[#1db87a]">
-            <span className="font-semibold">✓ Price Match Guarantee</span>
-            <span className="text-theme-40">— We beat any verified seller by 10%</span>
-          </div>
-        )}
-      </header>
+        {/* Category Pills */}
+        <div className="mb-6 flex flex-wrap gap-2">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setCategory(cat.id)}
+              className={`rounded-full border px-3 py-1.5 font-ui text-[0.6rem] uppercase tracking-[0.18em] transition ${
+                category === cat.id ? "border-ember bg-ember text-white" : "border-theme-10 text-theme-50 hover:border-theme-20"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
 
-      {/* Comparison Toggle */}
-      <div className="mb-6 flex items-center justify-between">
-        <div />
-        <button
-          onClick={() => setShowComparison(!showComparison)}
-          className="text-xs text-theme-50 hover:text-theme-30 underline"
-        >
-          {showComparison ? "Hide" : "Show"} tier comparison
-        </button>
-      </div>
+        {/* Search + Sort */}
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by name, SKU, or manufacturer..."
+            className="flex-1 min-w-[240px] rounded-xl border border-theme-10 bg-white px-4 py-2.5 text-sm text-theme-primary placeholder:text-theme-30 focus:border-theme-20 focus:outline-none"
+          />
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="rounded-xl border border-theme-10 bg-white px-4 py-2.5 text-sm text-theme-primary focus:outline-none"
+          >
+            <option value="default">Sort: Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name">Name: A-Z</option>
+          </select>
+        </div>
 
-      {/* Tier Comparison */}
-      {showComparison && (
-        <div className="mb-8 grid gap-4 sm:grid-cols-3">
-          {(["oem", "direct", "bundle"] as const).map((tier) => {
-            const meta = TIER_META[tier];
-            const count = tier === "bundle" ? STORE_BUNDLES.length : STORE_PARTS.filter(p => p.tier === tier).length;
+        {/* Items Grid */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredItems.map((item) => {
+            const tier = TIER_META[item.tier];
+            const isBundle = item.tier === "bundle";
+            const bundle = isBundle ? (item as PartBundle) : null;
+
             return (
-              <div key={tier} className="rounded-xl border border-theme-10 bg-white p-5">
-                <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full" style={{ backgroundColor: meta.color }} />
-                  <span className="font-ui text-xs uppercase tracking-wider text-theme-40">{meta.label}</span>
+              <div
+                key={item.sku}
+                onClick={() => openDetail(item.sku)}
+                className={`cursor-pointer rounded-2xl border bg-white p-5 transition hover:shadow-md ${
+                  isBundle ? "border-amber-300 ring-1 ring-amber-200" : "border-theme-10 hover:border-theme-20"
+                }`}
+              >
+                {/* Tier Badge */}
+                <div className="mb-2 flex items-center justify-between">
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.55rem] font-bold uppercase tracking-wider"
+                    style={{ backgroundColor: `${tier.color}15`, color: tier.color }}
+                  >
+                    {tier.badge}
+                  </span>
+                  {bundle && <span className="text-[0.6rem] font-bold text-amber-600">Save {bundle.savingsPct}%</span>}
                 </div>
-                <p className="mt-2 text-sm font-semibold text-theme-primary">{meta.badge}</p>
-                <p className="mt-1 text-xs text-theme-50">{meta.description}</p>
-                <div className="mt-3 flex items-center justify-between border-t border-theme-5 pt-3">
-                  <span className="text-xs text-theme-40">{count} SKUs</span>
-                  <span className="text-xs text-theme-40">from {formatPrice(tier === "bundle" ? Math.min(...STORE_BUNDLES.map(b => b.unitAmount)) : Math.min(...STORE_PARTS.filter(p => p.tier === tier).map(p => p.unitAmount)))}</span>
+
+                {/* Image placeholder */}
+                <div className="mb-3 flex h-40 items-center justify-center rounded-xl bg-theme-5">
+                  <span className="text-xs text-theme-300">{item.name}</span>
                 </div>
-                <button
-                  onClick={() => { setTierFilter(tier); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  className="mt-3 w-full rounded-lg border border-theme-10 py-1.5 text-xs text-theme-50 hover:border-theme-20"
-                >
-                  Shop {meta.label}
-                </button>
+
+                <p className="font-ui text-[0.6rem] uppercase tracking-[0.18em] text-theme-40">
+                  {item.manufacturer}
+                </p>
+                <h3 className="mt-1 text-base font-semibold text-theme-primary">{item.name}</h3>
+                <p className="mt-1 text-xs text-theme-50 line-clamp-2">{item.description}</p>
+
+                {bundle && (
+                  <div className="mt-2 rounded-lg bg-amber-50 p-2">
+                    <p className="text-[0.6rem] font-semibold text-amber-700">Includes:</p>
+                    <ul className="mt-1 text-[0.6rem] text-amber-600">
+                      {bundle.parts.slice(0, 3).map((sku) => (<li key={sku}>• {sku}</li>))}
+                      {bundle.parts.length > 3 && <li>+{bundle.parts.length - 3} more</li>}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="text-sm font-semibold text-theme-primary">{formatPrice(item.unitAmount)}</span>
+                  <span className="text-[0.65rem] text-theme-40">{item.leadTime}</span>
+                </div>
+                <div className="mt-1 text-[0.6rem] text-theme-40">{item.warranty} warranty</div>
+
+                <div className="mt-3 flex items-center gap-2">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); addToCart(item.sku); }}
+                    className="flex-1 rounded-lg bg-ember px-4 py-2 font-ui text-xs uppercase tracking-widest text-white transition hover:bg-ember/90"
+                  >
+                    {isBundle ? "Add Bundle" : "Add to Cart"}
+                  </button>
+                </div>
               </div>
             );
           })}
         </div>
-      )}
 
-      {/* Tier Filter Pills */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        {([["all", "All Tiers"], ["bundle", `Bundles (${STORE_BUNDLES.length})`], ["oem", "OEM Genuine"], ["direct", "Direct (Compatible)"]] as [TierFilter, string][]).map(([id, label]) => (
-          <button
-            key={id}
-            onClick={() => setTierFilter(id)}
-            className={`rounded-full border px-3 py-1.5 font-ui text-[0.6rem] uppercase tracking-[0.18em] transition ${
-              tierFilter === id ? "border-ember bg-ember text-white" : "border-theme-10 text-theme-50 hover:border-theme-20"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
+        {filteredItems.length === 0 && (
+          <p className="py-12 text-center text-theme-40">No parts match your search.</p>
+        )}
       </div>
-
-      {/* Category Pills */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setCategory(cat.id)}
-            className={`rounded-full border px-3 py-1.5 font-ui text-[0.6rem] uppercase tracking-[0.18em] transition ${
-              category === cat.id ? "border-ember bg-ember text-white" : "border-theme-10 text-theme-50 hover:border-theme-20"
-            }`}
-          >
-            {cat.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Search + Sort */}
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by name, SKU, or manufacturer..."
-          className="flex-1 min-w-[240px] rounded-xl border border-theme-10 bg-white px-4 py-2.5 text-sm text-theme-primary placeholder:text-theme-30 focus:border-theme-20 focus:outline-none"
-        />
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="rounded-xl border border-theme-10 bg-white px-4 py-2.5 text-sm text-theme-primary focus:outline-none"
-        >
-          <option value="default">Sort: Default</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="name">Name: A-Z</option>
-        </select>
-      </div>
-
-      {/* Items Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredItems.map((item) => {
-          const tier = TIER_META[item.tier];
-          const isBundle = item.tier === "bundle";
-          const bundle = isBundle ? (item as PartBundle) : null;
-
-          return (
-            <div
-              key={item.sku}
-              onClick={() => openDetail(item.sku)}
-              className={`cursor-pointer rounded-2xl border bg-white p-5 transition hover:shadow-md ${
-                isBundle ? "border-amber-300 ring-1 ring-amber-200" : "border-theme-10 hover:border-theme-20"
-              }`}
-            >
-              {/* Tier Badge */}
-              <div className="mb-2 flex items-center justify-between">
-                <span
-                  className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.55rem] font-bold uppercase tracking-wider"
-                  style={{ backgroundColor: `${tier.color}15`, color: tier.color }}
-                >
-                  {tier.badge}
-                </span>
-                {bundle && <span className="text-[0.6rem] font-bold text-amber-600">Save {bundle.savingsPct}%</span>}
-              </div>
-
-              {/* Image placeholder — real images go here */}
-              <div className="mb-3 flex h-40 items-center justify-center rounded-xl bg-theme-5">
-                <span className="text-xs text-theme-300">{item.name}</span>
-              </div>
-
-              <p className="font-ui text-[0.6rem] uppercase tracking-[0.18em] text-theme-40">
-                {item.manufacturer}
-              </p>
-              <h3 className="mt-1 text-base font-semibold text-theme-primary">{item.name}</h3>
-              <p className="mt-1 text-xs text-theme-50 line-clamp-2">{item.description}</p>
-
-              {bundle && (
-                <div className="mt-2 rounded-lg bg-amber-50 p-2">
-                  <p className="text-[0.6rem] font-semibold text-amber-700">Includes:</p>
-                  <ul className="mt-1 text-[0.6rem] text-amber-600">
-                    {bundle.parts.slice(0, 3).map((sku) => (<li key={sku}>• {sku}</li>))}
-                    {bundle.parts.length > 3 && <li>+{bundle.parts.length - 3} more</li>}
-                  </ul>
-                </div>
-              )}
-
-              <div className="mt-3 flex items-center justify-between">
-                <span className="text-sm font-semibold text-theme-primary">{formatPrice(item.unitAmount)}</span>
-                <span className="text-[0.65rem] text-theme-40">{item.leadTime}</span>
-              </div>
-              <div className="mt-1 text-[0.6rem] text-theme-40">{item.warranty} warranty</div>
-
-              <div className="mt-3 flex items-center gap-2">
-                <button
-                  onClick={(e) => { e.stopPropagation(); addToCart(item.sku); }}
-                  className="flex-1 rounded-lg bg-ember px-4 py-2 font-ui text-xs uppercase tracking-widest text-white transition hover:bg-ember/90"
-                >
-                  {isBundle ? "Add Bundle" : "Add to Cart"}
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {filteredItems.length === 0 && (
-        <p className="py-12 text-center text-theme-40">No parts match your search.</p>
-      )}
 
       {/* Floating Cart Button */}
       <button
@@ -341,12 +343,10 @@ export default function StorePage() {
             </div>
 
             <div className="p-5">
-              {/* Image */}
               <div className="mb-4 flex h-48 items-center justify-center rounded-xl bg-theme-5">
                 <span className="text-sm text-theme-300">{selectedItem.name}</span>
               </div>
 
-              {/* Tier Badge */}
               <div className="mb-3">
                 <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-wider" style={{ backgroundColor: `${TIER_META[selectedItem.tier].color}15`, color: TIER_META[selectedItem.tier].color }}>
                   {TIER_META[selectedItem.tier].badge}
@@ -358,7 +358,6 @@ export default function StorePage() {
               <p className="mt-1 text-xs text-theme-40">{selectedItem.sku}</p>
               <p className="mt-3 text-sm text-theme-50">{selectedItem.description}</p>
 
-              {/* Price */}
               <div className="mt-4 rounded-xl bg-theme-5 p-4">
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-semibold text-theme-primary">{formatPrice(selectedItem.unitAmount)}</span>
@@ -367,15 +366,12 @@ export default function StorePage() {
                 <div className="mt-1 text-xs text-theme-40">{selectedItem.warranty} warranty</div>
               </div>
 
-              {/* Bundle breakdown */}
               {selectedItem.tier === "bundle" && (
                 <div className="mt-4 rounded-xl bg-amber-50 p-4">
                   <p className="font-semibold text-amber-800">Bundle includes:</p>
                   <ul className="mt-2 space-y-1 text-sm text-amber-700">
                     {(selectedItem as PartBundle).parts.map((sku) => (
-                      <li key={sku} className="flex items-center justify-between">
-                        <span>• {sku}</span>
-                      </li>
+                      <li key={sku} className="flex items-center justify-between"><span>• {sku}</span></li>
                     ))}
                   </ul>
                   <div className="mt-3 flex items-center justify-between border-t border-amber-200 pt-2">
@@ -385,20 +381,17 @@ export default function StorePage() {
                 </div>
               )}
 
-              {/* Platform */}
               <div className="mt-4 flex items-center justify-between text-sm">
                 <span className="text-theme-40">Platform</span>
                 <span className="font-medium text-theme-primary">{PLATFORM_META[selectedItem.platformId]?.name || selectedItem.platformId}</span>
               </div>
 
-              {/* Source */}
               {"sourceUrl" in selectedItem && selectedItem.sourceUrl && (
                 <div className="mt-2 text-xs text-theme-40">
                   Price source: <a href={selectedItem.sourceUrl} target="_blank" rel="noopener" className="underline hover:text-theme-300">verify</a>
                 </div>
               )}
 
-              {/* Add to Cart */}
               <div className="mt-6">
                 <button
                   onClick={() => { addToCart(selectedItem.sku); closeDetail(); }}
@@ -408,7 +401,6 @@ export default function StorePage() {
                 </button>
               </div>
 
-              {/* Price Match */}
               <p className="mt-3 text-center text-[0.65rem] text-theme-40">
                 Price match guarantee • Free TechMedix monitoring included
               </p>
@@ -529,6 +521,9 @@ export default function StorePage() {
           </div>
         </>
       )}
-    </main>
+
+      {/* Store Footer with FAQ */}
+      <StoreFooter />
+    </>
   );
 }
