@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import RequestQuoteModal from "./RequestQuoteModal";
 
 const STORE_NAV = [
   { href: "/store", label: "All Parts" },
@@ -11,6 +12,7 @@ const STORE_NAV = [
   { href: "/store?platform=dji-agras-t50", label: "DJI Agras" },
   { href: "/store?tier=bundle", label: "Bundles" },
   { href: "/store/partners", label: "Partners" },
+  { href: "/store/track", label: "Track Order" },
 ];
 
 const FAQ = [
@@ -42,6 +44,8 @@ const FAQ = [
 
 export default function StoreFooter() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [quoteOpen, setQuoteOpen] = useState(false);
+
 
   return (
     <>
@@ -101,13 +105,17 @@ export default function StoreFooter() {
               <p className="text-xs text-theme-40">TechMedix Aftermarket Parts Store</p>
             </div>
             <div className="flex gap-4 text-xs text-theme-40">
+              <button onClick={() => setQuoteOpen(true)} className="hover:text-theme-primary">Request Quote</button>
               <a href="/store/partners" className="hover:text-theme-primary">Partners</a>
               <a href="/store?tier=bundle" className="hover:text-theme-primary">Bundles</a>
+              <a href="/store/track" className="hover:text-theme-primary">Track Order</a>
               <a href="mailto:parts@blackcatrobotics.com" className="hover:text-theme-primary">Contact</a>
             </div>
           </div>
         </div>
       </footer>
+
+      <RequestQuoteModal isOpen={quoteOpen} onClose={() => setQuoteOpen(false)} />
     </>
   );
 }

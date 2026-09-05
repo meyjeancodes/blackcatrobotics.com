@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { STORE_PARTS, STORE_BUNDLES, STORE_CATALOG, StorePart, PartBundle, TIER_META, PRICE_MATCH_GUARANTEE, PLATFORM_META } from "@/lib/store/parts-catalog";
 import StoreFooter from "./StoreFooter";
+import RequestQuoteModal from "./RequestQuoteModal";
 
 interface CartItem {
   item: StorePart | PartBundle;
@@ -38,6 +39,13 @@ export default function StorePage() {
   const [advisorOpen, setAdvisorOpen] = useState(false);
   const [selectedSku, setSelectedSku] = useState<string | null>(null);
   const [showComparison, setShowComparison] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setQuoteOpen(true);
+    window.addEventListener("open-quote-modal", handler);
+    return () => window.removeEventListener("open-quote-modal", handler);
+  }, []);
 
   const filteredItems = useMemo(() => {
     let list = STORE_CATALOG;
@@ -141,10 +149,29 @@ export default function StorePage() {
               <span className="text-theme-40">— We beat any verified seller by 10%</span>
             </div>
           )}
-        </header>
 
-        {/* Comparison Toggle */}
-        <div className="mb-6 flex items-center justify-between">
+          {/* CTA Buttons */}
+          <div className="mt-6 flex flex-wrap gap-3">
+            <button
+              onClick={() => document.getElementById('parts-grid')?.scrollIntoView({ behavior: 'smooth' })}
+              className="rounded-xl bg-ember px-6 py-2.5 font-ui text-xs uppercase tracking-widest text-white transition hover:bg-ember/90"
+            >
+              Shop All Parts
+            </button>
+            <button
+              onClick={() => {
+                const event = new CustomEvent('open-quote-modal');
+                window.dispatchEvent(event);
+              }}
+              className="rounded-xl border border-theme-20 px-6 py-2.5 font-ui text-xs uppercase tracking-widest text-theme-70 transition hover:bg-theme-5"
+            >
+              Request Fleet Quote
+            </button>
+          </div>
+          </header>
+
+          {/* Comparison Toggle */}
+          <div id="parts-grid" className="mb-6 flex items-center justify-between">
           <p className="text-sm text-theme-40">{filteredItems.length} parts</p>
           <button
             onClick={() => setShowComparison(!showComparison)}
@@ -524,6 +551,9 @@ export default function StorePage() {
 
       {/* Store Footer with FAQ */}
       <StoreFooter />
+
+      {/* Request Quote Modal */}
+      <RequestQuoteModal isOpen={quoteOpen} onClose={() => setQuoteOpen(false)} />
     </>
   );
 }
