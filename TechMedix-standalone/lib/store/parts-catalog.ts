@@ -70,6 +70,8 @@ const PLATFORM_FALLBACK: Record<string, string> = {
   "unitree-g1": "/images/parts/unitree_g1.jpg",
   "boston-dynamics-spot": "/images/parts/bostondynamics_spot.jpg",
   "dji-agras-t50": "/images/parts/dji_agras_t50.jpg",
+  "figure-02": "/images/parts/figure02.jpg",
+  "digit-v5": "/images/parts/digit.jpg",
 };
 
 /** Get the best available image for a part */
@@ -673,7 +675,124 @@ const H1_BUNDLES: PartBundle[] = [
   },
 ];
 
-// ─── Catalog aggregation ──────────────────────────────────────────────────────
+// ─── Figure 02 — OEM ──────────────────────────────────────────────────────────
+
+const FIGURE02_OEM: StorePart[] = [
+  {
+    sku: "FIG2-HAND",
+    name: "Figure 02 Dexterous Hand",
+    platformId: "figure-02",
+    manufacturer: "Figure AI",
+    description: "Genuine Figure 02 16-DOF dexterous hand. 20kg payload, precision grip. Replace on hand gear wear or finger position drift.",
+    unitAmount: 4500000,
+    currency: "usd",
+    image: "/images/parts/figure02.jpg",
+    leadTime: "14–21 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://www.figure.ai/news/figure-02",
+  },
+  {
+    sku: "FIG2-ARM-ACT",
+    name: "Figure 02 Arm Actuator",
+    platformId: "figure-02",
+    manufacturer: "Figure AI",
+    description: "Genuine Figure 02 7-DOF arm actuator module. High-torque, precision-controlled.",
+    unitAmount: 850000,
+    currency: "usd",
+    image: "/images/parts/figure02.jpg",
+    leadTime: "14–21 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+  {
+    sku: "FIG2-BATTERY",
+    name: "Figure 02 Battery Pack",
+    platformId: "figure-02",
+    manufacturer: "Figure AI",
+    description: "Genuine Figure 02 battery pack. ~5h runtime, hot-swap compatible.",
+    unitAmount: 2500000,
+    currency: "usd",
+    image: "/images/parts/figure02.jpg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+  {
+    sku: "FIG2-CONTROLLER",
+    name: "Figure 02 Main Controller",
+    platformId: "figure-02",
+    manufacturer: "Figure AI",
+    description: "Genuine Figure 02 main compute/motion controller. OpenAI-trained reasoning stack.",
+    unitAmount: 3200000,
+    currency: "usd",
+    image: "/images/parts/figure02.jpg",
+    leadTime: "14–21 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+  {
+    sku: "FIG2-LEG-ACT",
+    name: "Figure 02 Leg Actuator",
+    platformId: "figure-02",
+    manufacturer: "Figure AI",
+    description: "Genuine Figure 02 6-DOF leg actuator module. High-torque for bipedal locomotion.",
+    unitAmount: 950000,
+    currency: "usd",
+    image: "/images/parts/figure02.jpg",
+    leadTime: "14–21 days",
+    warranty: "12 months",
+    tier: "oem",
+  },
+];
+
+
+// ─── Digit v5 — OEM ──────────────────────────────────────────────────────────
+
+const DIGIT_OEM: StorePart[] = [
+  {
+    sku: "DIGIT-HAND",
+    name: "Digit v5 Dexterous Hand",
+    platformId: "digit-v5",
+    manufacturer: "Agility Robotics",
+    description: "Genuine Digit v5 hand with 16 DOF. Precision grip for logistics and warehouse operations.",
+    unitAmount: 3800000,
+    currency: "usd",
+    image: "/images/parts/digit.jpg",
+    leadTime: "14–21 days",
+    warranty: "12 months",
+    tier: "oem",
+    sourceUrl: "https://agilityrobotics.com/products/digit"
+  },
+  {
+    sku: "DIGIT-ARM-ACT",
+    name: "Digit v5 Arm Actuator",
+    platformId: "digit-v5",
+    manufacturer: "Agility Robotics",
+    description: "Genuine Digit v5 7-DOF arm actuator module. High-torque for payload handling.",
+    unitAmount: 750000,
+    currency: "usd",
+    image: "/images/parts/digit.jpg",
+    leadTime: "14–21 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "DIGIT-BATTERY",
+    name: "Digit v5 Battery Pack",
+    platformId: "digit-v5",
+    manufacturer: "Agility Robotics",
+    description: "Genuine Digit v5 battery pack. Hot-swap compatible for continuous operation.",
+    unitAmount: 1800000,
+    currency: "usd",
+    image: "/images/parts/digit.jpg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+];
+
+
 
 /** All individual parts (OEM + Direct) */
 export const STORE_PARTS: StorePart[] = [
@@ -683,6 +802,8 @@ export const STORE_PARTS: StorePart[] = [
   ...SPOT_OEM,
   ...AGRAS_OEM,
   ...INSPIRE_OEM,
+  ...FIGURE02_OEM,
+  ...DIGIT_OEM,
 ];
 
 /** All bundles */
@@ -714,57 +835,29 @@ export function getBundleBySku(sku: string): PartBundle | undefined {
   return STORE_BUNDLES.find((b) => b.sku === sku);
 }
 
-/**
- * Resolve Stripe Price ID for a part. Uses STRIPE_PRICE_<SKU> env if present
- * (recommended for production), otherwise returns undefined and the API falls
- * back to a price_data object built from unitAmount.
- */
 export function stripePriceIdFor(part: StorePart | PartBundle): string | undefined {
   const envKey = `STRIPE_PRICE_${part.sku}`;
   const id = 'stripePriceId' in part ? part.stripePriceId : undefined;
   return process.env[envKey] || id;
 }
 
-/** Price match guarantee: lowest price guarantee on any verified seller */
 export const PRICE_MATCH_GUARANTEE = {
   enabled: true,
   terms: "Find a lower price from a verified seller? We'll beat it by 10%. Submit proof within 30 days of purchase.",
   excludes: ["AliExpress", "unverified marketplace sellers", "used/refurbished"],
 };
 
-/** Tier metadata for UI display */
 export const TIER_META: Record<PartTier, { label: string; badge: string; description: string; color: string }> = {
-  oem: {
-    label: "OEM",
-    badge: "Genuine",
-    description: "Factory-original parts with full manufacturer warranty",
-    color: "#1db87a",
-  },
-  direct: {
-    label: "Direct",
-    badge: "Tested Compatible",
-    description: "Tested Chinese-compatible alternatives, ships fast from US/EU",
-    color: "#cc3d17",
-  },
-  bundle: {
-    label: "Bundle",
-    badge: "Save up to 36%",
-    description: "Curated repair kits, save 15-35% vs individual parts",
-    color: "#f59e0b",
-  },
+  oem: { label: "OEM", badge: "Genuine", description: "Factory-original parts with full manufacturer warranty", color: "#1db87a" },
+  direct: { label: "Direct", badge: "Tested Compatible", description: "Tested Chinese-compatible alternatives, ships fast from US/EU", color: "#cc3d17" },
+  bundle: { label: "Bundle", badge: "Save up to 36%", description: "Curated repair kits, save 15-35% vs individual parts", color: "#f59e0b" },
 };
 
-/** Platform metadata for UI display */
 export const PLATFORM_META: Record<string, { name: string; manufacturer: string }> = {
   "unitree-h1-2": { name: "Unitree H1", manufacturer: "Unitree Robotics" },
   "unitree-g1": { name: "Unitree G1", manufacturer: "Unitree Robotics" },
   "boston-dynamics-spot": { name: "Boston Dynamics Spot", manufacturer: "Boston Dynamics" },
   "dji-agras-t50": { name: "DJI Agras T50", manufacturer: "DJI" },
+  "figure-02": { name: "Figure 02", manufacturer: "Figure AI" },
+  "digit-v5": { name: "Digit v5", manufacturer: "Agility Robotics" },
 };
-
-/** Get all images used by the store */
-export function getAllPartImages(): string[] {
-  const images = new Set<string>();
-  [...STORE_PARTS, ...STORE_BUNDLES].forEach((p) => images.add(p.image));
-  return Array.from(images);
-}
