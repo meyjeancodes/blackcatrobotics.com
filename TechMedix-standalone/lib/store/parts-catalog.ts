@@ -648,7 +648,14 @@ const H1_BUNDLES: PartBundle[] = [
 
 // ─── Catalog aggregation ──────────────────────────────────────────────────────
 
-/** All individual parts (OEM + Direct) */
+// ─── Platform photos (used as card backgrounds) ───────────────────────────────
+
+const PLATFORM_PHOTOS: Record<string, string> = {
+  "unitree-h1-2": "/images/platforms/unitree_h1.jpg",
+  "unitree-g1": "/images/platforms/unitree_g1.jpg",
+  "boston-dynamics-spot": "/images/platforms/bostondynamics_spot.jpg",
+  "dji-agras-t50": "/images/platforms/dji_agras_t50.jpg",
+};
 export const STORE_PARTS: StorePart[] = [
   ...H1_OEM,
   ...H1_DIRECT,
