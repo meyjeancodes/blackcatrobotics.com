@@ -10,9 +10,11 @@ const STORE_NAV = [
   { href: "/store?platform=unitree-g1", label: "Unitree G1" },
   { href: "/store?platform=boston-dynamics-spot", label: "Boston Dynamics" },
   { href: "/store?platform=dji-agras-t50", label: "DJI Agras" },
+  { href: "/store?platform=figure-02", label: "Figure" },
   { href: "/store?tier=bundle", label: "Bundles" },
   { href: "/store/partners", label: "Partners" },
   { href: "/store/track", label: "Track Order" },
+  { href: "/account", label: "My Account" },
 ];
 
 const FAQ = [
