@@ -72,6 +72,12 @@ const PLATFORM_FALLBACK: Record<string, string> = {
   "dji-agras-t50": "/images/parts/dji_agras_t50.jpg",
   "figure-02": "/images/parts/figure02.jpg",
   "digit-v5": "/images/parts/digit.jpg",
+  "optimus-gen3": "/images/parts/optimus.jpg",
+  "apollo": "/images/parts/apollo.jpg",
+  "neo": "/images/parts/neo.jpg",
+  "skydio-x10": "/images/parts/skydio.jpg",
+  "starship-gen3": "/images/parts/starship.jpg",
+  "lime-gen4": "/images/parts/lime.jpg",
 };
 
 /** Get the best available image for a part */
@@ -231,8 +237,6 @@ const H1_OEM: StorePart[] = [
     tier: "oem",
     sourceUrl: "https://shop.unitree.com/collections/accessories",
   },
-];
-
 // ─── Unitree H1 — Direct (Compatible) ─────────────────────────────────────────
 
 const H1_DIRECT: StorePart[] = [
@@ -366,8 +370,6 @@ const H1_DIRECT: StorePart[] = [
     warranty: "30 days",
     tier: "direct",
   },
-];
-
 // ─── Unitree G1 — OEM ─────────────────────────────────────────────────────────
 
 const G1_OEM: StorePart[] = [
@@ -438,8 +440,6 @@ const G1_OEM: StorePart[] = [
     tier: "oem",
     sourceUrl: "https://futurology.tech/collections/unitree-robot-accessories",
   },
-];
-
 // ─── Boston Dynamics Spot — OEM ───────────────────────────────────────────────
 
 const SPOT_OEM: StorePart[] = [
@@ -513,8 +513,6 @@ const SPOT_OEM: StorePart[] = [
     tier: "oem",
     sourceUrl: "https://bostondynamics.com/products/spot/extras/",
   },
-];
-
 // ─── DJI Agras — OEM ──────────────────────────────────────────────────────────
 
 const AGRAS_OEM: StorePart[] = [
@@ -585,8 +583,6 @@ const AGRAS_OEM: StorePart[] = [
     warranty: "12 months",
     tier: "oem",
   },
-];
-
 // ─── Inspire Robots — OEM ─────────────────────────────────────────────────────
 
 const INSPIRE_OEM: StorePart[] = [
@@ -604,8 +600,6 @@ const INSPIRE_OEM: StorePart[] = [
     tier: "oem",
     sourceUrl: "https://www.knoxlabs.com/products/inspire-robots-rh56h1-dexterous-hand",
   },
-];
-
 // ─── Bundles ─────────────────────────────────────────────────────────────────
 
 const H1_BUNDLES: PartBundle[] = [
@@ -673,8 +667,6 @@ const H1_BUNDLES: PartBundle[] = [
     leadTime: "5–7 days",
     warranty: "12 months",
   },
-];
-
 // ─── Figure 02 — OEM ──────────────────────────────────────────────────────────
 
 const FIGURE02_OEM: StorePart[] = [
@@ -687,10 +679,6 @@ const FIGURE02_OEM: StorePart[] = [
     unitAmount: 4500000,
     currency: "usd",
     image: "/images/parts/figure02.jpg",
-    leadTime: "14–21 days",
-    warranty: "12 months",
-    tier: "oem",
-    sourceUrl: "https://www.figure.ai/news/figure-02",
   },
   {
     sku: "FIG2-ARM-ACT",
@@ -701,10 +689,6 @@ const FIGURE02_OEM: StorePart[] = [
     unitAmount: 850000,
     currency: "usd",
     image: "/images/parts/figure02.jpg",
-    leadTime: "14–21 days",
-    warranty: "12 months",
-    tier: "oem",
-  },
   {
     sku: "FIG2-BATTERY",
     name: "Figure 02 Battery Pack",
@@ -727,10 +711,6 @@ const FIGURE02_OEM: StorePart[] = [
     unitAmount: 3200000,
     currency: "usd",
     image: "/images/parts/figure02.jpg",
-    leadTime: "14–21 days",
-    warranty: "12 months",
-    tier: "oem",
-  },
   {
     sku: "FIG2-LEG-ACT",
     name: "Figure 02 Leg Actuator",
@@ -740,12 +720,316 @@ const FIGURE02_OEM: StorePart[] = [
     unitAmount: 950000,
     currency: "usd",
     image: "/images/parts/figure02.jpg",
-    leadTime: "14–21 days",
+  },
+// ─── Tesla Optimus Gen 3 — OEM ───────────────────────────────────────────────
+
+const OPTIMUS_OEM: StorePart[] = [
+  {
+    sku: "OPTIMUS-HAND",
+    name: "Optimus Gen 3 Dexterous Hand",
+    platformId: "optimus-gen3",
+    manufacturer: "Tesla",
+    description: "Genuine Optimus Gen 3 22-DOF dexterous hand. Actuated tendons, sensory feedback.",
+    unitAmount: 5200000,
+    currency: "usd",
+    image: "/images/parts/optimus.jpg",
+  },
+  {
+    sku: "OPTIMUS-ARM-ACT",
+    name: "Optimus Gen 3 Arm Actuator",
+    platformId: "optimus-gen3",
+    manufacturer: "Tesla",
+    description: "Genuine Optimus Gen 3 7-DOF arm actuator. High-torque, precision-controlled.",
+    unitAmount: 950000,
+    currency: "usd",
+    image: "/images/parts/optimus.jpg",
+  {
+    sku: "OPTIMUS-BATTERY",
+    name: "Optimus Gen 3 Battery Pack",
+    platformId: "optimus-gen3",
+    manufacturer: "Tesla",
+    description: "Genuine Optimus Gen 3 battery pack. 2.3 kWh, hot-swap compatible.",
+    unitAmount: 2800000,
+    currency: "usd",
+    image: "/images/parts/optimus.jpg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "OPTIMUS-CONTROLLER",
+    name: "Optimus Gen 3 FSD Controller",
+    platformId: "optimus-gen3",
+    manufacturer: "Tesla",
+    description: "Genuine Optimus Gen 3 FSD computer. Dojo-trained neural net inference.",
+    unitAmount: 4500000,
+    currency: "usd",
+    image: "/images/parts/optimus.jpg",
+  {
+    sku: "OPTIMUS-LEG-ACT",
+    name: "Optimus Gen 3 Leg Actuator",
+    platformId: "optimus-gen3",
+    manufacturer: "Tesla",
+    description: "Genuine Optimus Gen 3 6-DOF leg actuator. High-torque for bipedal locomotion.",
+    unitAmount: 1100000,
+    currency: "usd",
+    image: "/images/parts/optimus.jpg",
+// ─── Apptronik Apollo — OEM ──────────────────────────────────────────────────
+
+const APOLLO_OEM: StorePart[] = [
+  {
+    sku: "APOLLO-HAND",
+    name: "Apollo Dexterous Hand",
+    platformId: "apollo",
+    manufacturer: "Apptronik",
+    description: "Genuine Apollo hand with 16 DOF. Precision grip for logistics.",
+    unitAmount: 4200000,
+    currency: "usd",
+    image: "/images/parts/apollo.jpg",
+  },
+  {
+    sku: "APOLLO-ARM-ACT",
+    name: "Apollo Arm Actuator",
+    platformId: "apollo",
+    manufacturer: "Apptronik",
+    description: "Genuine Apollo 7-DOF arm actuator module. High-torque for payload handling.",
+    unitAmount: 820000,
+    currency: "usd",
+    image: "/images/parts/apollo.jpg",
+  {
+    sku: "APOLLO-BATTERY",
+    name: "Apollo Battery Pack",
+    platformId: "apollo",
+    manufacturer: "Apptronik",
+    description: "Genuine Apollo battery pack. Hot-swap compatible for continuous operation.",
+    unitAmount: 2200000,
+    currency: "usd",
+    image: "/images/parts/apollo.jpg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "APOLLO-CONTROLLER",
+    name: "Apollo Main Controller",
+    platformId: "apollo",
+    manufacturer: "Apptronik",
+    description: "Genuine Apollo main compute/motion controller. Real-time path planning.",
+    unitAmount: 3500000,
+    currency: "usd",
+    image: "/images/parts/apollo.jpg",
+// ─── 1X Neo — OEM ────────────────────────────────────────────────────────────
+
+const NEO_OEM: StorePart[] = [
+  {
+    sku: "NEO-HAND",
+    name: "Neo Dexterous Hand",
+    platformId: "neo",
+    manufacturer: "1X",
+    description: "Genuine Neo hand with 20 DOF. Precision grip for domestic tasks.",
+    unitAmount: 3800000,
+    currency: "usd",
+    image: "/images/parts/neo.jpg",
+  },
+  {
+    sku: "NEO-ARM-ACT",
+    name: "Neo Arm Actuator",
+    platformId: "neo",
+    manufacturer: "1X",
+    description: "Genuine Neo 7-DOF arm actuator module. High-torque for manipulation.",
+    unitAmount: 720000,
+    currency: "usd",
+    image: "/images/parts/neo.jpg",
+  {
+    sku: "NEO-BATTERY",
+    name: "Neo Battery Pack",
+    platformId: "neo",
+    manufacturer: "1X",
+    description: "Genuine Neo battery pack. Hot-swap compatible for domestic operation.",
+    unitAmount: 1900000,
+    currency: "usd",
+    image: "/images/parts/neo.jpg",
+    leadTime: "10–14 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "NEO-CONTROLLER",
+    name: "Neo Main Controller",
+    platformId: "neo",
+    manufacturer: "1X",
+    description: "Genuine Neo main compute/motion controller. Large behavior model inference.",
+    unitAmount: 3200000,
+    currency: "usd",
+    image: "/images/parts/neo.jpg",
+// ─── Skydio X10 — OEM ────────────────────────────────────────────────────────
+
+const SKYDIO_OEM: StorePart[] = [
+  {
+    sku: "SKYDIO-PROP",
+    name: "Skydio X10 Propeller Set (4pcs)",
+    platformId: "skydio-x10",
+    manufacturer: "Skydio",
+    description: "Genuine Skydio X10 propeller set. Replace every 200 flight hours.",
+    unitAmount: 45000,
+    currency: "usd",
+    image: "/images/parts/skydio.jpg",
+    leadTime: "3–5 days",
+    warranty: "6 months",
+    tier: "oem",
+    sourceUrl: "https://www.skydio.com/skydio-x10"
+  },
+  {
+    sku: "SKYDIO-MOTOR",
+    name: "Skydio X10 Brushless Motor",
+    platformId: "skydio-x10",
+    manufacturer: "Skydio",
+    description: "Genuine Skydio X10 brushless motor. High-torque, IP67 rated.",
+    unitAmount: 380000,
+    currency: "usd",
+    image: "/images/parts/skydio.jpg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "SKYDIO-BATTERY",
+    name: "Skydio X10 Battery Pack",
+    platformId: "skydio-x10",
+    manufacturer: "Skydio",
+    description: "Genuine Skydio X10 intelligent battery. Hot-swap compatible.",
+    unitAmount: 520000,
+    currency: "usd",
+    image: "/images/parts/skydio.jpg",
+    leadTime: "5–7 days",
+    warranty: "6 months",
+    tier: "oem"
+  },
+  {
+    sku: "SKYDIO-CAMERA",
+    name: "Skydio X10 Camera Gimbal",
+    platformId: "skydio-x10",
+    manufacturer: "Skydio",
+    description: "Genuine Skydio X10 camera gimbal. 4K/60fps with obstacle avoidance.",
+    unitAmount: 1800000,
+    currency: "usd",
+    image: "/images/parts/skydio.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+// ─── Starship Gen3 — OEM ─────────────────────────────────────────────────────
+
+const STARSHIP_OEM: StorePart[] = [
+  {
+    sku: "STARSHIP-WHEEL",
+    name: "Starship Gen3 Wheel Motor",
+    platformId: "starship-gen3",
+    manufacturer: "Starship Technologies",
+    description: "Genuine Starship Gen3 wheel motor. Sealed for outdoor operation.",
+    unitAmount: 180000,
+    currency: "usd",
+    image: "/images/parts/starship.jpg",
+    leadTime: "7–10 days",
     warranty: "12 months",
     tier: "oem",
+    sourceUrl: "https://www.starship.xyz"
   },
-];
+  {
+    sku: "STARSHIP-BATTERY",
+    name: "Starship Gen3 Battery Pack",
+    platformId: "starship-gen3",
+    manufacturer: "Starship Technologies",
+    description: "Genuine Starship Gen3 battery pack. ~18h runtime, hot-swap compatible.",
+    unitAmount: 220000,
+    currency: "usd",
+    image: "/images/parts/starship.jpg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "STARSHIP-SENSOR",
+    name: "Starship Gen3 Sensor Array",
+    platformId: "starship-gen3",
+    manufacturer: "Starship Technologies",
+    description: "Genuine Starship Gen3 sensor array. LiDAR, cameras, ultrasonic.",
+    unitAmount: 450000,
+    currency: "usd",
+    image: "/images/parts/starship.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "STARSHIP-CONTROLLER",
+    name: "Starship Gen3 Main Controller",
+    platformId: "starship-gen3",
+    manufacturer: "Starship Technologies",
+    description: "Genuine Starship Gen3 main controller. Autonomous navigation stack.",
+    unitAmount: 680000,
+    currency: "usd",
+    image: "/images/parts/starship.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+// ─── Lime Gen4 — OEM ─────────────────────────────────────────────────────────
 
+const LIME_OEM: StorePart[] = [
+  {
+    sku: "LIME-BATTERY",
+    name: "Lime Gen4 Battery Pack",
+    platformId: "lime-gen4",
+    manufacturer: "Lime",
+    description: "Genuine Lime Gen4 swappable battery pack. 551 Wh, 20 mi range.",
+    unitAmount: 180000,
+    currency: "usd",
+    image: "/images/parts/lime.jpg",
+    leadTime: "3–5 days",
+    warranty: "6 months",
+    tier: "oem",
+    sourceUrl: "https://www.li.me"
+  },
+  {
+    sku: "LIME-HUB-MOTOR",
+    name: "Lime Gen4 Hub Motor",
+    platformId: "lime-gen4",
+    manufacturer: "Lime",
+    description: "Genuine Lime Gen4 hub motor. 350W, regenerative braking.",
+    unitAmount: 120000,
+    currency: "usd",
+    image: "/images/parts/lime.jpg",
+    leadTime: "5–7 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "LIME-BRAKE",
+    name: "Lime Gen4 Brake Assembly",
+    platformId: "lime-gen4",
+    manufacturer: "Lime",
+    description: "Genuine Lime Gen4 brake assembly. Regenerative + disc brake.",
+    unitAmount: 65000,
+    currency: "usd",
+    image: "/images/parts/lime.jpg",
+    leadTime: "3–5 days",
+    warranty: "12 months",
+    tier: "oem"
+  },
+  {
+    sku: "LIME-TIRE",
+    name: "Lime Gen4 Tire",
+    platformId: "lime-gen4",
+    manufacturer: "Lime",
+    description: "Genuine Lime Gen4 10-inch pneumatic tire. Replace every 3,000 mi.",
+    unitAmount: 35000,
+    currency: "usd",
+    image: "/images/parts/lime.jpg",
+    leadTime: "2–3 days",
+    warranty: "6 months",
+    tier: "oem"
+  },
 
 // ─── Digit v5 — OEM ──────────────────────────────────────────────────────────
 
@@ -759,10 +1043,6 @@ const DIGIT_OEM: StorePart[] = [
     unitAmount: 3800000,
     currency: "usd",
     image: "/images/parts/digit.jpg",
-    leadTime: "14–21 days",
-    warranty: "12 months",
-    tier: "oem",
-    sourceUrl: "https://agilityrobotics.com/products/digit"
   },
   {
     sku: "DIGIT-ARM-ACT",
@@ -773,10 +1053,6 @@ const DIGIT_OEM: StorePart[] = [
     unitAmount: 750000,
     currency: "usd",
     image: "/images/parts/digit.jpg",
-    leadTime: "14–21 days",
-    warranty: "12 months",
-    tier: "oem"
-  },
   {
     sku: "DIGIT-BATTERY",
     name: "Digit v5 Battery Pack",
@@ -790,8 +1066,6 @@ const DIGIT_OEM: StorePart[] = [
     warranty: "12 months",
     tier: "oem"
   },
-];
-
 
 
 /** All individual parts (OEM + Direct) */
@@ -804,8 +1078,12 @@ export const STORE_PARTS: StorePart[] = [
   ...INSPIRE_OEM,
   ...FIGURE02_OEM,
   ...DIGIT_OEM,
-];
-
+  ...OPTIMUS_OEM,
+  ...APOLLO_OEM,
+  ...NEO_OEM,
+  ...SKYDIO_OEM,
+  ...STARSHIP_OEM,
+  ...LIME_OEM,
 /** All bundles */
 export const STORE_BUNDLES: PartBundle[] = [...H1_BUNDLES];
 
@@ -813,8 +1091,6 @@ export const STORE_BUNDLES: PartBundle[] = [...H1_BUNDLES];
 export const STORE_CATALOG: (StorePart | PartBundle)[] = [
   ...STORE_BUNDLES,
   ...STORE_PARTS,
-];
-
 /** Quick lookup maps */
 const PART_MAP = new Map<string, StorePart | PartBundle>();
 [...STORE_PARTS, ...STORE_BUNDLES].forEach((p) => PART_MAP.set(p.sku, p));
@@ -860,4 +1136,11 @@ export const PLATFORM_META: Record<string, { name: string; manufacturer: string 
   "dji-agras-t50": { name: "DJI Agras T50", manufacturer: "DJI" },
   "figure-02": { name: "Figure 02", manufacturer: "Figure AI" },
   "digit-v5": { name: "Digit v5", manufacturer: "Agility Robotics" },
+  "optimus-gen3": { name: "Tesla Optimus", manufacturer: "Tesla" },
+  "apollo": { name: "Apptronik Apollo", manufacturer: "Apptronik" },
+  "neo": { name: "1X Neo", manufacturer: "1X" },
+  "skydio-x10": { name: "Skydio X10", manufacturer: "Skydio" },
+  "starship-gen3": { name: "Starship Gen3", manufacturer: "Starship Technologies" },
+  "lime-gen4": { name: "Lime Gen4", manufacturer: "Lime" },
 };
+
