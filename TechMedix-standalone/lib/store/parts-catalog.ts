@@ -62,6 +62,17 @@ const PLATFORM_FALLBACK: Record<string, string> = {
   "uworld-u1-pro": "/images/parts/uworld.jpg",
   "unitree-b2": "/images/parts/unitree_b2.jpg",
   "dji-matrice-350": "/images/parts/matrice.jpg",
+  "aigen-element-gen2": "/images/parts/aigen.jpg",
+  "bird-three": "/images/parts/bird.jpg",
+  "dji-agras-t60": "/images/parts/agras_t60.jpg",
+  "unitree-r1": "/images/parts/unitree_r1.jpg",
+  "uworld-u1-lite": "/images/parts/uworld.jpg",
+  "uworld-u1-ultra": "/images/parts/uworld.jpg",
+  "phantom-mk1": "/images/parts/phantom.jpg",
+  "radcommercial": "/images/parts/rad.jpg",
+  "rebot-devarm": "/images/parts/rebot.jpg",
+  "robo-1": "/images/parts/robo1.jpg",
+  "nvidia-jetson-agx-thor": "/images/parts/thor.jpg",
 };
 
 export function getPartImage(sku: string, platformId: string): string {
@@ -228,6 +239,73 @@ const MATRICE_OEM: StorePart[] = [
   { sku: "MATRICE-CAMERA", name: "Matrice 350 Camera Gimbal", platformId: "dji-matrice-350", manufacturer: "DJI", description: "Genuine Matrice 350 camera gimbal. 4K/60fps.", unitAmount: 2200000, currency: "usd", image: "/images/parts/matrice.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem" },
 ];
 
+
+const AIGEN_OEM: StorePart[] = [
+  { sku: "AIGEN-ARM", name: "Aigen Element Gen2 Arm", platformId: "aigen-element-gen2", manufacturer: "Aigen", description: "Genuine Aigen Element Gen2 7-DOF arm.", unitAmount: 7800000, currency: "usd", image: "/images/parts/aigen.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+  { sku: "AIGEN-GRIPPER", name: "Aigen Element Gen2 Gripper", platformId: "aigen-element-gen2", manufacturer: "Aigen", description: "Genuine Aigen Element Gen2 gripper.", unitAmount: 1600000, currency: "usd", image: "/images/parts/aigen.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem" },
+  { sku: "AIGEN-CONTROLLER", name: "Aigen Element Gen2 Controller", platformId: "aigen-element-gen2", manufacturer: "Aigen", description: "Genuine Aigen Element Gen2 controller.", unitAmount: 3200000, currency: "usd", image: "/images/parts/aigen.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+];
+
+const BIRD_OEM: StorePart[] = [
+  { sku: "BIRD-LEG-ACT", name: "Bird Three Leg Actuator", platformId: "bird-three", manufacturer: "Bird Three", description: "Genuine Bird Three leg actuator.", unitAmount: 95000, currency: "usd", image: "/images/parts/bird.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem" },
+  { sku: "BIRD-BATTERY", name: "Bird Three Battery Pack", platformId: "bird-three", manufacturer: "Bird Three", description: "Genuine Bird Three battery pack.", unitAmount: 125000, currency: "usd", image: "/images/parts/bird.jpg", leadTime: "5–7 days", warranty: "12 months", tier: "oem" },
+  { sku: "BIRD-CONTROLLER", name: "Bird Three Main Controller", platformId: "bird-three", manufacturer: "Bird Three", description: "Genuine Bird Three main controller.", unitAmount: 220000, currency: "usd", image: "/images/parts/bird.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem" },
+];
+
+const AGRAS_T60_OEM: StorePart[] = [
+  { sku: "T60-PROP", name: "DJI Agras T60 Propeller Set", platformId: "dji-agras-t60", manufacturer: "DJI", description: "Genuine DJI Agras T60 propeller set.", unitAmount: 22000, currency: "usd", image: "/images/parts/agras_t60.jpg", leadTime: "3–5 days", warranty: "6 months", tier: "oem" },
+  { sku: "T60-MOTOR", name: "DJI Agras T60 Brushless Motor", platformId: "dji-agras-t60", manufacturer: "DJI", description: "Genuine DJI Agras T60 brushless motor.", unitAmount: 32000, currency: "usd", image: "/images/parts/agras_t60.jpg", leadTime: "5–7 days", warranty: "12 months", tier: "oem" },
+  { sku: "T60-BATTERY", name: "DJI Agras T60 Battery Pack", platformId: "dji-agras-t60", manufacturer: "DJI", description: "Genuine DJI Agras T60 intelligent battery.", unitAmount: 420000, currency: "usd", image: "/images/parts/agras_t60.jpg", leadTime: "5–7 days", warranty: "6 months", tier: "oem" },
+  { sku: "T60-PUMP", name: "DJI Agras T60 Spray Pump", platformId: "dji-agras-t60", manufacturer: "DJI", description: "Genuine DJI Agras T60 spray pump assembly.", unitAmount: 55000, currency: "usd", image: "/images/parts/agras_t60.jpg", leadTime: "5–7 days", warranty: "12 months", tier: "oem" },
+];
+
+const R1_OEM: StorePart[] = [
+  { sku: "R1-LEG-ACT", name: "Unitree R1 Leg Actuator", platformId: "unitree-r1", manufacturer: "Unitree Robotics", description: "Genuine R1 leg actuator.", unitAmount: 78000, currency: "usd", image: "/images/parts/unitree_r1.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem" },
+  { sku: "R1-BATTERY", name: "Unitree R1 Battery Pack", platformId: "unitree-r1", manufacturer: "Unitree Robotics", description: "Genuine R1 battery pack.", unitAmount: 95000, currency: "usd", image: "/images/parts/unitree_r1.jpg", leadTime: "5–7 days", warranty: "12 months", tier: "oem" },
+  { sku: "R1-CONTROLLER", name: "Unitree R1 Main Controller", platformId: "unitree-r1", manufacturer: "Unitree Robotics", description: "Genuine R1 main controller.", unitAmount: 185000, currency: "usd", image: "/images/parts/unitree_r1.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem" },
+];
+
+const UWORLD_LITE_OEM: StorePart[] = [
+  { sku: "UWORLD-LITE-HAND", name: "U1 Lite Dexterous Hand", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "Genuine U1 Lite hand with 16 DOF.", unitAmount: 2800000, currency: "usd", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+  { sku: "UWORLD-LITE-ARM-ACT", name: "U1 Lite Arm Actuator", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "Genuine U1 Lite 7-DOF arm actuator module.", unitAmount: 580000, currency: "usd", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+  { sku: "UWORLD-LITE-BATTERY", name: "U1 Lite Battery Pack", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "Genuine U1 Lite battery pack.", unitAmount: 1400000, currency: "usd", image: "/images/parts/uworld.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem" },
+];
+
+const UWORLD_ULTRA_OEM: StorePart[] = [
+  { sku: "UWORLD-ULTRA-HAND", name: "U1 Ultra Dexterous Hand", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "Genuine U1 Ultra hand with 20 DOF.", unitAmount: 4200000, currency: "usd", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+  { sku: "UWORLD-ULTRA-ARM-ACT", name: "U1 Ultra Arm Actuator", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "Genuine U1 Ultra 7-DOF arm actuator module.", unitAmount: 850000, currency: "usd", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+  { sku: "UWORLD-ULTRA-BATTERY", name: "U1 Ultra Battery Pack", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "Genuine U1 Ultra battery pack.", unitAmount: 1800000, currency: "usd", image: "/images/parts/uworld.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem" },
+];
+
+const PHANTOM_OEM: StorePart[] = [
+  { sku: "PHANTOM-ARM", name: "Phantom MK1 Arm", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Genuine Phantom MK1 7-DOF arm.", unitAmount: 9200000, currency: "usd", image: "/images/parts/phantom.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+  { sku: "PHANTOM-GRIPPER", name: "Phantom MK1 Gripper", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Genuine Phantom MK1 gripper.", unitAmount: 1900000, currency: "usd", image: "/images/parts/phantom.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem" },
+  { sku: "PHANTOM-CONTROLLER", name: "Phantom MK1 Controller", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Genuine Phantom MK1 controller.", unitAmount: 3800000, currency: "usd", image: "/images/parts/phantom.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+];
+
+const RAD_OEM: StorePart[] = [
+  { sku: "RAD-WHEEL", name: "RadCommercial Wheel Motor", platformId: "radcommercial", manufacturer: "RadCommercial", description: "Genuine RadCommercial wheel motor.", unitAmount: 165000, currency: "usd", image: "/images/parts/rad.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem" },
+  { sku: "RAD-BATTERY", name: "RadCommercial Battery Pack", platformId: "radcommercial", manufacturer: "RadCommercial", description: "Genuine RadCommercial battery pack.", unitAmount: 195000, currency: "usd", image: "/images/parts/rad.jpg", leadTime: "5–7 days", warranty: "12 months", tier: "oem" },
+  { sku: "RAD-SENSOR", name: "RadCommercial Sensor Array", platformId: "radcommercial", manufacturer: "RadCommercial", description: "Genuine RadCommercial sensor array.", unitAmount: 380000, currency: "usd", image: "/images/parts/rad.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem" },
+];
+
+const REBOT_OEM: StorePart[] = [
+  { sku: "REBOT-ARM", name: "Rebot DevArm 6-DOF Arm", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Genuine Rebot DevArm 6-DOF arm.", unitAmount: 6800000, currency: "usd", image: "/images/parts/rebot.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+  { sku: "REBOT-GRIPPER", name: "Rebot DevArm Gripper", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Genuine Rebot DevArm gripper.", unitAmount: 1400000, currency: "usd", image: "/images/parts/rebot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem" },
+  { sku: "REBOT-CONTROLLER", name: "Rebot DevArm Controller", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Genuine Rebot DevArm controller.", unitAmount: 2800000, currency: "usd", image: "/images/parts/rebot.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+];
+
+const ROBO1_OEM: StorePart[] = [
+  { sku: "ROBO1-ARM", name: "Robo-1 7-DOF Arm", platformId: "robo-1", manufacturer: "Robo", description: "Genuine Robo-1 7-DOF arm.", unitAmount: 8500000, currency: "usd", image: "/images/parts/robo1.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+  { sku: "ROBO1-GRIPPER", name: "Robo-1 Gripper", platformId: "robo-1", manufacturer: "Robo", description: "Genuine Robo-1 gripper.", unitAmount: 1700000, currency: "usd", image: "/images/parts/robo1.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem" },
+  { sku: "ROBO1-CONTROLLER", name: "Robo-1 Controller", platformId: "robo-1", manufacturer: "Robo", description: "Genuine Robo-1 controller.", unitAmount: 3200000, currency: "usd", image: "/images/parts/robo1.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem" },
+];
+
+const THOR_OEM: StorePart[] = [
+  { sku: "THOR-MODULE", name: "Jetson AGX Thor Module", platformId: "nvidia-jetson-agx-thor", manufacturer: "Nvidia", description: "Genuine Jetson AGX Thor module. 1000 TOPS AI.", unitAmount: 3500000, currency: "usd", image: "/images/parts/thor.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem" },
+  { sku: "THOR-CARRIER", name: "Jetson AGX Thor Carrier Board", platformId: "nvidia-jetson-agx-thor", manufacturer: "Nvidia", description: "Genuine Jetson AGX Thor carrier board.", unitAmount: 850000, currency: "usd", image: "/images/parts/thor.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem" },
+];
+
 export const STORE_PARTS: StorePart[] = [
   ...H1_OEM,
   ...G1_OEM,
@@ -254,6 +332,17 @@ export const STORE_PARTS: StorePart[] = [
   ...UWORLD_OEM,
   ...B2_OEM,
   ...MATRICE_OEM,
+  ...AIGEN_OEM,
+  ...BIRD_OEM,
+  ...AGRAS_T60_OEM,
+  ...R1_OEM,
+  ...UWORLD_LITE_OEM,
+  ...UWORLD_ULTRA_OEM,
+  ...PHANTOM_OEM,
+  ...RAD_OEM,
+  ...REBOT_OEM,
+  ...ROBO1_OEM,
+  ...THOR_OEM,
 ];
 
 export const STORE_BUNDLES: PartBundle[] = [];
@@ -307,6 +396,17 @@ export const PLATFORM_META: Record<string, { name: string; manufacturer: string 
   "uworld-u1-pro": { name: "U1 Pro", manufacturer: "UWorld" },
   "unitree-b2": { name: "Unitree B2", manufacturer: "Unitree Robotics" },
   "dji-matrice-350": { name: "Matrice 350", manufacturer: "DJI" },
+  "aigen-element-gen2": { name: "Aigen Element Gen2", manufacturer: "Aigen" },
+  "bird-three": { name: "Bird Three", manufacturer: "Bird Three" },
+  "dji-agras-t60": { name: "DJI Agras T60", manufacturer: "DJI" },
+  "unitree-r1": { name: "Unitree R1", manufacturer: "Unitree Robotics" },
+  "uworld-u1-lite": { name: "U1 Lite", manufacturer: "UWorld" },
+  "uworld-u1-ultra": { name: "U1 Ultra", manufacturer: "UWorld" },
+  "phantom-mk1": { name: "Phantom MK1", manufacturer: "Phantom" },
+  "radcommercial": { name: "RadCommercial", manufacturer: "RadCommercial" },
+  "rebot-devarm": { name: "Rebot DevArm", manufacturer: "Rebot" },
+  "robo-1": { name: "Robo-1", manufacturer: "Robo" },
+  "nvidia-jetson-agx-thor": { name: "Jetson AGX Thor", manufacturer: "Nvidia" },
 };
 
 export const PRICE_MATCH_GUARANTEE = {
@@ -314,3 +414,25 @@ export const PRICE_MATCH_GUARANTEE = {
   terms: "Find a lower price from a verified seller? We'll beat it by 10%.",
   excludes: ["AliExpress", "unverified marketplace sellers"],
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
