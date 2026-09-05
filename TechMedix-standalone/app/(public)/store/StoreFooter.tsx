@@ -14,6 +14,7 @@ const STORE_NAV = [
   { href: "/store?tier=bundle", label: "Bundles" },
   { href: "/store/partners", label: "Partners" },
   { href: "/store/track", label: "Track Order" },
+  { href: "/store/pricing", label: "Pricing" },
   { href: "/account", label: "My Account" },
 ];
 
