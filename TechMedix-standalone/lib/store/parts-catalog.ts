@@ -201,10 +201,10 @@ const INSPIRE_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const FIGURE02_OEM: StorePart[] = [
-  { sku: "FIG2-HAND", name: "Figure 02 Dexterous Hand", platformId: "figure-02", manufacturer: "Figure AI", description: "Genuine Figure 02 16-DOF dexterous hand.", unitAmount: 4500000, currency: "usd", stripePriceId: "price_FIG2_HAND", image: "/images/parts/figure02.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://figure.ai/products/figure-02" },
-  { sku: "FIG2-ARM-ACT", name: "Figure 02 Arm Actuator", platformId: "figure-02", manufacturer: "Figure AI", description: "Genuine Figure 02 7-DOF arm actuator module.", unitAmount: 850000, currency: "usd", stripePriceId: "price_FIG2_ARM_ACT", image: "/images/parts/figure02.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://figure.ai/products/figure-02" },
-  { sku: "FIG2-BATTERY", name: "Figure 02 Battery Pack", platformId: "figure-02", manufacturer: "Figure AI", description: "Genuine Figure 02 battery pack. ~5h runtime.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_FIG2_BATTERY", image: "/images/parts/figure02.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://figure.ai/products/figure-02" },
-  { sku: "FIG2-CONTROLLER", name: "Figure 02 Main Controller", platformId: "figure-02", manufacturer: "Figure AI", description: "Genuine Figure 02 main compute/motion controller.", unitAmount: 3200000, currency: "usd", stripePriceId: "price_FIG2_CONTROLLER", image: "/images/parts/figure02.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://figure.ai/products/figure-02" },
+  { sku: "FIG2-HAND", name: "Figure 02 Dexterous Hand", platformId: "figure-02", manufacturer: "Figure AI", description: "Figure 02 hand module. Dexterous manipulation.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_FIG2_HAND", image: "/images/parts/figure02.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://figure.ai/products/figure-02" },
+  { sku: "FIG2-ARM-ACT", name: "Figure 02 Arm Actuator", platformId: "figure-02", manufacturer: "Figure AI", description: "Figure 02 arm actuator module. 7-DOF.", unitAmount: 500000, currency: "usd", stripePriceId: "price_FIG2_ARM_ACT", image: "/images/parts/figure02.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://figure.ai/products/figure-02" },
+  { sku: "FIG2-BATTERY", name: "Figure 02 Battery Pack", platformId: "figure-02", manufacturer: "Figure AI", description: "Figure 02 battery pack. Hot-swap compatible.", unitAmount: 1100000, currency: "usd", stripePriceId: "price_FIG2_BATTERY", image: "/images/parts/figure02.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://figure.ai/products/figure-02" },
+  { sku: "FIG2-CONTROLLER", name: "Figure 02 Main Controller", platformId: "figure-02", manufacturer: "Figure AI", description: "Figure 02 main controller unit.", unitAmount: 2200000, currency: "usd", stripePriceId: "price_FIG2_CONTROLLER", image: "/images/parts/figure02.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://figure.ai/products" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -212,9 +212,9 @@ const FIGURE02_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const OPTIMUS_OEM: StorePart[] = [
-  { sku: "OPTIMUS-HAND", name: "Optimus Gen 3 Dexterous Hand", platformId: "optimus-gen3", manufacturer: "Tesla", description: "Genuine Optimus Gen 3 22-DOF dexterous hand.", unitAmount: 5200000, currency: "usd", stripePriceId: "price_OPTIMUS_HAND", image: "/images/parts/optimus.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.tesla.com/optimus" },
-  { sku: "OPTIMUS-ARM-ACT", name: "Optimus Gen 3 Arm Actuator", platformId: "optimus-gen3", manufacturer: "Tesla", description: "Genuine Optimus Gen 3 7-DOF arm actuator.", unitAmount: 950000, currency: "usd", stripePriceId: "price_OPTIMUS_ARM_ACT", image: "/images/parts/optimus.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.tesla.com/optimus" },
-  { sku: "OPTIMUS-BATTERY", name: "Optimus Gen 3 Battery Pack", platformId: "optimus-gen3", manufacturer: "Tesla", description: "Genuine Optimus Gen 3 battery pack. 2.3 kWh.", unitAmount: 2800000, currency: "usd", stripePriceId: "price_OPTIMUS_BATTERY", image: "/images/parts/optimus.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.tesla.com/optimus" },
+  { sku: "OPTIMUS-HAND", name: "Optimus Gen 3 Dexterous Hand", platformId: "optimus-gen3", manufacturer: "Tesla", description: "Optimus Gen 3 hand module. 22-DOF dexterous hand.", unitAmount: 3500000, currency: "usd", stripePriceId: "price_OPTIMUS_HAND", image: "/images/parts/optimus.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.tesla.com/optimus" },
+  { sku: "OPTIMUS-ARM-ACT", name: "Optimus Gen 3 Arm Actuator", platformId: "optimus-gen3", manufacturer: "Tesla", description: "Optimus Gen 3 7-DOF arm actuator module.", unitAmount: 750000, currency: "usd", stripePriceId: "price_OPTIMUS_ARM_ACT", image: "/images/parts/optimus.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.tesla.com/optimus" },
+  { sku: "OPTIMUS-BATTERY", name: "Optimus Gen 3 Battery Pack", platformId: "optimus-gen3", manufacturer: "Tesla", description: "Optimus Gen 3 battery pack. Hot-swap compatible.", unitAmount: 1200000, currency: "usd", stripePriceId: "price_OPTIMUS_BATTERY", image: "/images/parts/optimus.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.tesla.com/optimus" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -222,9 +222,9 @@ const OPTIMUS_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const APOLLO_OEM: StorePart[] = [
-  { sku: "APOLLO-HAND", name: "Apollo Dexterous Hand", platformId: "apollo", manufacturer: "Apptronik", description: "Genuine Apollo hand with 16 DOF.", unitAmount: 4200000, currency: "usd", stripePriceId: "price_APOLLO_HAND", image: "/images/parts/apollo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://apptronik.com/products/apollo" },
+  { sku: "APOLLO-HAND", name: "Apollo Dexterous Hand", platformId: "apollo", manufacturer: "Apptronik", description: "Apollo hand module. 16-DOF dexterous manipulation.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_APOLLO_HAND", image: "/images/parts/apollo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://apptronik.com/products/apollo" },
   { sku: "APOLLO-ARM-ACT", name: "Apollo Arm Actuator", platformId: "apollo", manufacturer: "Apptronik", description: "Genuine Apollo 7-DOF arm actuator module.", unitAmount: 820000, currency: "usd", stripePriceId: "price_APOLLO_ARM_ACT", image: "/images/parts/apollo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://apptronik.com/products/apollo" },
-  { sku: "APOLLO-BATTERY", name: "Apollo Battery Pack", platformId: "apollo", manufacturer: "Apptronik", description: "Genuine Apollo battery pack. Hot-swap compatible.", unitAmount: 2200000, currency: "usd", stripePriceId: "price_APOLLO_BATTERY", image: "/images/parts/apollo.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://apptronik.com/products/apollo" },
+  { sku: "APOLLO-BATTERY", name: "Apollo Battery Pack", platformId: "apollo", manufacturer: "Apptronik", description: "Apollo battery pack. Hot-swap compatible.", unitAmount: 1500000, currency: "usd", stripePriceId: "price_APOLLO_BATTERY", image: "/images/parts/apollo.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://apptronik.com/products/apollo" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -232,15 +232,15 @@ const APOLLO_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const NEO_OEM: StorePart[] = [
-  { sku: "NEO-HAND", name: "Neo Dexterous Hand", platformId: "neo", manufacturer: "1X", description: "Genuine Neo hand with 20 DOF.", unitAmount: 3800000, currency: "usd", stripePriceId: "price_NEO_HAND", image: "/images/parts/neo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
-  { sku: "NEO-ARM-ACT", name: "Neo Arm Actuator", platformId: "neo", manufacturer: "1X", description: "Genuine Neo 7-DOF arm actuator module.", unitAmount: 720000, currency: "usd", stripePriceId: "price_NEO_ARM_ACT", image: "/images/parts/neo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
-  { sku: "NEO-BATTERY", name: "Neo Battery Pack", platformId: "neo", manufacturer: "1X", description: "Genuine Neo battery pack. Hot-swap compatible.", unitAmount: 1900000, currency: "usd", stripePriceId: "price_NEO_BATTERY", image: "/images/parts/neo.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
+  { sku: "NEO-HAND", name: "Neo Dexterous Hand", platformId: "neo", manufacturer: "1X", description: "Neo hand module with tendon-driven actuation. 20 DOF.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_NEO_HAND", image: "/images/parts/neo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
+  { sku: "NEO-ARM-ACT", name: "Neo Arm Actuator", platformId: "neo", manufacturer: "1X", description: "Neo 7-DOF arm actuator module.", unitAmount: 420000, currency: "usd", stripePriceId: "price_NEO_ARM_ACT", image: "/images/parts/neo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
+  { sku: "NEO-BATTERY", name: "Neo Battery Pack", platformId: "neo", manufacturer: "1X", description: "Neo battery pack. Hot-swap compatible.", unitAmount: 1500000, currency: "usd", stripePriceId: "price_NEO_BATTERY", image: "/images/parts/neo.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
 ];
 
 const ASIMOV_OEM: StorePart[] = [
-  { sku: "ASIMOV-HAND", name: "Asimov Dexterous Hand", platformId: "asimov-1", manufacturer: "1X", description: "Genuine Asimov hand with 20 DOF.", unitAmount: 4200000, currency: "usd", stripePriceId: "price_ASIMOV_HAND", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
-  { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-1", manufacturer: "1X", description: "Genuine Asimov 7-DOF arm actuator module.", unitAmount: 820000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
-  { sku: "ASIMOV-BATTERY", name: "Asimov Battery Pack", platformId: "asimov-1", manufacturer: "1X", description: "Genuine Asimov battery pack. Hot-swap compatible.", unitAmount: 2200000, currency: "usd", stripePriceId: "price_ASIMOV_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
+  { sku: "ASIMOV-HAND", name: "Asimov Dexterous Hand", platformId: "asimov-1", manufacturer: "1X", description: "Asimov hand module with tendon-driven actuation. 20 DOF.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_ASIMOV_HAND", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
+  { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-1", manufacturer: "1X", description: "Asimov 7-DOF arm actuator module.", unitAmount: 420000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
+  { sku: "ASIMOV-BATTERY", name: "Asimov Battery Pack", platformId: "asimov-1", manufacturer: "1X", description: "Asimov battery pack. Hot-swap compatible.", unitAmount: 180000, currency: "usd", stripePriceId: "price_ASIMOV_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -287,13 +287,13 @@ const LIME_DIRECT: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const DIGIT_OEM: StorePart[] = [
-  { sku: "DIGIT-HAND", name: "Digit v5 Dexterous Hand", platformId: "digit-v5", manufacturer: "Agility Robotics", description: "Genuine Digit v5 hand with 16 DOF.", unitAmount: 3800000, currency: "usd", stripePriceId: "price_DIGIT_HAND", image: "/images/parts/digit.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
+  { sku: "DIGIT-HAND", name: "Digit v5 Dexterous Hand", platformId: "digit-v5", manufacturer: "Agility Robotics", description: "Genuine Digit v5 hand with 16 DOF.", unitAmount: 900000, currency: "usd", stripePriceId: "price_DIGIT_HAND", image: "/images/parts/digit.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
   { sku: "DIGIT-ARM-ACT", name: "Digit v5 Arm Actuator", platformId: "digit-v5", manufacturer: "Agility Robotics", description: "Genuine Digit v5 7-DOF arm actuator module.", unitAmount: 750000, currency: "usd", stripePriceId: "price_DIGIT_ARM_ACT", image: "/images/parts/digit.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
   { sku: "DIGIT-BATTERY", name: "Digit v5 Battery Pack", platformId: "digit-v5", manufacturer: "Agility Robotics", description: "Genuine Digit v5 battery pack. Hot-swap compatible.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_DIGIT_BATTERY", image: "/images/parts/digit.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
 ];
 
 const AGILITY_OEM: StorePart[] = [
-  { sku: "AGILITY-HAND", name: "Digit Dexterous Hand", platformId: "agility-digit", manufacturer: "Agility Robotics", description: "Genuine Digit hand with 16 DOF.", unitAmount: 3800000, currency: "usd", stripePriceId: "price_AGILITY_HAND", image: "/images/parts/agility_digit.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
+  { sku: "AGILITY-HAND", name: "Digit Dexterous Hand", platformId: "agility-digit", manufacturer: "Agility Robotics", description: "Genuine Digit hand with 16 DOF.", unitAmount: 900000, currency: "usd", stripePriceId: "price_AGILITY_HAND", image: "/images/parts/agility_digit.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
   { sku: "AGILITY-ARM-ACT", name: "Digit Arm Actuator", platformId: "agility-digit", manufacturer: "Agility Robotics", description: "Genuine Digit 7-DOF arm actuator module.", unitAmount: 750000, currency: "usd", stripePriceId: "price_AGILITY_ARM_ACT", image: "/images/parts/agility_digit.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
   { sku: "AGILITY-BATTERY", name: "Digit Battery Pack", platformId: "agility-digit", manufacturer: "Agility Robotics", description: "Genuine Digit battery pack. Hot-swap compatible.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_AGILITY_BATTERY", image: "/images/parts/agility_digit.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
 ];
@@ -319,9 +319,9 @@ const MATRICE_DIRECT: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const AIGEN_OEM: StorePart[] = [
-  { sku: "AIGEN-ARM", name: "Aigen Element Gen2 Arm", platformId: "aigen-element-gen2", manufacturer: "Aigen", description: "Genuine Aigen Element Gen2 7-DOF arm.", unitAmount: 7800000, currency: "usd", stripePriceId: "price_AIGEN_ARM", image: "/images/parts/aigen.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://aigen.com/products/element-gen2" },
+  { sku: "AIGEN-ARM", name: "Aigen Element Gen2 Arm", platformId: "aigen-element-gen2", manufacturer: "Aigen", description: "Aigen Element Gen2 7-DOF arm.", unitAmount: 3500000, currency: "usd", stripePriceId: "price_AIGEN_ARM", image: "/images/parts/aigen.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://aigen.com/products/element-gen2" },
   { sku: "AIGEN-GRIPPER", name: "Aigen Element Gen2 Gripper", platformId: "aigen-element-gen2", manufacturer: "Aigen", description: "Genuine Aigen Element Gen2 gripper.", unitAmount: 1600000, currency: "usd", stripePriceId: "price_AIGEN_GRIPPER", image: "/images/parts/aigen.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://aigen.com/products/element-gen2" },
-  { sku: "AIGEN-CONTROLLER", name: "Aigen Element Gen2 Controller", platformId: "aigen-element-gen2", manufacturer: "Aigen", description: "Genuine Aigen Element Gen2 controller.", unitAmount: 3200000, currency: "usd", stripePriceId: "price_AIGEN_CONTROLLER", image: "/images/parts/aigen.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://aigen.com/products/element-gen2" },
+  { sku: "AIGEN-CONTROLLER", name: "Aigen Element Gen2 Controller", platformId: "aigen-element-gen2", manufacturer: "Aigen", description: "Aigen Element Gen2 controller.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_AIGEN_CONTROLLER", image: "/images/parts/aigen.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://aigen.com/products/element-gen2" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -339,9 +339,9 @@ const BIRD_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const PHANTOM_OEM: StorePart[] = [
-  { sku: "PHANTOM-ARM", name: "Phantom MK1 Arm", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Genuine Phantom MK1 7-DOF arm.", unitAmount: 9200000, currency: "usd", stripePriceId: "price_PHANTOM_ARM", image: "/images/parts/phantom.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://phantom.ai/products/mk1" },
-  { sku: "PHANTOM-GRIPPER", name: "Phantom MK1 Gripper", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Genuine Phantom MK1 gripper.", unitAmount: 1900000, currency: "usd", stripePriceId: "price_PHANTOM_GRIPPER", image: "/images/parts/phantom.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://phantom.ai/products/mk1" },
-  { sku: "PHANTOM-CONTROLLER", name: "Phantom MK1 Controller", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Genuine Phantom MK1 controller.", unitAmount: 3800000, currency: "usd", stripePriceId: "price_PHANTOM_CONTROLLER", image: "/images/parts/phantom.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://phantom.ai/products/mk1" },
+  { sku: "PHANTOM-ARM", name: "Phantom MK1 Arm", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Genuine Phantom MK1 7-DOF arm.", unitAmount: 4500000, currency: "usd", stripePriceId: "price_PHANTOM_ARM", image: "/images/parts/phantom.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://phantom.ai/products/mk1" },
+  { sku: "PHANTOM-GRIPPER", name: "Phantom MK1 Gripper", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Phantom MK1 gripper.", unitAmount: 1200000, currency: "usd", stripePriceId: "price_PHANTOM_GRIPPER", image: "/images/parts/phantom.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://phantom.ai/products/mk1" },
+  { sku: "PHANTOM-CONTROLLER", name: "Phantom MK1 Controller", platformId: "phantom-mk1", manufacturer: "Phantom", description: "Phantom MK1 controller.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_PHANTOM_CONTROLLER", image: "/images/parts/phantom.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://phantom.ai/products/mk1" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -359,9 +359,9 @@ const RAD_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const REBOT_OEM: StorePart[] = [
-  { sku: "REBOT-ARM", name: "Rebot DevArm 6-DOF Arm", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Genuine Rebot DevArm 6-DOF arm.", unitAmount: 6800000, currency: "usd", stripePriceId: "price_REBOT_ARM", image: "/images/parts/rebot.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://rebot.ai/products/devarm" },
-  { sku: "REBOT-GRIPPER", name: "Rebot DevArm Gripper", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Genuine Rebot DevArm gripper.", unitAmount: 1400000, currency: "usd", stripePriceId: "price_REBOT_GRIPPER", image: "/images/parts/rebot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://rebot.ai/products/devarm" },
-  { sku: "REBOT-CONTROLLER", name: "Rebot DevArm Controller", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Genuine Rebot DevArm controller.", unitAmount: 2800000, currency: "usd", stripePriceId: "price_REBOT_CONTROLLER", image: "/images/parts/rebot.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://rebot.ai/products/devarm" },
+  { sku: "REBOT-ARM", name: "Rebot DevArm 6-DOF Arm", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Rebot DevArm 6-DOF arm.", unitAmount: 3000000, currency: "usd", stripePriceId: "price_REBOT_ARM", image: "/images/parts/rebot.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://rebot.ai/products/devarm" },
+  { sku: "REBOT-GRIPPER", name: "Rebot DevArm Gripper", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Rebot DevArm gripper.", unitAmount: 900000, currency: "usd", stripePriceId: "price_REBOT_GRIPPER", image: "/images/parts/rebot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://rebot.ai/products/devarm" },
+  { sku: "REBOT-CONTROLLER", name: "Rebot DevArm Controller", platformId: "rebot-devarm", manufacturer: "Rebot", description: "Rebot DevArm controller.", unitAmount: 900000, currency: "usd", stripePriceId: "price_REBOT_CONTROLLER", image: "/images/parts/rebot.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://rebot.ai/products/devarm" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -369,9 +369,9 @@ const REBOT_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const ROBO1_OEM: StorePart[] = [
-  { sku: "ROBO1-ARM", name: "Robo-1 7-DOF Arm", platformId: "robo-1", manufacturer: "Robo", description: "Genuine Robo-1 7-DOF arm.", unitAmount: 8500000, currency: "usd", stripePriceId: "price_ROBO1_ARM", image: "/images/parts/robo1.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://robo.ai/products/robo-1" },
-  { sku: "ROBO1-GRIPPER", name: "Robo-1 Gripper", platformId: "robo-1", manufacturer: "Robo", description: "Genuine Robo-1 gripper.", unitAmount: 1700000, currency: "usd", stripePriceId: "price_ROBO1_GRIPPER", image: "/images/parts/robo1.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://robo.ai/products/robo-1" },
-  { sku: "ROBO1-CONTROLLER", name: "Robo-1 Controller", platformId: "robo-1", manufacturer: "Robo", description: "Genuine Robo-1 controller.", unitAmount: 3200000, currency: "usd", stripePriceId: "price_ROBO1_CONTROLLER", image: "/images/parts/robo1.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://robo.ai/products/robo-1" },
+  { sku: "ROBO1-ARM", name: "Robo-1 7-DOF Arm", platformId: "robo-1", manufacturer: "Robo", description: "Robo-1 7-DOF arm.", unitAmount: 4200000, currency: "usd", stripePriceId: "price_ROBO1_ARM", image: "/images/parts/robo1.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://robo.ai/products/robo-1" },
+  { sku: "ROBO1-GRIPPER", name: "Robo-1 Gripper", platformId: "robo-1", manufacturer: "Robo", description: "Robo-1 parallel-jaw gripper.", unitAmount: 1200000, currency: "usd", stripePriceId: "price_ROBO1_GRIPPER", image: "/images/parts/robo1.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://robo.ai/products/robo-1" },
+  { sku: "ROBO1-CONTROLLER", name: "Robo-1 Controller", platformId: "robo-1", manufacturer: "Robo", description: "Robo-1 controller.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_ROBO1_CONTROLLER", image: "/images/parts/robo1.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://robo.ai/products/robo-1" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -394,21 +394,21 @@ const SERVE_DIRECT: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const UWORLD_OEM: StorePart[] = [
-  { sku: "UWORLD-HAND", name: "U1 Pro Dexterous Hand", platformId: "uworld-u1-pro", manufacturer: "UWorld", description: "Genuine U1 Pro hand with 16 DOF.", unitAmount: 3200000, currency: "usd", stripePriceId: "price_UWORLD_HAND", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-pro" },
-  { sku: "UWORLD-ARM-ACT", name: "U1 Pro Arm Actuator", platformId: "uworld-u1-pro", manufacturer: "UWorld", description: "Genuine U1 Pro 7-DOF arm actuator module.", unitAmount: 680000, currency: "usd", stripePriceId: "price_UWORLD_ARM_ACT", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-pro" },
-  { sku: "UWORLD-BATTERY", name: "U1 Pro Battery Pack", platformId: "uworld-u1-pro", manufacturer: "UWorld", description: "Genuine U1 Pro battery pack. Hot-swap compatible.", unitAmount: 1600000, currency: "usd", stripePriceId: "price_UWORLD_BATTERY", image: "/images/parts/uworld.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-pro" },
+  { sku: "UWORLD-HAND", name: "U1 Pro Dexterous Hand", platformId: "uworld-u1-pro", manufacturer: "UWorld", description: "U1 Pro hand module. 16-DOF.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_UWORLD_HAND", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-pro" },
+  { sku: "UWORLD-ARM-ACT", name: "U1 Pro Arm Actuator", platformId: "uworld-u1-pro", manufacturer: "UWorld", description: "U1 Pro arm actuator. 7-DOF.", unitAmount: 500000, currency: "usd", stripePriceId: "price_UWORLD_ARM_ACT", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-pro" },
+  { sku: "UWORLD-BATTERY", name: "U1 Pro Battery Pack", platformId: "uworld-u1-pro", manufacturer: "UWorld", description: "U1 Pro battery pack. Hot-swap.", unitAmount: 1200000, currency: "usd", stripePriceId: "price_UWORLD_BATTERY", image: "/images/parts/uworld.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-pro" },
 ];
 
 const UWORLD_LITE_OEM: StorePart[] = [
-  { sku: "UWORLD-LITE-HAND", name: "U1 Lite Dexterous Hand", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "Genuine U1 Lite hand with 16 DOF.", unitAmount: 2800000, currency: "usd", stripePriceId: "price_UWORLD_LITE_HAND", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-lite" },
-  { sku: "UWORLD-LITE-ARM-ACT", name: "U1 Lite Arm Actuator", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "Genuine U1 Lite 7-DOF arm actuator module.", unitAmount: 580000, currency: "usd", stripePriceId: "price_UWORLD_LITE_ARM_ACT", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-lite" },
-  { sku: "UWORLD-LITE-BATTERY", name: "U1 Lite Battery Pack", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "Genuine U1 Lite battery pack.", unitAmount: 1400000, currency: "usd", stripePriceId: "price_UWORLD_LITE_BATTERY", image: "/images/parts/uworld.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-lite" },
+  { sku: "UWORLD-LITE-HAND", name: "U1 Lite Dexterous Hand", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "U1 Lite hand module. 16-DOF.", unitAmount: 2000000, currency: "usd", stripePriceId: "price_UWORLD_LITE_HAND", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-lite" },
+  { sku: "UWORLD-LITE-ARM-ACT", name: "U1 Lite Arm Actuator", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "U1 Lite arm actuator. 7-DOF.", unitAmount: 400000, currency: "usd", stripePriceId: "price_UWORLD_LITE_ARM_ACT", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-lite" },
+  { sku: "UWORLD-LITE-BATTERY", name: "U1 Lite Battery Pack", platformId: "uworld-u1-lite", manufacturer: "UWorld", description: "U1 Lite battery pack.", unitAmount: 1000000, currency: "usd", stripePriceId: "price_UWORLD_LITE_BATTERY", image: "/images/parts/uworld.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-lite" },
 ];
 
 const UWORLD_ULTRA_OEM: StorePart[] = [
-  { sku: "UWORLD-ULTRA-HAND", name: "U1 Ultra Dexterous Hand", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "Genuine U1 Ultra hand with 20 DOF.", unitAmount: 4200000, currency: "usd", stripePriceId: "price_UWORLD_ULTRA_HAND", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-ultra" },
-  { sku: "UWORLD-ULTRA-ARM-ACT", name: "U1 Ultra Arm Actuator", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "Genuine U1 Ultra 7-DOF arm actuator module.", unitAmount: 850000, currency: "usd", stripePriceId: "price_UWORLD_ULTRA_ARM_ACT", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-ultra" },
-  { sku: "UWORLD-ULTRA-BATTERY", name: "U1 Ultra Battery Pack", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "Genuine U1 Ultra battery pack.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_UWORLD_ULTRA_BATTERY", image: "/images/parts/uworld.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-ultra" },
+  { sku: "UWORLD-ULTRA-HAND", name: "U1 Ultra Dexterous Hand", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "U1 Ultra hand module. 20-DOF.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_UWORLD_ULTRA_HAND", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-ultra" },
+  { sku: "UWORLD-ULTRA-ARM-ACT", name: "U1 Ultra Arm Actuator", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "U1 Ultra arm actuator. 7-DOF.", unitAmount: 500000, currency: "usd", stripePriceId: "price_UWORLD_ULTRA_ARM_ACT", image: "/images/parts/uworld.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-ultra" },
+  { sku: "UWORLD-ULTRA-BATTERY", name: "U1 Ultra Battery Pack", platformId: "uworld-u1-ultra", manufacturer: "UWorld", description: "U1 Ultra battery pack.", unitAmount: 1200000, currency: "usd", stripePriceId: "price_UWORLD_ULTRA_BATTERY", image: "/images/parts/uworld.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://uworld.ai/products/u1-ultra" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -435,9 +435,9 @@ const THOR_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const UR5E_OEM: StorePart[] = [
-  { sku: "UR5E-ARM", name: "UR5e 6-DOF Arm", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "Genuine UR5e 6-DOF collaborative arm. 5kg payload.", unitAmount: 18500000, currency: "usd", stripePriceId: "price_UR5E_ARM", image: "/images/parts/ur5e.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
-  { sku: "UR5E-GRIPPER", name: "UR5e Gripper", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "Genuine UR5e gripper. Parallel-jaw, force-sensitive.", unitAmount: 2800000, currency: "usd", stripePriceId: "price_UR5E_GRIPPER", image: "/images/parts/ur5e.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
-  { sku: "UR5E-CONTROLLER", name: "UR5e Controller", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "Genuine UR5e controller. PolyScope interface.", unitAmount: 6500000, currency: "usd", stripePriceId: "price_UR5E_CONTROLLER", image: "/images/parts/ur5e.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
+  { sku: "UR5E-ARM", name: "UR5e 6-DOF Arm", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "UR5e collaborative arm. 5kg payload, 850mm reach.", unitAmount: 900000, currency: "usd", stripePriceId: "price_UR5E_ARM", image: "/images/parts/ur5e.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
+  { sku: "UR5E-GRIPPER", name: "UR5e Gripper", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "UR5e parallel-jaw gripper. Force-sensitive.", unitAmount: 900000, currency: "usd", stripePriceId: "price_UR5E_GRIPPER", image: "/images/parts/ur5e.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
+  { sku: "UR5E-CONTROLLER", name: "UR5e Controller", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "UR5e PolyScope controller.", unitAmount: 2200000, currency: "usd", stripePriceId: "price_UR5E_CONTROLLER", image: "/images/parts/ur5e.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
 ];
 
 const UR5E_DIRECT: StorePart[] = [
@@ -449,9 +449,9 @@ const UR5E_DIRECT: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const UFACTORY_OEM: StorePart[] = [
-  { sku: "UFACTORY-ARM", name: "xArm6 6-DOF Arm", platformId: "ufactory-xarm6", manufacturer: "UFactory", description: "Genuine xArm6 6-DOF arm. 5kg payload, 700mm reach.", unitAmount: 8500000, currency: "usd", stripePriceId: "price_UFACTORY_ARM", image: "/images/parts/ufactory.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.ufactory.cc/products/xarm-6" },
+  { sku: "UFACTORY-ARM", name: "xArm6 6-DOF Arm", platformId: "ufactory-xarm6", manufacturer: "UFactory", description: "xArm6 6-DOF arm. 5kg payload, 700mm reach.", unitAmount: 1500000, currency: "usd", stripePriceId: "price_UFACTORY_ARM", image: "/images/parts/ufactory.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.ufactory.cc/products/xarm-6" },
   { sku: "UFACTORY-GRIPPER", name: "xArm6 Gripper", platformId: "ufactory-xarm6", manufacturer: "UFactory", description: "Genuine xArm6 gripper. Parallel-jaw, force-sensitive.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_UFACTORY_GRIPPER", image: "/images/parts/ufactory.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.ufactory.cc/products/xarm-6" },
-  { sku: "UFACTORY-CONTROLLER", name: "xArm6 Controller", platformId: "ufactory-xarm6", manufacturer: "UFactory", description: "Genuine xArm6 controller. ROS-compatible.", unitAmount: 3200000, currency: "usd", stripePriceId: "price_UFACTORY_CONTROLLER", image: "/images/parts/ufactory.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.ufactory.cc/products/xarm-6" },
+  { sku: "UFACTORY-CONTROLLER", name: "xArm6 Controller", platformId: "ufactory-xarm6", manufacturer: "UFactory", description: "xArm6 controller. ROS-compatible.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_UFACTORY_CONTROLLER", image: "/images/parts/ufactory.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.ufactory.cc/products/xarm-6" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -459,9 +459,9 @@ const UFACTORY_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const KINOVA_OEM: StorePart[] = [
-  { sku: "KINOVA-ARM", name: "Kinova Gen3 7-DOF Arm", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Genuine Kinova Gen3 7-DOF lightweight arm.", unitAmount: 9800000, currency: "usd", stripePriceId: "price_KINOVA_ARM", image: "/images/parts/kinova.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
-  { sku: "KINOVA-GRIPPER", name: "Kinova Gen3 Gripper", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Genuine Kinova Gen3 3-finger gripper.", unitAmount: 2200000, currency: "usd", stripePriceId: "price_KINOVA_GRIPPER", image: "/images/parts/kinova.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
-  { sku: "KINOVA-CONTROLLER", name: "Kinova Gen3 Controller", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Genuine Kinova Gen3 controller. ROS-compatible.", unitAmount: 3800000, currency: "usd", stripePriceId: "price_KINOVA_CONTROLLER", image: "/images/parts/kinova.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
+  { sku: "KINOVA-ARM", name: "Kinova Gen3 7-DOF Arm", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Kinova Gen3 lightweight 7-DOF arm.", unitAmount: 900000, currency: "usd", stripePriceId: "price_KINOVA_ARM", image: "/images/parts/kinova.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
+  { sku: "KINOVA-GRIPPER", name: "Kinova Gen3 Gripper", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Kinova Gen3 3-finger adaptive gripper.", unitAmount: 2200000, currency: "usd", stripePriceId: "price_KINOVA_GRIPPER", image: "/images/parts/kinova.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
+  { sku: "KINOVA-CONTROLLER", name: "Kinova Gen3 Controller", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Kinova Gen3 controller. ROS-compatible.", unitAmount: 900000, currency: "usd", stripePriceId: "price_KINOVA_CONTROLLER", image: "/images/parts/kinova.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -469,9 +469,9 @@ const KINOVA_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const FRANKA_OEM: StorePart[] = [
-  { sku: "FRANKA-ARM", name: "Franka Panda 7-DOF Arm", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Genuine Franka Panda 7-DOF torque-controlled arm.", unitAmount: 12500000, currency: "usd", stripePriceId: "price_FRANKA_ARM", image: "/images/parts/franka.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products" },
-  { sku: "FRANKA-GRIPPER", name: "Franka Panda Gripper", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Genuine Franka Panda gripper. Parallel-jaw, force-sensitive.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_FRANKA_GRIPPER", image: "/images/parts/franka.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products" },
-  { sku: "FRANKA-CONTROLLER", name: "Franka Panda Controller", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Genuine Franka Panda controller. Real-time torque control at 1kHz.", unitAmount: 4500000, currency: "usd", stripePriceId: "price_FRANKA_CONTROLLER", image: "/images/parts/franka.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products" },
+  { sku: "FRANKA-ARM", name: "Franka Panda 7-DOF Arm", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Franka Panda 7-DOF collaborative arm. 3kg payload.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_FRANKA_ARM", image: "/images/parts/franka.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products/panda" },
+  { sku: "FRANKA-CONTROLLER", name: "Franka Panda Controller", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Franka Panda desktop controller.", unitAmount: 900000, currency: "usd", stripePriceId: "price_FRANKA_CONTROLLER", image: "/images/parts/franka.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products/panda" },
+  { sku: "FRANKA-GRIPPER", name: "Franka Panda Gripper", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Franka Panda parallel-jaw force-sensitive gripper.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_FRANKA_GRIPPER", image: "/images/parts/franka.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products/panda" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -487,6 +487,220 @@ const PROTEUS_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 // Aggregation
 // ─────────────────────────────────────────────────────────────────────────────
+
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Unitree B2 — Direct Compatible
+// ─────────────────────────────────────────────────────────────────────────────
+
+const B2_DIRECT: StorePart[] = [
+  { sku: "B2-LEG-ACT-D", name: "B2 Leg Actuator (Direct Compatible)", platformId: "unitree-b2", manufacturer: "BlackCat Robotics", description: "Tested-compatible B2 leg actuator. High-torque for quadruped locomotion, 60% below OEM.", unitAmount: 58000, currency: "usd", image: "/images/parts/unitree_b2.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/unitree-b2-leg-actuator-compatible" },
+  { sku: "B2-BATTERY-D", name: "B2 Battery Pack (Direct Compatible)", platformId: "unitree-b2", manufacturer: "BlackCat Robotics", description: "Compatible B2 high-capacity battery pack. ~4h runtime, hot-swap capable. 65% below OEM.", unitAmount: 64750, currency: "usd", image: "/images/parts/unitree_b2.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/unitree-b2-battery-compatible" },
+  { sku: "B2-CONTROLLER-D", name: "B2 Main Controller (Direct Compatible)", platformId: "unitree-b2", manufacturer: "BlackCat Robotics", description: "Compatible B2 quadruped gait controller. Verified communication protocol. 60% below OEM.", unitAmount: 112000, currency: "usd", image: "/images/parts/unitree_b2.jpg", leadTime: "7–10 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/unitree-b2-controller-compatible" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Unitree B2 — Bundle
+// ─────────────────────────────────────────────────────────────────────────────
+
+const B2_BUNDLES: PartBundle[] = [
+  // B2 Essentials: leg + battery + controller
+  // OEM total: 145000 + 185000 + 280000 = 610000; 18% = 498200, savings = 111800
+  {
+    sku: "B2-ESSENTIALS",
+    name: "B2 Essentials Kit",
+    platformId: "unitree-b2",
+    manufacturer: "BlackCat Robotics",
+    description: "Most commonly replaced B2 parts: leg actuator, battery pack, and main controller.",
+    tier: "bundle",
+    unitAmount: 498200,
+    currency: "usd",
+    savingsPct: 18,
+    savingsDollars: 111800,
+    parts: ["B2-LEG-ACT", "B2-BATTERY", "B2-CONTROLLER"],
+    image: "/images/parts/unitree_b2.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Unitree R1 — Direct Compatible
+// ─────────────────────────────────────────────────────────────────────────────
+
+const R1_DIRECT: StorePart[] = [
+  { sku: "R1-LEG-ACT-D", name: "R1 Leg Actuator (Direct Compatible)", platformId: "unitree-r1", manufacturer: "BlackCat Robotics", description: "Tested-compatible R1 leg actuator. 60% below OEM.", unitAmount: 31200, currency: "usd", image: "/images/parts/unitree_r1.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/unitree-r1-leg-actuator-compatible" },
+  { sku: "R1-BATTERY-D", name: "R1 Battery Pack (Direct Compatible)", platformId: "unitree-r1", manufacturer: "BlackCat Robotics", description: "Compatible R1 battery pack. Quick-release smart battery, hot-swap capable. 60% below OEM.", unitAmount: 38000, currency: "usd", image: "/images/parts/unitree_r1.jpg", leadTime: "3–5 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/unitree-r1-battery-compatible" },
+  { sku: "R1-CONTROLLER-D", name: "R1 Main Controller (Direct Compatible)", platformId: "unitree-r1", manufacturer: "BlackCat Robotics", description: "Compatible R1 main controller with Bluetooth and data transmission. 60% below OEM.", unitAmount: 29600, currency: "usd", image: "/images/parts/unitree_r1.jpg", leadTime: "7–10 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/unitree-r1-controller-compatible" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Unitree R1 — Bundle
+// ─────────────────────────────────────────────────────────────────────────────
+
+const R1_BUNDLES: PartBundle[] = [
+  // R1 Essentials: leg + battery + controller
+  // OEM total: 78000 + 95000 + 185000 = 358000; 18% = 293560, savings = 64440
+  {
+    sku: "R1-ESSENTIALS",
+    name: "R1 Essentials Kit",
+    platformId: "unitree-r1",
+    manufacturer: "BlackCat Robotics",
+    description: "All R1 essentials: leg actuator, battery, and main controller.",
+    tier: "bundle",
+    unitAmount: 293560,
+    currency: "usd",
+    savingsPct: 18,
+    savingsDollars: 64440,
+    parts: ["R1-LEG-ACT", "R1-BATTERY", "R1-CONTROLLER"],
+    image: "/images/parts/unitree_r1.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DJI Agras T50 — Direct Compatible
+// ─────────────────────────────────────────────────────────────────────────────
+
+const AGRAS_DIRECT: StorePart[] = [
+  { sku: "AGRAS-PROP-D", name: "Agras T50 Propeller Set (Direct Compatible)", platformId: "dji-agras-t50", manufacturer: "BlackCat Robotics", description: "Compatible propeller set. 60% below OEM.", unitAmount: 7200, currency: "usd", image: "/images/parts/dji_agras_t50.jpg", leadTime: "3–5 days", warranty: "30 days", tier: "direct", sourceUrl: "https://nuwayag.com/products/agras-t50-prop-compatible" },
+  { sku: "AGRAS-MOTOR-D", name: "Agras T50 Brushless Motor (Direct Compatible)", platformId: "dji-agras-t50", manufacturer: "BlackCat Robotics", description: "Compatible centrifugal spray motor. Tested flow rate and chemical resistance. 60% below OEM.", unitAmount: 10760, currency: "usd", image: "/images/parts/dji_agras_t50.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://nuwayag.com/products/impeller-pump-motor" },
+  { sku: "AGRAS-PUMP-D", name: "Agras T50 Spray Pump (Direct Compatible)", platformId: "dji-agras-t50", manufacturer: "BlackCat Robotics", description: "Compatible spray pump assembly. Verified spray pattern. 60% below OEM.", unitAmount: 16800, currency: "usd", image: "/images/parts/dji_agras_t50.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://droneoemparts.com/t50-pump-compatible" },
+  { sku: "AGRAS-BATTERY-D", name: "Agras T50 Intelligent Battery (Direct Compatible)", platformId: "dji-agras-t50", manufacturer: "BlackCat Robotics", description: "Compatible intelligent battery. Optimized charge cycles, verified capacity. 65% below OEM.", unitAmount: 133000, currency: "usd", image: "/images/parts/dji_agras_t50.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/agras-t50-battery-compatible" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DJI Agras T50 — Bundle
+// ─────────────────────────────────────────────────────────────────────────────
+
+const AGRAS_BUNDLES: PartBundle[] = [
+  // T50 Maintenance Kit: prop + motor + pump + battery
+  // OEM total: 18000 + 26900 + 42000 + 380000 = 466900; 18% = 382858, savings = 84042
+  {
+    sku: "T50-MAINT-KIT",
+    name: "Agras T50 Maintenance Kit",
+    platformId: "dji-agras-t50",
+    manufacturer: "BlackCat Robotics",
+    description: "Complete T50 service kit: propellers, brushless motor, spray pump, and intelligent battery.",
+    tier: "bundle",
+    unitAmount: 382858,
+    currency: "usd",
+    savingsPct: 18,
+    savingsDollars: 84042,
+    parts: ["AGRAS-PROP", "AGRAS-MOTOR", "AGRAS-PUMP", "AGRAS-BATTERY"],
+    image: "/images/parts/dji_agras_t50.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Skydio X10 — Direct Compatible
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SKYDIO_DIRECT: StorePart[] = [
+  { sku: "SKYDIO-PROP-D", name: "Skydio X10 Propeller Set (Direct Compatible)", platformId: "skydio-x10", manufacturer: "BlackCat Robotics", description: "Compatible propeller set. CW and CCW, tested flight stability. 60% below OEM.", unitAmount: 18000, currency: "usd", image: "/images/parts/skydio.jpg", leadTime: "3–5 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/skydio-x10-prop-compatible" },
+  { sku: "SKYDIO-MOTOR-D", name: "Skydio X10 Brushless Motor (Direct Compatible)", platformId: "skydio-x10", manufacturer: "BlackCat Robotics", description: "Compatible brushless motor. Balanced thrust output, verified RPM curve. 60% below OEM.", unitAmount: 152000, currency: "usd", image: "/images/parts/skydio.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/skydio-x10-motor-compatible" },
+  { sku: "SKYDIO-BATTERY-D", name: "Skydio X10 Battery Pack (Direct Compatible)", platformId: "skydio-x10", manufacturer: "BlackCat Robotics", description: "Compatible intelligent battery. Verified flight time, hot-swap capable. 60% below OEM.", unitAmount: 208000, currency: "usd", image: "/images/parts/skydio.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/skydio-x10-battery-compatible" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Skydio X10 — Bundle
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SKYDIO_BUNDLES: PartBundle[] = [
+  // Skydio Essentials: prop + motor + battery
+  // OEM total: 45000 + 380000 + 520000 = 945000; 18% = 772900, savings = 172100
+  {
+    sku: "SKYDIO-ESSENTIALS",
+    name: "Skydio X10 Essentials Kit",
+    platformId: "skydio-x10",
+    manufacturer: "BlackCat Robotics",
+    description: "X10 essentials: propeller set, brushless motor, and intelligent battery.",
+    tier: "bundle",
+    unitAmount: 772900,
+    currency: "usd",
+    savingsPct: 18,
+    savingsDollars: 172100,
+    parts: ["SKYDIO-PROP", "SKYDIO-MOTOR", "SKYDIO-BATTERY"],
+    image: "/images/parts/skydio.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Zipline P2 — Direct Compatible
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ZIPLINE_DIRECT: StorePart[] = [
+  { sku: "ZIPLINE-PROP-D", name: "Zipline P2 Propeller Set (Direct Compatible)", platformId: "zipline-p2", manufacturer: "BlackCat Robotics", description: "Compatible propeller set. Tested aerodynamic performance. 60% below OEM.", unitAmount: 34000, currency: "usd", image: "/images/parts/zipline.jpg", leadTime: "3–5 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/zipline-p2-prop-compatible" },
+  { sku: "ZIPLINE-BATTERY-D", name: "Zipline P2 Battery Pack (Direct Compatible)", platformId: "zipline-p2", manufacturer: "BlackCat Robotics", description: "Compatible battery pack. Hot-swap capable, verified capacity. 65% below OEM.", unitAmount: 157500, currency: "usd", image: "/images/parts/zipline.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/zipline-p2-battery-compatible" },
+  { sku: "ZIPLINE-CONTROLLER-D", name: "Zipline P2 Flight Controller (Direct Compatible)", platformId: "zipline-p2", manufacturer: "BlackCat Robotics", description: "Compatible flight controller. Verified navigation and telemetry. 60% below OEM.", unitAmount: 480000, currency: "usd", image: "/images/parts/zipline.jpg", leadTime: "7–10 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/zipline-p2-controller-compatible" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Zipline P2 — Bundle
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ZIPLINE_BUNDLES: PartBundle[] = [
+  // Zipline Essentials: prop + battery + controller
+  // OEM total: 85000 + 450000 + 1200000 = 1735000; 18% = 1422700, savings = 312300
+  {
+    sku: "ZIPLINE-ESSENTIALS",
+    name: "Zipline P2 Essentials Kit",
+    platformId: "zipline-p2",
+    manufacturer: "BlackCat Robotics",
+    description: "P2 essentials: propeller set, battery pack, and flight controller.",
+    tier: "bundle",
+    unitAmount: 1422700,
+    currency: "usd",
+    savingsPct: 18,
+    savingsDollars: 312300,
+    parts: ["ZIPLINE-PROP", "ZIPLINE-BATTERY", "ZIPLINE-CONTROLLER"],
+    image: "/images/parts/zipline.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Bird Three — Direct Compatible
+// ─────────────────────────────────────────────────────────────────────────────
+
+const BIRD_DIRECT: StorePart[] = [
+  { sku: "BIRD-LEG-ACT-D", name: "Bird Three Leg Actuator (Direct Compatible)", platformId: "bird-three", manufacturer: "BlackCat Robotics", description: "Compatible leg actuator. Verified steering and drive performance. 60% below OEM.", unitAmount: 38000, currency: "usd", image: "/images/parts/bird.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/bird-three-leg-actuator-compatible" },
+  { sku: "BIRD-BATTERY-D", name: "Bird Three Battery Pack (Direct Compatible)", platformId: "bird-three", manufacturer: "BlackCat Robotics", description: "Compatible battery pack. Verified range and charge cycles. 60% below OEM.", unitAmount: 50000, currency: "usd", image: "/images/parts/bird.jpg", leadTime: "3–5 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/bird-three-battery-compatible" },
+  { sku: "BIRD-CONTROLLER-D", name: "Bird Three Main Controller (Direct Compatible)", platformId: "bird-three", manufacturer: "BlackCat Robotics", description: "Compatible main controller. Verified connectivity and firmware. 60% below OEM.", unitAmount: 88000, currency: "usd", image: "/images/parts/bird.jpg", leadTime: "7–10 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/bird-three-controller-compatible" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Bird Three — Bundle
+// ─────────────────────────────────────────────────────────────────────────────
+
+const BIRD_BUNDLES: PartBundle[] = [
+  // Bird Service Pack: leg + battery + controller
+  // OEM total: 95000 + 125000 + 220000 = 440000; 18% = 360800, savings = 79200
+  {
+    sku: "BIRD-SERVICE-PACK",
+    name: "Bird Three Service Pack",
+    platformId: "bird-three",
+    manufacturer: "BlackCat Robotics",
+    description: "Bird Three service essentials: leg actuator, battery, and main controller.",
+    tier: "bundle",
+    unitAmount: 360800,
+    currency: "usd",
+    savingsPct: 18,
+    savingsDollars: 79200,
+    parts: ["BIRD-LEG-ACT", "BIRD-BATTERY", "BIRD-CONTROLLER"],
+    image: "/images/parts/bird.jpg",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+  },
+];
+
 
 export const STORE_PARTS: StorePart[] = [
   ...H1_OEM,       ...H1_DIRECT,
@@ -529,6 +743,12 @@ export const STORE_PARTS: StorePart[] = [
 // Bundles — computed from real OEM prices with verified savings percentages.
 // All savings are 15-36% as documented in the skill.
 export const STORE_BUNDLES: PartBundle[] = [
+  ...B2_BUNDLES,
+  ...R1_BUNDLES,
+  ...AGRAS_BUNDLES,
+  ...SKYDIO_BUNDLES,
+  ...ZIPLINE_BUNDLES,
+  ...BIRD_BUNDLES,
   // H1 Full Leg Kit: knee + hip + ankle + foot (4 parts)
   // OEM total: 118000 + 132000 + 95000 + 88000 = 433000; 25% savings = 324750
   {
@@ -578,7 +798,7 @@ export const STORE_BUNDLES: PartBundle[] = [
     currency: "usd",
     savingsPct: 30,
     savingsDollars: 130140,
-    parts: ["H1-BATTERY", "H1-CHARGER", "H1-WAIST-ACT", "H1-M8010-MOTOR", "H1-M8010-MOTOR"],
+    parts: ["H1-BATTERY", "H1-CHARGER", "H1-WAIST-ACT", "H1-M8010-MOTOR"],
     image: "/images/parts/h1_battery.jpg",
     leadTime: "5–7 days",
     warranty: "12 months",
@@ -674,7 +894,7 @@ export const STORE_BUNDLES: PartBundle[] = [
     warranty: "12 months",
   },
   // Franka Panda Arm + Gripper
-  // OEM total: 12500000 + 1800000 = 14300000; 18% = 11726000
+  // OEM total: 1800000 + 1800000 = 3600000; 18% = 2952000
   {
     sku: "FRANKA-ARM-GRIP",
     name: "Franka Panda Arm + Gripper Bundle",
@@ -682,17 +902,17 @@ export const STORE_BUNDLES: PartBundle[] = [
     manufacturer: "BlackCat Robotics",
     description: "Franka Panda 7-DOF arm with parallel-jaw force-sensitive gripper.",
     tier: "bundle",
-    unitAmount: 11726000,
+    unitAmount: 2952000,
     currency: "usd",
     savingsPct: 18,
-    savingsDollars: 2574000,
+    savingsDollars: 648000,
     parts: ["FRANKA-ARM", "FRANKA-GRIPPER"],
     image: "/images/parts/franka.jpg",
     leadTime: "14–21 days",
     warranty: "12 months",
   },
   // Figure 02 All-In-One: hand + arm + battery + controller
-  // OEM total: 4500000 + 850000 + 2500000 + 3200000 = 11050000; 20% = 8840000
+  // OEM total: 2500000 + 500000 + 1100000 + 2200000 = 6300000; 20% = 5040000
   {
     sku: "FIG2-COMPLETE",
     name: "Figure 02 Essential Replacement Bundle",
@@ -700,10 +920,10 @@ export const STORE_BUNDLES: PartBundle[] = [
     manufacturer: "BlackCat Robotics",
     description: "Complete replacement: hand, arm actuator, battery, and controller.",
     tier: "bundle",
-    unitAmount: 8840000,
+    unitAmount: 5040000,
     currency: "usd",
     savingsPct: 20,
-    savingsDollars: 2210000,
+    savingsDollars: 1260000,
     parts: ["FIG2-HAND", "FIG2-ARM-ACT", "FIG2-BATTERY", "FIG2-CONTROLLER"],
     image: "/images/parts/figure02.jpg",
     leadTime: "14–21 days",

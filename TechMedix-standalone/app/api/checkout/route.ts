@@ -152,6 +152,37 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, url: stripeSession.url });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Stripe session creation failed";
+    // If a pre-created price ID doesn't exist in Stripe, fall back to inline price_data
+    // for every line item so the checkout still works without manual price setup.
+    if (msg.includes("No such price") && lineItems.length > 0) {
+      const fallbackItems: Stripe.Checkout.SessionCreateParams.LineItem[] = items.map((item) => {
+        const part = getPartBySku(item.sku);
+        if (!part) return { quantity: item.quantity, price_data: { currency: "usd", unit_amount: 0, product_data: { name: item.sku } } };
+        return {
+          quantity: item.quantity,
+          price_data: {
+            currency: part.currency,
+            unit_amount: part.unitAmount,
+            product_data: { name: part.name, description: part.description, images: [`${siteUrl}${part.image}`], metadata: { sku: part.sku, platformId: part.platformId } },
+          },
+        };
+      });
+      try {
+        const stripeSession = await stripe.checkout.sessions.create({
+          mode: "payment",
+          line_items: fallbackItems,
+          success_url: `${siteUrl}/store/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${siteUrl}/store?canceled=true`,
+          allow_promotion_codes: true,
+          metadata: { type: "store_order", items: JSON.stringify(items.map(i => `${i.sku}:${i.quantity}`)) },
+        });
+        return NextResponse.json({ ok: true, url: stripeSession.url, fallback: true });
+      } catch (e2) {
+        const msg2 = e2 instanceof Error ? e2.message : "Stripe fallback also failed";
+        console.error("Stripe checkout fallback error:", msg2);
+        return NextResponse.json({ ok: false, error: msg2 }, { status: 500 });
+      }
+    }
     console.error("Stripe checkout error:", msg);
     return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }

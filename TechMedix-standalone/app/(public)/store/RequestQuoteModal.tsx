@@ -45,13 +45,13 @@ export default function RequestQuoteModal({ isOpen, onClose }: { isOpen: boolean
             <div>
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#1db87a]/10 text-[#1db87a]">✓</div>
               <p className="mt-4 text-lg font-semibold text-theme-primary">Request Sent</p>
-              <p className="mt-2 text-sm text-theme-50">We'll get back to you within 24 hours.</p>
+              <p className="mt-2 text-sm text-theme-50">We&apos;ll get back to you within 24 hours.</p>
             </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 space-y-4">
             <p className="text-sm text-theme-50">
-              Need bulk pricing, fleet-wide parts, or something not listed? We'll source it and beat any verified price.
+              Need bulk pricing, fleet-wide parts, or something not listed? We&apos;ll review sourcing options and eligible price-match requests.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">

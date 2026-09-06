@@ -21,27 +21,27 @@ const STORE_NAV = [
 const FAQ = [
   {
     q: "What's the difference between OEM and Direct parts?",
-    a: "OEM parts are genuine manufacturer components with full factory warranty. Direct parts are tested Chinese-compatible alternatives calibrated to OEM specs — same fit, lower price, 30-day warranty."
+    a: "OEM catalog parts are listed against manufacturer references. Direct parts are compatible alternatives. Availability, warranty, and fitment are confirmed for your specific robot before fulfillment."
   },
   {
     q: "How does the Price Match Guarantee work?",
-    a: "Find a lower price from a verified seller within 30 days of purchase? We'll beat it by 10%. Submit proof via email and we'll refund the difference."
+    a: "If you find a lower eligible price from a verified seller, send us the product and price evidence. We review the match before confirming eligibility; exclusions apply."
   },
   {
     q: "Is TechMedix monitoring really free?",
-    a: "Yes. Every parts order includes free TechMedix monitoring — predictive failure alerts, wear tracking, and maintenance scheduling. No subscription required."
+    a: "Eligible orders include TechMedix monitoring. We confirm the supported platform, scope, and onboarding requirements with your order."
   },
   {
     q: "Do you ship internationally?",
-    a: "Yes. We ship from US (Austin), EU (Rotterdam), and Asia (Shenzhen) warehouses. Lead times vary by region."
+    a: "International shipping depends on destination, inventory, and the component. Batteries and other regulated goods may have additional carrier or import requirements; we confirm options before dispatch."
   },
   {
     q: "Can I return parts?",
-    a: "OEM parts: 30-day return policy. Direct parts: 30-day return policy. Bundles: same as individual parts. Must be unused and in original packaging."
+    a: "Return eligibility depends on the item, condition, and fulfillment status. Contact us before ordering or opening a return so we can confirm the applicable terms."
   },
   {
     q: "What payment methods do you accept?",
-    a: "Credit card (Visa, Mastercard, Amex), bank transfer, and purchase orders for qualified business customers."
+    a: "Available payment methods are shown at checkout. For fleet, controlled, or high-value orders, request a quote and we will confirm the available purchase options."
   },
 ];
 

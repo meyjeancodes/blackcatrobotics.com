@@ -69,7 +69,7 @@ export default function PartnersPage() {
           Supply Chain & Partners
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-theme-50">
-          We partner with the world's leading robotics manufacturers to bring you genuine parts at the best prices. Every part is sourced, tested, and backed by TechMedix monitoring.
+          We work with verified distribution channels to source robotics parts. Availability, fitment, and TechMedix eligibility are confirmed for each order.
         </p>
       </header>
 
@@ -177,7 +177,7 @@ export default function PartnersPage() {
       <div className="mt-12 rounded-2xl bg-ember/5 p-8 text-center">
         <h3 className="font-header text-xl text-theme-primary">Become a Partner</h3>
         <p className="mt-2 text-sm text-theme-50">
-          Are you a robotics manufacturer or distributor? Let's talk about how BlackCat can move your parts.
+          Are you a robotics manufacturer or distributor? Let&apos;s talk about how BlackCat can move your parts.
         </p>
         <a
           href="mailto:parts@blackcatrobotics.com"

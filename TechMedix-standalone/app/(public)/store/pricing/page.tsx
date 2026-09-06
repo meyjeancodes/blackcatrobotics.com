@@ -93,8 +93,8 @@ export default function PricingPage() {
           Pricing Comparison
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-theme-50">
-          We guarantee the best price on every part. Find a lower price from a
-          verified seller? We'll beat it by 10%.
+          Compare catalog pricing by part and tier. If you find a lower eligible
+          price from a verified seller, request a price-match review.
         </p>
       </header>
 
@@ -208,9 +208,9 @@ export default function PricingPage() {
           Price Match Guarantee
         </h3>
         <p className="mt-2 text-sm text-theme-50">
-          Find a lower price from a verified seller within 30 days of purchase?
-          We'll beat it by 10%. Exclude AliExpress and unverified marketplaces.
-          Submit proof via email and we'll refund the difference.
+          Submit the product and price evidence from a verified seller within 30
+          days of purchase. We review eligibility before confirming a match;
+          unverified marketplaces are excluded.
         </p>
         <Link
           href="/store"
