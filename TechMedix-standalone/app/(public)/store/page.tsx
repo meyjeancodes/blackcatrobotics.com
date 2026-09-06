@@ -18,7 +18,48 @@ const CATEGORIES = [
   { id: "unitree-g1", label: "Unitree G1" },
   { id: "boston-dynamics-spot", label: "Boston Dynamics" },
   { id: "dji-agras-t50", label: "DJI Agras" },
+  { id: "figure-02", label: "Figure" },
+  { id: "optimus-gen3", label: "Tesla" },
+  { id: "apollo", label: "Apptronik" },
+  { id: "neo", label: "1X" },
+  { id: "skydio-x10", label: "Skydio" },
+  { id: "starship-gen3", label: "Starship" },
+  { id: "lime-gen4", label: "Lime" },
+  { id: "digit-v5", label: "Digit" },
+  { id: "agility-digit", label: "Agility" },
+  { id: "asimov-1", label: "Asimov" },
+  { id: "franka-panda", label: "Franka" },
+  { id: "kinova-gen3", label: "Kinova" },
+  { id: "universal-robots-ur5e", label: "UR5e" },
+  { id: "ufactory-xarm6", label: "UFactory" },
+  { id: "zipline-p2", label: "Zipline" },
+  { id: "proteus-amr", label: "Proteus" },
+  { id: "serve-rs2", label: "Serve" },
+  { id: "uworld-u1-pro", label: "UWorld" },
+  { id: "unitree-b2", label: "B2" },
+  { id: "unitree-r1", label: "R1" },
+  { id: "aigen-element-gen2", label: "Aigen" },
+  { id: "bird-three", label: "Bird" },
+  { id: "phantom-mk1", label: "Phantom" },
+  { id: "radcommercial", label: "Rad" },
+  { id: "rebot-devarm", label: "Rebot" },
+  { id: "robo-1", label: "Robo-1" },
+  { id: "nvidia-jetson-agx-thor", label: "Thor" },
 ];
+
+// Frequently bought together pairs
+const FREQUENTLY_BOUGHT_TOGETHER: Record<string, string[]> = {
+  "H1-KNEE-ACT": ["H1-HIP-ACT", "H1-ANKLE-FOOT", "H1-BATTERY"],
+  "H1-HIP-ACT": ["H1-KNEE-ACT", "H1-SHOULDER-ACT", "H1-BATTERY"],
+  "H1-BATTERY": ["H1-CHARGER", "H1-KNEE-ACT", "H1-HIP-ACT"],
+  "H1-DEX-HAND": ["H1-CONTROLLER", "H1-BATTERY"],
+  "SPOT-LEG-ACT": ["SPOT-BATTERY", "SPOT-CHARGER"],
+  "SPOT-BATTERY": ["SPOT-CHARGER", "SPOT-LEG-ACT"],
+  "AGRAS-MOTOR": ["AGRAS-PROP", "AGRAS-BATTERY"],
+  "AGRAS-BATTERY": ["AGRAS-MOTOR", "AGRAS-PROP"],
+  "FIG2-HAND": ["FIG2-CONTROLLER", "FIG2-BATTERY"],
+  "FIG2-BATTERY": ["FIG2-CONTROLLER", "FIG2-HAND"],
+};
 
 const TRUST_BADGES = [
   { icon: "shield", text: "Verified Fitment" },
@@ -343,6 +384,27 @@ export default function StorePage() {
         {filteredItems.length === 0 && (
           <p className="py-12 text-center text-theme-40">No parts match your search.</p>
         )}
+
+        {/* Customers Also Viewed */}
+        {filteredItems.length > 0 && (
+          <div className="mt-12 border-t border-theme-10 pt-8">
+            <h2 className="font-header text-xl tracking-[-0.04em] text-theme-primary">Customers Also Viewed</h2>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {STORE_CATALOG.filter((p) => !filteredItems.slice(0, 12).includes(p)).slice(0, 4).map((item) => (
+                <div
+                  key={item.sku}
+                  onClick={() => openDetail(item.sku)}
+                  className="cursor-pointer rounded-2xl border border-theme-10 bg-white p-4 transition hover:border-theme-20 hover:shadow-md"
+                >
+                  <img src={item.image} alt={item.name} className="h-24 w-full rounded-xl object-cover" />
+                  <p className="mt-2 text-xs text-theme-40">{item.manufacturer}</p>
+                  <h3 className="text-sm font-semibold text-theme-primary truncate">{item.name}</h3>
+                  <p className="mt-1 text-sm font-semibold text-theme-primary">{formatPrice(item.unitAmount)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Floating Cart Button */}
@@ -439,6 +501,50 @@ export default function StorePage() {
               {"sourceUrl" in selectedItem && selectedItem.sourceUrl && (
                 <div className="mt-2 text-xs text-theme-40">
                   Price source: <a href={selectedItem.sourceUrl} target="_blank" rel="noopener" className="underline hover:text-theme-300">verify</a>
+                </div>
+              )}
+
+              {/* You May Also Like */}
+              <div className="mt-6 border-t border-theme-10 pt-4">
+                <p className="text-xs font-semibold text-theme-40 uppercase tracking-wider">You May Also Like</p>
+                <div className="mt-3 flex gap-2 overflow-x-auto">
+                  {STORE_CATALOG.filter(
+                    (p) => p.sku !== selectedItem.sku && (p.platformId === selectedItem.platformId || p.tier === selectedItem.tier)
+                  ).slice(0, 4).map((rec) => (
+                    <button
+                      key={rec.sku}
+                      onClick={() => setSelectedSku(rec.sku)}
+                      className="shrink-0 w-28 rounded-xl border border-theme-10 bg-white p-2 text-left transition hover:border-theme-20"
+                    >
+                      <img src={rec.image} alt={rec.name} className="h-16 w-full rounded-lg object-cover" />
+                      <p className="mt-1 text-[0.6rem] text-theme-primary truncate">{rec.name}</p>
+                      <p className="text-[0.6rem] font-semibold text-theme-primary">{formatPrice(rec.unitAmount)}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Frequently Bought Together */}
+              {FREQUENTLY_BOUGHT_TOGETHER[selectedItem.sku] && (
+                <div className="mt-4 border-t border-theme-10 pt-4">
+                  <p className="text-xs font-semibold text-theme-40 uppercase tracking-wider">Frequently Bought Together</p>
+                  <div className="mt-3 flex gap-2 overflow-x-auto">
+                    {FREQUENTLY_BOUGHT_TOGETHER[selectedItem.sku].map((sku) => {
+                      const rec = STORE_CATALOG.find((p) => p.sku === sku);
+                      if (!rec) return null;
+                      return (
+                        <button
+                          key={rec.sku}
+                          onClick={() => setSelectedSku(rec.sku)}
+                          className="shrink-0 w-28 rounded-xl border border-theme-10 bg-white p-2 text-left transition hover:border-theme-20"
+                        >
+                          <img src={rec.image} alt={rec.name} className="h-16 w-full rounded-lg object-cover" />
+                          <p className="mt-1 text-[0.6rem] text-theme-primary truncate">{rec.name}</p>
+                          <p className="text-[0.6rem] font-semibold text-theme-primary">{formatPrice(rec.unitAmount)}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
 
