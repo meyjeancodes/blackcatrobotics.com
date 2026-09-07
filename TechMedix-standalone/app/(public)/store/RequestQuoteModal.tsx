@@ -149,7 +149,7 @@ export default function RequestQuoteModal({ isOpen, onClose }: { isOpen: boolean
             </button>
 
             <p className="text-center text-[0.65rem] text-theme-40">
-              We respond within 24 hours. All quotes include free TechMedix monitoring.
+              We respond within 24 hours. Quote responses include TechMedix eligibility for eligible parts.
             </p>
           </form>
         )}

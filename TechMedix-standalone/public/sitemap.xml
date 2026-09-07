@@ -36,6 +36,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://blackcatrobotics.com/store/pricing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://blackcatrobotics.com/store/partners</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blackcatrobotics.com/store/track</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blackcatrobotics.com/store/success</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://blackcatrobotics.com/book</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -56,7 +76,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://blackcatrobotics.com/habitat</loc>
+    <loc>https://blackcatrobotics.com/habitat.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

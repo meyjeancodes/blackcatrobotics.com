@@ -66,10 +66,10 @@ const FREQUENTLY_BOUGHT_TOGETHER: Record<string, string[]> = {
 };
 
 const TRUST_BADGES = [
-  { icon: "shield", text: "Verified Fitment" },
-  { icon: "clock", text: "24h Ship" },
-  { icon: "wrench", text: "TechMedix Included" },
-  { icon: "dollar", text: "Price Match" },
+  { icon: "shield", text: "Fitment review" },
+  { icon: "clock", text: "Lead time shown" },
+  { icon: "wrench", text: "TechMedix eligible" },
+  { icon: "dollar", text: "Price-match terms" },
 ];
 
 export default function StorePage() {
@@ -91,6 +91,28 @@ export default function StorePage() {
     window.addEventListener("open-quote-modal", handler);
     return () => window.removeEventListener("open-quote-modal", handler);
   }, []);
+
+  const handleAdvisorQuery = useCallback(async (q: string) => {
+    if (!q.trim()) return;
+    const res = await fetch("/api/parts-advisor", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: q }),
+    });
+    const data = await res.json();
+    setRecommendations(data.recommendations || []);
+  }, []);
+
+  const handleAdvisorKeydown = useCallback(async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && query.trim()) {
+      await handleAdvisorQuery(query);
+    }
+  }, [query, handleAdvisorQuery]);
+
+  const handleSuggestionClick = useCallback(async (s: string) => {
+    setQuery(s);
+    await handleAdvisorQuery(s);
+  }, [handleAdvisorQuery]);
 
   const filteredItems = useMemo(() => {
     let list = STORE_CATALOG;
@@ -175,7 +197,7 @@ export default function StorePage() {
             Aftermarket Parts
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-theme-50">
-            The world's most trusted source for robotic parts. Three tiers, one guarantee: the best price or we beat it by 10%. Every order includes free TechMedix monitoring.
+            Aftermarket parts for the robots you run — OEM catalog and tested-compatible Direct alternatives, with fitment details listed per part.
           </p>
 
           {/* Trust Badges */}
@@ -190,8 +212,8 @@ export default function StorePage() {
 
           {PRICE_MATCH_GUARANTEE.enabled && (
             <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#1db87a]/10 px-3 py-1 text-xs text-[#1db87a]">
-              <span className="font-semibold">✓ Price Match Guarantee</span>
-              <span className="text-theme-40">— We beat any verified seller by 10%</span>
+              <a href="/store/pricing" className="font-semibold underline underline-offset-2">Price Match Guarantee</a>
+              <span className="text-theme-40">— terms and exclusions apply</span>
             </div>
           )}
 
@@ -561,8 +583,8 @@ export default function StorePage() {
                 </button>
               </div>
 
-              <p className="mt-3 text-center text-[0.65rem] text-theme-40">
-                Price match guarantee • Free TechMedix monitoring included
+              <p className="mt-2 text-center text-[0.65rem] text-theme-40">
+                Price match available on eligible orders · TechMedix eligibility confirmed with your order
               </p>
             </div>
           </div>
@@ -621,7 +643,7 @@ export default function StorePage() {
                 <button onClick={checkout} className="w-full rounded-xl bg-ember px-4 py-3 font-ui text-sm uppercase tracking-widest text-white transition hover:bg-ember/90">
                   Checkout with Stripe
                 </button>
-                <p className="mt-2 text-center text-[0.65rem] text-theme-40">Secure payment · Free TechMedix monitoring</p>
+                <p className="mt-2 text-center text-[0.65rem] text-theme-40">Price match terms available · TechMedix eligibility confirmed with your order</p>
               </div>
             )}
           </div>
@@ -654,7 +676,7 @@ export default function StorePage() {
                   <p className="text-sm text-theme-50">Tell me about your robot and the issue you're seeing.</p>
                   <div className="flex flex-wrap gap-2">
                     {["Unitree H1 knee overheating", "H1 battery draining fast", "Spot leg actuator"].map((s) => (
-                      <button key={s} onClick={async () => { setQuery(s); const res = await fetch("/api/parts-advisor", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query: s }) }); const data = await res.json(); setRecommendations(data.recommendations || []); }} className="rounded-full border border-theme-10 px-3 py-1.5 text-xs text-theme-50 hover:border-theme-20">{s}</button>
+                      <button key={s} onClick={() => handleSuggestionClick(s)} className="rounded-full border border-theme-10 px-3 py-1.5 text-xs text-theme-50 hover:border-theme-20">{s}</button>
                     ))}
                   </div>
                 </div>
@@ -678,8 +700,8 @@ export default function StorePage() {
 
             <div className="border-t border-theme-10 p-3">
               <div className="flex items-center gap-2">
-                <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={async (e) => { if (e.key === "Enter" && query.trim()) { const res = await fetch("/api/parts-advisor", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query }) }); const data = await res.json(); setRecommendations(data.recommendations || []); } }} placeholder="Describe your robot and issue..." className="flex-1 rounded-xl border border-theme-10 bg-white px-3 py-2 text-sm text-theme-primary placeholder:text-theme-30 focus:outline-none" />
-                <button onClick={async () => { if (!query.trim()) return; const res = await fetch("/api/parts-advisor", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query }) }); const data = await res.json(); setRecommendations(data.recommendations || []); }} className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1db87a] text-white hover:bg-[#1db87a]/90">
+                <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={handleAdvisorKeydown} placeholder="Describe your robot and issue..." className="flex-1 rounded-xl border border-theme-10 bg-white px-3 py-2 text-sm text-theme-primary placeholder:text-theme-30 focus:outline-none" />
+                <button onClick={() => handleAdvisorQuery(query)} className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1db87a] text-white hover:bg-[#1db87a]/90">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                 </button>
               </div>
