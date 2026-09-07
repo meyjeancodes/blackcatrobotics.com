@@ -32,3 +32,4 @@ sources:
   - "KUKA medical robotics documentation (ISO 13485 compliance)"
   - "Robot-Forum thread: 'Torque sensor not referenced - PositionAndGMSReferencing'"
   - "Encycam LBR Med 14 R820 specifications and applications"
+---

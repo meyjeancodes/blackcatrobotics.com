@@ -41,3 +41,4 @@ sources:
   - "Tesla Optimus Maintenance Checklist (optimusk.blog)"
   - "Tesla Optimus Diagnostics Technical Guide (optimusk.blog)"
   - "Tesla Optimus 'Phantom Headset' Sync Errors (tech-champion.com)"
+---

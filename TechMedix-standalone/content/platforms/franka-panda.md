@@ -38,3 +38,4 @@ sources:
   - "iFixit guide: Franka Emika Panda Electromagnetic Locking System (Brake) Replacement"
   - "GitHub issue #140: Opening Brakes Failed — frankarobotics/libfranka"
   - "Research papers on Panda dynamic identification and torque sensor error analysis"
+---

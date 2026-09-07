@@ -37,3 +37,4 @@ sources:
   - "DJI Agras T40/T50 preseason maintenance guides (applicable to T60 platform)"
   - "Agrispraydrones.com knowledge base — motor inspection and pump troubleshooting"
   - "Community reports (Empire Drone, DJI Agras user groups) on bearing and arm issues"
+---

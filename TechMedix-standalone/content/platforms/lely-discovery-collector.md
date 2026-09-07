@@ -38,3 +38,4 @@ sources:
   - "West Coast Robotics: 'Discovery Alarms Demystified' — common issue solutions"
   - "Farmer reports and Lely Center maintenance guidance"
   - "Profi.co.uk: Lely manure robot for solid floors overview"
+---

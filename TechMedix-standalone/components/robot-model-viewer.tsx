@@ -8,7 +8,7 @@ import type { RobotCanvasProps } from "./robot-canvas";
 import { getUrdfForPlatform } from "../lib/platforms/urdf-config";
 import { UrdfRobotViewer } from "./urdf-robot-viewer";
 import { getPlatformById, PLATFORM_IMAGE_MAP } from "../lib/platforms/index";
-import { getChassisForPlatform, type Part, type PartCategory } from "../lib/platforms/parts-catalog";
+import { getChassisForPlatform, type Part, type PartCategory } from "../lib/platforms/chassis-breakdown";
 
 // Three.js Canvas — browser only, skip SSR
 const RobotCanvas = dynamic<RobotCanvasProps>(

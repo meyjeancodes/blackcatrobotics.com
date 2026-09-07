@@ -40,3 +40,4 @@ sources:
   - "Stryker RIO Technical User Guide Rev 01 (July 2015) — preventive maintenance, joint specifications"
   - "Pitfalls with the MAKO Robotic-Arm-Assisted Total Knee Arthroplasty (PMCID: PMC10890000)"
   - "Stryker Instrument Cleaning and Sterilization Guide (201845)"
+---

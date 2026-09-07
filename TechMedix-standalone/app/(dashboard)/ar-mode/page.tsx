@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { createClient } from "../../../lib/supabase-browser";
 import type { AROverlay, Procedure, ProcedureStep } from "../../../types/atlas";
-import { getChassisForPlatform, type Part, type PartCategory } from "../../../lib/platforms/parts-catalog";
+import { getChassisForPlatform, type Part, type PartCategory } from "../../../lib/platforms/chassis-breakdown";
 import { getPlatformById } from "../../../lib/platforms/index";
 
 const CATEGORY_COLOR: Record<PartCategory, string> = {

@@ -41,3 +41,4 @@ sources:
   - "Universal Robots Forum — UR5e booting problem, brake release fault threads"
   - "Universal Robots Safety Notice — mechanical damage detection"
   - "Universal Robots Inspection and Maintenance Plan (universal-robots.com)"
+---

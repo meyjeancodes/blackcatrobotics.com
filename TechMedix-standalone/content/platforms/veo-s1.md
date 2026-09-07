@@ -13,3 +13,4 @@ sources:
   - "Humanoid robot industry databases (humanoidintel.ai, humanoid.guide) — no VEO S1 entry"
   - "Veo Robotics (Waltham, MA) — industrial safeguarding systems, not humanoid"
   - "UBTECH Walker S1 — distinct platform with separate documentation"
+---

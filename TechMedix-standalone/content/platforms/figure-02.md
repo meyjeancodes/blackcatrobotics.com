@@ -32,3 +32,4 @@ sources:
   - "Figure 02 specifications — humanoid.guide, robozaps.com, firgellirobots.com"
   - "BMW Spartanburg pilot coverage: gagadget.com, freshfromchina.com, assemblymag.com"
   - "Figure 03 redesign announcements addressing forearm reliability"
+---

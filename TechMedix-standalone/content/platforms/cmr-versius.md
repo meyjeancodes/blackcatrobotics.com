@@ -34,3 +34,4 @@ sources:
   - "Versius tips and tricks for OR setting (Springer 2025)"
   - "The use of Versius CMR for pelvic surgery: multicentric analysis (PMC10787883)"
   - "Preclinical evaluation of Versius (University of Hertfordshire)"
+---
