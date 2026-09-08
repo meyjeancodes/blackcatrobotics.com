@@ -239,8 +239,8 @@ const NEO_OEM: StorePart[] = [
 ];
 
 const ASIMOV_OEM: StorePart[] = [
-  { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 5-DOF arm actuator module. Individual actuator pricing at low volume.", unitAmount: 30000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
-  { sku: "ASIMOV-BATTERY", name: "Asimov Battery Pack", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 13S4P Li-ion battery pack (46.8V, 10.5Ah). Hot-swap compatible.", unitAmount: 2500, currency: "usd", stripePriceId: "price_ASIMOV_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
+  { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 5-DOF arm actuator module. Individual actuator pricing at low volume.", unitAmount: 3000000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
+  { sku: "ASIMOV-BATTERY", name: "Asimov Battery Pack", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 13S4P Li-ion battery pack (46.8V, 10.5Ah). Hot-swap compatible.", unitAmount: 250000, currency: "usd", stripePriceId: "price_ASIMOV_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -920,10 +920,10 @@ export const STORE_BUNDLES: PartBundle[] = [
     manufacturer: "BlackCat Robotics",
     description: "Asimov arm actuator and battery pack — the two most common replacement parts.",
     tier: "bundle",
-    unitAmount: 26000,
+    unitAmount: 2600000,
     currency: "usd",
     savingsPct: 20,
-    savingsDollars: 6500,
+    savingsDollars: 650000,
     parts: ["ASIMOV-ARM-ACT", "ASIMOV-BATTERY"],
     image: "/images/parts/asimov.jpg",
     leadTime: "14–21 days",
