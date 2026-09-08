@@ -39,7 +39,7 @@
  *   Same request/response schema as Option A but at a private URL.
  *
  * Escalation threshold: BEHAVIORAL_SCORE > VLA_ESCALATION_THRESHOLD (default 0.65)
- *   → If exceeded, fire Layer 3 Claude analyzer for human-readable repair protocol.
+ *   → If exceeded, fire Layer 3 AI analyzer for human-readable repair protocol.
  *
  * Env vars required:
  *   HUGGINGFACE_API_TOKEN     — Bearer token for HF API or self-hosted endpoint

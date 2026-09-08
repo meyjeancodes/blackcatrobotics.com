@@ -58,7 +58,7 @@ export interface VLAComparisonResult {
   rawComparison: object;
 }
 
-// ─── Layer 3 — Claude analyzer ───────────────────────────────────────────────
+// ─── Layer 3 — AI analyzer ───────────────────────────────────────────────
 
 export interface RepairRecommendation {
   immediate: string;

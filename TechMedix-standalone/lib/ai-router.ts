@@ -28,7 +28,7 @@ export function routeAI(_task: TaskType, _content?: string): RouteResult {
       model = process.env.OPENAI_MODEL || "gpt-4o-mini";
       break;
     case "anthropic":
-      model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
+      model = process.env.ANTHROPIC_MODEL || "fast-model";
       break;
     default:
       model = "unknown";

@@ -40,7 +40,7 @@ export interface DiagnosticAnomaly {
   message: string;
 }
 
-export interface ClaudeDiagnosticResponse {
+export interface AIDiagnosticResponse {
   severity: "low" | "medium" | "high" | "critical";
   summary: string;
   affected_components: string[];
@@ -186,13 +186,13 @@ export async function runLayer2(
   return anomalies;
 }
 
-// ─── LAYER 3: Claude Diagnostic Agent ────────────────────────────────────────
+// ─── LAYER 3: ai Diagnostic Agent ────────────────────────────────────────
 
 export async function runLayer3(
   telemetry: TelemetryPayload,
   layer1Violations: DiagnosticViolation[],
   layer2Anomalies: DiagnosticAnomaly[]
-): Promise<ClaudeDiagnosticResponse | null> {
+): Promise<AIDiagnosticResponse | null> {
   if (layer1Violations.length === 0 && layer2Anomalies.length === 0) return null;
 
   try {
@@ -227,8 +227,8 @@ Return ONLY this JSON structure:
   "dispatch_required": true or false
 }`;
 
-    const parsed = await generateJSON<ClaudeDiagnosticResponse>({
-      model: "claude-sonnet-4-6",
+    const parsed = await generateJSON<AIDiagnosticResponse>({
+      model: "ai-sonnet-4-6",
       maxTokens: 800,
       temperature: 0,
       system: systemPrompt,
@@ -237,7 +237,7 @@ Return ONLY this JSON structure:
 
     return parsed;
   } catch (err) {
-    console.error("Layer 3 Claude diagnostic error:", err);
+    console.error("Layer 3 ai diagnostic error:", err);
     return null;
   }
 }
@@ -252,7 +252,7 @@ export async function runDiagnostics(
   const layer1 = runLayer1(telemetry);
   const layer2 = await runLayer2(telemetry, customerId);
 
-  let layer3: ClaudeDiagnosticResponse | null = null;
+  let layer3: AIDiagnosticResponse | null = null;
   let severity = "none";
   let dispatchRequired = false;
 

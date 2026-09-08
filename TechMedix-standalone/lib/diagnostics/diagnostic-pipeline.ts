@@ -7,14 +7,14 @@
  * Mock mode (NEXT_PUBLIC_MOCK_DATA=true):
  *   Layer 1: runs normally (pure functions, no API)
  *   Layer 2: uses mock VLA output
- *   Layer 3: uses mock Claude result
+ *   Layer 3: uses mock AI result
  *   costEstimate: all zeros
  */
 
 import { randomUUID } from "crypto";
 import { runRuleEngine } from "./rule-engine";
 import { compareWithVLA } from "./vla-comparator";
-import { analyzeWithClaude } from "./claude-analyzer";
+import { analyzeWithAI } from "./ai-analyzer";
 import { trackLayer2Call, trackLayer3Call, calcLayer3Cost } from "./cost-tracker";
 import { getPlatformById } from "../platforms";
 import type {
@@ -132,7 +132,7 @@ export async function runDiagnosticPipeline(
     };
   }
 
-  // ── Layer 3 — Claude deep analysis (only when Layer 2 exceeds threshold) ──
+  // ── Layer 3 — AI deep analysis (only when Layer 2 exceeds threshold) ──
   if (!platform) {
     console.warn(`[diagnostic-pipeline] ${reportId}: Skipping Layer 3 — platform config not found.`);
     return {
@@ -150,7 +150,7 @@ export async function runDiagnosticPipeline(
 
   layersFired.push("ai-analyzer");
 
-  const aiAnalysis = await analyzeWithClaude({
+  const aiAnalysis = await analyzeWithAI({
     platform,
     frame,
     ruleResults,

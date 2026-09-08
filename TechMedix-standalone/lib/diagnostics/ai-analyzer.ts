@@ -1,11 +1,11 @@
 /**
- * Layer 3 — Claude Deep Analysis
+ * Layer 3 — AI Deep Analysis
  *
  * SERVER-SIDE ONLY. Never import this in client components.
  * Only fires when Layer 2 exceedsThreshold: true.
  *
  * Produces human-readable repair recommendations operators and technicians act on.
- * Uses claude-sonnet-4-6 at temperature=0 for deterministic repair protocols.
+ * Uses fast-model at temperature=0 for deterministic repair protocols.
  */
 
 import { generate, generateJSON } from "@/lib/llm";
@@ -178,7 +178,7 @@ export async function analyzeWithVision(params: {
 
   try {
     const result = await generate({
-      model: "claude-sonnet-4-6",
+      model: process.env.ANTHROPIC_MODEL || "fast-model",
       maxTokens: 500,
       temperature: 0,
       system:
@@ -217,7 +217,7 @@ export async function analyzeWithVision(params: {
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
-export async function analyzeWithClaude(
+export async function analyzeWithAI(
   input: AIAnalysisInput
 ): Promise<AIAnalysisResult> {
   // Always use mock in demo mode or when API key is absent
@@ -236,7 +236,7 @@ export async function analyzeWithClaude(
     const userPrompt = buildUserPrompt(input);
 
     const result = await generate({
-      model: "claude-sonnet-4-6",
+      model: process.env.ANTHROPIC_MODEL || "fast-model",
       maxTokens: 1000,
       temperature: 0,
       system: SYSTEM_PROMPT,

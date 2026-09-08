@@ -2,7 +2,7 @@
  * Cost Tracker — session and monthly projection for diagnostic pipeline spend.
  *
  * Layer 2 (VLA HuggingFace inference): ~$0.001 per call
- * Layer 3 (Claude sonnet-4-6):
+ * Layer 3 (fast-model):
  *   Input:  ~$3.00 / 1M tokens
  *   Output: ~$15.00 / 1M tokens
  *   Typical call: ~800 input + ~400 output = ~$0.0084 per call

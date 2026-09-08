@@ -3,7 +3,7 @@
  *
  * Compares a VLA-predicted action sequence (expected robot behavior) against
  * live telemetry frames (actual robot behavior) and surfaces anomaly results
- * suitable for maintenance dispatch or Claude-backed repair protocol generation.
+ * suitable for maintenance dispatch or AI-backed repair protocol generation.
  *
  * ── Implementation path ──────────────────────────────────────────────────────
  *
@@ -24,11 +24,11 @@
  *   latency for safety-critical pause decisions (<50ms vs ~200ms HTTP).
  *   Not feasible for learned models — only for deterministic threshold checks.
  *
- * PHASE 4 — Claude API (TechMedix current path for repair protocols):
- *   Send compressed anomaly summary JSON to Claude (claude-sonnet-4-6) with
+ * PHASE 4 — AI API (TechMedix current path for repair protocols):
+ *   Send compressed anomaly summary JSON to AI (fast-model) with
  *   the maintenance prompt template. Returns natural-language repair protocol
  *   routed to the dispatched technician's mobile app.
- *   See: lib/diagnostics/claude-maintenance-prompt.ts (TODO)
+ *   See: lib/diagnostics/ai-maintenance-prompt.ts (TODO)
  */
 
 // ─── Core types ───────────────────────────────────────────────────────────────
@@ -129,7 +129,7 @@ export interface AnomalyResult {
   riskScore: number;
   /** Recommended TechMedix action */
   recommendedAction: "none" | "monitor" | "alert" | "dispatch" | "auto-pause";
-  /** Human-readable summary for Claude maintenance prompt */
+  /** Human-readable summary for AI maintenance prompt */
   summary: string;
   /** True if mock data; false when running against live telemetry */
   isMock: boolean;
