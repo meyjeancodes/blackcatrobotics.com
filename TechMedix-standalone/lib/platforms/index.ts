@@ -1012,6 +1012,7 @@ export const PLATFORM_IMAGE_MAP: Record<string, string> = {
   "digit-v5":              "/images/platforms/agility_digit.jpg",
   "asimov-1":              "/images/platforms/asimov_1.jpg",
   "asimov-v1":             "/images/platforms/asimov_diy_kit.png",
+  "asimov-here-be-dragons": "/images/platforms/asimov_1.jpg",
   "phantom-mk1":           "/images/platforms/foundation_phantom.webp",
   "aigen-element-gen2":    "/images/platforms/aigen_element_gen2.jpg",
   "ubtech-u1":             "/images/platforms/ubtech_u1.svg",

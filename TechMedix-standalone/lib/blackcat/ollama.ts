@@ -74,27 +74,30 @@ export async function ollamaOrFallback<T>(
 }
 
 /**
- * Check if Ollama is reachable and a model is loaded.
+ * Vision-capable Ollama call. Sends a prompt and returns structured
+ * text instructions with a confidence score.
  */
-export async function ollamaHealthCheck(): Promise<{
-  healthy: boolean;
-  model: string;
-  error?: string;
-}> {
+export async function runOllamaVision(
+  prompt: string,
+  options?: { temperature?: number; maxTokens?: number }
+): Promise<{ response: string; confidence: number }> {
+  const text = await ollamaGenerate(prompt, {
+    system: "You are a field service AR overlay assistant. Return a JSON object with 'instructions' (string) and 'confidence' (number 0-1).",
+    json: true,
+    temperature: options?.temperature ?? 0.2,
+    maxTokens: options?.maxTokens ?? 512,
+  }) as unknown as string;
+
+  let confidence = 0.5;
+  let instructions = text;
   try {
-    const res = await fetch(`${OLLAMA_URL}/api/tags`, {
-      signal: AbortSignal.timeout(3000),
-    });
-    if (!res.ok) return { healthy: false, model: OLLAMA_MODEL, error: `HTTP ${res.status}` };
-    const data = await res.json();
-    const models = data.models?.map((m: { name: string }) => m.name) ?? [];
-    const hasModel = models.includes(OLLAMA_MODEL);
-    return {
-      healthy: hasModel,
-      model: OLLAMA_MODEL,
-      error: hasModel ? undefined : `Model ${OLLAMA_MODEL} not found. Available: ${models.join(", ")}`,
-    };
-  } catch (err) {
-    return { healthy: false, model: OLLAMA_MODEL, error: (err as Error).message };
+    const parsed = JSON.parse(text);
+    if (typeof parsed.confidence === "number") confidence = parsed.confidence;
+    if (typeof parsed.instructions === "string") instructions = parsed.instructions;
+  } catch {
+    // Not JSON, use raw response
   }
+
+  return { response: instructions, confidence };
 }
+

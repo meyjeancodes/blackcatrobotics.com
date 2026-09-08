@@ -238,9 +238,9 @@ const NEO_OEM: StorePart[] = [
 ];
 
 const ASIMOV_OEM: StorePart[] = [
-  { sku: "ASIMOV-HAND", name: "Asimov Dexterous Hand", platformId: "asimov-1", manufacturer: "1X", description: "Asimov hand module with tendon-driven actuation. 20 DOF.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_ASIMOV_HAND", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
-  { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-1", manufacturer: "1X", description: "Asimov 7-DOF arm actuator module.", unitAmount: 420000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
-  { sku: "ASIMOV-BATTERY", name: "Asimov Battery Pack", platformId: "asimov-1", manufacturer: "1X", description: "Asimov battery pack. Hot-swap compatible.", unitAmount: 180000, currency: "usd", stripePriceId: "price_ASIMOV_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/asimov" },
+  { sku: "ASIMOV-HAND", name: "Asimov Dexterous Hand", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov hand module with tendon-driven actuation. 20 DOF.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_ASIMOV_HAND", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
+  { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 7-DOF arm actuator module.", unitAmount: 420000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
+  { sku: "ASIMOV-BATTERY", name: "Asimov Battery Pack", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov battery pack. Hot-swap compatible.", unitAmount: 180000, currency: "usd", stripePriceId: "price_ASIMOV_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -911,6 +911,24 @@ export const STORE_BUNDLES: PartBundle[] = [
     leadTime: "14–21 days",
     warranty: "12 months",
   },
+  // Asimov Full Kit: hand + arm actuator + battery
+  // OEM total: 2500000 + 420000 + 180000 = 3100000; 20% = 2480000, savings = 620000
+  {
+    sku: "ASIMOV-FULL-KIT",
+    name: "Asimov Full Kit",
+    platformId: "asimov-here-be-dragons",
+    manufacturer: "BlackCat Robotics",
+    description: "Complete Asimov kit: hand, arm actuator, and battery.",
+    tier: "bundle",
+    unitAmount: 2480000,
+    currency: "usd",
+    savingsPct: 20,
+    savingsDollars: 620000,
+    parts: ["ASIMOV-HAND", "ASIMOV-ARM-ACT", "ASIMOV-BATTERY"],
+    image: "/images/parts/asimov.jpg",
+    leadTime: "14–21 days",
+    warranty: "12 months",
+  },
   // Figure 02 All-In-One: hand + arm + battery + controller
   // OEM total: 2500000 + 500000 + 1100000 + 2200000 = 6300000; 20% = 5040000
   {
@@ -966,6 +984,7 @@ export const PLATFORM_META: Record<string, { name: string; manufacturer: string 
   "apollo": { name: "Apptronik Apollo", manufacturer: "Apptronik" },
   "neo": { name: "1X Neo", manufacturer: "1X" },
   "asimov-1": { name: "Asimov", manufacturer: "1X" },
+  "asimov-here-be-dragons": { name: "Asimov Here Be Dragons", manufacturer: "Menlo Research" },
   "skydio-x10": { name: "Skydio X10", manufacturer: "Skydio" },
   "starship-gen3": { name: "Starship Gen3", manufacturer: "Starship Technologies" },
   "lime-gen4": { name: "Lime Gen4", manufacturer: "Lime" },

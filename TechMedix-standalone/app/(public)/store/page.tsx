@@ -24,7 +24,7 @@ const CATEGORIES = [
   { id: "optimus-gen3", label: "Tesla" },
   { id: "apollo", label: "Apptronik" },
   { id: "neo", label: "1X" },
-  { id: "asimov-1", label: "Asimov" },
+  { id: "asimov-here-be-dragons", label: "Asimov" },
   { id: "skydio-x10", label: "Skydio" },
   { id: "starship-gen3", label: "Starship" },
   { id: "lime-gen4", label: "Lime" },

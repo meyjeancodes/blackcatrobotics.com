@@ -68,9 +68,8 @@ const REPAIR_LOOP = [
 export default async function KnowledgePage() {
   const platforms = await getPlatformsFromSupabase();
   
-  // Filter out fictional/test platforms
+  // Filter out fictional/test platforms only
   const realPlatforms = platforms.filter((p) => 
-    !p.id.includes("asimov-here-be-dragons") && 
     !p.id.includes("fictional")
   );
   

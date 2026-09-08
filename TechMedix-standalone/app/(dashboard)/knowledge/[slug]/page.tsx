@@ -4,7 +4,6 @@ import { getPlatformBySlug, getFailureModesByPlatform } from "@/lib/blackcat/kno
 import type { FailureMode, RepairProtocol } from "@/lib/blackcat/knowledge/db";
 import { getPlatformKnowledge } from "@/lib/knowledge-content";
 import { getAllPlatforms } from "@/lib/platforms/index";
-import { hasUrdf } from "@/lib/platforms/urdf-config";
 import { PlatformKnowledgeClient } from "./platform-knowledge-client";
 
 export async function generateMetadata({
