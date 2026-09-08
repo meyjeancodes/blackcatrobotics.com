@@ -4,7 +4,7 @@
  * This file delegates to the universal LLM adapter (lib/llm.ts) for
  * backward compatibility. All new code should import from lib/llm.ts directly.
  *
- * The @anthropic-ai/sdk is no longer used — Anthropic is called via raw HTTP.
+ * Anthropic is called via raw HTTP through lib/llm.ts.
  */
 
 import { generate, generateJSON } from "./llm";
@@ -22,7 +22,7 @@ export function getBedrockClient(): null {
 }
 
 /** @deprecated Use llm.generateJSON() from lib/llm.ts */
-export async function callClaude(
+export async function callAI(
   _prompt: string,
   _taskType?: string,
   _options?: Record<string, any>

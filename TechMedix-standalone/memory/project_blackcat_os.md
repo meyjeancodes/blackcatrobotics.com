@@ -8,7 +8,7 @@ BlackCat OS is a full-stack humanoid robot maintenance platform added to TechMed
 
 **Why:** To extend TechMedix with humanoid-specific tooling: AR-guided maintenance, component sourcing, and technician certification tracking for the Unitree H1.
 
-**How to apply:** When working on any /ar-mode, /maintenance, /certifications, /acquire routes or the blackcat OS schema, refer to this context.
+**How to apply:** When working on any /maintenance, /certifications, /acquire routes or the blackcat OS schema, refer to this context.
 
 ## New Files Added
 
@@ -62,5 +62,4 @@ Seed UUIDs use single hex letter prefix to indicate table:
 - e = jobs
 - f = suppliers
 
-## Known: Supabase env vars required for AR mode
-The /ar-mode page uses "use client" + lazy Supabase init (inside event handler, not component body) to avoid SSR prerender errors during builds without env vars set.
+## Known: Supabase env vars required for maintenance features

@@ -1,7 +1,7 @@
 /**
  * BlackCat AI Insights
  *
- * Generates fleet and energy insights using Claude.
+ * Generates fleet and energy insights using AI.
  * Results are cached in Supabase for 5 minutes to control API costs.
  *
  * SERVER-SIDE ONLY.
@@ -37,7 +37,7 @@ export async function generateFleetInsight(input: {
     `Lowest health: ${lowestHealth(input.robots)}.`,
   ].join(" ");
 
-  const insight = await callClaude(prompt);
+  const insight = await callAI(prompt);
   await setCache("fleet", insight);
   return insight;
 }
@@ -60,15 +60,15 @@ export async function generateEnergyInsight(input: {
     `Total traded: ${totalTraded(input.transactions).toFixed(2)} kWh.`,
   ].join(" ");
 
-  const insight = await callClaude(prompt);
+  const insight = await callAI(prompt);
   await setCache("energy", insight);
   return insight;
 }
 
-async function callClaude(userPrompt: string): Promise<string> {
+async function callAI(userPrompt: string): Promise<string> {
   try {
     const result = await generate({
-      model: "claude-sonnet-4-6",
+      model: process.env.ANTHROPIC_MODEL || "fast-model",
       maxTokens: 150,
       temperature: 0,
       system: SYSTEM_PROMPT,
@@ -80,7 +80,7 @@ async function callClaude(userPrompt: string): Promise<string> {
     }
     return "Unable to generate insight at this time.";
   } catch (err) {
-    console.error("[ai/insights] Claude API error:", err);
+    console.error("[ai/insights] AI API error:", err);
     return "Unable to generate insight at this time.";
   }
 }

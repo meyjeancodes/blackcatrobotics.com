@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
             id: diagResult.id,
             robot_id: diagResult.robot_id,
             severity: diagResult.severity,
-            layer3_claude_response: diagResult.layer3_claude_response,
+            layer3_ai_response: diagResult.layer3_ai_response,
           },
           { id: customer.id, name: customer.name, email: customer.email }
         );

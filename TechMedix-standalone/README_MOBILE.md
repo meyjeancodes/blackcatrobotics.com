@@ -97,7 +97,7 @@ Deployment method: sideload APK via ADB or use RealWear Foresight MDM.
 adb install techmedix.apk
 ```
 
-Display optimizations: the HMT-1 renders at 854x480. The TechMedix dashboard is responsive and will adapt. AR mode (`/ar-mode`) works best in landscape orientation.
+Display optimizations: the HMT-1 renders at 854x480. The TechMedix dashboard is responsive and will adapt. Knowledge Hub (`/knowledge`) works best in landscape orientation.
 
 ### Vuzix Blade 2
 

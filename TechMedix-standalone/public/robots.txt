@@ -5,7 +5,6 @@ Allow: /
 # noindex too, but the Disallow is defense-in-depth so crawlers don't burn
 # budget hitting login-walled pages).
 Disallow: /dashboard
-Disallow: /ar-mode
 Disallow: /maintenance
 
 Sitemap: https://blackcatrobotics.com/sitemap.xml
