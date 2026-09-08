@@ -53,6 +53,16 @@ export interface PlatformProfile {
   manualUrl?: string;
   /** Technical diagram, exploded view, or datasheet URL */
   diagramUrl?: string;
+  /** Locally-hosted URDF path for the interactive 3D viewer */
+  urdfPath?: string;
+  /** Badge shown on the 3D viewer (e.g. "Official URDF") */
+  urdfBadge?: string;
+  /** Optional viewer config — camera framing */
+  modelViewerConfig?: {
+    cameraPosition: [number, number, number];
+    target: [number, number, number];
+    fov: number;
+  };
 }
 
 const PLATFORMS: PlatformProfile[] = [
@@ -228,7 +238,7 @@ const PLATFORMS: PlatformProfile[] = [
   {
     id: "asimov-1",
     name: "Asimov 1",
-    manufacturer: "Menlo Robotics",
+    manufacturer: "Menlo Research",
     category: "humanoid",
     description: "Open-source reference humanoid. 25+2 DOF, DIY-kit available, 1.2 m tall, 35 kg. Full BOM and assembly manual published. Designed for researchers and builders.",
     badge: "Open Source",
@@ -252,6 +262,9 @@ const PLATFORMS: PlatformProfile[] = [
     maintenanceCta: "Browse Asimov assembly manual",
     manualUrl: "https://docs.menlo.ai/asimov/1",
     diagramUrl: "https://docs.menlo.ai/asimov/1/assembly-manual/assembly-steps",
+    urdfPath: "/robots/asimov/asimov_1.urdf",
+    urdfBadge: "Open-Source URDF",
+    modelViewerConfig: { cameraPosition: [0, 0.3, 1.5], target: [0, 0.3, 0], fov: 45 },
   },
   {
     id: "phantom-mk1",
