@@ -1,12 +1,17 @@
 import Link from "next/link";
 import {
   AlertTriangle,
+  BookOpen,
   Bot,
   ChevronRight,
+  Cpu,
   GraduationCap,
+  Layers,
+  Play,
   Search,
   Shield,
   Wrench,
+  Zap,
 } from "lucide-react";
 import { getPlatformsFromSupabase } from "@/lib/knowledge/platforms-server";
 import { PlatformSearch } from "@/components/platform-search";
@@ -15,12 +20,36 @@ import { PlatformSearch } from "@/components/platform-search";
 
 const SUPPORTING = [
   {
+    title: "Simulation Lab",
+    description: "Inject faults, walk guided teardowns, practice on virtual hardware.",
+    href: "/knowledge/simulations",
+    icon: Play,
+    color: "text-sky-600",
+    bg: "bg-sky-500/[0.08]",
+  },
+  {
     title: "Certifications",
     description: "Five levels from Operator to Autonomous Systems Architect.",
     href: "/technicians/certifications",
     icon: GraduationCap,
     color: "text-violet-600",
     bg: "bg-violet-500/[0.08]",
+  },
+  {
+    title: "Learning Modules",
+    description: "Structured courses with progress tracking and exams.",
+    href: "/knowledge/modules",
+    icon: BookOpen,
+    color: "text-emerald-600",
+    bg: "bg-emerald-500/[0.08]",
+  },
+  {
+    title: "Blueprint Explorer",
+    description: "Interactive CAD diagrams, exploded views, component specs.",
+    href: "/knowledge/blueprint",
+    icon: Layers,
+    color: "text-amber-600",
+    bg: "bg-amber-500/[0.08]",
   },
 ];
 
@@ -148,7 +177,7 @@ export default async function KnowledgePage() {
             <ChevronRight size={14} className="text-[var(--ink)]/20 group-hover:text-violet-600 transition" />
           </Link>
           <Link
-            href="#platform-search"
+            href="/knowledge/failures"
             className="group panel-elevated flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/[0.10] ring-1 ring-sky-500/20">
@@ -165,7 +194,7 @@ export default async function KnowledgePage() {
             <ChevronRight size={14} className="text-[var(--ink)]/20 group-hover:text-sky-600 transition" />
           </Link>
           <Link
-            href="#platform-search"
+            href="/knowledge/modules"
             className="group panel-elevated flex flex-col gap-3 p-5 transition hover:-translate-y-0.5 hover:shadow-lg"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/[0.10] ring-1 ring-emerald-500/20">
@@ -176,7 +205,7 @@ export default async function KnowledgePage() {
                 I want to learn
               </h3>
               <p className="mt-1 text-xs leading-relaxed text-[var(--ink)]/45">
-                Explore platforms by category. Find your robot and start learning.
+                Structured courses, simulations, and certification tracks.
               </p>
             </div>
             <ChevronRight size={14} className="text-[var(--ink)]/20 group-hover:text-emerald-600 transition" />
