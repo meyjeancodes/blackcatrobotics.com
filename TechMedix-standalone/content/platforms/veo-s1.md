@@ -37,4 +37,3 @@ specs:
   ip_rating: IP54
   tire_type: airless
 ---
-MDEOF && echo "veo-s1.md rewritten" && cat content/platforms/veo-s1.md | head -5
