@@ -6,7 +6,7 @@ const config: SkillConfig = {
   name: "fleet-telemetry-ingestion",
   version: "0.1.0",
   description:
-    "Creates telemetry plugin rows for VEO Micromobility pilot and returns usage hints for downstream workflows.",
+    "Creates telemetry plugin rows for micromobility fleet ingestion and returns usage hints for downstream workflows.",
   inputSchema: { dryRun: "boolean?" },
 };
 
@@ -36,9 +36,9 @@ async function perform(input: SkillInput): Promise<SkillResult> {
     name: `fleet_telemetry_${new Date().toISOString().slice(0, 10)}`,
     status: "pending",
     payload: {
-      pilot: "veo_micromobility",
-      partitions: buildPartitions(),
-      metadata: { start_timestamp: new Date().toISOString() },
+    pilot: "micromobility_fleet",
+    partitions: buildPartitions(),
+    metadata: { start_timestamp: new Date().toISOString() },
     },
   };
 

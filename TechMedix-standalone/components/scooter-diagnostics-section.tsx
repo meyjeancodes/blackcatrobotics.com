@@ -99,7 +99,7 @@ export function ScooterDiagnosticsSection() {
           {platform.name} diagnostics
         </h2>
         <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
-          Live seeded data for the VEO S1 pilot: {meta.total_failures} failure modes ({meta.critical} critical, {meta.high} high).
+          Live seeded data for the micromobility fleet: {meta.total_failures} failure modes ({meta.critical} critical, {meta.high} high).
           Predictive maintenance thresholds loaded in Supabase.
         </p>
       </div>
