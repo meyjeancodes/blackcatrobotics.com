@@ -1,4 +1,4 @@
--- Seed VEO S1 platform (first micromobility partner)
+-- Seed micromobility platform (first micromobility partner)
 -- Use an explicit CTE so the platform id is visible to all downstream inserts
 WITH new_platform AS (
   INSERT INTO platforms (
@@ -18,8 +18,8 @@ WITH new_platform AS (
   )
   VALUES (
     'veo-s1',
-    'VEO S1',
-    'VEO Mobility',
+    'S1',
+    'Micromobility Fleet',
     'micromobility',
     '{"motor_power_w":350,"top_speed_kmh":30,"range_km":25,"ip_rating":"IP54","tire_type":"airless"}',
     'beta',
@@ -146,11 +146,11 @@ rp_battery AS (
       jsonb_build_object('step', 1, 'title', 'Run battery health diagnostic in TechMedix app', 'details', 'Check SOH% and charge cycles. SOH < 80% triggers replacement.'),
       jsonb_build_object('step', 2, 'title', 'Power off scooter and remove battery key', 'details', ''),
       jsonb_build_object('step', 3, 'title', 'Unplug battery connectors and remove battery tray', 'details', 'Use 4mm hex driver'),
-      jsonb_build_object('step', 4, 'title', 'Install new or refurbished battery', 'details', 'Spec: 36V 7.8Ah Li-ion, part # VEO-BAT-S1'),
+      jsonb_build_object('step', 4, 'title', 'Install new or refurbished battery', 'details', 'Spec: 36V 7.8Ah Li-ion, part # MB-BAT-S1'),
       jsonb_build_object('step', 5, 'title', 'Reconnect, secure tray, run post-replacement calibration', 'details', 'App prompts: Battery replaced?, then complete calibration cycle')
     ),
     ARRAY['4mm hex driver', 'Torx T10'],
-    jsonb_build_object('VEO-BAT-S1', 'OEM 36V 7.8Ah battery'),
+    jsonb_build_object('MB-BAT-S1', 'OEM 36V 7.8Ah battery'),
     45,
     'intermediate',
     'https://veo.tools/guides/battery-cycles',
@@ -182,11 +182,11 @@ rp_motor AS (
       jsonb_build_object('step', 1, 'title', 'Check diagnostic logs for error code ''MOTOR_OVERCURRENT''', 'details', ''),
       jsonb_build_object('step', 2, 'title', 'Inspect phase wires from controller to motor for chafing or loose crimp', 'details', ''),
       jsonb_build_object('step', 3, 'title', 'Measure motor winding resistance (should be ~0.3Ω)', 'details', 'Use multimeter on motor leads'),
-      jsonb_build_object('step', 4, 'title', 'If resistance OK, replace controller (part # VEO-CTRL-S1)', 'details', 'Program new controller with latest firmware via USB'),
+      jsonb_build_object('step', 4, 'title', 'If resistance OK, replace controller (part # MB-CTRL-S1)', 'details', 'Program new controller with latest firmware via USB'),
       jsonb_build_object('step', 5, 'title', 'Test ride under load; confirm torque restored', 'details', 'Incline 10% grade, full throttle')
     ),
     ARRAY['multimeter', '4mm hex', 'USB-A cable'],
-    jsonb_build_object('VEO-CTRL-S1', 'Motor controller 36V 15A'),
+    jsonb_build_object('MB-CTRL-S1', 'Motor controller 36V 15A'),
     60,
     'advanced',
     'https://veo.tools/guides/motor-errors',
@@ -218,12 +218,12 @@ rp_brake AS (
       jsonb_build_object('step', 1, 'title', 'Lift scooter and remove front wheel', 'details', 'Use 15mm cone wrench on axle nuts'),
       jsonb_build_object('step', 2, 'title', 'Remove caliper mounting bolts (5mm hex)', 'details', ''),
       jsonb_build_object('step', 3, 'title', 'Slide out old brake pads, measure thickness (<1mm triggers replacement)', 'details', ''),
-      jsonb_build_object('step', 4, 'title', 'Insert new pads (part # VEO-BRAKE-S1) and reset caliper piston', 'details', 'Use plastic pry tool to push piston back'),
+      jsonb_build_object('step', 4, 'title', 'Insert new pads (part # MB-BRAKE-S1) and reset caliper piston', 'details', 'Use plastic pry tool to push piston back'),
       jsonb_build_object('step', 5, 'title', 'Re-mount caliper, align rotor with brake lever', 'details', 'Torque mounting bolts to 5 Nm'),
       jsonb_build_object('step', 6, 'title', 'Pump brake lever until firm, then test ride at low speed', 'details', '')
     ),
     ARRAY['15mm cone wrench', '5mm hex', 'plastic pry tool'],
-    jsonb_build_object('VEO-BRAKE-S1', 'Disc brake pad set'),
+    jsonb_build_object('MB-BRAKE-S1', 'Disc brake pad set'),
     30,
     'basic',
     'https://veo.tools/guides/brake-service',
