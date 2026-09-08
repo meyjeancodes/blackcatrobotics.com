@@ -10,7 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: "Supabase not configured" }, { status: 500 });
     }
 
-    // Find VEO S1 scooter platform by matching known seed values
+    // Find micromobility platform by matching known seed values
     const { data: platforms, error: platformError } = await supabase
       .from("platforms")
       .select("*")
@@ -35,14 +35,14 @@ export async function GET() {
     const failure_modes = (failureModes ?? []) as Array<Record<string, unknown>>;
 
     const summary = {
-      platform: {
-        id: platform.id,
-        name: "VEO Micromobility S1",
-        category: "scooter",
-        motor_power_w: platform.motor_power_w,
-        top_speed_kmh: platform.top_speed_kmh,
-        range_km: platform.range_km,
-      },
+    platform: {
+    id: platform.id,
+    name: platform.name,
+    category: "micromobility",
+    motor_power_w: platform.motor_power_w,
+    top_speed_kmh: platform.top_speed_kmh,
+    range_km: platform.range_km,
+    },
       failure_modes: failure_modes.map((fm) => ({
         id: fm.id,
         code: (fm as Record<string, unknown>)["code"] ?? null,
