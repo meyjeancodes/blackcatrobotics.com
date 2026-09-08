@@ -239,9 +239,8 @@ const NEO_OEM: StorePart[] = [
 ];
 
 const ASIMOV_OEM: StorePart[] = [
-  { sku: "ASIMOV-HAND", name: "Asimov Dexterous Hand", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov hand module with tendon-driven actuation. 20 DOF.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_ASIMOV_HAND", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
-  { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 7-DOF arm actuator module.", unitAmount: 420000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
-  { sku: "ASIMOV-BATTERY", name: "Asimov Battery Pack", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov battery pack. Hot-swap compatible.", unitAmount: 180000, currency: "usd", stripePriceId: "price_ASIMOV_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
+  { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 5-DOF arm actuator module. Individual actuator pricing at low volume.", unitAmount: 30000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
+  { sku: "ASIMOV-BATTERY", name: "Asimov Battery Pack", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 13S4P Li-ion battery pack (46.8V, 10.5Ah). Hot-swap compatible.", unitAmount: 2500, currency: "usd", stripePriceId: "price_ASIMOV_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -912,20 +911,20 @@ export const STORE_BUNDLES: PartBundle[] = [
     leadTime: "14–21 days",
     warranty: "12 months",
   },
-  // Asimov Full Kit: hand + arm actuator + battery
-  // OEM total: 2500000 + 420000 + 180000 = 3100000; 20% = 2480000, savings = 620000
+  // Asimov Core Kit: arm actuator + battery
+  // OEM total: 30000 + 2500 = 32500; 20% = 26000, savings = 6500
   {
     sku: "ASIMOV-FULL-KIT",
-    name: "Asimov Full Kit",
+    name: "Asimov Core Replacement Kit",
     platformId: "asimov-here-be-dragons",
     manufacturer: "BlackCat Robotics",
-    description: "Complete Asimov kit: hand, arm actuator, and battery.",
+    description: "Asimov arm actuator and battery pack — the two most common replacement parts.",
     tier: "bundle",
-    unitAmount: 2480000,
+    unitAmount: 26000,
     currency: "usd",
     savingsPct: 20,
-    savingsDollars: 620000,
-    parts: ["ASIMOV-HAND", "ASIMOV-ARM-ACT", "ASIMOV-BATTERY"],
+    savingsDollars: 6500,
+    parts: ["ASIMOV-ARM-ACT", "ASIMOV-BATTERY"],
     image: "/images/parts/asimov.jpg",
     leadTime: "14–21 days",
     warranty: "12 months",
