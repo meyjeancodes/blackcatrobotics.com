@@ -5,7 +5,7 @@ interface DiagnosticResult {
   id: string;
   robot_id: string;
   severity: string;
-  layer3_claude_response: {
+  layer3_ai_response: {
     summary: string;
     affected_components: string[];
     recommended_action: string;
@@ -25,7 +25,7 @@ export async function sendAlert(
   diagnosticResult: DiagnosticResult,
   customer: Customer
 ): Promise<string | null> {
-  const response = diagnosticResult.layer3_claude_response;
+  const response = diagnosticResult.layer3_ai_response;
   const severityLabel = diagnosticResult.severity?.toUpperCase() ?? "UNKNOWN";
   const dashboardUrl = "https://dashboard.blackcatrobotics.com/dashboard";
 

@@ -70,7 +70,7 @@ Raw Atlas JSON files are stored in `.atlas/`:
 | Route | Description |
 |-------|-------------|
 | `/dashboard` | Overview tiles with live Supabase stats |
-| `/ar-mode` | Full-screen AR robot body SVG with zone click → procedure steps + AI guidance |
+| `/knowledge` | Platform catalog with interactive 3D models and failure-mode diagrams |
 | `/maintenance` | Job list with status filter + procedure side panel + AI guidance |
 | `/certifications` | Level 1–5 cert cards with module checklist + AI score progress |
 | `/acquire` | Atlas-sourced supplier catalog with component/region filters |

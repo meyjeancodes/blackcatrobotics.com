@@ -36,17 +36,8 @@ export function JobList({ initialJobs }: { initialJobs: Job[] }) {
     setGuidanceLoading(true);
     setGuidance(null);
     try {
-      const res = await fetch("/api/ar-guidance", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          step_instruction: step.instruction,
-          component_name: job.components?.name ?? "Component",
-          warnings: step.warning ? [step.warning] : [],
-        }),
-      });
-      const data = await res.json();
-      setGuidance(data.guidance ?? "No guidance available.");
+      // AI guidance endpoint removed — degraded to step instruction text
+      setGuidance(step.instruction);
     } catch {
       setGuidance("AI guidance unavailable.");
     } finally {

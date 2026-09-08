@@ -38,7 +38,7 @@ interface NavGroup {
 
 const NAV: NavGroup[] = [
   { href: "/dashboard",  label: "Overview",    icon: LayoutDashboard },
-  { href: "/ar-mode",    label: "AR Mode",      icon: Scan },
+  { href: "/knowledge",  label: "Knowledge Hub",  icon: BookOpen },
   {
     label: "Maintenance", icon: Wrench,
     children: [

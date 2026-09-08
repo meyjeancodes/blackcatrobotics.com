@@ -19,7 +19,7 @@ interface NavGroup {
 
 const NAV: NavGroup[] = [
   { href: "/dashboard", label: "Overview" },
-  { href: "/ar-mode", label: "AR Mode" },
+  { href: "/knowledge", label: "Knowledge" },
   {
     label: "Maintenance",
     children: [

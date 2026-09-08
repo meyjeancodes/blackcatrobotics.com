@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     id: `test_${Date.now()}`,
     robot_id,
     severity: severity as "warning" | "critical",
-    layer3_claude_response: {
+    layer3_ai_response: {
       summary: `Test alert fired from /api/alerts/test for robot ${robot_id}. This is a synthetic diagnostic to verify alert delivery.`,
       affected_components: ["Left Hip Actuator", "Battery Management System"],
       recommended_action:

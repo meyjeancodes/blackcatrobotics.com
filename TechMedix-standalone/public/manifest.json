@@ -24,10 +24,10 @@
   ],
   "shortcuts": [
     {
-      "name": "AR Mode",
-      "short_name": "AR",
-      "url": "/ar-mode",
-      "description": "Open AR robot body viewer"
+      "name": "Knowledge Hub",
+      "short_name": "Knowledge",
+      "url": "/knowledge",
+      "description": "Browse robot platforms, failure modes, and repair protocols"
     },
     {
       "name": "Maintenance Jobs",

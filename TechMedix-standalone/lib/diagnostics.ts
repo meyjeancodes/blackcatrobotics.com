@@ -274,7 +274,7 @@ export async function runDiagnostics(
         telemetry_log_id: telemetryLogId,
         layer1_violations: layer1,
         layer2_anomalies: layer2,
-        layer3_claude_response: layer3,
+        layer3_ai_response: layer3,
         severity,
         dispatch_required: dispatchRequired,
         resolved: false,

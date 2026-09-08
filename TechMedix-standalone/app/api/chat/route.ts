@@ -2,7 +2,7 @@
  * POST /api/chat
  *
  * AI diagnostic chat endpoint. Accepts messages and fleet context,
- * returns a grounded response from Ollama (local) or Claude (cloud).
+ * returns a grounded response from Ollama (local) or AI (cloud).
  *
  * Request body:
  *   { messages: [{ role: "user" | "assistant", content: string }], robotId?: string }
@@ -85,20 +85,20 @@ export async function POST(req: Request) {
         return NextResponse.json({ reply: reply.trim(), source: "ollama" });
       }
     } catch {
-      console.log("[chat] Ollama unavailable, trying Claude...");
+      console.log("[chat] Ollama unavailable, trying AI...");
     }
 
-    // Fall back to Claude via LLM adapter
+    // Fall back to AI via LLM adapter
     try {
       const result = await generate({
         system: SYSTEM_PROMPT,
         messages: [{ role: "user", content: prompt }],
         maxTokens: 512,
-        model: "claude-sonnet-4-20250514",
+        model: "fast-model",
       });
       return NextResponse.json({ reply: result.text.trim(), source: "ai" });
     } catch {
-      console.log("[chat] Claude unavailable");
+      console.log("[chat] AI unavailable");
     }
 
     // Hard fallback

@@ -5,7 +5,7 @@ const CACHE_NAME = "techmedix-v1";
 const OFFLINE_URLS = [
   "/",
   "/dashboard",
-  "/ar-mode",
+  "/knowledge",
   "/maintenance",
   "/certifications",
   "/acquire",
