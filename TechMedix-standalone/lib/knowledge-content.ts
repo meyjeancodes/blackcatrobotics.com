@@ -27,6 +27,22 @@ export interface PlatformKnowledge {
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "platforms");
 
+/** Normalize a platform slug to match content file naming (underscore → hyphen).
+ * Content files use underscores (unitree_g1.md) but platform IDs and URLs use hyphens (unitree-g1).
+ * Try the slug as-is first, then with underscores→hyphens, then hyphens→underscores. */
+function resolveContentPath(slug: string): string | null {
+  const variants = [
+    slug,
+    slug.replace(/-/g, "_"),
+    slug.replace(/_/g, "-"),
+  ];
+  for (const v of variants) {
+    const file = path.join(CONTENT_DIR, `${v}.md`);
+    if (fs.existsSync(file)) return file;
+  }
+  return null;
+}
+
 function parseFrontmatter(raw: string): Record<string, any> {
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?/);
   if (!m) return {};
@@ -69,8 +85,8 @@ function parseFailureModes(raw: string): FailureMode[] {
 
 export function getPlatformKnowledge(slug: string): PlatformKnowledge | null {
   try {
-    const file = path.join(CONTENT_DIR, `${slug}.md`);
-    if (!fs.existsSync(file)) return null;
+    const file = resolveContentPath(slug);
+    if (!file) return null;
     const raw = fs.readFileSync(file, "utf8");
     const fm = parseFrontmatter(raw);
     const body = raw.replace(/^---\n[\s\S]*?\n---\n?/, "");

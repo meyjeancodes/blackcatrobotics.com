@@ -9,7 +9,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/IMU_ORIGIN.STL"/>
+        <mesh filename="assets/meshes/IMU_ORIGIN.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -40,7 +40,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_HIP_PITCH.STL"/>
+        <mesh filename="assets/meshes/LEFT_HIP_PITCH.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -78,7 +78,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_HIP_ROLL.STL"/>
+        <mesh filename="assets/meshes/LEFT_HIP_ROLL.STL"/>
       </geometry>
     </visual>
   </link>
@@ -98,7 +98,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_HIP_YAW.STL"/>
+        <mesh filename="assets/meshes/LEFT_HIP_YAW.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -136,7 +136,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_KNEE.STL"/>
+        <mesh filename="assets/meshes/LEFT_KNEE.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -174,7 +174,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_ANKLE_A.STL"/>
+        <mesh filename="assets/meshes/LEFT_ANKLE_A.STL"/>
       </geometry>
     </visual>
   </link>
@@ -194,7 +194,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/ANKLE_B_NEW.STL"/>
+        <mesh filename="assets/meshes/ANKLE_B_NEW.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -238,7 +238,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_HIP_PITCH.STL"/>
+        <mesh filename="assets/meshes/RIGHT_HIP_PITCH.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -276,7 +276,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_HIP_ROLL.STL"/>
+        <mesh filename="assets/meshes/RIGHT_HIP_ROLL.STL"/>
       </geometry>
     </visual>
   </link>
@@ -296,7 +296,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_HIP_YAW.STL"/>
+        <mesh filename="assets/meshes/RIGHT_HIP_YAW.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -334,7 +334,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_KNEE.STL"/>
+        <mesh filename="assets/meshes/RIGHT_KNEE.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -372,7 +372,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_ANKLE_A.STL"/>
+        <mesh filename="assets/meshes/RIGHT_ANKLE_A.STL"/>
       </geometry>
     </visual>
   </link>
@@ -392,7 +392,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/ANKLE_B_NEW.STL"/>
+        <mesh filename="assets/meshes/ANKLE_B_NEW.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -436,7 +436,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/WAIST_YAW.STL"/>
+        <mesh filename="assets/meshes/WAIST_YAW.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -474,7 +474,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/NECK_YAW.STL"/>
+        <mesh filename="assets/meshes/NECK_YAW.STL"/>
       </geometry>
     </visual>
   </link>
@@ -492,7 +492,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/NECK_PITCH.STL"/>
+        <mesh filename="assets/meshes/NECK_PITCH.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -528,7 +528,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_SHOULDER_PITCH.STL"/>
+        <mesh filename="assets/meshes/RIGHT_SHOULDER_PITCH.STL"/>
       </geometry>
     </visual>
   </link>
@@ -548,7 +548,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_SHOULDER_ROLL.STL"/>
+        <mesh filename="assets/meshes/RIGHT_SHOULDER_ROLL.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -586,7 +586,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_SHOULDER_YAW.STL"/>
+        <mesh filename="assets/meshes/RIGHT_SHOULDER_YAW.STL"/>
       </geometry>
     </visual>
   </link>
@@ -606,7 +606,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_ELBOW.STL"/>
+        <mesh filename="assets/meshes/RIGHT_ELBOW.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -644,7 +644,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/RIGHT_WRIST_YAW.STL"/>
+        <mesh filename="assets/meshes/RIGHT_WRIST_YAW.STL"/>
       </geometry>
     </visual>
   </link>
@@ -664,7 +664,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_SHOULDER_PITCH.STL"/>
+        <mesh filename="assets/meshes/LEFT_SHOULDER_PITCH.STL"/>
       </geometry>
     </visual>
   </link>
@@ -684,7 +684,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_SHOULDER_ROLL.STL"/>
+        <mesh filename="assets/meshes/LEFT_SHOULDER_ROLL.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -722,7 +722,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_SHOULDER_YAW.STL"/>
+        <mesh filename="assets/meshes/LEFT_SHOULDER_YAW.STL"/>
       </geometry>
     </visual>
   </link>
@@ -742,7 +742,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_ELBOW.STL"/>
+        <mesh filename="assets/meshes/LEFT_ELBOW.STL"/>
       </geometry>
     </visual>
     <collision>
@@ -780,7 +780,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://asimov_description/meshes/LEFT_WRIST_YAW.STL"/>
+        <mesh filename="assets/meshes/LEFT_WRIST_YAW.STL"/>
       </geometry>
     </visual>
   </link>

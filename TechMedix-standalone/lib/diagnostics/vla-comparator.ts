@@ -168,19 +168,15 @@ function mockComparison(
 // ─── Build observation from telemetry frame ────────────────────────────────────
 
 function buildEEObservation(frame: TelemetryFrame): object {
-  // Map TelemetryFrame.joints into a structured EE-space observation.
-  // The G1 EE state is: left_ee(10) + right_ee(10) + left_gripper(1) + right_gripper(1) + waist_rpy(3) = 23
+  // Build a G1EEState-shaped observation from the telemetry frame.
+  // The G1 VLA EE format is: left_ee(10) + right_ee(10) + waist_rpy(3) = 23.
+  // Gripper is element 9 of each EE array — NOT a separate top-level field.
   //
-  // TelemetryFrame.joints has named joints with { torque, temp, position }.
-  // We encode position as the primary signal; torque is included as secondary.
+  // TelemetryFrame.joints holds named joints with { torque, temp, position }.
+  // We map arm joint positions into EE position as a proxy (real deployments
+  // would have dedicated EE sensor readings in the frame).
   //
-  // Exact layout depends on the VLA model — here we produce a reasonable mapping:
-  //   left_ee:   [x, y, z, r1..r6 (identity proxy), gripper]  — from left arm joints
-  //   right_ee:  [x, y, z, r1..r6 (identity proxy), gripper]  — from right arm joints
-  //   waist_rpy: [roll, pitch, yaw]                            — from waist sensors
-  //
-  // Rotation matrix columns default to identity (robot facing forward) when
-  // orientation sensors are absent from the frame.
+  // Rotation matrix columns default to identity (robot facing forward).
 
   const identity6 = [1, 0, 0, 0, 1, 0]; // first 2 columns of 3×3 identity
 
@@ -191,17 +187,13 @@ function buildEEObservation(frame: TelemetryFrame): object {
     ? frame.joints.right_arm as unknown as Record<string, { position: number }>
     : {};
 
-  const leftGripper = frame.joints.left_gripper?.position ?? 0.5;
-  const rightGripper = frame.joints.right_gripper?.position ?? 0.5;
-
-  // EE position — derive from arm joint positions as a simple proxy
-  // (A real deployment would have dedicated EE sensor readings in the frame)
+  // EE position from arm joints (XYZ proxy), R6 identity, gripper=0.5 default
   const leftEE = [
     leftArm.shoulder_pitch?.position ?? 0,
     leftArm.shoulder_roll?.position ?? 0,
     leftArm.elbow?.position ?? 0,
     ...identity6,
-    leftGripper,
+    0.5,  // gripper (element 9 of the 10-dim EE array)
   ] as [number, number, number, number, number, number, number, number, number, number];
 
   const rightEE = [
@@ -209,28 +201,30 @@ function buildEEObservation(frame: TelemetryFrame): object {
     rightArm.shoulder_roll?.position ?? 0,
     rightArm.elbow?.position ?? 0,
     ...identity6,
-    rightGripper,
+    0.5,  // gripper
   ] as [number, number, number, number, number, number, number, number, number, number];
 
-  const waistSensors = frame.sensors;
   const waistRpy = [
-    waistSensors.waist_roll?.value ?? 0,
-    waistSensors.waist_pitch?.value ?? 0,
-    waistSensors.waist_yaw?.value ?? 0,
+    frame.sensors.waist_roll?.value ?? 0,
+    frame.sensors.waist_pitch?.value ?? 0,
+    frame.sensors.waist_yaw?.value ?? 0,
   ] as [number, number, number];
 
   return {
     left_ee: leftEE,
     right_ee: rightEE,
-    left_gripper: leftGripper,
-    right_gripper: rightGripper,
     waist_rpy: waistRpy,
+    // left_gripper and right_gripper are elements 9 of left_ee / right_ee.
+    // We keep them here for clarity but they are NOT separate VLA dims.
+    _left_gripper: 0.5,
+    _right_gripper: 0.5,
   };
 }
 
 function buildJointObservation(frame: TelemetryFrame): object {
-  // Joint-space observation: 16-dim
-  // left_arm(7) + left_gripper(1) + right_arm(7) + right_gripper(1) + waist_rpy(3)
+  // Build a G1JointState-shaped observation from the telemetry frame.
+  // The G1 VLA joint format is: left_arm(7) + left_gripper(1) + right_arm(7) + right_gripper(1) = 16.
+  // Waist_rpy is NOT part of the VLA joint-space mode.
   const leftArm = frame.joints.left_arm
     ? frame.joints.left_arm as unknown as Record<string, { position: number }>
     : {};
@@ -259,39 +253,27 @@ function buildJointObservation(frame: TelemetryFrame): object {
       rightArm.wrist_yaw?.position ?? 0,
     ] as [number, number, number, number, number, number, number],
     right_gripper: frame.joints.right_gripper?.position ?? 0.5,
-    waist_rpy: [
-      frame.sensors.waist_roll?.value ?? 0,
-      frame.sensors.waist_pitch?.value ?? 0,
-      frame.sensors.waist_yaw?.value ?? 0,
-    ] as [number, number, number],
   };
 }
 
 function flattenEEObservation(obs: object): number[] {
   // Flatten G1EEState-shaped observation into 23-dim vector for the VLA request.
+  // The G1 VLA EE format is: left_ee(10) + right_ee(10) + waist_rpy(3) = 23.
+  // Gripper is element 9 of each EE array — do NOT add as separate dimensions.
   const o = obs as Record<string, unknown>;
   const leftEE = o.left_ee as number[];
   const rightEE = o.right_ee as number[];
-  return [
-    ...leftEE,
-    ...rightEE,
-    o.left_gripper as number,
-    o.right_gripper as number,
-    ...(o.waist_rpy as number[]),
-  ];
+  return [...leftEE, ...rightEE, ...(o.waist_rpy as number[])];
 }
 
 function flattenJointObservation(obs: object): number[] {
+  // Flatten G1JointState-shaped observation into 16-dim vector for the VLA request.
+  // The G1 VLA joint format is: left_arm(7) + left_gripper(1) + right_arm(7) + right_gripper(1) = 16.
+  // Waist_rpy is NOT included in the VLA joint-space mode.
   const o = obs as Record<string, unknown>;
   const leftArm = o.left_arm as number[];
   const rightArm = o.right_arm as number[];
-  return [
-    ...leftArm,
-    o.left_gripper as number,
-    ...rightArm,
-    o.right_gripper as number,
-    ...(o.waist_rpy as number[]),
-  ];
+  return [...leftArm, o.left_gripper as number, ...rightArm, o.right_gripper as number];
 }
 
 async function realComparison(
@@ -364,8 +346,7 @@ async function realComparison(
       : ["left_shoulder_pitch", "left_shoulder_roll", "left_shoulder_yaw", "left_elbow", "left_wrist_roll", "left_wrist_pitch", "left_wrist_yaw",
           "left_gripper",
           "right_shoulder_pitch", "right_shoulder_roll", "right_shoulder_yaw", "right_elbow", "right_wrist_roll", "right_wrist_pitch", "right_wrist_yaw",
-          "right_gripper",
-          "waist_roll", "waist_pitch", "waist_yaw"];
+          "right_gripper"];
 
     const jointDeltas: Record<string, number> = {};
     for (let i = 0; i < Math.min(jointNames.length, deltas.length); i++) {

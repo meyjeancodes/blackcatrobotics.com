@@ -86,6 +86,19 @@ export const PLATFORM_URDFS: PlatformUrdf[] = [
     urdfPath: '/robots/asimov/asimov_1.urdf',
     badge: 'Open-Source URDF',
   },
+  // Asimov 1 / Asimov V1 both use the same Menlo open-source URDF
+  {
+    id: 'asimov-1',
+    name: 'Asimov 1',
+    urdfPath: '/robots/asimov/asimov_1.urdf',
+    badge: 'Open-Source URDF',
+  },
+  {
+    id: 'asimov-v1',
+    name: 'Asimov V1',
+    urdfPath: '/robots/asimov/asimov_1.urdf',
+    badge: 'Open-Source URDF',
+  },
 ];
 
 /** Look up URDF config by platform ID */

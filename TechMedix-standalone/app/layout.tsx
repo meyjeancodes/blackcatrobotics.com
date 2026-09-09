@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import "@/lib/techmedix"; // Register all TechMedix skills
 import "./globals.css";
 
 export const metadata: Metadata = {

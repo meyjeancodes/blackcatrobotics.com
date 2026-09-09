@@ -105,4 +105,20 @@ export const URDF_ROBOTS: Record<string, UrdfPlatformEntry> = {
     urdfPath: '/robots/unitree-g1/g1_29dof.urdf',
     badge: 'Official URDF',
   },
+  // Asimov open-source humanoid — same URDF for both V1 entries
+  'asimov-1': {
+    name: 'Asimov 1',
+    urdfPath: '/robots/asimov/asimov_1.urdf',
+    badge: 'Open-Source URDF',
+  },
+  'asimov-v1': {
+    name: 'Asimov V1',
+    urdfPath: '/robots/asimov/asimov_1.urdf',
+    badge: 'Open-Source URDF',
+  },
+  'asimov-here-be-dragons': {
+    name: 'Asimov Here Be Dragons',
+    urdfPath: '/robots/asimov/asimov_1.urdf',
+    badge: 'Open-Source URDF',
+  },
 };

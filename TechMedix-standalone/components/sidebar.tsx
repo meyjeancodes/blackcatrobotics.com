@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import {
   BookOpen,
+  Camera,
   ChevronLeft,
   ChevronRight,
   CreditCard,
@@ -38,7 +39,7 @@ interface NavGroup {
 
 const NAV: NavGroup[] = [
   { href: "/dashboard",  label: "Overview",    icon: LayoutDashboard },
-  { href: "/knowledge",  label: "Knowledge Hub",  icon: BookOpen },
+  { href: "/ar",         label: "AR Mode",     icon: Camera },
   {
     label: "Maintenance", icon: Wrench,
     children: [

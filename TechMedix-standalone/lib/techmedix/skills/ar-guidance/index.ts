@@ -32,10 +32,10 @@ interface ArGuidanceInput {
   image_data?: string;
 }
 
-async function runArGuidance(input: ArGuidanceInput): Promise<SkillResult> {
+const runArGuidance = async (input: SkillInput): Promise<SkillResult> => {
   try {
     const prompt = input.image_data
-      ? `Image attached. Fault: ${input.active_fault}. Provide AR overlay instructions for a field technician.`
+      ? `Fault: ${input.active_fault}. Provide AR overlay instructions for a field technician working on the robot.`
       : `Fault: ${input.active_fault}. Provide AR overlay instructions for a field technician working on the robot.`;
 
     const visionResult = await runOllamaVision(prompt, {
