@@ -19,15 +19,11 @@ import type { MedicalSignalSeries, MedicalTelemetryPoint } from "@/lib/shared";
 
 const useMockData =
   process.env.TECHMEDIX_USE_MOCK_DATA === "true" ||
-  process.env.NEXT_PUBLIC_MOCK_DATA === "true" ||
-  !process.env.NEXT_PUBLIC_SUPABASE_URL;
+  process.env.NEXT_PUBLIC_MOCK_DATA === "true";
 const customerId = process.env.TECHMEDIX_DEFAULT_CUSTOMER_ID ?? defaultCustomerId;
 
 async function resolveCustomerId(): Promise<string> {
   const envFallback = customerId;
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    return envFallback;
-  }
 
   try {
     const supabase = await createSupabaseServerClient();
@@ -267,9 +263,8 @@ export async function getDashboardData() {
       stats: buildDashboardStats(snapshot)
     };
   } catch (err) {
-    console.error("[techmedix] getDashboardData failed — falling back to mock:", err);
-    const snapshot = buildDashboardSnapshot(customerId);
-    return { snapshot, stats: buildDashboardStats(snapshot) };
+    console.error("[techmedix] getDashboardData failed:", err);
+    throw err;
   }
 }
 
