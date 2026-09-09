@@ -51,16 +51,29 @@
 
 import type { TelemetryFrame, RuleResult, VLAComparisonResult } from "./types";
 
-// Read at call-time so test env stubs take effect
+// ─── Config ────────────────────────────────────────────────────────────────────
+
+function getInferenceServerUrl(): string | null {
+  // Priority: explicit local server URL > HF API (if token present)
+  const localUrl = process.env.VLA_INFERENCE_SERVER_URL;
+  if (localUrl) return localUrl;
+  const hfToken = process.env.HUGGINGFACE_API_TOKEN;
+  if (hfToken) return "https://api-inference.huggingface.co/models/unitreerobotics/UnifoLM-VLA";
+  return null;
+}
+
+function getModelType(): "ee" | "joint" {
+  return (process.env.VLA_MODEL_TYPE as "ee" | "joint") ?? "ee";
+}
+
 function getEscalationThreshold(): number {
   return parseFloat(process.env.VLA_ESCALATION_THRESHOLD ?? "0.65");
 }
 
 function isMockMode(): boolean {
-  return (
-    process.env.NEXT_PUBLIC_MOCK_DATA === "true" ||
-    !process.env.HUGGINGFACE_API_TOKEN
-  );
+  // Mock only when NO inference server is configured at all.
+  // A local VLA server or HF token both count as "live".
+  return getInferenceServerUrl() === null || process.env.NEXT_PUBLIC_MOCK_DATA === "true";
 }
 
 // ─── Mock seeded random (deterministic per joint name + timestamp) ─────────────
@@ -137,33 +150,254 @@ function mockComparison(
   };
 }
 
-// ─── Real implementation stub ─────────────────────────────────────────────────
-// Uncomment and complete when VLA inference server is available.
+// ─── Real comparison — local VLA inference server ─────────────────────────────
 //
-// async function realComparison(
-//   escalated: RuleResult[],
-//   frame: TelemetryFrame
-// ): Promise<VLAComparisonResult> {
-//   const url = process.env.VLA_INFERENCE_SERVER_URL ??
-//     "https://api-inference.huggingface.co/models/unitreerobotics/UnifoLM-VLA";
-//   const stateVector = Object.values(frame.joints).flatMap((j) => [j.position, j.torque]);
-//   const response = await fetch(url, {
-//     method: "POST",
-//     headers: { Authorization: `Bearer ${process.env.HUGGINGFACE_API_TOKEN}`, "Content-Type": "application/json" },
-//     body: JSON.stringify({ inputs: { state: stateVector }, parameters: { mode: "EE_R6_G1", num_actions_chunk: 25 } }),
-//   });
-//   if (!response.ok) throw new Error(`VLA API ${response.status}`);
-//   const data = await response.json();
-//   const expectedStep = data.predicted_actions[0] as number[];
-//   const deltas = expectedStep.map((v, i) => Math.abs(v - (stateVector[i] ?? 0)));
-//   const score = deltas.reduce((s, d) => s + d, 0) / deltas.length;
-//   const jointNames = Object.keys(frame.joints);
-//   const jointDeltas: Record<string, number> = {};
-//   jointNames.forEach((name, i) => { jointDeltas[name] = deltas[i] ?? 0; });
-//   const sorted = Object.entries(jointDeltas).sort(([, a], [, b]) => b - a);
-//   const threshold = getEscalationThreshold();
-//   return { behavioralScore: Math.min(1, score), jointDeltas, mostAnomalousJoints: sorted.slice(0, 3).map(([n]) => n), exceedsThreshold: score > threshold, rawComparison: data };
-// }
+// Sends the current telemetry frame to a VLA model server and compares the
+// predicted next-state action chunk against the actual sensor readings.
+//
+// Request schema:  POST { observation, language_instruction } → { action_chunk }
+//   observation   — the robot's current state in the VLA's expected format
+//   language_instruction — the task the robot is performing (e.g. "stack_block")
+//
+// Response schema: { action_chunk: { steps, action_dim, chunk, language_instruction, inference_latency_ms } }
+//   chunk[i] = predicted state at step i (chunk[0] = immediate next state)
+//
+// The VLA model type (EE-space 23-dim or joint-space 16-dim) is selected by
+// VLA_MODEL_TYPE env var (default: "ee").
+//
+// ─── Build observation from telemetry frame ────────────────────────────────────
+
+function buildEEObservation(frame: TelemetryFrame): object {
+  // Map TelemetryFrame.joints into a structured EE-space observation.
+  // The G1 EE state is: left_ee(10) + right_ee(10) + left_gripper(1) + right_gripper(1) + waist_rpy(3) = 23
+  //
+  // TelemetryFrame.joints has named joints with { torque, temp, position }.
+  // We encode position as the primary signal; torque is included as secondary.
+  //
+  // Exact layout depends on the VLA model — here we produce a reasonable mapping:
+  //   left_ee:   [x, y, z, r1..r6 (identity proxy), gripper]  — from left arm joints
+  //   right_ee:  [x, y, z, r1..r6 (identity proxy), gripper]  — from right arm joints
+  //   waist_rpy: [roll, pitch, yaw]                            — from waist sensors
+  //
+  // Rotation matrix columns default to identity (robot facing forward) when
+  // orientation sensors are absent from the frame.
+
+  const identity6 = [1, 0, 0, 0, 1, 0]; // first 2 columns of 3×3 identity
+
+  const leftArm = frame.joints.left_arm
+    ? frame.joints.left_arm as unknown as Record<string, { position: number }>
+    : {};
+  const rightArm = frame.joints.right_arm
+    ? frame.joints.right_arm as unknown as Record<string, { position: number }>
+    : {};
+
+  const leftGripper = frame.joints.left_gripper?.position ?? 0.5;
+  const rightGripper = frame.joints.right_gripper?.position ?? 0.5;
+
+  // EE position — derive from arm joint positions as a simple proxy
+  // (A real deployment would have dedicated EE sensor readings in the frame)
+  const leftEE = [
+    leftArm.shoulder_pitch?.position ?? 0,
+    leftArm.shoulder_roll?.position ?? 0,
+    leftArm.elbow?.position ?? 0,
+    ...identity6,
+    leftGripper,
+  ] as [number, number, number, number, number, number, number, number, number, number];
+
+  const rightEE = [
+    rightArm.shoulder_pitch?.position ?? 0,
+    rightArm.shoulder_roll?.position ?? 0,
+    rightArm.elbow?.position ?? 0,
+    ...identity6,
+    rightGripper,
+  ] as [number, number, number, number, number, number, number, number, number, number];
+
+  const waistSensors = frame.sensors;
+  const waistRpy = [
+    waistSensors.waist_roll?.value ?? 0,
+    waistSensors.waist_pitch?.value ?? 0,
+    waistSensors.waist_yaw?.value ?? 0,
+  ] as [number, number, number];
+
+  return {
+    left_ee: leftEE,
+    right_ee: rightEE,
+    left_gripper: leftGripper,
+    right_gripper: rightGripper,
+    waist_rpy: waistRpy,
+  };
+}
+
+function buildJointObservation(frame: TelemetryFrame): object {
+  // Joint-space observation: 16-dim
+  // left_arm(7) + left_gripper(1) + right_arm(7) + right_gripper(1) + waist_rpy(3)
+  const leftArm = frame.joints.left_arm
+    ? frame.joints.left_arm as unknown as Record<string, { position: number }>
+    : {};
+  const rightArm = frame.joints.right_arm
+    ? frame.joints.right_arm as unknown as Record<string, { position: number }>
+    : {};
+
+  return {
+    left_arm: [
+      leftArm.shoulder_pitch?.position ?? 0,
+      leftArm.shoulder_roll?.position ?? 0,
+      leftArm.shoulder_yaw?.position ?? 0,
+      leftArm.elbow?.position ?? 0,
+      leftArm.wrist_roll?.position ?? 0,
+      leftArm.wrist_pitch?.position ?? 0,
+      leftArm.wrist_yaw?.position ?? 0,
+    ] as [number, number, number, number, number, number, number],
+    left_gripper: frame.joints.left_gripper?.position ?? 0.5,
+    right_arm: [
+      rightArm.shoulder_pitch?.position ?? 0,
+      rightArm.shoulder_roll?.position ?? 0,
+      rightArm.shoulder_yaw?.position ?? 0,
+      rightArm.elbow?.position ?? 0,
+      rightArm.wrist_roll?.position ?? 0,
+      rightArm.wrist_pitch?.position ?? 0,
+      rightArm.wrist_yaw?.position ?? 0,
+    ] as [number, number, number, number, number, number, number],
+    right_gripper: frame.joints.right_gripper?.position ?? 0.5,
+    waist_rpy: [
+      frame.sensors.waist_roll?.value ?? 0,
+      frame.sensors.waist_pitch?.value ?? 0,
+      frame.sensors.waist_yaw?.value ?? 0,
+    ] as [number, number, number],
+  };
+}
+
+function flattenEEObservation(obs: object): number[] {
+  // Flatten G1EEState-shaped observation into 23-dim vector for the VLA request.
+  const o = obs as Record<string, unknown>;
+  const leftEE = o.left_ee as number[];
+  const rightEE = o.right_ee as number[];
+  return [
+    ...leftEE,
+    ...rightEE,
+    o.left_gripper as number,
+    o.right_gripper as number,
+    ...(o.waist_rpy as number[]),
+  ];
+}
+
+function flattenJointObservation(obs: object): number[] {
+  const o = obs as Record<string, unknown>;
+  const leftArm = o.left_arm as number[];
+  const rightArm = o.right_arm as number[];
+  return [
+    ...leftArm,
+    o.left_gripper as number,
+    ...rightArm,
+    o.right_gripper as number,
+    ...(o.waist_rpy as number[]),
+  ];
+}
+
+async function realComparison(
+  escalated: RuleResult[],
+  frame: TelemetryFrame
+): Promise<VLAComparisonResult> {
+  const serverUrl = getInferenceServerUrl();
+  if (!serverUrl) {
+    console.warn("[vla-comparator] No inference server configured — falling back to mock.");
+    return mockComparison(escalated, frame);
+  }
+
+  const modelType = getModelType();
+  const observation = modelType === "ee" ? buildEEObservation(frame) : buildJointObservation(frame);
+  const flattened = modelType === "ee" ? flattenEEObservation(observation) : flattenJointObservation(observation);
+  const actionDim = modelType === "ee" ? 23 : 16;
+
+  // Infer the active task from escalated rules, falling back to a default.
+  // In production this would come from the robot's current task context.
+  const taskHint = escalated
+    .filter((r) => r.affectedComponents.some((c) => c.includes("arm") || c.includes("gripper")))
+    .map((r) => r.ruleId)
+    .join(", ");
+  const languageInstruction = taskHint || "inspect";
+
+  try {
+    const res = await fetch(serverUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.HUGGINGFACE_API_TOKEN ?? ""}`,
+      },
+      body: JSON.stringify({
+        observation,
+        language_instruction: languageInstruction,
+      }),
+    });
+
+    if (!res.ok) {
+      const errText = await res.text().catch(() => "");
+      throw new Error(`VLA server error ${res.status}: ${errText.slice(0, 200)}`);
+    }
+
+    const data = await res.json();
+
+    // Parse the action_chunk response.
+    const chunk = data.action_chunk?.chunk ?? data.chunk ?? data.predicted_actions;
+    if (!chunk || !Array.isArray(chunk) || chunk.length === 0) {
+      throw new Error("VLA response missing action_chunk.chunk array");
+    }
+
+    const expectedStep = chunk[0] as number[];
+    const dim = expectedStep.length;
+
+    // Compute per-dimension delta between predicted next state and actual state.
+    const deltas: number[] = [];
+    for (let i = 0; i < dim; i++) {
+      deltas.push(Math.abs((expectedStep[i] ?? 0) - (flattened[i] ?? 0)));
+    }
+
+    // Normalize delta by dimension-wise max from training stats (if available).
+    // Without training stats we use mean absolute delta as the raw score.
+    const rawScore = deltas.reduce((s, d) => s + d, 0) / deltas.length;
+
+    // Build per-joint delta map. The joint names depend on model type.
+    const jointNames = modelType === "ee"
+      ? ["left_ee_x", "left_ee_y", "left_ee_z", "left_ee_r1", "left_ee_r2", "left_ee_r3", "left_ee_r4", "left_ee_r5", "left_ee_r6", "left_gripper",
+          "right_ee_x", "right_ee_y", "right_ee_z", "right_ee_r1", "right_ee_r2", "right_ee_r3", "right_ee_r4", "right_ee_r5", "right_ee_r6", "right_gripper",
+          "waist_roll", "waist_pitch", "waist_yaw"]
+      : ["left_shoulder_pitch", "left_shoulder_roll", "left_shoulder_yaw", "left_elbow", "left_wrist_roll", "left_wrist_pitch", "left_wrist_yaw",
+          "left_gripper",
+          "right_shoulder_pitch", "right_shoulder_roll", "right_shoulder_yaw", "right_elbow", "right_wrist_roll", "right_wrist_pitch", "right_wrist_yaw",
+          "right_gripper",
+          "waist_roll", "waist_pitch", "waist_yaw"];
+
+    const jointDeltas: Record<string, number> = {};
+    for (let i = 0; i < Math.min(jointNames.length, deltas.length); i++) {
+      jointDeltas[jointNames[i]] = parseFloat(deltas[i].toFixed(4));
+    }
+
+    // Sort by delta descending — top 3 are most anomalous.
+    const sorted = Object.entries(jointDeltas).sort(([, a], [, b]) => b - a);
+    const mostAnomalousJoints = sorted.slice(0, 3).map(([name]) => name);
+
+    const threshold = getEscalationThreshold();
+    const behavioralScore = parseFloat(Math.min(1, rawScore).toFixed(4));
+
+    return {
+      behavioralScore,
+      jointDeltas,
+      mostAnomalousJoints,
+      exceedsThreshold: behavioralScore > threshold,
+      rawComparison: {
+        modelType,
+        actionDim,
+        chunkSteps: chunk.length,
+        inferenceLatencyMs: data.action_chunk?.inference_latency_ms,
+        _note: "Real VLA comparison — see vla-comparator.ts for schema details.",
+      },
+    };
+  } catch (err) {
+    console.error("[vla-comparator] realComparison failed:", err);
+    // On fetch failure, fall back to mock so the pipeline doesn't crash.
+    return mockComparison(escalated, frame);
+  }
+}
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
@@ -178,13 +412,13 @@ export async function compareWithVLA(
   const mock = isMockMode();
   const result = mock
     ? mockComparison(escalated, frame)
-    // : await realComparison(escalated, frame);  // uncomment for live
-    : mockComparison(escalated, frame);           // fallback until live is enabled
+    : await realComparison(escalated, frame);
 
   console.log(
     `[Layer 2 — vla-comparator] behavioral score: ${result.behavioralScore.toFixed(3)}, ` +
     `threshold: ${getEscalationThreshold()}, escalating: ${result.exceedsThreshold}, ` +
-    `mock: ${mock}`
+    `mock: ${mock}` +
+    (mock ? "" : `, model: ${getModelType()}`)
   );
 
   return result;
