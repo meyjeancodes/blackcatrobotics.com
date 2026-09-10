@@ -995,7 +995,7 @@ export const PLATFORM_IMAGE_MAP: Record<string, string> = {
   // ── Industrial ─────────────────────────────────────────────────────────────
   "franka-panda":          "/images/platforms/franka_panda.jpg",
   "universal-ur5e":        "/images/platforms/universal_robots_ur5e.jpg",
-  "kuka-med14":            "/images/platforms/kuka_med14.jpg",
+  "kuka-med14":            "/images/platforms/kuka_med14.png",
   "ufactory-xarm6":        "/images/platforms/ufactory_xarm6.jpg",
   "kinova-gen3":           "/images/platforms/kinova_gen3.jpg",
   "rebot-devarm":          "/images/platforms/robo_inc.png",
@@ -1010,7 +1010,6 @@ export const PLATFORM_IMAGE_MAP: Record<string, string> = {
   "moon-surgical-maestro": "/images/platforms/moon_maestro.jpg",
   "virtual-incision-mira": "/images/platforms/virtual_incision_mira.jpg",
   "asensus-senhance":      "/images/platforms/asensus_senhance.jpg",
-  "torin-surgical":        "/images/platforms/torin_surgical.jpg",
   "rob-surgical-bitrack":  "/images/platforms/rob_bitrack.jpg",
   "ekso-eksonr":           "/images/platforms/ekso_eksonr.jpg",
   
