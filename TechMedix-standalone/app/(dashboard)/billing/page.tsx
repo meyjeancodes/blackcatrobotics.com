@@ -4,6 +4,8 @@ import { BillingCheckoutButton } from "../../../components/billing-checkout-butt
 import { formatCurrency } from "../../../lib/format";
 import { getDashboardData } from "../../../lib/data";
 
+export const dynamic = "force-dynamic";
+
 const techmedixPlans = [
   {
     id: "operator",

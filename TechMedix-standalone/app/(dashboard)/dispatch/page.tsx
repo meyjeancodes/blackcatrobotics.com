@@ -3,6 +3,8 @@ import { StatusPill } from "../../../components/status-pill";
 import { getDashboardData } from "../../../lib/data";
 import { DispatchJobCard } from "./DispatchJobCard";
 
+export const dynamic = "force-dynamic";
+
 export default async function DispatchPage() {
   const { snapshot } = await getDashboardData();
 

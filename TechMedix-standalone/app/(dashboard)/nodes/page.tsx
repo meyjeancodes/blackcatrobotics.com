@@ -5,6 +5,8 @@ import { systemNodes, nodeEvents } from "../../../lib/shared/mock-data";
 import { getDashboardData } from "../../../lib/data";
 import type { SystemNode } from "../../../lib/shared/types";
 
+export const dynamic = "force-dynamic";
+
 const nodeTypeLabel: Record<SystemNode["type"], string> = {
   robot:   "Robot",
   home:    "Smart Home",

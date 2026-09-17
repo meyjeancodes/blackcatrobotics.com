@@ -17,6 +17,8 @@ import { ChatPanel } from "../../../components/chat-panel";
 import { ActionCenter } from "../../../components/action-center";
 import { getDashboardData } from "../../../lib/data";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const { snapshot, stats } = await getDashboardData();
   const flagshipRobot = snapshot.robots[0];
