@@ -212,6 +212,21 @@ export async function listAllFailureModes(): Promise<
   return (data ?? []) as (FailureMode & { platform: { name: string; slug: string } })[];
 }
 
+export async function getCriticalFailureModes(): Promise<
+  (FailureMode & { platform: { name: string; slug: string } })[]
+> {
+  if (!isSupabaseServerConfigured()) return [];
+  const supabase = createServiceClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("failure_modes")
+    .select("*, platform:platforms(name, slug)")
+    .eq("severity", "critical")
+    .order("id");
+  if (error) return [];
+  return (data ?? []) as (FailureMode & { platform: { name: string; slug: string } })[];
+}
+
 export async function getPredictiveSignals(failureModeId: string): Promise<PredictiveSignal[]> {
   if (!isSupabaseServerConfigured()) return [];
   const supabase = createServiceClient();
