@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, X, Wrench, ShoppingCart } from "lucide-react";
+import { Send, X, Wrench, ShoppingCart, Check } from "lucide-react";
 import type { StorePart } from "@/lib/store/parts-catalog";
 
 interface Message {
@@ -15,6 +15,9 @@ const INITIAL_SUGGESTIONS = [
   "Looking for hip actuator for H1",
   "What parts do you have for Boston Dynamics Spot?",
   "H1 battery draining fast",
+  "Spot arm actuator making noise",
+  "G1 grip force dropping",
+  "Asimov battery fault",
 ];
 
 export function PartsAdvisor() {
@@ -22,6 +25,9 @@ export function PartsAdvisor() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [cart, setCart] = useState<Map<string, { part: StorePart; qty: number }>>(
+    new Map()
+  );
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,38 +76,87 @@ export function PartsAdvisor() {
     }
   };
 
-  const buyPart = (part: StorePart) => {
-    // Redirect to checkout or add to cart
-    fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sku: part.sku, quantity: 1 }),
-    })
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.ok && d.url) {
-          window.location.href = d.url;
-        } else {
-          alert("Checkout unavailable: " + (d.error || "Please try again"));
-        }
-      })
-      .catch(() => alert("Checkout unavailable. Please try again."));
+  const addToCart = (part: StorePart) => {
+    setCart((prev) => {
+      const next = new Map(prev);
+      const existing = next.get(part.sku);
+      if (existing) {
+        next.set(part.sku, { part, qty: existing.qty + 1 });
+      } else {
+        next.set(part.sku, { part, qty: 1 });
+      }
+      return next;
+    });
   };
+
+  const removeFromCart = (sku: string) => {
+    setCart((prev) => {
+      const next = new Map(prev);
+      next.delete(sku);
+      return next;
+    });
+  };
+
+  const updateCartQty = (sku: string, qty: number) => {
+    if (qty <= 0) { removeFromCart(sku); return; }
+    setCart((prev) => {
+      const next = new Map(prev);
+      const existing = next.get(sku);
+      if (existing) next.set(sku, { ...existing, qty });
+      return next;
+    });
+  };
+
+  const checkout = async () => {
+    if (cart.size === 0) return;
+    const items = Array.from(cart.values()).map(({ part, qty }) => ({
+      sku: part.sku,
+      quantity: qty,
+    }));
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+      const data = await res.json();
+      if (data.ok && data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Checkout unavailable: " + (data.error || "Please try again"));
+      }
+    } catch {
+      alert("Checkout unavailable. Please try again.");
+    }
+  };
+
+  const cartCount = Array.from(cart.values()).reduce((s, { qty }) => s + qty, 0);
 
   if (!isOpen) {
     return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-ember px-5 py-3 font-ui text-sm uppercase tracking-widest text-white shadow-lg transition hover:bg-ember/90 hover:shadow-xl"
-      >
-        <Wrench size={16} />
-        Parts Advisor
-      </button>
+      <>
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-ember px-5 py-3 font-ui text-sm uppercase tracking-widest text-white shadow-lg transition hover:bg-ember/90 hover:shadow-xl"
+        >
+          <Wrench size={16} />
+          Parts Advisor
+        </button>
+        {cartCount > 0 && (
+          <button
+            onClick={() => setIsOpen(true)}
+            className="fixed bottom-6 right-20 z-50 flex items-center gap-2 rounded-full bg-ember/90 px-4 py-3 font-ui text-sm uppercase tracking-widest text-white shadow-lg transition hover:bg-ember"
+          >
+            <ShoppingCart size={16} />
+            Cart ({cartCount})
+          </button>
+        )}
+      </>
     );
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex h-[600px] w-[400px] flex-col rounded-2xl border border-theme-10 bg-theme-18 shadow-2xl">
+    <div className="fixed bottom-6 right-6 z-50 flex h-[600px] w-[420px] flex-col rounded-2xl border border-theme-10 bg-theme-18 shadow-2xl">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-theme-10 px-4 py-3">
         <div className="flex items-center gap-2">
@@ -175,9 +230,9 @@ export function PartsAdvisor() {
                           </p>
                         </div>
                         <button
-                          onClick={() => buyPart(rec.part)}
+                          onClick={() => addToCart(rec.part)}
                           className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-ember text-white transition hover:bg-ember/90"
-                          title="Buy now"
+                          title="Add to cart"
                         >
                           <ShoppingCart size={12} />
                         </button>
@@ -199,6 +254,19 @@ export function PartsAdvisor() {
         )}
         <div ref={messagesEndRef} />
       </div>
+
+      {/* Cart bar */}
+      {cartCount > 0 && (
+        <div className="border-t border-theme-10 bg-theme-5 px-4 py-2 flex items-center gap-3">
+          <span className="text-xs text-theme-40">{cartCount} item{cartCount > 1 ? "s" : ""} in cart</span>
+          <button
+            onClick={checkout}
+            className="flex-1 rounded-lg bg-ember px-3 py-1.5 text-xs font-ui uppercase tracking-widest text-white transition hover:bg-ember/90"
+          >
+            Checkout ({cart.size})
+          </button>
+        </div>
+      )}
 
       {/* Input */}
       <div className="border-t border-theme-10 p-3">
