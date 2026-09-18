@@ -9,16 +9,26 @@ failure_modes:
     cause: "Sealed leg modules accumulate internal wear; they are designed as field-replaceable units."
     mitigation: "Swap the affected leg module (Boston Dynamics sells them as LRU kits) and return the old unit for factory rebuild."
     confidence: verified-official
-  - mode: "Battery latch/cell degradation"
-    symptom: "Shorter runtime and occasional power loss over bumps."
-    cause: "High charge-cycle counts and hard landings stressing the latch interface."
-    mitigation: "Retire batteries per cycle-count guidance; inspect latches for cracks during weekly checks."
+  - mode: "Battery internal fault or hot cell"
+    symptom: "All SoC lights blink after pressing the SoC button; battery logging system full or cell above safe threshold."
+    cause: "High charge-cycle counts; thermal stress from repeated fast-charge; internal cell fault."
+    mitigation: "Insert battery into Spot and clear log via Admin Console > Battery page; cool battery outside robot for several hours; contact BD Support if persists."
+    confidence: verified-official
+  - mode: "Battery thermal runaway"
+    symptom: "Battery pack ignites or smolders; toxic fumes emitted; fire spreads to chassis."
+    cause: "Lithium-ion cell defect or thermal abuse; Spot battery fires cannot be extinguished with conventional agents."
+    mitigation: "Evacuate area; do not use conventional fire extinguishers; contact BD Support and fire department with hazmat training."
     confidence: verified-official
   - mode: "Payload port connector wear on frequent re-rigging"
     symptom: "Intermittent payload detection or data dropouts."
     cause: "The mechanical/electrical payload ports wear with repeated docking cycles."
     mitigation: "Follow the guided payload-removal procedure; inspect pins and use the protective cover between missions."
     confidence: verified-official
+  - mode: "IMU/perception fault from environmental exposure"
+    symptom: "Localization drift, erratic navigation, or 'perception fault' camera error."
+    cause: "Dust, moisture, or vibration degrading IMU or camera calibration; extreme temperatures affecting sensor accuracy."
+    mitigation: "Run sensor calibration from tablet; clean camera/LiDAR lenses; return to controlled environment for recalibration."
+    confidence: verified-community
 repair_protocol: |
   1. Spot service requires Boston Dynamics operator training for warranty work;
      untrained teardown voids coverage.

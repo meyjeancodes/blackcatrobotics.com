@@ -19,6 +19,16 @@ failure_modes:
     cause: "RGB camera lens obstruction (dust/grime from factory floor); VLM inference errors; calibration drift after physical shock."
     mitigation: "Clean camera lenses regularly; recalibrate vision system after transport or impact; update Helix VLA models per Figure AI releases."
     confidence: reported
+  - mode: "Motor overheating during high-demand tasks"
+    symptom: "Joint motors overheat during fast or sustained manipulation; robot enters limp mode or reduces speed."
+    cause: "High-torque actuators in a compact form factor; insufficient cooling for continuous operation; dynamic tasks push motors beyond rated duty cycle."
+    mitigation: "Monitor motor temps via diagnostics; schedule high-demand tasks with cool-down intervals; ensure adequate ventilation around torso."
+    confidence: reported
+  - mode: "Software crash or frozen state"
+    symptom: "Robot stops mid-task, becomes unresponsive, or falls back to static pose."
+    cause: "AI inference timeout; VLM/Helix model edge case; computation overload on RTX GPU during complex scene understanding."
+    mitigation: "Reset robot and re-run scene understanding; update Helix model to latest release; report recurring freezes to Figure AI for OTA fix."
+    confidence: reported
 repair_protocol: |
   1. Power down the robot and engage joint locks before any maintenance.
   2. Inspect forearm and wrist cabling for wear, especially at flex points.
