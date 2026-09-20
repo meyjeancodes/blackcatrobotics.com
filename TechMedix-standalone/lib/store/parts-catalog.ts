@@ -44,17 +44,14 @@ export interface PartBundle {
 const PLATFORM_FALLBACK: Record<string, string> = {
   "unitree-h1-2": "/images/parts/unitree_h1.jpg",
   "unitree-g1": "/images/parts/unitree_g1.jpg",
-  "boston-dynamics-spot": "/images/parts/bostondynamics_spot.jpg",
+  "spot": "/images/parts/bostondynamics_spot.jpg",
   "dji-agras-t50": "/images/parts/dji_agras_t50.jpg",
   "dji-agras-t60": "/images/parts/agras_t60.jpg",
   "figure-02": "/images/parts/figure02.jpg",
   "optimus-gen3": "/images/parts/optimus.jpg",
-  "apollo": "/images/parts/apollo.jpg",
-  "neo": "/images/parts/neo.jpg",
   "asimov-1": "/images/parts/asimov.jpg",
   "asimov-here-be-dragons": "/images/parts/asimov.jpg",
   "digit-v5": "/images/parts/digit.jpg",
-  "agility-digit": "/images/parts/agility_digit.jpg",
   "skydio-x10": "/images/parts/skydio.jpg",
   "starship-gen3": "/images/parts/starship.jpg",
   "lime-gen4": "/images/parts/lime.jpg",
@@ -73,11 +70,10 @@ const PLATFORM_FALLBACK: Record<string, string> = {
   "zipline-p2": "/images/parts/zipline.jpg",
   "proteus-amr": "/images/parts/proteus.jpg",
   "serve-rs2": "/images/parts/serve.jpg",
-  "franka-panda": "/images/parts/franka.jpg",
-  "kinova-gen3": "/images/parts/kinova.jpg",
-  "universal-robots-ur5e": "/images/parts/ur5e.jpg",
-  "ufactory-xarm6": "/images/parts/ufactory.jpg",
   "nvidia-jetson-agx-thor": "/images/parts/thor.jpg",
+  "unitree-h1": "/images/parts/unitree_h1.jpg",
+  "unitree-h2": "/images/parts/unitree_h2.png",
+  "asimov-v1": "/images/parts/asimov.jpg",
 };
 
 export function getPartImage(sku: string, platformId: string): string {
@@ -151,15 +147,15 @@ const R1_OEM: StorePart[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 const SPOT_OEM: StorePart[] = [
-  { sku: "SPOT-LEG-ACT", name: "Spot Leg Actuator", platformId: "boston-dynamics-spot", manufacturer: "Boston Dynamics", description: "Genuine Spot leg actuator assembly.", unitAmount: 320000, currency: "usd", stripePriceId: "price_SPOT_LEG_ACT", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://bostondynamics.com/products/spot/extras/" },
-  { sku: "SPOT-ARM", name: "Spot Arm Assembly", platformId: "boston-dynamics-spot", manufacturer: "Boston Dynamics", description: "Genuine Spot arm with 6 DOF + gripper.", unitAmount: 450000, currency: "usd", stripePriceId: "price_SPOT_ARM", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://bostondynamics.com/products/spot/extras/spot-arm/" },
-  { sku: "SPOT-BATTERY", name: "Spot Battery Pack", platformId: "boston-dynamics-spot", manufacturer: "Boston Dynamics", description: "Genuine Spot battery. Hot-swap capable.", unitAmount: 180000, currency: "usd", stripePriceId: "price_SPOT_BATTERY", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem", sourceUrl: "https://intuitive-robots.com/spot-robot-payloads-and-accessories/" },
-  { sku: "SPOT-CHARGER", name: "Spot Charger", platformId: "boston-dynamics-spot", manufacturer: "Boston Dynamics", description: "Official Spot charging dock.", unitAmount: 220000, currency: "usd", stripePriceId: "price_SPOT_CHARGER", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://bostondynamics.com/products/spot/extras/" },
+  { sku: "SPOT-LEG-ACT", name: "Spot Leg Actuator", platformId: "spot", manufacturer: "Boston Dynamics", description: "Genuine Spot leg actuator assembly.", unitAmount: 320000, currency: "usd", stripePriceId: "price_SPOT_LEG_ACT", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://bostondynamics.com/products/spot/extras/" },
+  { sku: "SPOT-ARM", name: "Spot Arm Assembly", platformId: "spot", manufacturer: "Boston Dynamics", description: "Genuine Spot arm with 6 DOF + gripper.", unitAmount: 450000, currency: "usd", stripePriceId: "price_SPOT_ARM", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://bostondynamics.com/products/spot/extras/spot-arm/" },
+  { sku: "SPOT-BATTERY", name: "Spot Battery Pack", platformId: "spot", manufacturer: "Boston Dynamics", description: "Genuine Spot battery. Hot-swap capable.", unitAmount: 180000, currency: "usd", stripePriceId: "price_SPOT_BATTERY", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem", sourceUrl: "https://intuitive-robots.com/spot-robot-payloads-and-accessories/" },
+  { sku: "SPOT-CHARGER", name: "Spot Charger", platformId: "spot", manufacturer: "Boston Dynamics", description: "Official Spot charging dock.", unitAmount: 220000, currency: "usd", stripePriceId: "price_SPOT_CHARGER", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://bostondynamics.com/products/spot/extras/" },
 ];
 
 const SPOT_DIRECT: StorePart[] = [
-  { sku: "SPOT-BATTERY-D", name: "Spot Battery Pack (Direct Compatible)", platformId: "boston-dynamics-spot", manufacturer: "BlackCat Robotics", description: "Compatible battery pack. 65% below OEM.", unitAmount: 63000, currency: "usd", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/spot-battery-compatible" },
-  { sku: "SPOT-CHARGER-D", name: "Spot Charger (Direct Compatible)", platformId: "boston-dynamics-spot", manufacturer: "BlackCat Robotics", description: "Compatible charging dock. Verified voltage.", unitAmount: 110000, currency: "usd", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/spot-charger-compatible" },
+  { sku: "SPOT-BATTERY-D", name: "Spot Battery Pack (Direct Compatible)", platformId: "spot", manufacturer: "BlackCat Robotics", description: "Compatible battery pack. 65% below OEM.", unitAmount: 63000, currency: "usd", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/spot-battery-compatible" },
+  { sku: "SPOT-CHARGER-D", name: "Spot Charger (Direct Compatible)", platformId: "spot", manufacturer: "BlackCat Robotics", description: "Compatible charging dock. Verified voltage.", unitAmount: 110000, currency: "usd", image: "/images/parts/bostondynamics_spot.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/spot-charger-compatible" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -222,21 +218,11 @@ const OPTIMUS_OEM: StorePart[] = [
 // Apptronik Apollo
 // ─────────────────────────────────────────────────────────────────────────────
 
-const APOLLO_OEM: StorePart[] = [
-  { sku: "APOLLO-HAND", name: "Apollo Dexterous Hand", platformId: "apollo", manufacturer: "Apptronik", description: "Apollo hand module. 16-DOF dexterous manipulation.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_APOLLO_HAND", image: "/images/parts/apollo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://apptronik.com/products/apollo" },
-  { sku: "APOLLO-ARM-ACT", name: "Apollo Arm Actuator", platformId: "apollo", manufacturer: "Apptronik", description: "Genuine Apollo 7-DOF arm actuator module.", unitAmount: 820000, currency: "usd", stripePriceId: "price_APOLLO_ARM_ACT", image: "/images/parts/apollo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://apptronik.com/products/apollo" },
-  { sku: "APOLLO-BATTERY", name: "Apollo Battery Pack", platformId: "apollo", manufacturer: "Apptronik", description: "Apollo battery pack. Hot-swap compatible.", unitAmount: 1500000, currency: "usd", stripePriceId: "price_APOLLO_BATTERY", image: "/images/parts/apollo.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://apptronik.com/products/apollo" },
-];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 1X Neo / Asimov
 // ─────────────────────────────────────────────────────────────────────────────
 
-const NEO_OEM: StorePart[] = [
-  { sku: "NEO-HAND", name: "Neo Dexterous Hand", platformId: "neo", manufacturer: "1X", description: "Neo hand module with tendon-driven actuation. 20 DOF.", unitAmount: 2500000, currency: "usd", stripePriceId: "price_NEO_HAND", image: "/images/parts/neo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
-  { sku: "NEO-ARM-ACT", name: "Neo Arm Actuator", platformId: "neo", manufacturer: "1X", description: "Neo 7-DOF arm actuator module.", unitAmount: 420000, currency: "usd", stripePriceId: "price_NEO_ARM_ACT", image: "/images/parts/neo.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
-  { sku: "NEO-BATTERY", name: "Neo Battery Pack", platformId: "neo", manufacturer: "1X", description: "Neo battery pack. Hot-swap compatible.", unitAmount: 1500000, currency: "usd", stripePriceId: "price_NEO_BATTERY", image: "/images/parts/neo.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://1x.com/products/neo" },
-];
 
 const ASIMOV_OEM: StorePart[] = [
   { sku: "ASIMOV-ARM-ACT", name: "Asimov Arm Actuator", platformId: "asimov-here-be-dragons", manufacturer: "Menlo Research", description: "Asimov 5-DOF arm actuator module. Individual actuator pricing at low volume.", unitAmount: 3000000, currency: "usd", stripePriceId: "price_ASIMOV_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
@@ -292,11 +278,6 @@ const DIGIT_OEM: StorePart[] = [
   { sku: "DIGIT-BATTERY", name: "Digit v5 Battery Pack", platformId: "digit-v5", manufacturer: "Agility Robotics", description: "Genuine Digit v5 battery pack. Hot-swap compatible.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_DIGIT_BATTERY", image: "/images/parts/digit.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
 ];
 
-const AGILITY_OEM: StorePart[] = [
-  { sku: "AGILITY-HAND", name: "Digit Dexterous Hand", platformId: "agility-digit", manufacturer: "Agility Robotics", description: "Genuine Digit hand with 16 DOF.", unitAmount: 900000, currency: "usd", stripePriceId: "price_AGILITY_HAND", image: "/images/parts/agility_digit.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
-  { sku: "AGILITY-ARM-ACT", name: "Digit Arm Actuator", platformId: "agility-digit", manufacturer: "Agility Robotics", description: "Genuine Digit 7-DOF arm actuator module.", unitAmount: 750000, currency: "usd", stripePriceId: "price_AGILITY_ARM_ACT", image: "/images/parts/agility_digit.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
-  { sku: "AGILITY-BATTERY", name: "Digit Battery Pack", platformId: "agility-digit", manufacturer: "Agility Robotics", description: "Genuine Digit battery pack. Hot-swap compatible.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_AGILITY_BATTERY", image: "/images/parts/agility_digit.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://agilityrobotics.com/support" },
-];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DJI Matrice 350
@@ -434,45 +415,22 @@ const THOR_OEM: StorePart[] = [
 // UR5e
 // ─────────────────────────────────────────────────────────────────────────────
 
-const UR5E_OEM: StorePart[] = [
-  { sku: "UR5E-ARM", name: "UR5e 6-DOF Arm", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "UR5e collaborative arm. 5kg payload, 850mm reach.", unitAmount: 900000, currency: "usd", stripePriceId: "price_UR5E_ARM", image: "/images/parts/ur5e.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
-  { sku: "UR5E-GRIPPER", name: "UR5e Gripper", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "UR5e parallel-jaw gripper. Force-sensitive.", unitAmount: 900000, currency: "usd", stripePriceId: "price_UR5E_GRIPPER", image: "/images/parts/ur5e.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
-  { sku: "UR5E-CONTROLLER", name: "UR5e Controller", platformId: "universal-robots-ur5e", manufacturer: "Universal Robots", description: "UR5e PolyScope controller.", unitAmount: 2200000, currency: "usd", stripePriceId: "price_UR5E_CONTROLLER", image: "/images/parts/ur5e.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.universal-robots.com/products/ur5e/" },
-];
 
-const UR5E_DIRECT: StorePart[] = [
-  { sku: "UR5E-GRIPPER-D", name: "UR5e Gripper (Direct Compatible)", platformId: "universal-robots-ur5e", manufacturer: "BlackCat Robotics", description: "Compatible parallel-jaw gripper. 60% below OEM.", unitAmount: 1120000, currency: "usd", image: "/images/parts/ur5e.jpg", leadTime: "7–10 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/ur5e-gripper-compatible" },
-];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // UFactory xArm6
 // ─────────────────────────────────────────────────────────────────────────────
 
-const UFACTORY_OEM: StorePart[] = [
-  { sku: "UFACTORY-ARM", name: "xArm6 6-DOF Arm", platformId: "ufactory-xarm6", manufacturer: "UFactory", description: "xArm6 6-DOF arm. 5kg payload, 700mm reach.", unitAmount: 1500000, currency: "usd", stripePriceId: "price_UFACTORY_ARM", image: "/images/parts/ufactory.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.ufactory.cc/products/xarm-6" },
-  { sku: "UFACTORY-GRIPPER", name: "xArm6 Gripper", platformId: "ufactory-xarm6", manufacturer: "UFactory", description: "Genuine xArm6 gripper. Parallel-jaw, force-sensitive.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_UFACTORY_GRIPPER", image: "/images/parts/ufactory.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.ufactory.cc/products/xarm-6" },
-  { sku: "UFACTORY-CONTROLLER", name: "xArm6 Controller", platformId: "ufactory-xarm6", manufacturer: "UFactory", description: "xArm6 controller. ROS-compatible.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_UFACTORY_CONTROLLER", image: "/images/parts/ufactory.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.ufactory.cc/products/xarm-6" },
-];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Kinova Gen3
 // ─────────────────────────────────────────────────────────────────────────────
 
-const KINOVA_OEM: StorePart[] = [
-  { sku: "KINOVA-ARM", name: "Kinova Gen3 7-DOF Arm", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Kinova Gen3 lightweight 7-DOF arm.", unitAmount: 900000, currency: "usd", stripePriceId: "price_KINOVA_ARM", image: "/images/parts/kinova.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
-  { sku: "KINOVA-GRIPPER", name: "Kinova Gen3 Gripper", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Kinova Gen3 3-finger adaptive gripper.", unitAmount: 2200000, currency: "usd", stripePriceId: "price_KINOVA_GRIPPER", image: "/images/parts/kinova.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
-  { sku: "KINOVA-CONTROLLER", name: "Kinova Gen3 Controller", platformId: "kinova-gen3", manufacturer: "Kinova", description: "Kinova Gen3 controller. ROS-compatible.", unitAmount: 900000, currency: "usd", stripePriceId: "price_KINOVA_CONTROLLER", image: "/images/parts/kinova.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://www.kinova.ca/en/products/gen3" },
-];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Franka Panda
 // ─────────────────────────────────────────────────────────────────────────────
 
-const FRANKA_OEM: StorePart[] = [
-  { sku: "FRANKA-ARM", name: "Franka Panda 7-DOF Arm", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Franka Panda 7-DOF collaborative arm. 3kg payload.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_FRANKA_ARM", image: "/images/parts/franka.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products/panda" },
-  { sku: "FRANKA-CONTROLLER", name: "Franka Panda Controller", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Franka Panda desktop controller.", unitAmount: 900000, currency: "usd", stripePriceId: "price_FRANKA_CONTROLLER", image: "/images/parts/franka.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products/panda" },
-  { sku: "FRANKA-GRIPPER", name: "Franka Panda Gripper", platformId: "franka-panda", manufacturer: "Franka Emika", description: "Franka Panda parallel-jaw force-sensitive gripper.", unitAmount: 1800000, currency: "usd", stripePriceId: "price_FRANKA_GRIPPER", image: "/images/parts/franka.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://franka.de/products/panda" },
-];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ProTEUS AMR
@@ -482,6 +440,37 @@ const PROTEUS_OEM: StorePart[] = [
   { sku: "PROTEUS-WHEEL", name: "Proteus Wheel Motor", platformId: "proteus-amr", manufacturer: "Proteus", description: "Genuine Proteus wheel motor.", unitAmount: 220000, currency: "usd", stripePriceId: "price_PROTEUS_WHEEL", image: "/images/parts/proteus.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem", sourceUrl: "https://amazon-robotics.com/proteus" },
   { sku: "PROTEUS-BATTERY", name: "Proteus Battery Pack", platformId: "proteus-amr", manufacturer: "Proteus", description: "Genuine Proteus battery pack. ~12h runtime.", unitAmount: 280000, currency: "usd", stripePriceId: "price_PROTEUS_BATTERY", image: "/images/parts/proteus.jpg", leadTime: "5–7 days", warranty: "12 months", tier: "oem", sourceUrl: "https://amazon-robotics.com/proteus" },
   { sku: "PROTEUS-SENSOR", name: "Proteus Sensor Array", platformId: "proteus-amr", manufacturer: "Proteus", description: "Genuine Proteus sensor array.", unitAmount: 520000, currency: "usd", stripePriceId: "price_PROTEUS_SENSOR", image: "/images/parts/proteus.jpg", leadTime: "7–10 days", warranty: "12 months", tier: "oem", sourceUrl: "https://amazon-robotics.com/proteus" },
+];
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Unitree H2
+// ─────────────────────────────────────────────────────────────────────────────
+
+const H2_OEM: StorePart[] = [
+  { sku: "H2-KNEE-ACT", name: "Unitree H2 Knee Actuator", platformId: "unitree-h2", manufacturer: "Unitree Robotics", description: "Genuine replacement knee actuator module.", unitAmount: 125000, currency: "usd", stripePriceId: "price_H2_KNEE_ACT", image: "/images/parts/unitree_h2.png", leadTime: "5–7 days", warranty: "12 months", tier: "oem", sourceUrl: "https://shop.unitree.com/products/h2-accessories" },
+  { sku: "H2-HIP-ACT", name: "Unitree H2 Hip Actuator", platformId: "unitree-h2", manufacturer: "Unitree Robotics", description: "Heavy-duty H2 hip torque actuator.", unitAmount: 140000, currency: "usd", stripePriceId: "price_H2_HIP_ACT", image: "/images/parts/unitree_h2.png", leadTime: "5–7 days", warranty: "12 months", tier: "oem", sourceUrl: "https://shop.unitree.com/products/h2-accessories" },
+  { sku: "H2-BATTERY", name: "Unitree H2 Battery Pack", platformId: "unitree-h2", manufacturer: "Unitree Robotics", description: "Genuine H2 battery pack. Hot-swap capable.", unitAmount: 165000, currency: "usd", stripePriceId: "price_H2_BATTERY", image: "/images/parts/unitree_h2.png", leadTime: "3–5 days", warranty: "12 months", tier: "oem", sourceUrl: "https://shop.unitree.com/products/h2-battery" },
+  { sku: "H2-CONTROLLER", name: "Unitree H2 Main Controller", platformId: "unitree-h2", manufacturer: "Unitree Robotics", description: "Genuine H2 main controller. Quadruped gait control.", unitAmount: 290000, currency: "usd", stripePriceId: "price_H2_CONTROLLER", image: "/images/parts/unitree_h2.png", leadTime: "7–10 days", warranty: "12 months", tier: "oem", sourceUrl: "https://shop.unitree.com/products/h2-controller" },
+];
+
+const H2_DIRECT: StorePart[] = [
+  { sku: "H2-KNEE-ACT-D", name: "H2 Knee Actuator (Direct Compatible)", platformId: "unitree-h2", manufacturer: "BlackCat Robotics", description: "Tested-compatible knee actuator. Same mounting, 60% below OEM.", unitAmount: 50000, currency: "usd", image: "/images/parts/unitree_h2.png", leadTime: "3–5 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/unitree-h2-knee-actuator-compatible" },
+  { sku: "H2-BATTERY-D", name: "H2 Battery Pack (Direct Compatible)", platformId: "unitree-h2", manufacturer: "BlackCat Robotics", description: "Compatible battery pack. CATL cells, BMS verified.", unitAmount: 66000, currency: "usd", image: "/images/parts/unitree_h2.png", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/unitree-h2-battery-compatible" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Asimov v1
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ASIMOVV1_OEM: StorePart[] = [
+  { sku: "ASIMOVV1-ARM-ACT", name: "Asimov v1 Arm Actuator", platformId: "asimov-v1", manufacturer: "Menlo Research", description: "Asimov v1 5-DOF arm actuator module.", unitAmount: 3000000, currency: "usd", stripePriceId: "price_ASIMOVV1_ARM_ACT", image: "/images/parts/asimov.jpg", leadTime: "14–21 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
+  { sku: "ASIMOVV1-BATTERY", name: "Asimov v1 Battery Pack", platformId: "asimov-v1", manufacturer: "Menlo Research", description: "Asimov v1 13S4P Li-ion battery pack (46.8V, 10.5Ah).", unitAmount: 250000, currency: "usd", stripePriceId: "price_ASIMOVV1_BATTERY", image: "/images/parts/asimov.jpg", leadTime: "10–14 days", warranty: "12 months", tier: "oem", sourceUrl: "https://asimov.inc/diy-kit" },
+];
+
+const ASIMOVV1_DIRECT: StorePart[] = [
+  { sku: "ASIMOVV1-ARM-ACT-D", name: "Asimov v1 Arm Actuator (Direct Compatible)", platformId: "asimov-v1", manufacturer: "BlackCat Robotics", description: "Tested-compatible arm actuator. 60% below OEM.", unitAmount: 120000, currency: "usd", image: "/images/parts/asimov.jpg", leadTime: "3–5 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/asimov-v1-arm-actuator-compatible" },
+  { sku: "ASIMOVV1-BATTERY-D", name: "Asimov v1 Battery Pack (Direct Compatible)", platformId: "asimov-v1", manufacturer: "BlackCat Robotics", description: "Compatible battery pack. Verified capacity.", unitAmount: 100000, currency: "usd", image: "/images/parts/asimov.jpg", leadTime: "5–7 days", warranty: "30 days", tier: "direct", sourceUrl: "https://robostore.com/asimov-v1-battery-compatible" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -704,6 +693,8 @@ const BIRD_BUNDLES: PartBundle[] = [
 
 export const STORE_PARTS: StorePart[] = [
   ...H1_OEM,       ...H1_DIRECT,
+  ...H2_OEM,       ...H2_DIRECT,
+  ...ASIMOVV1_OEM, ...ASIMOVV1_DIRECT,
   ...G1_OEM,       ...G1_DIRECT,
   ...B2_OEM,
   ...R1_OEM,
@@ -713,14 +704,11 @@ export const STORE_PARTS: StorePart[] = [
   ...INSPIRE_OEM,
   ...FIGURE02_OEM,
   ...OPTIMUS_OEM,
-  ...APOLLO_OEM,
-  ...NEO_OEM,
   ...ASIMOV_OEM,
   ...SKYDIO_OEM,
   ...STARSHIP_OEM, ...STARSHIP_DIRECT,
   ...LIME_OEM,     ...LIME_DIRECT,
   ...DIGIT_OEM,
-  ...AGILITY_OEM,
   ...MATRICE_OEM,  ...MATRICE_DIRECT,
   ...AIGEN_OEM,
   ...BIRD_OEM,
@@ -734,10 +722,6 @@ export const STORE_PARTS: StorePart[] = [
   ...UWORLD_ULTRA_OEM,
   ...ZIPLINE_OEM,
   ...THOR_OEM,
-  ...UR5E_OEM,     ...UR5E_DIRECT,
-  ...UFACTORY_OEM,
-  ...KINOVA_OEM,
-  ...FRANKA_OEM,
 ];
 
 // Bundles — computed from real OEM prices with verified savings percentages.
@@ -826,7 +810,7 @@ export const STORE_BUNDLES: PartBundle[] = [
   {
     sku: "SPOT-ESSENTIALS",
     name: "Spot Essentials Kit",
-    platformId: "boston-dynamics-spot",
+    platformId: "spot",
     manufacturer: "BlackCat Robotics",
     description: "Most commonly replaced Spot parts: leg actuator, battery, and charger.",
     tier: "bundle",
@@ -893,30 +877,12 @@ export const STORE_BUNDLES: PartBundle[] = [
     leadTime: "14–21 days",
     warranty: "12 months",
   },
-  // Franka Panda Arm + Gripper
-  // OEM total: 1800000 + 1800000 = 3600000; 18% = 2952000
-  {
-    sku: "FRANKA-ARM-GRIP",
-    name: "Franka Panda Arm + Gripper Bundle",
-    platformId: "franka-panda",
-    manufacturer: "BlackCat Robotics",
-    description: "Franka Panda 7-DOF arm with parallel-jaw force-sensitive gripper.",
-    tier: "bundle",
-    unitAmount: 2952000,
-    currency: "usd",
-    savingsPct: 18,
-    savingsDollars: 648000,
-    parts: ["FRANKA-ARM", "FRANKA-GRIPPER"],
-    image: "/images/parts/franka.jpg",
-    leadTime: "14–21 days",
-    warranty: "12 months",
-  },
   // Asimov Core Kit: arm actuator + battery
   // OEM total: 30000 + 2500 = 32500; 20% = 26000, savings = 6500
   {
     sku: "ASIMOV-FULL-KIT",
     name: "Asimov Core Replacement Kit",
-    platformId: "asimov-here-be-dragons",
+    platformId: "asimov-v1",
     manufacturer: "BlackCat Robotics",
     description: "Asimov arm actuator and battery pack — the two most common replacement parts.",
     tier: "bundle",
@@ -944,6 +910,42 @@ export const STORE_BUNDLES: PartBundle[] = [
     savingsDollars: 1260000,
     parts: ["FIG2-HAND", "FIG2-ARM-ACT", "FIG2-BATTERY", "FIG2-CONTROLLER"],
     image: "/images/parts/figure02.jpg",
+    leadTime: "14–21 days",
+    warranty: "12 months",
+  },
+  // H2 Essentials: knee + battery + controller
+  // OEM total: 125000 + 165000 + 290000 = 580000; 18% = 475600, savings = 104400
+  {
+    sku: "H2-ESSENTIALS",
+    name: "H2 Essentials Kit",
+    platformId: "unitree-h2",
+    manufacturer: "BlackCat Robotics",
+    description: "H2 essentials: knee actuator, battery pack, and main controller.",
+    tier: "bundle",
+    unitAmount: 475600,
+    currency: "usd",
+    savingsPct: 18,
+    savingsDollars: 104400,
+    parts: ["H2-KNEE-ACT", "H2-BATTERY", "H2-CONTROLLER"],
+    image: "/images/parts/unitree_h2.png",
+    leadTime: "7–10 days",
+    warranty: "12 months",
+  },
+  // Asimov v1 Core Kit: arm actuator + battery
+  // OEM total: 3000000 + 250000 = 3250000; 20% = 2600000, savings = 650000
+  {
+    sku: "ASIMOVV1-FULL-KIT",
+    name: "Asimov v1 Core Replacement Kit",
+    platformId: "asimov-v1",
+    manufacturer: "BlackCat Robotics",
+    description: "Asimov v1 arm actuator and battery pack — the two most common replacement parts.",
+    tier: "bundle",
+    unitAmount: 2600000,
+    currency: "usd",
+    savingsPct: 20,
+    savingsDollars: 650000,
+    parts: ["ASIMOVV1-ARM-ACT", "ASIMOVV1-BATTERY"],
+    image: "/images/parts/asimov.jpg",
     leadTime: "14–21 days",
     warranty: "12 months",
   },
@@ -976,20 +978,17 @@ export const TIER_META: Record<PartTier, { label: string; badge: string; descrip
 export const PLATFORM_META: Record<string, { name: string; manufacturer: string }> = {
   "unitree-h1-2": { name: "Unitree H1", manufacturer: "Unitree Robotics" },
   "unitree-g1": { name: "Unitree G1", manufacturer: "Unitree Robotics" },
-  "boston-dynamics-spot": { name: "Boston Dynamics Spot", manufacturer: "Boston Dynamics" },
+  "spot": { name: "Boston Dynamics Spot", manufacturer: "Boston Dynamics" },
   "dji-agras-t50": { name: "DJI Agras T50", manufacturer: "DJI" },
   "dji-agras-t60": { name: "DJI Agras T60", manufacturer: "DJI" },
   "figure-02": { name: "Figure 02", manufacturer: "Figure AI" },
   "optimus-gen3": { name: "Tesla Optimus", manufacturer: "Tesla" },
-  "apollo": { name: "Apptronik Apollo", manufacturer: "Apptronik" },
-  "neo": { name: "1X Neo", manufacturer: "1X" },
   "asimov-1": { name: "Asimov", manufacturer: "Menlo Research" },
   "asimov-here-be-dragons": { name: "Asimov Here Be Dragons", manufacturer: "Menlo Research" },
   "skydio-x10": { name: "Skydio X10", manufacturer: "Skydio" },
   "starship-gen3": { name: "Starship Gen3", manufacturer: "Starship Technologies" },
   "lime-gen4": { name: "Lime Gen4", manufacturer: "Lime" },
   "digit-v5": { name: "Digit v5", manufacturer: "Agility Robotics" },
-  "agility-digit": { name: "Digit v5", manufacturer: "Agility Robotics" },
   "dji-matrice-350": { name: "Matrice 350", manufacturer: "DJI" },
   "aigen-element-gen2": { name: "Aigen Element Gen2", manufacturer: "Aigen" },
   "bird-three": { name: "Bird Three", manufacturer: "Bird Three" },
@@ -1003,10 +1002,6 @@ export const PLATFORM_META: Record<string, { name: string; manufacturer: string 
   "zipline-p2": { name: "Zipline P2", manufacturer: "Zipline" },
   "proteus-amr": { name: "Proteus AMR", manufacturer: "Proteus" },
   "serve-rs2": { name: "Serve RS2", manufacturer: "Serve Robotics" },
-  "franka-panda": { name: "Franka Panda", manufacturer: "Franka Emika" },
-  "kinova-gen3": { name: "Kinova Gen3", manufacturer: "Kinova" },
-  "universal-robots-ur5e": { name: "UR5e", manufacturer: "Universal Robots" },
-  "ufactory-xarm6": { name: "xArm6", manufacturer: "UFactory" },
   "nvidia-jetson-agx-thor": { name: "Jetson AGX Thor", manufacturer: "Nvidia" },
 };
 

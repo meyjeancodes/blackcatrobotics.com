@@ -8,7 +8,7 @@ const STORE_NAV = [
   { href: "/store", label: "All Parts" },
   { href: "/store?platform=unitree-h1-2", label: "Unitree H1" },
   { href: "/store?platform=unitree-g1", label: "Unitree G1" },
-  { href: "/store?platform=boston-dynamics-spot", label: "Boston Dynamics" },
+  { href: "/store?platform=spot", label: "Boston Dynamics" },
   { href: "/store?platform=dji-agras-t50", label: "DJI Agras" },
   { href: "/store?platform=figure-02", label: "Figure" },
   { href: "/store?tier=bundle", label: "Bundles" },
