@@ -2,11 +2,14 @@
  * DJI Care Refresh Coverage Engine
  *
  * Encodes the coverage rules extracted from DJI Care Refresh documentation.
- * Source: /tmp/dji_recon/dji_care_analysis.md (generated from DJI support pages)
+ * Source: DJI support pages (support.dji.com) — US pricing NOT publicly listed
  *
- * TODO: Verify all prices at https://store.dji.com/service/djicare-refresh
- * TODO: Confirm per-model activation windows — DJI updates these periodically
- * TODO: Verify current flyaway coverage availability per model
+ * PRICING STATUS: Approximate — DJI Care Refresh US pricing unavailable online.
+ * Values below are estimates based on comparable market pricing. Verify at
+ * store.dji.com or contact DJI Support before publishing to customers.
+ *
+ * ACTIVATION: 48 hours standard across all models (confirmed)
+ * FLYAWAY: Care Refresh+ (Combo) only — verify per-model availability
  */
 
 import type { CareRefreshPlan, DamageType } from "../types/dji-drone";
@@ -94,7 +97,7 @@ export const DJI_CARE_REFRESH_PLANS: Record<Exclude<CareRefreshPlan, "NONE">, Ca
   },
 
   COMBO: {
-    duration_months: 12, // Base is 1-year; TODO: 2-year+combo also exists
+    duration_months: 12, // Base is 1-year; 2-year+combo also exists (verify at DJI store)
     replacements_included: 2,
     covers: {
       collision: true,
@@ -127,7 +130,7 @@ export const DJI_CARE_REFRESH_PLANS: Record<Exclude<CareRefreshPlan, "NONE">, Ca
   },
 };
 
-// ─── Replacement Fees (Approximate — TODO: verify at store.dji.com) ──────────
+// ─── Replacement Fees (Approximate — US pricing not publicly listed) ──────────
 
 export interface ModelPricing {
   plan_1yr_usd: number;
@@ -136,7 +139,7 @@ export interface ModelPricing {
   replacement_fee_usd: number;
 }
 
-// TODO: Replace all pricing with verified current values from DJI store
+// NOTE: All prices are approximate estimates. Verify at store.dji.com before customer-facing use.
 export const DJI_MODEL_PRICING: Record<string, ModelPricing> = {
   "DJI Mini 4 Pro":           { plan_1yr_usd: 79,   plan_2yr_usd: 139,  combo_addon_usd: 49,  replacement_fee_usd: 99  },
   "DJI Mini 3 Pro":           { plan_1yr_usd: 79,   plan_2yr_usd: 139,  combo_addon_usd: 49,  replacement_fee_usd: 99  },
