@@ -255,6 +255,9 @@ const PLATFORMS: PlatformProfile[] = [
     failureSignatures: [
       { id: "vla-inference-stall", name: "FSD Stack Latency", severity: "warning", description: "Perception inference > 50ms" },
       { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 20% during active sequence" },
+      { id: "arm-overheat", name: "Arm Actuator Overheat", severity: "critical", description: "Arm joint temp > 75°C sustained" },
+      { id: "hand-fault", name: "Dexterous Hand Fault", severity: "warning", description: "Finger actuator stall — check tendon tension" },
+      { id: "torso-instability", name: "Torso Instability", severity: "warning", description: "Torso RPY variance > 0.1 rad — recalibrate IMU" },
     ],
     maintenanceCta: "Open Optimus support ticket",
     manualUrl: "https://www.tesla.com/en_us/AI",
@@ -277,6 +280,9 @@ const PLATFORMS: PlatformProfile[] = [
     failureSignatures: [
       { id: "joint-backlash", name: "Ankle Backlash", severity: "warning", description: "Ankle dorsiflexion error > 1.5°" },
       { id: "actuator-overheat", name: "Knee Actuator Overheat", severity: "critical", description: "Knee joint > 76°C during incline traversal" },
+      { id: "foot-wear", name: "Foot Sole Wear", severity: "warning", description: "Foot sole thickness < 3mm — replace to prevent surface damage" },
+      { id: "hip-play", name: "Hip Actuator Wear", severity: "warning", description: "Hip yaw backlash > 0.8° — check bearing preload" },
+      { id: "battery-swell", name: "Battery Swelling", severity: "critical", description: "Battery pack swelling > 2mm — thermal runaway risk" },
     ],
     maintenanceCta: "Schedule Digit field service",
     manualUrl: "https://agilityrobotics.com/resources",
@@ -331,6 +337,9 @@ const PLATFORMS: PlatformProfile[] = [
     failureSignatures: [
       { id: "vla-inference-stall", name: "Diffusion Stall", severity: "warning", description: "Policy inference > 100ms per step" },
       { id: "gripper-encoder-drift", name: "Gripper Drift", severity: "warning", description: "End-effector grip force variance > 15N" },
+      { id: "arm-overheat", name: "Arm Actuator Overheat", severity: "critical", description: "Arm joint temp > 75°C sustained" },
+      { id: "battery-critical", name: "Battery Critical", severity: "critical", description: "SOC < 20% during active sequence" },
+      { id: "torso-instability", name: "Torso Instability", severity: "warning", description: "Torso RPY variance > 0.1 rad — recalibrate IMU" },
     ],
     maintenanceCta: "Open Phantom support ticket",
     manualUrl: "https://www.physicalintelligence.company/research",
@@ -507,6 +516,9 @@ const PLATFORMS: PlatformProfile[] = [
     failureSignatures: [
       { id: "actuator-overheat", name: "Drive Motor Overheat", severity: "critical", description: "Drive motor > 70°C under heavy pod" },
       { id: "camera-offline", name: "LiDAR Dropout", severity: "critical", description: "LiDAR scan rate < 5 Hz" },
+      { id: "battery-degradation", name: "Battery Degradation", severity: "warning", description: "Runtime drops > 15% from baseline — cells approaching EOL" },
+      { id: "pod-slip", name: "Pod Slip", severity: "warning", description: "Traction loss > 20% on wet surfaces — check tire condition" },
+      { id: "nav-fail", name: "Navigation Fail-Safe", severity: "critical", description: "GPS + visual odometry lost — enter safe stop mode" },
     ],
     maintenanceCta: "Open AMR maintenance ticket",
     manualUrl: "https://www.aboutamazon.com/news/operations/amazon-introduces-new-robotics-solutions",
@@ -569,8 +581,11 @@ const PLATFORMS: PlatformProfile[] = [
     ],
     tlmRanges: { healthScoreMin: 72, healthScoreMax: 96, batteryPctMin: 95, batteryPctMax: 100, motorTempMin: 28, motorTempMax: 65 },
     failureSignatures: [
-      { id: "joint-backlash",    name: "Joint Backlash",  severity: "warning", description: "EEF position error > 2mm on repetitive trajectory" },
-      { id: "actuator-overheat", name: "Servo Overheat",  severity: "warning", description: "Joint servo > 70°C during sustained high-torque moves" },
+      { id: "joint-backlash", name: "Joint Backlash", severity: "warning", description: "EEF position error > 2mm on repetitive trajectory" },
+      { id: "actuator-overheat", name: "Servo Overheat", severity: "warning", description: "Joint servo > 70°C during sustained high-torque moves" },
+      { id: "gripper-fault", name: "Gripper Fault", severity: "critical", description: "Gripper open/close command not acknowledged — check solenoid" },
+      { id: "controller-timeout", name: "Controller Timeout", severity: "critical", description: "Trajectory controller heartbeat lost > 2s — check CAN bus" },
+      { id: "base-slip", name: "Base Slip", severity: "warning", description: "Mounting bracket vibration > 2g — check mounting torque" },
     ],
     maintenanceCta: "Flag for integration review",
     manualUrl: "https://github.com/Seeed-Projects/reBot-DevArm",
@@ -905,6 +920,9 @@ const PLATFORMS: PlatformProfile[] = [
     failureSignatures: [
       { id: "joint-backlash", name: "Joint Backlash", severity: "warning", description: "EEF position error > 2mm on repetitive trajectory" },
       { id: "actuator-overheat", name: "Servo Overheat", severity: "warning", description: "Joint servo > 70°C during sustained high-torque moves" },
+      { id: "arm-deflection", name: "Arm Deflection", severity: "warning", description: "Arm sag > 3mm under rated payload — check bearing" },
+      { id: "controller-fault", name: "Controller Fault", severity: "critical", description: "Motion controller heartbeat lost — check power" },
+      { id: "calibration-drift", name: "Calibration Drift", severity: "warning", description: "Joint zero-offset > 0.5° after power cycle" },
     ],
     maintenanceCta: "Request quote",
     manualUrl: "https://robo.inc",
