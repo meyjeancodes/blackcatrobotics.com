@@ -39,6 +39,9 @@ RESEARCH_CAD_SOURCES.md
 # Allow PWA icons (required for production build)
 !TechMedix-standalone/public/icons/*.png
 !TechMedix-standalone/public/apple-touch-icon.png
+# Allow the social share / Open Graph image (referenced by index.html og:image;
+# without this the blanket *.png rule above leaves it untracked and it 404s live)
+!TechMedix-standalone/public/og-techmedix.png
 .env*
 # Allow env example files (no secrets) so newcomers can clone-and-run
 !.env.example
