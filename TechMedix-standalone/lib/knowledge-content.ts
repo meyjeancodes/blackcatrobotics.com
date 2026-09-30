@@ -13,6 +13,10 @@ export interface FailureMode {
   cause: string;
   mitigation: string;
   confidence: string;
+  component?: string;
+  severity?: string;
+  root_cause?: string;
+  mtbf_hours?: string;
 }
 
 export interface PlatformKnowledge {
@@ -65,22 +69,49 @@ function parseFrontmatter(raw: string): Record<string, any> {
   return fm;
 }
 
+/** Parse failure modes from the raw frontmatter. Two schemas exist in content/platforms:
+ *  A) `- mode: "..."` with symptom/cause/mitigation/confidence  (most files)
+ *  B) `- id: fm-...` with component/severity/symptom/root_cause  (veo-s1)
+ * Both are normalized into one shape so the UI renders either. */
 function parseFailureModes(raw: string): FailureMode[] {
   const modes: FailureMode[] = [];
   let cur: Partial<FailureMode> | null = null;
+
+  const start = (line: string): Partial<FailureMode> | null => {
+    const a = line.match(/^\s*-\s+mode:\s*"?(.*?)"?\s*$/);
+    if (a) return { mode: a[1] };
+    const b = line.match(/^\s*-\s+id:\s*(fm-[^\s]+)\s*$/);
+    if (b) return { mode: b[1] };
+    return null;
+  };
+
+  const FIELD = /^\s+(mode|symptom|cause|root_cause|mitigation|confidence|component|severity|mtbf_hours):\s*"?(.*?)"?\s*$/;
+
   for (const line of raw.split("\n")) {
-    const item = line.match(/^\s*-\s+mode:\s*"?(.*?)"?\s*$/);
-    if (item) {
-      if (cur) modes.push(cur as FailureMode);
-      cur = { mode: item[1] };
+    const s = start(line);
+    if (s) {
+      if (cur?.mode) modes.push(cur as FailureMode);
+      cur = s;
       continue;
     }
     if (!cur) continue;
-    const kv = line.match(/^\s+(mode|symptom|cause|mitigation|confidence):\s*"?(.*?)"?\s*$/);
+    const kv = line.match(FIELD);
     if (kv) (cur as any)[kv[1]] = kv[2];
   }
-  if (cur) modes.push(cur as FailureMode);
-  return modes.filter((m) => m.mode);
+  if (cur?.mode) modes.push(cur as FailureMode);
+
+  // Normalize schema B → A so the UI's confidence/cause fields are populated, and so the
+  // card title is the human component name rather than the raw fm-* id.
+  return modes
+    .filter((m) => m.mode)
+    .map((m) => ({
+      ...m,
+      mode: /^fm-/.test(m.mode) && m.component ? `${m.component}` : m.mode,
+      symptom: m.symptom ?? "",
+      cause: m.cause || m.root_cause || "",
+      mitigation: m.mitigation ?? "",
+      confidence: m.confidence || (m.root_cause ? "verified-community" : "reported"),
+    }));
 }
 
 export function getPlatformKnowledge(slug: string): PlatformKnowledge | null {
@@ -91,18 +122,21 @@ export function getPlatformKnowledge(slug: string): PlatformKnowledge | null {
     const fm = parseFrontmatter(raw);
     const body = raw.replace(/^---\n[\s\S]*?\n---\n?/, "");
 
+    // NOTE: these content files keep failure_modes / repair_protocol / sources INSIDE the
+    // frontmatter block, so `body` (frontmatter stripped) is EMPTY. Parse them from `raw`.
+    // Parsing from `body` made failure modes and repair protocols silently render as empty.
     const overview =
       (fm.overview as string) ||
-      (body.match(/overview:\s*\|?\n([\s\S]*?)(?=\n\w+:|$)/)?.[1] ?? "").trim();
-    const repairMatch = body.match(/repair_protocol:\s*\|\n([\s\S]*?)(?=\nsources:|$)/);
-    const sourcesMatch = body.match(/sources:\s*\n([\s\S]*)/);
+      (raw.match(/overview:\s*\|?\n([\s\S]*?)(?=\n\w+:|$)/)?.[1] ?? "").trim();
+    const repairMatch = raw.match(/repair_protocol:\s*\|\n([\s\S]*?)(?=\nsources:|$)/);
+    const sourcesMatch = raw.match(/sources:\s*\n([\s\S]*)/);
 
     return {
       slug,
       name: fm.name,
       category: fm.category,
       overview: overview || "",
-      failureModes: parseFailureModes(body),
+      failureModes: parseFailureModes(raw),
       repairProtocol: (repairMatch?.[1] ?? "").trim(),
       sources: (fm.sources as string[]) ||
         (sourcesMatch
