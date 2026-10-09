@@ -52,3 +52,4 @@ RESEARCH_CAD_SOURCES.md
 # tracking it left the working tree permanently dirty and risked committing a
 # connection string. Untracked 2026-10-03.
 TechMedix-standalone/supabase/.temp/
+.env*.local
