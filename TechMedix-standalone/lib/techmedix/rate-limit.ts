@@ -38,8 +38,10 @@ export interface RateLimitResult {
   retryAfterSec: number;
 }
 
-const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL;
-const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const UPSTASH_URL =
+  process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+const UPSTASH_TOKEN =
+  process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
 
 function redisConfigured(): boolean {
   return !!(UPSTASH_URL && UPSTASH_TOKEN);
