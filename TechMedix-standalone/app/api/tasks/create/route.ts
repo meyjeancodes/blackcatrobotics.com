@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const rl = checkRateLimit(`tasks:create:POST:${auth.customerId ?? auth.via}`);
+  const rl = await checkRateLimit(`tasks:create:POST:${auth.customerId ?? auth.via}`);
   if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
 
   // Idempotency: a retried POST with the same key returns the original

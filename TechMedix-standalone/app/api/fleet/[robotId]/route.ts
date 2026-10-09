@@ -19,7 +19,7 @@ export async function GET(
   const auth = await authenticateRequest(req);
   if (!auth.ok) return unauthorized();
 
-  const rlGet = checkRateLimit(`fleet:robot:GET:${auth.customerId ?? auth.via}`);
+  const rlGet = await checkRateLimit(`fleet:robot:GET:${auth.customerId ?? auth.via}`);
   if (rlGet.limited) return rateLimitedResponse(rlGet.retryAfterSec);
 
   const { robotId } = await params;
@@ -108,7 +108,7 @@ export async function PATCH(
   const auth = await authenticateRequest(req);
   if (!auth.ok) return unauthorized();
 
-  const rlPatch = checkRateLimit(`fleet:robot:PATCH:${auth.customerId ?? auth.via}`);
+  const rlPatch = await checkRateLimit(`fleet:robot:PATCH:${auth.customerId ?? auth.via}`);
   if (rlPatch.limited) return rateLimitedResponse(rlPatch.retryAfterSec);
 
   const { robotId } = await params;

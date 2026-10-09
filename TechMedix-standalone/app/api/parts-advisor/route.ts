@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   const auth = await authenticateRequest(req);
   if (!auth.ok) return unauthorized();
 
-  const rl = checkRateLimit(`parts-advisor:POST:${auth.customerId ?? auth.via}`);
+  const rl = await checkRateLimit(`parts-advisor:POST:${auth.customerId ?? auth.via}`);
   if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
 
   try {

@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   const auth = await authenticateRequest(request);
   if (!auth.ok) return unauthorized();
 
-  const rlPost = checkRateLimit(`ar-guidance:POST:${auth.customerId ?? auth.via}`);
+  const rlPost = await checkRateLimit(`ar-guidance:POST:${auth.customerId ?? auth.via}`);
   if (rlPost.limited) return rateLimitedResponse(rlPost.retryAfterSec);
 
   try {
@@ -187,7 +187,7 @@ export async function GET(request: NextRequest) {
   const auth = await authenticateRequest(request);
   if (!auth.ok) return unauthorized();
 
-  const rlGet = checkRateLimit(`ar-guidance:GET:${auth.customerId ?? auth.via}`);
+  const rlGet = await checkRateLimit(`ar-guidance:GET:${auth.customerId ?? auth.via}`);
   if (rlGet.limited) return rateLimitedResponse(rlGet.retryAfterSec);
 
   const supabase = await getSupabase();

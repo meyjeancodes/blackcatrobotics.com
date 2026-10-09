@@ -39,6 +39,12 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
               Certifications
             </Link>
             <Link
+              href="/integrations"
+              className="font-ui text-[0.60rem] uppercase tracking-[0.14em] text-theme-55 transition hover:text-theme-primary"
+            >
+              Integrations
+            </Link>
+            <Link
               href="/login"
               className="inline-flex items-center rounded-full border border-theme-12 px-4 py-1.5 font-ui text-[0.60rem] uppercase tracking-[0.16em] font-semibold text-theme-70 transition hover:bg-theme-4"
             >

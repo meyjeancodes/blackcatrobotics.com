@@ -13,7 +13,7 @@ export async function GET(
   const auth = await authenticateRequest(req);
   if (!auth.ok) return unauthorized();
 
-  const rl = checkRateLimit(`techmedix:protocol:GET:${auth.customerId ?? auth.via}`);
+  const rl = await checkRateLimit(`techmedix:protocol:GET:${auth.customerId ?? auth.via}`);
   if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
 
   const { id } = await params;

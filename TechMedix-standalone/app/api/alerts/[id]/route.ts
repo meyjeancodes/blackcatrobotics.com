@@ -10,7 +10,7 @@ export async function PATCH(
   const auth = await authenticateRequest(req);
   if (!auth.ok) return unauthorized();
 
-  const rl = checkRateLimit(`alerts:PATCH:${auth.customerId ?? auth.via}`);
+  const rl = await checkRateLimit(`alerts:PATCH:${auth.customerId ?? auth.via}`);
   if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
 
   const { id } = await params;

@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   const auth = await authenticateRequest(req);
   if (!auth.ok) return unauthorized();
 
-  const rlGet = checkRateLimit(`fleet:GET:${auth.customerId ?? auth.via}`);
+  const rlGet = await checkRateLimit(`fleet:GET:${auth.customerId ?? auth.via}`);
   if (rlGet.limited) return rateLimitedResponse(rlGet.retryAfterSec);
 
   const customerId = resolveCustomerId(auth, req.nextUrl.searchParams.get("customerId"));
@@ -131,7 +131,7 @@ export async function POST(req: NextRequest) {
   const auth = await authenticateRequest(req);
   if (!auth.ok) return unauthorized();
 
-  const rlPost = checkRateLimit(`fleet:POST:${auth.customerId ?? auth.via}`);
+  const rlPost = await checkRateLimit(`fleet:POST:${auth.customerId ?? auth.via}`);
   if (rlPost.limited) return rateLimitedResponse(rlPost.retryAfterSec);
 
   let body: RegisterRobotRequest;

@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   const auth = await authenticateRequest(req);
   if (!auth.ok) return unauthorized();
 
-  const rl = checkRateLimit(`tasks:list:GET:${auth.customerId ?? auth.via}`);
+  const rl = await checkRateLimit(`tasks:list:GET:${auth.customerId ?? auth.via}`);
   if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
 
   if (!isSupabaseServerConfigured()) {
