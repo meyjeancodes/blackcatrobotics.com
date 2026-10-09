@@ -6,14 +6,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient as createClient, isSupabaseServerConfigured } from "../../../../lib/supabase-server";
 import { getRobotDetails } from "../../../../lib/shared/mock-data";
+import { authenticateRequest, unauthorized } from "@/lib/techmedix/api-auth";
+import { checkRateLimit, rateLimitedResponse } from "@/lib/techmedix/rate-limit";
 
 export const runtime = "nodejs";
 
 // ── GET — full robot details ───────────────────────────────────────────────────
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ robotId: string }> }
 ) {
+  const auth = await authenticateRequest(req);
+  if (!auth.ok) return unauthorized();
+
+  const rlGet = checkRateLimit(`fleet:robot:GET:${auth.customerId ?? auth.via}`);
+  if (rlGet.limited) return rateLimitedResponse(rlGet.retryAfterSec);
+
   const { robotId } = await params;
 
   if (!isSupabaseServerConfigured()) {
@@ -61,7 +69,7 @@ export async function GET(
       .from("alerts")
       .select("*")
       .eq("robot_id", robotId)
-      .eq("status", "active")
+      .eq("resolved", false)
       .order("created_at", { ascending: false });
 
     // 4. Job history
@@ -97,6 +105,12 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ robotId: string }> }
 ) {
+  const auth = await authenticateRequest(req);
+  if (!auth.ok) return unauthorized();
+
+  const rlPatch = checkRateLimit(`fleet:robot:PATCH:${auth.customerId ?? auth.via}`);
+  if (rlPatch.limited) return rateLimitedResponse(rlPatch.retryAfterSec);
+
   const { robotId } = await params;
 
   let body: PatchRobotRequest;

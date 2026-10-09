@@ -1,15 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
 import type { TaskType, TaskStatus } from "@/types/blackcat";
+import { authenticateRequest } from "@/lib/techmedix/api-auth";
+import { getIdempotentResponse, storeIdempotentResponse } from "@/lib/techmedix/idempotency";
+import { checkRateLimit, rateLimitedResponse } from "@/lib/techmedix/rate-limit";
 
 function isAuthorized(req: NextRequest): boolean {
   const secret = req.headers.get("x-blackcat-secret");
-  return secret === process.env.BLACKCAT_API_SECRET;
+  return !!secret && secret === process.env.BLACKCAT_API_SECRET;
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAuthorized(req)) {
+  // Legacy service secret OR connector API key / dashboard session.
+  const auth = await authenticateRequest(req);
+  if (!auth.ok && !isAuthorized(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const rl = checkRateLimit(`tasks:create:POST:${auth.customerId ?? auth.via}`);
+  if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
+
+  // Idempotency: a retried POST with the same key returns the original
+  // response instead of creating a duplicate task.
+  const idempotencyKey = req.headers.get("Idempotency-Key");
+  const idempotencyRoute = "POST /api/tasks/create";
+  if (idempotencyKey) {
+    const replay = await getIdempotentResponse(
+      idempotencyKey,
+      auth.customerId,
+      idempotencyRoute
+    );
+    if (replay) {
+      return NextResponse.json(replay.body, {
+        status: replay.status,
+        headers: { "Idempotent-Replay": "true" },
+      });
+    }
   }
 
   let body: { robot_id?: string; type?: TaskType; priority?: number; status?: TaskStatus };
@@ -56,7 +82,17 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error) throw new Error(error.message);
-    return NextResponse.json({ task: data }, { status: 201 });
+    const responseBody = { task: data };
+    if (idempotencyKey) {
+      await storeIdempotentResponse(
+        idempotencyKey,
+        auth.customerId,
+        idempotencyRoute,
+        201,
+        responseBody
+      );
+    }
+    return NextResponse.json(responseBody, { status: 201 });
   } catch (err) {
     console.error("[/api/tasks/create]", err);
     return NextResponse.json(

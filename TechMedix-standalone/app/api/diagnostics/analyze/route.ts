@@ -27,16 +27,13 @@ function isRateLimited(key: string): boolean {
 
 // ─── Auth check ───────────────────────────────────────────────────────────────
 
-async function isAuthenticated(req: NextRequest): Promise<boolean> {
-  // If Supabase env vars are absent (demo/mock mode) let all requests through.
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    return true;
-  }
+import { authenticateRequest } from "@/lib/techmedix/api-auth";
 
-  // In live mode, check for a valid session cookie.
-  // The Supabase session token is stored in sb-<project>-auth-token cookies.
-  const hasCookie = req.cookies.getAll().some((c) => c.name.includes("auth-token"));
-  return hasCookie;
+async function isAuthenticated(req: NextRequest): Promise<boolean> {
+  // Shared connector auth: per-customer API key, master key, dashboard session,
+  // or local-dev leniency when no backend is configured.
+  const auth = await authenticateRequest(req);
+  return auth.ok;
 }
 
 // ─── POST handler ─────────────────────────────────────────────────────────────

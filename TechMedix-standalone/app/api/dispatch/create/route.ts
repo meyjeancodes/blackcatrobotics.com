@@ -5,6 +5,9 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient as createClient, isSupabaseServerConfigured } from "../../../../lib/supabase-server";
+import { authenticateRequest, unauthorized } from "@/lib/techmedix/api-auth";
+import { getIdempotentResponse, storeIdempotentResponse } from "@/lib/techmedix/idempotency";
+import { checkRateLimit, rateLimitedResponse } from "@/lib/techmedix/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -16,6 +19,30 @@ interface CreateDispatchRequest {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await authenticateRequest(req);
+  if (!auth.ok) return unauthorized();
+
+  const rl = checkRateLimit(`dispatch:create:POST:${auth.customerId ?? auth.via}`);
+  if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
+
+  // Idempotency: a retried POST with the same key returns the original
+  // response instead of creating a duplicate dispatch job.
+  const idempotencyKey = req.headers.get("Idempotency-Key");
+  const idempotencyRoute = "POST /api/dispatch/create";
+  if (idempotencyKey) {
+    const replay = await getIdempotentResponse(
+      idempotencyKey,
+      auth.customerId,
+      idempotencyRoute
+    );
+    if (replay) {
+      return NextResponse.json(replay.body, {
+        status: replay.status,
+        headers: { "Idempotent-Replay": "true" },
+      });
+    }
+  }
+
   if (!isSupabaseServerConfigured()) {
     return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });
   }
@@ -97,10 +124,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json(
-      { job, technician: bestTech },
-      { status: 201 }
-    );
+    const responseBody = { job, technician: bestTech };
+    if (idempotencyKey) {
+      await storeIdempotentResponse(
+        idempotencyKey,
+        auth.customerId,
+        idempotencyRoute,
+        201,
+        responseBody
+      );
+    }
+
+    return NextResponse.json(responseBody, { status: 201 });
   } catch (err) {
     console.error("[dispatch/create] unexpected error:", err);
     return NextResponse.json(

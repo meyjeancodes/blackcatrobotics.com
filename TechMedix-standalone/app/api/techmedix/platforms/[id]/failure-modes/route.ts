@@ -9,6 +9,8 @@ import {
   getPlatformBySlug,
   listPlatforms,
 } from "@/lib/blackcat/knowledge/db";
+import { authenticateRequest, unauthorized } from "@/lib/techmedix/api-auth";
+import { checkRateLimit, rateLimitedResponse } from "@/lib/techmedix/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +18,12 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await authenticateRequest(req);
+  if (!auth.ok) return unauthorized();
+
+  const rl = checkRateLimit(`techmedix:failure-modes:GET:${auth.customerId ?? auth.via}`);
+  if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
+
   const { id } = await params;
   const { searchParams } = new URL(req.url);
   const severity = searchParams.get("severity") ?? undefined;

@@ -12,6 +12,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabase } from "@/lib/techmedix/memory";
+import { authenticateRequest, unauthorized } from "@/lib/techmedix/api-auth";
+import { checkRateLimit, rateLimitedResponse } from "@/lib/techmedix/rate-limit";
 
 interface ArGuidanceBody {
   robot_id: string;
@@ -21,6 +23,12 @@ interface ArGuidanceBody {
 }
 
 export async function POST(request: NextRequest) {
+  const auth = await authenticateRequest(request);
+  if (!auth.ok) return unauthorized();
+
+  const rlPost = checkRateLimit(`ar-guidance:POST:${auth.customerId ?? auth.via}`);
+  if (rlPost.limited) return rateLimitedResponse(rlPost.retryAfterSec);
+
   try {
     const body: ArGuidanceBody = await request.json();
 
@@ -175,7 +183,13 @@ STEP 4 — REPAIR/RETURN TO SERVICE
   .trim();
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const auth = await authenticateRequest(request);
+  if (!auth.ok) return unauthorized();
+
+  const rlGet = checkRateLimit(`ar-guidance:GET:${auth.customerId ?? auth.via}`);
+  if (rlGet.limited) return rateLimitedResponse(rlGet.retryAfterSec);
+
   const supabase = await getSupabase();
   if (!supabase) {
     return NextResponse.json({ error: "Supabase not configured" }, { status: 503 });

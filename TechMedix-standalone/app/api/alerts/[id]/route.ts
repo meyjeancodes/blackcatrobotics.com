@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient, isSupabaseServerConfigured } from "@/lib/supabase-service";
+import { authenticateRequest, unauthorized } from "@/lib/techmedix/api-auth";
+import { checkRateLimit, rateLimitedResponse } from "@/lib/techmedix/rate-limit";
 
 export async function PATCH(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await authenticateRequest(req);
+  if (!auth.ok) return unauthorized();
+
+  const rl = checkRateLimit(`alerts:PATCH:${auth.customerId ?? auth.via}`);
+  if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
+
   const { id } = await params;
 
   if (!isSupabaseServerConfigured()) {

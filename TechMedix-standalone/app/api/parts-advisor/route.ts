@@ -9,8 +9,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { recommendParts, formatRecommendationText, detectPlatform, detectSymptoms } from "@/lib/parts-advisor/engine";
 import { getAllPlatforms } from "@/lib/platforms/index";
+import { authenticateRequest, unauthorized } from "@/lib/techmedix/api-auth";
+import { checkRateLimit, rateLimitedResponse } from "@/lib/techmedix/rate-limit";
 
 export async function POST(req: NextRequest) {
+  const auth = await authenticateRequest(req);
+  if (!auth.ok) return unauthorized();
+
+  const rl = checkRateLimit(`parts-advisor:POST:${auth.customerId ?? auth.via}`);
+  if (rl.limited) return rateLimitedResponse(rl.retryAfterSec);
+
   try {
     const body = await req.json();
     const { query } = body;

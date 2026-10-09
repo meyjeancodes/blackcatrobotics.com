@@ -6,12 +6,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient as createClient, isSupabaseServerConfigured } from "../../../lib/supabase-server";
 import { robots as MOCK_ROBOTS, alerts as MOCK_ALERTS, jobs as MOCK_JOBS } from "../../../lib/shared/mock-data";
+import { authenticateRequest, unauthorized, resolveCustomerId } from "@/lib/techmedix/api-auth";
+import { checkRateLimit, rateLimitedResponse } from "@/lib/techmedix/rate-limit";
 
 export const runtime = "nodejs";
 
 // ── GET — list robots ──────────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
-  const customerId = req.nextUrl.searchParams.get("customerId");
+  const auth = await authenticateRequest(req);
+  if (!auth.ok) return unauthorized();
+
+  const rlGet = checkRateLimit(`fleet:GET:${auth.customerId ?? auth.via}`);
+  if (rlGet.limited) return rateLimitedResponse(rlGet.retryAfterSec);
+
+  const customerId = resolveCustomerId(auth, req.nextUrl.searchParams.get("customerId"));
   if (!customerId) {
     return NextResponse.json(
       { error: "customerId query param is required" },
@@ -63,7 +71,7 @@ export async function GET(req: NextRequest) {
       .from("alerts")
       .select("*")
       .in("robot_id", robotIds)
-      .eq("status", "active")
+      .eq("resolved", false)
       .order("created_at", { ascending: false });
 
     // Fetch open jobs per robot
@@ -120,6 +128,12 @@ interface RegisterRobotRequest {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await authenticateRequest(req);
+  if (!auth.ok) return unauthorized();
+
+  const rlPost = checkRateLimit(`fleet:POST:${auth.customerId ?? auth.via}`);
+  if (rlPost.limited) return rateLimitedResponse(rlPost.retryAfterSec);
+
   let body: RegisterRobotRequest;
   try {
     body = await req.json();
@@ -127,7 +141,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { customerId, name, platform, serialNumber, location, region } = body;
+  const { customerId: bodyCustomerId, name, platform, serialNumber, location, region } = body;
+  // API-key callers are bound to their key's customer; dashboard callers use the body value.
+  const customerId = resolveCustomerId(auth, bodyCustomerId);
 
   if (!customerId || !name || !platform || !serialNumber) {
     return NextResponse.json(
