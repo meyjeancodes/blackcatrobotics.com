@@ -1,0 +1,242 @@
+openapi: 3.1.0
+info:
+  title: TechMedix Fleet Intelligence
+  version: 1.0.0
+  description: >-
+    AI maintenance intelligence for robot fleets by BlackCat Robotics.
+    Read-only tools report fleet health, alerts, failure modes, repair
+    protocols, diagnostics, AR repair guidance, and parts. Write tools
+    (dispatch_create, alert_resolve, task_create) mutate operational state
+    and require user confirmation. This connector cannot process payments,
+    ingest device telemetry, or control robots.
+  contact:
+    name: BlackCat Robotics
+    url: https://blackcatrobotics.com
+    email: support@blackcatrobotics.com
+servers:
+  - url: https://blackcatrobotics.com/api
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Per-customer TechMedix API key (tmdx_live_...), issued in the
+        TechMedix dashboard. A key only accesses its own customer's fleet.
+paths:
+  /fleet:
+    get:
+      operationId: fleet_status
+      summary: List robots with latest alert and open work order
+      description: Read-only. Returns each robot with its latest active alert and open job, if any.
+      parameters:
+        - name: customerId
+          in: query
+          required: true
+          schema: { type: string }
+          description: Your TechMedix customer ID (not needed when using a scoped API key).
+      responses:
+        '200': { description: Fleet list }
+        '401': { description: Missing or invalid API key }
+        '429': { description: Rate limited }
+  /fleet/{robotId}:
+    get:
+      operationId: robot_detail
+      summary: Get a single robot's full details
+      description: Read-only. Telemetry summary, alerts, jobs, and diagnostics for one robot.
+      parameters:
+        - name: robotId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Robot detail }
+        '404': { description: Robot not found }
+  /alerts:
+    get:
+      operationId: alerts_list
+      summary: List fleet alerts, newest first
+      description: Read-only. Filter by status (active, resolved, all) and optionally by robot.
+      parameters:
+        - name: customerId
+          in: query
+          required: true
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string, enum: [active, resolved, all], default: active }
+        - name: robotId
+          in: query
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 50, maximum: 200 }
+      responses:
+        '200': { description: Alert list }
+  /alerts/{id}:
+    patch:
+      operationId: alert_resolve
+      summary: Mark an alert resolved
+      description: Mutates alert state. Requires user confirmation.
+      x-requires-confirmation: true
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Resolution result }
+  /techmedix:
+    get:
+      operationId: platform_catalog
+      summary: Platform catalog with failure modes and repair protocols
+      description: Read-only. Use slim=1 for a lightweight platform list.
+      parameters:
+        - name: slim
+          in: query
+          schema: { type: string, enum: ['1'] }
+        - name: type
+          in: query
+          schema: { type: string, description: e.g. humanoid, quadruped, drone }
+        - name: manufacturer
+          in: query
+          schema: { type: string }
+      responses:
+        '200': { description: Platform catalog }
+  /techmedix/platforms/{id}/failure-modes:
+    get:
+      operationId: platform_failure_modes
+      summary: Failure modes for a platform
+      description: Read-only. The id can be a platform UUID or slug (e.g. unitree-h1).
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Failure modes with predictive signals }
+  /techmedix/failure-modes/{id}/protocol:
+    get:
+      operationId: failure_mode_protocol
+      summary: Step-by-step repair protocol for a failure mode
+      description: Read-only.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Repair protocol }
+  /diagnostics/analyze:
+    post:
+      operationId: diagnose
+      summary: Run AI diagnostic analysis on a telemetry frame
+      description: Read-only analysis. Rate-limited to 1 request per platform per 30 seconds.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [platformId]
+              properties:
+                platformId: { type: string, description: Platform slug, e.g. unitree-h1 }
+                frame: { type: object, description: Telemetry frame }
+                history: { type: array, items: { type: object } }
+      responses:
+        '200': { description: Diagnostic report }
+  /ar-guidance:
+    post:
+      operationId: ar_guidance
+      summary: Get AR repair guidance for a robot fault
+      description: Read-only. Returns step-by-step overlay instructions, tools needed, safety warnings, and confidence.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [robot_id, platform_id, active_fault]
+              properties:
+                robot_id: { type: string }
+                platform_id: { type: string }
+                active_fault: { type: string }
+                image_data: { type: string, description: Base64-encoded image of the fault, optional }
+      responses:
+        '200': { description: Overlay instructions plus confidence score }
+  /parts-advisor:
+    post:
+      operationId: parts_advisor
+      summary: Natural-language parts search
+      description: Read-only. Searches the parts inventory and supplier catalog. Cannot place orders — checkout happens on blackcatrobotics.com/store.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string, description: e.g. "replacement knee actuator for Unitree H1 in stock in the US" }
+      responses:
+        '200': { description: Matching parts and suppliers }
+  /dispatch/create:
+    post:
+      operationId: dispatch_create
+      summary: Create a repair work order
+      description: >-
+        Creates an operational work order and auto-assigns the best available
+        technician. Requires user confirmation. Idempotent: send Idempotency-Key
+        header with a UUID; retries return the original response.
+      x-requires-confirmation: true
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [robotId, failureMode]
+              properties:
+                robotId: { type: string }
+                failureMode: { type: string }
+                description: { type: string }
+                priority: { type: string, enum: [low, medium, high, critical], default: medium }
+      responses:
+        '201': { description: Created work order }
+  /tasks/create:
+    post:
+      operationId: task_create
+      summary: Create a maintenance task
+      description: Requires user confirmation. Idempotent via Idempotency-Key header.
+      x-requires-confirmation: true
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [robot_id, type]
+              properties:
+                robot_id: { type: string }
+                type: { type: string, enum: [charge, inspect, repair, calibrate] }
+                priority: { type: integer, default: 2 }
+                status: { type: string, default: pending }
+      responses:
+        '201': { description: Created task }
+  /tasks/list:
+    get:
+      operationId: tasks_list
+      summary: List maintenance tasks
+      description: Read-only.
+      responses:
+        '200': { description: Task list }
