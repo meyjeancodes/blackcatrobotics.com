@@ -1,5 +1,11 @@
 # TechMedix AR Mode — Meta Ray-Ban Display Integration Plan
 
+> **SUPERSEDED (2026-10-07):** this plan's "Current State" section is outdated —
+> `/api/ar-guidance` and `components/ar-overlay.tsx` now exist. See
+> [`docs/meta-glasses-spike.md`](./docs/meta-glasses-spike.md) for the current
+> Meta glasses integration findings, architecture, and the shippable
+> Ray-Ban Display web app prototype at `app/glasses/`.
+
 ## Architecture
 
 Meta Ray-Ban Display glasses capture video frames, run vision analysis, and display overlay responses. TechMedix needs a complete AR pipeline:
