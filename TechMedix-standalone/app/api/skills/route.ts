@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import "@/lib/techmedix"; // Ensure skills are registered before listing (API routes bypass app/layout.tsx)
 import { listSkills, getSkill } from "@/lib/techmedix/skills";
 
 export const dynamic = "force-dynamic";
