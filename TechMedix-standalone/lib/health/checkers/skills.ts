@@ -7,8 +7,13 @@ export async function checkSkills(options?: { timeoutMs?: number }): Promise<Che
   let message = "probe not completed";
 
   try {
+    // Prefer an explicit base URL, then Vercel's own deployment URL. Never fall back to
+    // localhost on a serverless platform — a fetch to 127.0.0.1 always fails there and
+    // makes a working endpoint look broken.
     const base =
-      process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+      process.env.NEXT_PUBLIC_APP_URL ??
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ??
+      "http://localhost:3000";
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -26,7 +31,11 @@ export async function checkSkills(options?: { timeoutMs?: number }): Promise<Che
 
     if (res.ok) {
       const payload = (await res.json()) as { ok?: boolean; skills?: unknown[] };
-      if (payload.ok && Array.isArray(payload.skills)) {
+      // The route returns { skills: [...] } with no `ok` flag — treat a well-formed
+      // skills array as healthy. `payload.ok === false` is the only explicit failure.
+      if (payload.ok === false) {
+        message = "skills endpoint reported failure";
+      } else if (Array.isArray(payload.skills)) {
         ok = true;
         message = `${payload.skills.length} skill(s) confirmed`;
       } else {
