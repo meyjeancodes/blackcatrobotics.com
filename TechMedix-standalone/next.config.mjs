@@ -23,6 +23,8 @@ const nextConfig = {
       { source: '/certifications-landing', destination: '/certifications.html' },
       { source: '/book-onboarding', destination: '/book-onboarding.html' },
       { source: '/book', destination: '/book.html' },
+      { source: '/privacy', destination: '/privacy.html' },
+      { source: '/terms', destination: '/terms.html' },
     ];
   },
 };
