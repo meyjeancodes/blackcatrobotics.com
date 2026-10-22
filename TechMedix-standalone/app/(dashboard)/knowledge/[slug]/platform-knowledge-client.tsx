@@ -135,7 +135,7 @@ export function PlatformKnowledgeClient({
                 onPartClick={handlePartClick}
               />
             ) : (
-              <ProceduralModelViewer archetype={archetype} accentColor={accent} />
+              <ProceduralModelViewer archetype={archetype} accentColor={accent} selectedPartId={selectedPart} onPartClick={handlePartClick} />
             )}
             {selectedPart && (
               <div className="mt-3 flex items-center gap-2 rounded-xl border border-theme-5 bg-theme-2 px-4 py-3">
