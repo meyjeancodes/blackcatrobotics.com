@@ -860,18 +860,18 @@ export const STORE_BUNDLES: PartBundle[] = [
     warranty: "12 months",
   },
   // U1 Pro Full: hand + arm + battery
-  // OEM total: 3200000 + 680000 + 1600000 = 5480000; 20% = 4384000
-  {
-    sku: "UWORLD-FULL-KIT",
-    name: "U1 Pro Complete Kit",
-    platformId: "uworld-u1-pro",
-    manufacturer: "BlackCat Robotics",
-    description: "All U1 Pro essentials: hand, arm actuator, and battery.",
-    tier: "bundle",
-    unitAmount: 4384000,
+  // Individual: 2500000 + 500000 + 1200000 = 4200000; 20% off = 3360000
+    {
+      sku: "UWORLD-FULL-KIT",
+      name: "U1 Pro Complete Kit",
+      platformId: "uworld-u1-pro",
+      manufacturer: "BlackCat Robotics",
+      description: "All U1 Pro essentials: hand, arm actuator, and battery.",
+      tier: "bundle",
+      unitAmount: 3360000,
     currency: "usd",
     savingsPct: 20,
-    savingsDollars: 1096000,
+    savingsDollars: 840000,
     parts: ["UWORLD-HAND", "UWORLD-ARM-ACT", "UWORLD-BATTERY"],
     image: "/images/parts/uworld.jpg",
     leadTime: "14–21 days",
