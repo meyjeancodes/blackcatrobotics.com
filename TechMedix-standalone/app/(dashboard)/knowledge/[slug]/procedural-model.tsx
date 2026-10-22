@@ -29,78 +29,45 @@ const COMPUTE_V = "#9b7bd6";
 const SENSOR_C = "#38b8f0";
 const RUBBER = "#15171c";
 
+// ─── Cached materials (avoid per-render allocation) ──────────────────────────
+const _matCache = new Map<string, THREE.MeshStandardMaterial>();
+function _cached(key: string, factory: () => THREE.MeshStandardMaterial) {
+  let m = _matCache.get(key);
+  if (!m) { m = factory(); _matCache.set(key, m); }
+  return m;
+}
+
 function matStd(color: string, metalness = 0.7, roughness = 0.3) {
-  return new THREE.MeshStandardMaterial({
-        color,
-        metalness,
-        roughness,
-        envMapIntensity: 0.6,
-      });
+  return _cached(`std:${color}:${metalness}:${roughness}`, () =>
+    new THREE.MeshStandardMaterial({ color, metalness, roughness, envMapIntensity: 0.6 }));
 }
 function matAccent(color: string) {
-  return new THREE.MeshStandardMaterial({
-        color,
-        metalness: 0.4,
-        roughness: 0.4,
-        emissive: color,
-        emissiveIntensity: 0.12,
-      });
+  return _cached(`accent:${color}`, () =>
+    new THREE.MeshStandardMaterial({ color, metalness: 0.4, roughness: 0.4, emissive: color, emissiveIntensity: 0.12 }));
 }
 function matDark() {
-  return new THREE.MeshStandardMaterial({
-        color: DARK,
-        metalness: 0.8,
-        roughness: 0.2,
-      });
+  return _cached("dark", () => new THREE.MeshStandardMaterial({ color: DARK, metalness: 0.8, roughness: 0.2 }));
 }
 function matSteel() {
-  return new THREE.MeshStandardMaterial({
-        color: STEEL,
-        metalness: 0.85,
-        roughness: 0.25,
-      });
+  return _cached("steel", () => new THREE.MeshStandardMaterial({ color: STEEL, metalness: 0.85, roughness: 0.25 }));
 }
 function matJoint() {
-  return new THREE.MeshStandardMaterial({
-        color: JOINT,
-        metalness: 0.5,
-        roughness: 0.4,
-      });
+  return _cached("joint", () => new THREE.MeshStandardMaterial({ color: JOINT, metalness: 0.5, roughness: 0.4 }));
 }
 function matGlass() {
-  return new THREE.MeshStandardMaterial({
-        color: GLASS,
-        metalness: 0.6,
-        roughness: 0.12,
-      });
+  return _cached("glass", () => new THREE.MeshStandardMaterial({ color: GLASS, metalness: 0.6, roughness: 0.12 }));
 }
 function matBattery() {
-  return new THREE.MeshStandardMaterial({
-        color: BATTERY_G,
-        metalness: 0.35,
-        roughness: 0.5,
-      });
+  return _cached("battery", () => new THREE.MeshStandardMaterial({ color: BATTERY_G, metalness: 0.35, roughness: 0.5 }));
 }
 function matCompute() {
-  return new THREE.MeshStandardMaterial({
-        color: COMPUTE_V,
-        metalness: 0.45,
-        roughness: 0.4,
-      });
+  return _cached("compute", () => new THREE.MeshStandardMaterial({ color: COMPUTE_V, metalness: 0.45, roughness: 0.4 }));
 }
 function matSensor() {
-  return new THREE.MeshStandardMaterial({
-        color: SENSOR_C,
-        metalness: 0.45,
-        roughness: 0.3,
-      });
+  return _cached("sensor", () => new THREE.MeshStandardMaterial({ color: SENSOR_C, metalness: 0.45, roughness: 0.3 }));
 }
 function matRubber() {
-  return new THREE.MeshStandardMaterial({
-        color: RUBBER,
-        metalness: 0.05,
-        roughness: 0.9,
-      });
+  return _cached("rubber", () => new THREE.MeshStandardMaterial({ color: RUBBER, metalness: 0.05, roughness: 0.9 }));
 }
 
 // ─── Helper: tag a sub-group with its part name + explode offset ──────────────
