@@ -246,7 +246,7 @@ export default async function KnowledgePage() {
             Find Your Failure
           </h2>
           <p className="mt-2 text-sm text-[var(--ink)]/50 max-w-xl">
-            Describe a symptom — we'll match it to documented failure modes and repair protocols.
+            Describe a symptom — we&apos;ll match it to documented failure modes and repair protocols.
           </p>
         </div>
         <SymptomFinder failureModes={symptomFinderData as any} />

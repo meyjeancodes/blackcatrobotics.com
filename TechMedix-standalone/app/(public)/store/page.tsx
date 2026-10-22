@@ -168,8 +168,8 @@ export default function StorePage() {
         body: JSON.stringify({ items: items.length === 1 ? items[0] : items }),
       });
       const data = await res.json();
-      if (data.ok && data.url) window.location.href = data.url;
-      else if (data.ok && data.urls) window.location.href = data.urls[0];
+      if (data.ok && data.url) window.location.assign(data.url);
+      else if (data.ok && data.urls) window.location.assign(data.urls[0]);
       else alert("Checkout unavailable: " + (data.error || "Please try again"));
     } catch { alert("Checkout unavailable. Please try again."); }
   };
@@ -671,7 +671,7 @@ export default function StorePage() {
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {recommendations.length === 0 && (
                 <div className="space-y-3">
-                  <p className="text-sm text-theme-50">Tell me about your robot and the issue you're seeing.</p>
+                  <p className="text-sm text-theme-50">Tell me about your robot and the issue you&apos;re seeing.</p>
                   <div className="flex flex-wrap gap-2">
                     {["Unitree H1 knee overheating", "H1 battery draining fast", "Spot leg actuator"].map((s) => (
                       <button key={s} onClick={() => handleSuggestionClick(s)} className="rounded-full border border-theme-10 px-3 py-1.5 text-xs text-theme-50 hover:border-theme-20">{s}</button>

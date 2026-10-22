@@ -30,117 +30,77 @@ const SENSOR_C = "#38b8f0";
 const RUBBER = "#15171c";
 
 function matStd(color: string, metalness = 0.7, roughness = 0.3) {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color,
         metalness,
         roughness,
         envMapIntensity: 0.6,
-      }),
-    [color, metalness, roughness]
-  );
+      });
 }
 function matAccent(color: string) {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color,
         metalness: 0.4,
         roughness: 0.4,
         emissive: color,
         emissiveIntensity: 0.12,
-      }),
-    [color]
-  );
+      });
 }
 function matDark() {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color: DARK,
         metalness: 0.8,
         roughness: 0.2,
-      }),
-    []
-  );
+      });
 }
 function matSteel() {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color: STEEL,
         metalness: 0.85,
         roughness: 0.25,
-      }),
-    []
-  );
+      });
 }
 function matJoint() {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color: JOINT,
         metalness: 0.5,
         roughness: 0.4,
-      }),
-    []
-  );
+      });
 }
 function matGlass() {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color: GLASS,
         metalness: 0.6,
         roughness: 0.12,
-      }),
-    []
-  );
+      });
 }
 function matBattery() {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color: BATTERY_G,
         metalness: 0.35,
         roughness: 0.5,
-      }),
-    []
-  );
+      });
 }
 function matCompute() {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color: COMPUTE_V,
         metalness: 0.45,
         roughness: 0.4,
-      }),
-    []
-  );
+      });
 }
 function matSensor() {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color: SENSOR_C,
         metalness: 0.45,
         roughness: 0.3,
-      }),
-    []
-  );
+      });
 }
 function matRubber() {
-  return useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
+  return new THREE.MeshStandardMaterial({
         color: RUBBER,
         metalness: 0.05,
         roughness: 0.9,
-      }),
-    []
-  );
+      });
 }
 
 // ─── Helper: tag a sub-group with its part name + explode offset ──────────────
