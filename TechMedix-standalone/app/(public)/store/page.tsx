@@ -497,6 +497,9 @@ export default function StorePage() {
                   <span className="text-xs text-theme-40">{selectedItem.leadTime}</span>
                 </div>
                 <div className="mt-1 text-xs text-theme-40">{selectedItem.warranty} warranty</div>
+                <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#1db87a]/10 px-2 py-0.5 text-[0.6rem] font-bold text-[#1db87a]">
+                  ✓ PRICE MATCH GUARANTEED
+                </div>
               </div>
 
               {selectedItem.tier === "bundle" && (
