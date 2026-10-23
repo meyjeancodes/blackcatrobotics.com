@@ -442,8 +442,15 @@ function buildEscooter(): THREE.Group {
     stem.add(grip);
   }
   stem.add(part(at(box(0.16, 0.11, 0.19, MAT.compute()), 0.13, 0.9, 0), "IoT telematics unit", [0.6, 0.5, 0]));
+  // Display screen
+  stem.add(at(box(0.12, 0.07, 0.005, MAT.glass()), 0.13, 0.78, 0.1));
+  // Brake lever
+  stem.add(at(box(0.01, 0.04, 0.12, MAT.darkShell()), 0.16, 0.95, 0.18));
   stem.position.set(0.46, 0.3, 0);
   root.add(part(stem, "Stem / cockpit", [0.5, 0.6, 0]));
+
+  // Kickstand
+  root.add(part(at(box(0.02, 0.18, 0.04, MAT.steel()), -0.05, 0.12, 0.12), "Kickstand", [0, -0.4, 0.6]));
 
   const fw = wheel(0.5, 0.24, 0, 0.24, 0.09);
   const hub = cyl(0.14, 0.14, 0.11, MAT.joint(), 18);
