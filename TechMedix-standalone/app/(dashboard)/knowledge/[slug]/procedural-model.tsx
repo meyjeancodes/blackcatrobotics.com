@@ -4,6 +4,7 @@ import { useRef, useMemo, useState, useCallback } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Html } from "@react-three/drei";
 import * as THREE from "three";
+import { buildArchetype } from "@/lib/platforms/archetype-meshes";
 import type { Archetype } from "@/lib/platforms/archetypes";
 
 // ─── Props ────────────────────────────────────────────────────────────────────
@@ -1035,6 +1036,18 @@ function DefaultModel({ accentColor, selectedPartId, exploded, rotate, onPartCli
   );
 }
 
+// ─── GENERIC ARCHETYPE MODEL (uses shared archetype meshes) ──────────────────
+function GenericArchetypeModel({ archetype, rotate }: { archetype: Archetype; accentColor: string; rotate?: boolean }) {
+  const groupRef = useRef<THREE.Group>(null);
+  const obj = useMemo(() => buildArchetype(archetype), [archetype]);
+  useFrame((state) => {
+    if (groupRef.current && rotate) {
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.2;
+    }
+  });
+  return <primitive ref={groupRef} object={obj} />;
+}
+
 // ─── VIEWER (wraps Canvas, receives callbacks) ───────────────────────────────
 
 export function ProceduralModelViewer({
@@ -1045,19 +1058,8 @@ export function ProceduralModelViewer({
   rotate = true,
   onPartClick,
 }: ProceduralModelProps) {
-  const Model: React.ComponentType<{ accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }> = useMemo(
-    () => {
-      if (archetype === "humanoid" || archetype === "exoskeleton") {
-        return HumanoidModel;
-      }
-      if (archetype === "quadruped") {
-        return QuadrupedModel;
-      }
-      if (archetype === "multirotor" || archetype === "vtol-delivery") {
-        return DroneModel;
-      }
-      return DefaultModel;
-    },
+  const Model: React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }> = useMemo(
+    () => GenericArchetypeModel as unknown as React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }>,
     [archetype]
   );
 
@@ -1082,6 +1084,7 @@ export function ProceduralModelViewer({
         <gridHelper args={[8, 20, "#c8c8d0", "#d8d8e0"]} position={[0, -0.16, 0]} />
 
         <Model
+          archetype={archetype}
           accentColor={accentColor}
           selectedPartId={selectedPartId ?? undefined}
           exploded={exploded}
