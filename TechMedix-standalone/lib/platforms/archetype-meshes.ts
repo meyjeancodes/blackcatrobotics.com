@@ -206,6 +206,11 @@ function buildQuadruped(): THREE.Group {
   body.position.y = 0.78;
   root.add(part(body, "Body / battery / compute", [0, 0.7, 0]));
 
+  // LiDAR dome
+  root.add(part(at(sph(0.12, MAT.glass(), 18), -0.1, 1.0, 0), "LiDAR dome", [0, 0.9, 0]));
+  // Tail
+  root.add(part(at(cyl(0.04, 0.02, 0.35, MAT.shell(), 12), -0.78, 0.78, 0), "Tail", [-0.9, 0.2, 0]));
+
   const head = new THREE.Group();
   head.add(box(0.3, 0.24, 0.3, MAT.darkShell()));
   head.add(at(box(0.26, 0.1, 0.02, MAT.glass()), 0, 0.02, 0.16));
