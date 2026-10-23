@@ -86,7 +86,19 @@ export function PlatformKnowledgeClient({
   const selectedProtocol = selectedFailure?.repair_protocols?.[0] ?? null;
 
   const handlePartClick = useCallback((partName: string) => {
-    setSelectedPart((prev) => (prev === partName ? null : partName));
+    setSelectedPart(partName);
+    // Gamification: award XP for inspecting a part
+    try {
+      const raw = localStorage.getItem("techmedix-xp");
+      const s = raw ? JSON.parse(raw) : { xp: 0, level: 1, streak: 0, lastDay: "" };
+      s.xp = (s.xp || 0) + 10;
+      const levels = [0, 100, 250, 500, 900, 1400, 2000, 2800, 3800, 5000];
+      let lvl = 1;
+      for (let i = 0; i < levels.length; i++) if (s.xp >= levels[i]) lvl = i + 1;
+      s.level = Math.min(lvl, levels.length);
+      localStorage.setItem("techmedix-xp", JSON.stringify(s));
+      window.dispatchEvent(new CustomEvent("techmedix-xp", { detail: s }));
+    } catch {}
   }, []);
 
   const specs_json = (platform?.specs_json as Record<string, unknown>) ?? {};

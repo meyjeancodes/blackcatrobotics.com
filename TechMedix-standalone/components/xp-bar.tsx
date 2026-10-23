@@ -49,6 +49,13 @@ export function XpBar() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
     setState(s);
     setMounted(true);
+
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail) setState(detail as XpState);
+    };
+    window.addEventListener("techmedix-xp", handler);
+    return () => window.removeEventListener("techmedix-xp", handler);
   }, []);
 
   if (!mounted) return null;
