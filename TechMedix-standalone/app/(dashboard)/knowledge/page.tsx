@@ -16,6 +16,7 @@ import {
 import { getPlatformsFromSupabase } from "@/lib/knowledge/platforms-server";
 import { PlatformSearch } from "@/components/platform-search";
 import { SymptomFinder } from "./symptom-finder";
+import { XpBar } from "@/components/xp-bar";
 
 // ─── Supporting areas ────────────────────────────────────────────────────────
 
@@ -138,6 +139,9 @@ export default async function KnowledgePage() {
           The operator console for robot repair. Identify the robot, diagnose the
           failure, follow the procedure, record the fix.
         </p>
+        <div className="mt-4 max-w-2xl">
+          <XpBar />
+        </div>
       </div>
 
       {/* ── Repair Loop Visual ────────────────────────────────────────────── */}
