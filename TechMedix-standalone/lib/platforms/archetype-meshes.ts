@@ -517,6 +517,13 @@ function buildEbike(): THREE.Group {
   root.add(at(cyl(0.03, 0.03, 0.42, MAT.steel(), 10), 0.69, 0.7, 0));
   root.add(part(at(box(0.5, 0.04, 0.32, MAT.steel()), -0.5, 0.78, 0), "Cargo rack", [0, 0.7, 0]));
 
+  // Headlight
+  root.add(at(sph(0.035, MAT.glass(), 12), 0.72, 0.88, 0.06));
+  // Handlebar grips
+  for (const s of [-1, 1]) root.add(at(cyl(0.025, 0.025, 0.12, MAT.rubber(), 10), 0.69, 0.95, s * 0.22));
+  // Display
+  root.add(at(box(0.08, 0.05, 0.005, MAT.glass()), 0.62, 0.9, 0));
+
   return root;
 }
 
