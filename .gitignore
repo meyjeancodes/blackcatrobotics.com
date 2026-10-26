@@ -7,7 +7,9 @@ Research/unitree-vla/
 
 # TechMedix (managed separately, has own .gitignore)
 TechMedix-standalone/node_modules/
-TechMedix-standalone/.next/
+# Stray .next/ at repo root (from failed Turbopack builds on macOS);
+# also covers any other .next/ build dir that isn't already ignored
+.next/
 TechMedix-standalone/.env.local
 TechMedix-standalone/.env*.local
 
