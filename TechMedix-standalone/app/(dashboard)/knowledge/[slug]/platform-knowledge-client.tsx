@@ -27,6 +27,7 @@ import { PLATFORM_IMAGE_MAP } from "@/lib/platforms/index";
 
 interface Props {
   platform: KnowledgePlatform | null;
+  staticPlatform?: any;
   knowledge: PlatformKnowledge | null;
   failureModes: (FailureMode & { repair_protocols: RepairProtocol[] })[];
   displayName: string;
@@ -54,6 +55,7 @@ const confidenceLabel: Record<string, string> = {
 
 export function PlatformKnowledgeClient({
   platform,
+  staticPlatform,
   knowledge,
   failureModes,
   displayName,
@@ -63,20 +65,29 @@ export function PlatformKnowledgeClient({
   const [selectedFailureId, setSelectedFailureId] = useState<string | null>(null);
 
   const archetype = useMemo(
-    () => (platform ? resolveArchetype({ slug: platform.id, name: platform.name }) : "humanoid"),
-    [platform]
+    () => {
+      const p = platform ?? staticPlatform;
+      return p ? resolveArchetype({ slug: p.id ?? slug, name: p.name ?? displayName }) : "humanoid";
+    },
+    [platform, staticPlatform, slug, displayName]
   );
   const meta = ARCHETYPE_META[archetype];
   const urdf = getUrdfForPlatform(slug);
   const accent = meta?.accent ?? "#8b5cf6";
 
   const specs: FormattedSpec[] = useMemo(() => {
-    if (!platform) return [];
-    const entries = Object.entries(platform.specs_json).map(([label, value]) => ({
-      label,
-      value: String(value ?? ""),
-    }));
-    return formatSpecs(entries);
+    if (platform) {
+      const entries = Object.entries(platform.specs_json).map(([label, value]) => ({
+        label,
+        value: String(value ?? ""),
+      }));
+      return formatSpecs(entries);
+    }
+    if (staticPlatform?.specs) {
+      const entries = staticPlatform.specs.map((sp: any) => ({ label: sp.label, value: String(sp.value ?? "") }));
+      return formatSpecs(entries);
+    }
+    return [];
   }, [platform]);
 
   const critical = failureModes.filter((f) => f.severity === "critical").length;

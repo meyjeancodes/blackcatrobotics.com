@@ -108,6 +108,7 @@ export default async function PlatformKnowledgePage({
       />
       <PlatformKnowledgeClient
         platform={platform}
+        staticPlatform={staticPlatform ?? null}
         knowledge={knowledge}
         failureModes={allFailureModes}
         displayName={displayName}
