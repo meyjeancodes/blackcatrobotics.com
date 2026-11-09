@@ -6,8 +6,6 @@ import {
   ChevronRight,
   Cpu,
   GraduationCap,
-  Layers,
-  Play,
   Search,
   Shield,
   Wrench,
@@ -21,14 +19,6 @@ import { XpBar } from "@/components/xp-bar";
 // ─── Supporting areas ────────────────────────────────────────────────────────
 
 const SUPPORTING = [
-  {
-    title: "Simulation Lab",
-    description: "Inject faults, walk guided teardowns, practice on virtual hardware.",
-    href: "/knowledge/simulations",
-    icon: Play,
-    color: "text-sky-600",
-    bg: "bg-sky-500/[0.08]",
-  },
   {
     title: "Certifications",
     description: "Five levels from Operator to Autonomous Systems Architect.",
@@ -44,14 +34,6 @@ const SUPPORTING = [
     icon: BookOpen,
     color: "text-emerald-600",
     bg: "bg-emerald-500/[0.08]",
-  },
-  {
-    title: "Blueprint Explorer",
-    description: "Interactive CAD diagrams, exploded views, component specs.",
-    href: "/knowledge/blueprint",
-    icon: Layers,
-    color: "text-amber-600",
-    bg: "bg-amber-500/[0.08]",
   },
 ];
 
@@ -118,7 +100,7 @@ export default async function KnowledgePage() {
         id: fs.id,
         symptom: fs.name,
         root_cause: fs.description,
-        component: fs.severity,
+        component: p.category,
         severity: fs.severity,
         tags: [fs.name, fs.description, p.category, p.manufacturer],
         platform_name: p.name,
