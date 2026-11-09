@@ -4,11 +4,8 @@ import { useRef, useEffect, useId } from "react";
 import useSWR from "swr";
 import type { ReactNode } from "react";
 
-// TODO: wire to live fleet API
-const healthValue = 81; // demo — replace with live WebSocket or polling endpoint
-
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
-type RobotStats = { fleet_health_avg: number };
+type RobotStats = { fleet_health_avg: number; total?: number; mock?: boolean };
 
 // ── Color logic ───────────────────────────────────────────────────────────────
 function getWaveColor(value: number): string {

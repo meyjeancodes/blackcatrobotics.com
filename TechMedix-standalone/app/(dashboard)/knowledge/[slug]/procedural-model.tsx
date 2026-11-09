@@ -1058,10 +1058,20 @@ export function ProceduralModelViewer({
   rotate = true,
   onPartClick,
 }: ProceduralModelProps) {
-  const Model: React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }> = useMemo(
-    () => GenericArchetypeModel as unknown as React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }>,
-    [archetype]
-  );
+  const Model: React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }> = useMemo(() => {
+    switch (archetype) {
+      case "humanoid":
+      case "exoskeleton":
+        return HumanoidModel as unknown as React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }>;
+      case "quadruped":
+        return QuadrupedModel as unknown as React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }>;
+      case "multirotor":
+      case "vtol-delivery":
+        return DroneModel as unknown as React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }>;
+      default:
+        return DefaultModel as unknown as React.ComponentType<{ archetype: Archetype; accentColor: string; selectedPartId?: string | null; exploded?: boolean; rotate?: boolean; onPartClick?: (n: string) => void }>;
+    }
+  }, [archetype]);
 
   return (
     <div className="relative h-[420px] overflow-hidden rounded-xl border border-theme-5 bg-theme-2">
