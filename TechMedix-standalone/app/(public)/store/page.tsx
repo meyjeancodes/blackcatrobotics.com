@@ -15,7 +15,6 @@ type TierFilter = "all" | "oem" | "direct" | "bundle";
 const CATEGORIES = [
   { id: "all", label: "All Platforms" },
   { id: "unitree-h1-2", label: "Unitree H1" },
-  { id: "unitree-h1", label: "Unitree H1" },
   { id: "unitree-h2", label: "Unitree H2" },
   { id: "unitree-g1", label: "Unitree G1" },
   { id: "spot", label: "Boston Dynamics" },
@@ -25,6 +24,7 @@ const CATEGORIES = [
   { id: "figure-02", label: "Figure" },
   { id: "optimus-gen3", label: "Tesla" },
   { id: "asimov-v1", label: "Asimov v1" },
+  { id: "asimov-here-be-dragons", label: "Asimov" },
   { id: "skydio-x10", label: "Skydio" },
   { id: "starship-gen3", label: "Starship" },
   { id: "lime-gen4", label: "Lime" },
